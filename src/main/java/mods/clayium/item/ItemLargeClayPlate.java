@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemLargeClayPlate extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:large_clay_plate")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemLargeClayPlate(ElementsClayiumMod instance) {
 		super(instance, 50);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)

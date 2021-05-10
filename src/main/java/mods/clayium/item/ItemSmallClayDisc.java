@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemSmallClayDisc extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:small_clay_disc")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemSmallClayDisc(ElementsClayiumMod instance) {
 		super(instance, 99);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)

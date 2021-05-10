@@ -1,9 +1,5 @@
 package mods.clayium.item.crafting;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.*;
 import mods.clayium.util.UtilItemStack;
@@ -11,33 +7,37 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class ClayWorkTableRecipes {
     private static final ClayWorkTableRecipes SMELTING_BASE = new ClayWorkTableRecipes();
-    private Map smeltingList = new HashMap();
-    private Map experienceList = new HashMap();
-    public Map kneadingList = new HashMap();
+    private Map<ItemStack, ItemStack> smeltingList = new HashMap<>();
+    private Map<ItemStack, Float> experienceList = new HashMap<>();
+    public Map<Map<String, Object>, Map<String, Object>> kneadingList = new HashMap<>();
 
-    public static mods.clayium.util.crafting.ClayWorkTableRecipes smelting() {
+    public static ClayWorkTableRecipes smelting() {
         return SMELTING_BASE;
     }
 
     private ClayWorkTableRecipes() {
-        this.addRecipe(new ItemStack(Items.CLAY_BALL),               1, new ItemStack(ItemClayStick.block), ItemStack.EMPTY, 4);
-        this.addRecipe(new ItemStack(ItemLargeClayBall.block),       2, new ItemStack(ItemClayDisc.block), ItemStack.EMPTY, 30);
-        this.addRecipe(new ItemStack(ItemLargeClayBall.block),       3, new ItemStack(ItemClayDisc.block), new ItemStack(Items.CLAY_BALL, 2), 4);
-        this.addRecipe(new ItemStack(ItemLargeClayBall.block),       1, new ItemStack(ItemClayCylinder.block), (ItemStack)null, 4);
-        this.addRecipe(new ItemStack(ItemClayPlate.block),           2, new ItemStack(ItemClayBlade.block), (ItemStack)null, 10);
-        this.addRecipe(new ItemStack(ItemClayPlate.block),           3, new ItemStack(ItemClayBlade.block), new ItemStack(Items.CLAY_BALL, 2), 1);
-        this.addRecipe(new ItemStack(ItemClayPlate.block),           6, new ItemStack(ItemClayStick.block, 4), (ItemStack)null, 3);
-        this.addRecipe(new ItemStack(ItemClayDisc.block),            4, new ItemStack(ItemClayPlate.block), new ItemStack(Items.CLAY_BALL, 2), 4);
-        this.addRecipe(new ItemStack(ItemClayDisc.block),            5, new ItemStack(ItemClayRing.block), CMaterials.itemClayParts.getItemStack("SmallDisc"), 2);
-        this.addRecipe((ItemStack)CMaterials.itemClayParts.getItemStack("SmallDisc"), 5, CMaterials.itemClayParts.getItemStack("SmallRing"), CMaterials.itemClayParts.getItemStack("ShortStick"), 1);
-        this.addRecipe(new ItemStack(ItemClayCylinder.block),        1, new ItemStack(ItemClayNeedle.block), (ItemStack)null, 3);
-        this.addRecipe(new ItemStack(ItemClayCylinder.block),        6, CMaterials.itemClayParts.getItemStack("SmallDisc", 8), (ItemStack)null, 7);
-        this.addRecipe(new ItemStack(ItemClayDisc.block),            2, new ItemStack(ItemRawClaySlicer.block), (ItemStack)null, 15);
-        this.addRecipe(new ItemStack(ItemClayDisc.block),            3, new ItemStack(ItemRawClaySlicer.block), (ItemStack)null, 2);
-        this.addRecipe(new ItemStack(ItemClayPlate.block, 6), 3, new ItemStack(ItemLargeClayPlate.block), (ItemStack)null, 10);
-        this.addRecipe(new ItemStack(ItemClayPlate.block, 3), 1, new ItemStack(ItemLargeClayBall.block), (ItemStack)null, 40);
+        this.addRecipe(new ItemStack(Items.CLAY_BALL), 1, new ItemStack(ItemClayStick.block), ItemStack.EMPTY, 4);
+        this.addRecipe(new ItemStack(ItemLargeClayBall.block), 2, new ItemStack(ItemClayDisc.block), ItemStack.EMPTY, 30);
+        this.addRecipe(new ItemStack(ItemLargeClayBall.block), 3, new ItemStack(ItemClayDisc.block), new ItemStack(Items.CLAY_BALL, 2), 4);
+        this.addRecipe(new ItemStack(ItemLargeClayBall.block), 1, new ItemStack(ItemClayCylinder.block), ItemStack.EMPTY, 4);
+        this.addRecipe(new ItemStack(ItemClayPlate.block), 2, new ItemStack(ItemClayBlade.block), ItemStack.EMPTY, 10);
+        this.addRecipe(new ItemStack(ItemClayPlate.block), 3, new ItemStack(ItemClayBlade.block), new ItemStack(Items.CLAY_BALL, 2), 1);
+        this.addRecipe(new ItemStack(ItemClayPlate.block), 6, new ItemStack(ItemClayStick.block, 4), ItemStack.EMPTY, 3);
+        this.addRecipe(new ItemStack(ItemClayDisc.block), 4, new ItemStack(ItemClayPlate.block), new ItemStack(Items.CLAY_BALL, 2), 4);
+        this.addRecipe(new ItemStack(ItemClayDisc.block), 5, new ItemStack(ItemClayRing.block), new ItemStack(ItemSmallClayDisc.block), 2);
+        this.addRecipe(new ItemStack(ItemSmallClayDisc.block), 5, new ItemStack(ItemSmallClayRing.block), new ItemStack(ItemShortClayStick.block), 1);
+        this.addRecipe(new ItemStack(ItemClayCylinder.block), 1, new ItemStack(ItemClayNeedle.block), ItemStack.EMPTY, 3);
+        this.addRecipe(new ItemStack(ItemClayCylinder.block), 6, new ItemStack(ItemSmallClayDisc.block, 8), ItemStack.EMPTY, 7);
+        this.addRecipe(new ItemStack(ItemClayDisc.block), 2, new ItemStack(ItemRawClaySlicer.block), ItemStack.EMPTY, 15);
+        this.addRecipe(new ItemStack(ItemClayDisc.block), 3, new ItemStack(ItemRawClaySlicer.block), ItemStack.EMPTY, 2);
+        this.addRecipe(new ItemStack(ItemClayPlate.block, 6), 3, new ItemStack(ItemLargeClayPlate.block), ItemStack.EMPTY, 10);
+        this.addRecipe(new ItemStack(ItemClayPlate.block, 3), 1, new ItemStack(ItemLargeClayBall.block), ItemStack.EMPTY, 40);
     }
 
     public void addRecipe(Item item, ItemStack itemstack, float experience) {
@@ -54,12 +54,9 @@ public class ClayWorkTableRecipes {
     }
 
     public ItemStack getSmeltingResult(ItemStack itemstack) {
-        Iterator iterator = this.smeltingList.entrySet().iterator();
-
-        while(iterator.hasNext()) {
-            Entry entry = (Entry)iterator.next();
-            if (this.canBeSmelted(itemstack, (ItemStack)entry.getKey())) {
-                return (ItemStack)entry.getValue();
+        for (Entry<ItemStack, ItemStack> itemStackItemStackEntry : this.smeltingList.entrySet()) {
+            if (this.canBeSmelted(itemstack, itemStackItemStackEntry.getKey())) {
+                return itemStackItemStackEntry.getValue();
             }
         }
 
@@ -67,20 +64,17 @@ public class ClayWorkTableRecipes {
     }
 
     private boolean canBeSmelted(ItemStack itemstack, ItemStack itemstack2) {
-        return UtilItemStack.areItemEqual(itemstack2, itemstack) && (itemstack2.func_77960_j() == 32767 || UtilItemStack.areDamageEqual(itemstack2, itemstack)) && itemstack2.field_77994_a <= itemstack.field_77994_a;
+        return UtilItemStack.areItemEqual(itemstack2, itemstack) && (itemstack2.getMetadata() == 32767 || UtilItemStack.areDamageEqual(itemstack2, itemstack)) && itemstack2.getCount() <= itemstack.getCount();
     }
 
     public float giveExperience(ItemStack itemstack) {
-        Iterator iterator = this.experienceList.entrySet().iterator();
-
-        while(iterator.hasNext()) {
-            Entry entry = (Entry)iterator.next();
-            if (this.canBeSmelted(itemstack, (ItemStack)entry.getKey())) {
-                if (itemstack.func_77973_b().getSmeltingExperience(itemstack) != -1.0F) {
-                    return itemstack.func_77973_b().getSmeltingExperience(itemstack);
+        for (Entry<ItemStack, Float> itemStackFloatEntry : this.experienceList.entrySet()) {
+            if (this.canBeSmelted(itemstack, itemStackFloatEntry.getKey())) {
+                if (itemstack.getItem().getSmeltingExperience(itemstack) != -1.0F) {
+                    return itemstack.getItem().getSmeltingExperience(itemstack);
                 }
 
-                return (Float)entry.getValue();
+                return itemStackFloatEntry.getValue();
             }
         }
 
@@ -92,8 +86,8 @@ public class ClayWorkTableRecipes {
     }
 
     public void addRecipe(ItemStack itemstack, int buttonId, ItemStack itemstack2, ItemStack itemstack3, int cookTime) {
-        Map keyMap = new HashMap();
-        Map valueMap = new HashMap();
+        Map<String, Object> keyMap = new HashMap<>();
+        Map<String, Object> valueMap = new HashMap<>();
         keyMap.put("Material", itemstack);
         keyMap.put("ButtonId", buttonId);
         valueMap.put("Result", itemstack2);
@@ -102,44 +96,42 @@ public class ClayWorkTableRecipes {
         this.kneadingList.put(keyMap, valueMap);
     }
 
-    public Map getKneadingResultMap(ItemStack itemstack, int buttonId) {
-        Entry entry_ = null;
+    public Map<String, Object> getKneadingResultMap(ItemStack itemstack, int buttonId) {
+        Entry<Map<String, Object>, Map<String, Object>> entry_ = null;
         int maxStackSize = 0;
-        Iterator iterator = this.kneadingList.entrySet().iterator();
 
-        while(iterator.hasNext()) {
-            Entry entry = (Entry)iterator.next();
-            if (this.canBeSmelted(itemstack, (ItemStack)((Map)entry.getKey()).get("Material")) && (Integer)((Map)entry.getKey()).get("ButtonId") == buttonId && ((ItemStack)((Map)entry.getKey()).get("Material")).field_77994_a > maxStackSize) {
+        for (Entry<Map<String, Object>, Map<String, Object>> entry : this.kneadingList.entrySet()) {
+            if (this.canBeSmelted(itemstack, (ItemStack) entry.getKey().get("Material"))
+                    && (Integer) entry.getKey().get("ButtonId") == buttonId
+                    && ((ItemStack) entry.getKey().get("Material")).getCount() > maxStackSize) {
                 entry_ = entry;
-                maxStackSize = ((ItemStack)((Map)entry.getKey()).get("Material")).field_77994_a;
+                maxStackSize = ((ItemStack) entry.getKey().get("Material")).getCount();
             }
         }
 
         if (entry_ == null) {
             return null;
-        } else {
-            return (Map)entry_.getValue();
         }
+        return entry_.getValue();
     }
 
     public int getConsumedStackSize(ItemStack itemstack, int buttonId) {
-        Entry entry_ = null;
+        Entry<Map<String, Object>, Map<String, Object>> entry_ = null;
         int maxStackSize = 0;
-        Iterator iterator = this.kneadingList.entrySet().iterator();
 
-        while(iterator.hasNext()) {
-            Entry entry = (Entry)iterator.next();
-            if (this.canBeSmelted(itemstack, (ItemStack)((Map)entry.getKey()).get("Material")) && (Integer)((Map)entry.getKey()).get("ButtonId") == buttonId && ((ItemStack)((Map)entry.getKey()).get("Material")).field_77994_a > maxStackSize) {
-                entry_ = entry;
-                maxStackSize = ((ItemStack)((Map)entry.getKey()).get("Material")).field_77994_a;
+        for (Entry<Map<String, Object>, Map<String, Object>> mapMapEntry : this.kneadingList.entrySet()) {
+            if (this.canBeSmelted(itemstack, (ItemStack) mapMapEntry.getKey().get("Material"))
+                    && (Integer) mapMapEntry.getKey().get("ButtonId") == buttonId
+                    && ((ItemStack) mapMapEntry.getKey().get("Material")).getCount() > maxStackSize) {
+                entry_ = mapMapEntry;
+                maxStackSize = ((ItemStack) mapMapEntry.getKey().get("Material")).getCount();
             }
         }
 
         if (entry_ == null) {
             return 0;
-        } else {
-            return maxStackSize;
         }
+        return maxStackSize;
     }
 
     public ItemStack getKneadingResult(ItemStack itemstack, int buttonId) {
@@ -156,16 +148,13 @@ public class ClayWorkTableRecipes {
 
     public boolean hasKneadingResult(ItemStack itemstack) {
         boolean flag = false;
-        Iterator iterator = this.kneadingList.entrySet().iterator();
 
-        while(iterator.hasNext()) {
-            Entry entry = (Entry)iterator.next();
-            if (this.canBeSmelted(itemstack, (ItemStack)((Map)entry.getKey()).get("Material"))) {
+        for (Entry<Map<String, Object>, Map<String, Object>> mapMapEntry : this.kneadingList.entrySet()) {
+            if (this.canBeSmelted(itemstack, (ItemStack) mapMapEntry.getKey().get("Material"))) {
                 flag = true;
             }
         }
 
         return flag;
     }
-
 }

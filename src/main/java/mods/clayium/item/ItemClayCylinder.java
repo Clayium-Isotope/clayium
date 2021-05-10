@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemClayCylinder extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:clay_cylinder")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemClayCylinder(ElementsClayiumMod instance) {
 		super(instance, 8);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)

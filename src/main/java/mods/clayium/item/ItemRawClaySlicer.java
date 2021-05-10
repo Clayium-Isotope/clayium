@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemRawClaySlicer extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:raw_clay_slicer")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemRawClaySlicer(ElementsClayiumMod instance) {
 		super(instance, 15);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)

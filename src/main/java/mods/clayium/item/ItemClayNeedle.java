@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemClayNeedle extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:clay_needle")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemClayNeedle(ElementsClayiumMod instance) {
 		super(instance, 42);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)

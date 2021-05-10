@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemShortClayStick extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:short_clay_stick")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemShortClayStick(ElementsClayiumMod instance) {
 		super(instance, 34);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)
