@@ -1,0 +1,42 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "clayium:clay_needle"
+    },
+    "1": {
+      "item": "clayium:clay_needle"
+    },
+    "2": {
+      "item": "clayium:clay_needle"
+    },
+    "3": {
+      "item": "clayium:clay_needle"
+    },
+    "4": {
+      "item": "clayium:clay_ring"
+    },
+    "5": {
+      "item": "clayium:clay_needle"
+    },
+    "6": {
+      "item": "clayium:clay_needle"
+    },
+    "7": {
+      "item": "clayium:clay_needle"
+    },
+    "8": {
+      "item": "clayium:clay_needle"
+    }
+  },
+  "result": {
+    "item": "clayium:clay_grinding_head",
+    "count": 1
+  }
+}

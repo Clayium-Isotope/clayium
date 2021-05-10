@@ -1,0 +1,13 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:clay_stick"
+    }
+  ],
+  "result": {
+    "item": "clayium:short_clay_stick",
+    "count": 2
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "clayium:blocks/machinehull-5",
+    "up": "clayium:blocks/machinehull-5",
+    "north": "clayium:blocks/machinehull-5",
+    "east": "clayium:blocks/machinehull-5",
+    "south": "clayium:blocks/machinehull-5",
+    "west": "clayium:blocks/machinehull-5",
+    "particle": "clayium:blocks/machinehull-5"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "clayium:small_clay_ring"
+    },
+    "1": {
+      "item": "clayium:clay_plate"
+    },
+    "2": {
+      "item": "clayium:small_clay_ring"
+    },
+    "3": {
+      "item": "clayium:clay_stick"
+    },
+    "4": {
+      "item": "clayium:clay_bearing"
+    },
+    "5": {
+      "item": "clayium:clay_ring"
+    },
+    "6": {
+      "item": "clayium:small_clay_ring"
+    },
+    "7": {
+      "item": "clayium:clay_plate"
+    },
+    "8": {
+      "item": "clayium:small_clay_ring"
+    }
+  },
+  "result": {
+    "item": "clayium:clay_spindle",
+    "count": 1
+  }
+}

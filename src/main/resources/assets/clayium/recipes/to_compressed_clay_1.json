@@ -1,0 +1,42 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "1": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "2": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "3": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "4": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "5": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "6": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "7": {
+      "item": "clayium:compressed_clay_0"
+    },
+    "8": {
+      "item": "clayium:compressed_clay_0"
+    }
+  },
+  "result": {
+    "item": "clayium:compressed_clay_1",
+    "count": 1
+  }
+}

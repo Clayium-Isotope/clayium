@@ -1,0 +1,13 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:clay_needle"
+    }
+  ],
+  "result": {
+    "item": "minecraft:clay_ball",
+    "count": 5
+  }
+}

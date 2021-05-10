@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "clayium:blocks/compressedclay-12",
+    "particle": "clayium:blocks/compressedclay-12"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:compressed_clay_1"
+    }
+  ],
+  "result": {
+    "item": "clayium:compressed_clay_0",
+    "count": 9
+  }
+}

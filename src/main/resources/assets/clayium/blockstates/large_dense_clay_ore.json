@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "clayium:large_dense_clay_ore"
+    }
+  }
+}

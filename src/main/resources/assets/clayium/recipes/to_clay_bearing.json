@@ -1,0 +1,42 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:clay_ball"
+    },
+    "1": {
+      "item": "minecraft:clay_ball"
+    },
+    "2": {
+      "item": "minecraft:clay_ball"
+    },
+    "3": {
+      "item": "minecraft:clay_ball"
+    },
+    "4": {
+      "item": "clayium:clay_ring"
+    },
+    "5": {
+      "item": "minecraft:clay_ball"
+    },
+    "6": {
+      "item": "minecraft:clay_ball"
+    },
+    "7": {
+      "item": "minecraft:clay_ball"
+    },
+    "8": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "result": {
+    "item": "clayium:clay_bearing",
+    "count": 1
+  }
+}

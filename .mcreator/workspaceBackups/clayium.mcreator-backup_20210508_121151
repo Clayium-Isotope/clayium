@@ -1,0 +1,818 @@
+{
+  "id_map": {
+    "GUI": 3
+  },
+  "mod_elements": [
+    {
+      "name": "Clayium",
+      "type": "tab",
+      "sortid": 1,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clayium"
+    },
+    {
+      "name": "ClayWorkTable",
+      "type": "block",
+      "sortid": 4,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {},
+      "registry_name": "clay_work_table"
+    },
+    {
+      "name": "ClayWorkTableGUI",
+      "type": "gui",
+      "sortid": 5,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {
+        "0": 3
+      },
+      "registry_name": "clay_work_table_gui"
+    },
+    {
+      "name": "ClayStick",
+      "type": "item",
+      "sortid": 7,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_stick"
+    },
+    {
+      "name": "ClayCylinder",
+      "type": "item",
+      "sortid": 8,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_cylinder"
+    },
+    {
+      "name": "ClayShovel",
+      "type": "tool",
+      "sortid": 9,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {},
+      "registry_name": "clay_shovel"
+    },
+    {
+      "name": "ClayPlate",
+      "type": "item",
+      "sortid": 10,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_plate"
+    },
+    {
+      "name": "ToClayWorkTable",
+      "type": "recipe",
+      "sortid": 11,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_work_table"
+    },
+    {
+      "name": "ToClayShovel",
+      "type": "recipe",
+      "sortid": 13,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_shovel"
+    },
+    {
+      "name": "RawClayRollingPin",
+      "type": "item",
+      "sortid": 14,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "raw_clay_rolling_pin"
+    },
+    {
+      "name": "RawClaySlicer",
+      "type": "item",
+      "sortid": 15,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "raw_clay_slicer"
+    },
+    {
+      "name": "RawClaySpatula",
+      "type": "item",
+      "sortid": 16,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "raw_clay_spatula"
+    },
+    {
+      "name": "ClaySlicer",
+      "type": "item",
+      "sortid": 18,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_slicer"
+    },
+    {
+      "name": "ClayRollingPin",
+      "type": "item",
+      "sortid": 19,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_rolling_pin"
+    },
+    {
+      "name": "ClaySpatula",
+      "type": "item",
+      "sortid": 20,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_spatula"
+    },
+    {
+      "name": "ToClayRollingPin",
+      "type": "recipe",
+      "sortid": 21,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_rolling_pin"
+    },
+    {
+      "name": "ToClaySpatula",
+      "type": "recipe",
+      "sortid": 22,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_spatula"
+    },
+    {
+      "name": "ToClaySlicer",
+      "type": "recipe",
+      "sortid": 23,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_slicer"
+    },
+    {
+      "name": "ClayOre",
+      "type": "block",
+      "sortid": 24,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {},
+      "registry_name": "clay_ore"
+    },
+    {
+      "name": "DenseClayOre",
+      "type": "block",
+      "sortid": 25,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "dense_clay_ore"
+    },
+    {
+      "name": "LargeDenseClayOre",
+      "type": "block",
+      "sortid": 26,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {},
+      "registry_name": "large_dense_clay_ore"
+    },
+    {
+      "name": "DenseClayPlate",
+      "type": "item",
+      "sortid": 27,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "dense_clay_plate"
+    },
+    {
+      "name": "DenseClayStick",
+      "type": "item",
+      "sortid": 28,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "dense_clay_stick"
+    },
+    {
+      "name": "ClayPickaxe",
+      "type": "tool",
+      "sortid": 29,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {},
+      "registry_name": "clay_pickaxe"
+    },
+    {
+      "name": "LargeClayBall",
+      "type": "item",
+      "sortid": 30,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "large_clay_ball"
+    },
+    {
+      "name": "ToLargeClayBall",
+      "type": "recipe",
+      "sortid": 31,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_large_clay_ball"
+    },
+    {
+      "name": "ClayBlade",
+      "type": "item",
+      "sortid": 32,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_blade"
+    },
+    {
+      "name": "ClayFromClayBlade",
+      "type": "recipe",
+      "sortid": 33,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_from_clay_blade"
+    },
+    {
+      "name": "ShortClayStick",
+      "type": "item",
+      "sortid": 34,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "short_clay_stick"
+    },
+    {
+      "name": "ToShortClayStick",
+      "type": "recipe",
+      "sortid": 35,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_short_clay_stick"
+    },
+    {
+      "name": "ToRawClaySpatula",
+      "type": "recipe",
+      "sortid": 36,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_raw_clay_spatula"
+    },
+    {
+      "name": "SmallClayRing",
+      "type": "item",
+      "sortid": 37,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "small_clay_ring"
+    },
+    {
+      "name": "ToSmallClayRing",
+      "type": "recipe",
+      "sortid": 38,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_small_clay_ring"
+    },
+    {
+      "name": "ClayRing",
+      "type": "item",
+      "sortid": 39,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_ring"
+    },
+    {
+      "name": "ClayFromClayRing",
+      "type": "recipe",
+      "sortid": 40,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_from_clay_ring"
+    },
+    {
+      "name": "ToShortClayStick1",
+      "type": "recipe",
+      "sortid": 41,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_short_clay_stick_1"
+    },
+    {
+      "name": "ClayNeedle",
+      "type": "item",
+      "sortid": 42,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_needle"
+    },
+    {
+      "name": "ClayFromClayNeedle",
+      "type": "recipe",
+      "sortid": 43,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_from_clay_needle"
+    },
+    {
+      "name": "ClayGear",
+      "type": "item",
+      "sortid": 44,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_gear"
+    },
+    {
+      "name": "ClayFromClayGear",
+      "type": "recipe",
+      "sortid": 45,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_from_clay_gear"
+    },
+    {
+      "name": "ToClayRing",
+      "type": "recipe",
+      "sortid": 46,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_ring"
+    },
+    {
+      "name": "ToClayGear",
+      "type": "recipe",
+      "sortid": 47,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_gear"
+    },
+    {
+      "name": "ClayPipe",
+      "type": "item",
+      "sortid": 48,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_pipe"
+    },
+    {
+      "name": "ToClayPipe",
+      "type": "recipe",
+      "sortid": 49,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_pipe"
+    },
+    {
+      "name": "LargeClayPlate",
+      "type": "item",
+      "sortid": 50,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "large_clay_plate"
+    },
+    {
+      "name": "ToLargeClayPlate",
+      "type": "recipe",
+      "sortid": 51,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_large_clay_plate"
+    },
+    {
+      "name": "ClayGrindingHead",
+      "type": "item",
+      "sortid": 52,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_grinding_head"
+    },
+    {
+      "name": "ToClayGrindingHead",
+      "type": "recipe",
+      "sortid": 53,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_grinding_head"
+    },
+    {
+      "name": "ClayBearing",
+      "type": "item",
+      "sortid": 54,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_bearing"
+    },
+    {
+      "name": "ToClayBearing",
+      "type": "recipe",
+      "sortid": 55,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_bearing"
+    },
+    {
+      "name": "ClaySpindle",
+      "type": "item",
+      "sortid": 56,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_spindle"
+    },
+    {
+      "name": "ToClaySpindle",
+      "type": "recipe",
+      "sortid": 57,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_spindle"
+    },
+    {
+      "name": "ClayCuttingHead",
+      "type": "item",
+      "sortid": 58,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_cutting_head"
+    },
+    {
+      "name": "ToClayCuttingHead",
+      "type": "recipe",
+      "sortid": 59,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_cutting_head"
+    },
+    {
+      "name": "ToRawClayRollingPin",
+      "type": "recipe",
+      "sortid": 60,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_raw_clay_rolling_pin"
+    },
+    {
+      "name": "ClayWaterWheel",
+      "type": "item",
+      "sortid": 61,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_water_wheel"
+    },
+    {
+      "name": "ToClayWaterWheel",
+      "type": "recipe",
+      "sortid": 62,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_clay_water_wheel"
+    },
+    {
+      "name": "ClayCraftingBoard",
+      "type": "block",
+      "sortid": 63,
+      "compiles": true,
+      "locked_code": true,
+      "ids": {},
+      "registry_name": "clay_crafting_board"
+    },
+    {
+      "name": "ClayDisc",
+      "type": "item",
+      "sortid": 64,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_disc"
+    },
+    {
+      "name": "ClayDust",
+      "type": "item",
+      "sortid": 65,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "clay_dust"
+    },
+    {
+      "name": "CompressedClay1",
+      "type": "block",
+      "sortid": 66,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_1"
+    },
+    {
+      "name": "CompressedClay2",
+      "type": "block",
+      "sortid": 67,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_2"
+    },
+    {
+      "name": "CompressedClay3",
+      "type": "block",
+      "sortid": 68,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_3"
+    },
+    {
+      "name": "CompressedClay4",
+      "type": "block",
+      "sortid": 69,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_4"
+    },
+    {
+      "name": "CompressedClay5",
+      "type": "block",
+      "sortid": 70,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_5"
+    },
+    {
+      "name": "CompressedClay6",
+      "type": "block",
+      "sortid": 71,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_6"
+    },
+    {
+      "name": "CompressedClay7",
+      "type": "block",
+      "sortid": 72,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_7"
+    },
+    {
+      "name": "CompressedClay8",
+      "type": "block",
+      "sortid": 73,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_8"
+    },
+    {
+      "name": "CompressedClay0",
+      "type": "block",
+      "sortid": 74,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_0"
+    },
+    {
+      "name": "CompressedClay9",
+      "type": "block",
+      "sortid": 75,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_9"
+    },
+    {
+      "name": "CompressedClay10",
+      "type": "block",
+      "sortid": 76,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_10"
+    },
+    {
+      "name": "CompressedClay11",
+      "type": "block",
+      "sortid": 77,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_11"
+    },
+    {
+      "name": "CompressedClay12",
+      "type": "block",
+      "sortid": 78,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "compressed_clay_12"
+    },
+    {
+      "name": "ToCompressedClay1",
+      "type": "recipe",
+      "sortid": 79,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_compressed_clay_1"
+    },
+    {
+      "name": "ToCompressedClay0",
+      "type": "recipe",
+      "sortid": 81,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_compressed_clay_0"
+    },
+    {
+      "name": "ToCompressedClay01",
+      "type": "recipe",
+      "sortid": 82,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "to_compressed_clay_01"
+    },
+    {
+      "name": "RawClayMachineHull",
+      "type": "block",
+      "sortid": 83,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "raw_clay_machine_hull"
+    },
+    {
+      "name": "MachineHull0",
+      "type": "block",
+      "sortid": 84,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "machine_hull_0"
+    },
+    {
+      "name": "MachineHull1",
+      "type": "block",
+      "sortid": 85,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "machine_hull_1"
+    },
+    {
+      "name": "MachineHull2",
+      "type": "block",
+      "sortid": 86,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "machine_hull_2"
+    },
+    {
+      "name": "MachineHull3",
+      "type": "block",
+      "sortid": 87,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "machine_hull_3"
+    }
+  ],
+  "variable_elements": [],
+  "sound_elements": [],
+  "language_map": {
+    "en_us": {
+      "item.clay_blade.name": "Clay Blade",
+      "tile.compressed_clay_4.name": "Compressed Clay 4",
+      "tile.compressed_clay_11.name": "Compressed Clay 11",
+      "item.clay_cutting_head.name": "Clay Cutting Head",
+      "tile.compressed_clay_10.name": "Compressed Clay 10",
+      "tile.machine_hull_1.name": "Machine Hull 1",
+      "tile.compressed_clay_5.name": "Compressed Clay 5",
+      "item.clay_needle.name": "Clay Needle",
+      "item.raw_clay_spatula.name": "Raw Clay Spatula",
+      "item.large_clay_plate.name": "Large Clay Plate",
+      "tile.raw_clay_machine_hull.name": "Raw Clay Machine Hull",
+      "item.clay_ring.name": "Clay Ring",
+      "item.raw_clay_rolling_pin.name": "Raw Clay Rolling Pin",
+      "item.dense_clay_plate.name": "Dense Clay Plate",
+      "item.clay_shovel.name": "Clay Shovel",
+      "item.short_clay_stick.name": "Short Clay Stick",
+      "item.clay_stick.name": "Clay Stick",
+      "item.clay_bearing.name": "Clay Bearing",
+      "item.clay_rolling_pin.name": "Clay Rolling Pin",
+      "tile.machine_hull_2.name": "Machine Hull 2",
+      "tile.clay_ore.name": "Clay Ore",
+      "tile.compressed_clay_12.name": "Compressed Clay 12",
+      "item.clay_spatula.name": "Clay Spatula",
+      "item.large_clay_ball.name": "Large Clay Ball",
+      "item.raw_clay_slicer.name": "Raw Clay Slicer",
+      "tile.compressed_clay_7.name": "Compressed Clay 7",
+      "item.small_clay_ring.name": "Small Clay Ring",
+      "itemGroup.tabclayium": "Clayium",
+      "tile.large_dense_clay_ore.name": "Large Dense Clay Ore",
+      "tile.compressed_clay_1.name": "Compressed Clay 1",
+      "item.clay_disc.name": "Clay Disc",
+      "tile.compressed_clay_2.name": "Compressed Clay 2",
+      "tile.compressed_clay_8.name": "Compressed Clay 8",
+      "tile.dense_clay_ore.name": "Dense Clay Ore",
+      "item.clay_dust.name": "Clay Dust",
+      "item.clay_cylinder.name": "Clay Cylinder",
+      "item.clay_pickaxe.name": "Clay Pickaxe",
+      "tile.clay_work_table.name": "Clay Crafting Table",
+      "item.clay_spindle.name": "Clay Spindle",
+      "tile.compressed_clay_0.name": "Dense Clay",
+      "tile.compressed_clay_6.name": "Compressed Clay 6",
+      "tile.compressed_clay_9.name": "Compressed Clay 9",
+      "item.clay_grinding_head.name": "Clay Grinding Head",
+      "tile.compressed_clay_3.name": "Compressed Clay 3",
+      "item.clay_plate.name": "Clay Plate",
+      "item.clay_water_wheel.name": "Clay Wheel",
+      "tile.clay_crafting_board.name": "Clay Crafting Board",
+      "item.dense_clay_stick.name": "Dense Clay Stick",
+      "item.clay_pipe.name": "Clay Pipe",
+      "item.clay_slicer.name": "Clay Slicer",
+      "item.clay_gear.name": "Clay Gear",
+      "tile.machine_hull_0.name": "Machine Hull 0",
+      "tile.machine_hull_3.name": "Machine Hull 3"
+    }
+  },
+  "foldersRoot": {
+    "name": "~",
+    "children": []
+  },
+  "workspaceSettings": {
+    "modid": "clayium",
+    "modName": "Clayium",
+    "version": "1.0.0",
+    "author": "tsugu, MCreator",
+    "websiteURL": "https://mcreator.net",
+    "disableForgeVersionCheck": true,
+    "serverSideOnly": false,
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "mcreatorDependencies": [],
+    "currentGenerator": "forge-1.12.2",
+    "modElementsPackage": "mods.clayium",
+    "lockBaseModFiles": false
+  },
+  "mcreatorVersion": 202100118117
+}

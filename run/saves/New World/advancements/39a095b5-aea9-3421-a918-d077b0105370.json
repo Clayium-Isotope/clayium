@@ -1,0 +1,14 @@
+{
+  "minecraft:recipes/building_blocks/clay": {
+    "criteria": {
+      "has_clay_ball": "2021-05-01 19:40:53 +0900"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "plains": "2021-05-01 19:40:53 +0900"
+    },
+    "done": false
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "_fv": 18,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 176,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": true,
+    "components": [
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "id": 0,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #0",
+          "x": 205,
+          "y": 53
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "id": 1,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #1",
+          "x": 142,
+          "y": 66
+        }
+      },
+      {
+        "type": "outputslot",
+        "data": {
+          "id": 2,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #2",
+          "x": 268,
+          "y": 66
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "id": 3,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #3",
+          "x": 268,
+          "y": 91
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "clayworktable_container.png",
+          "use1Xscale": false,
+          "name": "clayworktable_container.png",
+          "x": 125,
+          "y": 37
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "clayworktable_buttons.png",
+          "use1Xscale": false,
+          "name": "clayworktable_buttons.png",
+          "x": 165,
+          "y": 90
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "toStick",
+          "width": 16,
+          "height": 20,
+          "name": "toStick",
+          "x": 165,
+          "y": 90
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "press",
+          "width": 16,
+          "height": 20,
+          "name": "press",
+          "x": 181,
+          "y": 90
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "flat",
+          "width": 16,
+          "height": 20,
+          "name": "flat",
+          "x": 197,
+          "y": 89
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "cutRect",
+          "width": 16,
+          "height": 20,
+          "name": "cutRect",
+          "x": 213,
+          "y": 89
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "cutCircle",
+          "width": 16,
+          "height": 20,
+          "name": "cutCircle",
+          "x": 229,
+          "y": 89
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "cutStick",
+          "width": 16,
+          "height": 20,
+          "name": "cutStick",
+          "x": 245,
+          "y": 89
+        }
+      }
+    ]
+  }
+}
