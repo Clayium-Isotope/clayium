@@ -25,7 +25,7 @@
       "name": "ClayWorkTableGUI",
       "type": "gui",
       "sortid": 5,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "ids": {
         "0": 3
@@ -832,6 +832,15 @@
       "locked_code": false,
       "ids": {},
       "registry_name": "zk60a_alloy_hull"
+    },
+    {
+      "name": "SmallClayDisc",
+      "type": "item",
+      "sortid": 99,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "small_clay_disc"
     }
   ],
   "variable_elements": [],
@@ -847,6 +856,7 @@
       "tile.compressed_clay_10.name": "Compressed Clay 10",
       "tile.machine_hull_1.name": "Machine Hull 1",
       "tile.compressed_clay_5.name": "Compressed Clay 5",
+      "item.small_clay_disc.name": "Small Clay Disc",
       "item.clay_needle.name": "Clay Needle",
       "item.raw_clay_spatula.name": "Raw Clay Spatula",
       "item.large_clay_plate.name": "Large Clay Plate",

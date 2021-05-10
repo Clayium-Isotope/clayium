@@ -7,6 +7,7 @@ item.clay_cutting_head.name=Clay Cutting Head
 tile.compressed_clay_10.name=Compressed Clay 10
 tile.machine_hull_1.name=Machine Hull 1
 tile.compressed_clay_5.name=Compressed Clay 5
+item.small_clay_disc.name=Small Clay Disc
 item.clay_needle.name=Clay Needle
 item.raw_clay_spatula.name=Raw Clay Spatula
 item.large_clay_plate.name=Large Clay Plate
