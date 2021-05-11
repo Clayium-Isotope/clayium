@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "block/block"
+	"parent": "block/block",
 	"textures": {
 		"0": "clayium:blocks/claycraftingtable",
 		"1": "clayium:blocks/denseclay",
