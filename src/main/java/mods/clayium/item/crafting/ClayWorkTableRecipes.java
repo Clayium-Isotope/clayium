@@ -1,7 +1,7 @@
 package mods.clayium.item.crafting;
 
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.*;
+import mods.clayium.util.ProgressRatedVariable;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -92,7 +92,7 @@ public class ClayWorkTableRecipes {
         keyMap.put("ButtonId", buttonId);
         valueMap.put("Result", itemstack2);
         valueMap.put("Result2", itemstack3);
-        valueMap.put("CookTime", ClayiumCore.divideByProgressionRateI(cookTime));
+        valueMap.put("CookTime", ProgressRatedVariable.divideByProgressionRateI(cookTime));
         this.kneadingList.put(keyMap, valueMap);
     }
 

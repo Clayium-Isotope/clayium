@@ -3,7 +3,6 @@ package mods.clayium.block;
 
 import mods.clayium.ClayiumMod;
 import mods.clayium.ElementsClayiumMod;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.creativetab.TabClayium;
 import mods.clayium.gui.GuiClayWorkTableGUI;
 import mods.clayium.item.ItemClayRollingPin;
@@ -56,14 +55,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockClayWorkTable extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:clay_work_table")
-	public static final Block block = new BlockCustom();
+	public static final Block block = null;
 	public BlockClayWorkTable(ElementsClayiumMod instance) {
 		super(instance, 4);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> block.setRegistryName("clay_work_table"));
+		elements.blocks.add(() -> new BlockCustom().setRegistryName("clay_work_table"));
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 
@@ -323,7 +322,7 @@ public class BlockClayWorkTable extends ElementsClayiumMod.ModElement {
 
 			this.resetRecipeAndSlots();
 			if (!this.world.isRemote && this.ticket == null) {
-				this.ticket = ForgeChunkManager.requestTicket(ClayiumCore.INSTANCE, this.world, ForgeChunkManager.Type.NORMAL);
+				this.ticket = ForgeChunkManager.requestTicket(ClayiumMod.instance, this.world, ForgeChunkManager.Type.NORMAL);
 				ForgeChunkManager.forceChunk(this.ticket, new ChunkPos(this.pos.getX() >> 4, this.pos.getZ() >> 4));
 			}
 		}
@@ -561,7 +560,7 @@ public class BlockClayWorkTable extends ElementsClayiumMod.ModElement {
 				this.furnaceItemStacks.set(4, ItemStack.EMPTY);
 			}
 
-			ClayWorkTable.updateBlockState(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+			BlockClayWorkTable.updateBlockState(this.world, this.pos);
 			this.markDirty();
 			this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
 		}
@@ -726,6 +725,14 @@ public class BlockClayWorkTable extends ElementsClayiumMod.ModElement {
 		@Override
 		protected NonNullList<ItemStack> getItems() {
 			return this.stacks;
+		}
+	}
+
+	public static void updateBlockState(World world, BlockPos pos) {
+		TileEntity tileentity = world.getTileEntity(pos);
+		if (tileentity != null) {
+			tileentity.validate();
+			world.setTileEntity(pos, tileentity);
 		}
 	}
 }

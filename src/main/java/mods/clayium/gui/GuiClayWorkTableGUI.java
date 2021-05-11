@@ -3,18 +3,15 @@ package mods.clayium.gui;
 
 import mods.clayium.ClayiumMod;
 import mods.clayium.ElementsClayiumMod;
-import mods.clayium.block.tile.TileClayWorkTable;
-import mods.clayium.gui.container.ContainerClayWorkTable;
+import mods.clayium.block.BlockClayWorkTable;
+import mods.clayium.item.crafting.ClayWorkTableRecipes;
 import mods.clayium.network.GuiButtonPacket;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +22,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -233,7 +231,7 @@ public class GuiClayWorkTableGUI extends ElementsClayiumMod.ModElement {
 		private int x, y, z;
 		private EntityPlayer entity;
 		public static final ResourceLocation TEXTURE = new ResourceLocation("clayium", "textures/gui/clayworktable.png");
-		private TileClayWorkTable tileClayWorkTable;
+		private BlockClayWorkTable.TileEntityCustom tileClayWorkTable;
 
 		public GuiWindow(World world, int x, int y, int z, EntityPlayer entity) {
 			super(new GuiContainerMod(world, x, y, z, entity));
@@ -246,8 +244,8 @@ public class GuiClayWorkTableGUI extends ElementsClayiumMod.ModElement {
 			this.ySize = 166;
 		}
 
-		public GuiWindow(InventoryPlayer invPlayer, TileClayWorkTable tile) {
-			super(new ContainerClayWorkTable(invPlayer, tile));
+		public GuiWindow(InventoryPlayer invPlayer, BlockClayWorkTable.TileEntityCustom tile) {
+			super(new GuiClayWorkTableGUI.ContainerClayWorkTable(invPlayer, tile));
 			this.tileClayWorkTable = tile;
 		}
 
@@ -465,5 +463,167 @@ public class GuiClayWorkTableGUI extends ElementsClayiumMod.ModElement {
 		// security measure to prevent arbitrary chunk generation
 		if (!world.isBlockLoaded(new BlockPos(x, y, z)))
 			return;
+	}
+
+	public static class ContainerClayWorkTable extends Container {
+		private BlockClayWorkTable.TileEntityCustom tileClayWorkTable;
+		private int lastCookTime;
+		private int lastBurnTime;
+		private int lastItemBurnTime;
+		private int lastCookingMethod;
+		private int lastTimeToCook;
+		private static int slotNum = 4;
+		int xCoord;
+		int yCoord;
+		int zCorrd;
+
+		public ContainerClayWorkTable(int x, int y, int z) {
+			this.xCoord = x;
+			this.yCoord = y;
+			this.zCorrd = z;
+		}
+
+		public ContainerClayWorkTable(InventoryPlayer player, BlockClayWorkTable.TileEntityCustom tileEntityClayWorkTable) {
+			this.tileClayWorkTable = tileEntityClayWorkTable;
+			this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 0, 17, 30));
+			this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 1, 80, 17));
+			this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 2, 143, 30) {
+				@Override
+				public boolean isItemValid(ItemStack stack) {
+					return false;
+				}
+			});
+			this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 2, 143, 30) {
+				@Override
+				public boolean isItemValid(ItemStack stack) {
+					return false;
+				}
+			});
+
+			for(int i = 0; i < 3; ++i) {
+				for(int j = 0; j < 9; ++j) {
+					this.addSlotToContainer(new Slot(player, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				}
+			}
+
+			for(int i = 0; i < 9; ++i) {
+				this.addSlotToContainer(new Slot(player, i, 8 + i * 18, 142));
+			}
+
+		}
+
+		public void addListener(IContainerListener craft) {
+			super.addListener(craft);
+			craft.sendWindowProperty(this, 0, this.tileClayWorkTable.furnaceCookTime);
+			craft.sendWindowProperty(this, 1, this.tileClayWorkTable.furnaceBurnTime);
+			craft.sendWindowProperty(this, 3, this.tileClayWorkTable.furnaceBurnTime);
+			craft.sendWindowProperty(this, 4, this.tileClayWorkTable.furnaceTimeToCook);
+		}
+
+		public void detectAndSendChanges() {
+			super.detectAndSendChanges();
+
+			for (IContainerListener craft : this.listeners) {
+				if (this.lastCookTime != this.tileClayWorkTable.furnaceCookTime) {
+					craft.sendWindowProperty(this, 0, this.tileClayWorkTable.furnaceCookTime);
+				}
+
+				if (this.lastBurnTime != this.tileClayWorkTable.furnaceBurnTime) {
+					craft.sendWindowProperty(this, 1, this.tileClayWorkTable.furnaceBurnTime);
+				}
+
+				if (this.lastBurnTime != this.tileClayWorkTable.furnaceBurnTime) {
+					craft.sendWindowProperty(this, 3, this.tileClayWorkTable.furnaceCookingMethod);
+				}
+
+				if (this.lastBurnTime != this.tileClayWorkTable.furnaceBurnTime) {
+					craft.sendWindowProperty(this, 4, this.tileClayWorkTable.furnaceTimeToCook);
+				}
+			}
+
+			this.lastBurnTime = this.tileClayWorkTable.furnaceBurnTime;
+			this.lastCookTime = this.tileClayWorkTable.furnaceCookTime;
+			this.lastCookingMethod = this.tileClayWorkTable.furnaceCookingMethod;
+			this.lastTimeToCook = this.tileClayWorkTable.furnaceTimeToCook;
+		}
+
+		@SideOnly(Side.CLIENT)
+		public void updateProgressBar(int par1, int par2) {
+			switch (par1) {
+				case 0:
+					this.tileClayWorkTable.furnaceCookTime = par2;
+					break;
+				case 1:
+					this.tileClayWorkTable.furnaceBurnTime = par2;
+					break;
+				case 2:
+					break;
+				case 3:
+					this.tileClayWorkTable.furnaceCookingMethod = par2;
+					break;
+				case 4:
+					this.tileClayWorkTable.furnaceTimeToCook = par2;
+					break;
+			}
+		}
+
+		public boolean canInteractWith(EntityPlayer player) {
+			return this.tileClayWorkTable.isUsableByPlayer(player);
+		}
+
+		public ItemStack transferStackInSlot(EntityPlayer player, int par2) {
+			ItemStack itemstack = null;
+			Slot slot = this.inventorySlots.get(par2);
+			if (slot != null && slot.getHasStack()) {
+				ItemStack itemstack1 = slot.getStack();
+				itemstack = itemstack1.copy();
+				if (par2 != 2 && par2 != 3) {
+					if (par2 >= slotNum) {
+						if (ClayWorkTableRecipes.smelting().hasKneadingResult(itemstack1)) {
+							if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+								return null;
+							}
+						} else if (BlockClayWorkTable.TileEntityCustom.isItemTool(itemstack1)) {
+							if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+								return null;
+							}
+						} else if (par2 >= slotNum && par2 < slotNum + 27) {
+							if (!this.mergeItemStack(itemstack1, slotNum + 27, slotNum + 36, false)) {
+								return null;
+							}
+						} else if (par2 >= slotNum + 27 && par2 < slotNum + 36 && !this.mergeItemStack(itemstack1, slotNum, slotNum + 27, false)) {
+							return null;
+						}
+					} else if (!this.mergeItemStack(itemstack1, slotNum, slotNum + 36, false)) {
+						return null;
+					}
+				} else {
+					if (!this.mergeItemStack(itemstack1, slotNum, slotNum + 36, true)) {
+						return null;
+					}
+
+					slot.onSlotChange(itemstack1, itemstack);
+				}
+
+				if (itemstack1.getCount() == 0) {
+					slot.putStack(ItemStack.EMPTY);
+				} else {
+					slot.onSlotChanged();
+				}
+
+				if (itemstack1.getCount() == itemstack.getCount()) {
+					return null;
+				}
+
+				slot.onTake(player, itemstack1);
+			}
+
+			return itemstack;
+		}
+
+		public boolean enchantItem(EntityPlayer player, int action) {
+			this.tileClayWorkTable.pushButton(action);
+			return true;
+		}
 	}
 }
