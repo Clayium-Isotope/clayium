@@ -20,14 +20,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockZK60AAlloyHull extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:zk60a_alloy_hull")
-	public static final Block block = null;
+	public static final Block block = new BlockCustom();
 	public BlockZK60AAlloyHull(ElementsClayiumMod instance) {
 		super(instance, 98);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> new BlockCustom().setRegistryName("zk60a_alloy_hull"));
+		elements.blocks.add(() -> block.setRegistryName("zk60a_alloy_hull"));
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 

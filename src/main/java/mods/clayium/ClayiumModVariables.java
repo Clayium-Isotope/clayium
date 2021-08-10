@@ -1,5 +1,6 @@
 package mods.clayium;
 
+import mods.clayium.core.ClayiumCore;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -34,9 +35,9 @@ public class ClayiumModVariables {
 		public void syncData(World world) {
 			this.markDirty();
 			if (world.isRemote) {
-				ClayiumMod.PACKET_HANDLER.sendToServer(new WorldSavedDataSyncMessage(0, this));
+				ClayiumCore.packetHandler.sendToServer(new WorldSavedDataSyncMessage(0, this));
 			} else {
-				ClayiumMod.PACKET_HANDLER.sendToAll(new WorldSavedDataSyncMessage(0, this));
+				ClayiumCore.packetHandler.sendToAll(new WorldSavedDataSyncMessage(0, this));
 			}
 		}
 
@@ -72,9 +73,9 @@ public class ClayiumModVariables {
 		public void syncData(World world) {
 			this.markDirty();
 			if (world.isRemote) {
-				ClayiumMod.PACKET_HANDLER.sendToServer(new WorldSavedDataSyncMessage(1, this));
+				ClayiumCore.packetHandler.sendToServer(new WorldSavedDataSyncMessage(1, this));
 			} else {
-				ClayiumMod.PACKET_HANDLER.sendToDimension(new WorldSavedDataSyncMessage(1, this), world.provider.getDimension());
+				ClayiumCore.packetHandler.sendToDimension(new WorldSavedDataSyncMessage(1, this), world.provider.getDimension());
 			}
 		}
 
@@ -103,9 +104,9 @@ public class ClayiumModVariables {
 			if (context.side == Side.SERVER) {
 				message.data.markDirty();
 				if (message.type == 0)
-					ClayiumMod.PACKET_HANDLER.sendToAll(message);
+					ClayiumCore.packetHandler.sendToAll(message);
 				else
-					ClayiumMod.PACKET_HANDLER.sendToDimension(message, world.provider.getDimension());
+					ClayiumCore.packetHandler.sendToDimension(message, world.provider.getDimension());
 			}
 			if (message.type == 0) {
 				world.getMapStorage().setData(MapVariables.DATA_NAME, message.data);

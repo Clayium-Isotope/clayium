@@ -24,14 +24,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockClayCraftingBoard extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:clay_crafting_board")
-	public static final Block block = null;
+	public final Block block = new BlockCustom();
 	public BlockClayCraftingBoard(ElementsClayiumMod instance) {
 		super(instance, 63);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> new BlockCustom().setRegistryName("clay_crafting_board"));
+		elements.blocks.add(BlockCustom::new);
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 
@@ -41,16 +41,15 @@ public class BlockClayCraftingBoard extends ElementsClayiumMod.ModElement {
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
 				new ModelResourceLocation("clayium:clay_crafting_board", "inventory"));
 	}
-	public static class BlockCustom extends Block {
+	public class BlockCustom extends Block {
 		public BlockCustom() {
 			super(Material.CLAY);
+			setRegistryName("clay_crafting_board");
 			setUnlocalizedName("clay_crafting_board");
 			setSoundType(SoundType.GROUND);
 			setHarvestLevel("shovel", 0);
 			setHardness(1F);
 			setResistance(4F);
-			setLightLevel(0F);
-			setLightOpacity(255);
 			setCreativeTab(TabClayium.tab);
 		}
 

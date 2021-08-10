@@ -20,14 +20,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockDenseClayOre extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:dense_clay_ore")
-	public static final Block block = null;
+	public static final Block block = new BlockCustom();
 	public BlockDenseClayOre(ElementsClayiumMod instance) {
 		super(instance, 25);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> new BlockCustom().setRegistryName("dense_clay_ore"));
+		elements.blocks.add(() -> block.setRegistryName("dense_clay_ore"));
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 

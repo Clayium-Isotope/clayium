@@ -18,14 +18,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class ItemDenseClayPlate extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:dense_clay_plate")
-	public static final Item block = null;
+	public static final Item block = new ItemCustom();
 	public ItemDenseClayPlate(ElementsClayiumMod instance) {
 		super(instance, 27);
 	}
 
 	@Override
 	public void initElements() {
-		elements.items.add(() -> new ItemCustom());
+		elements.items.add(() -> block);
 	}
 
 	@SideOnly(Side.CLIENT)

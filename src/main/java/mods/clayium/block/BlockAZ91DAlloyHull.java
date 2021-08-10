@@ -20,14 +20,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockAZ91DAlloyHull extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:az91d_alloy_hull")
-	public static final Block block = null;
+	public final Block block = new BlockCustom();
 	public BlockAZ91DAlloyHull(ElementsClayiumMod instance) {
 		super(instance, 97);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> new BlockCustom().setRegistryName("az91d_alloy_hull"));
+		elements.blocks.add(() -> block.setRegistryName("az91d_alloy_hull"));
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 
@@ -37,6 +37,7 @@ public class BlockAZ91DAlloyHull extends ElementsClayiumMod.ModElement {
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
 				new ModelResourceLocation("clayium:az91d_alloy_hull", "inventory"));
 	}
+
 	public static class BlockCustom extends Block {
 		public BlockCustom() {
 			super(Material.IRON);

@@ -20,14 +20,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockCompressedClay1 extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:compressed_clay_1")
-	public static final Block block = null;
+	public static final Block block = new BlockCustom();
 	public BlockCompressedClay1(ElementsClayiumMod instance) {
 		super(instance, 66);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> new BlockCustom().setRegistryName("compressed_clay_1"));
+		elements.blocks.add(() -> block.setRegistryName("compressed_clay_1"));
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 

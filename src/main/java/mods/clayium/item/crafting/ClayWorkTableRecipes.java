@@ -1,156 +1,196 @@
 package mods.clayium.item.crafting;
 
-import mods.clayium.item.*;
+import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.ProgressRatedVariable;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClayWorkTableRecipes {
+    public static class RecipeElement {
+        public RecipeElement(ItemStack material, int buttonID, ItemStack result, ItemStack result1, int cookTime, ItemStack requireTool) {
+            this.material = material;
+            this.buttonID = buttonID;
+            this.result = result;
+            this.result1 = result1;
+            this.cookTime = ProgressRatedVariable.divideByProgressionRateI(cookTime);
+            this.requireTool = requireTool;
+        }
+
+        public RecipeElement(ItemStack material, int buttonID, ItemStack result, ItemStack result1, int cookTime) {
+            this(material, buttonID, result, result1, cookTime, ItemStack.EMPTY);
+        }
+
+        public boolean canSmelting(ItemStack itemstack) {
+            return this.material.isItemEqual(itemstack)
+//                    && (this.material.getMetadata() == 32767 || UtilItemStack.areDamageEqual(this.material, itemstack))
+                    && this.material.getCount() <= itemstack.getCount();
+        }
+
+        public ItemStack getMaterial() {
+            return this.material;
+        }
+
+        public int getButtonID() {
+            return this.buttonID;
+        }
+
+        public ItemStack getResult() {
+            return this.result;
+        }
+
+        public ItemStack getResult1() {
+            return this.result1;
+        }
+
+        public int getCookTime() {
+            return this.cookTime;
+        }
+
+        public boolean isSuitableTool(ItemStack tool) {
+            return this.requireTool == ItemStack.EMPTY || this.requireTool == tool;
+        }
+
+        private final ItemStack material;
+        private final int buttonID;
+        private final ItemStack result;
+        private final ItemStack result1;
+        private final int cookTime;
+        private final ItemStack requireTool;
+
+        public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, -1, ItemStack.EMPTY, ItemStack.EMPTY, 0);
+    }
+
     private static final ClayWorkTableRecipes SMELTING_BASE = new ClayWorkTableRecipes();
-    private Map<ItemStack, ItemStack> smeltingList = new HashMap<>();
-    private Map<ItemStack, Float> experienceList = new HashMap<>();
-    public Map<Map<String, Object>, Map<String, Object>> kneadingList = new HashMap<>();
+    private final List<RecipeElement> recipes = new ArrayList<>();
 
     public static ClayWorkTableRecipes smelting() {
         return SMELTING_BASE;
     }
 
     private ClayWorkTableRecipes() {
-        this.addRecipe(new ItemStack(Items.CLAY_BALL), 1, new ItemStack(ItemClayStick.block), ItemStack.EMPTY, 4);
-        this.addRecipe(new ItemStack(ItemLargeClayBall.block), 2, new ItemStack(ItemClayDisc.block), ItemStack.EMPTY, 30);
-        this.addRecipe(new ItemStack(ItemLargeClayBall.block), 3, new ItemStack(ItemClayDisc.block), new ItemStack(Items.CLAY_BALL, 2), 4);
-        this.addRecipe(new ItemStack(ItemLargeClayBall.block), 1, new ItemStack(ItemClayCylinder.block), ItemStack.EMPTY, 4);
-        this.addRecipe(new ItemStack(ItemClayPlate.block), 2, new ItemStack(ItemClayBlade.block), ItemStack.EMPTY, 10);
-        this.addRecipe(new ItemStack(ItemClayPlate.block), 3, new ItemStack(ItemClayBlade.block), new ItemStack(Items.CLAY_BALL, 2), 1);
-        this.addRecipe(new ItemStack(ItemClayPlate.block), 6, new ItemStack(ItemClayStick.block, 4), ItemStack.EMPTY, 3);
-        this.addRecipe(new ItemStack(ItemClayDisc.block), 4, new ItemStack(ItemClayPlate.block), new ItemStack(Items.CLAY_BALL, 2), 4);
-        this.addRecipe(new ItemStack(ItemClayDisc.block), 5, new ItemStack(ItemClayRing.block), new ItemStack(ItemSmallClayDisc.block), 2);
-        this.addRecipe(new ItemStack(ItemSmallClayDisc.block), 5, new ItemStack(ItemSmallClayRing.block), new ItemStack(ItemShortClayStick.block), 1);
-        this.addRecipe(new ItemStack(ItemClayCylinder.block), 1, new ItemStack(ItemClayNeedle.block), ItemStack.EMPTY, 3);
-        this.addRecipe(new ItemStack(ItemClayCylinder.block), 6, new ItemStack(ItemSmallClayDisc.block, 8), ItemStack.EMPTY, 7);
-        this.addRecipe(new ItemStack(ItemClayDisc.block), 2, new ItemStack(ItemRawClaySlicer.block), ItemStack.EMPTY, 15);
-        this.addRecipe(new ItemStack(ItemClayDisc.block), 3, new ItemStack(ItemRawClaySlicer.block), ItemStack.EMPTY, 2);
-        this.addRecipe(new ItemStack(ItemClayPlate.block, 6), 3, new ItemStack(ItemLargeClayPlate.block), ItemStack.EMPTY, 10);
-        this.addRecipe(new ItemStack(ItemClayPlate.block, 3), 1, new ItemStack(ItemLargeClayBall.block), ItemStack.EMPTY, 40);
-    }
-
-    public void addRecipe(Item item, ItemStack itemstack, float experience) {
-        this.addLists(item, itemstack, experience);
-    }
-
-    public void addLists(Item item, ItemStack itemstack, float experience) {
-        this.putLists(new ItemStack(item), itemstack, experience);
-    }
-
-    public void putLists(ItemStack itemstack, ItemStack itemstack2, float experience) {
-        this.smeltingList.put(itemstack, itemstack2);
-        this.experienceList.put(itemstack2, experience);
+        this.addRecipe(new ItemStack(Items.CLAY_BALL), 1, new ItemStack(ClayiumItems.clayStick), ItemStack.EMPTY, 4);
+        this.addRecipe(new ItemStack(ClayiumItems.largeClayBall), 2, new ItemStack(ClayiumItems.clayDisc), ItemStack.EMPTY, 30);
+        this.addRecipe(new ItemStack(ClayiumItems.largeClayBall), 3, new ItemStack(ClayiumItems.clayDisc), new ItemStack(Items.CLAY_BALL, 2), 4, new ItemStack(ClayiumItems.clayRollingPin));
+        this.addRecipe(new ItemStack(ClayiumItems.largeClayBall), 1, new ItemStack(ClayiumItems.clayCylinder), ItemStack.EMPTY, 4);
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate), 2, new ItemStack(ClayiumItems.clayBlade), ItemStack.EMPTY, 10);
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate), 3, new ItemStack(ClayiumItems.clayBlade), new ItemStack(Items.CLAY_BALL, 2), 1, new ItemStack(ClayiumItems.clayRollingPin));
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate), 6, new ItemStack(ClayiumItems.clayStick, 4), ItemStack.EMPTY, 3, new ItemStack(ClayiumItems.claySlicer));
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate), 6, new ItemStack(ClayiumItems.clayStick, 4), ItemStack.EMPTY, 3, new ItemStack(ClayiumItems.claySpatula));
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 4, new ItemStack(ClayiumItems.clayPlate), new ItemStack(Items.CLAY_BALL, 2), 4, new ItemStack(ClayiumItems.claySlicer));
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 4, new ItemStack(ClayiumItems.clayPlate), new ItemStack(Items.CLAY_BALL, 2), 4, new ItemStack(ClayiumItems.claySpatula));
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 5, new ItemStack(ClayiumItems.clayRing), new ItemStack(ClayiumItems.smallClayDisc), 2, new ItemStack(ClayiumItems.claySpatula));
+        this.addRecipe(new ItemStack(ClayiumItems.smallClayDisc), 5, new ItemStack(ClayiumItems.smallClayRing), new ItemStack(ClayiumItems.shortClayStick), 1, new ItemStack(ClayiumItems.claySpatula));
+        this.addRecipe(new ItemStack(ClayiumItems.clayCylinder), 1, new ItemStack(ClayiumItems.clayNeedle), ItemStack.EMPTY, 3);
+        this.addRecipe(new ItemStack(ClayiumItems.clayCylinder), 6, new ItemStack(ClayiumItems.smallClayDisc, 8), ItemStack.EMPTY, 7, new ItemStack(ClayiumItems.claySlicer));
+        this.addRecipe(new ItemStack(ClayiumItems.clayCylinder), 6, new ItemStack(ClayiumItems.smallClayDisc, 8), ItemStack.EMPTY, 7, new ItemStack(ClayiumItems.claySpatula));
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 2, new ItemStack(ClayiumItems.rawClaySlicer), ItemStack.EMPTY, 15);
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 3, new ItemStack(ClayiumItems.rawClaySlicer), ItemStack.EMPTY, 2, new ItemStack(ClayiumItems.clayRollingPin));
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate, 6), 3, new ItemStack(ClayiumItems.largeClayPlate), ItemStack.EMPTY, 10, new ItemStack(ClayiumItems.clayRollingPin));
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate, 3), 1, new ItemStack(ClayiumItems.largeClayBall), ItemStack.EMPTY, 40);
     }
 
     public ItemStack getSmeltingResult(ItemStack itemstack) {
-        for (Entry<ItemStack, ItemStack> itemStackItemStackEntry : this.smeltingList.entrySet()) {
-            if (this.canBeSmelted(itemstack, itemStackItemStackEntry.getKey())) {
-                return itemStackItemStackEntry.getValue();
+        for (RecipeElement recipe : this.recipes) {
+            if (recipe.canSmelting(itemstack)) {
+                return recipe.getResult();
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
+    @Deprecated /* RecipeElement#canSmelting */
     private boolean canBeSmelted(ItemStack itemstack, ItemStack itemstack2) {
         return UtilItemStack.areItemEqual(itemstack2, itemstack) && (itemstack2.getMetadata() == 32767 || UtilItemStack.areDamageEqual(itemstack2, itemstack)) && itemstack2.getCount() <= itemstack.getCount();
     }
 
-    public float giveExperience(ItemStack itemstack) {
-        for (Entry<ItemStack, Float> itemStackFloatEntry : this.experienceList.entrySet()) {
-            if (this.canBeSmelted(itemstack, itemStackFloatEntry.getKey())) {
-                if (itemstack.getItem().getSmeltingExperience(itemstack) != -1.0F) {
-                    return itemstack.getItem().getSmeltingExperience(itemstack);
-                }
-
-                return itemStackFloatEntry.getValue();
-            }
-        }
-
-        return 0.0F;
-    }
-
-    public void addRecipe(Item item, int buttonId, ItemStack itemstack, ItemStack itemstack2, int cookTime) {
-        this.addRecipe(new ItemStack(item), buttonId, itemstack, itemstack2, cookTime);
-    }
-
     public void addRecipe(ItemStack itemstack, int buttonId, ItemStack itemstack2, ItemStack itemstack3, int cookTime) {
-        Map<String, Object> keyMap = new HashMap<>();
-        Map<String, Object> valueMap = new HashMap<>();
-        keyMap.put("Material", itemstack);
-        keyMap.put("ButtonId", buttonId);
-        valueMap.put("Result", itemstack2);
-        valueMap.put("Result2", itemstack3);
-        valueMap.put("CookTime", ProgressRatedVariable.divideByProgressionRateI(cookTime));
-        this.kneadingList.put(keyMap, valueMap);
+        addRecipe(itemstack, buttonId, itemstack2, itemstack3, cookTime, ItemStack.EMPTY);
     }
 
-    public Map<String, Object> getKneadingResultMap(ItemStack itemstack, int buttonId) {
-        Entry<Map<String, Object>, Map<String, Object>> entry_ = null;
+    public void addRecipe(ItemStack itemstack, int buttonId, ItemStack itemstack2, ItemStack itemstack3, int cookTime, ItemStack requireTool) {
+        this.recipes.add(new RecipeElement(itemstack, buttonId, itemstack2, itemstack3, cookTime, requireTool));
+    }
+
+    public RecipeElement getKneadingResultMap(ItemStack itemstack, int buttonId, ItemStack tool) {
+        RecipeElement entry_ = RecipeElement.FLAT;
         int maxStackSize = 0;
 
-        for (Entry<Map<String, Object>, Map<String, Object>> entry : this.kneadingList.entrySet()) {
-            if (this.canBeSmelted(itemstack, (ItemStack) entry.getKey().get("Material"))
-                    && (Integer) entry.getKey().get("ButtonId") == buttonId
-                    && ((ItemStack) entry.getKey().get("Material")).getCount() > maxStackSize) {
-                entry_ = entry;
-                maxStackSize = ((ItemStack) entry.getKey().get("Material")).getCount();
+        for (RecipeElement recipe : this.recipes) {
+            if (recipe.canSmelting(itemstack)
+                    && recipe.getButtonID() == buttonId
+                    && recipe.getMaterial().getCount() > maxStackSize
+                    && maxStackSize <= itemstack.getCount()
+                    && recipe.isSuitableTool(tool)) {
+                entry_ = recipe;
+                maxStackSize = recipe.getMaterial().getCount();
             }
         }
 
-        if (entry_ == null) {
-            return null;
-        }
-        return entry_.getValue();
+        return entry_;
+    }
+
+    public RecipeElement getKneadingResultMap(ItemStack itemstack, int buttonId) {
+        return getKneadingResultMap(itemstack, buttonId, ItemStack.EMPTY);
     }
 
     public int getConsumedStackSize(ItemStack itemstack, int buttonId) {
-        Entry<Map<String, Object>, Map<String, Object>> entry_ = null;
-        int maxStackSize = 0;
-
-        for (Entry<Map<String, Object>, Map<String, Object>> mapMapEntry : this.kneadingList.entrySet()) {
-            if (this.canBeSmelted(itemstack, (ItemStack) mapMapEntry.getKey().get("Material"))
-                    && (Integer) mapMapEntry.getKey().get("ButtonId") == buttonId
-                    && ((ItemStack) mapMapEntry.getKey().get("Material")).getCount() > maxStackSize) {
-                entry_ = mapMapEntry;
-                maxStackSize = ((ItemStack) mapMapEntry.getKey().get("Material")).getCount();
-            }
-        }
-
-        if (entry_ == null) {
-            return 0;
-        }
-        return maxStackSize;
+        return getConsumedStackSize(itemstack, buttonId, ItemStack.EMPTY);
     }
 
-    public ItemStack getKneadingResult(ItemStack itemstack, int buttonId) {
-        return this.getKneadingResultMap(itemstack, buttonId) == null ? null : (ItemStack)this.getKneadingResultMap(itemstack, buttonId).get("Result");
+    public int getConsumedStackSize(ItemStack itemstack, int buttonId, ItemStack tool) {
+        return this.getConsumedStackSize(this.getKneadingResultMap(itemstack, buttonId, tool));
     }
 
-    public ItemStack getKneadingResult2(ItemStack itemstack, int buttonId) {
-        return this.getKneadingResultMap(itemstack, buttonId) == null ? null : (ItemStack)this.getKneadingResultMap(itemstack, buttonId).get("Result2");
+    public int getConsumedStackSize(RecipeElement recipe) {
+        return recipe.getMaterial().getCount();
     }
 
-    public int getKneadingTime(ItemStack itemstack, int buttonId) {
-        return this.getKneadingResultMap(itemstack, buttonId) == null ? 0 : (Integer)this.getKneadingResultMap(itemstack, buttonId).get("CookTime");
+    public ItemStack getKneadingResult(ItemStack material, int buttonId) {
+        return this.getKneadingResult(material, buttonId, ItemStack.EMPTY);
     }
 
-    public boolean hasKneadingResult(ItemStack itemstack) {
+    public ItemStack getKneadingResult(ItemStack material, int buttonId, ItemStack tool) {
+        return this.getKneadingResult(this.getKneadingResultMap(material, buttonId, tool));
+    }
+
+    public ItemStack getKneadingResult(RecipeElement recipe) {
+        return recipe.getResult();
+    }
+
+    public ItemStack getKneadingResult1(ItemStack material, int buttonId) {
+        return this.getKneadingResult1(material, buttonId, ItemStack.EMPTY);
+    }
+
+    public ItemStack getKneadingResult1(ItemStack material, int buttonId, ItemStack tool) {
+        return this.getKneadingResult1(this.getKneadingResultMap(material, buttonId, tool));
+    }
+
+    public ItemStack getKneadingResult1(RecipeElement recipe) {
+        return recipe.getResult();
+    }
+
+    public int getKneadingTime(ItemStack material, int buttonId) {
+        return this.getKneadingTime(material, buttonId, ItemStack.EMPTY);
+    }
+
+    public int getKneadingTime(ItemStack material, int buttonId, ItemStack tool) {
+        return this.getKneadingTime(this.getKneadingResultMap(material, buttonId, tool));
+    }
+
+    public int getKneadingTime(RecipeElement recipe) {
+        return recipe.getCookTime();
+    }
+
+    public boolean hasKneadingResult(ItemStack material) {
         boolean flag = false;
 
-        for (Entry<Map<String, Object>, Map<String, Object>> mapMapEntry : this.kneadingList.entrySet()) {
-            if (this.canBeSmelted(itemstack, (ItemStack) mapMapEntry.getKey().get("Material"))) {
+        for (RecipeElement recipe : this.recipes) {
+            if (recipe.canSmelting(material)) {
                 flag = true;
             }
         }

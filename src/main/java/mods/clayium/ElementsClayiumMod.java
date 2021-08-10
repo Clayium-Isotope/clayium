@@ -6,46 +6,38 @@
  */
 package mods.clayium;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.common.IFuelHandler;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-
-import net.minecraft.world.storage.WorldSavedData;
-import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.World;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.potion.Potion;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.EntityPlayer;
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.IFuelHandler;
+import net.minecraftforge.fml.common.IWorldGenerator;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.relauncher.Side;
 
-import mods.clayium.gui.GuiClayWorkTableGUI;
-
-import java.util.function.Supplier;
-import java.util.Random;
-import java.util.Map;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Collections;
-import java.util.ArrayList;
-
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class ElementsClayiumMod implements IFuelHandler, IWorldGenerator {
 	public final List<ModElement> elements = new ArrayList<>();
@@ -100,9 +92,9 @@ public class ElementsClayiumMod implements IFuelHandler, IWorldGenerator {
 			WorldSavedData mapdata = ClayiumModVariables.MapVariables.get(event.player.world);
 			WorldSavedData worlddata = ClayiumModVariables.WorldVariables.get(event.player.world);
 			if (mapdata != null)
-				ClayiumMod.PACKET_HANDLER.sendTo(new ClayiumModVariables.WorldSavedDataSyncMessage(0, mapdata), (EntityPlayerMP) event.player);
+				ClayiumCore.packetHandler.sendTo(new ClayiumModVariables.WorldSavedDataSyncMessage(0, mapdata), (EntityPlayerMP) event.player);
 			if (worlddata != null)
-				ClayiumMod.PACKET_HANDLER.sendTo(new ClayiumModVariables.WorldSavedDataSyncMessage(1, worlddata), (EntityPlayerMP) event.player);
+				ClayiumCore.packetHandler.sendTo(new ClayiumModVariables.WorldSavedDataSyncMessage(1, worlddata), (EntityPlayerMP) event.player);
 		}
 	}
 
@@ -111,28 +103,24 @@ public class ElementsClayiumMod implements IFuelHandler, IWorldGenerator {
 		if (!event.player.world.isRemote) {
 			WorldSavedData worlddata = ClayiumModVariables.WorldVariables.get(event.player.world);
 			if (worlddata != null)
-				ClayiumMod.PACKET_HANDLER.sendTo(new ClayiumModVariables.WorldSavedDataSyncMessage(1, worlddata), (EntityPlayerMP) event.player);
+				ClayiumCore.packetHandler.sendTo(new ClayiumModVariables.WorldSavedDataSyncMessage(1, worlddata), (EntityPlayerMP) event.player);
 		}
 	}
 	private int messageID = 0;
 	public <T extends IMessage, V extends IMessage> void addNetworkMessage(Class<? extends IMessageHandler<T, V>> handler, Class<T> messageClass,
 			Side... sides) {
 		for (Side side : sides)
-			ClayiumMod.PACKET_HANDLER.registerMessage(handler, messageClass, messageID, side);
+			ClayiumCore.packetHandler.registerMessage(handler, messageClass, messageID, side);
 		messageID++;
 	}
 	public static class GuiHandler implements IGuiHandler {
 		@Override
 		public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-			if (id == GuiClayWorkTableGUI.GUIID)
-				return new GuiClayWorkTableGUI.GuiContainerMod(world, x, y, z, player);
 			return null;
 		}
 
 		@Override
 		public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-			if (id == GuiClayWorkTableGUI.GUIID)
-				return new GuiClayWorkTableGUI.GuiWindow(world, x, y, z, player);
 			return null;
 		}
 	}

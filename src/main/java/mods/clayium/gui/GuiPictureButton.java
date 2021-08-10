@@ -9,8 +9,8 @@ public class GuiPictureButton extends GuiButtonExt {
 
     public GuiPictureButton(int id, int xPos, int yPos, int width, int height, String displayString, ResourceLocation _buttonTextures, int _rXPos, int _rYPos) {
         super(id, xPos, yPos, width, height, displayString);
-        for(int i = 0; i < 3; ++i) {
-            this.textures[i] = new RectangleTexture(_buttonTextures, xPos, yPos, _rXPos, _rYPos + height * i);
+        for(int i = 0; i < 3; i++) {
+            this.textures[i] = new RectangleTexture(_buttonTextures, width, height, _rXPos, _rYPos + height * i);
         }
     }
 
@@ -24,8 +24,7 @@ public class GuiPictureButton extends GuiButtonExt {
             return;
         }
 
-        this.hovered = mouseX >= this.x && mouseX < this.x + this.width
-                && mouseY >= this.y && mouseY < this.y + this.height;
+        this.hovered = mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height;
         int state = this.getHoverState(this.hovered);
         if (state >= 0 && state < this.textures.length && this.textures[state] != null) {
             this.textures[state].draw(this, this.x, this.y);

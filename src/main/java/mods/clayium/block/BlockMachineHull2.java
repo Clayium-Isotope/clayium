@@ -20,14 +20,14 @@ import mods.clayium.ElementsClayiumMod;
 @ElementsClayiumMod.ModElement.Tag
 public class BlockMachineHull2 extends ElementsClayiumMod.ModElement {
 	@GameRegistry.ObjectHolder("clayium:machine_hull_2")
-	public static final Block block = null;
+	public static final Block block = new BlockCustom();
 	public BlockMachineHull2(ElementsClayiumMod instance) {
 		super(instance, 86);
 	}
 
 	@Override
 	public void initElements() {
-		elements.blocks.add(() -> new BlockCustom().setRegistryName("machine_hull_2"));
+		elements.blocks.add(() -> block.setRegistryName("machine_hull_2"));
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 

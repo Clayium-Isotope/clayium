@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
-//import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL11;
 
 public class RectangleTexture implements ITexture {
     private final int sizeX;
@@ -31,7 +31,7 @@ public class RectangleTexture implements ITexture {
     }
 
     public void draw(Gui gui, int posX, int posY) {
-//        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (this.tm == null) {
             this.tm = Minecraft.getMinecraft().getTextureManager();
         }
