@@ -1,5 +1,7 @@
 # [作業中] Clayium for MC 1.12.2
 
+[EN]/JP
+
 ## 概要
 
 GitHubの数あるリポジトリの中から、このリポジトリを見つけて頂き、感謝いたします。  
@@ -21,3 +23,4 @@ GitHubの数あるリポジトリの中から、このリポジトリを見つ�
 英語とか、コミュニケーションとか、プログラミングとか、至らぬ点もままあると思いますが、ご了承ください。
 
 [Clayium]: https://www.curseforge.com/minecraft/mc-mods/clayium
+[EN]: https://github.com/t5ugu/clayium/blob/master/README.md
