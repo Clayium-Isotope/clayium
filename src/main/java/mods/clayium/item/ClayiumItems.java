@@ -52,6 +52,12 @@ public class ClayiumItems {
     public static final Item rawClaySpatula = new RawClaySpatula();
     public static final Item claySlicer = new ClaySlicer();
     public static final Item rawClaySlicer = new RawClaySlicer();
+
+    public static final Item[] clayTools = new Item[]{
+            ClayiumItems.clayRollingPin,
+            ClayiumItems.claySlicer,
+            ClayiumItems.claySpatula
+    };
     /* ...Tools */
 
     /* ...Elements */

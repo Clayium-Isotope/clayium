@@ -31,22 +31,22 @@ public class GuiPictureButton extends GuiButtonExt {
         }
 
         this.mouseDragged(mc, mouseX, mouseY);
-        int color = 14737632;
-        if (this.packedFGColour != 0) {
-            color = this.packedFGColour;
-        } else if (!this.enabled) {
-            color = 10526880;
-        } else if (this.hovered) {
-            color = 16777120;
-        }
-
-        String buttonText = this.displayString;
-        int strWidth = mc.fontRenderer.getStringWidth(buttonText);
-        int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
-        if (strWidth > this.width - 6 && strWidth > ellipsisWidth) {
-            buttonText = mc.fontRenderer.trimStringToWidth(buttonText, this.width - 6 - ellipsisWidth).trim() + "...";
-        }
-
-        this.drawCenteredString(mc.fontRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+//        int color = 14737632;
+//        if (this.packedFGColour != 0) {
+//            color = this.packedFGColour;
+//        } else if (!this.enabled) {
+//            color = 10526880;
+//        } else if (this.hovered) {
+//            color = 16777120;
+//        }
+//
+//        String buttonText = this.displayString;
+//        int strWidth = mc.fontRenderer.getStringWidth(buttonText);
+//        int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
+//        if (strWidth > this.width - 6 && strWidth > ellipsisWidth) {
+//            buttonText = mc.fontRenderer.trimStringToWidth(buttonText, this.width - 6 - ellipsisWidth).trim() + "...";
+//        }
+//
+//        this.drawCenteredString(mc.fontRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
     }
 }

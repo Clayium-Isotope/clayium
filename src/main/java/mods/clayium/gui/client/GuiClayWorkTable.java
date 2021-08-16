@@ -4,7 +4,6 @@ import mods.clayium.block.tile.TileClayWorkTable;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.container.ContainerClayWorkTable;
-import mods.clayium.network.GuiButtonPacket;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,14 +78,12 @@ public class GuiClayWorkTable extends GuiContainer {
         this.mc.renderEngine.bindTexture(TEXTURE);
         drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, this.xSize, this.ySize);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-//        if (this.tileClayWorkTable.isBurning()) {
-//            this.drawTexturedModalRect(this.guiLeft + 56, this.guiTop + 36 + 12 - 6, 176, 12 - 6, 14, 6 + 2);
-//        }
 
         this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 29, 176, 0, this.tileClayWorkTable.getCookProgressScaled(80), 16);
 
+        GuiButton button;
         for (int i = 0; i < this.buttonList.size(); i++) {
-            GuiButton button = this.buttonList.get(i);
+            button = this.buttonList.get(i);
             button.enabled = this.tileClayWorkTable.canPushButton(i) != 0;
             this.buttonList.set(i, button);
         }
@@ -115,7 +112,7 @@ public class GuiClayWorkTable extends GuiContainer {
     public void initGui() {
         super.initGui();
 //        Keyboard.enableRepeatEvents(true);
-        this.buttonList.clear();
+//        this.buttonList.clear();
         this.buttonList.add(new GuiPictureButton(0, this.guiLeft + 40, this.guiTop + 52, 16, 16, TEXTURE, 176, 32));
         this.buttonList.add(new GuiPictureButton(1, this.guiLeft + 56, this.guiTop + 52, 16, 16, TEXTURE, 192, 32));
         this.buttonList.add(new GuiPictureButton(2, this.guiLeft + 72, this.guiTop + 52, 16, 16, TEXTURE, 208, 32));
@@ -127,8 +124,9 @@ public class GuiClayWorkTable extends GuiContainer {
     @Override
     protected void actionPerformed(GuiButton button) {
         if (button.enabled) {
-            ClayiumCore.packetHandler.sendToServer(new GuiButtonPacket(this.tileClayWorkTable.getPos().getX(), this.tileClayWorkTable.getPos().getY(), this.tileClayWorkTable.getPos().getZ(), button.id));
-            this.mc.playerController.sendEnchantPacket(this.inventorySlots.windowId, button.id);
+//            ClayiumCore.packetHandler.sendToServer(new GuiButtonPacket(this.tileClayWorkTable.getPos(), button.id));
+//            this.mc.playerController.sendEnchantPacket(this.inventorySlots.windowId, button.id);
+            this.tileClayWorkTable.pushButton(button.id);
         }
     }
 }

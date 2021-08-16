@@ -1,6 +1,7 @@
 package mods.clayium.network;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class GuiButtonPacket implements IMessage {
@@ -16,6 +17,10 @@ public class GuiButtonPacket implements IMessage {
         this.coordY = _coordY;
         this.coordZ = _coordZ;
         this.buttonId = _buttonId;
+    }
+
+    public GuiButtonPacket(BlockPos pos, int buttonId) {
+        this(pos.getX(), pos.getY(), pos.getZ(), buttonId);
     }
 
     public void fromBytes(ByteBuf buffer) {

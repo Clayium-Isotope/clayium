@@ -50,7 +50,7 @@ public class ClayiumCore {
     @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy", serverSide = "mods.clayium.core.ClayiumServerProxy")
     public static IClayiumProxy proxy;
 
-    public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel("clayium:a");
+    public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel("clayium:channel");
 
     public static Logger logger = LogManager.getLogger("clayium");
 

@@ -1,12 +1,14 @@
 package mods.clayium.gui.container;
 
 import mods.clayium.block.tile.TileClayWorkTable;
+import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +22,7 @@ public class ContainerClayWorkTable extends Container {
     private int lastItemBurnTime;
     private int lastCookingMethod;
     private int lastTimeToCook;
-    private static int slotNum = 4;
+    private static final int slotNum = 4;
 
     public ContainerClayWorkTable(World world, BlockPos pos, EntityPlayer player) {
         this(player.inventory, (TileClayWorkTable) world.getTileEntity(pos));
@@ -29,7 +31,15 @@ public class ContainerClayWorkTable extends Container {
     public ContainerClayWorkTable(InventoryPlayer player, TileClayWorkTable tileEntityClayWorkTable) {
         this.tileClayWorkTable = tileEntityClayWorkTable;
         this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 0, 17, 30));
-        this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 1, 80, 17));
+        this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 1, 80, 17) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                for (Item item : ClayiumItems.clayTools) {
+                    if (stack.getItem() == item) return true;
+                }
+                return false;
+            }
+        });
         this.addSlotToContainer(new Slot(tileEntityClayWorkTable, 2, 143, 30) {
             @Override
             public boolean isItemValid(ItemStack stack) {
@@ -58,7 +68,7 @@ public class ContainerClayWorkTable extends Container {
         super.addListener(craft);
         craft.sendWindowProperty(this, 0, this.tileClayWorkTable.kneadProgress);
         craft.sendWindowProperty(this, 1, this.tileClayWorkTable.furnaceBurnTime);
-        craft.sendWindowProperty(this, 3, this.tileClayWorkTable.furnaceBurnTime);
+        craft.sendWindowProperty(this, 3, this.tileClayWorkTable.cookingMethod);
         craft.sendWindowProperty(this, 4, this.tileClayWorkTable.timeToKnead);
     }
 
@@ -129,11 +139,11 @@ public class ContainerClayWorkTable extends Container {
                         if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
                             return null;
                         }
-                    } else if (par2 >= slotNum && par2 < slotNum + 27) {
+                    } else if (par2 < slotNum + 27) {
                         if (!this.mergeItemStack(itemstack1, slotNum + 27, slotNum + 36, false)) {
                             return null;
                         }
-                    } else if (par2 >= slotNum + 27 && par2 < slotNum + 36 && !this.mergeItemStack(itemstack1, slotNum, slotNum + 27, false)) {
+                    } else if (par2 < slotNum + 36 && !this.mergeItemStack(itemstack1, slotNum, slotNum + 27, false)) {
                         return null;
                     }
                 } else if (!this.mergeItemStack(itemstack1, slotNum, slotNum + 36, false)) {
