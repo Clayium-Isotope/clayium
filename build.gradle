@@ -50,12 +50,12 @@ minecraft {
 }
 
 sourceSets {
-    main { output.resourcesDir = output.classesDir }
+    main(({ output.resourcesDir = output.classesDir } as String))
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
 }
 
-apply from: 'mcreator.gradle'
+// apply from: 'mcreator.gradle'
 

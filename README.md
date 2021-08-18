@@ -24,4 +24,4 @@ I'm still learning English, communicating, and programming.
 I'm sorry for not being good at them.
 
 [Clayium]: https://www.curseforge.com/minecraft/mc-mods/clayium
-[JP]: https://github.com/t5ugu/clayium/blob/master/README_JP.md
+[JP]: README_JP.md
