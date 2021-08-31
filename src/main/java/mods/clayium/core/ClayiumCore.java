@@ -1,6 +1,7 @@
 package mods.clayium.core;
 
 import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.tile.TileClayWorkTable;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import net.minecraft.block.Block;
@@ -14,7 +15,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -39,7 +39,7 @@ public class ClayiumCore {
     public static final String Version = "0.0.0";
 
     @Instance(ClayiumCore.ModId)
-    public static ClayiumCore instance;
+    private static ClayiumCore instance;
 
     public static ClayiumCore instance() {
         if (instance == null)
@@ -47,7 +47,7 @@ public class ClayiumCore {
         return instance;
     }
 
-    @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy", serverSide = "mods.clayium.core.ClayiumServerProxy")
+    @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy", serverSide = "mods.clayium.core.ClayiumCommonProxy")
     public static IClayiumProxy proxy;
 
     public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel("clayium:channel");
@@ -63,10 +63,11 @@ public class ClayiumCore {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(this);
+
         ClayiumBlocks.initBlocks();
         ClayiumItems.initItems();
 
-        MinecraftForge.EVENT_BUS.register(this);
         proxy.preInit(event);
     }
 
@@ -79,8 +80,7 @@ public class ClayiumCore {
         GameRegistry.addSmelting(ClayiumItems.rawClaySlicer, new ItemStack(ClayiumItems.claySlicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawClaySpatula, new ItemStack(ClayiumItems.claySpatula), 1F);
 
-        proxy.registerTileEntities();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         ForgeChunkManager.setForcedChunkLoadingCallback(ClayiumCore.instance(), null);
     }
 
@@ -97,6 +97,9 @@ public class ClayiumCore {
     @SubscribeEvent
     public void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(ClayiumBlocks.getBlocks().toArray(new Block[0]));
+
+        /* Register Tile Entities */
+        GameRegistry.registerTileEntity(TileClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
     }
 
     @SubscribeEvent
@@ -117,9 +120,5 @@ public class ClayiumCore {
             ModelLoader.setCustomModelResourceLocation(item, 0,
                     new ModelResourceLocation(item.getRegistryName(), "inventory"));
         }
-    }
-
-    static {
-        FluidRegistry.enableUniversalBucket();
     }
 }

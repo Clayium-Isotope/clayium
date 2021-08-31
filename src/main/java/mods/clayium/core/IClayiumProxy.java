@@ -13,6 +13,4 @@ public interface IClayiumProxy {
 	void postInit(FMLPostInitializationEvent event);
 
 	void serverLoad(FMLServerStartingEvent event);
-
-	void registerTileEntities();
 }

@@ -1,6 +1,7 @@
 package mods.clayium.item;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -63,4 +64,11 @@ public class ClayiumItems {
     /* ...Elements */
 
     private static final List<Item> items = new ArrayList<>();
+
+    public static boolean isItemTool(ItemStack itemstack) {
+        for (Item item : ClayiumItems.clayTools) {
+            if (itemstack.getItem() == item) return true;
+        }
+        return false;
+    }
 }

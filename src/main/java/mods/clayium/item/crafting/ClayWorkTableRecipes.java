@@ -1,32 +1,33 @@
 package mods.clayium.item.crafting;
 
+import mods.clayium.block.tile.TileClayWorkTable.ClayWorkTableSlots;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.ProgressRatedVariable;
-import mods.clayium.util.UtilItemStack;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClayWorkTableRecipes {
     public static class RecipeElement {
-        public RecipeElement(ItemStack material, int buttonID, ItemStack product, ItemStack change, int cookTime, ItemStack requireTool) {
+        public RecipeElement(ItemStack material, int button, ItemStack product, ItemStack change, int kneadTime, ItemStack requireTool) {
             this.material = material;
-            this.buttonID = buttonID;
+            this.button = button;
             this.product = product;
             this.change = change;
-            this.cookTime = ProgressRatedVariable.divideByProgressionRateI(cookTime);
+            this.kneadTime = ProgressRatedVariable.divideByProgressionRateI(kneadTime);
             this.requireTool = requireTool;
         }
 
-        public RecipeElement(ItemStack material, int buttonID, ItemStack product, ItemStack change, int cookTime) {
-            this(material, buttonID, product, change, cookTime, ItemStack.EMPTY);
+        public RecipeElement(ItemStack material, int button, ItemStack product, ItemStack change, int kneadTime) {
+            this(material, button, product, change, kneadTime, ItemStack.EMPTY);
         }
 
-        public boolean canSmelting(ItemStack itemstack) {
+        public boolean canKneading(ItemStack itemstack) {
             return this.material.isItemEqual(itemstack)
-//                    && (this.material.getMetadata() == 32767 || UtilItemStack.areDamageEqual(this.material, itemstack))
+                    //                    && (this.material.getMetadata() == 32767 || UtilItemStack.areDamageEqual(this.material, itemstack))
                     && this.material.getCount() <= itemstack.getCount();
         }
 
@@ -34,8 +35,8 @@ public class ClayWorkTableRecipes {
             return this.material;
         }
 
-        public int getButtonID() {
-            return this.buttonID;
+        public int getButton() {
+            return this.button;
         }
 
         public ItemStack getProduct() {
@@ -46,8 +47,8 @@ public class ClayWorkTableRecipes {
             return this.change;
         }
 
-        public int getCookTime() {
-            return this.cookTime;
+        public int getKneadTime() {
+            return this.kneadTime;
         }
 
         public ItemStack getRequireTool() {
@@ -59,20 +60,20 @@ public class ClayWorkTableRecipes {
         }
 
         private final ItemStack material;
-        private final int buttonID;
+        private final int button;
         private final ItemStack product;
         private final ItemStack change;
-        private final int cookTime;
+        private final int kneadTime;
         private final ItemStack requireTool;
 
         public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, -1, ItemStack.EMPTY, ItemStack.EMPTY, 0);
     }
 
-    private static final ClayWorkTableRecipes SMELTING_BASE = new ClayWorkTableRecipes();
+    private static final ClayWorkTableRecipes KNEADING_BASE = new ClayWorkTableRecipes();
     private final List<RecipeElement> recipes = new ArrayList<>();
 
-    public static ClayWorkTableRecipes smelting() {
-        return SMELTING_BASE;
+    public static ClayWorkTableRecipes instance() {
+        return KNEADING_BASE;
     }
 
     private ClayWorkTableRecipes() {
@@ -91,45 +92,30 @@ public class ClayWorkTableRecipes {
         this.addRecipe(new ItemStack(ClayiumItems.clayCylinder), 0, new ItemStack(ClayiumItems.clayNeedle), ItemStack.EMPTY, 3);
         this.addRecipe(new ItemStack(ClayiumItems.clayCylinder), 5, new ItemStack(ClayiumItems.smallClayDisc, 8), ItemStack.EMPTY, 7, new ItemStack(ClayiumItems.claySlicer));
         this.addRecipe(new ItemStack(ClayiumItems.clayCylinder), 5, new ItemStack(ClayiumItems.smallClayDisc, 8), ItemStack.EMPTY, 7, new ItemStack(ClayiumItems.claySpatula));
-        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 1, new ItemStack(ClayiumItems.rawClaySlicer), ItemStack.EMPTY, 15);
-        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 2, new ItemStack(ClayiumItems.rawClaySlicer), ItemStack.EMPTY, 2, new ItemStack(ClayiumItems.clayRollingPin));
-        this.addRecipe(new ItemStack(ClayiumItems.clayPlate, 6), 2, new ItemStack(ClayiumItems.largeClayPlate), ItemStack.EMPTY, 10, new ItemStack(ClayiumItems.clayRollingPin));
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 2, new ItemStack(ClayiumItems.rawClaySlicer), ItemStack.EMPTY, 15);
+        this.addRecipe(new ItemStack(ClayiumItems.clayDisc), 3, new ItemStack(ClayiumItems.rawClaySlicer), ItemStack.EMPTY, 2, new ItemStack(ClayiumItems.clayRollingPin));
+        this.addRecipe(new ItemStack(ClayiumItems.clayPlate, 6), 3, new ItemStack(ClayiumItems.largeClayPlate), ItemStack.EMPTY, 10, new ItemStack(ClayiumItems.clayRollingPin));
         this.addRecipe(new ItemStack(ClayiumItems.clayPlate, 3), 0, new ItemStack(ClayiumItems.largeClayBall), ItemStack.EMPTY, 40);
     }
 
-//    public ItemStack getSmeltingResult(ItemStack material) {
-//        for (RecipeElement recipe : this.recipes) {
-//            if (recipe.canSmelting(material)) {
-//                return recipe.getProduct();
-//            }
-//        }
-//
-//        return ItemStack.EMPTY;
-//    }
-
-    @Deprecated /* RecipeElement#canSmelting */
-    private boolean canBeSmelted(ItemStack itemstack, ItemStack itemstack2) {
-        return UtilItemStack.areItemEqual(itemstack2, itemstack) && (itemstack2.getMetadata() == 32767 || UtilItemStack.areDamageEqual(itemstack2, itemstack)) && itemstack2.getCount() <= itemstack.getCount();
+    private void addRecipe(ItemStack material, int button, ItemStack product, ItemStack change, int cookTime) {
+        addRecipe(material, button, product, change, cookTime, ItemStack.EMPTY);
     }
 
-    public void addRecipe(ItemStack material, int buttonId, ItemStack product, ItemStack change, int cookTime) {
-        addRecipe(material, buttonId, product, change, cookTime, ItemStack.EMPTY);
+    private void addRecipe(ItemStack material, int button, ItemStack product, ItemStack change, int cookTime, ItemStack requireTool) {
+        recipes.add(new RecipeElement(material, button, product, change, cookTime, requireTool));
     }
 
-    public void addRecipe(ItemStack material, int buttonId, ItemStack product, ItemStack change, int cookTime, ItemStack requireTool) {
-        this.recipes.add(new RecipeElement(material, buttonId, product, change, cookTime, requireTool));
-    }
-
-    public RecipeElement getKneadingResultMap(ItemStack material, int buttonId, ItemStack tool) {
+    public RecipeElement getKneadingResultMap(int button, NonNullList<ItemStack> referItemStacks) {
         RecipeElement entry_ = RecipeElement.FLAT;
         int maxStackSize = 0;
 
-        for (RecipeElement recipe : this.recipes) {
-            if (recipe.canSmelting(material)
-                    && recipe.getButtonID() == buttonId
+        for (RecipeElement recipe : recipes) {
+            if (recipe.canKneading(referItemStacks.get(ClayWorkTableSlots.MATERIAL.ordinal()))
+                    && recipe.getButton() == button
                     && recipe.getMaterial().getCount() > maxStackSize
-                    && maxStackSize <= material.getCount()
-                    && recipe.isSuitableTool(tool)) {
+                    && recipe.getMaterial().getCount() <= referItemStacks.get(ClayWorkTableSlots.MATERIAL.ordinal()).getCount()
+                    && recipe.isSuitableTool(referItemStacks.get(ClayWorkTableSlots.TOOL.ordinal()))) {
                 entry_ = recipe;
                 maxStackSize = recipe.getMaterial().getCount();
             }
@@ -138,67 +124,13 @@ public class ClayWorkTableRecipes {
         return entry_;
     }
 
-    public RecipeElement getKneadingResultMap(ItemStack material, int buttonId) {
-        return getKneadingResultMap(material, buttonId, ItemStack.EMPTY);
-    }
-
-    public int getConsumedStackSize(ItemStack material, int buttonId) {
-        return getConsumedStackSize(material, buttonId, ItemStack.EMPTY);
-    }
-
-    public int getConsumedStackSize(ItemStack material, int buttonId, ItemStack tool) {
-        return this.getConsumedStackSize(this.getKneadingResultMap(material, buttonId, tool));
-    }
-
-    public int getConsumedStackSize(RecipeElement recipe) {
-        return recipe.getMaterial().getCount();
-    }
-
-    public ItemStack getKneadingProduct(ItemStack material, int buttonId) {
-        return this.getKneadingProduct(material, buttonId, ItemStack.EMPTY);
-    }
-
-    public ItemStack getKneadingProduct(ItemStack material, int buttonId, ItemStack tool) {
-        return this.getKneadingProduct(this.getKneadingResultMap(material, buttonId, tool));
-    }
-
-    public ItemStack getKneadingProduct(RecipeElement recipe) {
-        return recipe.getProduct();
-    }
-
-    public ItemStack getKneadingChange(ItemStack material, int buttonId) {
-        return this.getKneadingChange(material, buttonId, ItemStack.EMPTY);
-    }
-
-    public ItemStack getKneadingChange(ItemStack material, int buttonId, ItemStack tool) {
-        return this.getKneadingChange(this.getKneadingResultMap(material, buttonId, tool));
-    }
-
-    public ItemStack getKneadingChange(RecipeElement recipe) {
-        return recipe.getChange();
-    }
-
-    public int getKneadingTime(ItemStack material, int buttonId) {
-        return this.getKneadingTime(material, buttonId, ItemStack.EMPTY);
-    }
-
-    public int getKneadingTime(ItemStack material, int buttonId, ItemStack tool) {
-        return this.getKneadingTime(this.getKneadingResultMap(material, buttonId, tool));
-    }
-
-    public int getKneadingTime(RecipeElement recipe) {
-        return recipe.getCookTime();
-    }
-
-    public boolean hasKneadingResult(ItemStack material) {
-        boolean flag = false;
-
-        for (RecipeElement recipe : this.recipes) {
-            if (recipe.canSmelting(material)) {
-                flag = true;
+    public boolean hasKneadingResult(ItemStack stack) {
+        for (RecipeElement recipe : recipes) {
+            if (recipe.canKneading(stack)) {
+                return true;
             }
         }
 
-        return flag;
+        return false;
     }
 }
