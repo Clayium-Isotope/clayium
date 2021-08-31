@@ -1,5 +1,6 @@
 package mods.clayium.block;
 
+import mods.clayium.machines.ClayWorkTable.BlockClayWorkTable;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

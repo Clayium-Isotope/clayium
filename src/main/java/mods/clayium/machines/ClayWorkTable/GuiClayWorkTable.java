@@ -1,9 +1,7 @@
-package mods.clayium.gui.client;
+package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.block.tile.TileClayWorkTable;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
-import mods.clayium.gui.container.ContainerClayWorkTable;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,9 +13,9 @@ import java.io.IOException;
 public class GuiClayWorkTable extends GuiContainer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(ClayiumCore.ModId, "textures/gui/clayworktable.png");
     private final InventoryPlayer player;
-    private final TileClayWorkTable tileEntity;
+    private final TileEntityClayWorkTable tileEntity;
 
-    public GuiClayWorkTable(InventoryPlayer invPlayer, TileClayWorkTable tileEntity) {
+    public GuiClayWorkTable(InventoryPlayer invPlayer, TileEntityClayWorkTable tileEntity) {
         super(new ContainerClayWorkTable(invPlayer, tileEntity));
         player = invPlayer;
         this.tileEntity = tileEntity;

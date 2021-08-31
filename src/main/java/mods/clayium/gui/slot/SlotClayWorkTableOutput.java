@@ -1,4 +1,4 @@
-package mods.clayium.gui.container.slot;
+package mods.clayium.gui.slot;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

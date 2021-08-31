@@ -1,6 +1,5 @@
-package mods.clayium.block.tile;
+package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.block.BlockClayWorkTable;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
@@ -23,7 +22,7 @@ import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileClayWorkTable extends TileEntity implements ISidedInventory {
+public class TileEntityClayWorkTable extends TileEntity implements ISidedInventory {
     private enum ButtonProperty {
         FAILURE,
         PERMIT,

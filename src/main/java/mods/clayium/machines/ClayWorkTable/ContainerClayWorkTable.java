@@ -1,10 +1,9 @@
-package mods.clayium.gui.container;
+package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.block.tile.TileClayWorkTable;
-import mods.clayium.block.tile.TileClayWorkTable.ClayWorkTableSlots;
-import mods.clayium.gui.container.slot.SlotClayWorkTableOutput;
+import mods.clayium.gui.slot.SlotClayWorkTableOutput;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
+import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -17,15 +16,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerClayWorkTable extends Container {
-    private final TileClayWorkTable tileEntity;
+    private final TileEntityClayWorkTable tileEntity;
     private int kneadTime, kneadedTimes, cookingMethod;
     private static final int sizeInventory = 4;
 
     public ContainerClayWorkTable(World world, BlockPos pos, EntityPlayer player) {
-        this(player.inventory, (TileClayWorkTable) world.getTileEntity(pos));
+        this(player.inventory, (TileEntityClayWorkTable) world.getTileEntity(pos));
     }
 
-    public ContainerClayWorkTable(InventoryPlayer player, TileClayWorkTable tileEntity) {
+    public ContainerClayWorkTable(InventoryPlayer player, TileEntityClayWorkTable tileEntity) {
         this.tileEntity = tileEntity;
         this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 17, 30));
         this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {

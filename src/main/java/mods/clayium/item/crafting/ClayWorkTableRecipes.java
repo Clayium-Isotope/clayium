@@ -1,6 +1,6 @@
 package mods.clayium.item.crafting;
 
-import mods.clayium.block.tile.TileClayWorkTable.ClayWorkTableSlots;
+import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.ProgressRatedVariable;
 import net.minecraft.init.Items;

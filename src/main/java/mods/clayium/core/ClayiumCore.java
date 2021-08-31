@@ -1,7 +1,7 @@
 package mods.clayium.core;
 
 import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.tile.TileClayWorkTable;
+import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import net.minecraft.block.Block;
@@ -99,7 +99,7 @@ public class ClayiumCore {
         event.getRegistry().registerAll(ClayiumBlocks.getBlocks().toArray(new Block[0]));
 
         /* Register Tile Entities */
-        GameRegistry.registerTileEntity(TileClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
     }
 
     @SubscribeEvent

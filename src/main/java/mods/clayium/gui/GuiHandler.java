@@ -1,8 +1,8 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.TileClayWorkTable;
-import mods.clayium.gui.client.GuiClayWorkTable;
-import mods.clayium.gui.container.ContainerClayWorkTable;
+import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable;
+import mods.clayium.machines.ClayWorkTable.GuiClayWorkTable;
+import mods.clayium.machines.ClayWorkTable.ContainerClayWorkTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,7 @@ public class GuiHandler implements IGuiHandler {
         if (tile != null) {
             switch (ID) {
                 case clayWorkTableGuiID:
-                    return new ContainerClayWorkTable(player.inventory, (TileClayWorkTable) tile);
+                    return new ContainerClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile);
             }
         }
 
@@ -34,7 +34,7 @@ public class GuiHandler implements IGuiHandler {
         if (tile != null) {
             switch (ID) {
                 case clayWorkTableGuiID:
-                    return new GuiClayWorkTable(player.inventory, (TileClayWorkTable) tile);
+                    return new GuiClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile);
             }
         }
 
