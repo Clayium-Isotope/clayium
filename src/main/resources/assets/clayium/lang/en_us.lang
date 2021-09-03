@@ -65,9 +65,9 @@ tooltip.HoldShiftForDetails=--§fHold §lShift§r For Details§7--
 # recipe.ClayTree=Clay Tree
 # recipe.ClayTree.description=A Clay Tree is a good source of Lithium, but it isn't generated in the Overworld. A sapling of Clay Tree is obtained by irradiating a vanilla sapling, planted on the ground, with Clay Laser. The energy value of Clay Laser must be higher than 1000.
 
-# tile.blockClayOre.0.name=Clay Ore
-# tile.blockClayOre.1.name=Dense Clay Ore
-# tile.blockClayOre.2.name=Large Dense Clay Ore
+tile.clay_ore.name=Clay Ore
+tile.dense_clay_ore.name=Dense Clay Ore
+tile.large_dense_clay_ore.name=Large Dense Clay Ore
 
 # tile.blockCompressedClay.0.name=Dense Clay
 # tile.blockCompressedClay.1.name=Compressed Clay

@@ -41,6 +41,13 @@ public class ClayiumBlocks {
     /* Machines... */
     public static final Block clayWorkTable = new ClayWorkTable(0);
     /* ...Machines */
+
+    /* Ores... */
+    public static final Block clayOre = new ClayOre();
+    public static final Block denseClayOre = new DenseClayOre();
+    public static final Block largeDenseClayOre = new LargeDenseClayOre();
+    /* ...Ores */
+
     /* Compressed... */
     public static final Block compressedClay0 = new CompressedClay0();
     public static final Block compressedClay1 = new CompressedClay1();

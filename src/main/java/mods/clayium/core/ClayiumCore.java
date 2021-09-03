@@ -4,6 +4,7 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -82,6 +83,7 @@ public class ClayiumCore {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         ForgeChunkManager.setForcedChunkLoadingCallback(ClayiumCore.instance(), null);
+        GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);
     }
 
     @EventHandler
