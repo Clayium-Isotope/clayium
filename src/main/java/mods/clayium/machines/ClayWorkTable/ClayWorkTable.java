@@ -1,28 +1,36 @@
 
 package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.ITieredBlock;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Random;
+import javax.annotation.Nullable;
+import java.util.List;
 
-public class BlockClayWorkTable extends BlockContainer {
-	public BlockClayWorkTable() {
-		super(Material.CLAY);
+public class ClayWorkTable extends BlockContainer implements ITieredBlock {
+	private final int tier;
+
+	public ClayWorkTable(int tier) {
+		super(Material.ROCK);
 		setUnlocalizedName("clay_work_table");
 		setSoundType(SoundType.GROUND);
 		setHarvestLevel("shovel", 0);
@@ -30,6 +38,8 @@ public class BlockClayWorkTable extends BlockContainer {
 		setResistance(4F);
 		setCreativeTab(ClayiumCore.tabClayium);
 		setRegistryName(ClayiumCore.ModId, "clay_work_table");
+
+		this.tier = tier;
 	}
 
 	@Override
@@ -68,7 +78,18 @@ public class BlockClayWorkTable extends BlockContainer {
 	}
 
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(ClayiumBlocks.clayWorkTable);
+	public int getTier(ItemStack stackIn) {
+		return tier;
+	}
+
+	@Override
+	public int getTier(IBlockAccess access, BlockPos posIn) {
+		return tier;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+		UtilLocale.localizeTooltip(this.getUnlocalizedName(), tooltip);
 	}
 }

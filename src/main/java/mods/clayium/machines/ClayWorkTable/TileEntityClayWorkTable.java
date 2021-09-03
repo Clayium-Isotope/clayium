@@ -157,7 +157,7 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     private void sendUpdate() {
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-        BlockClayWorkTable.updateBlockState(world, pos);
+        ClayWorkTable.updateBlockState(world, pos);
 
         if (ticket == null) {
             ticket = ForgeChunkManager.requestTicket(ClayiumCore.instance(), world, ForgeChunkManager.Type.NORMAL);

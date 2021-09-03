@@ -1,6 +1,6 @@
 package mods.clayium.block;
 
-import mods.clayium.machines.ClayWorkTable.BlockClayWorkTable;
+import mods.clayium.machines.ClayWorkTable.ClayWorkTable;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -38,9 +38,13 @@ public class ClayiumBlocks {
     private static final ClayiumBlocks instance = new ClayiumBlocks();
 
     /* Elements... */
-    public static final Block clayWorkTable = new BlockClayWorkTable();
+    /* Machines... */
+    public static final Block clayWorkTable = new ClayWorkTable(0);
+    /* ...Machines */
+    /* Compressed... */
     public static final Block compressedClay0 = new CompressedClay0();
     public static final Block compressedClay1 = new CompressedClay1();
+    /* ...Compressed */
     /* ...Elements */
 
     private static final List<Block> blocks = new ArrayList<>();

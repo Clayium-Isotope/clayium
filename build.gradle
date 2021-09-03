@@ -50,7 +50,7 @@ minecraft {
 }
 
 sourceSets {
-    main(({ output.resourcesDir = output.classesDir } as String))
+    main({ output.resourcesDir = output.classesDir })
 }
 
 dependencies {
