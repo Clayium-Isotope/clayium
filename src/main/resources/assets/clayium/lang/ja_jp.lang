@@ -6,8 +6,8 @@ itemGroup.clayium=Clayium
 
 tooltip.HoldShiftForDetails=--§f詳細は§lShift§rキー§7--
 
-# gui.Common.energy=%1$sCE
-# gui.Common.tier=Tier %1$d
+gui.Common.energy=%1$sCE
+gui.Common.tier=Tier %1$d
 # gui.Common.clayLaser=レーザー %1$s
 # gui.Common.resonance=共鳴率 %1$s
 # gui.Common.overclockFactor=オーバークロック x%1$s
@@ -69,19 +69,19 @@ tile.clay_ore.name=粘土鉱石
 tile.dense_clay_ore.name=高密度粘土鉱石
 tile.large_dense_clay_ore.name=高密度粘土鉱石大
 
-# tile.blockCompressedClay.0.name=高密度粘土
-# tile.blockCompressedClay.1.name=圧縮粘土
-# tile.blockCompressedClay.2.name=工業用粘土
-# tile.blockCompressedClay.3.name=発展工業用粘土
-# tile.blockCompressedClay.4.name=エネルギー粘土
-# tile.blockCompressedClay.5.name=圧縮エネルギー粘土
-# tile.blockCompressedClay.6.name=2重圧縮エネルギー粘土
-# tile.blockCompressedClay.7.name=3重圧縮エネルギー粘土
-# tile.blockCompressedClay.8.name=4重圧縮エネルギー粘土
-# tile.blockCompressedClay.9.name=5重圧縮エネルギー粘土
-# tile.blockCompressedClay.10.name=6重圧縮エネルギー粘土
-# tile.blockCompressedClay.11.name=7重圧縮エネルギー粘土
-# tile.blockCompressedClay.12.name=8重圧縮エネルギー粘土
+tile.compressed_clay_0.name=高密度粘土
+tile.compressed_clay_1.name=圧縮粘土
+tile.compressed_clay_2.name=工業用粘土
+tile.compressed_clay_3.name=発展工業用粘土
+tile.compressed_clay_4.name=エネルギー粘土
+tile.compressed_clay_5.name=圧縮エネルギー粘土
+tile.compressed_clay_6.name=2重圧縮エネルギー粘土
+tile.compressed_clay_7.name=3重圧縮エネルギー粘土
+tile.compressed_clay_8.name=4重圧縮エネルギー粘土
+tile.compressed_clay_9.name=5重圧縮エネルギー粘土
+tile.compressed_clay_10.name=6重圧縮エネルギー粘土
+tile.compressed_clay_11.name=7重圧縮エネルギー粘土
+tile.compressed_clay_12.name=8重圧縮エネルギー粘土
 
 # tile.blockRawClayMachineHull.0.name=生の粘土マシン筐体
 # tile.blockMachineHull.0.name=粘土マシン筐体

@@ -1,4 +1,4 @@
-package mods.clayium.block;
+package mods.clayium.block.common;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;

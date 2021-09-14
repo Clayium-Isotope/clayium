@@ -13,7 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -60,6 +59,18 @@ public class ClayiumCore {
         public ItemStack getTabIconItem() {
             return new ItemStack(Items.CLAY_BALL);
         }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void displayAllRelevantItems(NonNullList<ItemStack> p_78018_1_) {
+            for (Item item : ClayiumItems.getItems()) {
+                p_78018_1_.add(new ItemStack(item));
+            }
+
+            for (Item block : ClayiumBlocks.getItems()) {
+                p_78018_1_.add(new ItemStack(block));
+            }
+        }
     };
 
     @EventHandler
@@ -76,13 +87,11 @@ public class ClayiumCore {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
-        /* Register Smelt Recipes */
         GameRegistry.addSmelting(ClayiumItems.rawClayRollingPin, new ItemStack(ClayiumItems.clayRollingPin), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawClaySlicer, new ItemStack(ClayiumItems.claySlicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawClaySpatula, new ItemStack(ClayiumItems.claySpatula), 1F);
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
-        ForgeChunkManager.setForcedChunkLoadingCallback(ClayiumCore.instance(), null);
         GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);
     }
 
@@ -91,7 +100,7 @@ public class ClayiumCore {
         proxy.postInit(event);
     }
 
-    @Mod.EventHandler
+    @EventHandler
     public void serverLoad(FMLServerStartingEvent event) {
         proxy.serverLoad(event);
     }

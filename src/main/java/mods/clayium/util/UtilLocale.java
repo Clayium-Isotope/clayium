@@ -142,10 +142,10 @@ public class UtilLocale {
         return String.format("%,d", rf);
     }
 
-    public static void localizeTooltip(String name, List<String> tooltip) {
+    public static void localizeTooltip(List<String> tooltip, String name, Object... args) {
         for (int i = 1; i < maxLineTooltip; i++) {
             String key = name + ".tooltip.line" + i;
-            String loc = I18n.format(key);
+            String loc = I18n.format(key, args);
 
             if (loc.equals(key) || loc.equals("")) return;
 

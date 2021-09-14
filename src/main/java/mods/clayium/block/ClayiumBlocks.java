@@ -3,15 +3,13 @@ package mods.clayium.block;
 import mods.clayium.machines.ClayWorkTable.ClayWorkTable;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ClayiumBlocks {
-    public ClayiumBlocks() {}
-
     public static void initBlocks() {
         blocks.clear();
         items.clear();
@@ -21,7 +19,7 @@ public class ClayiumBlocks {
                 if (field.get(instance) instanceof Block) {
                     Block block = (Block) field.get(instance);
                     blocks.add(block);
-                    items.add(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+                    items.add(block.getItemDropped(block.getDefaultState(), new Random(), 0).setRegistryName(block.getRegistryName()));
                 }
             }
         } catch (IllegalAccessException ignore) {}
@@ -49,8 +47,19 @@ public class ClayiumBlocks {
     /* ...Ores */
 
     /* Compressed... */
-    public static final Block compressedClay0 = new CompressedClay0();
-    public static final Block compressedClay1 = new CompressedClay1();
+    public static final Block compressedClay0 = new CompressedClay(0);
+    public static final Block compressedClay1 = new CompressedClay(1);
+    public static final Block compressedClay2 = new CompressedClay(2);
+    public static final Block compressedClay3 = new CompressedClay(3);
+    public static final Block compressedClay4 = new CompressedClay(4);
+    public static final Block compressedClay5 = new CompressedClay(5);
+    public static final Block compressedClay6 = new CompressedClay(6);
+    public static final Block compressedClay7 = new CompressedClay(7);
+    public static final Block compressedClay8 = new CompressedClay(8);
+    public static final Block compressedClay9 = new CompressedClay(9);
+    public static final Block compressedClay10 = new CompressedClay(10);
+    public static final Block compressedClay11 = new CompressedClay(11);
+    public static final Block compressedClay12 = new CompressedClay(12);
     /* ...Compressed */
     /* ...Elements */
 
