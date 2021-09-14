@@ -9,7 +9,7 @@ public class BlockTiered extends ClayiumBlock implements ITieredBlock {
     private final int tier;
 
     public BlockTiered(Material material, String modelPath, int tier) {
-        super(material, modelPath + tier);
+        super(material, modelPath + (modelPath.endsWith("_") ? tier : ""));
         this.tier = tier;
     }
 

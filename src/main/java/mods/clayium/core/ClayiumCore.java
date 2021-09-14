@@ -1,7 +1,6 @@
 package mods.clayium.core;
 
 import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.worldgen.ClayOreGenerator;
@@ -11,6 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -108,9 +108,6 @@ public class ClayiumCore {
     @SubscribeEvent
     public void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(ClayiumBlocks.getBlocks().toArray(new Block[0]));
-
-        /* Register Tile Entities */
-        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
     }
 
     @SubscribeEvent

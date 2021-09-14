@@ -1,7 +1,6 @@
 package mods.clayium.block;
 
-import mods.clayium.core.ClayiumCore;
-import net.minecraft.block.Block;
+import mods.clayium.block.common.ClayiumBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,16 +10,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class ClayOre extends Block {
+public class ClayOre extends ClayiumBlock {
 	public ClayOre() {
-		super(Material.ROCK);
-		setUnlocalizedName("clay_ore");
+		super(Material.ROCK, "clay_ore");
 		setSoundType(SoundType.STONE);
 		setHarvestLevel("pickaxe", 1);
 		setHardness(3F);
 		setResistance(5F);
-		setRegistryName(ClayiumCore.ModId, "clay_ore");
-		setCreativeTab(ClayiumCore.tabClayium);
 	}
 
 	@Override

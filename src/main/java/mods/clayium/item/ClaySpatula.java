@@ -1,16 +1,12 @@
 package mods.clayium.item;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.creativetab.TabClayium;
-import net.minecraft.item.Item;
+import mods.clayium.item.common.ClayiumItem;
 
-public class ClaySpatula extends Item {
+public class ClaySpatula extends ClayiumItem {
     public ClaySpatula() {
+        super("clay_spatula");
         setMaxDamage(36);
         setMaxStackSize(1);
-        setUnlocalizedName("clay_spatula");
-        setRegistryName(ClayiumCore.ModId, "clay_spatula");
-        setCreativeTab(TabClayium.tab);
         setContainerItem(this);
     }
 }

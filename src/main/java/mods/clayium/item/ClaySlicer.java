@@ -1,16 +1,12 @@
 package mods.clayium.item;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.creativetab.TabClayium;
-import net.minecraft.item.Item;
+import mods.clayium.item.common.ClayiumItem;
 
-public class ClaySlicer extends Item {
+public class ClaySlicer extends ClayiumItem {
     public ClaySlicer() {
+        super("clay_slicer");
         setMaxDamage(60);
         setMaxStackSize(1);
-        setUnlocalizedName("clay_slicer");
-        setRegistryName(ClayiumCore.ModId, "clay_slicer");
-        setCreativeTab(TabClayium.tab);
         setContainerItem(this);
     }
 }
