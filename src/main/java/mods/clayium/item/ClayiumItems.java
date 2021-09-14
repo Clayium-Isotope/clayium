@@ -1,5 +1,6 @@
 package mods.clayium.item;
 
+import mods.clayium.item.common.ClayiumItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
