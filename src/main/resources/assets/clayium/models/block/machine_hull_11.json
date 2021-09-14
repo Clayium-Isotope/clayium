@@ -1,12 +1,7 @@
 {
-  "parent": "block/cube",
+  "parent": "block/cube_all",
   "textures": {
-    "down": "clayium:blocks/machinehull-11",
-    "up": "clayium:blocks/machinehull-11",
-    "north": "clayium:blocks/machinehull-11",
-    "east": "clayium:blocks/machinehull-11",
-    "south": "clayium:blocks/machinehull-11",
-    "west": "clayium:blocks/machinehull-11",
+    "all": "clayium:blocks/machinehull-11",
     "particle": "clayium:blocks/machinehull-11"
   }
 }
