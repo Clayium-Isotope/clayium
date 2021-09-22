@@ -1,7 +1,8 @@
 
 package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.block.ITieredBlock;
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.block.itemblock.ItemBlockTiered;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.util.UtilLocale;
@@ -12,12 +13,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class ClayWorkTable extends BlockContainer implements ITieredBlock {
 	private final int tier;
@@ -90,6 +94,16 @@ public class ClayWorkTable extends BlockContainer implements ITieredBlock {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-		UtilLocale.localizeTooltip(this.getUnlocalizedName(), tooltip);
+		UtilLocale.localizeTooltip(tooltip, this.getUnlocalizedName());
+	}
+
+	@Override
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+		return new ItemStack(new ItemBlockTiered(this));
+	}
+
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return new ItemBlockTiered(this);
 	}
 }

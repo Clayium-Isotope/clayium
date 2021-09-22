@@ -1,6 +1,5 @@
 package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +13,9 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,7 +41,6 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     private int kneadTime;
     private int cookingMethod = -1;
     private String customName;
-    private ForgeChunkManager.Ticket ticket;
 
     @Override
     public int getSizeInventory() {
@@ -158,11 +154,6 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
         ClayWorkTable.updateBlockState(world, pos);
-
-        if (ticket == null) {
-            ticket = ForgeChunkManager.requestTicket(ClayiumCore.instance(), world, ForgeChunkManager.Type.NORMAL);
-        }
-        ForgeChunkManager.forceChunk(ticket, new ChunkPos(pos.getX() >> 4, pos.getZ() >> 4));
 
         markDirty();
     }

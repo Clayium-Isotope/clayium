@@ -1,6 +1,5 @@
 package mods.clayium.block;
 
-import mods.clayium.machines.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machines.ClayWorkTable.ClayWorkTable;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -78,7 +77,7 @@ public class ClayiumBlocks {
     /* ...Machine Hulls */
 
     /* Machines... */
-    public static final Block clayWorkTable = new ClayWorkTable();
+    public static final Block clayWorkTable = new ClayWorkTable(0);
     /* ...Machines */
     /* ...Elements */
 

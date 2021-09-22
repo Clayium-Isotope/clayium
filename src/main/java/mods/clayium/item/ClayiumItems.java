@@ -37,6 +37,9 @@ public class ClayiumItems {
     public static final Item rawClaySlicer = new ClayiumItem("raw_clay_slicer");
     public static final Item claySpatula = new ClaySpatula();
     public static final Item rawClaySpatula = new ClayiumItem("raw_clay_spatula");
+
+    public static final Item clayPickaxe = new ClayPickaxe();
+    public static final Item clayShovel = new ClayShovel();
     /* ...Tools */
 
     /* Materials... */
