@@ -126,7 +126,7 @@ public class ClayWorkTableRecipes {
 
     public boolean hasKneadingResult(ItemStack stack) {
         for (RecipeElement recipe : recipes) {
-            if (recipe.canKneading(stack)) {
+            if (recipe.material.getItem() == stack.getItem()) {
                 return true;
             }
         }

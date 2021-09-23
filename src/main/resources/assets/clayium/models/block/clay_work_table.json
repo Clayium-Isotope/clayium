@@ -1,12 +1,8 @@
 {
-  "parent": "block/cube",
+  "parent": "block/cube_column",
   "textures": {
-    "down": "clayium:blocks/clayworktable",
-    "up": "clayium:blocks/clayworktable",
-    "north": "clayium:blocks/clayworktable_side",
-    "east": "clayium:blocks/clayworktable_side",
-    "south": "clayium:blocks/clayworktable_side",
-    "west": "clayium:blocks/clayworktable_side",
+    "end": "clayium:blocks/clayworktable",
+    "side": "clayium:blocks/clayworktable_side",
     "particle": "clayium:blocks/clayworktable"
   }
 }

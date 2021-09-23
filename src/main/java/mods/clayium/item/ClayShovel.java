@@ -3,10 +3,18 @@ package mods.clayium.item;
 
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ClayShovel extends ItemSpade {
 	public ClayShovel() {
@@ -28,6 +36,12 @@ public class ClayShovel extends ItemSpade {
 				|| state.getBlock() == ClayiumBlocks.largeDenseClayOre)
 			return efficiencyOnClayOre;
 		return super.getDestroySpeed(stack, state);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+		UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
 	}
 
 	protected float efficiencyOnClayBlocks = 32F;
