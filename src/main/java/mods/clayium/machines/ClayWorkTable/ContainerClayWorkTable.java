@@ -1,6 +1,5 @@
 package mods.clayium.machines.ClayWorkTable;
 
-import mods.clayium.gui.slot.SlotClayWorkTableOutput;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
 import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
@@ -10,8 +9,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -20,21 +17,32 @@ public class ContainerClayWorkTable extends Container {
     private int kneadTime, kneadedTimes, cookingMethod;
     private static final int sizeInventory = 4;
 
-    public ContainerClayWorkTable(World world, BlockPos pos, EntityPlayer player) {
-        this(player.inventory, (TileEntityClayWorkTable) world.getTileEntity(pos));
-    }
-
     public ContainerClayWorkTable(InventoryPlayer player, TileEntityClayWorkTable tileEntity) {
         this.tileEntity = tileEntity;
-        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 17, 30));
+        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 17, 30) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return ClayWorkTableRecipes.instance().hasKneadingResult(stack);
+            }
+        });
         this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return ClayiumItems.isItemTool(stack);
             }
         });
-        this.addSlotToContainer(new SlotClayWorkTableOutput(player.player, tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 143, 30));
-        this.addSlotToContainer(new SlotClayWorkTableOutput(player.player, tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 143, 55));
+        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 143, 30) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return false;
+            }
+        });
+        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 143, 55) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return false;
+            }
+        });
 
         for(int y = 0; y < 3; ++y) {
             for(int x = 0; x < 9; ++x) {
@@ -152,7 +160,7 @@ public class ContainerClayWorkTable extends Container {
 
     @Override
     public boolean enchantItem(EntityPlayer playerIn, int id) {
-        tileEntity.pushButton(id);
+        tileEntity.pushButton(playerIn, id);
         return true;
     }
 }

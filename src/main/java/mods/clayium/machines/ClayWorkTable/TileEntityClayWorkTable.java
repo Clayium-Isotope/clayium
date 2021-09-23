@@ -2,6 +2,7 @@ package mods.clayium.machines.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
+import mods.clayium.machines.common.IClicker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -19,13 +20,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayWorkTable extends TileEntity implements ISidedInventory {
-    private enum ButtonProperty {
-        FAILURE,
-        PERMIT,
-        PROPOSE
-    }
-
+public class TileEntityClayWorkTable extends TileEntity implements ISidedInventory, IClicker {
     public enum ClayWorkTableSlots {
         MATERIAL,
         TOOL,
@@ -338,7 +333,7 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
         return canPushButton(button) != ButtonProperty.FAILURE;
     }
 
-    public void pushButton(int button) {
+    public void pushButton(EntityPlayer player, int button) {
         ButtonProperty canPushButton = this.canPushButton(button);
 
         ClayWorkTableRecipes.RecipeElement recipe = ClayWorkTableRecipes.RecipeElement.FLAT;
