@@ -1,4 +1,4 @@
-package mods.clayium.machines.ClayWorkTable;
+package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;

@@ -1,8 +1,8 @@
-package mods.clayium.machines.ClayWorkTable;
+package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
-import mods.clayium.machines.common.IClicker;
+import mods.clayium.machine.common.IClicker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;

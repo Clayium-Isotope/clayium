@@ -1,8 +1,8 @@
 package mods.clayium.gui;
 
-import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable;
-import mods.clayium.machines.ClayWorkTable.GuiClayWorkTable;
-import mods.clayium.machines.ClayWorkTable.ContainerClayWorkTable;
+import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
+import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
+import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;

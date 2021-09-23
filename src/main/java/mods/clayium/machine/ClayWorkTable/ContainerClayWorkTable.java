@@ -1,8 +1,8 @@
-package mods.clayium.machines.ClayWorkTable;
+package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.crafting.ClayWorkTableRecipes;
-import mods.clayium.machines.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
+import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
