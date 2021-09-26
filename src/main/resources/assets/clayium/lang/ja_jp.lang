@@ -105,10 +105,10 @@ tile.machine_hull_12.name=OPA マシン筐体
 
 tile.clay_work_table.name=粘土作業台
 tile.clay_work_table.tooltip.line1=工業化への第一歩
-# tile.blockClayCraftingTable.name=粘土作業板
-# tile.blockClayCraftingTable.tooltip.line1=ちょっと便利な作業台
-# tile.blockClayCraftingTable.tooltip.line2=__DETAIL__
-# tile.blockClayCraftingTable.tooltip.line3=クラフト時隣接チェストにアクセス可能
+tile.clay_crafting_table.name=粘土作業板
+tile.clay_crafting_table.tooltip.line1=ちょっと便利な作業台
+tile.clay_crafting_table.tooltip.line2=__DETAIL__
+tile.clay_crafting_table.tooltip.line3=クラフト時隣接チェストにアクセス可能
 
 # tile.blockElementalMillingMachine.name=初期型フライス盤
 # tile.blockElementalMillingMachine.tooltip.line1=初めての回路

@@ -105,10 +105,10 @@ tile.machine_hull_12.name=OPA Machine Hull
 
 tile.clay_work_table.name=Clay Work Table
 tile.clay_work_table.tooltip.line1=The first step to Clay Industry.
-# tile.blockClayCraftingTable.name=Clay Crafting Board
-# tile.blockClayCraftingTable.tooltip.line1=A convenient version of vanilla Crafting Table.
-# tile.blockClayCraftingTable.tooltip.line2=__DETAIL__
-# tile.blockClayCraftingTable.tooltip.line3=You can access the content of a nearby chest while using it.
+tile.clay_crafting_table.name=Clay Crafting Board
+tile.clay_crafting_table.tooltip.line1=A convenient version of vanilla Crafting Table.
+tile.clay_crafting_table.tooltip.line2=__DETAIL__
+tile.clay_crafting_table.tooltip.line3=You can access the content of a nearby chest while using it.
 
 # tile.blockElementalMillingMachine.name=Elemental Milling Machine
 # tile.blockElementalMillingMachine.tooltip.line1=To obtain the first circuit.
