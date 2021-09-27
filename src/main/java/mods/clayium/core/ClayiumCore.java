@@ -3,6 +3,8 @@ package mods.clayium.core;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
+import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -90,6 +92,9 @@ public class ClayiumCore {
         GameRegistry.addSmelting(ClayiumItems.rawClayRollingPin, new ItemStack(ClayiumItems.clayRollingPin), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawClaySlicer, new ItemStack(ClayiumItems.claySlicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawClaySpatula, new ItemStack(ClayiumItems.claySpatula), 1F);
+
+        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.clayCraftingTable.getRegistryName());
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);

@@ -22,9 +22,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -102,10 +99,5 @@ public class ClayWorkTable extends BlockContainer implements ITieredBlock {
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		return new ItemBlockTiered(this);
-	}
-
-	@SubscribeEvent
-	public void registerOwnTE(FMLInitializationEvent event) {
-		GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, getRegistryName());
 	}
 }

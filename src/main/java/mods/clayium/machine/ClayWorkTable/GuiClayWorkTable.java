@@ -11,7 +11,6 @@ import org.lwjgl.opengl.GL11;
 import java.io.IOException;
 
 public class GuiClayWorkTable extends GuiContainer {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(ClayiumCore.ModId, "textures/gui/clayworktable.png");
     private final InventoryPlayer player;
     private final TileEntityClayWorkTable tileEntity;
 
@@ -30,17 +29,17 @@ public class GuiClayWorkTable extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseZ) {
-        this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
+        guiLeft = (width - xSize) / 2;
+        guiTop = (height - ySize) / 2;
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(TEXTURE);
-        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/clay_work_table.png"));
+        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        this.drawTexturedModalRect(this.guiLeft + 48, this.guiTop + 29, 176, 0, this.tileEntity.getCookProgressScaled(80), 16);
+        drawTexturedModalRect(guiLeft + 48, guiTop + 29, 176, 0, tileEntity.getCookProgressScaled(80), 16);
 
-        for (GuiButton button : this.buttonList) {
-            button.enabled = this.tileEntity.isButtonEnable(button.id);
+        for (GuiButton button : buttonList) {
+            button.enabled = tileEntity.isButtonEnable(button.id);
         }
     }
 
@@ -87,19 +86,17 @@ public class GuiClayWorkTable extends GuiContainer {
     public void initGui() {
         super.initGui();
 //        Keyboard.enableRepeatEvents(true);
-        this.buttonList.add(new GuiPictureButton(0, this.guiLeft + 40, this.guiTop + 52, 16, 16, TEXTURE, 176, 32));
-        this.buttonList.add(new GuiPictureButton(1, this.guiLeft + 56, this.guiTop + 52, 16, 16, TEXTURE, 192, 32));
-        this.buttonList.add(new GuiPictureButton(2, this.guiLeft + 72, this.guiTop + 52, 16, 16, TEXTURE, 208, 32));
-        this.buttonList.add(new GuiPictureButton(3, this.guiLeft + 88, this.guiTop + 52, 16, 16, TEXTURE, 224, 32));
-        this.buttonList.add(new GuiPictureButton(4, this.guiLeft + 104, this.guiTop + 52, 16, 16, TEXTURE, 240, 32));
-        this.buttonList.add(new GuiPictureButton(5, this.guiLeft + 120, this.guiTop + 52, 16, 16, TEXTURE, 176, 80));
+
+        for (int i = 0; i < 6; i++) {
+            buttonList.add(new GuiPictureButton(i, guiLeft + 40 + 16 * i, guiTop + 52, 16 * i, 32));
+        }
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
         if (button.enabled) {
 //            ClayiumCore.packetHandler.sendToServer(new GuiButtonPacket(this.tileEntityClayWorkTable.getPos(), button.id));
-            this.mc.playerController.sendEnchantPacket(this.inventorySlots.windowId, button.id);
+            mc.playerController.sendEnchantPacket(inventorySlots.windowId, button.id);
 //            this.tileEntity.pushButton(button.id);
         }
     }
