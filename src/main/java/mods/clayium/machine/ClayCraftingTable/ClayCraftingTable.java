@@ -33,9 +33,9 @@ import java.util.List;
 import java.util.Random;
 
 public class ClayCraftingTable extends BlockContainer implements ITieredBlock {
-    private int tier;
+    private final int tier;
 
-    public ClayCraftingTable(int tier) {
+    public ClayCraftingTable() {
         super(Material.CLAY);
         setRegistryName(ClayiumCore.ModId, "clay_crafting_table");
         setUnlocalizedName("clay_crafting_table");
@@ -45,7 +45,7 @@ public class ClayCraftingTable extends BlockContainer implements ITieredBlock {
         setResistance(4F);
         setCreativeTab(ClayiumCore.tabClayium);
 
-        this.tier = tier;
+        this.tier = 0;
     }
 
     @Override

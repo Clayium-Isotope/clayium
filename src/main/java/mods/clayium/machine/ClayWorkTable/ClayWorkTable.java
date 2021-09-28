@@ -32,7 +32,7 @@ import java.util.Random;
 public class ClayWorkTable extends BlockContainer implements ITieredBlock {
 	private final int tier;
 
-	public ClayWorkTable(int tier) {
+	public ClayWorkTable() {
 		super(Material.ROCK);
 		setUnlocalizedName("clay_work_table");
 		setSoundType(SoundType.GROUND);
@@ -42,7 +42,7 @@ public class ClayWorkTable extends BlockContainer implements ITieredBlock {
 		setCreativeTab(ClayiumCore.tabClayium);
 		setRegistryName(ClayiumCore.ModId, "clay_work_table");
 
-		this.tier = tier;
+		this.tier = 0;
 	}
 
 	@Override

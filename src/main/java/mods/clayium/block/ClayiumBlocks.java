@@ -75,11 +75,14 @@ public class ClayiumBlocks {
     public static final Block machineHull10 = new MachineHull(10);
     public static final Block machineHull11 = new MachineHull(11);
     public static final Block machineHull12 = new MachineHull(12);
+
+    public static final Block alloyHullAZ91D = new AZ91DAlloyHull();
+    public static final Block alloyHullZK60A = new ZK60AAlloyHull();
     /* ...Machine Hulls */
 
     /* Machines... */
-    public static final Block clayWorkTable = new ClayWorkTable(0);
-    public static final Block clayCraftingTable = new ClayCraftingTable(0);
+    public static final Block clayWorkTable = new ClayWorkTable();
+    public static final Block clayCraftingTable = new ClayCraftingTable();
     /* ...Machines */
     /* ...Elements */
 
