@@ -19,7 +19,7 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
 
         sizeInventory = 4;
 
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 12, 25, RectangleTexture.LargeSlotTexture) {
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return ClayWorkTableRecipes.instance().hasKneadingResult(stack);
@@ -31,13 +31,13 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
                 return ClayiumItems.isItemTool(stack);
             }
         });
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 138, 25, RectangleTexture.LargeSlotTexture) {
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 142, 29, RectangleTexture.LargeSlotTexture) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return false;
             }
         });
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 143, 55) {
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 142, 54) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return false;
