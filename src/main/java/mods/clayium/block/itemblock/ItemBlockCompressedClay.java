@@ -1,7 +1,7 @@
 package mods.clayium.block.itemblock;
 
 import mods.clayium.block.CompressedClay;
-import mods.clayium.item.IClayEnergy;
+import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;

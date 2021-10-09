@@ -68,6 +68,22 @@ public class ClayiumItems {
     /* Dense Clay... */
     public static final Item denseClayPlate = new ClayiumItem("dense_clay_plate");
     public static final Item denseClayStick = new ClayiumItem("dense_clay_stick");
+    public static final Item shortDenseClayStick = new ClayiumItem("short_dense_clay_stick");
+    public static final Item denseClayRing = new ClayiumItem("dense_clay_ring");
+    public static final Item smallDenseClayRing = new ClayiumItem("small_dense_clay_ring");
+    public static final Item denseClayGear = new ClayiumItem("dense_clay_gear");
+    public static final Item denseClayBlade = new ClayiumItem("dense_clay_blade");
+    public static final Item denseClayNeedle = new ClayiumItem("dense_clay_needle");
+    public static final Item denseClayDisc = new ClayiumItem("dense_clay_disc");
+    public static final Item smallDenseClayDisc = new ClayiumItem("small_dense_clay_disc");
+    public static final Item denseClayCylinder = new ClayiumItem("dense_clay_cylinder");
+    public static final Item denseClayPipe = new ClayiumItem("dense_clay_pipe");
+    public static final Item largeDenseClayPlate = new ClayiumItem("large_dense_clay_plate");
+    public static final Item denseClayGrindingHead = new ClayiumItem("dense_clay_grinding_head");
+    public static final Item denseClayBearing = new ClayiumItem("dense_clay_bearing");
+    public static final Item denseClaySpindle = new ClayiumItem("dense_clay_spindle");
+    public static final Item denseClayCuttingHead = new ClayiumItem("dense_clay_cutting_head");
+    public static final Item denseClayWaterWheel = new ClayiumItem("dense_clay_water_wheel");
     /* ...Dense Clay */
     /* ...Materials */
 
