@@ -1,63 +1,50 @@
 package mods.clayium.machine.ClayWorkTable;
 
+import mods.clayium.gui.RectangleTexture;
+import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
+import mods.clayium.machine.common.ContainerClayMachineTemp;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerClayWorkTable extends Container {
-    private final TileEntityClayWorkTable tileEntity;
+public class ContainerClayWorkTable extends ContainerClayMachineTemp {
     private int kneadTime, kneadedTimes, cookingMethod;
-    private static final int sizeInventory = 4;
 
     public ContainerClayWorkTable(InventoryPlayer player, TileEntityClayWorkTable tileEntity) {
-        this.tileEntity = tileEntity;
-        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 17, 30) {
+        super(tileEntity);
+
+        sizeInventory = 4;
+
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 12, 25, RectangleTexture.LargeSlotTexture) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return ClayWorkTableRecipes.instance().hasKneadingResult(stack);
             }
         });
-        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return ClayiumItems.isItemTool(stack);
             }
         });
-        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 143, 30) {
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 138, 25, RectangleTexture.LargeSlotTexture) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return false;
             }
         });
-        this.addSlotToContainer(new Slot(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 143, 55) {
+        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 143, 55) {
             @Override
             public boolean isItemValid(ItemStack stack) {
                 return false;
             }
         });
 
-        for(int y = 0; y < 3; ++y) {
-            for(int x = 0; x < 9; ++x) {
-                this.addSlotToContainer(new Slot(player, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
-            }
-        }
-
-        for(int x = 0; x < 9; ++x) {
-            this.addSlotToContainer(new Slot(player, x, 8 + x * 18, 142));
-        }
-    }
-
-    @Override
-    public void addListener(IContainerListener listener) {
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, tileEntity);
+        setupPlayerSlots(player);
     }
 
     @Override
@@ -81,17 +68,6 @@ public class ContainerClayWorkTable extends Container {
         this.kneadTime = this.tileEntity.getField(0);
         this.kneadedTimes = this.tileEntity.getField(1);
         this.cookingMethod = this.tileEntity.getField(2);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int value) {
-        this.tileEntity.setField(id, value);
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer player) {
-        return this.tileEntity.isUsableByPlayer(player);
     }
 
     @Override
@@ -159,7 +135,7 @@ public class ContainerClayWorkTable extends Container {
 
     @Override
     public boolean enchantItem(EntityPlayer playerIn, int id) {
-        tileEntity.pushButton(playerIn, id);
+        ((TileEntityClayWorkTable) tileEntity).pushButton(playerIn, id);
         return true;
     }
 }

@@ -16,11 +16,8 @@ public abstract class TileEntityClayContainer extends TileEntity {
     protected NonNullList<ItemStack> inventory;
     protected String customName;
 
-    protected TileEntityClayContainer() {
+    protected TileEntityClayContainer(int invSize) {
         super();
-    }
-
-    protected void initTileEntity(int invSize) {
         inventory = NonNullList.withSize(invSize, ItemStack.EMPTY);
     }
 

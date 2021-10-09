@@ -2,44 +2,30 @@ package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
+import mods.clayium.machine.common.GuiClayMachineTemp;
+import mods.clayium.machine.common.IClicker;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 
-public class GuiClayWorkTable extends GuiContainer {
-    private final InventoryPlayer player;
-    private final TileEntityClayWorkTable tileEntity;
-
-    public GuiClayWorkTable(InventoryPlayer invPlayer, TileEntityClayWorkTable tileEntity) {
-        super(new ContainerClayWorkTable(invPlayer, tileEntity));
-        player = invPlayer;
-        this.tileEntity = tileEntity;
+public class GuiClayWorkTable extends GuiClayMachineTemp {
+    public GuiClayWorkTable(InventoryPlayer invPlayer, TileEntityClayWorkTable tileEntity, Block block) {
+        super(new ContainerClayWorkTable(invPlayer, tileEntity), tileEntity, block, 72);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        fontRenderer.drawString(tileEntity.getDisplayName().getUnformattedText(), 6, 6, 4210752);
-        fontRenderer.drawString(player.getDisplayName().getUnformattedText(), 8, ySize - 94, 4210752);
-    }
+    protected void supplyDraw() {
+        super.supplyDraw();
 
-    @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseZ) {
-        guiLeft = (width - xSize) / 2;
-        guiTop = (height - ySize) / 2;
-
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/clay_work_table.png"));
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-
-        drawTexturedModalRect(guiLeft + 48, guiTop + 29, 176, 0, tileEntity.getCookProgressScaled(80), 16);
+        mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png"));
+        drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 96, 80, 16);
+        drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 112, ((TileEntityClayWorkTable) tile).getCookProgressScaled(80), 16);
 
         for (GuiButton button : buttonList) {
-            button.enabled = tileEntity.isButtonEnable(button.id);
+            button.enabled = ((IClicker) tile).isButtonEnable(button.id);
         }
     }
 

@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayCraftingTable;
 
 import mods.clayium.gui.SlotWithTexture;
+import mods.clayium.machine.common.ContainerClayMachineTemp;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -11,7 +12,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ContainerClayCraftingTable extends Container {
+public class ContainerClayCraftingTable extends ContainerClayMachineTemp {
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public InventoryCraftResult craftResult = new InventoryCraftResult();
     private final World world;
@@ -19,20 +20,22 @@ public class ContainerClayCraftingTable extends Container {
     private final EntityPlayer player;
     private final AccessibleTile<TileEntityClayCraftingTable> tileTable;
     public AccessibleTile<TileEntityChest> tileChest = null;
-    private final int resultSlot = 0;
-    private final int sizeInventory = 10;
+    private final int resultSlot;
+    private final int machineSlot;
     public int machineGuiHeight;
 
     public ContainerClayCraftingTable(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
+        super((IInventory) worldIn.getTileEntity(posIn));
+
         world = worldIn;
         pos = posIn;
         player = playerInventory.player;
-        tileTable = new AccessibleTile<>((TileEntityClayCraftingTable) worldIn.getTileEntity(posIn), 0, 3, 3, 30, 17);
+        tileTable = new AccessibleTile<>((TileEntityClayCraftingTable) tileEntity, 0, 3, 3, 30, 17);
 
         for (EnumFacing facing : EnumFacing.VALUES) {
             TileEntity rawTile = worldIn.getTileEntity(posIn.offset(facing));
             if (rawTile instanceof TileEntityChest) {
-                tileChest = new AccessibleTile<>((TileEntityChest) rawTile, 0, 9, 3, 8, 73);
+                tileChest = new AccessibleTile<>((TileEntityChest) rawTile, 0, 9, 3, 8, 75);
                 break;
             }
         }
@@ -49,11 +52,15 @@ public class ContainerClayCraftingTable extends Container {
 
         addSlotToContainer(new SlotCrafting(playerInventory.player, craftMatrix, craftResult, 0, 124, 35));
 
+        resultSlot = inventorySlots.size();
+
         for(int y = 0; y < tileTable.getHeight(); ++y) {
             for(int x = 0; x < tileTable.getWidth(); ++x) {
                 addSlotToContainer(new SlotWithTexture(craftMatrix, tileTable.getStart() + x + y * tileTable.getWidth(), tileTable.getX() + x * 18, tileTable.getY() + y * 18, this));
             }
         }
+
+        machineSlot = inventorySlots.size();
 
         if (tileChest != null) {
             for(int y = 0; y < tileChest.getHeight(); ++y) {
@@ -63,15 +70,9 @@ public class ContainerClayCraftingTable extends Container {
             }
         }
 
-        for(int y = 0; y < 3; ++y) {
-            for(int x = 0; x < 9; ++x) {
-                addSlotToContainer(new Slot(playerInventory, x + y * 9 + 9,  8 + x * 18, machineGuiHeight + 12 + y * 18));
-            }
-        }
+        sizeInventory = inventorySlots.size();
 
-        for(int x = 0; x < 9; ++x) {
-            addSlotToContainer(new Slot(playerInventory, x, 8 + x * 18, machineGuiHeight + 70));
-        }
+        setupPlayerSlots(playerInventory, machineGuiHeight);
     }
 
     @Override
@@ -90,66 +91,50 @@ public class ContainerClayCraftingTable extends Container {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return tileTable.getInventory().isUsableByPlayer(playerIn);
+    public boolean canTransferToMachineInventory(ItemStack itemStackIn) {
+        return true;
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = inventorySlots.get(index);
+    public boolean transferStackToMachineInventory(ItemStack itemStackIn) {
+        return mergeItemStack(itemStackIn, machineSlot, sizeInventory, false)
+                || mergeItemStack(itemStackIn, resultSlot, machineSlot, false);
+    }
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+    @Override
+    public boolean transferStackFromMachineInventory(ItemStack itemStackIn, int index) {
+        if (index == resultSlot) {
+            int stackSize = canMergeItemStack(itemStackIn, machineSlot, sizeInventory, true);
 
-            if (index == resultSlot) {
-                itemstack1.getItem().onCreated(itemstack1, world, playerIn);
-
-                if (!this.mergeItemStack(itemstack1, sizeInventory, sizeInventory + 36, true)) {
-                    return ItemStack.EMPTY;
-                }
-
-                slot.onSlotChange(itemstack1, itemstack);
-            } else if (index >= sizeInventory && index < sizeInventory + 27) {
-                if (!this.mergeItemStack(itemstack1, sizeInventory + 27, sizeInventory + 36, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            else if (index >= sizeInventory + 27 && index < sizeInventory + 36) {
-                if (!this.mergeItemStack(itemstack1, sizeInventory, sizeInventory + 27, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.mergeItemStack(itemstack1, sizeInventory, sizeInventory + 36, false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (itemstack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+            if (stackSize == 0) {
+                return mergeItemStack(itemStackIn, machineSlot, sizeInventory, true);
             } else {
-                slot.onSlotChanged();
+                ItemStack _itemStack = itemStackIn.copy();
+                _itemStack.setCount(stackSize);
+
+                if (canMergeItemStack(_itemStack, sizeInventory, sizeInventory + 36, true) == 0) {
+                    mergeItemStack(itemStackIn, machineSlot, sizeInventory, true);
+                    mergeItemStack(itemStackIn, sizeInventory, sizeInventory + 36, true);
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            if (index >= resultSlot && index < machineSlot) {
+                if (mergeItemStack(itemStackIn, 0, machineSlot, false)) {
+                    return true;
+                }
+            } else if (index < machineSlot
+                    && mergeItemStack(itemStackIn, machineSlot, resultSlot, false)) {
+                return true;
             }
 
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            ItemStack itemstack2 = slot.onTake(playerIn, itemstack1);
-
-            if (index == resultSlot) {
-                playerIn.dropItem(itemstack2, false);
-            }
+            return transferStackToPlayerInventory(itemStackIn, false);
         }
-
-        return itemstack;
     }
 
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
-    }
-
-    public String getInventoryName() {
-        return tileTable.getInventory().getDisplayName().getFormattedText();
     }
 }

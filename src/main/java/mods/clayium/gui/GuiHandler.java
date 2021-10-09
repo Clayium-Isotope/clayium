@@ -50,7 +50,7 @@ public class GuiHandler implements IGuiHandler {
         if (tile != null) {
             switch (ID) {
                 case clayWorkTableGuiID:
-                    return new GuiClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile);
+                    return new GuiClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile, state.getBlock());
                 case clayCraftingTableGuiID:
                     return new GuiClayCraftingTable(new ContainerClayCraftingTable(player.inventory, world, pos), (TileEntityClayCraftingTable) tile, state.getBlock());
             }

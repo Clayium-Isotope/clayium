@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.common.IClicker;
+import mods.clayium.machine.common.TileEntitySidedClayContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -19,7 +20,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayWorkTable extends TileEntity implements ISidedInventory, IClicker {
+public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implements IClicker {
     public enum ClayWorkTableSlots {
         MATERIAL,
         TOOL,
@@ -30,11 +31,14 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     private static final int[] slotsTop = new int[] { ClayWorkTableSlots.TOOL.ordinal() };
     private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
     private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(), ClayWorkTableSlots.CHANGE.ordinal() };
-    private NonNullList<ItemStack> inventory = NonNullList.withSize(ClayWorkTableSlots.values().length, ItemStack.EMPTY);
     private int kneadedTimes;
     private int kneadTime;
     private int cookingMethod = -1;
     private String customName;
+
+    public TileEntityClayWorkTable() {
+        super(ClayWorkTableSlots.values().length);
+    }
 
     @Override
     public int getSizeInventory() {
@@ -142,6 +146,22 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         super.onDataPacket(net, pkt);
         handleUpdateTag(pkt.getNbtCompound());
+
+        boolean stateChanged = false;
+
+        //        updateEntity();
+
+        if (!ClayWorkTableRecipes.instance().hasKneadingResult(getStackInSlot(ClayWorkTableSlots.MATERIAL))) {
+            kneadedTimes = 0;
+            kneadTime = 0;
+            cookingMethod = -1;
+
+            stateChanged = true;
+        }
+
+        if (stateChanged) {
+            sendUpdate();
+        }
     }
 
     private void sendUpdate() {
@@ -166,25 +186,6 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     public int getCookProgressScaled(int pixels) {
         return this.kneadTime != 0 && this.cookingMethod != -1 ? this.kneadedTimes * pixels / this.kneadTime : 0;
     }
-
-//    @Override
-//    public void update() {
-//        boolean stateChanged = false;
-//
-//        updateEntity();
-//
-//        if (!ClayWorkTableRecipes.instance().hasKneadingResult(getStackInSlot(ClayWorkTableSlots.MATERIAL))) {
-//            this.kneadProgress = 0;
-//            this.timeToKnead = 0;
-//            this.cookingMethod = ClayWorkTableActions.UNKNOWN;
-//
-//            stateChanged = true;
-//        }
-//
-//        if (stateChanged) {
-//            sendUpdate();
-//        }
-//    }
 
     public void updateEntity() {
         int maxTransfer = 1;
@@ -391,16 +392,6 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
-        if (this.world.getTileEntity(this.pos) == this)
-            return player.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64.0D;
-        return false;
-    }
-
-    @Override
-    public void openInventory(EntityPlayer player) {}
-
-    @Override
     public void closeInventory(EntityPlayer player) {
         sendUpdate();
     }
@@ -422,11 +413,6 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
         return isItemValidForSlot(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        return true;
     }
 
 //    @Override
@@ -456,10 +442,5 @@ public class TileEntityClayWorkTable extends TileEntity implements ISidedInvento
     @Override
     public int getFieldCount() {
         return 3;
-    }
-
-    @Override
-    public void clear() {
-        this.inventory.clear();
     }
 }

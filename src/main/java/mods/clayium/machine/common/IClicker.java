@@ -9,5 +9,9 @@ public interface IClicker {
         PROPOSE
     }
 
+    ButtonProperty canPushButton(int button);
+
+    boolean isButtonEnable(int button);
+
     void pushButton(EntityPlayer playerIn, int id);
 }
