@@ -5,6 +5,7 @@ import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
 import mods.clayium.machine.common.ContainerClayMachineTemp;
+import mods.clayium.machine.crafting.ClayiumRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -22,7 +23,7 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
         this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture) {
             @Override
             public boolean isItemValid(ItemStack stack) {
-                return ClayWorkTableRecipes.instance().hasKneadingResult(stack);
+                return ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTableRecipe, stack, ItemStack.EMPTY);
             }
         });
         this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
@@ -91,7 +92,9 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
                 slot.onSlotChange(itemstack1, itemstack);
             } else {
                 if (index >= sizeInventory) { // belongings ->
-                    if (ClayWorkTableRecipes.instance().hasKneadingResult(itemstack1)) { // -> container[material]
+                    if (ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTableRecipe,
+                            itemstack1, ((TileEntityClayWorkTable) tileEntity).getStackInSlot(ClayWorkTableSlots.TOOL))
+                    ) { // -> container[material]
                         if (!this.mergeItemStack(itemstack1, ClayWorkTableSlots.MATERIAL.ordinal(), ClayWorkTableSlots.MATERIAL.ordinal() + 1, false)) {
                             return ItemStack.EMPTY;
                         }

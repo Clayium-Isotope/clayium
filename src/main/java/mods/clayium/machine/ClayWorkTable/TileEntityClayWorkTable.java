@@ -3,6 +3,8 @@ package mods.clayium.machine.ClayWorkTable;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.common.IClicker;
 import mods.clayium.machine.common.TileEntitySidedClayContainer;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -32,7 +34,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
     private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(), ClayWorkTableSlots.CHANGE.ordinal() };
     private int kneadedTimes;
-    private int kneadTime;
+    private long kneadTime;
     private int cookingMethod = -1;
     private String customName;
 
@@ -42,12 +44,12 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
     @Override
     public int getSizeInventory() {
-        return this.inventory.size();
+        return this.machineInventory.size();
     }
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return this.inventory.get(index);
+        return this.machineInventory.get(index);
     }
 
     public ItemStack getStackInSlot(ClayWorkTableSlots slot) {
@@ -56,17 +58,17 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(inventory, index, count);
+        return ItemStackHelper.getAndSplit(machineInventory, index, count);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.inventory, index);
+        return ItemStackHelper.getAndRemove(this.machineInventory, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.inventory.set(index, stack);
+        this.machineInventory.set(index, stack);
 
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
@@ -75,7 +77,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack itemstack : this.inventory)
+        for (ItemStack itemstack : this.machineInventory)
             if (!itemstack.isEmpty())
                 return false;
         return true;
@@ -103,12 +105,12 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
-        this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(tagCompound, this.inventory);
+        machineInventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(tagCompound, machineInventory);
 
-        this.kneadedTimes = tagCompound.getShort("kneadProgress");
-        this.kneadTime = tagCompound.getShort("TimeToKnead");
-        this.cookingMethod = tagCompound.getShort("cookingMethod");
+        kneadedTimes = tagCompound.getInteger("kneadProgress");
+        kneadTime = tagCompound.getLong("TimeToKnead");
+        cookingMethod = tagCompound.getInteger("cookingMethod");
 
         if (tagCompound.hasKey("CustomName", 8)) {
             this.customName = tagCompound.getString("CustomName");
@@ -119,11 +121,11 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
 
-        tagCompound.setShort("kneadProgress", (short) this.kneadedTimes);
-        tagCompound.setShort("TimeToKnead", (short) this.kneadTime);
-        tagCompound.setShort("CookingMethod", (short) this.cookingMethod);
+        tagCompound.setInteger("kneadProgress", kneadedTimes);
+        tagCompound.setLong("TimeToKnead", kneadTime);
+        tagCompound.setInteger("CookingMethod", cookingMethod);
 
-        ItemStackHelper.saveAllItems(tagCompound, this.inventory);
+        ItemStackHelper.saveAllItems(tagCompound, machineInventory);
 
         if (hasCustomName()) {
             tagCompound.setString("CustomName", customName);
@@ -151,7 +153,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
         //        updateEntity();
 
-        if (!ClayWorkTableRecipes.instance().hasKneadingResult(getStackInSlot(ClayWorkTableSlots.MATERIAL))) {
+        if (!ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTableRecipe, getStackInSlot(ClayWorkTableSlots.MATERIAL), getStackInSlot(ClayWorkTableSlots.TOOL))) {
             kneadedTimes = 0;
             kneadTime = 0;
             cookingMethod = -1;
@@ -184,7 +186,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
     @SideOnly(Side.CLIENT)
     public int getCookProgressScaled(int pixels) {
-        return this.kneadTime != 0 && this.cookingMethod != -1 ? this.kneadedTimes * pixels / this.kneadTime : 0;
+        return this.kneadTime != 0 && this.cookingMethod != -1 ? (int) (this.kneadedTimes * pixels / this.kneadTime) : 0;
     }
 
     public void updateEntity() {
@@ -273,30 +275,30 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
             return false;
         }
 
-        ClayWorkTableRecipes.RecipeElement recipe = ClayWorkTableRecipes.instance().getKneadingResultMap(method, this.inventory);
-        if (recipe.getProduct().isEmpty()) {
+        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTableRecipe, machineInventory, method, 0);
+        if (recipe.getResult().getResults().get(0).isEmpty()) {
             return false;
         }
         if (this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isEmpty()) {
             return true;
         }
-        if (!this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isItemEqual(recipe.getProduct())) {
+        if (!this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isItemEqual(recipe.getResult().getResults().get(0))) {
             return false;
         }
 
         int count;
-        if (!recipe.getChange().isEmpty() && !this.getStackInSlot(ClayWorkTableSlots.CHANGE).isEmpty()) {
-            if (!this.getStackInSlot(ClayWorkTableSlots.CHANGE).isItemEqual(recipe.getChange())) {
+        if (!recipe.getResult().getResults().get(1).isEmpty() && !this.getStackInSlot(ClayWorkTableSlots.CHANGE).isEmpty()) {
+            if (!this.getStackInSlot(ClayWorkTableSlots.CHANGE).isItemEqual(recipe.getResult().getResults().get(1))) {
                 return false;
             }
 
-            count = this.getStackInSlot(ClayWorkTableSlots.CHANGE).getCount() + recipe.getChange().getCount();
+            count = this.getStackInSlot(ClayWorkTableSlots.CHANGE).getCount() + recipe.getResult().getResults().get(1).getCount();
             if (count > this.getInventoryStackLimit() || count > this.getStackInSlot(ClayWorkTableSlots.CHANGE).getMaxStackSize()) {
                 return false;
             }
         }
 
-        count = this.getStackInSlot(ClayWorkTableSlots.PRODUCT).getCount() + recipe.getProduct().getCount();
+        count = this.getStackInSlot(ClayWorkTableSlots.PRODUCT).getCount() + recipe.getResult().getResults().get(0).getCount();
         return count <= this.getInventoryStackLimit() && count <= this.getStackInSlot(ClayWorkTableSlots.PRODUCT).getMaxStackSize();
     }
 
@@ -336,45 +338,45 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     public void pushButton(EntityPlayer player, int button) {
         ButtonProperty canPushButton = this.canPushButton(button);
 
-        ClayWorkTableRecipes.RecipeElement recipe = ClayWorkTableRecipes.RecipeElement.FLAT;
+        RecipeElement recipe = RecipeElement.FLAT;
         if (canPushButton != ButtonProperty.FAILURE) {
-            recipe = ClayWorkTableRecipes.instance().getKneadingResultMap(button, this.inventory);
+            recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTableRecipe, this.machineInventory, button, 0);
         }
 
         if (canPushButton != ButtonProperty.FAILURE
                 //                && buttonId >= 2
-                && !recipe.getRequireTool().isEmpty()
+                && !recipe.getCondition().getMaterials().get(ClayWorkTableSlots.TOOL.ordinal()).isEmpty()
                 && !this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()
                 && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem().hasContainerItem(this.getStackInSlot(ClayWorkTableSlots.TOOL))) {
-            this.inventory.set(ClayWorkTableSlots.TOOL.ordinal(),
+            this.machineInventory.set(ClayWorkTableSlots.TOOL.ordinal(),
                     this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem().getContainerItem(this.getStackInSlot(ClayWorkTableSlots.TOOL)));
         }
 
         if (canPushButton == ButtonProperty.PERMIT) {
             if (this.cookingMethod == -1) {
-                this.kneadTime = recipe.getKneadTime();
+                this.kneadTime = recipe.getResult().getTime();
                 this.cookingMethod = button;
                 this.kneadedTimes = 0;
             }
 
             ++this.kneadedTimes;
             if (this.kneadedTimes >= this.kneadTime) {
-                ItemStack product = recipe.getProduct();
-                ItemStack change = recipe.getChange();
+                ItemStack product = recipe.getResult().getResults().get(0);
+                ItemStack change = recipe.getResult().getResults().get(1);
                 this.kneadedTimes = 0;
                 this.cookingMethod = -1;
 
-                this.getStackInSlot(ClayWorkTableSlots.MATERIAL).shrink(recipe.getMaterial().getCount());
+                this.getStackInSlot(ClayWorkTableSlots.MATERIAL).shrink(recipe.getCondition().getMaterials().get(ClayWorkTableSlots.MATERIAL.ordinal()).getCount());
 
                 if (this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isEmpty()) {
-                    this.inventory.set(ClayWorkTableSlots.PRODUCT.ordinal(), product.copy());
+                    this.machineInventory.set(ClayWorkTableSlots.PRODUCT.ordinal(), product.copy());
                 } else if (this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isItemEqual(product)) {
                     this.getStackInSlot(ClayWorkTableSlots.PRODUCT).grow(product.getCount());
                 }
 
                 if (!change.isEmpty()) {
                     if (this.getStackInSlot(ClayWorkTableSlots.CHANGE).isEmpty()) {
-                        this.inventory.set(ClayWorkTableSlots.CHANGE.ordinal(), change.copy());
+                        this.machineInventory.set(ClayWorkTableSlots.CHANGE.ordinal(), change.copy());
                     } else if (this.getStackInSlot(ClayWorkTableSlots.CHANGE).isItemEqual(change)) {
                         this.getStackInSlot(ClayWorkTableSlots.CHANGE).grow(change.getCount());
                     }
@@ -423,7 +425,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     @Override
     public int getField(int id) {
         switch (id) {
-            case 0: return this.kneadTime;
+            case 0: return (int) this.kneadTime;
             case 1: return this.kneadedTimes;
             case 2: return this.cookingMethod;
             default: return 0;

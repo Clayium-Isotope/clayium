@@ -13,12 +13,12 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public abstract class TileEntityClayContainer extends TileEntity {
-    protected NonNullList<ItemStack> inventory;
+    protected NonNullList<ItemStack> machineInventory;
     protected String customName;
 
     protected TileEntityClayContainer(int invSize) {
         super();
-        inventory = NonNullList.withSize(invSize, ItemStack.EMPTY);
+        machineInventory = NonNullList.withSize(invSize, ItemStack.EMPTY);
     }
 
     public int getInventoryStackLimit() {
@@ -26,23 +26,23 @@ public abstract class TileEntityClayContainer extends TileEntity {
     }
 
     public int getSizeInventory() {
-        return inventory.size();
+        return machineInventory.size();
     }
 
     public ItemStack getStackInSlot(int index) {
-        return inventory.get(index);
+        return machineInventory.get(index);
     }
 
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(inventory, index, count);
+        return ItemStackHelper.getAndSplit(machineInventory, index, count);
     }
 
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(inventory, index);
+        return ItemStackHelper.getAndRemove(machineInventory, index);
     }
 
     public void setInventorySlotContents(int index, ItemStack stack) {
-        inventory.set(index, stack);
+        machineInventory.set(index, stack);
 
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
@@ -50,14 +50,14 @@ public abstract class TileEntityClayContainer extends TileEntity {
     }
 
     public boolean isEmpty() {
-        for (ItemStack itemstack : inventory)
+        for (ItemStack itemstack : machineInventory)
             if (!itemstack.isEmpty())
                 return false;
         return true;
     }
 
     public void clear() {
-        inventory.clear();
+        machineInventory.clear();
     }
 
     public String getName() {
@@ -80,8 +80,8 @@ public abstract class TileEntityClayContainer extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, inventory);
+        machineInventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, machineInventory);
 
         if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
@@ -92,7 +92,7 @@ public abstract class TileEntityClayContainer extends TileEntity {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
-        ItemStackHelper.saveAllItems(compound, this.inventory);
+        ItemStackHelper.saveAllItems(compound, this.machineInventory);
 
         if (hasCustomName()) {
             compound.setString("CustomName", customName);
