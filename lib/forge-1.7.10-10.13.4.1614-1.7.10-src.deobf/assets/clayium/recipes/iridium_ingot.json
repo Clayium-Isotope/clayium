@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:item_iridium_block"
+    }
+  ],
+  "result": {
+    "item": "clayium:item_iridium_ingot",
+    "count": 9
+  }
+}

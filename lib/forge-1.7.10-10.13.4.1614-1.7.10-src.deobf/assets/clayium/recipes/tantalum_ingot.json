@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:item_tantalum_block"
+    }
+  ],
+  "result": {
+    "item": "clayium:item_tantalum_ingot",
+    "count": 9
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:item_europium_block"
+    }
+  ],
+  "result": {
+    "item": "clayium:item_europium_ingot",
+    "count": 9
+  }
+}

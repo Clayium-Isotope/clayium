@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:item_az91d_block"
+    }
+  ],
+  "result": {
+    "item": "clayium:item_az91d_ingot",
+    "count": 9
+  }
+}

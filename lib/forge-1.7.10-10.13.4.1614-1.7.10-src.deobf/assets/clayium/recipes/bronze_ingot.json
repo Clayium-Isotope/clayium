@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "clayium:item_bronze_block"
+    }
+  ],
+  "result": {
+    "item": "clayium:item_bronze_ingot",
+    "count": 9
+  }
+}
