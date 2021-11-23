@@ -2,19 +2,19 @@ package mods.clayium.machine.crafting;
 
 import net.minecraft.item.ItemStack;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class RecipeElement {
-    public static final RecipeElement FLAT = new RecipeElement(Collections.singletonList(ItemStack.EMPTY), Collections.singletonList(ItemStack.EMPTY), 0);
+    public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, 0, 0, ItemStack.EMPTY, 0, 0);
 
-    public RecipeElement(List<ItemStack> materialIn, List<ItemStack> resultIn, int time) {
-        this(materialIn, resultIn, -1, time);
+    public RecipeElement(ItemStack materialIn, int method, int tier, ItemStack resultIn, long energy, long time) {
+        this(Arrays.asList(materialIn), method, tier, Arrays.asList(resultIn), energy, time);
     }
 
-    public RecipeElement(List<ItemStack> materialIn, List<ItemStack> resultIn, int method, int time) {
-        condition = new RecipeCondition(materialIn, method, 0);
-        result = new RecipeResult(resultIn, 0, time);
+    public RecipeElement(List<ItemStack> materialIn, int method, int tier, List<ItemStack> resultIn, long energy, long time) {
+        condition = new RecipeCondition(materialIn, method, tier);
+        result = new RecipeResult(resultIn, energy, time);
     }
 
     public RecipeCondition getCondition() {

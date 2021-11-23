@@ -4,7 +4,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
@@ -15,15 +14,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemTiered extends ClayiumItem implements ITieredItem {
-    private int tier = -1;
+    private final int tier;
 
     public ItemTiered(String modelPath, int tier) {
-        super(modelPath);
+        super(modelPath + (modelPath.endsWith("_") ? tier : ""));
         this.tier = tier;
-    }
-
-    public ItemTiered(ResourceLocation modelPath, int tier) {
-        this(modelPath.toString(), tier);
     }
 
     @Override
@@ -48,11 +43,6 @@ public class ItemTiered extends ClayiumItem implements ITieredItem {
         if (12 <= tier && tier <= 15) return EnumRarity.EPIC;
 
         return EnumRarity.COMMON;
-    }
-
-    public ItemTiered setTier(int tier) {
-        this.tier = tier;
-        return this;
     }
 
     @Override

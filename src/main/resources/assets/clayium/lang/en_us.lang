@@ -98,10 +98,10 @@ tile.machine_hull_10.name=Pure Antimatter Machine Hull
 tile.machine_hull_11.name=OEC Machine Hull
 tile.machine_hull_12.name=OPA Machine Hull
 
-# #tile.blockOthersHull.0.name=AZ91D Alloy Hull
-# #tile.blockOthersHull.1.name=ZK60A Alloy Hull
-# tile.blockAZ91DHull.name=AZ91D Alloy Hull
-# tile.blockZK60AHull.name=ZK60A Alloy Hull
+#tile.blockOthersHull.0.name=AZ91D Alloy Hull
+#tile.blockOthersHull.1.name=ZK60A Alloy Hull
+tile.az91d_alloy_hull.name=AZ91D Alloy Hull
+tile.zk60a_alloy_hull.name=ZK60A Alloy Hull
 
 tile.clay_work_table.name=Clay Work Table
 tile.clay_work_table.tooltip.line1=The first step to Clay Industry.
@@ -801,9 +801,9 @@ item.clay_spatula.tooltip.line1=Changes a machine's appearance to Pipe.
 # item.itemDirectionMemory.tooltip.line1=Used to configure in what direction
 # item.itemDirectionMemory.tooltip.line2=an Area Activator aims while using items.
 
-# item.itemCompressedClayShard.1.name=Compressed Clay Shard
-# item.itemCompressedClayShard.2.name=Industrial Clay Shard
-# item.itemCompressedClayShard.3.name=Advanced Industrial Clay Shard
+item.compressed_clay_shard_1.name=Compressed Clay Shard
+item.compressed_clay_shard_2.name=Industrial Clay Shard
+item.compressed_clay_shard_3.name=Advanced Industrial Clay Shard
 
 item.clay_shovel.name=Clay Shovel
 item.clay_shovel.tooltip.line1=Can dig Clay Ores and increase drops.
@@ -931,18 +931,18 @@ item.clay_pickaxe.tooltip.line1=Can harvest Clay Ores so fast and increase drops
 
 item.clay_plate.name=Clay Plate
 item.clay_stick.name=Clay Stick
-item.short_clay_stick.name=Short Clay Stick
+item.clay_short_stick.name=Short Clay Stick
 item.clay_ring.name=Clay Ring
-item.small_clay_ring.name=Small Clay Ring
+item.clay_small_ring.name=Small Clay Ring
 item.clay_gear.name=Clay Gear
 item.clay_blade.name=Clay Blade
 item.clay_needle.name=Clay Needle
 item.clay_disc.name=Clay Disc
-item.small_clay_disc.name=Small Clay Disc
+item.clay_small_disc.name=Small Clay Disc
 item.clay_cylinder.name=Clay Cylinder
 item.clay_pipe.name=Clay Pipe
-item.large_clay_ball.name=Large Clay Ball
-item.large_clay_plate.name=Large Clay Plate
+item.clay_large_ball.name=Large Clay Ball
+item.clay_large_plate.name=Large Clay Plate
 item.clay_grinding_head.name=Clay Grinding Head
 item.clay_bearing.name=Clay Bearing
 item.clay_spindle.name=Clay Spindle
@@ -951,17 +951,17 @@ item.clay_water_wheel.name=Clay Wheel
 
 item.dense_clay_plate.name=Dense Clay Plate
 item.dense_clay_stick.name=Dense Clay Stick
-item.short_dense_clay_stick.name=Short Dense Clay Stick
+item.dense_clay_short_stick.name=Short Dense Clay Stick
 item.dense_clay_ring.name=Dense Clay Ring
-item.small_dense_clay_ring.name=Small Dense Clay Ring
+item.dense_clay_small_ring.name=Small Dense Clay Ring
 item.dense_clay_gear.name=Dense Clay Gear
 item.dense_clay_blade.name=Dense Clay Blade
 item.dense_clay_needle.name=Dense Clay Needle
 item.dense_clay_disc.name=Dense Clay Disc
-item.small_dense_clay_disc.name=Small Dense Clay Disc
+item.dense_clay_small_disc.name=Small Dense Clay Disc
 item.dense_clay_cylinder.name=Dense Clay Cylinder
 item.dense_clay_pipe.name=Dense Clay Pipe
-item.large_dense_clay_plate.name=Large Dense Clay Plate
+item.dense_clay_large_plate.name=Large Dense Clay Plate
 item.dense_clay_grinding_head.name=Dense Clay Grinding Head
 item.dense_clay_bearing.name=Dense Clay Bearing
 item.dense_clay_spindle.name=Dense Clay Spindle
@@ -969,11 +969,11 @@ item.dense_clay_spindle.tooltip.line1=Time consumer
 item.dense_clay_cutting_head.name=Dense Clay Cutting Head
 item.dense_clay_water_wheel.name=Dense Clay Wheel
 
-# item.itemPlates.IndustrialClay.name=Industrial Clay Plate
-# item.itemLargePlates.IndustrialClay.name=Large Industrial Clay Plate
+item.ind_clay_plate.name=Industrial Clay Plate
+item.ind_clay_large_plate.name=Large Industrial Clay Plate
 
-# item.itemPlates.AdvancedIndustrialClay.name=Advanced Industrial Clay Plate
-# item.itemLargePlates.AdvancedIndustrialClay.name=Large Advanced Industrial Clay Plate
+item.adv_ind_clay_plate.name=Advanced Industrial Clay Plate
+item.adv_ind_clay_large_plate.name=Large Advanced Industrial Clay Plate
 
 # item.itemClayParts.Dust.name=Clay Dust
 # item.dense_clay_Dust.name=Dense Clay Dust

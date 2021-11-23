@@ -1,12 +1,15 @@
 package mods.clayium.item;
 
+import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.common.ItemDamaged;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ClayiumItems {
     public static void initItems() {
@@ -16,7 +19,24 @@ public class ClayiumItems {
             for (Field field : ClayiumItems.class.getFields()) {
                 if (field.get(instance) instanceof Item) {
                     Item item = (Item) field.get(instance);
-                    items.add(item);
+
+                    if (item instanceof ClayiumItem
+                            || item.equals(clayPickaxe)
+                            || item.equals(clayShovel)) {
+                        items.add(item);
+                    }
+                }
+                if (field.get(instance) instanceof ItemDamaged) {
+                    items.addAll((ItemDamaged) field.get(instance));
+                }
+                if (field.get(instance) == materialMap) {
+                    for (CMaterial material : CMaterial.values()) {
+                        for (CShape shape : CShape.values()) {
+                            if (get(material, shape) instanceof ClayiumItem) {
+                                items.add(get(material, shape));
+                            }
+                        }
+                    }
                 }
             }
         } catch (IllegalAccessException ignore) {}
@@ -42,49 +62,92 @@ public class ClayiumItems {
     public static final Item clayShovel = new ClayShovel();
     /* ...Tools */
 
-    /* Materials... */
-    /* Clay... */
-    public static final Item clayPlate = new ClayiumItem("clay_plate");
-    public static final Item clayStick = new ClayiumItem("clay_stick");
-    public static final Item shortClayStick = new ClayiumItem("short_clay_stick");
-    public static final Item clayRing = new ClayiumItem("clay_ring");
-    public static final Item smallClayRing = new ClayiumItem("small_clay_ring");
-    public static final Item clayGear = new ClayiumItem("clay_gear");
-    public static final Item clayBlade = new ClayiumItem("clay_blade");
-    public static final Item clayNeedle = new ClayiumItem("clay_needle");
-    public static final Item clayDisc = new ClayiumItem("clay_disc");
-    public static final Item smallClayDisc = new ClayiumItem("small_clay_disc");
-    public static final Item clayCylinder = new ClayiumItem("clay_cylinder");
-    public static final Item clayPipe = new ClayiumItem("clay_pipe");
-    public static final Item largeClayBall = new ClayiumItem("large_clay_ball");
-    public static final Item largeClayPlate = new ClayiumItem("large_clay_plate");
-    public static final Item clayGrindingHead = new ClayiumItem("clay_grinding_head");
-    public static final Item clayBearing = new ClayiumItem("clay_bearing");
-    public static final Item claySpindle = new ClayiumItem("clay_spindle");
-    public static final Item clayCuttingHead = new ClayiumItem("clay_cutting_head");
-    public static final Item clayWaterWheel = new ClayiumItem("clay_water_wheel");
-    /* ...Clay*/
+    /* Compressed Clay Shards ... */
+    public static final ItemDamaged clayShards = new ItemDamaged("compressed_clay_shard_", new int[] {1, 2, 3});
+    /* ... Compressed Clay Shards */
 
-    /* Dense Clay... */
-    public static final Item denseClayPlate = new ClayiumItem("dense_clay_plate");
-    public static final Item denseClayStick = new ClayiumItem("dense_clay_stick");
-    public static final Item shortDenseClayStick = new ClayiumItem("short_dense_clay_stick");
-    public static final Item denseClayRing = new ClayiumItem("dense_clay_ring");
-    public static final Item smallDenseClayRing = new ClayiumItem("small_dense_clay_ring");
-    public static final Item denseClayGear = new ClayiumItem("dense_clay_gear");
-    public static final Item denseClayBlade = new ClayiumItem("dense_clay_blade");
-    public static final Item denseClayNeedle = new ClayiumItem("dense_clay_needle");
-    public static final Item denseClayDisc = new ClayiumItem("dense_clay_disc");
-    public static final Item smallDenseClayDisc = new ClayiumItem("small_dense_clay_disc");
-    public static final Item denseClayCylinder = new ClayiumItem("dense_clay_cylinder");
-    public static final Item denseClayPipe = new ClayiumItem("dense_clay_pipe");
-    public static final Item largeDenseClayPlate = new ClayiumItem("large_dense_clay_plate");
-    public static final Item denseClayGrindingHead = new ClayiumItem("dense_clay_grinding_head");
-    public static final Item denseClayBearing = new ClayiumItem("dense_clay_bearing");
-    public static final Item denseClaySpindle = new ClayiumItem("dense_clay_spindle");
-    public static final Item denseClayCuttingHead = new ClayiumItem("dense_clay_cutting_head");
-    public static final Item denseClayWaterWheel = new ClayiumItem("dense_clay_water_wheel");
-    /* ...Dense Clay */
+    /* Materials... */
+    public enum CMaterial {
+        clay("clay"),
+        denseClay("dense_clay"),
+        indClay("ind_clay"),
+        advIndClay("adv_ind_clay");
+
+        CMaterial(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+        private final String name;
+    }
+
+    public enum CShape {
+        plate("plate"),
+        stick("stick"),
+        shortStick("short_stick"),
+        ring("ring"),
+        smallRing("small_ring"),
+        gear("gear"),
+        blade("blade"),
+        needle("needle"),
+        disc("disc"),
+        smallDisc("small_disc"),
+        cylinder("cylinder"),
+        pipe("pipe"),
+        largeBall("large_ball"),
+        largePlate("large_plate"),
+        grindingHead("grinding_head"),
+        bearing("bearing"),
+        spindle("spindle"),
+        cuttingHead("cutting_head"),
+        waterWheel("water_wheel"),
+        block("block"),
+        ball("ball"),
+        dust("dust"),
+        plural("plural");
+
+        CShape(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+        private final String name;
+    }
+
+    public static final Map<CMaterial, Map<CShape, Item>> materialMap = new HashMap<>();
+    static {
+        for (CMaterial material : CMaterial.values()) {
+            materialMap.put(material, new HashMap<>());
+        }
+
+        materialMap.get(CMaterial.clay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(0)));
+        materialMap.get(CMaterial.clay).put(CShape.ball, Items.CLAY_BALL);
+        materialMap.get(CMaterial.clay).put(CShape.plural, Items.AIR);
+        for (CShape shape : CShape.values()) {
+            materialMap.get(CMaterial.clay).putIfAbsent(shape, new ClayiumItem(CMaterial.clay.getName() + "_" + shape.getName()));
+        }
+
+        materialMap.get(CMaterial.denseClay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(1)));
+        materialMap.get(CMaterial.denseClay).put(CShape.ball, Items.CLAY_BALL);
+        materialMap.get(CMaterial.denseClay).put(CShape.largeBall, Items.AIR);
+        materialMap.get(CMaterial.denseClay).put(CShape.plural, Items.AIR);
+        for (CShape shape : CShape.values()) {
+            materialMap.get(CMaterial.denseClay).putIfAbsent(shape, new ClayiumItem(CMaterial.denseClay.getName() + "_" + shape.getName()));
+        }
+
+        materialMap.get(CMaterial.indClay).putIfAbsent(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(3)));
+        materialMap.get(CMaterial.indClay).putIfAbsent(CShape.plate, new ClayiumItem(CMaterial.indClay.getName() + "_" + CShape.plate.getName()));
+        materialMap.get(CMaterial.indClay).putIfAbsent(CShape.largePlate, new ClayiumItem(CMaterial.indClay.getName() + "_" + CShape.largePlate.getName()));
+
+        materialMap.get(CMaterial.advIndClay).putIfAbsent(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(4)));
+        materialMap.get(CMaterial.advIndClay).putIfAbsent(CShape.plate, new ClayiumItem(CMaterial.advIndClay.getName() + "_" + CShape.plate.getName()));
+        materialMap.get(CMaterial.advIndClay).putIfAbsent(CShape.largePlate, new ClayiumItem(CMaterial.advIndClay.getName() + "_" + CShape.largePlate.getName()));
+    }
+    public static Item get(CMaterial material, CShape shape) {
+        return materialMap.get(material).get(shape);
+    }
     /* ...Materials */
 
     /* ...Elements */

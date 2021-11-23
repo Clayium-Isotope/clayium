@@ -23,7 +23,7 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
         this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture) {
             @Override
             public boolean isItemValid(ItemStack stack) {
-                return ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTableRecipe, stack, ItemStack.EMPTY);
+                return ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable, stack, ItemStack.EMPTY);
             }
         });
         this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
@@ -92,7 +92,7 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
                 slot.onSlotChange(itemstack1, itemstack);
             } else {
                 if (index >= sizeInventory) { // belongings ->
-                    if (ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTableRecipe,
+                    if (ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable,
                             itemstack1, ((TileEntityClayWorkTable) tileEntity).getStackInSlot(ClayWorkTableSlots.TOOL))
                     ) { // -> container[material]
                         if (!this.mergeItemStack(itemstack1, ClayWorkTableSlots.MATERIAL.ordinal(), ClayWorkTableSlots.MATERIAL.ordinal() + 1, false)) {

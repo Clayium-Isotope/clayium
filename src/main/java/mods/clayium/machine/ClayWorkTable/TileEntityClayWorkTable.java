@@ -153,7 +153,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
         //        updateEntity();
 
-        if (!ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTableRecipe, getStackInSlot(ClayWorkTableSlots.MATERIAL), getStackInSlot(ClayWorkTableSlots.TOOL))) {
+        if (!ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable, getStackInSlot(ClayWorkTableSlots.MATERIAL), getStackInSlot(ClayWorkTableSlots.TOOL))) {
             kneadedTimes = 0;
             kneadTime = 0;
             cookingMethod = -1;
@@ -275,7 +275,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
             return false;
         }
 
-        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTableRecipe, machineInventory, method, 0);
+        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, machineInventory, method, 0);
         if (recipe.getResult().getResults().get(0).isEmpty()) {
             return false;
         }
@@ -340,7 +340,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
         RecipeElement recipe = RecipeElement.FLAT;
         if (canPushButton != ButtonProperty.FAILURE) {
-            recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTableRecipe, this.machineInventory, button, 0);
+            recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, this.machineInventory, button, 0);
         }
 
         if (canPushButton != ButtonProperty.FAILURE

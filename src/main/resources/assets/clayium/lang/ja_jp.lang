@@ -98,10 +98,10 @@ tile.machine_hull_10.name=純反物質マシン筐体
 tile.machine_hull_11.name=OEC マシン筐体
 tile.machine_hull_12.name=OPA マシン筐体
 
-# #tile.blockOthersHull.0.name=AZ91D Alloy Hull
-# #tile.blockOthersHull.1.name=ZK60A Alloy Hull
-# tile.blockAZ91DHull.name=AZ91D 合金マシン筐体
-# tile.blockZK60AHull.name=ZK60A 合金マシン筐体
+#tile.blockOthersHull.0.name=AZ91D Alloy Hull
+#tile.blockOthersHull.1.name=ZK60A Alloy Hull
+tile.az91d_alloy_hull.name=AZ91D 合金マシン筐体
+tile.zk60a_alloy_hull.name=ZK60A 合金マシン筐体
 
 tile.clay_work_table.name=粘土作業台
 tile.clay_work_table.tooltip.line1=工業化への第一歩
@@ -801,9 +801,9 @@ item.clay_spatula.tooltip.line1=装置の見た目をパイプ化する
 # item.itemDirectionMemory.tooltip.line1=クリック方向・位置を保存し、
 # item.itemDirectionMemory.tooltip.line2=範囲代行機に設定を適用する
 
-# item.itemCompressedClayShard.1.name=圧縮粘土片
-# item.itemCompressedClayShard.2.name=工業用粘土片
-# item.itemCompressedClayShard.3.name=発展工業用粘土片
+item.compressed_clay_shard_1.name=圧縮粘土片
+item.compressed_clay_shard_2.name=工業用粘土片
+item.compressed_clay_shard_3.name=発展工業用粘土片
 
 item.clay_shovel.name=粘土シャベル
 item.clay_shovel.tooltip.line1=粘土鉱石が採掘でき、そのドロップ数を上昇させる
@@ -931,18 +931,18 @@ item.clay_pickaxe.tooltip.line1=粘土鉱石を素早く採掘し、そのドロ
 
 item.clay_plate.name=粘土プレート
 item.clay_stick.name=粘土棒
-item.short_clay_stick.name=粘土小棒
+item.clay_short_stick.name=粘土小棒
 item.clay_ring.name=粘土リング
-item.small_clay_ring.name=粘土小リング
+item.clay_small_ring.name=粘土小リング
 item.clay_gear.name=粘土歯車
 item.clay_blade.name=粘土ブレード
 item.clay_needle.name=粘土ニードル
 item.clay_disc.name=粘土円盤
-item.small_clay_disc.name=粘土小円盤
+item.clay_small_disc.name=粘土小円盤
 item.clay_cylinder.name=粘土円柱
 item.clay_pipe.name=粘土パイプ
-item.large_clay_ball.name=大粘土玉
-item.large_clay_plate.name=粘土大プレート
+item.clay_large_ball.name=大粘土玉
+item.clay_large_plate.name=粘土大プレート
 item.clay_grinding_head.name=粘土粉砕機ヘッド
 item.clay_bearing.name=粘土軸受
 item.clay_spindle.name=粘土主軸
@@ -951,17 +951,17 @@ item.clay_water_wheel.name=粘土水車パーツ
 
 item.dense_clay_plate.name=高密度粘土プレート
 item.dense_clay_stick.name=高密度粘土棒
-item.short_dense_clay_stick.name=高密度粘土小棒
+item.dense_clay_short_stick.name=高密度粘土小棒
 item.dense_clay_ring.name=高密度粘土リング
-item.small_dense_clay_ring.name=高密度粘土小リング
+item.dense_clay_small_ring.name=高密度粘土小リング
 item.dense_clay_gear.name=高密度粘土歯車
 item.dense_clay_blade.name=高密度粘土ブレード
 item.dense_clay_needle.name=高密度粘土ニードル
 item.dense_clay_disc.name=高密度粘土円盤
-item.small_dense_clay_disc.name=高密度粘土小円盤
+item.dense_clay_small_disc.name=高密度粘土小円盤
 item.dense_clay_cylinder.name=高密度粘土円柱
 item.dense_clay_pipe.name=高密度粘土パイプ
-item.large_dense_clay_plate.name=高密度粘土大プレート
+item.dense_clay_large_plate.name=高密度粘土大プレート
 item.dense_clay_grinding_head.name=高密度粘土粉砕機ヘッド
 item.dense_clay_bearing.name=高密度粘土軸受
 item.dense_clay_spindle.name=高密度粘土主軸
@@ -969,11 +969,11 @@ item.dense_clay_spindle.tooltip.line1=タイムコンシューマー
 item.dense_clay_cutting_head.name=高密度粘土切断機ヘッド
 item.dense_clay_water_wheel.name=高密度粘土水車パーツ
 
-# item.itemPlates.IndustrialClay.name=工業用粘土プレート
-# item.itemLargePlates.IndustrialClay.name=工業用粘土大プレート
+item.ind_clay_plate.name=工業用粘土プレート
+item.ind_clay_large_plate.name=工業用粘土大プレート
 
-# item.itemPlates.AdvancedIndustrialClay.name=発展工業用粘土プレート
-# item.itemLargePlates.AdvancedIndustrialClay.name=発展工業用粘土大プレート
+item.adv_ind_clay_plate.name=発展工業用粘土プレート
+item.adv_ind_clay_large_plate.name=発展工業用粘土大プレート
 
 # item.itemClayParts.Dust.name=粘土粉
 # item.itemDenseClayParts.Dust.name=高密度粘土粉
