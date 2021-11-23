@@ -1,6 +1,7 @@
 package mods.clayium.item.common;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -17,6 +18,10 @@ public class ClayiumItem extends Item {
         setUnlocalizedName(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
+    }
+
+    public ClayiumItem(ClayiumItems.CMaterial material, ClayiumItems.CShape shape) {
+        this(material.getName() + "_" + shape.getName());
     }
 
     @Override
