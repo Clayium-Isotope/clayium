@@ -137,13 +137,13 @@ public class ClayiumItems {
             materialMap.get(CMaterial.denseClay).putIfAbsent(shape, new ClayiumItem(CMaterial.denseClay.getName() + "_" + shape.getName()));
         }
 
-        materialMap.get(CMaterial.indClay).putIfAbsent(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(3)));
-        materialMap.get(CMaterial.indClay).putIfAbsent(CShape.plate, new ClayiumItem(CMaterial.indClay.getName() + "_" + CShape.plate.getName()));
-        materialMap.get(CMaterial.indClay).putIfAbsent(CShape.largePlate, new ClayiumItem(CMaterial.indClay.getName() + "_" + CShape.largePlate.getName()));
+        materialMap.get(CMaterial.indClay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(3)));
+        materialMap.get(CMaterial.indClay).put(CShape.plate, new ClayiumItem(CMaterial.indClay.getName() + "_" + CShape.plate.getName()));
+        materialMap.get(CMaterial.indClay).put(CShape.largePlate, new ClayiumItem(CMaterial.indClay.getName() + "_" + CShape.largePlate.getName()));
 
-        materialMap.get(CMaterial.advIndClay).putIfAbsent(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(4)));
-        materialMap.get(CMaterial.advIndClay).putIfAbsent(CShape.plate, new ClayiumItem(CMaterial.advIndClay.getName() + "_" + CShape.plate.getName()));
-        materialMap.get(CMaterial.advIndClay).putIfAbsent(CShape.largePlate, new ClayiumItem(CMaterial.advIndClay.getName() + "_" + CShape.largePlate.getName()));
+        materialMap.get(CMaterial.advIndClay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(4)));
+        materialMap.get(CMaterial.advIndClay).put(CShape.plate, new ClayiumItem(CMaterial.advIndClay.getName() + "_" + CShape.plate.getName()));
+        materialMap.get(CMaterial.advIndClay).put(CShape.largePlate, new ClayiumItem(CMaterial.advIndClay.getName() + "_" + CShape.largePlate.getName()));
     }
     public static Item get(CMaterial material, CShape shape) {
         return materialMap.get(material).get(shape);
