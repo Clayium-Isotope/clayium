@@ -22,7 +22,9 @@ public class ClayiumItems {
 
                     if (item instanceof ClayiumItem
                             || item.equals(clayPickaxe)
-                            || item.equals(clayShovel)) {
+                            || item.equals(clayShovel)
+                            || item.equals(claySteelPickaxe)
+                            || item.equals(claySteelShovel)) {
                         items.add(item);
                     }
                 }
@@ -60,6 +62,8 @@ public class ClayiumItems {
 
     public static final Item clayPickaxe = new ClayPickaxe();
     public static final Item clayShovel = new ClayShovel();
+    public static final Item claySteelPickaxe = new ClaySteelPickaxe();
+    public static final Item claySteelShovel = new ClaySteelShovel();
     /* ...Tools */
 
     /* Compressed Clay Shards ... */

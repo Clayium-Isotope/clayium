@@ -16,6 +16,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -74,6 +75,8 @@ public class ClayiumCore {
             }
         }
     };
+
+    public static Item.ToolMaterial CLAY_STEEL = EnumHelper.addToolMaterial("CLAY_STEEL", 2, 10000, 3f, 3f, 10);
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
