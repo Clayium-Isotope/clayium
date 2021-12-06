@@ -1,10 +1,10 @@
 package mods.clayium.machine.crafting;
 
 import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumItems.CMaterial;
 import mods.clayium.item.ClayiumItems.CShape;
-import mods.clayium.util.ProgressRatedVariable;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -43,69 +43,69 @@ public class ClayiumRecipes {
     // TODO
     public static ClayiumRecipe bendingMachine = new ClayiumRecipe() {
         public void init() {
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.ball)), I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc)), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largeBall)), I(ClayiumItems.get(CMaterial.clay, CShape.disc)), ProgressRatedVariable.divideByProgressionRateI(2));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.disc)), I(ClayiumItems.rawClaySlicer), ProgressRatedVariable.divideByProgressionRateI(1));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.block)), I(ClayiumItems.get(CMaterial.clay, CShape.plate)), ProgressRatedVariable.divideByProgressionRateI(1));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.plate), 4), I(ClayiumItems.get(CMaterial.clay, CShape.largePlate)), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.blade), 2), ProgressRatedVariable.divideByProgressionRateI(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.ball)), I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc)), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largeBall)), I(ClayiumItems.get(CMaterial.clay, CShape.disc)), ClayiumCore.divideByProgressionRate(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.disc)), I(ClayiumItems.rawClaySlicer), ClayiumCore.divideByProgressionRate(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.block)), I(ClayiumItems.get(CMaterial.clay, CShape.plate)), ClayiumCore.divideByProgressionRate(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.plate), 4), I(ClayiumItems.get(CMaterial.clay, CShape.largePlate)), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.blade), 2), ClayiumCore.divideByProgressionRate(4));
 
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.block)), I(ClayiumItems.get(CMaterial.denseClay, CShape.plate)), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.plate), 4), I(ClayiumItems.get(CMaterial.denseClay, CShape.largePlate)), ProgressRatedVariable.divideByProgressionRateI(8));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.blade), 2), ProgressRatedVariable.divideByProgressionRateI(8));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.block)), I(ClayiumItems.get(CMaterial.denseClay, CShape.plate)), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.plate), 4), I(ClayiumItems.get(CMaterial.denseClay, CShape.largePlate)), ClayiumCore.divideByProgressionRate(8));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.blade), 2), ClayiumCore.divideByProgressionRate(8));
 
-            addRecipe(I(ClayiumItems.get(CMaterial.indClay, CShape.block)), 2, I(ClayiumItems.get(CMaterial.indClay, CShape.plate)), 2L, ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.indClay, CShape.plate), 4), 2, I(ClayiumItems.get(CMaterial.indClay, CShape.largePlate)), 2L, ProgressRatedVariable.divideByProgressionRateI(8));
-            addRecipe(I(ClayiumItems.get(CMaterial.advIndClay, CShape.block)), 2, I(ClayiumItems.get(CMaterial.advIndClay, CShape.plate)), 4L, ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.advIndClay, CShape.plate), 4), 2, I(ClayiumItems.get(CMaterial.advIndClay, CShape.largePlate)), 4L, ProgressRatedVariable.divideByProgressionRateI(8));
+            addRecipe(I(ClayiumItems.get(CMaterial.indClay, CShape.block)), 2, I(ClayiumItems.get(CMaterial.indClay, CShape.plate)), 2L, ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.indClay, CShape.plate), 4), 2, I(ClayiumItems.get(CMaterial.indClay, CShape.largePlate)), 2L, ClayiumCore.divideByProgressionRate(8));
+            addRecipe(I(ClayiumItems.get(CMaterial.advIndClay, CShape.block)), 2, I(ClayiumItems.get(CMaterial.advIndClay, CShape.plate)), 4L, ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.advIndClay, CShape.plate), 4), 2, I(ClayiumItems.get(CMaterial.advIndClay, CShape.largePlate)), 4L, ClayiumCore.divideByProgressionRate(8));
     }};
     // TODO
     public static ClayiumRecipe wireDrawingMachine = new ClayiumRecipe() {
         public void init() {
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.ball)), I(ClayiumItems.get(CMaterial.clay, CShape.stick)), ProgressRatedVariable.divideByProgressionRateI(1));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.stick), 8), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.pipe)), I(ClayiumItems.get(CMaterial.clay, CShape.stick), 4), ProgressRatedVariable.divideByProgressionRateI(2));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.clay, CShape.stick)), ProgressRatedVariable.divideByProgressionRateI(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.ball)), I(ClayiumItems.get(CMaterial.clay, CShape.stick)), ClayiumCore.divideByProgressionRate(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.stick), 8), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.pipe)), I(ClayiumItems.get(CMaterial.clay, CShape.stick), 4), ClayiumCore.divideByProgressionRate(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.clay, CShape.stick)), ClayiumCore.divideByProgressionRate(1));
 
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick), 8), ProgressRatedVariable.divideByProgressionRateI(6));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.pipe)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick), 4), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick)), ProgressRatedVariable.divideByProgressionRateI(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick), 8), ClayiumCore.divideByProgressionRate(6));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.pipe)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick), 4), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick)), ClayiumCore.divideByProgressionRate(2));
     }};
     // TODO
     public static ClayiumRecipe pipeDrawingMachine = new ClayiumRecipe() {
         public void init() {
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.pipe), 2), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.pipe), 2), ProgressRatedVariable.divideByProgressionRateI(6));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.pipe), 2), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.pipe), 2), ClayiumCore.divideByProgressionRate(6));
     }};
     // TODO
     public static ClayiumRecipe cuttingMachine = new ClayiumRecipe() {
         public void init() {
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largeBall)), I(ClayiumItems.get(CMaterial.clay, CShape.disc)), ProgressRatedVariable.divideByProgressionRateI(2));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc), 8), ProgressRatedVariable.divideByProgressionRateI(2));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largePlate)), I(ClayiumItems.get(CMaterial.clay, CShape.disc), 2), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.plate)), I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc), 4), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.stick)), I(ClayiumItems.get(CMaterial.clay, CShape.shortStick), 2), ProgressRatedVariable.divideByProgressionRateI(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largeBall)), I(ClayiumItems.get(CMaterial.clay, CShape.disc)), ClayiumCore.divideByProgressionRate(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc), 8), ClayiumCore.divideByProgressionRate(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largePlate)), I(ClayiumItems.get(CMaterial.clay, CShape.disc), 2), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.plate)), I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc), 4), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.stick)), I(ClayiumItems.get(CMaterial.clay, CShape.shortStick), 2), ClayiumCore.divideByProgressionRate(1));
 
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc), 8), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.largePlate)), I(ClayiumItems.get(CMaterial.denseClay, CShape.disc), 2), ProgressRatedVariable.divideByProgressionRateI(6));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.plate)), I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc), 4), ProgressRatedVariable.divideByProgressionRateI(6));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.stick)), I(ClayiumItems.get(CMaterial.denseClay, CShape.shortStick), 2), ProgressRatedVariable.divideByProgressionRateI(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc), 8), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.largePlate)), I(ClayiumItems.get(CMaterial.denseClay, CShape.disc), 2), ClayiumCore.divideByProgressionRate(6));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.plate)), I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc), 4), ClayiumCore.divideByProgressionRate(6));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.stick)), I(ClayiumItems.get(CMaterial.denseClay, CShape.shortStick), 2), ClayiumCore.divideByProgressionRate(2));
     }};
     // TODO
     public static ClayiumRecipe lathe = new ClayiumRecipe() {
         public void init() {
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.ball)), I(ClayiumItems.get(CMaterial.clay, CShape.shortStick)), ProgressRatedVariable.divideByProgressionRateI(1));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largeBall)), I(ClayiumItems.get(CMaterial.clay, CShape.cylinder), 8), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.needle), 2), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.needle)), I(ClayiumItems.get(CMaterial.clay, CShape.stick), 6), ProgressRatedVariable.divideByProgressionRateI(3));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.disc)), I(ClayiumItems.get(CMaterial.clay, CShape.ring)), ProgressRatedVariable.divideByProgressionRateI(2));
-            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.clay, CShape.smallRing), 2), ProgressRatedVariable.divideByProgressionRateI(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.ball)), I(ClayiumItems.get(CMaterial.clay, CShape.shortStick)), ClayiumCore.divideByProgressionRate(1));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.largeBall)), I(ClayiumItems.get(CMaterial.clay, CShape.cylinder), 8), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.clay, CShape.needle), 2), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.needle)), I(ClayiumItems.get(CMaterial.clay, CShape.stick), 6), ClayiumCore.divideByProgressionRate(3));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.disc)), I(ClayiumItems.get(CMaterial.clay, CShape.ring)), ClayiumCore.divideByProgressionRate(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.clay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.clay, CShape.smallRing), 2), ClayiumCore.divideByProgressionRate(1));
 
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.block), 2), I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.needle)), ProgressRatedVariable.divideByProgressionRateI(6));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.needle)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick), 6), ProgressRatedVariable.divideByProgressionRateI(6));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.disc)), I(ClayiumItems.get(CMaterial.denseClay, CShape.ring)), ProgressRatedVariable.divideByProgressionRateI(4));
-            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.denseClay, CShape.smallRing)), ProgressRatedVariable.divideByProgressionRateI(2));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.block), 2), I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.cylinder)), I(ClayiumItems.get(CMaterial.denseClay, CShape.needle)), ClayiumCore.divideByProgressionRate(6));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.needle)), I(ClayiumItems.get(CMaterial.denseClay, CShape.stick), 6), ClayiumCore.divideByProgressionRate(6));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.disc)), I(ClayiumItems.get(CMaterial.denseClay, CShape.ring)), ClayiumCore.divideByProgressionRate(4));
+            addRecipe(I(ClayiumItems.get(CMaterial.denseClay, CShape.smallDisc)), I(ClayiumItems.get(CMaterial.denseClay, CShape.smallRing)), ClayiumCore.divideByProgressionRate(2));
     }};
     // TODO
     public static ClayiumRecipe millingMachine = new ClayiumRecipe() { public void init() {} };

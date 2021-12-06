@@ -1,5 +1,6 @@
 package mods.clayium.item;
 
+import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.util.UtilAdvancedTools;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -80,7 +81,7 @@ public class HarvestCoordClaySteelTools implements IHarvestCoord {
         int mode = tag.hasKey("Mode") ? tag.getInteger("Mode") : 0;
 
         if (player.isSneaking()) {
-            if (true) { // && !ClayiumCore.cfgUtilityMode
+            if (!ClayiumConfiguration.cfgUtilityMode) {
                 player.getHeldItem(hand).damageItem(1, player);
                 return new ItemBlock(Blocks.CLAY).onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
             }

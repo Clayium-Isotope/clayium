@@ -1,5 +1,6 @@
 package mods.clayium.item;
 
+import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.UtilAdvancedTools;
 import mods.clayium.util.UtilLocale;
@@ -31,7 +32,7 @@ public class ClaySteelShovel extends ItemSpade implements IAdvancedTool {
         setRegistryName(ClayiumCore.ModId, "clay_steel_shovel");
         setCreativeTab(ClayiumCore.tabClayium);
 
-        harvestCoord = new HarvestCoordClaySteelTools(2 /* ClayiumCore.cfgClaySteelPickaxeRange */);
+        harvestCoord = new HarvestCoordClaySteelTools(ClayiumConfiguration.cfgClaySteelPickaxeRange);
     }
 
     @Override

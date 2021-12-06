@@ -137,4 +137,52 @@ public class ClayiumCore {
                     new ModelResourceLocation(item.getRegistryName(), "inventory"));
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public static <N extends Number> N multiplyProgressionRate(N number) {
+        if (number instanceof Double) {
+            return (N) (Double) (number.doubleValue() * ClayiumConfiguration.cfgProgressionRate);
+        }
+        if (number instanceof Float) {
+            return (N) (Float) ((float) (number.floatValue() * ClayiumConfiguration.cfgProgressionRate));
+        }
+        if (number instanceof Integer) {
+            Integer r = (Integer) ((int) ((double) number.intValue() * ClayiumConfiguration.cfgProgressionRate));
+            return r != 0 ? (N) r : (N) (Integer) Integer.compare(number.intValue(), 0);
+        }
+        if (number instanceof Long) {
+            Long r = (Long) ((long) ((double) number.longValue() * ClayiumConfiguration.cfgProgressionRate));
+            return r != 0 ? (N) r : (N) (Integer) Long.compare(number.longValue(), 0);
+        }
+
+        throw new UnsupportedOperationException("unknown class: " + number.getClass());
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <N extends Number> N divideByProgressionRate(N number) {
+        if (number instanceof Double) {
+            return (N) (Double) (number.doubleValue() / ClayiumConfiguration.cfgProgressionRate);
+        }
+        if (number instanceof Float) {
+            return (N) (Float) ((float) (number.floatValue() / ClayiumConfiguration.cfgProgressionRate));
+        }
+        if (number instanceof Integer) {
+            Integer r = (Integer) ((int) ((double) number.intValue() / ClayiumConfiguration.cfgProgressionRate));
+            return r != 0 ? (N) r : (N) (Integer) Integer.compare(number.intValue(), 0);
+        }
+        if (number instanceof Long) {
+            Long r = (Long) ((long) ((double) number.longValue() / ClayiumConfiguration.cfgProgressionRate));
+            return r != 0 ? (N) r : (N) (Integer) Long.compare(number.longValue(), 0);
+        }
+
+        throw new UnsupportedOperationException("unknown class: " + number.getClass());
+    }
+
+    public static int multiplyProgressionRateStackSize(int a) {
+        return Math.min(multiplyProgressionRate(a), 64);
+    }
+
+    public static int divideByProgressionRateStackSize(int a) {
+        return Math.min(divideByProgressionRate(a), 64);
+    }
 }
