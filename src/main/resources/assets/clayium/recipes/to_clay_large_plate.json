@@ -8,11 +8,11 @@
   ],
   "key": {
     "#": {
-      "item": "clayium:compressed_clay_0"
+      "item": "clayium:clay_plate"
     }
   },
   "result": {
-    "item": "clayium:compressed_clay_1",
+    "item": "clayium:clay_large_plate",
     "count": 1
   }
 }

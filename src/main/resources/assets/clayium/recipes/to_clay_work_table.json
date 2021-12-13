@@ -2,20 +2,11 @@
   "group": "clayium",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "01",
-    "23"
+    "##",
+    "##"
   ],
   "key": {
-    "0": {
-      "item": "clayium:compressed_clay_0"
-    },
-    "1": {
-      "item": "clayium:compressed_clay_0"
-    },
-    "2": {
-      "item": "clayium:compressed_clay_0"
-    },
-    "3": {
+    "#": {
       "item": "clayium:compressed_clay_0"
     }
   },

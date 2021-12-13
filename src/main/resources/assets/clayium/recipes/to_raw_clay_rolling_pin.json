@@ -2,17 +2,14 @@
   "group": "clayium",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "012"
+    "-=-"
   ],
   "key": {
-    "0": {
-      "item": "clayium:short_clay_stick"
+    "-": {
+      "item": "clayium:clay_short_stick"
     },
-    "1": {
+    "=": {
       "item": "clayium:clay_cylinder"
-    },
-    "2": {
-      "item": "clayium:short_clay_stick"
     }
   },
   "result": {

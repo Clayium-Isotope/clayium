@@ -2,37 +2,16 @@
   "group": "clayium",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "012",
-    "345",
-    "678"
+    "###",
+    "#o#",
+    "###"
   ],
   "key": {
-    "0": {
+    "#": {
       "item": "clayium:clay_blade"
     },
-    "1": {
-      "item": "clayium:clay_blade"
-    },
-    "2": {
-      "item": "clayium:clay_blade"
-    },
-    "3": {
-      "item": "clayium:clay_blade"
-    },
-    "4": {
+    "o": {
       "item": "clayium:clay_ring"
-    },
-    "5": {
-      "item": "clayium:clay_blade"
-    },
-    "6": {
-      "item": "clayium:clay_blade"
-    },
-    "7": {
-      "item": "clayium:clay_blade"
-    },
-    "8": {
-      "item": "clayium:clay_blade"
     }
   },
   "result": {

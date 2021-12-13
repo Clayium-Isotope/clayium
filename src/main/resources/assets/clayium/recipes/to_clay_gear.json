@@ -2,37 +2,16 @@
   "group": "clayium",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "012",
-    "345",
-    "678"
+    "|||",
+    "|o|",
+    "|||"
   ],
   "key": {
-    "0": {
-      "item": "clayium:short_clay_stick"
+    "|": {
+      "item": "clayium:clay_short_stick"
     },
-    "1": {
-      "item": "clayium:short_clay_stick"
-    },
-    "2": {
-      "item": "clayium:short_clay_stick"
-    },
-    "3": {
-      "item": "clayium:short_clay_stick"
-    },
-    "4": {
-      "item": "clayium:small_clay_ring"
-    },
-    "5": {
-      "item": "clayium:short_clay_stick"
-    },
-    "6": {
-      "item": "clayium:short_clay_stick"
-    },
-    "7": {
-      "item": "clayium:short_clay_stick"
-    },
-    "8": {
-      "item": "clayium:short_clay_stick"
+    "o": {
+      "item": "clayium:clay_small_ring"
     }
   },
   "result": {
