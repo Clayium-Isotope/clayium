@@ -3,6 +3,7 @@ package mods.clayium.core;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.ClayBendingMachine.TileEntityClayBendingMachine;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.worldgen.ClayOreGenerator;
@@ -98,6 +99,7 @@ public class ClayiumCore {
 
         GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
         GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.clayCraftingTable.getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayBendingMachine.class, ClayiumBlocks.clayBendingMachine.getRegistryName());
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);

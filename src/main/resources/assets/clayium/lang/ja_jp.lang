@@ -116,8 +116,8 @@ tile.clay_crafting_table.tooltip.line3=クラフト時隣接チェストにア�
 # tile.blockEnergeticClayCondenser.tooltip.line1=初めてのエネルギー粘土
 # tile.blockEnergeticClayCondenserMK2.name=エネルギー粘土凝縮機 Mk II
 
-# tile.blockClayBendingMachine.name=粘土プレート作成機
-# tile.blockClayBendingMachine.tooltip.line1=初めての機械
+tile.clay_bending_machine.name=粘土プレート作成機
+tile.clay_bending_machine.tooltip.line1=初めての機械
 # tile.blockDenseClayBendingMachine.name=高密度粘土プレート作成機
 # tile.blockSimpleBendingMachine.name=簡易プレート作成機
 # tile.blockBasicBendingMachine.name=プレート作成機

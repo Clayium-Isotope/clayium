@@ -12,7 +12,7 @@ public class GuiClayMachineTemp extends GuiContainer {
     protected final TileEntity tile;
     protected final Block block;
     protected final ContainerClayMachineTemp container;
-    private final int machineHeight;
+    protected final int machineHeight;
     protected ResourceLocation coverTexture;
 
     public GuiClayMachineTemp(ContainerClayMachineTemp container, TileEntity tile, Block block, int height) {

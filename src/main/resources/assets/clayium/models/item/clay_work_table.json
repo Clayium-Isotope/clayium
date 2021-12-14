@@ -1,5 +1,5 @@
 {
-  "parent": "clayium:block/clay_work_table",
+  "parent": "clayium:block/machine/clay_work_table",
   "display": {
     "thirdperson": {
       "rotation": [

@@ -3,6 +3,7 @@ package mods.clayium.block;
 import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.ClayiumBlock;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayBendingMachine.ClayBendingMachine;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import net.minecraft.block.Block;
@@ -85,8 +86,14 @@ public class ClayiumBlocks {
     /* ...Machine Hulls */
 
     /* Machines... */
+    /* Tier 0... */
     public static final Block clayWorkTable = new ClayWorkTable();
     public static final Block clayCraftingTable = new ClayCraftingTable();
+    /* ...Tier 0 */
+
+    /* Tier 1... */
+    public static final Block clayBendingMachine = new ClayBendingMachine();
+    /* ...Tier 1 */
     /* ...Machines */
     /* ...Elements */
 

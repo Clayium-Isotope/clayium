@@ -116,8 +116,8 @@ tile.clay_crafting_table.tooltip.line3=You can access the content of a nearby ch
 # tile.blockEnergeticClayCondenser.tooltip.line1=To obtain the first Energetic Clay.
 # tile.blockEnergeticClayCondenserMK2.name=Energetic Clay Condenser Mk II
 
-# tile.blockClayBendingMachine.name=Clay Bending Machine
-# tile.blockClayBendingMachine.tooltip.line1=The first machine.
+tile.clay_bending_machine.name=Clay Bending Machine
+tile.clay_bending_machine.tooltip.line1=The first machine.
 # tile.blockDenseClayBendingMachine.name=Dense Clay Bending Machine
 # tile.blockSimpleBendingMachine.name=Simple Bending Machine
 # tile.blockBasicBendingMachine.name=Basic Bending Machine

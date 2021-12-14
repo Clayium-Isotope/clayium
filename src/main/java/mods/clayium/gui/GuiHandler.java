@@ -1,5 +1,8 @@
 package mods.clayium.gui;
 
+import mods.clayium.machine.ClayBendingMachine.ContainerClayBendingMachine;
+import mods.clayium.machine.ClayBendingMachine.GuiClayBendingMachine;
+import mods.clayium.machine.ClayBendingMachine.TileEntityClayBendingMachine;
 import mods.clayium.machine.ClayCraftingTable.ContainerClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.GuiClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
@@ -33,6 +36,8 @@ public class GuiHandler implements IGuiHandler {
                     return new ContainerClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile);
                 case clayCraftingTableGuiID:
                     return new ContainerClayCraftingTable(player.inventory, world, pos);
+                case clayBendingMachineGuiID:
+                    return new ContainerClayBendingMachine(player.inventory, (TileEntityClayBendingMachine) tile);
             }
         }
 
@@ -53,6 +58,8 @@ public class GuiHandler implements IGuiHandler {
                     return new GuiClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile, state.getBlock());
                 case clayCraftingTableGuiID:
                     return new GuiClayCraftingTable(new ContainerClayCraftingTable(player.inventory, world, pos), (TileEntityClayCraftingTable) tile, state.getBlock());
+                case clayBendingMachineGuiID:
+                    return new GuiClayBendingMachine(player.inventory, (TileEntityClayBendingMachine) tile, state.getBlock());
             }
         }
 
@@ -60,5 +67,6 @@ public class GuiHandler implements IGuiHandler {
     }
 
     public static final int clayWorkTableGuiID = 0;
+    public static final int clayBendingMachineGuiID = 9;
     public static final int clayCraftingTableGuiID = 30;
 }

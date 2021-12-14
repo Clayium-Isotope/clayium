@@ -1,6 +1,10 @@
 package mods.clayium.machine.crafting;
 
+import mods.clayium.util.UtilItemStack;
+import mods.clayium.util.crafting.IItemPattern;
+import mods.clayium.util.crafting.OreDictionaryStack;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Arrays;
 import java.util.List;
@@ -70,6 +74,27 @@ public class RecipeElement {
             if (from.getHasSubtypes() && comes.getHasSubtypes()) return from.isItemEqual(comes);
             return from.getItem() == comes.getItem();
         }
+
+        public int[] getStackSizes(ItemStack... items) {
+            int[] sizes = new int[items.length];
+            for (int i = 0; i < items.length && i < this.materials.size(); i++) {
+                sizes[i] = getStackSize(this.materials.get(i), items[i]);
+            }
+            return sizes;
+        }
+
+        public boolean isCraftable(ItemStack itemstack, int tier) {
+            if (this.tier > tier) {
+                return false;
+            }
+
+            for (ItemStack stack : this.materials) {
+                if (canBeCraftedODs(itemstack, stack, false)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public static class RecipeResult {
@@ -94,5 +119,102 @@ public class RecipeElement {
             this.energy = energy;
             this.time = time;
         }
+    }
+
+    public static int getStackSize(Object recipe, ItemStack item) {
+        if (recipe instanceof IItemPattern) {
+            if (item == null) {
+                ItemStack[] items = ((IItemPattern) recipe).toItemStacks();
+                if (items != null && items.length >= 1)
+                    item = items[0];
+            }
+            return ((IItemPattern) recipe).getStackSize(item);
+        }
+        return getStackSize(recipe);
+    }
+
+    public static int getStackSize(Object item) {
+        if (item instanceof ItemStack) return ((ItemStack) item).getCount();
+//        if (item instanceof OreDictionaryStack) return ((OreDictionaryStack) item).stackSize;
+        if (item instanceof String) return 1;
+
+        return 0;
+    }
+
+    public static boolean canBeCrafted(ItemStack itemstack, ItemStack itemstack2, boolean sizeCheck) {
+        if (itemstack2 == null) return true;
+        if (itemstack == null) return false;
+        return UtilItemStack.areItemEqual(itemstack2, itemstack)
+                && (itemstack2.getItemDamage() == 32767 || itemstack.getItemDamage() == 32767
+                || UtilItemStack.areDamageEqual(itemstack2, itemstack))
+                && (!sizeCheck || itemstack2.getCount() <= itemstack.getCount());
+    }
+
+    public static boolean canBeCrafted(ItemStack itemstack, ItemStack itemstack2) {
+        return canBeCrafted(itemstack, itemstack2, true);
+    }
+
+    public static boolean canBeCraftedOD(ItemStack itemstack, Object object, boolean sizeCheck) {
+        if (object == null) return true;
+        if (itemstack == null) return false;
+        if (object instanceof String) {
+            return UtilItemStack.hasOreName(itemstack, (String) object);
+        }
+        if (object instanceof OreDictionaryStack) {
+            if (sizeCheck && ((OreDictionaryStack) object).stackSize > itemstack.getCount())
+                return false;
+            return UtilItemStack.hasOreName(itemstack, ((OreDictionaryStack) object).id);
+        }
+        if (object instanceof ItemStack)
+            return canBeCrafted(itemstack, (ItemStack) object, sizeCheck);
+        if (object instanceof IItemPattern)
+            return ((IItemPattern) object).match(itemstack, sizeCheck);
+
+        return false;
+    }
+
+    public static boolean canBeCraftedOD(ItemStack itemstack, Object object) {
+        return canBeCraftedOD(itemstack, object, true);
+    }
+
+    public static boolean canBeCraftedODs(Object stackingred, Object recipeingred, boolean sizeCheck) {
+        if (recipeingred == null) return true;
+        if (stackingred == null) return false;
+        if (stackingred instanceof ItemStack) {
+            return canBeCraftedOD((ItemStack) stackingred, recipeingred, sizeCheck);
+        }
+        if (stackingred instanceof String || stackingred instanceof OreDictionaryStack) {
+            int oreid = (stackingred instanceof OreDictionaryStack) ? ((OreDictionaryStack) stackingred).id : OreDictionary.getOreID((String) stackingred);
+            int stackSize = (stackingred instanceof OreDictionaryStack) ? ((OreDictionaryStack) stackingred).stackSize : 1;
+            for (ItemStack item : OreDictionary.getOres(String.valueOf(oreid))) {
+                ItemStack item0 = item.copy();
+                item0.setCount(stackSize);
+                if (canBeCraftedOD(item0, recipeingred, sizeCheck)) {
+                    return true;
+                }
+            }
+        }
+        if (stackingred instanceof IItemPattern) {
+            return ((IItemPattern) stackingred).hasIntersection(convert(recipeingred), sizeCheck);
+        }
+        return false;
+    }
+
+    public static IItemPattern convert(Object ingred) {
+    /* TODO still added ItemPattern
+        if (ingred instanceof ItemStack) {
+            return new ItemPatternItemStack((ItemStack) ingred);
+        }
+        if (ingred instanceof OreDictionaryStack) {
+            return new ItemPatternOreDictionary(((OreDictionaryStack) ingred).id, ((OreDictionaryStack) ingred).stackSize);
+        }
+        if (ingred instanceof String) {
+            return new ItemPatternOreDictionary((String) ingred, 1);
+        }
+    */
+        if (ingred instanceof IItemPattern) {
+            return (IItemPattern) ingred;
+        }
+        return null;
     }
 }

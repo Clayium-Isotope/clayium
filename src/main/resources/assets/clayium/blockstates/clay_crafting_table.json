@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "clayium:clay_crafting_table"
+      "model": "clayium:machine/clay_crafting_table"
     }
   }
 }

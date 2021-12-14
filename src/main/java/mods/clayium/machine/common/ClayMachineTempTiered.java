@@ -17,6 +17,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -96,5 +97,10 @@ public class ClayMachineTempTiered extends BlockContainer implements ITieredBloc
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return new ItemBlockTiered(this);
+    }
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(new ItemBlockTiered(this));
     }
 }
