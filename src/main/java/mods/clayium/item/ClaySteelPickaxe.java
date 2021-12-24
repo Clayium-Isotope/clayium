@@ -25,7 +25,7 @@ public class ClaySteelPickaxe extends ItemPickaxe implements IAdvancedTool {
     private IHarvestCoord harvestCoord;
 
     public ClaySteelPickaxe() {
-        super(ClayiumCore.CLAY_STEEL);
+        super(ToolMaterial.DIAMOND);
         setMaxDamage(10000);
 
         setUnlocalizedName("clay_steel_pickaxe");

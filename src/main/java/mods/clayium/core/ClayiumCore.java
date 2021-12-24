@@ -77,8 +77,6 @@ public class ClayiumCore {
         }
     };
 
-    public static Item.ToolMaterial CLAY_STEEL = EnumHelper.addToolMaterial("CLAY_STEEL", 2, 10000, 3f, 3f, 10);
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);

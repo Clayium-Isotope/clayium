@@ -25,7 +25,7 @@ public class ClaySteelShovel extends ItemSpade implements IAdvancedTool {
     private IHarvestCoord harvestCoord;
 
     public ClaySteelShovel() {
-        super(ClayiumCore.CLAY_STEEL);
+        super(ToolMaterial.DIAMOND);
         setMaxDamage(10000);
 
         setUnlocalizedName("clay_steel_shovel");
