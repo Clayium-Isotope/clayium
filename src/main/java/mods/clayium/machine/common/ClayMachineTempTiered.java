@@ -30,7 +30,7 @@ import java.util.Random;
 public class ClayMachineTempTiered extends BlockContainer implements ITieredBlock {
     private final Class<? extends TileEntity> teClass;
     private final int guiID;
-    private final int tier;
+    protected final int tier;
 
     public ClayMachineTempTiered(Material materialIn, Class<? extends TileEntity> teClass, String modelPath, int guiID, int tier) {
         super(materialIn);
@@ -102,5 +102,9 @@ public class ClayMachineTempTiered extends BlockContainer implements ITieredBloc
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(new ItemBlockTiered(this));
+    }
+
+    public Class<? extends TileEntity> getTileEntity() {
+        return teClass;
     }
 }

@@ -3,9 +3,9 @@ package mods.clayium.core;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.ClayBendingMachine.TileEntityClayBendingMachine;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -14,10 +14,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -95,9 +95,9 @@ public class ClayiumCore {
         GameRegistry.addSmelting(ClayiumItems.rawClaySlicer, new ItemStack(ClayiumItems.claySlicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawClaySpatula, new ItemStack(ClayiumItems.claySpatula), 1F);
 
-        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.clayWorkTable.getRegistryName());
-        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.clayCraftingTable.getRegistryName());
-        GameRegistry.registerTileEntity(TileEntityClayBendingMachine.class, ClayiumBlocks.clayBendingMachine.getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.get(ClayiumBlocks.MachineKind.workTable, 0).getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.get(ClayiumBlocks.MachineKind.craftingTable, 0).getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayiumMachine.class, new ResourceLocation(ModId, "machine"));
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);

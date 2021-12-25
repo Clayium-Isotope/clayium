@@ -1,5 +1,6 @@
-package mods.clayium.machine.ClayBendingMachine;
+package mods.clayium.machine.ClayiumMachine;
 
+import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.common.ClayMachineTempTiered;
 import net.minecraft.block.BlockHorizontal;
@@ -10,20 +11,26 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ClayBendingMachine extends ClayMachineTempTiered {
+public class ClayiumMachine extends ClayMachineTempTiered {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
+    private final ClayiumBlocks.MachineKind machineKind;
 
-    public ClayBendingMachine() {
-        super(Material.IRON, TileEntityClayBendingMachine.class, "clay_bending_machine", GuiHandler.clayBendingMachineGuiID, 1);
+    public ClayiumMachine(ClayiumBlocks.MachineKind kind, String suffix, int tier) {
+        super(Material.IRON, TileEntityClayiumMachine.class,
+                ClayiumBlocks.TierPrefix.get(tier) + "_" + kind.get() + (suffix.isEmpty() ? "" : "_" + suffix),
+                GuiHandler.clayBendingMachineGuiID, tier);
+        this.machineKind = kind;
 
         setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileEntityClayiumMachine(tier, machineKind);
     }
 
     @Override
@@ -87,5 +94,14 @@ public class ClayBendingMachine extends ClayMachineTempTiered {
             tileentity.validate();
             world.setTileEntity(pos, tileentity);
         }
+    }
+
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
+
+    public ClayiumBlocks.MachineKind getMachineKind() {
+        return machineKind;
     }
 }

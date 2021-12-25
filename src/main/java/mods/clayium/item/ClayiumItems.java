@@ -3,13 +3,18 @@ package mods.clayium.item;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.ItemDamaged;
+import mods.clayium.item.common.MaterialShape.*;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ClayiumItems {
     public static void initItems() {
@@ -32,8 +37,8 @@ public class ClayiumItems {
                     items.addAll((ItemDamaged) field.get(instance));
                 }
                 if (field.get(instance) == materialMap) {
-                    for (CMaterial material : CMaterial.values()) {
-                        for (CShape shape : CShape.values()) {
+                    for (Material material : ClayMaterial.values()) {
+                        for (ClayShape shape : ClayShape.values()) {
                             if (get(material, shape) instanceof ClayiumItem) {
                                 items.add(get(material, shape));
                             }
@@ -71,86 +76,52 @@ public class ClayiumItems {
     /* ... Compressed Clay Shards */
 
     /* Materials... */
-    public enum CMaterial {
-        clay("clay"),
-        denseClay("dense_clay"),
-        indClay("ind_clay"),
-        advIndClay("adv_ind_clay");
-
-        CMaterial(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-        private final String name;
-    }
-
-    public enum CShape {
-        plate("plate"),
-        stick("stick"),
-        shortStick("short_stick"),
-        ring("ring"),
-        smallRing("small_ring"),
-        gear("gear"),
-        blade("blade"),
-        needle("needle"),
-        disc("disc"),
-        smallDisc("small_disc"),
-        cylinder("cylinder"),
-        pipe("pipe"),
-        largeBall("large_ball"),
-        largePlate("large_plate"),
-        grindingHead("grinding_head"),
-        bearing("bearing"),
-        spindle("spindle"),
-        cuttingHead("cutting_head"),
-        waterWheel("water_wheel"),
-        block("block"),
-        ball("ball"),
-        dust("dust"),
-        plural("plural");
-
-        CShape(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-        private final String name;
-    }
-
-    public static final Map<CMaterial, Map<CShape, Item>> materialMap = new HashMap<>();
+    public static final Map<Material, Map<IShape, Item>> materialMap = new HashMap<>();
     static {
-        for (CMaterial material : CMaterial.values()) {
+        // ===== PARTS PART =====
+        for (Material material : ClayMaterial.values()) {
             materialMap.put(material, new HashMap<>());
         }
 
-        materialMap.get(CMaterial.clay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(0)));
-        materialMap.get(CMaterial.clay).put(CShape.ball, Items.CLAY_BALL);
-        materialMap.get(CMaterial.clay).put(CShape.plural, Items.AIR);
-        for (CShape shape : CShape.values()) {
-            materialMap.get(CMaterial.clay).putIfAbsent(shape, new ClayiumItem(CMaterial.clay, shape));
+        materialMap.get(ClayMaterial.clay).put(ClayShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(0)));
+        materialMap.get(ClayMaterial.clay).put(ClayShape.ball, Items.CLAY_BALL);
+        for (ClayShape shape : ClayShape.values()) {
+            materialMap.get(ClayMaterial.clay).putIfAbsent(shape, new ClayiumItem(ClayMaterial.clay, shape));
         }
 
-        materialMap.get(CMaterial.denseClay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(1)));
-        materialMap.get(CMaterial.denseClay).put(CShape.ball, Items.CLAY_BALL);
-        materialMap.get(CMaterial.denseClay).put(CShape.largeBall, Items.AIR);
-        materialMap.get(CMaterial.denseClay).put(CShape.plural, Items.AIR);
-        for (CShape shape : CShape.values()) {
-            materialMap.get(CMaterial.denseClay).putIfAbsent(shape, new ClayiumItem(CMaterial.denseClay, shape));
+        materialMap.get(ClayMaterial.denseClay).put(ClayShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(1)));
+        materialMap.get(ClayMaterial.denseClay).put(ClayShape.ball, Items.CLAY_BALL);
+        materialMap.get(ClayMaterial.denseClay).put(ClayShape.largeBall, Items.AIR);
+        for (ClayShape shape : ClayShape.values()) {
+            materialMap.get(ClayMaterial.denseClay).putIfAbsent(shape, new ClayiumItem(ClayMaterial.denseClay, shape));
         }
 
-        materialMap.get(CMaterial.indClay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(3)));
-        materialMap.get(CMaterial.indClay).put(CShape.plate, new ClayiumItem(CMaterial.indClay, CShape.plate));
-        materialMap.get(CMaterial.indClay).put(CShape.largePlate, new ClayiumItem(CMaterial.indClay, CShape.largePlate));
+        materialMap.get(ClayMaterial.indClay).put(ClayShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(3)));
+        materialMap.get(ClayMaterial.indClay).put(ClayShape.plate, new ClayiumItem(ClayMaterial.indClay, ClayShape.plate));
+        materialMap.get(ClayMaterial.indClay).put(ClayShape.largePlate, new ClayiumItem(ClayMaterial.indClay, ClayShape.largePlate));
 
-        materialMap.get(CMaterial.advIndClay).put(CShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(4)));
-        materialMap.get(CMaterial.advIndClay).put(CShape.plate, new ClayiumItem(CMaterial.advIndClay, CShape.plate));
-        materialMap.get(CMaterial.advIndClay).put(CShape.largePlate, new ClayiumItem(CMaterial.advIndClay, CShape.largePlate));
+        materialMap.get(ClayMaterial.advIndClay).put(ClayShape.block, new ItemBlock(ClayiumBlocks.compressedClays.get(4)));
+        materialMap.get(ClayMaterial.advIndClay).put(ClayShape.plate, new ClayiumItem(ClayMaterial.advIndClay, ClayShape.plate));
+        materialMap.get(ClayMaterial.advIndClay).put(ClayShape.largePlate, new ClayiumItem(ClayMaterial.advIndClay, ClayShape.largePlate));
+
+        // ===== METAL PART =====
+//        for (Material material : GenericMaterial.values()) {
+//            materialMap.put(material, new HashMap<>());
+//        }
+//
+//        materialMap.get(GenericMaterial.aluminum).put(GenericShape.ingot, new ClayiumItem(GenericMaterial.aluminum, GenericShape.ingot));
+
     }
-    public static Item get(CMaterial material, CShape shape) {
+    public static Item get(Material material, IShape shape) {
         return materialMap.get(material).get(shape);
+    }
+    public static ItemStack getOD(Material material, IShape shape, int amount) {
+        List<ItemStack> oreList = OreDictionary.getOres(shape.getName() + material.getODName());
+        if (oreList == null || oreList.isEmpty()) return ItemStack.EMPTY;
+
+        ItemStack res = oreList.get(0).copy();
+        res.setCount(amount);
+        return res;
     }
     /* ...Materials */
 

@@ -110,8 +110,6 @@ tile.clay_crafting_table.tooltip.line1=ちょっと便利な作業台
 tile.clay_crafting_table.tooltip.line2=__DETAIL__
 tile.clay_crafting_table.tooltip.line3=クラフト時隣接チェストにアクセス可能
 
-# tile.blockElementalMillingMachine.name=初期型フライス盤
-# tile.blockElementalMillingMachine.tooltip.line1=初めての回路
 # tile.blockEnergeticClayCondenser.name=エネルギー粘土凝縮機 Mk I
 # tile.blockEnergeticClayCondenser.tooltip.line1=初めてのエネルギー粘土
 # tile.blockEnergeticClayCondenserMK2.name=エネルギー粘土凝縮機 Mk II
@@ -126,22 +124,22 @@ tile.clay_bending_machine.tooltip.line1=初めての機械
 # tile.blockClaySteelBendingMachine.name=粘土鋼プレート作成機
 # tile.blockUltimateBendingMachine.name=究極プレート作成機
 
-# tile.blockClayWireDrawingMachine.name=粘土ワイヤー圧延機
+tile.clay_wire_drawing_machine.name=粘土ワイヤー圧延機
 # tile.blockDenseClayWireDrawingMachine.name=高密度粘土ワイヤー圧延機
 # tile.blockSimpleWireDrawingMachine.name=簡易ワイヤー圧延機
 # tile.blockBasicWireDrawingMachine.name=ワイヤー圧延機
 
-# tile.blockClayPipeDrawingMachine.name=粘土パイプ圧延機
+tile.clay_pipe_drawing_machine.name=粘土パイプ圧延機
 # tile.blockDenseClayPipeDrawingMachine.name=高密度粘土パイプ圧延機
 # tile.blockSimplePipeDrawingMachine.name=簡易パイプ圧延機
 # tile.blockBasicPipeDrawingMachine.name=パイプ圧延機
 
-# tile.blockClayCuttingMachine.name=粘土切断機
+tile.clay_cutting_machine.name=粘土切断機
 # tile.blockDenseClayCuttingMachine.name=高密度粘土切断機
 # tile.blockSimpleCuttingMachine.name=簡易切断機
 # tile.blockBasicCuttingMachine.name=切断機
 
-# tile.blockClayLathe.name=粘土旋盤
+tile.clay_lathe.name=粘土旋盤
 # tile.blockDenseClayLathe.name=高密度粘土旋盤
 # tile.blockSimpleLathe.name=簡易旋盤
 # tile.blockBasicLathe.name=旋盤
@@ -172,6 +170,8 @@ tile.clay_bending_machine.tooltip.line1=初めての機械
 # tile.blockSimpleDecomposer.name=簡易分解機
 # tile.blockBasicDecomposer.name=分解機
 
+# tile.blockDenseClayMillingMachine.name=初期型フライス盤
+# tile.blockDenseClayMillingMachine.tooltip.line1=初めての回路
 # tile.blockSimpleMillingMachine.name=簡易フライス盤
 # tile.blockBasicMillingMachine.name=フライス盤
 

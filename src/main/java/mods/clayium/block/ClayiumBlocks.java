@@ -3,17 +3,18 @@ package mods.clayium.block;
 import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.ClayiumBlock;
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.ClayBendingMachine.ClayBendingMachine;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
+import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
+import mods.clayium.machine.common.ClayMachineTempTiered;
+import mods.clayium.machine.crafting.ClayiumRecipe;
+import mods.clayium.machine.crafting.ClayiumRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ClayiumBlocks {
     public static void initBlocks() {
@@ -29,14 +30,20 @@ public class ClayiumBlocks {
                     items.add(block.getItemDropped(block.getDefaultState(), new Random(), 0).setRegistryName(block.getRegistryName()));
                 }
                 if (field.get(instance) instanceof BlockDamaged) {
-                    ClayiumCore.logger.info("ItemDamaged!");
                     for (Block _block : (BlockDamaged) field.get(instance)) {
-                        ClayiumCore.logger.info(_block.getRegistryName());
                         if (_block instanceof ClayiumBlock) {
                             blocks.add(_block);
                             items.add(_block.getItemDropped(_block.getDefaultState(), new Random(), 0).setRegistryName(_block.getRegistryName()));
                         }
-                    };
+                    }
+                }
+                if (field.get(instance) == machineMap) {
+                    for (Map.Entry<ClayiumBlocks.MachineKind, Map<ClayiumBlocks.TierPrefix, ClayMachineTempTiered>> kinds : ClayiumBlocks.machineMap.entrySet()) {
+                        for (Map.Entry<ClayiumBlocks.TierPrefix, ClayMachineTempTiered> tiers : kinds.getValue().entrySet()) {
+                            blocks.add(tiers.getValue());
+                            items.add(tiers.getValue().getItemDropped(tiers.getValue().getDefaultState(), new Random(), 0).setRegistryName(tiers.getValue().getRegistryName()));
+                        }
+                    }
                 }
             }
         } catch (IllegalAccessException ignore) {}
@@ -86,14 +93,110 @@ public class ClayiumBlocks {
     /* ...Machine Hulls */
 
     /* Machines... */
-    /* Tier 0... */
-    public static final Block clayWorkTable = new ClayWorkTable();
-    public static final Block clayCraftingTable = new ClayCraftingTable();
-    /* ...Tier 0 */
+    public enum TierPrefix {
+        none(""),
+        clay("clay"),
+        denseClay("dense_clay"),
+        simple("simple"),
+        basic("basic"),
+        advanced("advanced"),
+        precision("precision"),
+        claySteel("clay_steel"),
+        clayium("clayium"),
+        ultimate("ultimate"),
+        antimatter("antimatter"),
+        pureAntimatter("pure_antimatter"),
+        OEC("oec"),
+        OPA("opa");
 
-    /* Tier 1... */
-    public static final Block clayBendingMachine = new ClayBendingMachine();
-    /* ...Tier 1 */
+        TierPrefix(String prefix) {
+            this.prefix = prefix;
+        }
+
+        public String get() {
+            return prefix;
+        }
+
+        public static TierPrefix get(int tier) {
+            switch (tier) {
+                case 0: return none;
+                case 1: return clay;
+                case 2: return denseClay;
+                case 3: return simple;
+                case 4: return basic;
+                case 5: return advanced;
+                case 6: return precision;
+                case 7: return claySteel;
+                case 8: return clayium;
+                case 9: return ultimate;
+                case 10: return antimatter;
+                case 11: return pureAntimatter;
+                case 12: return OEC;
+                case 13: return OPA;
+            }
+
+            ClayiumCore.logger.error(new IllegalAccessException());
+            return null;
+        }
+
+        private final String prefix;
+    }
+
+    public enum MachineKind {
+        workTable("work_table", ClayiumRecipes.clayWorkTable),
+        craftingTable("crafting_table", null),
+        bendingMachine("bending_machine", ClayiumRecipes.bendingMachine),
+        wireDrawingMachine("wire_drawing_machine", ClayiumRecipes.wireDrawingMachine),
+        pipeDrawingMachine("pipe_drawing_machine", ClayiumRecipes.pipeDrawingMachine),
+        cuttingMachine("cutting_machine", ClayiumRecipes.cuttingMachine),
+        lathe("lathe", ClayiumRecipes.lathe),
+        ;
+
+        MachineKind(String kind, ClayiumRecipe recipe) {
+            this.kind = kind;
+            this.recipe = recipe;
+        }
+
+        public String get() {
+            return kind;
+        }
+        public ClayiumRecipe getRecipe() {
+            return recipe;
+        }
+
+        private final String kind;
+        private final ClayiumRecipe recipe;
+    }
+
+    public static final Map<MachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new HashMap<>();
+    static {
+        for (MachineKind kind : MachineKind.values()) {
+            machineMap.put(kind, new HashMap<>());
+        }
+
+        /* Tier 0... */
+        machineMap.get(MachineKind.workTable).put(TierPrefix.none, new ClayWorkTable());
+        machineMap.get(MachineKind.craftingTable).put(TierPrefix.none, new ClayCraftingTable());
+        /* ...Tier 0 */
+
+        /* Tier 1... */
+        for (MachineKind kind : new MachineKind[] {
+                MachineKind.bendingMachine,
+                MachineKind.wireDrawingMachine,
+                MachineKind.pipeDrawingMachine,
+                MachineKind.cuttingMachine,
+                MachineKind.lathe
+        }) {
+            machineMap.get(kind).put(TierPrefix.clay, new ClayiumMachine(kind, "", 1));
+        }
+        /* ...Tier 1 */
+    }
+    public static Block get(MachineKind kind, TierPrefix tier) {
+        return machineMap.get(kind).get(tier);
+    }
+    public static Block get(MachineKind kind, int tier) {
+        return get(kind, TierPrefix.get(tier));
+    }
     /* ...Machines */
     /* ...Elements */
 

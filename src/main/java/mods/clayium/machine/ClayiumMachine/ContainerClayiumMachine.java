@@ -1,4 +1,4 @@
-package mods.clayium.machine.ClayBendingMachine;
+package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.RectangleTexture;
@@ -11,12 +11,12 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerClayBendingMachine extends ContainerClayMachineTemp {
+public class ContainerClayiumMachine extends ContainerClayMachineTemp {
     private long craftTime, timeToCraft, debtEnergy, containEnergy;
     private final int materialSlotIndex = 0;
     private final int resultSlotIndex = 1;
 
-    public ContainerClayBendingMachine(InventoryPlayer player, TileEntityClayBendingMachine tile) {
+    public ContainerClayiumMachine(InventoryPlayer player, TileEntityClayiumMachine tile) {
         super(tile);
         sizeInventory = 3;
 
@@ -48,7 +48,7 @@ public class ContainerClayBendingMachine extends ContainerClayMachineTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return ((TileEntityClayBendingMachine) tileEntity).getRecipe(itemstack1) != RecipeElement.FLAT;
+        return ((TileEntityClayiumMachine) tileEntity).getRecipe(itemstack1) != RecipeElement.FLAT;
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1) {
@@ -64,7 +64,7 @@ public class ContainerClayBendingMachine extends ContainerClayMachineTemp {
 
     @Override
     public boolean enchantItem(EntityPlayer playerIn, int id) {
-        ((TileEntityClayBendingMachine) tileEntity).pushButton(playerIn, id);
+        ((TileEntityClayiumMachine) tileEntity).pushButton(playerIn, id);
         return true;
     }
 

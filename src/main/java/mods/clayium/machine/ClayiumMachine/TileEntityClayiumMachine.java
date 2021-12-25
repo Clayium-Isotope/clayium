@@ -1,10 +1,10 @@
-package mods.clayium.machine.ClayBendingMachine;
+package mods.clayium.machine.ClayiumMachine;
 
+import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.common.IClicker;
 import mods.clayium.machine.common.TileEntitySidedClayContainer;
 import mods.clayium.machine.crafting.ClayiumRecipe;
-import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,28 +16,29 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayBendingMachine extends TileEntitySidedClayContainer implements IClicker, ITickable {
+public class TileEntityClayiumMachine extends TileEntitySidedClayContainer implements IClicker, ITickable {
     private enum MachineSlots {
         MATERIAL,
         PRODUCT,
         ENERGY
     }
 
-    private final int tier = 1;
-    private final ClayiumRecipe recipeCards = ClayiumRecipes.bendingMachine;
+    private final int tier;
+    private final ClayiumRecipe recipeCards;
     private RecipeElement doingRecipe = RecipeElement.FLAT;
 
-    // for work
     private long craftTime;
     private long timeToCraft;
     private long debtEnergy;
 
-    // energy part
     public long containEnergy;
     public final int clayEnergySlot = MachineSlots.ENERGY.ordinal();
 
-    public TileEntityClayBendingMachine() {
+    public TileEntityClayiumMachine(int tier, ClayiumBlocks.MachineKind kind) {
         super(MachineSlots.values().length);
+
+        this.tier = tier;
+        this.recipeCards = kind.getRecipe();
     }
 
     public ItemStack getStackInSlot(MachineSlots index) {
@@ -74,7 +75,7 @@ public class TileEntityClayBendingMachine extends TileEntitySidedClayContainer i
     private void sendUpdate() {
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-        ClayBendingMachine.updateBlockState(world, pos);
+        ClayiumMachine.updateBlockState(world, pos);
 
         markDirty();
     }

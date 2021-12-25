@@ -8,10 +8,7 @@ import java.util.List;
 public class ClayiumRecipe extends ArrayList<RecipeElement> {
     public ClayiumRecipe() {
         super();
-        init();
     }
-
-    public void init() {}
 
     public void addRecipe(ItemStack materialIn, ItemStack resultIn, long time) {
         addRecipe(materialIn, -1, 0, resultIn, 1L, time);

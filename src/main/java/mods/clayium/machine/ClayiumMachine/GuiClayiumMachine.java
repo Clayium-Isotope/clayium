@@ -1,4 +1,4 @@
-package mods.clayium.machine.ClayBendingMachine;
+package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
@@ -12,21 +12,21 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 // TODO still added an integration between JEI. see from ordinal
-public class GuiClayBendingMachine extends GuiClayMachineTemp {
+public class GuiClayiumMachine extends GuiClayMachineTemp {
     private final int progressBarSizeX = 22;
     private final int progressBarSizeY = 16;
     private final int progressBarPosX = (xSize - this.progressBarSizeX) / 2;
     private final int progressBarPosY = 35;
 
-    public GuiClayBendingMachine(InventoryPlayer invPlayer, TileEntityClayBendingMachine tile, Block block) {
-        super(new ContainerClayBendingMachine(invPlayer, tile), tile, block, 72);
+    public GuiClayiumMachine(InventoryPlayer invPlayer, TileEntityClayiumMachine tile, Block block) {
+        super(new ContainerClayiumMachine(invPlayer, tile), tile, block, 72);
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((TileEntityClayBendingMachine) tile).containEnergy, false)), 4, machineHeight - 12, 4210752);
+        fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((TileEntityClayiumMachine) tile).containEnergy, false)), 4, machineHeight - 12, 4210752);
     }
 
     @Override
@@ -35,9 +35,9 @@ public class GuiClayBendingMachine extends GuiClayMachineTemp {
 
         mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png"));
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 96, progressBarSizeX, progressBarSizeY);
-        drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, ((TileEntityClayBendingMachine) tile).getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
+        drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, ((TileEntityClayiumMachine) tile).getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
 
-        buttonList.get(0).enabled = ((TileEntityClayBendingMachine) tile).canPushButton(0) == IClicker.ButtonProperty.PERMIT;
+        buttonList.get(0).enabled = ((TileEntityClayiumMachine) tile).canPushButton(0) == IClicker.ButtonProperty.PERMIT;
     }
 
     @Override
@@ -51,8 +51,8 @@ public class GuiClayBendingMachine extends GuiClayMachineTemp {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        itemRender.renderItemAndEffectIntoGUI(((TileEntityClayBendingMachine) tile).getStackInSlot(((TileEntityClayBendingMachine) tile).clayEnergySlot), guiLeft - 12, guiTop + machineHeight - 16);
-        itemRender.renderItemOverlayIntoGUI(fontRenderer, ((TileEntityClayBendingMachine) tile).getStackInSlot(((TileEntityClayBendingMachine) tile).clayEnergySlot), guiLeft - 12, guiTop + machineHeight - 16, null);
+        itemRender.renderItemAndEffectIntoGUI(((TileEntityClayiumMachine) tile).getStackInSlot(((TileEntityClayiumMachine) tile).clayEnergySlot), guiLeft - 12, guiTop + machineHeight - 16);
+        itemRender.renderItemOverlayIntoGUI(fontRenderer, ((TileEntityClayiumMachine) tile).getStackInSlot(((TileEntityClayiumMachine) tile).clayEnergySlot), guiLeft - 12, guiTop + machineHeight - 16, null);
     }
 
     @Override

@@ -1,14 +1,8 @@
 package mods.clayium.gui;
 
-import mods.clayium.machine.ClayBendingMachine.ContainerClayBendingMachine;
-import mods.clayium.machine.ClayBendingMachine.GuiClayBendingMachine;
-import mods.clayium.machine.ClayBendingMachine.TileEntityClayBendingMachine;
-import mods.clayium.machine.ClayCraftingTable.ContainerClayCraftingTable;
-import mods.clayium.machine.ClayCraftingTable.GuiClayCraftingTable;
-import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
-import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
-import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
-import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
+import mods.clayium.machine.ClayiumMachine.*;
+import mods.clayium.machine.ClayCraftingTable.*;
+import mods.clayium.machine.ClayWorkTable.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,7 +31,7 @@ public class GuiHandler implements IGuiHandler {
                 case clayCraftingTableGuiID:
                     return new ContainerClayCraftingTable(player.inventory, world, pos);
                 case clayBendingMachineGuiID:
-                    return new ContainerClayBendingMachine(player.inventory, (TileEntityClayBendingMachine) tile);
+                    return new ContainerClayiumMachine(player.inventory, (TileEntityClayiumMachine) tile);
             }
         }
 
@@ -59,7 +53,7 @@ public class GuiHandler implements IGuiHandler {
                 case clayCraftingTableGuiID:
                     return new GuiClayCraftingTable(new ContainerClayCraftingTable(player.inventory, world, pos), (TileEntityClayCraftingTable) tile, state.getBlock());
                 case clayBendingMachineGuiID:
-                    return new GuiClayBendingMachine(player.inventory, (TileEntityClayBendingMachine) tile, state.getBlock());
+                    return new GuiClayiumMachine(player.inventory, (TileEntityClayiumMachine) tile, state.getBlock());
             }
         }
 

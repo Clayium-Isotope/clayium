@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "clayium:machine/clay_cutting_machine" },
+        "facing=east": { "model": "clayium:machine/clay_cutting_machine", "y": 90 },
+        "facing=south": { "model": "clayium:machine/clay_cutting_machine", "y": 180 },
+        "facing=west": { "model": "clayium:machine/clay_cutting_machine", "y": 270 }
+    }
+}

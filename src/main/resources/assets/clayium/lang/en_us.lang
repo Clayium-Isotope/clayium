@@ -110,8 +110,6 @@ tile.clay_crafting_table.tooltip.line1=A convenient version of vanilla Crafting 
 tile.clay_crafting_table.tooltip.line2=__DETAIL__
 tile.clay_crafting_table.tooltip.line3=You can access the content of a nearby chest while using it.
 
-# tile.blockElementalMillingMachine.name=Elemental Milling Machine
-# tile.blockElementalMillingMachine.tooltip.line1=To obtain the first circuit.
 # tile.blockEnergeticClayCondenser.name=Energetic Clay Condenser Mk I
 # tile.blockEnergeticClayCondenser.tooltip.line1=To obtain the first Energetic Clay.
 # tile.blockEnergeticClayCondenserMK2.name=Energetic Clay Condenser Mk II
@@ -126,22 +124,22 @@ tile.clay_bending_machine.tooltip.line1=The first machine.
 # tile.blockClaySteelBendingMachine.name=Clay Steel Bending Machine
 # tile.blockUltimateBendingMachine.name=Ultimate Bending Machine
 
-# tile.blockClayWireDrawingMachine.name=Clay Wire Drawing Machine
+tile.clay_wire_drawing_machine.name=Clay Wire Drawing Machine
 # tile.blockDenseClayWireDrawingMachine.name=Dense Clay Wire Drawing Machine
 # tile.blockSimpleWireDrawingMachine.name=Simple Wire Drawing Machine
 # tile.blockBasicWireDrawingMachine.name=Basic Wire Drawing Machine
 
-# tile.blockClayPipeDrawingMachine.name=Clay Pipe Drawing Machine
+tile.clay_pipe_drawing_machine.name=Clay Pipe Drawing Machine
 # tile.blockDenseClayPipeDrawingMachine.name=Dense Clay Pipe Drawing Machine
 # tile.blockSimplePipeDrawingMachine.name=Simple Pipe Drawing Machine
 # tile.blockBasicPipeDrawingMachine.name=Basic Pipe Drawing Machine
 
-# tile.blockClayCuttingMachine.name=Clay Cutting Machine
+tile.clay_cutting_machine.name=Clay Cutting Machine
 # tile.blockDenseClayCuttingMachine.name=Dense Clay Cutting Machine
 # tile.blockSimpleCuttingMachine.name=Simple Cutting Machine
 # tile.blockBasicCuttingMachine.name=Basic Cutting Machine
 
-# tile.blockClayLathe.name=Clay Lathe
+tile.clay_lathe.name=Clay Lathe
 # tile.blockDenseClayLathe.name=Dense Clay Lathe
 # tile.blockSimpleLathe.name=Simple Lathe
 # tile.blockBasicLathe.name=Basic Lathe
@@ -172,6 +170,8 @@ tile.clay_bending_machine.tooltip.line1=The first machine.
 # tile.blockSimpleDecomposer.name=Simple Decomposer
 # tile.blockBasicDecomposer.name=Basic Decomposer
 
+# tile.blockDenseClayMillingMachine.name=Elemental Milling Machine
+# tile.blockDenseClayMillingMachine.tooltip.line1=To obtain the first circuit.
 # tile.blockSimpleMillingMachine.name=Simple Milling Machine
 # tile.blockBasicMillingMachine.name=Basic Milling Machine
 
