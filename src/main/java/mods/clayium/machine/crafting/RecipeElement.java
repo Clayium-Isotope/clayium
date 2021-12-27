@@ -124,9 +124,9 @@ public class RecipeElement {
     public static int getStackSize(Object recipe, ItemStack item) {
         if (recipe instanceof IItemPattern) {
             if (item == null) {
-                ItemStack[] items = ((IItemPattern) recipe).toItemStacks();
-                if (items != null && items.length >= 1)
-                    item = items[0];
+                List<ItemStack> items = ((IItemPattern) recipe).toItemStacks();
+                if (items != null && items.size() >= 1)
+                    item = items.get(0);
             }
             return ((IItemPattern) recipe).getStackSize(item);
         }
@@ -144,7 +144,7 @@ public class RecipeElement {
     public static boolean canBeCrafted(ItemStack itemstack, ItemStack itemstack2, boolean sizeCheck) {
         if (itemstack2 == null) return true;
         if (itemstack == null) return false;
-        return UtilItemStack.areItemEqual(itemstack2, itemstack)
+        return ItemStack.areItemsEqual(itemstack2, itemstack)
                 && (itemstack2.getItemDamage() == 32767 || itemstack.getItemDamage() == 32767
                 || UtilItemStack.areDamageEqual(itemstack2, itemstack))
                 && (!sizeCheck || itemstack2.getCount() <= itemstack.getCount());
@@ -161,9 +161,9 @@ public class RecipeElement {
             return UtilItemStack.hasOreName(itemstack, (String) object);
         }
         if (object instanceof OreDictionaryStack) {
-            if (sizeCheck && ((OreDictionaryStack) object).stackSize > itemstack.getCount())
+            if (sizeCheck && ((OreDictionaryStack) object).getStackSize() > itemstack.getCount())
                 return false;
-            return UtilItemStack.hasOreName(itemstack, ((OreDictionaryStack) object).id);
+            return UtilItemStack.hasOreName(itemstack, ((OreDictionaryStack) object).getId());
         }
         if (object instanceof ItemStack)
             return canBeCrafted(itemstack, (ItemStack) object, sizeCheck);
@@ -184,8 +184,8 @@ public class RecipeElement {
             return canBeCraftedOD((ItemStack) stackingred, recipeingred, sizeCheck);
         }
         if (stackingred instanceof String || stackingred instanceof OreDictionaryStack) {
-            int oreid = (stackingred instanceof OreDictionaryStack) ? ((OreDictionaryStack) stackingred).id : OreDictionary.getOreID((String) stackingred);
-            int stackSize = (stackingred instanceof OreDictionaryStack) ? ((OreDictionaryStack) stackingred).stackSize : 1;
+            int oreid = (stackingred instanceof OreDictionaryStack) ? ((OreDictionaryStack) stackingred).getId() : OreDictionary.getOreID((String) stackingred);
+            int stackSize = (stackingred instanceof OreDictionaryStack) ? ((OreDictionaryStack) stackingred).getStackSize() : 1;
             for (ItemStack item : OreDictionary.getOres(String.valueOf(oreid))) {
                 ItemStack item0 = item.copy();
                 item0.setCount(stackSize);

@@ -3,8 +3,8 @@ package mods.clayium.util.crafting;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OreDictionaryStack {
-    public int id;
-    public int stackSize;
+    private final int id;
+    private final int stackSize;
 
     public OreDictionaryStack(int id, int stackSize) {
         this.id = id;
@@ -17,5 +17,13 @@ public class OreDictionaryStack {
 
     public String getOreName() {
         return OreDictionary.getOreName(this.id);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getStackSize() {
+        return stackSize;
     }
 }

@@ -2,6 +2,8 @@ package mods.clayium.util.crafting;
 
 import net.minecraft.item.ItemStack;
 
+import java.util.List;
+
 public interface IItemPattern {
     boolean match(ItemStack var1, boolean var2);
 
@@ -9,7 +11,7 @@ public interface IItemPattern {
 
     int getStackSize(ItemStack var1);
 
-    ItemStack[] toItemStacks();
+    List<ItemStack> toItemStacks();
 
     ItemStack isSimple();
 
