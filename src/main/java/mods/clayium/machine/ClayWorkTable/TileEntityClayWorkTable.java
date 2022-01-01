@@ -133,21 +133,20 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     }
 
     public ButtonProperty canPushButton(int button) {
-        if (button == 2) {
-            if (!(!this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()
-                    && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() == ClayiumItems.clayRollingPin))
-                return ButtonProperty.FAILURE;
-        }
-        if (button == 3 || button == 5) {
-            if (!(!this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()
-                    && (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() == ClayiumItems.claySlicer
-                    || this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() == ClayiumItems.claySpatula)))
-                return ButtonProperty.FAILURE;
-        }
-        if (button == 4) {
-            if (!(!this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()
-                    && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() == ClayiumItems.claySpatula))
-                return ButtonProperty.FAILURE;
+        if (!this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()) {
+            if (button == 2) {
+                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.clayRollingPin)
+                    return ButtonProperty.FAILURE;
+            }
+            if (button == 3 || button == 5) {
+                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.claySlicer
+                        && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.claySpatula)
+                    return ButtonProperty.FAILURE;
+            }
+            if (button == 4) {
+                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.claySpatula)
+                    return ButtonProperty.FAILURE;
+            }
         }
 
         if (this.cookingMethod == button && this.canKnead(button)) {
