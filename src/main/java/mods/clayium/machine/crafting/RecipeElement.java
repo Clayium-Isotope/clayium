@@ -70,9 +70,11 @@ public class RecipeElement {
 
         public static boolean inclusion(ItemStack from, ItemStack comes) {
             if (from.isEmpty()) return true;
+            if (from.getItem() != comes.getItem()) return false;
             if (from.getCount() > comes.getCount()) return false;
             if (from.getHasSubtypes() && comes.getHasSubtypes()) return from.isItemEqual(comes);
-            return from.getItem() == comes.getItem();
+            if (from.getItemDamage() == 32767) return true;
+            return false;
         }
 
         public int[] getStackSizes(ItemStack... items) {
