@@ -19,7 +19,7 @@ public class ClayiumItem extends Item {
         setCreativeTab(ClayiumCore.tabClayium);
     }
 
-    public ClayiumItem(MaterialShape.Material material, MaterialShape.IShape shape) {
+    public ClayiumItem(ClayiumMaterial material, ClayiumShape shape) {
         this(material.getName() + "_" + shape.getName());
     }
 

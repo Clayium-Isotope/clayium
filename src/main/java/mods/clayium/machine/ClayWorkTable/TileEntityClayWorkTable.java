@@ -12,6 +12,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -135,16 +136,16 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     public ButtonProperty canPushButton(int button) {
         if (!this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()) {
             if (button == 2) {
-                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.clayRollingPin)
+                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.rollingPin)
                     return ButtonProperty.FAILURE;
             }
             if (button == 3 || button == 5) {
-                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.claySlicer
-                        && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.claySpatula)
+                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.slicer
+                        && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.spatula)
                     return ButtonProperty.FAILURE;
             }
             if (button == 4) {
-                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.claySpatula)
+                if (this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem() != ClayiumItems.spatula)
                     return ButtonProperty.FAILURE;
             }
         }
@@ -166,19 +167,15 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
 
     public void pushButton(EntityPlayer player, int button) {
         ButtonProperty canPushButton = this.canPushButton(button);
+        if (canPushButton == ButtonProperty.FAILURE) return;
 
-        RecipeElement recipe = RecipeElement.FLAT;
-        if (canPushButton != ButtonProperty.FAILURE) {
-            recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, this.machineInventory, button, 0);
-        }
+        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, this.machineInventory, button, 0);
 
-        if (canPushButton != ButtonProperty.FAILURE
-                //                && buttonId >= 2
-                && !recipe.getCondition().getMaterials().get(ClayWorkTableSlots.TOOL.ordinal()).isEmpty()
+        if (!recipe.getCondition().getMaterials().get(ClayWorkTableSlots.TOOL.ordinal()).isEmpty()
                 && !this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()
-                && this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem().hasContainerItem(this.getStackInSlot(ClayWorkTableSlots.TOOL))) {
+        ) {
             this.machineInventory.set(ClayWorkTableSlots.TOOL.ordinal(),
-                    this.getStackInSlot(ClayWorkTableSlots.TOOL).getItem().getContainerItem(this.getStackInSlot(ClayWorkTableSlots.TOOL)));
+                    ForgeHooks.getContainerItem(this.getStackInSlot(ClayWorkTableSlots.TOOL)));
         }
 
         if (canPushButton == ButtonProperty.PERMIT) {

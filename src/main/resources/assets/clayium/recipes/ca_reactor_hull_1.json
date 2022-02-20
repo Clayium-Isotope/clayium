@@ -1,0 +1,25 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#I#",
+        "#H#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:gem_compressed_pure_antimatter_0"
+        },
+        "H": {
+            "item": "clayium:ca_reactor_hull_0"
+        },
+        "I": {
+            "type": "forge:ore_dict",
+            "ore": "ingotCerium"
+        }
+    },
+    "result": {
+        "item": "clayium:ca_reactor_hull_1",
+        "count": 1
+    }
+}

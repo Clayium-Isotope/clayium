@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
 
+// TODO still added an integration between JEI. see from ordinal
 public class GuiClayWorkTable extends GuiClayMachineTemp {
     public GuiClayWorkTable(InventoryPlayer invPlayer, TileEntityClayWorkTable tileEntity, Block block) {
         super(new ContainerClayWorkTable(invPlayer, tileEntity), tileEntity, block, 72);

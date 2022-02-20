@@ -17,15 +17,19 @@ import net.minecraft.world.World;
 
 public class ClayiumMachine extends ClayMachineTempTiered {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    private final ClayiumBlocks.MachineKind machineKind;
+    private final ClayiumBlocks.EnumMachineKind machineKind;
 
-    public ClayiumMachine(ClayiumBlocks.MachineKind kind, String suffix, int tier) {
+    public ClayiumMachine(ClayiumBlocks.EnumMachineKind kind, String suffix, int tier) {
         super(Material.IRON, TileEntityClayiumMachine.class,
                 ClayiumBlocks.TierPrefix.get(tier) + "_" + kind.get() + (suffix.isEmpty() ? "" : "_" + suffix),
                 GuiHandler.clayBendingMachineGuiID, tier);
         this.machineKind = kind;
 
         setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+    }
+
+    public ClayiumMachine(ClayiumBlocks.EnumMachineKind kind, int tier) {
+        this(kind, "", tier);
     }
 
     @Override
@@ -101,7 +105,7 @@ public class ClayiumMachine extends ClayMachineTempTiered {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
-    public ClayiumBlocks.MachineKind getMachineKind() {
+    public ClayiumBlocks.EnumMachineKind getMachineKind() {
         return machineKind;
     }
 }

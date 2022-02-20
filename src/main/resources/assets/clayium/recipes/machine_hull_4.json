@@ -1,0 +1,27 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#E#",
+        "*C*",
+        "#*#"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:impure_silicon_large_plate"
+        },
+        "*": {
+            "item": "clayium:silicon_large_plate"
+        },
+        "C": {
+            "item": "clayium:advanced_circuit"
+        },
+        "E": {
+            "item": "clayium:cee"
+        }
+    },
+    "result": {
+        "item": "clayium:clay_machine_hull_4",
+        "count": 1
+    }
+}

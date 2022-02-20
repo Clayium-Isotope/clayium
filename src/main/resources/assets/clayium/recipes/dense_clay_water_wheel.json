@@ -8,14 +8,14 @@
   ],
   "key": {
     "#": {
-      "item": "clayium:clay_blade"
+      "item": "clayium:dense_clay_plate"
     },
     "o": {
-      "item": "clayium:clay_ring"
+      "item": "clayium:dense_clay_ring"
     }
   },
   "result": {
-    "item": "clayium:clay_cutting_head",
+    "item": "clayium:dense_clay_water_wheel",
     "count": 1
   }
 }

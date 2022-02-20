@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -91,13 +93,19 @@ public class ClayiumCore {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
-        GameRegistry.addSmelting(ClayiumItems.rawClayRollingPin, new ItemStack(ClayiumItems.clayRollingPin), 1F);
-        GameRegistry.addSmelting(ClayiumItems.rawClaySlicer, new ItemStack(ClayiumItems.claySlicer), 1F);
-        GameRegistry.addSmelting(ClayiumItems.rawClaySpatula, new ItemStack(ClayiumItems.claySpatula), 1F);
+        GameRegistry.addSmelting(ClayiumItems.rawRollingPin, new ItemStack(ClayiumItems.rollingPin), 1F);
+        GameRegistry.addSmelting(ClayiumItems.rawSlicer, new ItemStack(ClayiumItems.slicer), 1F);
+        GameRegistry.addSmelting(ClayiumItems.rawSpatula, new ItemStack(ClayiumItems.spatula), 1F);
+        GameRegistry.addSmelting(ClayiumBlocks.rawClayMachineHull, new ItemStack(ClayiumBlocks.machineHulls.get(0)), 0.1F);
 
-        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.get(ClayiumBlocks.MachineKind.workTable, 0).getRegistryName());
-        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.get(ClayiumBlocks.MachineKind.craftingTable, 0).getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.workTable, 0).getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.craftingTable, 0).getRegistryName());
         GameRegistry.registerTileEntity(TileEntityClayiumMachine.class, new ResourceLocation(ModId, "machine"));
+
+        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
+        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);
+        OreDictionary.registerOre("circuitElite", ClayiumItems.integratedCircuit);
+        OreDictionary.registerOre("circuitUltimate", ClayiumItems.clayCore);
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);
@@ -136,6 +144,11 @@ public class ClayiumCore {
             ModelLoader.setCustomModelResourceLocation(item, 0,
                     new ModelResourceLocation(item.getRegistryName(), "inventory"));
         }
+    }
+
+    @SubscribeEvent
+    public void registerBlockColors(ColorHandlerEvent.Item event){
+//        event.getItemColors().registerItemColorHandler(ClayiumShapedMaterial.class, );
     }
 
     @SuppressWarnings("unchecked")

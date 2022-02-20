@@ -1,0 +1,21 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#C#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:dense_clay_large_plate"
+        },
+        "C": {
+            "item": "clayium:clay_circuit"
+        }
+    },
+    "result": {
+        "item": "clayium:clay_machine_hull_1",
+        "count": 1
+    }
+}

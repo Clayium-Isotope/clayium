@@ -3,8 +3,13 @@ package mods.clayium.machine.crafting;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -73,11 +78,11 @@ public class RecipeElement {
             if (from.getItem() != comes.getItem()) return false;
             if (from.getCount() > comes.getCount()) return false;
             if (from.getHasSubtypes() && comes.getHasSubtypes()) return from.isItemEqual(comes);
-            if (from.getItemDamage() == 32767) return true;
+            if (from.getItemDamage() == OreDictionary.WILDCARD_VALUE) return true;
             return false;
         }
 
-        public int[] getStackSizes(ItemStack... items) {
+        public int[] getStackSizes(ItemStack ...items) {
             int[] sizes = new int[items.length];
             for (int i = 0; i < items.length && i < this.materials.size(); i++) {
                 sizes[i] = getStackSize(this.materials.get(i), items[i]);
@@ -147,7 +152,7 @@ public class RecipeElement {
         if (itemstack2 == null) return true;
         if (itemstack == null) return false;
         return ItemStack.areItemsEqual(itemstack2, itemstack)
-                && (itemstack2.getItemDamage() == 32767 || itemstack.getItemDamage() == 32767
+                && (itemstack2.getItemDamage() == OreDictionary.WILDCARD_VALUE || itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE
                 || UtilItemStack.areDamageEqual(itemstack2, itemstack))
                 && (!sizeCheck || itemstack2.getCount() <= itemstack.getCount());
     }
@@ -218,5 +223,78 @@ public class RecipeElement {
             return (IItemPattern) ingred;
         }
         return null;
+    }
+}
+
+// TODO RecipeElement implement IRecipe
+class _RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+
+    private final NonNullList<ItemStack> materials;
+    private final int method;
+    private final int tier;
+    private final NonNullList<ItemStack> results;
+    private final long energy;
+    private final long time;
+
+    public _RecipeElement(List<ItemStack> materials, int method, int tier, List<ItemStack> results, long energy, long time) {
+        this.materials = NonNullList.from(ItemStack.EMPTY, materials.toArray(new ItemStack[0]));
+        this.method = method;
+        this.tier = tier;
+        this.results = NonNullList.from(ItemStack.EMPTY, results.toArray(new ItemStack[0]));;
+        this.energy = energy;
+        this.time = time;
+    }
+
+    @Override
+    @Deprecated // Use more arguments version
+    public boolean matches(InventoryCrafting inv, World worldIn) {
+        return false;
+    }
+
+    public boolean matches(InventorySimpleMachine invIn, int methodIn, int tierIn) {
+        if (method != methodIn || tier > tierIn || materials.size() > invIn.getSizeInventory()) return false;
+        return matches(invIn);
+    }
+
+    public boolean matches(InventorySimpleMachine invIn) {
+        for (int i = 0; i < materials.size(); i++)
+            if (!inclusion(materials.get(i), invIn.getStackInSlot(i)))
+                return false;
+
+        return true;
+    }
+
+    public static boolean inclusion(ItemStack from, ItemStack comes) {
+        if (from.isEmpty()) return true;
+        if (from.getItem() != comes.getItem()) return false;
+        if (from.getCount() > comes.getCount()) return false;
+        if (from.getHasSubtypes() && comes.getHasSubtypes()) return from.isItemEqual(comes);
+        if (from.getItemDamage() == OreDictionary.WILDCARD_VALUE) return true;
+        return false;
+    }
+
+    @Override
+    @Deprecated // Use NonNullList version
+    public ItemStack getCraftingResult(InventoryCrafting inv) {
+        return getCraftingResults(inv).get(0);
+    }
+
+    public NonNullList<ItemStack> getCraftingResults(InventoryCrafting inv) {
+        return results;
+    }
+
+    @Override
+    public boolean canFit(int width, int height) {
+        return height == 1 && width >= materials.size();
+    }
+
+    @Override
+    public ItemStack getRecipeOutput() {
+        return results.get(0);
+    }
+
+    @Override
+    public String getGroup() {
+        return "clayium";
     }
 }

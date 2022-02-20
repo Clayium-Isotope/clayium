@@ -1,6 +1,6 @@
 package mods.clayium.item.common;
 
-import net.minecraft.client.resources.I18n;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -14,10 +14,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemTiered extends ClayiumItem implements ITieredItem {
-    private final int tier;
+    private int tier;
 
     public ItemTiered(String modelPath, int tier) {
         super(modelPath + (modelPath.endsWith("_") ? tier : ""));
+        this.tier = tier;
+    }
+
+    public ItemTiered(ClayiumMaterial material, ClayiumShape shape, int tier) {
+        super(material, shape);
         this.tier = tier;
     }
 
@@ -32,7 +37,7 @@ public class ItemTiered extends ClayiumItem implements ITieredItem {
     }
 
     public static String getTieredToolTip(int tier) {
-        return TextFormatting.WHITE + I18n.format("gui.Common.tier", tier) + TextFormatting.RESET;
+        return TextFormatting.WHITE + UtilLocale.tierGui(tier) + TextFormatting.RESET;
     }
 
     @Override
@@ -48,5 +53,10 @@ public class ItemTiered extends ClayiumItem implements ITieredItem {
     @Override
     public int getTier() {
         return tier;
+    }
+
+    public ItemTiered setTier(int tier) {
+        this.tier = tier;
+        return this;
     }
 }

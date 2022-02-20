@@ -2,20 +2,20 @@
   "group": "clayium",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "###",
-    "#o#",
-    "###"
+    "iii",
+    "ioi",
+    "iii"
   ],
   "key": {
-    "#": {
-      "item": "clayium:clay_needle"
+    "i": {
+      "item": "clayium:clay_blade"
     },
     "o": {
       "item": "clayium:clay_ring"
     }
   },
   "result": {
-    "item": "clayium:clay_grinding_head",
+    "item": "clayium:clay_cutting_head",
     "count": 1
   }
 }

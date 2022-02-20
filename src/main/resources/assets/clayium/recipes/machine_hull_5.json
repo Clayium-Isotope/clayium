@@ -1,0 +1,24 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#E#",
+        "#C#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:aluminum_clay_large_plate"
+        },
+        "C": {
+            "item": "clayium:precision_circuit"
+        },
+        "E": {
+            "item": "clayium:cee"
+        }
+    },
+    "result": {
+        "item": "clayium:clay_machine_hull_5",
+        "count": 1
+    }
+}

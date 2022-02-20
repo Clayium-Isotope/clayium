@@ -1,0 +1,21 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#C#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:zk60a_large_plate"
+        },
+        "C": {
+            "item": "clayium:precision_circuit"
+        }
+    },
+    "result": {
+        "item": "clayium:zk60a_machine_hull",
+        "count": 1
+    }
+}

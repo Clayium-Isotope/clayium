@@ -1,0 +1,27 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "*o*",
+        "=#=",
+        "*o*"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_1"
+        },
+        "o": {
+            "item": "clayium:clay_spindle"
+        },
+        "*": {
+            "item": "clayium:clay_gear"
+        },
+        "=": {
+            "item": "clayium:clay_pipe"
+        }
+    },
+    "result": {
+        "item": "clayium:dense_clay_wire_drawing_machine",
+        "count": 1
+    }
+}

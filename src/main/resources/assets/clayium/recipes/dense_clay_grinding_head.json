@@ -1,0 +1,21 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "ioi",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "clayium:dense_clay_needle"
+    },
+    "o": {
+      "item": "clayium:dense_clay_ring"
+    }
+  },
+  "result": {
+    "item": "clayium:dense_clay_grinding_head",
+    "count": 1
+  }
+}

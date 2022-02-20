@@ -2,25 +2,25 @@
   "group": "clayium",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "o#o",
-    "-@0",
-    "o#o"
+    "0#0",
+    "ioO",
+    "0#0"
   ],
   "key": {
+    "i": {
+      "item": "clayium:clay_stick"
+    },
     "o": {
-      "item": "clayium:clay_small_ring"
+      "item": "clayium:clay_bearing"
+    },
+    "O": {
+      "item": "clayium:clay_ring"
     },
     "#": {
       "item": "clayium:clay_plate"
     },
-    "-": {
-      "item": "clayium:clay_stick"
-    },
-    "@": {
-      "item": "clayium:clay_bearing"
-    },
     "0": {
-      "item": "clayium:clay_ring"
+      "item": "clayium:clay_small_ring"
     }
   },
   "result": {

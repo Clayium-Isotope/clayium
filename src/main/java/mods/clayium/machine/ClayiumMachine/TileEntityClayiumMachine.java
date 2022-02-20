@@ -34,7 +34,7 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
     public long containEnergy;
     public final int clayEnergySlot = MachineSlots.ENERGY.ordinal();
 
-    public TileEntityClayiumMachine(int tier, ClayiumBlocks.MachineKind kind) {
+    public TileEntityClayiumMachine(int tier, ClayiumBlocks.EnumMachineKind kind) {
         super(MachineSlots.values().length);
 
         this.tier = tier;
@@ -75,7 +75,7 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
     private void sendUpdate() {
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-        ClayiumMachine.updateBlockState(world, pos);
+        mods.clayium.machine.ClayiumMachine.ClayiumMachine.updateBlockState(world, pos);
 
         markDirty();
     }

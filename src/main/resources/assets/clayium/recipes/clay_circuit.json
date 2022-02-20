@@ -1,0 +1,27 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "-*-",
+        "o#o",
+        "-*-"
+    ],
+    "key": {
+        "-": {
+            "item": "clayium:dense_clay_stick"
+        },
+        "*": {
+            "item": "clayium:dense_clay_gear"
+        },
+        "o": {
+            "item": "clayium:dense_clay_ring"
+        },
+        "#": {
+            "item": "clayium:clay_circuit_board"
+        }
+    },
+    "result": {
+        "item": "clayium:clay_circuit",
+        "count": 1
+    }
+}

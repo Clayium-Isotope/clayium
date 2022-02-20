@@ -1,0 +1,13 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "clayium:gem_antimatter_4"
+        }
+    ],
+    "result": {
+        "item": "minecraft:gem_antimatter_3",
+        "count": 9
+    }
+}

@@ -38,8 +38,8 @@ public class UtilAdvancedTools {
         if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
 
             zzVector = EnumFacing.UP;
-            float f1 = MathHelper.cos((float) (Math.toRadians(-player.rotationYaw) - Math.PI));
-            float f2 = MathHelper.sin((float) (Math.toRadians(-player.rotationYaw) - Math.PI));
+            float f1 = MathHelper.cos((float) (StrictMath.toRadians(-player.rotationYaw) - Math.PI));
+            float f2 = MathHelper.sin((float) (StrictMath.toRadians(-player.rotationYaw) - Math.PI));
             if (f1 >= Math.sqrt(0.5D)) yyVector = EnumFacing.NORTH;
             if (f1 <= -Math.sqrt(0.5D)) yyVector = EnumFacing.SOUTH;
             if (f2 >= Math.sqrt(0.5D)) yyVector = EnumFacing.WEST;

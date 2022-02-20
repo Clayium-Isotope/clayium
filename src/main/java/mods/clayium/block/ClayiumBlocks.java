@@ -1,8 +1,10 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockDamaged;
+import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.common.ClayiumBlock;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
@@ -10,6 +12,8 @@ import mods.clayium.machine.common.ClayMachineTempTiered;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 
@@ -38,7 +42,7 @@ public class ClayiumBlocks {
                     }
                 }
                 if (field.get(instance) == machineMap) {
-                    for (Map.Entry<ClayiumBlocks.MachineKind, Map<ClayiumBlocks.TierPrefix, ClayMachineTempTiered>> kinds : ClayiumBlocks.machineMap.entrySet()) {
+                    for (Map.Entry<EnumMachineKind, Map<ClayiumBlocks.TierPrefix, ClayMachineTempTiered>> kinds : ClayiumBlocks.machineMap.entrySet()) {
                         for (Map.Entry<ClayiumBlocks.TierPrefix, ClayMachineTempTiered> tiers : kinds.getValue().entrySet()) {
                             blocks.add(tiers.getValue());
                             items.add(tiers.getValue().getItemDropped(tiers.getValue().getDefaultState(), new Random(), 0).setRegistryName(tiers.getValue().getRegistryName()));
@@ -66,55 +70,70 @@ public class ClayiumBlocks {
     public static final Block largeDenseClayOre = new LargeDenseClayOre();
     /* ...Ores */
 
-    /* Compressed Clays... */
-    public static final BlockDamaged compressedClays = new BlockDamaged() {
-        public void init() {
-            add(Blocks.CLAY);
-            for (int i = 0; i < 13; i++) {
-                add(new CompressedClay(i));
-            }
+    public static final BlockDamaged compressedClays = new BlockDamaged() {{
+        add(Blocks.CLAY);
+        for (int i = 0; i < 13; i++) {
+            add(new CompressedClay(i));
         }
-    };
-    /* ...Compressed Clays */
+    }};
+
+    public static final BlockDamaged CAReactorHull = new BlockDamaged() {{
+        int[] tiers = { 10, 11, 11, 11, 11, 12, 12, 12, 12, 13 };
+        for (int i = 0; i < 10; i++) {
+            add(new BlockTiered(Material.IRON, "ca_reactor_hull_", i, tiers[i]) {{
+                setSoundType(SoundType.METAL);
+                setHarvestLevel("pickaxe", 0);
+                setHardness(4.0F);
+                setResistance(25.0F);
+            }});
+        }
+    }};
 
     /* Machine Hulls... */
     public static final Block rawClayMachineHull = new RawClayMachineHull();
 
-    public static final BlockDamaged machineHulls = new BlockDamaged() {
-        public void init() {
-            for (int i = 0; i < 13; i++) {
-                add(new MachineHull(i));
-            }
+    public static final BlockDamaged machineHulls = new BlockDamaged() {{
+        for (int i = 0; i < 13; i++) {
+            add(new BlockTiered(Material.IRON, "machine_hull_", i, i + 1) {{
+                setSoundType(SoundType.METAL);
+                setHarvestLevel("pickaxe", 0);
+                setHardness(2F);
+                setResistance(5F);
+            }});
         }
-    };
+    }};
 
-    public static final Block alloyHullAZ91D = new AZ91DAlloyHull();
-    public static final Block alloyHullZK60A = new ZK60AAlloyHull();
+    public static final Block AZ91DAlloyHull = new AZ91DAlloyHull();
+    public static final Block ZK60AAlloyHull = new ZK60AAlloyHull();
     /* ...Machine Hulls */
 
     /* Machines... */
     public enum TierPrefix {
-        none(""),
-        clay("clay"),
-        denseClay("dense_clay"),
-        simple("simple"),
-        basic("basic"),
-        advanced("advanced"),
-        precision("precision"),
-        claySteel("clay_steel"),
-        clayium("clayium"),
-        ultimate("ultimate"),
-        antimatter("antimatter"),
-        pureAntimatter("pure_antimatter"),
-        OEC("oec"),
-        OPA("opa");
+        none("", ClayiumMaterial.clay),
+        clay("clay", ClayiumMaterial.clay),
+        denseClay("dense_clay", ClayiumMaterial.denseClay),
+        simple("simple", ClayiumMaterial.indClay),
+        basic("basic", ClayiumMaterial.advClay),
+        advanced("advanced", ClayiumMaterial.impureSilicon),
+        precision("precision", ClayiumMaterial.mainAluminum),
+        claySteel("clay_steel", ClayiumMaterial.claySteel),
+        clayium("clayium", ClayiumMaterial.clayium),
+        ultimate("ultimate", ClayiumMaterial.ultimateAlloy),
+        antimatter("antimatter", ClayiumMaterial.antimatter),
+        pureAntimatter("pure_antimatter", ClayiumMaterial.pureAntimatter),
+        OEC("oec", ClayiumMaterial.octupleEnergeticClay),
+        OPA("opa", ClayiumMaterial.octuplePureAntimatter);
 
-        TierPrefix(String prefix) {
+        TierPrefix(String prefix, ClayiumMaterial material) {
             this.prefix = prefix;
+            this.material = material;
         }
 
-        public String get() {
+        public String getPrefix() {
             return prefix;
+        }
+        public ClayiumMaterial getMaterial() {
+            return material;
         }
 
         public static TierPrefix get(int tier) {
@@ -136,23 +155,97 @@ public class ClayiumBlocks {
             }
 
             ClayiumCore.logger.error(new IllegalAccessException());
-            return null;
+            return none;
         }
 
         private final String prefix;
+        private final ClayiumMaterial material;
     }
 
-    public enum MachineKind {
+    public enum EnumMachineKind {
+        // Tier 0
         workTable("work_table", ClayiumRecipes.clayWorkTable),
         craftingTable("crafting_table", null),
+
+        // Tier 1
         bendingMachine("bending_machine", ClayiumRecipes.bendingMachine),
         wireDrawingMachine("wire_drawing_machine", ClayiumRecipes.wireDrawingMachine),
         pipeDrawingMachine("pipe_drawing_machine", ClayiumRecipes.pipeDrawingMachine),
         cuttingMachine("cutting_machine", ClayiumRecipes.cuttingMachine),
         lathe("lathe", ClayiumRecipes.lathe),
+        millingMachine("milling_machine", ClayiumRecipes.millingMachine),
+        cobblestoneGenerator("cobblestone_generator", null),
+        waterWheel("water_wheel", null),
+
+        // Tier 2
+        condenser("condenser", ClayiumRecipes.condenser),
+        grinder("grinder", ClayiumRecipes.grinder),
+        decomposer("decomposer", ClayiumRecipes.decomposer),
+
+        // Tier 3
+        assembler("assembler", ClayiumRecipes.assembler),
+        inscriber("inscriber", ClayiumRecipes.inscriber),
+        centrifuge("centrifuge", ClayiumRecipes.centrifuge),
+        ECCondenser("ec_condenser", ClayiumRecipes.energeticClayCondenser),
+
+        // Tier 4
+        smelter("smelter", ClayiumRecipes.smelter),
+        buffer("buffer", null),
+        multitrackBuffer("multitrack_buffer", null),
+        chemicalReactor("chemical_reactor", ClayiumRecipes.chemicalReactor),
+        saltExtractor("salt_extractor", null),
+        fluidTranslator("fluid_translator", null),
+
+        // Tier 5
+        autoClayCondenser("auto_clay_condenser", null),
+        quartzCrucible("quartz_crucible", null),
+        solarClayFabricator("solar_clay_fabricator", null),
+        clayInterface("clay_interface", null),
+        redstoneInterface("redstone_interface", null),
+        autoCrafter("auto_crafter", null),
+        fluidTransferMachine("fluid_transfer_machine", ClayiumRecipes.fluidTransferMachine),
+
+        // Tier 6
+        alloySmelter("alloy_smelter", ClayiumRecipes.alloySmelter),
+        chemicalMetalSeparator("chemical_metal_separator", null),
+        blastFurnace("blast_furnace", ClayiumRecipes.blastFurnace),
+        electrolysisReactor("electrolysis_reactor", ClayiumRecipes.electrolysisReactor),
+        clayChunkLoader("clay_chunk_loader", null),
+
+        // Tier 7
+        distributor("distributor", null),
+        laserInterface("laser_interface", null),
+        reactor("reactor", ClayiumRecipes.reactor),
+        transformer("matter_transformer", ClayiumRecipes.transformer),
+        clayEnergyLaser("clay_energy_laser", null),
+        laserReflector("laser_reflector", null),
+        claySapling("clay_sapling", null),
+
+        // Tier 8
+        clayFabricator("clay_fabricator", null),
+
+        // Tier 9
+        CACondenser("ca_condenser", ClayiumRecipes.CACondenser),
+        CAInjector("ca_injector", ClayiumRecipes.CAInjector),
+        CACollector("ca_collector", null),
+
+        // Tier 10
+        CAReactorCore("ca_reactor", ClayiumRecipes.CAReactor),
+
+        // Tier 11
+        PANCore("pan_core", null),
+        PANAdapter("pan_adapter", null),
+        PANDuplicator("pan_duplicator", null),
+        PANCable("pan_cable", null),
+
+        // Tier 13
+        ECDecomposer("ec_decomposer", ClayiumRecipes.energeticClayDecomposer),
+
+        // Metal Chest
+        metalChest("metal_chest", null)
         ;
 
-        MachineKind(String kind, ClayiumRecipe recipe) {
+        EnumMachineKind(String kind, ClayiumRecipe recipe) {
             this.kind = kind;
             this.recipe = recipe;
         }
@@ -168,33 +261,104 @@ public class ClayiumBlocks {
         private final ClayiumRecipe recipe;
     }
 
-    public static final Map<MachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new HashMap<>();
+    public static final Map<EnumMachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new HashMap<>();
     static {
-        for (MachineKind kind : MachineKind.values()) {
+        for (EnumMachineKind kind : EnumMachineKind.values()) {
             machineMap.put(kind, new HashMap<>());
         }
 
         /* Tier 0... */
-        machineMap.get(MachineKind.workTable).put(TierPrefix.none, new ClayWorkTable());
-        machineMap.get(MachineKind.craftingTable).put(TierPrefix.none, new ClayCraftingTable());
+        machineMap.get(EnumMachineKind.workTable).put(TierPrefix.none, new ClayWorkTable());
+        machineMap.get(EnumMachineKind.craftingTable).put(TierPrefix.none, new ClayCraftingTable());
         /* ...Tier 0 */
 
         /* Tier 1... */
-        for (MachineKind kind : new MachineKind[] {
-                MachineKind.bendingMachine,
-                MachineKind.wireDrawingMachine,
-                MachineKind.pipeDrawingMachine,
-                MachineKind.cuttingMachine,
-                MachineKind.lathe
+        for (EnumMachineKind kind : new EnumMachineKind[] {
+                EnumMachineKind.bendingMachine,
+                EnumMachineKind.wireDrawingMachine,
+                EnumMachineKind.pipeDrawingMachine,
+                EnumMachineKind.cuttingMachine,
+                EnumMachineKind.lathe,
+                EnumMachineKind.cobblestoneGenerator,
+
+                EnumMachineKind.millingMachine,
+                EnumMachineKind.waterWheel
         }) {
-            machineMap.get(kind).put(TierPrefix.clay, new ClayiumMachine(kind, "", 1));
+            machineMap.get(kind).put(TierPrefix.clay, new ClayiumMachine(kind, 1));
         }
         /* ...Tier 1 */
+
+        /* Tier 2... */
+        for (EnumMachineKind kind : new EnumMachineKind[] {
+                EnumMachineKind.bendingMachine,
+                EnumMachineKind.wireDrawingMachine,
+                EnumMachineKind.pipeDrawingMachine,
+                EnumMachineKind.cuttingMachine,
+                EnumMachineKind.lathe,
+                EnumMachineKind.cobblestoneGenerator,
+
+                EnumMachineKind.grinder,
+                EnumMachineKind.decomposer,
+                EnumMachineKind.condenser,
+
+                EnumMachineKind.waterWheel
+        }) {
+            machineMap.get(kind).put(TierPrefix.denseClay, new ClayiumMachine(kind, 2));
+        }
+        /* ...Tier 2 */
+
+        /* Tier 3... */
+        for (EnumMachineKind kind : new EnumMachineKind[] {
+                EnumMachineKind.bendingMachine,
+                EnumMachineKind.wireDrawingMachine,
+                EnumMachineKind.pipeDrawingMachine,
+                EnumMachineKind.cuttingMachine,
+                EnumMachineKind.lathe,
+                EnumMachineKind.cobblestoneGenerator,
+
+                EnumMachineKind.grinder,
+                EnumMachineKind.decomposer,
+                EnumMachineKind.condenser,
+
+                EnumMachineKind.centrifuge,
+                EnumMachineKind.inscriber,
+                EnumMachineKind.assembler,
+                EnumMachineKind.millingMachine,
+
+                EnumMachineKind.ECCondenser
+        }) {
+            machineMap.get(kind).put(TierPrefix.simple, new ClayiumMachine(kind, 3));
+        }
+        /* ...Tier 3 */
+
+        /* Tier 4... */
+        for (EnumMachineKind kind : new EnumMachineKind[] {
+                EnumMachineKind.bendingMachine,
+                EnumMachineKind.wireDrawingMachine,
+                EnumMachineKind.pipeDrawingMachine,
+                EnumMachineKind.cuttingMachine,
+                EnumMachineKind.lathe,
+                EnumMachineKind.cobblestoneGenerator,
+
+                EnumMachineKind.grinder,
+                EnumMachineKind.decomposer,
+                EnumMachineKind.condenser,
+
+                EnumMachineKind.centrifuge,
+                EnumMachineKind.inscriber,
+                EnumMachineKind.assembler,
+                EnumMachineKind.millingMachine,
+
+                EnumMachineKind.ECCondenser
+        }) {
+            machineMap.get(kind).put(TierPrefix.basic, new ClayiumMachine(kind, 4));
+        }
+        /* ...Tier 4 */
     }
-    public static Block get(MachineKind kind, TierPrefix tier) {
+    public static Block get(EnumMachineKind kind, TierPrefix tier) {
         return machineMap.get(kind).get(tier);
     }
-    public static Block get(MachineKind kind, int tier) {
+    public static Block get(EnumMachineKind kind, int tier) {
         return get(kind, TierPrefix.get(tier));
     }
     /* ...Machines */
