@@ -19,7 +19,7 @@ public enum ClayiumShape {
     bearing("bearing"),
     spindle("spindle"),
     cuttingHead("cutting_head"),
-    waterWheel("water_wheel"),
+    waterWheel("water_wheel_vane"),
     block("block"),
     ball("ball"),
     dust("dust"),

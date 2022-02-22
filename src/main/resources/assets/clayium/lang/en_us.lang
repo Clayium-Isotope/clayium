@@ -175,7 +175,7 @@ item.clay_grinding_head.name=Clay Grinding Head
 item.clay_bearing.name=Clay Bearing
 item.clay_spindle.name=Clay Spindle
 item.clay_cutting_head.name=Clay Cutting Head
-item.clay_water_wheel.name=Clay Wheel
+item.clay_water_wheel_vane.name=Clay Wheel Vane
 
 item.dense_clay_plate.name=Dense Clay Plate
 item.dense_clay_stick.name=Dense Clay Stick
@@ -195,7 +195,7 @@ item.dense_clay_bearing.name=Dense Clay Bearing
 item.dense_clay_spindle.name=Dense Clay Spindle
 item.dense_clay_spindle.tooltip.line1=Time consumer
 item.dense_clay_cutting_head.name=Dense Clay Cutting Head
-item.dense_clay_water_wheel.name=Dense Clay Wheel
+item.dense_clay_water_wheel_vane.name=Dense Clay Wheel Vane
 
 item.ind_clay_plate.name=Industrial Clay Plate
 item.ind_clay_large_plate.name=Large Industrial Clay Plate

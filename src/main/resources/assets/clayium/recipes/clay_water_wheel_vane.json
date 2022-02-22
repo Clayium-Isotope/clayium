@@ -1,0 +1,21 @@
+{
+  "group": "clayium",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#o#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "clayium:clay_plate"
+    },
+    "o": {
+      "item": "clayium:clay_ring"
+    }
+  },
+  "result": {
+    "item": "clayium:clay_water_wheel_vane",
+    "count": 1
+  }
+}

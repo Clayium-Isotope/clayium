@@ -168,7 +168,7 @@ item.clay_grinding_head.name=粘土粉砕機ヘッド
 item.clay_bearing.name=粘土軸受
 item.clay_spindle.name=粘土主軸
 item.clay_cutting_head.name=粘土切断機ヘッド
-item.clay_water_wheel.name=粘土水車パーツ
+item.clay_water_wheel_vane.name=粘土水車パーツ
 
 item.dense_clay_plate.name=高密度粘土プレート
 item.dense_clay_stick.name=高密度粘土棒
@@ -188,7 +188,7 @@ item.dense_clay_bearing.name=高密度粘土軸受
 item.dense_clay_spindle.name=高密度粘土主軸
 item.dense_clay_spindle.tooltip.line1=タイムコンシューマー
 item.dense_clay_cutting_head.name=高密度粘土切断機ヘッド
-item.dense_clay_water_wheel.name=高密度粘土水車パーツ
+item.dense_clay_water_wheel_vane.name=高密度粘土水車パーツ
 
 item.ind_clay_plate.name=工業用粘土プレート
 item.ind_clay_large_plate.name=工業用粘土大プレート
