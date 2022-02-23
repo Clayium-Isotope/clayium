@@ -46,14 +46,14 @@ public enum EnumMachineKind {
     autoCrafter("auto_crafter", null),
     fluidTransferMachine("fluid_transfer_machine", ClayiumRecipes.fluidTransferMachine),
 
-    // Tier 6
+    // Tier 6 ~
     alloySmelter("alloy_smelter", ClayiumRecipes.alloySmelter),
     chemicalMetalSeparator("chemical_metal_separator", null),
     blastFurnace("blast_furnace", ClayiumRecipes.blastFurnace),
     electrolysisReactor("electrolysis_reactor", ClayiumRecipes.electrolysisReactor),
     clayChunkLoader("clay_chunk_loader", null),
 
-    // Tier 7
+    // Tier 7 ~
     distributor("distributor", null),
     laserInterface("laser_interface", null),
     reactor("reactor", ClayiumRecipes.reactor),
@@ -62,24 +62,24 @@ public enum EnumMachineKind {
     laserReflector("laser_reflector", null),
     claySapling("clay_sapling", null),
 
-    // Tier 8
+    // Tier 8 ~
     clayFabricator("clay_fabricator", null),
 
-    // Tier 9
+    // Tier 9 ~
     CACondenser("ca_condenser", ClayiumRecipes.CACondenser),
     CAInjector("ca_injector", ClayiumRecipes.CAInjector),
     CACollector("ca_collector", null),
 
-    // Tier 10
+    // Tier 10 ~
     CAReactorCore("ca_reactor", ClayiumRecipes.CAReactor),
 
-    // Tier 11
+    // Tier 11 ~
     PANCore("pan_core", null),
     PANAdapter("pan_adapter", null),
     PANDuplicator("pan_duplicator", null),
     PANCable("pan_cable", null),
 
-    // Tier 13
+    // Tier 13 ~
     ECDecomposer("ec_decomposer", ClayiumRecipes.energeticClayDecomposer),
 
     // Metal Chest
