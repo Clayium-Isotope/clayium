@@ -1,7 +1,7 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClicker;
 import mods.clayium.machine.common.TileEntitySidedClayContainer;
 import mods.clayium.machine.crafting.ClayiumRecipe;
@@ -34,7 +34,7 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
     public long containEnergy;
     public final int clayEnergySlot = MachineSlots.ENERGY.ordinal();
 
-    public TileEntityClayiumMachine(int tier, ClayiumBlocks.EnumMachineKind kind) {
+    public TileEntityClayiumMachine(int tier, EnumMachineKind kind) {
         super(MachineSlots.values().length);
 
         this.tier = tier;

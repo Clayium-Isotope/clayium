@@ -6,6 +6,8 @@ import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -98,8 +100,8 @@ public class ClayiumCore {
         GameRegistry.addSmelting(ClayiumItems.rawSpatula, new ItemStack(ClayiumItems.spatula), 1F);
         GameRegistry.addSmelting(ClayiumBlocks.rawClayMachineHull, new ItemStack(ClayiumBlocks.machineHulls.get(0)), 0.1F);
 
-        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.workTable, 0).getRegistryName());
-        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.craftingTable, 0).getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, ClayiumMachines.get(EnumMachineKind.workTable, 0).getRegistryName());
+        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, ClayiumMachines.get(EnumMachineKind.craftingTable, 0).getRegistryName());
         GameRegistry.registerTileEntity(TileEntityClayiumMachine.class, new ResourceLocation(ModId, "machine"));
 
         OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);

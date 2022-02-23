@@ -4,6 +4,7 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.CompressedClay;
 import mods.clayium.block.itemblock.ItemBlockCompressedClay;
 import mods.clayium.item.common.*;
+import mods.clayium.machine.TierPrefix;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -174,11 +175,11 @@ public class ClayiumItems {
         stack.setCount(amount);
         return stack;
     }
-    public static ItemStack get(ClayiumBlocks.TierPrefix material, ClayiumShape shape) {
+    public static ItemStack get(TierPrefix material, ClayiumShape shape) {
         return get(material.getMaterial(), shape);
     }
     public static ItemStack get(int tier, ClayiumShape shape) {
-        return get(ClayiumBlocks.TierPrefix.get(tier), shape);
+        return get(TierPrefix.get(tier), shape);
     }
     public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape) {
         List<ItemStack> oreList = OreDictionary.getOres(shape.getName() + material.getODName());

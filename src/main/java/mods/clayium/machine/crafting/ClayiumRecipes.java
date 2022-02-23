@@ -7,6 +7,7 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.machine.EnumMachineKind;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -207,151 +208,151 @@ public class ClayiumRecipes {
         for (int tier = 1; tier <= 13; tier++) {
             if (tier >= 1) {
                 if (tier <= 1) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.millingMachine, 1))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.millingMachine, 1))), E(tier), 120L);
                 }
                 if (tier <= 3) {
-                    addRecipe(L(ClayiumItems.get(tier, ClayiumShape.largePlate), I(ClayiumItems.circuits.get(3))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.cobblestoneGenerator, tier))), E(tier), 40L);
+                    addRecipe(L(ClayiumItems.get(tier, ClayiumShape.largePlate), I(ClayiumItems.circuits.get(3))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.cobblestoneGenerator, tier))), E(tier), 40L);
                 }
                 if (tier <= 4) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 3)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.bendingMachine, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.wireDrawingMachine, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder, 2)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.pipeDrawingMachine, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.cuttingMachine, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.lathe, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 3)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.bendingMachine, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.wireDrawingMachine, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder, 2)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.pipeDrawingMachine, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.cuttingMachine, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.lathe, tier))), E(tier), 120L);
                 }
             }
 
             if (tier >= 2) {
                 if (tier <= 3) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(tier, ClayiumShape.largePlate)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.condenser, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(tier, ClayiumShape.largePlate)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.condenser, tier))), E(tier), 120L);
                 }
                 if (tier <= 4) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.clay, ClayiumShape.gear, 4)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.decomposer, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.clay, ClayiumShape.gear, 4)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.decomposer, tier))), E(tier), 120L);
                 }
                 if (tier <= 6) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.grinder, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.grinder, tier))), E(tier), 120L);
                 }
             }
 
             if (tier >= 3) {
                 if (tier <= 3) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.CEE, 2)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.ECCondenser, 3))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.CEE, 2)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.ECCondenser, 3))), E(tier), 120L);
                 }
                 if (tier <= 4) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.millingMachine, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, tier))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, tier)), I(ClayiumItems.circuits.get(4))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.inscriber, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.millingMachine, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.assembler, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.assembler, tier)), I(ClayiumItems.circuits.get(4))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.inscriber, tier))), E(tier), 40L);
                 }
                 if (tier <= 6) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.spindle, Math.max(tier - 4, 1))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.centrifuge, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.spindle, Math.max(tier - 4, 1))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.centrifuge, tier))), E(tier), 120L);
                 }
             }
 
             if (tier >= 4) {
-                addRecipe(L(ClayiumItems.get(tier, ClayiumShape.plate), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier), 16)), E(tier), 40L);
-                addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier), 6), ClayiumItems.get(tier, ClayiumShape.largePlate)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.multitrackBuffer, tier))), E(tier), 40L);
+                addRecipe(L(ClayiumItems.get(tier, ClayiumShape.plate), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier), 16)), E(tier), 40L);
+                addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier), 6), ClayiumItems.get(tier, ClayiumShape.largePlate)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.multitrackBuffer, tier))), E(tier), 40L);
 
                 // if (ClayiumConfiguration.cfgEnableFluidCapsule)
                 // TODO till add ClayCapsule: addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumClayiumTileEntity.buffer, tier)), I(CItems.itemsCapsule[0], 4)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumClayiumTileEntity.fluidTranslator, tier))), E(tier), 40L);
 
                 if (tier <= 4) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.CEE, 2)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.ECCondenser, 4))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.CEE, 2)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.ECCondenser, 4))), E(tier), 120L);
                 }
                 if (tier <= 7) {
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(3))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.cobblestoneGenerator, tier))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(3))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.saltExtractor, tier))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.circuits.get(3), tier - 3)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.smelter, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(3))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.cobblestoneGenerator, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(3))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.saltExtractor, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.circuits.get(3), tier - 3)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.smelter, tier))), E(tier), 120L);
                     // TODO till add ClayShooter: addRecipe(L(I(ClayiumItems.get(ClayiumMaterial.AZ91DAlloy, GenericShape.plate), 4), I(ClayiumItems.circuits.get(tier))), 4, L(I(CItems.itemsClayShooter[tier - 4])), E(tier), 40L);
                 }
                 if (tier <= 5) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.condenser, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.circuits.get(4), tier - 3)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.chemicalReactor, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.buffer, tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.condenser, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.circuits.get(4), tier - 3)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.chemicalReactor, tier))), E(tier), 120L);
                 }
             }
 
             if (tier >= 5) {
-                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, 6))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.clayInterface, tier))), E(tier), 40L);
-                addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.clayInterface, tier)), ClayiumItems.get(ClayiumMaterial.engClay, ClayiumShape.dust, 16)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.redstoneInterface, tier))), E(tier), 40L);
+                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.buffer, 6))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.clayInterface, tier))), E(tier), 40L);
+                addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.clayInterface, tier)), ClayiumItems.get(ClayiumMaterial.engClay, ClayiumShape.dust, 16)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.redstoneInterface, tier))), E(tier), 40L);
 
                 if (tier <= 5) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 8)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.solarClayFabricator, 5))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(5))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.autoClayCondenser, 5))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, 4)), I(ClayiumBlocks.machineHulls.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.autoCrafter, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 8)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.solarClayFabricator, 5))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(5))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.autoClayCondenser, 5))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.assembler, 4)), I(ClayiumBlocks.machineHulls.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.autoCrafter, tier))), E(tier), 40L);
                     if (ClayiumConfiguration.cfgEnableFluidCapsule)
-                        addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.fluidTranslator, tier), 2), I(ClayiumBlocks.machineHulls.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.fluidTransferMachine, tier))), E(tier), 40L);
+                        addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.fluidTranslator, tier), 2), I(ClayiumBlocks.machineHulls.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.fluidTransferMachine, tier))), E(tier), 40L);
                 }
                 if (tier <= 7) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.plate, (tier - 4) * 3)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.bendingMachine, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.plate, (tier - 4) * 3)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.bendingMachine, tier))), E(tier), 120L);
                 }
             }
 
             if (tier >= 6) {
                 if (tier <= 6) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.solarClayFabricator, 6))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.smelter, tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.clayInterface, tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.blastFurnace, 6))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.chemicalReactor, 5)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.smelter, tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.chemicalMetalSeparator, 6))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, tier))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, 4)), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, 6))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.smelter, tier)), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.alloySmelter, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.solarClayFabricator, 6))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.smelter, tier)), I(ClayiumBlocks.get(EnumMachineKind.clayInterface, tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.blastFurnace, 6))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.chemicalReactor, 5)), I(ClayiumBlocks.get(EnumMachineKind.smelter, tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.chemicalMetalSeparator, 6))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.assembler, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.assembler, 4)), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.assembler, 6))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.smelter, tier)), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.alloySmelter, tier))), E(tier), 40L);
                 }
                 if (tier <= 9) {
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.chemicalReactor, 5)), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.electrolysisReactor, tier))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.autoCrafter, tier - 1)), I(ClayiumBlocks.machineHulls.get(tier))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.autoCrafter, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.chemicalReactor, 5)), I(ClayiumItems.circuits.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.electrolysisReactor, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.autoCrafter, tier - 1)), I(ClayiumBlocks.machineHulls.get(tier))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.autoCrafter, tier))), E(tier), 40L);
                 }
             }
 
             if (tier >= 7) {
-                addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumItems.laserParts)), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.laserInterface, tier))), E(tier), 120L);
+                addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumItems.laserParts)), 6, L(I(ClayiumBlocks.get(EnumMachineKind.laserInterface, tier))), E(tier), 120L);
 
                 if (tier <= 7) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.solarClayFabricator, 7))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(5))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.autoClayCondenser, 7))), E(tier), 40L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.laserInterface, tier))), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.reactor, 7))), E(tier), 1200L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), ClayiumItems.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4, L(I(ClayiumBlocks.get(EnumMachineKind.solarClayFabricator, 7))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(5))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.autoClayCondenser, 7))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.laserInterface, tier))), 6, L(I(ClayiumBlocks.get(EnumMachineKind.reactor, 7))), E(tier), 1200L);
                 }
                 if (tier <= 9) {
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumBlocks.machineHulls.get(tier))), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.distributor, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(7))), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.distributor, tier))), E(tier), 120L);
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.reactor, 7)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.electrolysisReactor, tier))), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.transformer, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumBlocks.machineHulls.get(tier))), 6, L(I(ClayiumBlocks.get(EnumMachineKind.distributor, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.buffer, tier)), I(ClayiumItems.circuits.get(7))), 6, L(I(ClayiumBlocks.get(EnumMachineKind.distributor, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.reactor, 7)), I(ClayiumBlocks.get(EnumMachineKind.electrolysisReactor, tier))), 6, L(I(ClayiumBlocks.get(EnumMachineKind.transformer, tier))), E(tier), 120L);
                 }
                 if (tier <= 10) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.laserParts, 4)), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.clayEnergyLaser, tier))), E(tier), 480L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumItems.laserParts, 4)), 6, L(I(ClayiumBlocks.get(EnumMachineKind.clayEnergyLaser, tier))), E(tier), 480L);
                 }
             }
 
             if (tier >= 8) {
                 if (tier <= 8) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.chemicalReactor, 5))), 4, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.chemicalReactor, tier))), E(tier), 480L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.chemicalReactor, 5))), 4, L(I(ClayiumBlocks.get(EnumMachineKind.chemicalReactor, tier))), E(tier), 480L);
                 }
                 if (tier <= 9) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.smelter, tier - 1), 16)), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.smelter, tier))), E(tier), 2000L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.smelter, tier - 1), 16)), 6, L(I(ClayiumBlocks.get(EnumMachineKind.smelter, tier))), E(tier), 2000L);
                 }
             }
 
             if (tier >= 9) {
                 if (tier <= 9) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.bendingMachine, 7), 4)), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.bendingMachine, tier))), E(tier), 480L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.transformer, tier), 16)), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CACondenser, tier))), E(tier), 480L);
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.reactor, 7), 16)), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CAInjector, tier))), E(tier), 480L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.bendingMachine, 7), 4)), 6, L(I(ClayiumBlocks.get(EnumMachineKind.bendingMachine, tier))), E(tier), 480L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.transformer, tier), 16)), 6, L(I(ClayiumBlocks.get(EnumMachineKind.CACondenser, tier))), E(tier), 480L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.reactor, 7), 16)), 6, L(I(ClayiumBlocks.get(EnumMachineKind.CAInjector, tier))), E(tier), 480L);
                 }
             }
 
             if (tier >= 10) {
-                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.reactor, 7), 16)), 10, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CAReactorCore, tier))), E(tier), 120L);
-                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CAInjector, tier - 1), 2)), 10, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CAInjector, tier))), E(tier), 480L);
+                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.reactor, 7), 16)), 10, L(I(ClayiumBlocks.get(EnumMachineKind.CAReactorCore, tier))), E(tier), 120L);
+                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.CAInjector, tier - 1), 2)), 10, L(I(ClayiumBlocks.get(EnumMachineKind.CAInjector, tier))), E(tier), 480L);
 
                 if (tier == 10) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, 6))), 6, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.assembler, tier))), E(tier), 40L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.assembler, 6))), 6, L(I(ClayiumBlocks.get(EnumMachineKind.assembler, tier))), E(tier), 40L);
                 }
                 if (tier <= 11) {
-                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.transformer, tier), 16)), 10, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CACondenser, tier))), E(tier), 480L);
+                    addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.get(EnumMachineKind.transformer, tier), 16)), 10, L(I(ClayiumBlocks.get(EnumMachineKind.CACondenser, tier))), E(tier), 480L);
                 }
                 if (tier <= 12) {
-                    addRecipe(L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.CAInjector, tier)), I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.reactor, 7))), 10, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.transformer, tier))), E(tier), 120L);
+                    addRecipe(L(I(ClayiumBlocks.get(EnumMachineKind.CAInjector, tier)), I(ClayiumBlocks.get(EnumMachineKind.reactor, 7))), 10, L(I(ClayiumBlocks.get(EnumMachineKind.transformer, tier))), E(tier), 120L);
                 }
             }
 
             if (tier == 13) {
-                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.blockCAReactorCoil.get("opa"))), 10, L(I(ClayiumBlocks.get(ClayiumBlocks.EnumMachineKind.ECDecomposer, 13))), E(tier), 120L);
+                addRecipe(L(I(ClayiumBlocks.machineHulls.get(tier)), I(ClayiumBlocks.blockCAReactorCoil.get("opa"))), 10, L(I(ClayiumBlocks.get(EnumMachineKind.ECDecomposer, 13))), E(tier), 120L);
             }
         }
 

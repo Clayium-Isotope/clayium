@@ -1,7 +1,8 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.GuiHandler;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.TierPrefix;
 import mods.clayium.machine.common.ClayMachineTempTiered;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -17,18 +18,18 @@ import net.minecraft.world.World;
 
 public class ClayiumMachine extends ClayMachineTempTiered {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    private final ClayiumBlocks.EnumMachineKind machineKind;
+    private final EnumMachineKind machineKind;
 
-    public ClayiumMachine(ClayiumBlocks.EnumMachineKind kind, String suffix, int tier) {
+    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
         super(Material.IRON, TileEntityClayiumMachine.class,
-                ClayiumBlocks.TierPrefix.get(tier) + "_" + kind.get() + (suffix.isEmpty() ? "" : "_" + suffix),
+                TierPrefix.get(tier) + "_" + kind.get() + (suffix.isEmpty() ? "" : "_" + suffix),
                 GuiHandler.clayBendingMachineGuiID, tier);
         this.machineKind = kind;
 
         setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.NORTH));
     }
 
-    public ClayiumMachine(ClayiumBlocks.EnumMachineKind kind, int tier) {
+    public ClayiumMachine(EnumMachineKind kind, int tier) {
         this(kind, "", tier);
     }
 
@@ -105,7 +106,7 @@ public class ClayiumMachine extends ClayMachineTempTiered {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
-    public ClayiumBlocks.EnumMachineKind getMachineKind() {
+    public EnumMachineKind getMachineKind() {
         return machineKind;
     }
 }
