@@ -1,0 +1,30 @@
+{
+    "group": "clayium",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "P*P",
+        "E#E",
+        "PCP"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_3"
+        },
+        "P": {
+            "item": "clayium:dense_clay_plate"
+        },
+        "*": {
+            "item": "clayium:dense_clay_gear"
+        },
+        "C": {
+            "item": "clayium:advanced_circuit"
+        },
+        "E": {
+            "item": "clayium:cee"
+        }
+    },
+    "result": {
+        "item": "clayium:ec_condenser_mk2",
+        "count": 1
+    }
+}

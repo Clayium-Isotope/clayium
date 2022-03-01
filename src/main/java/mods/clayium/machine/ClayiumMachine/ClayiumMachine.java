@@ -22,7 +22,9 @@ public class ClayiumMachine extends ClayMachineTempTiered {
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
         super(Material.IRON, TileEntityClayiumMachine.class,
-                TierPrefix.get(tier) + "_" + kind.get() + (suffix.isEmpty() ? "" : "_" + suffix),
+                suffix.isEmpty()
+                        ? TierPrefix.get(tier) + "_" + kind.get()
+                        : kind.get() + "_" + suffix,
                 GuiHandler.clayBendingMachineGuiID, tier);
         this.machineKind = kind;
 

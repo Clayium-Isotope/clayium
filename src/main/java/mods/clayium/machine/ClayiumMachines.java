@@ -72,12 +72,11 @@ public class ClayiumMachines {
                 EnumMachineKind.centrifuge,
                 EnumMachineKind.inscriber,
                 EnumMachineKind.assembler,
-                EnumMachineKind.millingMachine,
-
-                EnumMachineKind.ECCondenser
+                EnumMachineKind.millingMachine
         }) {
             machineMap.get(kind).put(TierPrefix.simple, new ClayiumMachine(kind, 3));
         }
+        machineMap.get(EnumMachineKind.ECCondenser).put(TierPrefix.simple, new ClayiumMachine(EnumMachineKind.ECCondenser, "mk1", 3));
         /* ...Tier 3 */
 
         /* Tier 4... */
@@ -96,12 +95,11 @@ public class ClayiumMachines {
                 EnumMachineKind.centrifuge,
                 EnumMachineKind.inscriber,
                 EnumMachineKind.assembler,
-                EnumMachineKind.millingMachine,
-
-                EnumMachineKind.ECCondenser
+                EnumMachineKind.millingMachine
         }) {
             machineMap.get(kind).put(TierPrefix.basic, new ClayiumMachine(kind, 4));
         }
+        machineMap.get(EnumMachineKind.ECCondenser).put(TierPrefix.basic, new ClayiumMachine(EnumMachineKind.ECCondenser, "mk2", 4));
         /* ...Tier 4 */
     }
 
