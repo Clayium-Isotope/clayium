@@ -1,0 +1,30 @@
+{
+    "group": "clayium:machine",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "*o*",
+        "C#C",
+        "*=*"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_3"
+        },
+        "o": {
+            "item": "clayium:dense_clay_spindle"
+        },
+        "*": {
+            "item": "clayium:dense_clay_gear"
+        },
+        "=": {
+            "item": "clayium:dense_clay_pipe"
+        },
+        "C": {
+            "item": "clayium:basic_circuit"
+        }
+    },
+    "result": {
+        "item": "clayium:basic_decomposer",
+        "count": 1
+    }
+}

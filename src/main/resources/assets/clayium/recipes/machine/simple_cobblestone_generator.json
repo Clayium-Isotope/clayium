@@ -1,0 +1,24 @@
+{
+    "group": "clayium:machine",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " * ",
+        "=#=",
+        " * "
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_2"
+        },
+        "*": {
+            "item": "clayium:dense_clay_gear"
+        },
+        "=": {
+            "item": "clayium:dense_clay_pipe"
+        }
+    },
+    "result": {
+        "item": "clayium:simple_clay_cobblestone_generator",
+        "count": 1
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "group": "clayium:machine",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "*o*",
+        "C#C",
+        "*C*"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_2"
+        },
+        "o": {
+            "item": "clayium:dense_clay_spindle"
+        },
+        "*": {
+            "item": "clayium:dense_clay_gear"
+        },
+        "C": {
+            "item": "clayium:simple_circuit"
+        }
+    },
+    "result": {
+        "item": "clayium:simple_inscriber",
+        "count": 1
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "group": "clayium:machine",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "o-*",
+        "P#P",
+        "o-*"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_1"
+        },
+        "o": {
+            "item": "clayium:clay_spindle"
+        },
+        "-": {
+            "item": "clayium:clay_cylinder"
+        },
+        "*": {
+            "item": "clayium:clay_gear"
+        },
+        "P": {
+            "item": "clayium:clay_plate"
+        }
+    },
+    "result": {
+        "item": "clayium:dense_clay_bending_machine",
+        "count": 1
+    }
+}

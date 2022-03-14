@@ -1,0 +1,24 @@
+{
+  "group": "clayium:tool",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    " o ",
+    " | "
+  ],
+  "key": {
+    "#": {
+      "item": "clayium:dense_clay_blade"
+    },
+    "|": {
+      "item": "clayium:dense_clay_stick"
+    },
+    "o": {
+      "item": "clayium:dense_clay_spindle"
+    }
+  },
+  "result": {
+    "item": "clayium:clay_wrench",
+    "count": 1
+  }
+}

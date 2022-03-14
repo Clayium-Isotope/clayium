@@ -1,0 +1,24 @@
+{
+    "group": "clayium:machine",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "*P*",
+        "P#P",
+        "*P*"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:clay_machine_hull_2"
+        },
+        "*": {
+            "item": "clayium:dense_clay_gear"
+        },
+        "P": {
+            "item": "clayium:dense_clay_plate"
+        }
+    },
+    "result": {
+        "item": "clayium:simple_condenser",
+        "count": 1
+    }
+}
