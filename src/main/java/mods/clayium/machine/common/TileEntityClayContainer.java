@@ -29,6 +29,13 @@ public abstract class TileEntityClayContainer extends TileEntity {
         return machineInventory.size();
     }
 
+    public void growCEStorageSize(int dist) {
+        clayEnergyStorageSize += dist;
+        if (clayEnergyStorageSize > 64) {
+            clayEnergyStorageSize = 64;
+        }
+    }
+
     public ItemStack getStackInSlot(int index) {
         return machineInventory.get(index);
     }

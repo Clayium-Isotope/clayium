@@ -6,14 +6,14 @@ import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.common.ClayMachineTempTiered;
 import net.minecraft.block.Block;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class ClayiumMachines {
     public static final Map<EnumMachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new HashMap<>();
     static {
         for (EnumMachineKind kind : EnumMachineKind.values()) {
-            machineMap.put(kind, new HashMap<>());
+            machineMap.put(kind, new EnumMap<>(TierPrefix.class));
         }
 
         /* Tier 0... */
@@ -101,9 +101,39 @@ public class ClayiumMachines {
         }
         machineMap.get(EnumMachineKind.ECCondenser).put(TierPrefix.basic, new ClayiumMachine(EnumMachineKind.ECCondenser, "mk2", 4));
         /* ...Tier 4 */
+
+        /* Tier 5... */
+        machineMap.get(EnumMachineKind.quartzCrucible).put(TierPrefix.advanced, null); // TODO
+        /* ...Tier 5 */
+
+        /* Tier 6... */
+        /* ...Tier 6 */
+
+        /* Tier 7... */
+        machineMap.get(EnumMachineKind.laserReflector).put(TierPrefix.claySteel, null); // TODO
+        /* ...Tier 7 */
+
+        /* Tier 8... */
+        /* ...Tier 8 */
+
+        /* Tier 9... */
+        /* ...Tier 9 */
+
+        /* Tier 10... */
+        /* ...Tier 10 */
+
+        /* Tier 11... */
+        /* ...Tier 11 */
+
+        /* Tier 12... */
+        /* ...Tier 12 */
+
+        /* Tier 13... */
+        /* ...Tier 13 */
     }
 
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
+        assert machineMap != null;
         return machineMap.get(kind).get(tier);
     }
     public static Block get(EnumMachineKind kind, int tier) {

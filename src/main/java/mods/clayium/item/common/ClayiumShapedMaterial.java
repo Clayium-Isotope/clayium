@@ -3,6 +3,8 @@ package mods.clayium.item.common;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
 
+import java.awt.*;
+
 public class ClayiumShapedMaterial extends ItemTiered implements IItemColor {
     private final ClayiumMaterial material;
 
@@ -13,7 +15,7 @@ public class ClayiumShapedMaterial extends ItemTiered implements IItemColor {
 
     @Override
     public int colorMultiplier(ItemStack stack, int tintIndex) {
-        int[] tint =  material.getColors()[tintIndex];
-        return ((tint[0] << 8) + tint[1] << 8) + tint[2];
+        int[] tint = material.getColors()[tintIndex];
+        return new Color(tint[0], tint[1], tint[2]).getRGB();
     }
 }

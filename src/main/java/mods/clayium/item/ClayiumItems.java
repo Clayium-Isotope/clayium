@@ -37,10 +37,10 @@ public class ClayiumItems {
                     items.addAll((ItemDamaged) field.get(instance));
                 }
                 if (field.get(instance) == materialMap) {
-                    for (Map.Entry<ClayiumMaterial, Map<ClayiumShape, ItemStack>> entry : materialMap.entrySet()) {
-                        for (Map.Entry<ClayiumShape, ItemStack> entry_ : entry.getValue().entrySet()) {
-                            if (entry_.getValue().getItem() instanceof ClayiumItem) {
-                                items.add(entry_.getValue().getItem());
+                    for (Map<ClayiumShape, ItemStack> entry : materialMap.values()) {
+                        for (ItemStack entry_ : entry.values()) {
+                            if (entry_.getItem() instanceof ClayiumItem) {
+                                items.add(entry_.getItem());
                             }
                         }
                     }
