@@ -343,6 +343,9 @@ public enum ClayiumMaterial {
     public float getHardness() {
         return hardness;
     }
+    public int getID() {
+        return id;
+    }
     public int[][] getColors() {
         return colors;
     }

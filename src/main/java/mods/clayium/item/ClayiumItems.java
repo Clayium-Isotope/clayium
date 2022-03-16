@@ -88,6 +88,10 @@ public class ClayiumItems {
     /* ...Misc */
 
     public static final Map<Integer, ClayiumMaterial> materials = new HashMap<>();
+    static {
+        for(ClayiumMaterial material : ClayiumMaterial.values())
+            materials.put(material.getID(), material);
+    }
     /* Materials... */
     public static final Map<ClayiumMaterial, Map<ClayiumShape, ItemStack>> materialMap = new HashMap<ClayiumMaterial, Map<ClayiumShape, ItemStack>>() {{
         // ===== PARTS PART =====
