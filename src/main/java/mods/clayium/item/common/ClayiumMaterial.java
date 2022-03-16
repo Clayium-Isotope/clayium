@@ -24,7 +24,7 @@ public enum ClayiumMaterial {
     // Period III
     sodium("sodium", "Sodium", 11, $ -> $.setColor(170, 170, 222).setColor(120, 120, 120, 1)),
     magnesium("magnesium", "Magnesium", 12, $ -> $.setColor(150, 210, 150).setColor(120, 120, 120, 1)),
-    aluminum("aluminum", "Aluminum", 13, $ -> $.setColor(190, 200, 202).setColor(255, 255, 255, 2)),
+    aluminium("aluminium", "Aluminium", 13, $ -> $.setColor(190, 200, 202).setColor(255, 255, 255, 2)),
     silicon("silicon", "Silicon", 14, $ -> $.setColor(40, 28, 40).setColor(255, 255, 255, 2)),
     phosphorus("phosphorus", "Phosphorus", 15, $ -> $.setColor(155, 155, 0, 205, 205, 50)),
     sulfur("sulfur", "Sulfur", 16, $ -> $.setColor(205, 205, 0, 255, 255, 0)),
@@ -89,7 +89,7 @@ public enum ClayiumMaterial {
     impureBeryllium("impure_beryllium", "ImpureBeryllium", 132, $ -> $.setColor(210, 240, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureSodium("impure_sodium", "ImpureSodium", 139, $ -> $.setColor(170, 170, 230).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureMagnesium("impure_magnesium", "ImpureMagnesium", 140, $ -> $.setColor(150, 220, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureAluminum("aluminum", "ImpureAluminum", 141, $ -> $.setColor(190, 200, 202).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureAluminium("aluminium", "ImpureAluminium", 141, $ -> $.setColor(190, 200, 202).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureSilicon("impure_silicon", "ImpureSilicon", 142, $ -> $.setColor(151, 143, 152, 0).setColor(83, 55, 100, 1).setColor(169, 165, 165, 2)),
     impurePotassium("impure_potassium", "ImpurePotassium", 147, $ -> $.setColor(240, 240, 190).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureCalcium("impure_calcium", "ImpureCalcium", 148, $ -> $.setColor(240, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
@@ -306,7 +306,7 @@ public enum ClayiumMaterial {
 //    public static CMaterial ALUMINIUM_OD;
 
     ;
-    public static final ClayiumMaterial mainAluminum = ClayiumConfiguration.cfgHardcoreAluminium ? impureAluminum : aluminum;
+    public static final ClayiumMaterial mainAluminium = ClayiumConfiguration.cfgHardcoreAluminium ? impureAluminium : aluminium;
     public static final ClayiumMaterial mainOsmium = ClayiumConfiguration.cfgHardcoreOsmium ? impureOsmium : osmium;
 
     public static final List<ClayiumMaterial> compressedPureAntimatter = Arrays.asList(pureAntimatter, compressedPureAntimatter_1, compressedPureAntimatter_2, compressedPureAntimatter_3, compressedPureAntimatter_4, compressedPureAntimatter_5, compressedPureAntimatter_6, compressedPureAntimatter_7, octuplePureAntimatter);

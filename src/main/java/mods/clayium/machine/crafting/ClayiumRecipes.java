@@ -62,17 +62,17 @@ public class ClayiumRecipes {
         addRecipe(ClayiumItems.get(ClayiumMaterial.advClay, ClayiumShape.block), 2, ClayiumItems.get(ClayiumMaterial.advClay, ClayiumShape.plate), 4L, ClayiumCore.divideByProgressionRate(4));
         addRecipe(ClayiumItems.get(ClayiumMaterial.advClay, ClayiumShape.plate, 4), 2, ClayiumItems.get(ClayiumMaterial.advClay, ClayiumShape.largePlate), 4L, ClayiumCore.divideByProgressionRate(8));
 
-        for (ClayiumMaterial material : new ClayiumMaterial[] { ClayiumMaterial.impureSilicon, ClayiumMaterial.silicon, ClayiumMaterial.silicone, ClayiumMaterial.aluminum, ClayiumMaterial.claySteel, ClayiumMaterial.clayium, ClayiumMaterial.ultimateAlloy, ClayiumMaterial.AZ91DAlloy, ClayiumMaterial.ZK60AAlloy }) {
+        for (ClayiumMaterial material : new ClayiumMaterial[] { ClayiumMaterial.impureSilicon, ClayiumMaterial.silicon, ClayiumMaterial.silicone, ClayiumMaterial.aluminium, ClayiumMaterial.claySteel, ClayiumMaterial.clayium, ClayiumMaterial.ultimateAlloy, ClayiumMaterial.AZ91DAlloy, ClayiumMaterial.ZK60AAlloy }) {
             addRecipe(ClayiumItems.get(material, ClayiumShape.ingot), 4, ClayiumItems.get(material, ClayiumShape.plate), E(4), (int) (20.0F * material.getHardness()));
             addRecipe(ClayiumItems.get(material, ClayiumShape.plate, 4), 4, ClayiumItems.get(material, ClayiumShape.largePlate), E(4), (int) (40.0F * material.getHardness()));
         }
 
-        addRecipe(ClayiumItems.getOD(ClayiumMaterial.aluminum, ClayiumShape.ingot), 4, ClayiumItems.get(ClayiumMaterial.aluminum, ClayiumShape.plate), E(4), (int) (20.0F * ClayiumMaterial.aluminum.getHardness()));
-        addRecipe(ClayiumItems.getOD(ClayiumMaterial.aluminum, ClayiumShape.plate, 4), 4, ClayiumItems.get(ClayiumMaterial.aluminum, ClayiumShape.largePlate), E(4), (int) (40.0F * ClayiumMaterial.aluminum.getHardness()));
+        addRecipe(ClayiumItems.getOD(ClayiumMaterial.aluminium, ClayiumShape.ingot), 4, ClayiumItems.get(ClayiumMaterial.aluminium, ClayiumShape.plate), E(4), (int) (20.0F * ClayiumMaterial.aluminium.getHardness()));
+        addRecipe(ClayiumItems.getOD(ClayiumMaterial.aluminium, ClayiumShape.plate, 4), 4, ClayiumItems.get(ClayiumMaterial.aluminium, ClayiumShape.largePlate), E(4), (int) (40.0F * ClayiumMaterial.aluminium.getHardness()));
 
         if (ClayiumConfiguration.cfgHardcoreAluminium) {
-            addRecipe(ClayiumItems.get(ClayiumMaterial.impureAluminum, ClayiumShape.ingot), 4, ClayiumItems.get(ClayiumMaterial.impureAluminum, ClayiumShape.plate), E(4), (int) (20.0F * ClayiumMaterial.impureAluminum.getHardness()));
-            addRecipe(ClayiumItems.get(ClayiumMaterial.impureAluminum, ClayiumShape.plate, 4), 4, ClayiumItems.get(ClayiumMaterial.impureAluminum, ClayiumShape.largePlate), E(4), (int) (40.0F * ClayiumMaterial.impureAluminum.getHardness()));
+            addRecipe(ClayiumItems.get(ClayiumMaterial.impureAluminium, ClayiumShape.ingot), 4, ClayiumItems.get(ClayiumMaterial.impureAluminium, ClayiumShape.plate), E(4), (int) (20.0F * ClayiumMaterial.impureAluminium.getHardness()));
+            addRecipe(ClayiumItems.get(ClayiumMaterial.impureAluminium, ClayiumShape.plate, 4), 4, ClayiumItems.get(ClayiumMaterial.impureAluminium, ClayiumShape.largePlate), E(4), (int) (40.0F * ClayiumMaterial.impureAluminium.getHardness()));
         }
 
         // TODO external metals
@@ -435,7 +435,7 @@ public class ClayiumRecipes {
         addRecipe(L(ClayiumItems.getOD(ClayiumMaterial.salt, ClayiumShape.dust), ClayiumItems.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 8, L(ClayiumItems.get(ClayiumMaterial.quartz, ClayiumShape.dust), ClayiumItems.get(ClayiumMaterial.calciumChloride, ClayiumShape.dust)), E(10.0D, 8), 1L);
         addRecipe(L(ClayiumItems.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), ClayiumItems.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 8, L(ClayiumItems.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), E(10.0D, 8), 1L);
 
-        addRecipe(L(ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 5, L(ClayiumItems.get(ClayiumMaterial.impureSilicon, ClayiumShape.dust), ClayiumItems.get(ClayiumMaterial.mainAluminum, ClayiumShape.dust)), E(5), 30L);
+        addRecipe(L(ClayiumItems.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 5, L(ClayiumItems.get(ClayiumMaterial.impureSilicon, ClayiumShape.dust), ClayiumItems.get(ClayiumMaterial.mainAluminium, ClayiumShape.dust)), E(5), 30L);
     }};
     // TODO
     public static final ClayiumRecipe alloySmelter = new ClayiumRecipe() {{}};

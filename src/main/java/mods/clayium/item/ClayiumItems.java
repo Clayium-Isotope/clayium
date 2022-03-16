@@ -118,7 +118,7 @@ public class ClayiumItems {
         //            materialMap.put(material, new HashMap<>());
         //        }
         //
-        //        materialMap.get(GenericMaterial.aluminum).put(GenericShape.ingot, add(GenericMaterial.aluminum, GenericShape.ingot));
+        //        materialMap.get(GenericMaterial.aluminium).put(GenericShape.ingot, add(GenericMaterial.aluminium, GenericShape.ingot));
 
         for (ClayiumMaterial material : new ClayiumMaterial[] {ClayiumMaterial.rubidium, ClayiumMaterial.cerium, ClayiumMaterial.tantalum, ClayiumMaterial.praseodymium, ClayiumMaterial.protactinium,
                 ClayiumMaterial.neptunium, ClayiumMaterial.promethium, ClayiumMaterial.samarium, ClayiumMaterial.curium, ClayiumMaterial.europium}) {

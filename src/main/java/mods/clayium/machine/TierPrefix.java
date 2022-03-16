@@ -10,7 +10,7 @@ public enum TierPrefix {
     simple("simple", ClayiumMaterial.indClay),
     basic("basic", ClayiumMaterial.advClay),
     advanced("advanced", ClayiumMaterial.impureSilicon),
-    precision("precision", ClayiumMaterial.mainAluminum),
+    precision("precision", ClayiumMaterial.mainAluminium),
     claySteel("clay_steel", ClayiumMaterial.claySteel),
     clayium("clayium", ClayiumMaterial.clayium),
     ultimate("ultimate", ClayiumMaterial.ultimateAlloy),
