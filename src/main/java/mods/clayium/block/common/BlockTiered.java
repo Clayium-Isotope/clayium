@@ -1,6 +1,7 @@
 package mods.clayium.block.common;
 
 import mods.clayium.block.itemblock.ItemBlockTiered;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -17,9 +18,16 @@ public class BlockTiered extends ClayiumBlock implements ITieredBlock {
         this(material, modelPath, tier, tier);
     }
 
-    public BlockTiered(Material material, String modelPath, int meta, int tier) {
-        super(material, modelPath + (modelPath.endsWith("_") ? meta : ""));
+    // For Colored Silicone Blocks
+    public BlockTiered(Material material, String modelPath, int tier, MapColor mapColor) {
+        super(material, modelPath, mapColor);
+        setItemBlock(new ItemBlockTiered(this));
+
         this.tier = tier;
+    }
+
+    public BlockTiered(Material material, String modelPath, int meta, int tier) {
+        this(material, modelPath + (modelPath.endsWith("_") ? meta : ""), tier, material.getMaterialMapColor());
     }
 
     @Override
@@ -30,10 +38,5 @@ public class BlockTiered extends ClayiumBlock implements ITieredBlock {
     @Override
     public int getTier(IBlockAccess access, BlockPos posIn) {
         return tier;
-    }
-
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return new ItemBlockTiered(this);
     }
 }

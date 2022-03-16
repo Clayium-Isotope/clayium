@@ -32,6 +32,8 @@ public class ClayMachineTempTiered extends BlockContainer implements ITieredBloc
     private final int guiID;
     protected final int tier;
 
+    private Item itemBlock = new ItemBlockTiered(this);
+
     public ClayMachineTempTiered(Material materialIn, Class<? extends TileEntity> teClass, String modelPath, int guiID, int tier) {
         super(materialIn);
 
@@ -94,9 +96,8 @@ public class ClayMachineTempTiered extends BlockContainer implements ITieredBloc
         UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
     }
 
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return new ItemBlockTiered(this);
+    public Item getItemBlock() {
+        return this.itemBlock;
     }
 
     @Override

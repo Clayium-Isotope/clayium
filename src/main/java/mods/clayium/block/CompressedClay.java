@@ -16,10 +16,6 @@ public class CompressedClay extends BlockTiered {
         setHarvestLevel("shovel", 0);
         setHardness(1F);
         setResistance(1F);
-    }
-
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return new ItemBlockCompressedClay(this);
+        setItemBlock(new ItemBlockCompressedClay(this));
     }
 }

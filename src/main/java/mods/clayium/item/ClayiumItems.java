@@ -3,8 +3,11 @@ package mods.clayium.item;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.CompressedClay;
 import mods.clayium.block.itemblock.ItemBlockCompressedClay;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.*;
 import mods.clayium.machine.TierPrefix;
+import mods.clayium.util.ODHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,7 +46,9 @@ public class ClayiumItems {
                     }
                 }
             }
-        } catch (IllegalAccessException ignore) {}
+        } catch (IllegalAccessException e) {
+            ClayiumCore.logger.catching(e);
+        }
     }
 
     public static List<Item> getItems() {
@@ -181,18 +186,14 @@ public class ClayiumItems {
     public static ItemStack get(int tier, ClayiumShape shape) {
         return get(TierPrefix.get(tier), shape);
     }
+    public static ItemStack get(int tier, ClayiumShape shape, int amount) {
+        return get(TierPrefix.get(tier).getMaterial(), shape, amount);
+    }
     public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape) {
-        List<ItemStack> oreList = OreDictionary.getOres(shape.getName() + material.getODName());
-        if (oreList.isEmpty()) return ItemStack.EMPTY;
-
-        return oreList.get(0).copy();
+        return ODHelper.getODStack(shape.getName() + material.getODName());
     }
     public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape, int amount) {
-        ItemStack res = getOD(material, shape);
-        if (res.isEmpty()) return ItemStack.EMPTY;
-
-        res.setCount(amount);
-        return res;
+        return ODHelper.getODStack(shape.getName() + material.getODName(), amount);
     }
     private static ItemStack I(Item item) {
         return new ItemStack(item);

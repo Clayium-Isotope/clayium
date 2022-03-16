@@ -3,6 +3,7 @@ package mods.clayium.block.common;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -18,8 +19,14 @@ import java.util.List;
 import java.util.Random;
 
 public class ClayiumBlock extends Block {
+    private Item itemBlock = new ItemBlock(this);
+
     public ClayiumBlock(Material material, String modelPath) {
-        super(material);
+        this(material, modelPath, material.getMaterialMapColor());
+    }
+
+    public ClayiumBlock(Material material, String modelPath, MapColor mapColor) {
+        super(material, mapColor);
         setUnlocalizedName(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
@@ -34,5 +41,15 @@ public class ClayiumBlock extends Block {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return new ItemBlock(this);
+    }
+
+    // able to Method Chaining
+    public final Block setItemBlock(Item newItemBlock) {
+        this.itemBlock = newItemBlock;
+        return this;
+    }
+
+    public final Item getItemBlock() {
+        return this.itemBlock;
     }
 }

@@ -1,10 +1,12 @@
 package mods.clayium.util;
 
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.IllegalFormatException;
 import java.util.List;
 
 public class UtilLocale {
@@ -158,5 +160,24 @@ public class UtilLocale {
                 tooltip.add(loc);
             }
         }
+    }
+
+    public static boolean canLocalize(String key) {
+        return I18n.hasKey(key);
+    }
+
+    public static String localizeAndFormat(String key, Object ...args) {
+        String unsafe = I18n.format(key, args);
+
+        if (unsafe.equals(key))
+            return null;
+
+        // this line is uncomfortable
+        if (unsafe.startsWith("Format error: ")) {
+            ClayiumCore.logger.error("[Illegal Format Exception] Translation Key: " + key);
+            return key;
+        }
+
+        return unsafe;
     }
 }
