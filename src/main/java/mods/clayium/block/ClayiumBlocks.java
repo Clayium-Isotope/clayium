@@ -4,6 +4,7 @@ import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.BlockTierTied;
 import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.common.ClayiumBlock;
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.TierPrefix;
 import mods.clayium.machine.common.ClayMachineTempTiered;
@@ -47,7 +48,9 @@ public class ClayiumBlocks {
                     }
                 }
             }
-        } catch (IllegalAccessException ignore) {}
+        } catch (IllegalAccessException e) {
+            ClayiumCore.logger.catching(e);
+        }
 
         for (Map<TierPrefix, ClayMachineTempTiered> kinds : ClayiumMachines.machineMap.values()) {
             for (ClayMachineTempTiered machine : kinds.values()) {
