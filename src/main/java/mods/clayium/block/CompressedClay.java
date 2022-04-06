@@ -4,10 +4,7 @@ import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.itemblock.ItemBlockCompressedClay;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
-
-import java.util.Random;
+import net.minecraft.item.ItemBlock;
 
 public class CompressedClay extends BlockTiered {
     public CompressedClay(int meta) {
@@ -16,6 +13,10 @@ public class CompressedClay extends BlockTiered {
         setHarvestLevel("shovel", 0);
         setHardness(1F);
         setResistance(1F);
-        setItemBlock(new ItemBlockCompressedClay(this));
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockCompressedClay(this);
     }
 }

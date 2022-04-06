@@ -17,8 +17,9 @@ public class BlockDamaged extends ArrayList<Block> {
     public boolean contains(Item item) {
         Random rand = new Random();
         for (Block block : this) {
-            if (block.getItemDropped(block.getDefaultState(), rand, 0) == item)
-                return true;
+            if (Item.getItemFromBlock(block).equals(item)) return true;
+//            if (block instanceof ClayiumBlock && ((ClayiumBlock) block).getItemBlock().equals(item)) return true;
+            if (block.getItemDropped(block.getDefaultState(), rand, 0) == item) return true;
         }
         return false;
     }

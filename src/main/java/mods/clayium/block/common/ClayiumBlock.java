@@ -18,9 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class ClayiumBlock extends Block {
-    private Item itemBlock = new ItemBlock(this);
-
+public class ClayiumBlock extends Block implements IItemBlockHolder {
     public ClayiumBlock(Material material, String modelPath) {
         this(material, modelPath, material.getMaterialMapColor());
     }
@@ -39,17 +37,19 @@ public class ClayiumBlock extends Block {
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    public ItemBlock getItemBlock() {
         return new ItemBlock(this);
     }
 
-    // able to Method Chaining
-    public final Block setItemBlock(Item newItemBlock) {
-        this.itemBlock = newItemBlock;
-        return this;
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(this);
+//        return new ItemStack(getItemBlock());
     }
 
-    public final Item getItemBlock() {
-        return this.itemBlock;
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Item.getItemFromBlock(this);
+//        return getItemBlock();
     }
 }

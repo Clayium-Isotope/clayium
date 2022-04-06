@@ -7,7 +7,7 @@ import mods.clayium.block.common.ClayiumBlock;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.TierPrefix;
-import mods.clayium.machine.common.ClayMachineTempTiered;
+import mods.clayium.util.ExternalSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,36 +16,26 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClayiumBlocks {
     public static void initBlocks() {
         blocks.clear();
-        items.clear();
 
         try {
             for (Field field : ClayiumBlocks.class.getFields()) {
-                if (field.get(instance) instanceof ClayiumBlock) {
-                    ClayiumBlock block = (ClayiumBlock) field.get(instance);
-
-                    blocks.add(block);
-                    items.add(block.getItemBlock().setRegistryName(block.getRegistryName()));
+                if (field.get(instance).getClass().isAnnotationPresent(ExternalSupplier.class)) {
+                    continue;
+                }
+                if (field.get(instance) instanceof Block) {
+                    blocks.add((Block) field.get(instance));
                 }
                 if (field.get(instance) instanceof BlockDamaged) {
-                    for (Block _block : (BlockDamaged) field.get(instance)) {
-                        if (_block instanceof ClayiumBlock) {
-                            blocks.add(_block);
-                            items.add(((ClayiumBlock) _block).getItemBlock().setRegistryName(_block.getRegistryName()));
-                        }
-                    }
+                    blocks.addAll((BlockDamaged) field.get(instance));
                 }
                 if (field.get(instance) instanceof BlockTierTied) {
-                    for (Block _block : ((BlockTierTied) field.get(instance)).entryList()) {
-                        if (_block instanceof ClayiumBlock) {
-                            blocks.add(_block);
-                            items.add(((ClayiumBlock) _block).getItemBlock().setRegistryName(_block.getRegistryName()));
-                        }
-                    }
+                    blocks.addAll(((BlockTierTied) field.get(instance)).entryList());
                 }
             }
         } catch (IllegalAccessException e) {
@@ -61,11 +51,8 @@ public class ClayiumBlocks {
     }
 
     public static List<Block> getBlocks() {
+        if (blocks.isEmpty()) initBlocks();
         return blocks;
-    }
-
-    public static List<Item> getItems() {
-        return items;
     }
 
     private static final ClayiumBlocks instance = new ClayiumBlocks();
@@ -150,5 +137,4 @@ public class ClayiumBlocks {
     }};
 
     private static final List<Block> blocks = new ArrayList<>();
-    private static final List<Item> items = new ArrayList<>();
 }
