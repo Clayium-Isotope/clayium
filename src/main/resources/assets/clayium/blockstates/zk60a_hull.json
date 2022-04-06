@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "clayium:zk60a_alloy_hull"
+      "model": "clayium:zk60a_hull"
     }
   }
 }

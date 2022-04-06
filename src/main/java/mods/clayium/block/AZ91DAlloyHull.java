@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 
 public class AZ91DAlloyHull extends BlockTiered {
     public AZ91DAlloyHull() {
-        super(Material.IRON, "az91d_alloy_hull", 6);
+        super(Material.IRON, "az91d_hull", 6);
         setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 1);
         setHardness(2F);
