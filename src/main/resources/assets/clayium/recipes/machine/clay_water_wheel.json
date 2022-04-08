@@ -3,7 +3,7 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {
-            "item": "clayium:clay_machine_hull_0"
+            "item": "clayium:machine_hull_0"
         },
         {
             "item": "clayium:clay_water_wheel_vane"

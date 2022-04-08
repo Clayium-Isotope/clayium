@@ -8,7 +8,7 @@
     ],
     "key": {
         "#": {
-            "item": "clayium:clay_machine_hull_2"
+            "item": "clayium:machine_hull_2"
         },
         "*": {
             "item": "clayium:dense_clay_gear"
@@ -18,7 +18,7 @@
         }
     },
     "result": {
-        "item": "clayium:simple_clay_cobblestone_generator",
+        "item": "clayium:simple_cobblestone_generator",
         "count": 1
     }
 }

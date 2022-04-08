@@ -3,11 +3,11 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {
-            "item": "clayium:gem_antimatter_3"
+            "item": "clayium:octuple_pure_antimatter_gem"
         }
     ],
     "result": {
-        "item": "minecraft:gem_antimatter_2",
+        "item": "minecraft:pure_antimatter_7_gem",
         "count": 9
     }
 }
