@@ -28,7 +28,7 @@ public class ClayPickaxe extends ItemPickaxe {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, IBlockState state) {
-		if (state == ClayiumBlocks.clayOre.getDefaultState())
+		if (state.getBlock() == ClayiumBlocks.clayOre)
 			return efficiencyOnClayOre;
 		return super.getDestroySpeed(stack, state);
 	}
