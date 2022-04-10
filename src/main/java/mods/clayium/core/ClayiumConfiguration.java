@@ -3,6 +3,9 @@ package mods.clayium.core;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public class ClayiumConfiguration {
     private static Configuration cfg = null;
 
@@ -14,6 +17,8 @@ public class ClayiumConfiguration {
     public static int cfgClaySteelPickaxeRange = 2;
 
     public static boolean cfgEnableFluidCapsule = true;
+
+    public static Map<ClayiumIntegration, Boolean> cfgModIntegration = new EnumMap<>(ClayiumIntegration.class);
 
     public void loadConfig(FMLPreInitializationEvent event) {
         cfg = new Configuration(event.getSuggestedConfigurationFile());
@@ -27,5 +32,9 @@ public class ClayiumConfiguration {
         cfgClaySteelPickaxeRange = cfg.getInt("ClaySteelPickaxeRange", "misc", 2, 0, 64, "");
 
         cfgEnableFluidCapsule = cfg.getBoolean("EnableFluidCapsule", "misc", true, "");
+
+        for (ClayiumIntegration id : ClayiumIntegration.values()) {
+            cfgModIntegration.put(id, cfg.getBoolean(id.configId, "integration", true, ""));
+        }
     }
 }
