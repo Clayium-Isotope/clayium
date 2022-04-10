@@ -16,8 +16,8 @@ import java.util.List;
 public class Resonator extends BlockTiered implements ICAResonator {
     private final double resonance;
 
-    public Resonator(int tier, double resonance) {
-        super(Material.IRON, "resonator", tier);
+    public Resonator(int meta, int tier, double resonance) {
+        super(Material.IRON, "resonator_", meta, tier);
         setHardness(2.0F);
         setResistance(2.0F);
         setSoundType(SoundType.METAL);

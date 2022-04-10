@@ -1,17 +1,9 @@
 package mods.clayium.item;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.CompressedClay;
-import mods.clayium.block.itemblock.ItemBlockCompressedClay;
-import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.*;
-import mods.clayium.machine.TierPrefix;
-import mods.clayium.util.ODHelper;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -31,18 +23,13 @@ public class ClayiumItems {
                             || item.equals(claySteelPickaxe)
                             || item.equals(claySteelShovel)) {
                         items.add(item);
+//                        ClayiumCore.jsonHelper.generateSimpleItemJson(item.getUnlocalizedName().substring(5));
                     }
                 }
                 if (field.get(instance) instanceof ItemDamaged) {
-                    items.addAll((ItemDamaged) field.get(instance));
-                }
-                if (field.get(instance) == materialMap) {
-                    for (Map<ClayiumShape, ItemStack> entry : materialMap.values()) {
-                        for (ItemStack entry_ : entry.values()) {
-                            if (entry_.getItem() instanceof ClayiumItem) {
-                                items.add(entry_.getItem());
-                            }
-                        }
+                    for (Item item : (ItemDamaged) field.get(instance)) {
+                        items.add(item);
+//                        ClayiumCore.jsonHelper.generateSimpleItemJson(item.getUnlocalizedName().substring(5));
                     }
                 }
             }
@@ -52,6 +39,7 @@ public class ClayiumItems {
     }
 
     public static List<Item> getItems() {
+        if (items.isEmpty()) initItems();
         return items;
     }
 
@@ -84,125 +72,7 @@ public class ClayiumItems {
     public static final Item manipulator1 = new ItemTiered("manipulator_1", 6);
     public static final Item manipulator2 = new ItemTiered("manipulator_2", 8);
     public static final Item manipulator3 = new ItemTiered("manipulator_3", 12);
-    public static final List<Item> circuits = Arrays.asList(clayCircuit, clayCircuit, clayCircuit, simpleCircuit, basicCircuit, advancedCircuit, precisionCircuit, integratedCircuit, clayCore, clayBrain, claySpirit, claySoul, clayAnima, clayPsyche);
     /* ...Misc */
-
-    public static final Map<Integer, ClayiumMaterial> materials = new HashMap<>();
-    static {
-        for(ClayiumMaterial material : ClayiumMaterial.values())
-            materials.put(material.getID(), material);
-    }
-    /* Materials... */
-    public static final Map<ClayiumMaterial, Map<ClayiumShape, ItemStack>> materialMap = new HashMap<ClayiumMaterial, Map<ClayiumShape, ItemStack>>() {{
-        // ===== PARTS PART =====
-        for (ClayiumMaterial material : materials.values()) {
-            materialMap.put(material, new HashMap<>());
-        }
-
-        materialMap.get(ClayiumMaterial.clay).put(ClayiumShape.block, I(new ItemBlockCompressedClay((CompressedClay) ClayiumBlocks.compressedClays.get(0))));
-        materialMap.get(ClayiumMaterial.clay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
-        for (ClayiumShape shape : ClayiumShape.values()) {
-            add(ClayiumMaterial.clay, shape, 1);
-        }
-
-        materialMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, I(new ItemBlockCompressedClay((CompressedClay) ClayiumBlocks.compressedClays.get(1))));
-        materialMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
-        materialMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.largeBall, ItemStack.EMPTY);
-        for (ClayiumShape shape : ClayiumShape.values()) {
-            add(ClayiumMaterial.denseClay, shape, 2);
-        }
-
-        materialMap.get(ClayiumMaterial.indClay).put(ClayiumShape.block, I(new ItemBlockCompressedClay((CompressedClay) ClayiumBlocks.compressedClays.get(3))));
-        add(ClayiumMaterial.indClay, ClayiumShape.plate, 3);
-        add(ClayiumMaterial.indClay, ClayiumShape.largePlate, 3);
-
-        materialMap.get(ClayiumMaterial.advClay).put(ClayiumShape.block, I(new ItemBlockCompressedClay((CompressedClay) ClayiumBlocks.compressedClays.get(4))));
-        add(ClayiumMaterial.advClay, ClayiumShape.plate, 4);
-        add(ClayiumMaterial.advClay, ClayiumShape.largePlate, 4);
-
-        add(ClayiumMaterial.engClay, ClayiumShape.dust, 3);
-
-        // ===== METAL PART =====
-        //        for (Material material : GenericMaterial.values()) {
-        //            materialMap.put(material, new HashMap<>());
-        //        }
-        //
-        //        materialMap.get(GenericMaterial.aluminium).put(GenericShape.ingot, add(GenericMaterial.aluminium, GenericShape.ingot));
-
-        for (ClayiumMaterial material : new ClayiumMaterial[] {ClayiumMaterial.rubidium, ClayiumMaterial.cerium, ClayiumMaterial.tantalum, ClayiumMaterial.praseodymium, ClayiumMaterial.protactinium,
-                ClayiumMaterial.neptunium, ClayiumMaterial.promethium, ClayiumMaterial.samarium, ClayiumMaterial.curium, ClayiumMaterial.europium}) {
-            materialMap.get(material).put(ClayiumShape.ingot, I(new ClayiumShapedMaterial(material, ClayiumShape.ingot, 0)));
-        }
-
-        addOD(ClayiumMaterial.antimatter, ClayiumShape.dust, 10);
-        addOD(ClayiumMaterial.antimatter, ClayiumShape.gem, 10);
-        addOD(ClayiumMaterial.antimatter, ClayiumShape.plate, 10);
-        add(ClayiumMaterial.antimatter, ClayiumShape.largePlate, 10);
-
-        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.dust, 11);
-        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, 11);
-        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.plate, 11);
-        add(ClayiumMaterial.pureAntimatter, ClayiumShape.largePlate, 11);
-
-        for (int i = 1; i <= 7; i++) {
-            addOD(ClayiumMaterial.compressedPureAntimatter.get(i), ClayiumShape.gem, i < 4 ? 11 : 12);
-        }
-
-        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.dust, 12);
-        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.plate, 12);
-        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.largePlate, 12);
-        materialMap.get(ClayiumMaterial.octupleEnergeticClay).putIfAbsent(ClayiumShape.block, I(new ItemBlockCompressedClay((CompressedClay) ClayiumBlocks.compressedClays.get(13))));
-
-        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.dust, 13);
-        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.gem, 13);
-        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.plate, 13);
-        add(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.largePlate, 13);
-    }};
-
-    private static void add(ClayiumMaterial material, ClayiumShape shape) {
-        materialMap.get(material).putIfAbsent(shape, I(new ClayiumItem(material, shape)));
-    }
-    private static void add(ClayiumMaterial material, ClayiumShape shape, int tier) {
-        materialMap.get(material).putIfAbsent(shape, I(new ItemTiered(material, shape, tier)));
-    }
-    private static void addOD(ClayiumMaterial material, ClayiumShape shape, int tier) {
-        List<ItemStack> list = OreDictionary.getOres(shape.getName() + material.getODName());
-        if (list.isEmpty()) {
-            add(material, shape);
-            OreDictionary.registerOre(shape.getName() + material.getODName(), get(material, shape));
-        }
-
-        ItemStack stack = list.get(0).copy();
-        ((ItemTiered) stack.getItem()).setTier(tier);
-        materialMap.get(material).putIfAbsent(shape, stack);
-    }
-    public static ItemStack get(ClayiumMaterial material, ClayiumShape shape) {
-        return materialMap.get(material).get(shape).copy();
-    }
-    public static ItemStack get(ClayiumMaterial material, ClayiumShape shape, int amount) {
-        ItemStack stack = get(material, shape);
-        stack.setCount(amount);
-        return stack;
-    }
-    public static ItemStack get(TierPrefix material, ClayiumShape shape) {
-        return get(material.getMaterial(), shape);
-    }
-    public static ItemStack get(int tier, ClayiumShape shape) {
-        return get(TierPrefix.get(tier), shape);
-    }
-    public static ItemStack get(int tier, ClayiumShape shape, int amount) {
-        return get(TierPrefix.get(tier).getMaterial(), shape, amount);
-    }
-    public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape) {
-        return ODHelper.getODStack(shape.getName() + material.getODName());
-    }
-    public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape, int amount) {
-        return ODHelper.getODStack(shape.getName() + material.getODName(), amount);
-    }
-    private static ItemStack I(Item item) {
-        return new ItemStack(item);
-    }
-    /* ...Materials */
 
     /* Tools... */
     public static final Item rollingPin = new ClayiumItem("clay_rolling_pin") {{

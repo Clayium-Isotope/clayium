@@ -1,7 +1,6 @@
 package mods.clayium.item.common;
 
 import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.item.ClayiumItems;
 
 import java.util.Arrays;
 import java.util.List;
@@ -89,7 +88,7 @@ public enum ClayiumMaterial {
     impureBeryllium("impure_beryllium", "ImpureBeryllium", 132, $ -> $.setColor(210, 240, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureSodium("impure_sodium", "ImpureSodium", 139, $ -> $.setColor(170, 170, 230).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureMagnesium("impure_magnesium", "ImpureMagnesium", 140, $ -> $.setColor(150, 220, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureAluminium("aluminium", "ImpureAluminium", 141, $ -> $.setColor(190, 200, 202).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureAluminium("impure_aluminium", "ImpureAluminium", 141, $ -> $.setColor(190, 200, 202).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureSilicon("impure_silicon", "ImpureSilicon", 142, $ -> $.setColor(151, 143, 152, 0).setColor(83, 55, 100, 1).setColor(169, 165, 165, 2)),
     impurePotassium("impure_potassium", "ImpurePotassium", 147, $ -> $.setColor(240, 240, 190).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
     impureCalcium("impure_calcium", "ImpureCalcium", 148, $ -> $.setColor(240, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
@@ -124,7 +123,7 @@ public enum ClayiumMaterial {
     silicone("silicone", "Silicone", 1028, 0.2F, $ -> $.setColor(180, 180, 180, 240, 240, 240)),
 
     claySteel("clay_steel", "ClaySteel", 256, 3.0F, $ -> $.setColor(136, 144, 173).setColor(255, 255, 255, 2)),
-    clayium("clay_steel", "ClaySteel", 257, 6.0F, $ -> $.setColor(90, 240, 210).setColor(63, 72, 85, 1).setColor(255, 205, 200, 2)),
+    clayium("clayium", "ClaySteel", 257, 6.0F, $ -> $.setColor(90, 240, 210).setColor(63, 72, 85, 1).setColor(255, 205, 200, 2)),
     impureUltimateAlloy("impure_ultimate_alloy", "ImpureUltimateAlloy", 386, 9.0F, $ -> $.setColor(85, 205, 85).setColor(245, 160, 255, 2).setColor(245, 255, 255, 1)),
     ultimateAlloy("ultimate_alloy", "UltimateAlloy", 258, 9.0F, $ -> $.setColor(85, 205, 85).setColor(245, 160, 255, 2)),
     antimatter("antimatter", "Antimatter", 800, $ -> $.setColor(0, 0, 235).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
@@ -146,13 +145,12 @@ public enum ClayiumMaterial {
     zinconiumAlloy("zinconium", "Zinconium", 1345, $ -> $.setColor(230, 170, 140).setColor(120, 0, 0, 1)),
     ZK60AAlloy("zk60a", "ZK60A", 1313, $ -> $.setColor(75, 85, 80).setColor(255, 255, 255, 2).setColor(10, 40, 10, 1)),
 
+    bronze("bronze", "Bronze", 1280, $ -> $.setColor(250, 150, 40).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
+    brass("brass", "Brass", 1281, $ -> $.setColor(190, 170, 20).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
+    electrum("electrum", "Electrum", 1283, $ -> $.setColor(230, 230, 155).setColor(120, 120, 70, 1).setColor(255, 255, 255, 2)),
+    invar("invar", "Invar", 1284, $ -> $.setColor(170, 170, 80).setColor(140, 140, 70, 1).setColor(180, 180, 80, 2)),
+    steel("steel", "Steel", 1536, $ -> $.setColor(90, 90, 110).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
 
-//    public static CMaterial BRONZE;
-//    public static CMaterial BRASS;
-//    public static CMaterial ELECTRUM;
-//    public static CMaterial INVAR;
-//    public static CMaterial STEEL;
-//
 //    public static CMaterial OBSIDIAN;
 //    public static CMaterial REDSTONE;
 //    public static CMaterial GLOWSTONE;
@@ -164,6 +162,8 @@ public enum ClayiumMaterial {
     diamond("diamond", "Diamond", 1856),
     emerald("emerald", "Emerald", 1857),
     stone("stone", "Stone", 2048),
+
+    saltpeter("saltpeter", "Saltpeter", 1041, $ -> $.setColor(190, 200, 210, 255, 240, 230)),
 
 //    public static CMaterial PLASTIC;
 //    public static CMaterial CINNABAR;
@@ -309,7 +309,11 @@ public enum ClayiumMaterial {
     public static final ClayiumMaterial mainAluminium = ClayiumConfiguration.cfgHardcoreAluminium ? impureAluminium : aluminium;
     public static final ClayiumMaterial mainOsmium = ClayiumConfiguration.cfgHardcoreOsmium ? impureOsmium : osmium;
 
-    public static final List<ClayiumMaterial> compressedPureAntimatter = Arrays.asList(pureAntimatter, compressedPureAntimatter_1, compressedPureAntimatter_2, compressedPureAntimatter_3, compressedPureAntimatter_4, compressedPureAntimatter_5, compressedPureAntimatter_6, compressedPureAntimatter_7, octuplePureAntimatter);
+    public static final List<ClayiumMaterial> compressedPureAntimatter = Arrays.asList(
+            pureAntimatter, compressedPureAntimatter_1, compressedPureAntimatter_2, compressedPureAntimatter_3,
+            compressedPureAntimatter_4, compressedPureAntimatter_5, compressedPureAntimatter_6, compressedPureAntimatter_7,
+            octuplePureAntimatter
+    );
 
     ClayiumMaterial(String name, String ODName, int id) {
         this(name, ODName, id, 1.0F);
@@ -320,8 +324,6 @@ public enum ClayiumMaterial {
         this.ODName = ODName;
         this.id = id;
         this.hardness = hardness;
-
-        ClayiumItems.materials.put(id, this);
     }
 
     ClayiumMaterial(String name, String ODName, int id, Consumer<ClayiumMaterial> cb) {
@@ -372,4 +374,21 @@ public enum ClayiumMaterial {
         setColor(r3, g3, b3, 2);
         return this;
     }
+
+    public static final List<ClayiumMaterial> metals = Arrays.asList(
+            magnesium, sodium, lithium, zirconium, zinc, manganese, calcium, potassium, nickel, beryllium, lead, hafnium,
+            chrome, titanium, strontium, barium, copper, iron, gold, bronze, brass, electrum, invar, steel
+    );
+
+    public static final List<ClayiumMaterial> impureMetals = Arrays.asList(
+            impureAluminium, impureMagnesium, impureSodium, impureLithium, impureZirconium, impureZinc, impureManganese,
+            impureCalcium, impurePotassium, impureNickel, impureIron, impureBeryllium, impureLead, impureHafnium, impureChrome,
+            impureTitanium, impureStrontium, impureBarium, impureCopper
+    );
+
+    public static final List<ClayiumMaterial> ingotMetals = Arrays.asList(
+            rubidium, caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium,
+            curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium,
+            silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth
+    );
 }

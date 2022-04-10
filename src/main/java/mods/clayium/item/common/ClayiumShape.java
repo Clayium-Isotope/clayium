@@ -1,5 +1,8 @@
 package mods.clayium.item.common;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum ClayiumShape {
     plate("plate"),
     stick("stick"),
@@ -35,4 +38,13 @@ public enum ClayiumShape {
     }
 
     private final String name;
+
+    public static final List<ClayiumShape> clayPartShapes = Arrays.asList(
+            plate, stick, shortStick, ring, smallRing, gear, blade, needle, disc, smallDisc,
+            cylinder, pipe, largeBall, largePlate, grindingHead, bearing, spindle, cuttingHead, waterWheel, block,
+            ball);
+
+    public static final List<ClayiumShape> metalPartShapes = Arrays.asList(
+            plate, largePlate, block, dust, ingot, gem
+    );
 }

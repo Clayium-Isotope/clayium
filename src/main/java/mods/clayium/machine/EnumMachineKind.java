@@ -33,9 +33,11 @@ public enum EnumMachineKind {
     smelter("smelter", ClayiumRecipes.smelter),
     buffer("buffer", null),
     multitrackBuffer("multitrack_buffer", null),
+    fluidBuffer("fluid_buffer", null),
     chemicalReactor("chemical_reactor", ClayiumRecipes.chemicalReactor),
     saltExtractor("salt_extractor", null),
     fluidTranslator("fluid_translator", null),
+    CE_RFConverter("ce_rf_converter", null),
 
     // Tier 5 ~
     autoClayCondenser("auto_clay_condenser", null),
@@ -81,6 +83,7 @@ public enum EnumMachineKind {
 
     // Tier 13 ~
     ECDecomposer("ec_decomposer", ClayiumRecipes.energeticClayDecomposer),
+    creativeCESource("creative_energy", null),
 
     // Metal Chest
     metalChest("metal_chest", null);
@@ -90,7 +93,7 @@ public enum EnumMachineKind {
         this.recipe = recipe;
     }
 
-    public String get() {
+    public String getRegisterName() {
         return kind;
     }
 

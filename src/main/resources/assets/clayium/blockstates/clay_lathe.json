@@ -1,8 +1,45 @@
 {
-    "variants": {
-        "facing=north": { "model": "clayium:machine/clay_lathe" },
-        "facing=east": { "model": "clayium:machine/clay_lathe", "y": 90 },
-        "facing=south": { "model": "clayium:machine/clay_lathe", "y": 180 },
-        "facing=west": { "model": "clayium:machine/clay_lathe", "y": 270 }
+  "multipart": [
+    {
+      "apply": {
+        "model": "clayium:machine_hull_0"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "clayium:machine/lathe",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "clayium:machine/lathe",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "clayium:machine/lathe",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "clayium:machine/lathe",
+        "y": 270
+      }
     }
+  ]
 }

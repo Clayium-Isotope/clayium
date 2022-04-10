@@ -3,11 +3,16 @@ package mods.clayium.machine.crafting;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClayiumRecipe extends ArrayList<RecipeElement> {
-    public ClayiumRecipe() {
+    private final Map<String, ClayiumRecipe> id2Recipe = new HashMap<>();
+
+    public ClayiumRecipe(String recipeId) {
         super();
+        id2Recipe.put(recipeId, this);
     }
 
     public void addRecipe(ItemStack materialIn, ItemStack resultIn, long time) {

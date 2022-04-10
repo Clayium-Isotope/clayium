@@ -2,6 +2,6 @@
   "parent": "block/cube_all",
   "textures": {
     "all": "clayium:blocks/compressedclay-4",
-    "particle": "clayium:blocks/compressedclay-4"
+    "particles": "#all"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "clayium:energy_storage_upgrade_3"
+    }
+  }
+}

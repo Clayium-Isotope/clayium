@@ -30,12 +30,13 @@ public class ContainerClayiumMachine extends ContainerClayMachineTemp {
         addSlotToContainer(new Slot(tileEntity, 2, -12, 72 - 16) {
             @Override
             public int getSlotStackLimit() {
-                return 1;
+                assert tileEntity instanceof TileEntityClayiumMachine;
+                return ((TileEntityClayiumMachine) tileEntity).getClayEnergyStorageSize();
             }
 
             @Override
             public boolean isItemValid(ItemStack stack) {
-                return ClayiumBlocks.compressedClays.contains(stack.getItem());
+                return ClayiumBlocks.compressedClay.contains(stack.getItem());
             }
 
             @Override

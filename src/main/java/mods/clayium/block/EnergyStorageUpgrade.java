@@ -10,8 +10,8 @@ import net.minecraft.world.IBlockAccess;
 public class EnergyStorageUpgrade extends BlockTiered implements IClayContainerModifier {
     private final int additionalEnergyStorage;
 
-    public EnergyStorageUpgrade(int tier, int additionalEnergyStorage) {
-        super(Material.IRON, "energy_storage_upgrade", tier);
+    public EnergyStorageUpgrade(int meta, int tier, int additionalEnergyStorage) {
+        super(Material.IRON, "energy_storage_upgrade_", meta, tier);
         setHardness(2.0F);
         setResistance(2.0F);
         setSoundType(SoundType.METAL);

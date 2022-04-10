@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class CAReactorCoil extends BlockTiered {
-    public CAReactorCoil(int tier) {
-        super(Material.IRON, "ca_reactor_coil", tier);
+    public CAReactorCoil(int meta, int tier) {
+        super(Material.IRON, "ca_reactor_coil_", meta, tier);
         setHardness(8.0F);
         setResistance(5.0F);
         setSoundType(SoundType.METAL);

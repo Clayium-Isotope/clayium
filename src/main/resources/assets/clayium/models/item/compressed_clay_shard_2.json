@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "clayium:items/compressedclay-shard-2"
-    }
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "clayium:items/compressedclay-shard-2"
+  }
 }

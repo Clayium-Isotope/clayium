@@ -16,8 +16,8 @@ import java.util.List;
 public class Overclocker extends BlockTiered implements IOverclocker {
     private final double overclockFactor;
 
-    public Overclocker(int tier, double overclockFactor) {
-        super(Material.IRON, "overclocker", tier);
+    public Overclocker(int meta, int tier, double overclockFactor) {
+        super(Material.IRON, "overclocker_", meta, tier);
         setHardness(2.0F);
         setResistance(2.0F);
         setSoundType(SoundType.METAL);

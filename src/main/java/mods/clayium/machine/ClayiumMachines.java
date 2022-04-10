@@ -1,142 +1,67 @@
 package mods.clayium.machine;
 
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.common.ClayMachineTempTiered;
 import net.minecraft.block.Block;
 
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
 
 public class ClayiumMachines {
-    public static final Map<EnumMachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new HashMap<>();
-    static {
-        for (EnumMachineKind kind : EnumMachineKind.values()) {
-            machineMap.put(kind, new EnumMap<>(TierPrefix.class));
+    public static final Map<EnumMachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new EnumMap<>(EnumMachineKind.class);
+
+    public static void registerMachines() {
+        add(EnumMachineKind.workTable, 0, new ClayWorkTable());
+        add(EnumMachineKind.craftingTable, 0, new ClayCraftingTable());
+
+        add(EnumMachineKind.bendingMachine, new int[] { 1, 2, 3, 4, 5, 6, 7, 9 });
+        add(EnumMachineKind.wireDrawingMachine, new int[] { 1, 2, 3, 4 });
+        add(EnumMachineKind.pipeDrawingMachine, new int[] { 1, 2, 3, 4 });
+        add(EnumMachineKind.cuttingMachine, new int[] { 1, 2, 3, 4 });
+        add(EnumMachineKind.lathe, new int[] { 1, 2, 3, 4 });
+
+        add(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
+    }
+
+    private static void add(EnumMachineKind kind, int tier, ClayMachineTempTiered block) {
+        TierPrefix _tier = TierPrefix.get(tier);
+
+        if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
+        if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(_tier)) {
+            ClayiumCore.logger.error("The machine already exists  [" + kind.getRegisterName() + "] [" + _tier.getPrefix() + "]");
+            return;
         }
 
-        /* Tier 0... */
-        machineMap.get(EnumMachineKind.workTable).put(TierPrefix.none, new ClayWorkTable());
-        machineMap.get(EnumMachineKind.craftingTable).put(TierPrefix.none, new ClayCraftingTable());
-        /* ...Tier 0 */
+        machineMap.get(kind).put(_tier, block);
+    }
 
-        /* Tier 1... */
-        for (EnumMachineKind kind : new EnumMachineKind[] {
-                EnumMachineKind.bendingMachine,
-                EnumMachineKind.wireDrawingMachine,
-                EnumMachineKind.pipeDrawingMachine,
-                EnumMachineKind.cuttingMachine,
-                EnumMachineKind.lathe,
-                EnumMachineKind.cobblestoneGenerator,
-
-                EnumMachineKind.millingMachine,
-                EnumMachineKind.waterWheel
-        }) {
-            machineMap.get(kind).put(TierPrefix.clay, new ClayiumMachine(kind, 1));
-        }
-        /* ...Tier 1 */
-
-        /* Tier 2... */
-        for (EnumMachineKind kind : new EnumMachineKind[] {
-                EnumMachineKind.bendingMachine,
-                EnumMachineKind.wireDrawingMachine,
-                EnumMachineKind.pipeDrawingMachine,
-                EnumMachineKind.cuttingMachine,
-                EnumMachineKind.lathe,
-                EnumMachineKind.cobblestoneGenerator,
-
-                EnumMachineKind.grinder,
-                EnumMachineKind.decomposer,
-                EnumMachineKind.condenser,
-
-                EnumMachineKind.waterWheel
-        }) {
-            machineMap.get(kind).put(TierPrefix.denseClay, new ClayiumMachine(kind, 2));
-        }
-        /* ...Tier 2 */
-
-        /* Tier 3... */
-        for (EnumMachineKind kind : new EnumMachineKind[] {
-                EnumMachineKind.bendingMachine,
-                EnumMachineKind.wireDrawingMachine,
-                EnumMachineKind.pipeDrawingMachine,
-                EnumMachineKind.cuttingMachine,
-                EnumMachineKind.lathe,
-                EnumMachineKind.cobblestoneGenerator,
-
-                EnumMachineKind.grinder,
-                EnumMachineKind.decomposer,
-                EnumMachineKind.condenser,
-
-                EnumMachineKind.centrifuge,
-                EnumMachineKind.inscriber,
-                EnumMachineKind.assembler,
-                EnumMachineKind.millingMachine
-        }) {
-            machineMap.get(kind).put(TierPrefix.simple, new ClayiumMachine(kind, 3));
-        }
-        machineMap.get(EnumMachineKind.ECCondenser).put(TierPrefix.simple, new ClayiumMachine(EnumMachineKind.ECCondenser, "mk1", 3));
-        /* ...Tier 3 */
-
-        /* Tier 4... */
-        for (EnumMachineKind kind : new EnumMachineKind[] {
-                EnumMachineKind.bendingMachine,
-                EnumMachineKind.wireDrawingMachine,
-                EnumMachineKind.pipeDrawingMachine,
-                EnumMachineKind.cuttingMachine,
-                EnumMachineKind.lathe,
-                EnumMachineKind.cobblestoneGenerator,
-
-                EnumMachineKind.grinder,
-                EnumMachineKind.decomposer,
-                EnumMachineKind.condenser,
-
-                EnumMachineKind.centrifuge,
-                EnumMachineKind.inscriber,
-                EnumMachineKind.assembler,
-                EnumMachineKind.millingMachine
-        }) {
-            machineMap.get(kind).put(TierPrefix.basic, new ClayiumMachine(kind, 4));
-        }
-        machineMap.get(EnumMachineKind.ECCondenser).put(TierPrefix.basic, new ClayiumMachine(EnumMachineKind.ECCondenser, "mk2", 4));
-        /* ...Tier 4 */
-
-        /* Tier 5... */
-        machineMap.get(EnumMachineKind.quartzCrucible).put(TierPrefix.advanced, null); // TODO
-        /* ...Tier 5 */
-
-        /* Tier 6... */
-        /* ...Tier 6 */
-
-        /* Tier 7... */
-        machineMap.get(EnumMachineKind.laserReflector).put(TierPrefix.claySteel, null); // TODO
-        /* ...Tier 7 */
-
-        /* Tier 8... */
-        /* ...Tier 8 */
-
-        /* Tier 9... */
-        /* ...Tier 9 */
-
-        /* Tier 10... */
-        /* ...Tier 10 */
-
-        /* Tier 11... */
-        /* ...Tier 11 */
-
-        /* Tier 12... */
-        /* ...Tier 12 */
-
-        /* Tier 13... */
-        /* ...Tier 13 */
+    private static void add(EnumMachineKind kind, int tier) {
+        add(kind, tier, new ClayiumMachine(kind, tier));
+    }
+    private static void add(EnumMachineKind kind, int[] tiers) {
+        for (int i : tiers)
+            add(kind, i, new ClayiumMachine(kind, i));
+    }
+    private static void add(EnumMachineKind kind, int tier, String suffix) {
+        add(kind, tier, new ClayiumMachine(kind, suffix, tier));
     }
 
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
-        assert machineMap != null;
         return machineMap.get(kind).get(tier);
     }
     public static Block get(EnumMachineKind kind, int tier) {
         return get(kind, TierPrefix.get(tier));
+    }
+
+    public static List<Block> getBlocks() {
+        List<Block> res = new ArrayList<>();
+
+        for (Map<TierPrefix, ClayMachineTempTiered> kind : machineMap.values()) {
+            res.addAll(kind.values());
+        }
+
+        return res;
     }
 }
