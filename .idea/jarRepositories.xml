@@ -14,12 +14,7 @@
     <remote-repository>
       <option name="id" value="MavenRepo" />
       <option name="name" value="MavenRepo" />
-      <option name="url" value="https://repo.maven.apache.org/maven2/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="deobfDeps" />
-      <option name="name" value="deobfDeps" />
-      <option name="url" value="file:/$USER_HOME$/gradle-6.5.1/caches/minecraft/deobfedDeps" />
+      <option name="url" value="https://repo1.maven.org/maven2/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="minecraft" />
@@ -32,9 +27,9 @@
       <option name="url" value="https://maven.minecraftforge.net" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="maven" />
-      <option name="name" value="maven" />
-      <option name="url" value="https://maven.minecraftforge.net/" />
+      <option name="id" value="MavenRepo" />
+      <option name="name" value="MavenRepo" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/" />
     </remote-repository>
   </component>
 </project>

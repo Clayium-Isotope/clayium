@@ -1,30 +1,64 @@
 package mods.clayium.core;
 
+import mods.clayium.item.ClaySteelPickaxe;
+import mods.clayium.util.UtilAdvancedTools;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.World;
 
-public class ClayiumCommonProxy implements IClayiumProxy {
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {}
+public class ClayiumCommonProxy {
+    public void registerTileEntity() {}
 
-	@Override
-	public void init(FMLInitializationEvent event) {}
+    public void registerRenderer() {}
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {}
+    public int getRenderID() {
+        return -1;
+    }
 
-	@Override
-	public void serverLoad(FMLServerStartingEvent event) {}
 
-	public EnumFacing getHittingSide(EntityPlayer player) {
-		return player.rayTrace(9999.0D, 0.0F).sideHit;
-	}
+    public World getClientWorld() {
+        return null;
+    }
 
-	public EntityPlayer getClientPlayer() {
-		return null;
-	}
+
+    public void LoadNEI() {}
+
+    public ClaySteelPickaxe newClaySteelPickaxe() {
+        return new ClaySteelPickaxe();
+    }
+
+    public int getHittingSide(EntityPlayer player) {
+        Integer s = (Integer) UtilAdvancedTools.sideList.get(player);
+        return (s == null || s.intValue() < 0 || s.intValue() >= 6) ? -1 : s.intValue();
+    }
+
+    public void updateHittingSide(EntityPlayer player) {}
+
+    public EntityPlayer getClientPlayer() {
+        return null;
+    }
+
+    public boolean renderAsPipingMode() {
+        return false;
+    }
+
+
+    public void clientPlayerTick(EntityPlayer player) {}
+
+
+    public void overclockPlayer(int delay) {}
+
+
+    public void updateFlightStatus(int mode) {}
+
+    public float hookBlockReachDistance(float distance) {
+        return distance;
+    }
+
+    public boolean isCreative(EntityPlayer player) {
+        if (player instanceof EntityPlayerMP) {
+            return ((EntityPlayerMP) player).theItemInWorldManager.isCreative();
+        }
+        return false;
+    }
 }

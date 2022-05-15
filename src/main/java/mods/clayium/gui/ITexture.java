@@ -7,5 +7,5 @@ public interface ITexture {
 
     int getSizeY();
 
-    void draw(Gui gui, int x, int y);
+    void draw(Gui paramGui, int paramInt1, int paramInt2);
 }

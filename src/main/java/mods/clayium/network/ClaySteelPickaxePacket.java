@@ -1,41 +1,45 @@
 package mods.clayium.network;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class ClaySteelPickaxePacket implements IMessage {
-    public EnumFacing side;
+    public int side;
     public int dimid;
-    public Vec3i pos;
+    public int x;
+    public int y;
+    public int z;
 
     public ClaySteelPickaxePacket() {}
 
-    public ClaySteelPickaxePacket(EnumFacing side) {
+    public ClaySteelPickaxePacket(int side) {
         this.side = side;
     }
 
-    public ClaySteelPickaxePacket(World world, Vec3i pos) {
-        this.side = null;
-        this.dimid = world.provider.getDimension();
-        this.pos = pos;
+    public ClaySteelPickaxePacket(World world, int x, int y, int z) {
+        this.side = -2;
+        this.dimid = world.provider.dimensionId;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
 
     public void fromBytes(ByteBuf buf) {
-        int _side = buf.readInt();
-        this.side = _side == -1 ? null : EnumFacing.getFront(_side);
+        this.side = buf.readInt();
         this.dimid = buf.readInt();
-        this.pos = new Vec3i(buf.readInt(), buf.readInt(), buf.readInt());
+        this.x = buf.readInt();
+        this.y = buf.readInt();
+        this.z = buf.readInt();
     }
 
+
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(this.side == null ? -1 : this.side.getIndex());
+        buf.writeInt(this.side);
         buf.writeInt(this.dimid);
-        buf.writeInt(this.pos.getX());
-        buf.writeInt(this.pos.getY());
-        buf.writeInt(this.pos.getZ());
+        buf.writeInt(this.x);
+        buf.writeInt(this.y);
+        buf.writeInt(this.z);
     }
 }

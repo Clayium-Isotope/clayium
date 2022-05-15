@@ -1,42 +1,37 @@
 package mods.clayium.block.itemblock;
 
-import mods.clayium.block.CompressedClay;
-import mods.clayium.item.common.IClayEnergy;
-import mods.clayium.util.UtilLocale;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBlockCompressedClay extends ItemBlockTiered implements IClayEnergy {
-    private final int meta;
+import mods.clayium.item.IClayEnergy;
+import mods.clayium.util.UtilLocale;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
-    public ItemBlockCompressedClay(CompressedClay block) {
+public class ItemBlockCompressedClay
+        extends ItemBlockDamaged
+        implements IClayEnergy {
+    public ItemBlockCompressedClay(Block block) {
         super(block);
-
-        meta = block.getTier(ItemStack.EMPTY);
     }
 
-    @Override
-    public long getClayEnergy() {
-        if (meta < 4) return 0L;
-        return (long) Math.pow(10.0D, meta + 1);
+
+    public long getClayEnergy(ItemStack itemStack) {
+        return (itemStack.getItemDamage() >= 4) ? (long) Math.pow(10.0D, (itemStack.getItemDamage() + 1)) : 0L;
     }
 
-    @Override
-    public int getTier() {
-        return meta;
+
+    public int getTier(ItemStack itemstack) {
+        return itemstack.getItemDamage();
     }
 
-    @Override
+
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(getClayEnergy())));
+    public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean flag) {
+        super.addInformation(itemstack, player, list, flag);
+        list.add(UtilLocale.ClayEnergyNumeral(getClayEnergy(itemstack)) + "CE");
     }
 }

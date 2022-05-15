@@ -13,5 +13,5 @@ public interface IGeneralInterface {
 
     void setRenderSyncFlag();
 
-    void pushButton(EntityPlayer playerIn, int button);
+    void pushButton(EntityPlayer paramEntityPlayer, int paramInt);
 }

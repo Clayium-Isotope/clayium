@@ -1,18 +1,14 @@
 package mods.clayium.item;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.World;
-
 import java.util.List;
 
-public interface IHarvestCoord {
-    List<BlockPos> getHarvestedCoordList(ItemStack itemStack, BlockPos blockPos, Vec3i vec31, Vec3i vec32, Vec3i vec33);
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
-    EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ);
+public interface IHarvestCoord {
+    List<Vec3> getHarvestedCoordList(ItemStack paramItemStack, int paramInt1, int paramInt2, int paramInt3, Vec3 paramVec31, Vec3 paramVec32, Vec3 paramVec33);
+
+    boolean onItemUse(ItemStack paramItemStack, EntityPlayer paramEntityPlayer, World paramWorld, int paramInt1, int paramInt2, int paramInt3, int paramInt4, float paramFloat1, float paramFloat2, float paramFloat3);
 }

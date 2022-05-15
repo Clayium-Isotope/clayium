@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "clayium:blocks/clayworktable",
-    "side": "clayium:blocks/clayworktable_side",
-    "particle": "clayium:blocks/clayworktable"
-  }
-}

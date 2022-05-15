@@ -1,9 +1,8 @@
 package mods.clayium.block;
 
-import mods.clayium.machine.common.TileEntityClayContainer;
-import net.minecraft.util.math.BlockPos;
+import mods.clayium.block.tile.TileClayContainer;
 import net.minecraft.world.IBlockAccess;
 
 public interface IClayContainerModifier {
-    void modifyClayContainer(IBlockAccess world, BlockPos pos, TileEntityClayContainer tile);
+    void modifyClayContainer(IBlockAccess paramIBlockAccess, int paramInt1, int paramInt2, int paramInt3, TileClayContainer paramTileClayContainer);
 }

@@ -1,230 +1,260 @@
 package mods.clayium.util;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class UtilItemStack {
     public static boolean areItemDamageEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        return ItemStack.areItemsEqual(itemstack1, itemstack2) && areDamageEqual(itemstack1, itemstack2);
+        return (areItemEqual(itemstack1, itemstack2) && areDamageEqual(itemstack1, itemstack2));
     }
+
 
     public static boolean areItemDamageEqualOrDamageable(ItemStack itemstack1, ItemStack itemstack2) {
-        return ItemStack.areItemsEqual(itemstack1, itemstack2) && (areDamageEqual(itemstack1, itemstack2) || itemstack1.getItem().isDamageable());
+        return (areItemEqual(itemstack1, itemstack2) && (
+                areDamageEqual(itemstack1, itemstack2) || itemstack1.getItem().isDamageable()));
     }
+
 
     public static boolean areTypeEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        return areItemDamageEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
+        return (areItemDamageEqual(itemstack1, itemstack2) && areTagEqual(itemstack1, itemstack2));
     }
+
 
     public static boolean areStackEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        return areTypeEqual(itemstack1, itemstack2) && areSizeEqual(itemstack1, itemstack2);
+        return (areTypeEqual(itemstack1, itemstack2) && areSizeEqual(itemstack1, itemstack2));
     }
 
-    @Deprecated // Use ItemStack.areItemsEqual
+
     public static boolean areItemEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        if (itemstack1 != ItemStack.EMPTY && itemstack2 != ItemStack.EMPTY) {
-            return itemstack1.isItemEqual(itemstack2);
-        }
-
-        return itemstack1 == ItemStack.EMPTY && itemstack2 == ItemStack.EMPTY;
+        if (itemstack1 == null || itemstack2 == null)
+            return (itemstack1 == null && itemstack2 == null);
+        return (itemstack1.getItem() == itemstack2.getItem());
     }
+
 
     public static boolean areDamageEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        if (itemstack1 != ItemStack.EMPTY && itemstack2 != ItemStack.EMPTY) {
-            return itemstack1.getMetadata() == itemstack2.getMetadata();
-        } else {
-            return itemstack1 == ItemStack.EMPTY && itemstack2 == ItemStack.EMPTY;
-        }
+        if (itemstack1 == null || itemstack2 == null)
+            return (itemstack1 == null && itemstack2 == null);
+        return (itemstack1.getItemDamage() == itemstack2.getItemDamage());
     }
+
 
     public static boolean areSizeEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        if (itemstack1 != ItemStack.EMPTY && itemstack2 != ItemStack.EMPTY) {
-            return itemstack1.getCount() == itemstack2.getCount();
-        } else {
-            return itemstack1 == ItemStack.EMPTY && itemstack2 == ItemStack.EMPTY;
-        }
+        if (itemstack1 == null || itemstack2 == null)
+            return (itemstack1 == null && itemstack2 == null);
+        return (itemstack1.stackSize == itemstack2.stackSize);
     }
 
-    @Deprecated // Use ItemStack.areItemStackTagsEqual
+
     public static boolean areTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
+
     public static boolean haveSameOD(ItemStack itemstack1, ItemStack itemstack2) {
-        for (int id : OreDictionary.getOreIDs(itemstack1))
-            for (int id1 : OreDictionary.getOreIDs(itemstack2))
+        int[] ids = OreDictionary.getOreIDs(itemstack1);
+        int[] ids1 = OreDictionary.getOreIDs(itemstack2);
+        for (int id : ids) {
+            for (int id1 : ids1) {
                 if (id1 == id)
                     return true;
-
+            }
+        }
         return false;
     }
+
 
     public static boolean hasOreName(ItemStack itemstack, String orename) {
-        for (int i : OreDictionary.getOreIDs(itemstack))
-            if (OreDictionary.getOreName(i).equals(orename))
+        for (int i : OreDictionary.getOreIDs(itemstack)) {
+            if (OreDictionary.getOreName(i).equals(orename)) {
                 return true;
-
+            }
+        }
         return false;
     }
+
 
     public static boolean hasOreName(ItemStack itemstack, int oreid) {
-        for (int i : OreDictionary.getOreIDs(itemstack))
-            if (i == oreid)
+        for (int i : OreDictionary.getOreIDs(itemstack)) {
+            if (i == oreid) {
                 return true;
-
+            }
+        }
         return false;
     }
+
 
     public static String[] getOreNames(ItemStack itemstack) {
         int[] ids = OreDictionary.getOreIDs(itemstack);
         String[] res = new String[ids.length];
-
-        for(int i = 0; i < ids.length; ++i) {
+        for (int i = 0; i < ids.length; i++)
             res[i] = OreDictionary.getOreName(ids[i]);
-        }
-
         return res;
     }
 
-    /*
-     * public static GameRegistry.UniqueIdentifier findUniqueIdentifierFor(Item item) {
-     *     if (item == null) return null;
-     *     if (item instanceof ItemBlock)
-     *         return GameRegistry.findUniqueIdentifierFor(((ItemBlock) item).field_150939_a);
-     *     return GameRegistry.findUniqueIdentifierFor(item);
-     * }
-     */
+    public static GameRegistry.UniqueIdentifier findUniqueIdentifierFor(Item item) {
+        if (item == null)
+            return null;
+        if (item instanceof ItemBlock) {
+            return GameRegistry.findUniqueIdentifierFor(((ItemBlock) item).field_150939_a);
+        }
+        return GameRegistry.findUniqueIdentifierFor(item);
+    }
+
 
     public static int getItemStackHashCode(ItemStack item) {
-        if (item == ItemStack.EMPTY) return 0;
-
+        if (item == null || item.getItem() == null)
+            return 0;
+        int prime = 31;
         int result = 1;
-        result = 31 * result + item.getItem().getRegistryName().hashCode();
-        result = 31 * result + item.getMetadata();
-        result = 31 * result + item.getCount();
-        result = 31 * result + (item.getTagCompound() == null ? 0 : item.getTagCompound().hashCode());
+        result = 31 * result + findUniqueIdentifierFor(item.getItem()).hashCode();
+        result = 31 * result + item.getItemDamage();
+        result = 31 * result + item.stackSize;
+        result = 31 * result + ((item.getTagCompound() == null) ? 0 : item.getTagCompound().hashCode());
         return result;
     }
 
-    public static int getItemStackHashCode(Iterable<ItemStack> items) {
-        if (items == null) return 0;
-
+    public static int getItemStackHashCode(Iterable items) {
+        if (items == null)
+            return 0;
+        int prime = 31;
         int result = 1;
-        for (ItemStack item : items) {
-            result = 31 * result + (!item.isEmpty() ? getItemStackHashCode(item) : item.hashCode());
+        for (Object item : items) {
+            result = 31 * result + ((item instanceof ItemStack) ? getItemStackHashCode((ItemStack) item) : ((item != null) ? item.hashCode() : 0));
         }
-
         return result;
     }
 
-    public static boolean areStacksEqual(List<ItemStack> items1, List<ItemStack> items2) {
-        if (items1 == items2) return true;
-        if (items1.isEmpty() || items2.isEmpty()) return false;
-        if (items1.size() != items2.size()) return false;
+    public static int getItemStackHashCode(Object[] items) {
+        return getItemStackHashCode(Arrays.asList(items));
+    }
 
-        for (int i = 0; i < items1.size(); i++) {
-            if (!ItemStack.areItemStacksEqual(items1.get(i), items2.get(i)))
+    public static boolean areStacksEqual(Object[] items1, Object[] items2) {
+        if (items1 == null)
+            return (items2 == null);
+        if (items2 == null)
+            return false;
+        if (items1.length != items2.length)
+            return false;
+        for (int i = 0; i < items1.length; i++) {
+            if ((items1[i] == null && items2[i] != null) || (items1[i] instanceof ItemStack && items2[i] instanceof ItemStack &&
+                    !areStackEqual((ItemStack) items1[i], (ItemStack) items2[i])) ||
+                    !items1[i].equals(items2[i]))
                 return false;
         }
-
         return true;
     }
 
-    public static List<ItemStack> object2ItemStacks(Object object) {
-        if (object instanceof ItemStack) {
-            return Arrays.asList((ItemStack) object);
-        }
-        if (object instanceof List) {
-            return ((List<?>) object).stream()
-                    .map(ItemStack.class::cast)
-                    .collect(Collectors.toList());
-        }
+    public static boolean areStacksEqual(Collection items1, Collection items2) {
+        return (items1 == null) ? ((items2 == null)) : ((items2 == null) ? false : areStacksEqual(items1.toArray(new Object[0]), items2.toArray(new Object[0])));
+    }
+
+
+    public static ItemStack[] object2ItemStacks(Object object) {
+        if (object instanceof ItemStack)
+            return new ItemStack[] {(ItemStack) object};
+        if (object instanceof ItemStack[])
+            return (ItemStack[]) object;
         if (object instanceof OreDictionaryStack) {
-            List<ItemStack> stacks = OreDictionary.getOres(((OreDictionaryStack) object).getOreName());
-            List<ItemStack> stacks1 = new ArrayList<>(stacks.size());
-
-            for (int i = 0; i < stacks.size(); ++i) {
-                stacks1.set(i, stacks.get(i).copy());
-                stacks1.get(i).setCount(((OreDictionaryStack) object).getStackSize());
+            OreDictionaryStack odstack = (OreDictionaryStack) object;
+            ItemStack[] stacks = (ItemStack[]) OreDictionary.getOres(odstack.getOreName()).toArray((Object[]) new ItemStack[0]);
+            ItemStack[] stacks1 = new ItemStack[stacks.length];
+            for (int i = 0; i < stacks.length; i++) {
+                stacks1[i] = stacks[i].copy();
+                (stacks1[i]).stackSize = odstack.stackSize;
             }
-
             return stacks1;
         }
+        if (object instanceof String)
+            return object2ItemStacks(new OreDictionaryStack((String) object, 1));
         if (object instanceof IItemPattern) {
             return ((IItemPattern) object).toItemStacks();
         }
-        if (object instanceof String) {
-            return object2ItemStacks(new OreDictionaryStack((String) object, 1));
-        }
-        return new ArrayList<>();
+        return null;
     }
 
-    public static List<ItemStack> getItemsFromTag(String name, ItemStack item) {
-        return item != null && item.hasTagCompound() ? getItemsFromTag(name, item.getTagCompound()) : new ArrayList<>();
+
+    public static ItemStack[] getItemsFromTag(String name, ItemStack item) {
+        return (item == null || !item.hasTagCompound()) ? null : getItemsFromTag(name, item.getTagCompound());
     }
 
-    public static List<ItemStack> getItemsFromTag(String name, NBTTagCompound tag) {
-        return tag != null ? tagList2ItemList(tag.getTagList(name, 10)) : new ArrayList<>();
+
+    public static ItemStack[] getItemsFromTag(String name, NBTTagCompound tag) {
+        return (tag == null) ? null : tagList2Items(tag.getTagList(name, 10));
     }
 
-    public static void setItemsToTag(String name, List<ItemStack> items, NBTTagCompound tag) {
-        if (tag == null) tag = new NBTTagCompound();
-        tag.setTag(name, items2TagList(items));
+
+    public static void setItemsToTag(String name, ItemStack[] items, NBTTagCompound tag) {
+        if (tag == null)
+            tag = new NBTTagCompound();
+        tag.setTag(name, (NBTBase) items2TagList(items));
     }
+
 
     public static List<ItemStack> tagList2ItemList(NBTTagList tagList) {
-        List<ItemStack> res = new ArrayList<>();
-        if (tagList == null) return res;
+        if (tagList == null) return null;
 
-        for(int i = 0; i < tagList.tagCount(); ++i) {
+        List<ItemStack> res = new ArrayList<ItemStack>();
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tagCompound1 = tagList.getCompoundTagAt(i);
             short byte0 = tagCompound1.getShort("Slot");
-
-            while(res.size() <= byte0) {
-                res.add(ItemStack.EMPTY);
+            while (res.size() <= byte0) {
+                res.add(null);
             }
-
-            res.set(byte0, new ItemStack(tagCompound1));
+            res.set(byte0, ItemStack.loadItemStackFromNBT(tagCompound1));
         }
-
         return res;
     }
 
+
     public static ItemStack[] tagList2Items(NBTTagList tagList) {
-        return tagList2ItemList(tagList).toArray(new ItemStack[0]);
+        List<ItemStack> list = tagList2ItemList(tagList);
+        return (list == null) ? null : list.<ItemStack>toArray(new ItemStack[0]);
     }
 
-    public static void tagList2Items(NBTTagList tagList, List<ItemStack> itemstacks) {
-        if (tagList == null || itemstacks == null) return;
 
-        for(int i = 0; i < tagList.tagCount(); ++i) {
+    public static void tagList2Items(NBTTagList tagList, ItemStack[] itemstacks) {
+        if (tagList == null || itemstacks == null)
+            return;
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tagCompound1 = tagList.getCompoundTagAt(i);
             short byte0 = tagCompound1.getShort("Slot");
-            if (byte0 >= 0 && byte0 < itemstacks.size())
-                itemstacks.set(byte0, new ItemStack(tagCompound1));
+            if (byte0 >= 0 && byte0 < itemstacks.length) {
+                itemstacks[byte0] = ItemStack.loadItemStackFromNBT(tagCompound1);
+            }
         }
     }
 
-    public static NBTTagList items2TagList(List<ItemStack> items) {
-        NBTTagList tagList = new NBTTagList();
-        if (items == null) return tagList;
 
-        for(int i = 0; i < items.size(); ++i) {
-            if (items.get(i) != null) {
-                NBTTagCompound tagCompound1 = new NBTTagCompound();
-                tagCompound1.setShort("Slot", (short) i);
-                items.get(i).writeToNBT(tagCompound1);
-                tagList.appendTag(tagCompound1);
+    public static NBTTagList items2TagList(ItemStack[] items) {
+        NBTTagList tagList = new NBTTagList();
+        if (items != null) {
+            for (int i = 0; i < items.length; i++) {
+                if (items[i] != null) {
+                    NBTTagCompound tagCompound1 = new NBTTagCompound();
+                    tagCompound1.setShort("Slot", (short) i);
+                    items[i].writeToNBT(tagCompound1);
+                    tagList.appendTag((NBTBase) tagCompound1);
+                }
             }
         }
-
         return tagList;
     }
 }
+
+

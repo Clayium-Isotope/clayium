@@ -2,18 +2,18 @@ package mods.clayium.util.crafting;
 
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
-
 public interface IItemPattern {
-    boolean match(ItemStack var1, boolean var2);
+    boolean match(ItemStack paramItemStack, boolean paramBoolean);
 
-    boolean hasIntersection(IItemPattern var1, boolean var2);
+    boolean hasIntersection(IItemPattern paramIItemPattern, boolean paramBoolean);
 
-    int getStackSize(ItemStack var1);
+    int getStackSize(ItemStack paramItemStack);
 
-    List<ItemStack> toItemStacks();
+    ItemStack[] toItemStacks();
 
     ItemStack isSimple();
 
     boolean isAvailable();
 }
+
+
