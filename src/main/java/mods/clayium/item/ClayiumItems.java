@@ -1,12 +1,20 @@
 package mods.clayium.item;
 
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.*;
+import mods.clayium.item.common.ClayPipingTools;
+import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.common.ItemDamaged;
+import mods.clayium.item.common.ItemTiered;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClayiumItems {
     public static void initItems() {
@@ -108,13 +116,24 @@ public class ClayiumItems {
 
     private static final List<Item> items = new ArrayList<>();
 
-    public static boolean isItemTool(ItemStack itemstack) {
+    public static boolean isWorkTableTool(ItemStack itemstack) {
         for (Item item : new Item[]{
                 ClayiumItems.rollingPin,
                 ClayiumItems.slicer,
                 ClayiumItems.spatula
         }) {
             if (itemstack.getItem() == item) return true;
+        }
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static boolean hasPipingTools(EntityPlayer player) {
+        ItemStack main = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+        ItemStack off = player.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+
+        for (Item item : new Item[] { IOTool, pipingTool, memoryCard }) {
+            if (main.getItem() == item || off.getItem() == item) return true;
         }
         return false;
     }

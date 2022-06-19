@@ -1,8 +1,8 @@
 package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.ClayContainer.TileEntitySidedClayContainer;
 import mods.clayium.machine.common.IClicker;
-import mods.clayium.machine.common.TileEntitySidedClayContainer;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.entity.player.EntityPlayer;
@@ -106,7 +106,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
             return false;
         }
 
-        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, machineInventory, method, 0);
+        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, containerItemStacks, method, 0);
         if (recipe.getResult().getResults().get(0).isEmpty()) {
             return false;
         }
@@ -169,12 +169,12 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
         ButtonProperty canPushButton = this.canPushButton(button);
         if (canPushButton == ButtonProperty.FAILURE) return;
 
-        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, this.machineInventory, button, 0);
+        RecipeElement recipe = ClayiumRecipes.getRecipeElement(ClayiumRecipes.clayWorkTable, this.containerItemStacks, button, 0);
 
         if (!recipe.getCondition().getMaterials().get(ClayWorkTableSlots.TOOL.ordinal()).isEmpty()
                 && !this.getStackInSlot(ClayWorkTableSlots.TOOL).isEmpty()
         ) {
-            this.machineInventory.set(ClayWorkTableSlots.TOOL.ordinal(),
+            this.containerItemStacks.set(ClayWorkTableSlots.TOOL.ordinal(),
                     ForgeHooks.getContainerItem(this.getStackInSlot(ClayWorkTableSlots.TOOL)));
         }
 
@@ -195,14 +195,14 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
                 this.getStackInSlot(ClayWorkTableSlots.MATERIAL).shrink(recipe.getCondition().getMaterials().get(ClayWorkTableSlots.MATERIAL.ordinal()).getCount());
 
                 if (this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isEmpty()) {
-                    this.machineInventory.set(ClayWorkTableSlots.PRODUCT.ordinal(), product.copy());
+                    this.containerItemStacks.set(ClayWorkTableSlots.PRODUCT.ordinal(), product.copy());
                 } else if (this.getStackInSlot(ClayWorkTableSlots.PRODUCT).isItemEqual(product)) {
                     this.getStackInSlot(ClayWorkTableSlots.PRODUCT).grow(product.getCount());
                 }
 
                 if (!change.isEmpty()) {
                     if (this.getStackInSlot(ClayWorkTableSlots.CHANGE).isEmpty()) {
-                        this.machineInventory.set(ClayWorkTableSlots.CHANGE.ordinal(), change.copy());
+                        this.containerItemStacks.set(ClayWorkTableSlots.CHANGE.ordinal(), change.copy());
                     } else if (this.getStackInSlot(ClayWorkTableSlots.CHANGE).isItemEqual(change)) {
                         this.getStackInSlot(ClayWorkTableSlots.CHANGE).grow(change.getCount());
                     }
@@ -227,7 +227,7 @@ public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implem
     @Override
     public boolean isItemValidForSlot(int index, ItemStack itemstack) {
         if (index == 0) return true;
-        if (index == 1) return ClayiumItems.isItemTool(itemstack);
+        if (index == 1) return ClayiumItems.isWorkTableTool(itemstack);
         return false;
     }
 

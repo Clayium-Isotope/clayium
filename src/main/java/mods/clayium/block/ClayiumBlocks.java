@@ -4,15 +4,14 @@ import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.BlockTierTied;
 import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.common.MaterialBlock;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.machine.ClayContainerTest.ClayContainerTest;
 import mods.clayium.machine.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumDyeColor;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +94,8 @@ public class ClayiumBlocks {
             siliconeColored.add(new SiliconeColored(color));
         }
         blocks.addAll(siliconeColored);
+
+        blocks.add(ccTest);
     }
 
     public static List<Block> getBlocks() {
@@ -127,6 +128,8 @@ public class ClayiumBlocks {
     public static final BlockDamaged CAReactorHull = new BlockDamaged();
     public static final BlockDamaged materialBlock = new BlockDamaged();
     public static final BlockDamaged siliconeColored = new BlockDamaged();
+
+    public static final Block ccTest = new ClayContainerTest();
 
     private static final List<Block> blocks = new ArrayList<>();
 }

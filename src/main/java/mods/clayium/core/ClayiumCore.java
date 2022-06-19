@@ -6,6 +6,8 @@ import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumShapedMaterial;
+import mods.clayium.machine.ClayContainer.ClayContainerTESR;
+import mods.clayium.machine.ClayContainerTest.TEClayContainerTest;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
@@ -23,6 +25,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -111,6 +114,7 @@ public class ClayiumCore {
         GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));
         GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_crafting_table"));
         GameRegistry.registerTileEntity(TileEntityClayiumMachine.class, new ResourceLocation(ClayiumCore.ModId, "machine"));
+        ClientRegistry.registerTileEntity(TEClayContainerTest.class, "clayium:cc_test", new ClayContainerTESR());
 
 //        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
 //        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);

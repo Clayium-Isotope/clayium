@@ -1,7 +1,7 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
-import mods.clayium.machine.common.TileEntityClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;

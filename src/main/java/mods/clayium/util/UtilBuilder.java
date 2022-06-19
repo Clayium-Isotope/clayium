@@ -1,6 +1,6 @@
 package mods.clayium.util;
 
-import mods.clayium.block.ClayContainer;
+import mods.clayium.machine.ClayContainer.ClayContainer;
 import net.minecraft.block.Block;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

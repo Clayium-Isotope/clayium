@@ -1,6 +1,6 @@
 package mods.clayium.block;
 
-import mods.clayium.machine.common.TileEntityClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 

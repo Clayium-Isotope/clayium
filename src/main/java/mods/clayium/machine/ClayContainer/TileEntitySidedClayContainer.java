@@ -1,4 +1,4 @@
-package mods.clayium.machine.common;
+package mods.clayium.machine.ClayContainer;
 
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
