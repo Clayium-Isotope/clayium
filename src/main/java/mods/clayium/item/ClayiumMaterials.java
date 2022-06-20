@@ -12,7 +12,9 @@ import mods.clayium.util.ODHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -91,10 +93,10 @@ public class ClayiumMaterials {
         add(ClayiumMaterial.advClay, ClayiumShape.plate, 4, true);
         add(ClayiumMaterial.advClay, ClayiumShape.largePlate, 4, true);
 
-        add(ClayiumMaterial.clay, ClayiumShape.dust, 1, true);
-        add(ClayiumMaterial.denseClay, ClayiumShape.dust, 2, true);
+//        add(ClayiumMaterial.clay, ClayiumShape.dust, 1, true);
+//        add(ClayiumMaterial.denseClay, ClayiumShape.dust, 2, true);
         addOD(ClayiumMaterial.indClay, ClayiumShape.dust, 3, true);
-        addOD(ClayiumMaterial.advClay, ClayiumShape.dust, 2, true);
+        addOD(ClayiumMaterial.advClay, ClayiumShape.dust, 4, true);
         addOD(ClayiumMaterial.engClay, ClayiumShape.dust, 3, true);
         addOD(ClayiumMaterial.excClay, ClayiumShape.dust, 7, true);
 
@@ -286,7 +288,8 @@ public class ClayiumMaterials {
         }
 
         materialShapeMap.get(material).putIfAbsent(shape, I(new ClayiumShapedMaterial(material, shape, tier, !hasUniqueIcon)));
-        putMap(material, shape);
+        if (material != ClayiumMaterial.clay && material != ClayiumMaterial.denseClay)
+            putMap(material, shape);
     }
 
     private static void addOD(ClayiumMaterial material, ClayiumShape shape, boolean hasUniqueIcon) {

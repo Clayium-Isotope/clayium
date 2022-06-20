@@ -42,7 +42,7 @@ public enum ClayiumShape {
     public static final List<ClayiumShape> clayPartShapes = Arrays.asList(
             plate, stick, shortStick, ring, smallRing, gear, blade, needle, disc, smallDisc,
             cylinder, pipe, largeBall, largePlate, grindingHead, bearing, spindle, cuttingHead, waterWheel, block,
-            ball);
+            ball, dust);
 
     public static final List<ClayiumShape> metalPartShapes = Arrays.asList(
             plate, largePlate, block, dust, ingot, gem
