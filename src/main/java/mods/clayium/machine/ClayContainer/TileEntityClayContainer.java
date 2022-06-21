@@ -1,7 +1,6 @@
 package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.block.tile.TileGeneric;
-import mods.clayium.item.ClayiumItems;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -16,10 +15,12 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
-public abstract class TileEntityClayContainer extends TileGeneric implements ISidedInventory {
+public class TileEntityClayContainer extends TileGeneric implements ISidedInventory {
     protected NonNullList<ItemStack> containerItemStacks;
     protected String customName;
     protected int clayEnergyStorageSize = 1;
@@ -34,6 +35,7 @@ public abstract class TileEntityClayContainer extends TileGeneric implements ISi
         put(EnumFacing.WEST,  -1);
         put(EnumFacing.EAST,  -1);
     }};
+    public List<int[]> listSlotsInsert = Arrays.asList(new int[] { 0 });
     public Map<EnumFacing, Integer> extractRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
         put(EnumFacing.UP,    -1);
         put(EnumFacing.DOWN,  -1);
@@ -42,6 +44,7 @@ public abstract class TileEntityClayContainer extends TileGeneric implements ISi
         put(EnumFacing.WEST,  -1);
         put(EnumFacing.EAST,  -1);
     }};
+    public List<int[]> listSlotsExtract = Arrays.asList(new int[] { 0 });
     public EnumFacing cePort;
 
     protected TileEntityClayContainer(int invSize) {
@@ -174,26 +177,6 @@ public abstract class TileEntityClayContainer extends TileGeneric implements ISi
         return compound;
     }
 
-    // TODO: Divide to each Item#onItemUse()
-    @Override
-    public void useItemFromSide(ItemStack itemStack, EntityPlayer player, EnumFacing side, int mode) {
-        if (itemStack.getItem() == ClayiumItems.spatula) {
-            this.isPipe = !this.isPipe;
-            this.world.addBlockEvent(this.pos, this.getBlockType(), 0, 0);
-        }
-
-        if (itemStack.getItem() == ClayiumItems.rollingPin) {
-            this.insertRoutes.replace(side, this.insertRoutes.get(side) == 0 ? -1 : 0);
-            player.sendMessage(new TextComponentString("Changed " + side.getName() + " Insert route to: " + this.insertRoutes.get(side)));
-        }
-        if (itemStack.getItem() == ClayiumItems.slicer) {
-            this.extractRoutes.replace(side, this.extractRoutes.get(side) == 0 ? -1 : 0);
-            player.sendMessage(new TextComponentString("Changed " + side.getName() + " Extract route to: " + this.extractRoutes.get(side)));
-        }
-
-        updateEntity();
-    }
-
     @Override
     public void onLoad() {
         this.world.addBlockEvent(this.pos, this.getBlockType(), 0, 0);
@@ -221,8 +204,45 @@ public abstract class TileEntityClayContainer extends TileGeneric implements ISi
         return isPipe;
     }
 
+    public void reverseIsPipe() {
+        this.isPipe = !this.isPipe;
+    }
+
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         return false;
+    }
+
+    @Override
+    public int getField(int id) {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value) {}
+
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return true;
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return true;
+    }
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing side) {
+        return new int[0];
     }
 }

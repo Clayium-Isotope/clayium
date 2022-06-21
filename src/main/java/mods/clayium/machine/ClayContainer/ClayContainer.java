@@ -5,6 +5,7 @@ package mods.clayium.machine.ClayContainer;
 import com.google.common.collect.ImmutableMap;
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.IModifyCC;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -79,15 +80,8 @@ public abstract class ClayContainer extends BlockContainer {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) return true;
 
-        if (playerIn.isSneaking()) return false;
-
-        TileGeneric te = (TileGeneric) worldIn.getTileEntity(pos);
-
         for (ItemStack stack : playerIn.getHeldEquipment()) {
-            if (te.isUsable(stack, playerIn, facing, hitX, hitY, hitZ)) {
-                te.useItem(stack, playerIn, facing, hitX, hitY, hitZ);
-                return true;
-            }
+            if (stack.getItem() instanceof IModifyCC) return false;
         }
 
         return onBlockRightClicked(worldIn, pos, playerIn, facing, hitX, hitY, hitZ);
