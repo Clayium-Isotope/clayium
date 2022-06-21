@@ -83,23 +83,11 @@ public class ClayiumItems {
     /* ...Misc */
 
     /* Tools... */
-    public static final Item rollingPin = new ClayiumItem("clay_rolling_pin") {{
-        setMaxDamage(60);
-        setMaxStackSize(1);
-        setContainerItem(this);
-    }};
+    public static final Item rollingPin = new ClayRollingPin();
     public static final Item rawRollingPin = new ClayiumItem("raw_clay_rolling_pin");
-    public static final Item slicer = new ClayiumItem("clay_slicer") {{
-        setMaxDamage(60);
-        setMaxStackSize(1);
-        setContainerItem(this);
-    }};
+    public static final Item slicer = new ClaySlicer();
     public static final Item rawSlicer = new ClayiumItem("raw_clay_slicer");
-    public static final Item spatula = new ClayiumItem("clay_spatula") {{
-        setMaxDamage(36);
-        setMaxStackSize(1);
-        setContainerItem(this);
-    }};
+    public static final Item spatula = new ClaySpatula();
     public static final Item rawSpatula = new ClayiumItem("raw_clay_spatula");
 
     public static final Item IOTool = new ClayPipingTools("io_tool");

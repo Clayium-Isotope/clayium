@@ -1,7 +1,7 @@
 package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.ClayContainer.TileEntitySidedClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IClicker;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
@@ -16,7 +16,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayWorkTable extends TileEntitySidedClayContainer implements IClicker {
+public class TileEntityClayWorkTable extends TileEntityClayContainer implements IClicker {
     public enum ClayWorkTableSlots {
         MATERIAL,
         TOOL,
