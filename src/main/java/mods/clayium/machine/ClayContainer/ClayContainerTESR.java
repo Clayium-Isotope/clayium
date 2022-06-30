@@ -20,15 +20,11 @@ import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayContainer> {
+    private final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+    private final ModelClayContainer modelCC = new ModelClayContainer(buffer);
+
     @Override
     public void render(TileEntityClayContainer te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
-
-        ModelClayContainer modelCC = new ModelClayContainer(buffer);
-
-        // TODO render breaking progress
-
         if (destroyStage >= 0) {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(GL11.GL_TEXTURE);
