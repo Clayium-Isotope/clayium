@@ -1,7 +1,7 @@
 package mods.clayium.machine.ClayCraftingTable;
 
+import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.SlotWithTexture;
-import mods.clayium.machine.common.ContainerClayMachineTemp;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -9,127 +9,123 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-public class ContainerClayCraftingTable extends ContainerClayMachineTemp {
+public class ContainerClayCraftingTable extends ContainerTemp {
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public InventoryCraftResult craftResult = new InventoryCraftResult();
-    private final World world;
-    private final BlockPos pos;
-    private final EntityPlayer player;
     private final AccessibleTile<TileEntityClayCraftingTable> tileTable;
-    public AccessibleTile<TileEntityChest> tileChest = null;
+    private AccessibleTile<TileEntityChest> tileChest = null;
     private final int resultSlot;
     private final int machineSlot;
-    public int machineGuiHeight;
 
-    public ContainerClayCraftingTable(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
-        super((IInventory) worldIn.getTileEntity(posIn));
+    public ContainerClayCraftingTable(InventoryPlayer playerIn, TileEntityClayCraftingTable tile) {
+        super(playerIn, tile);
 
-        world = worldIn;
-        pos = posIn;
-        player = playerInventory.player;
-        tileTable = new AccessibleTile<>((TileEntityClayCraftingTable) tileEntity, 0, 3, 3, 30, 17);
+        this.tileTable = new AccessibleTile<>((TileEntityClayCraftingTable) this.tileEntity, 0, 3, 3, 30, 17);
 
         for (EnumFacing facing : EnumFacing.VALUES) {
-            TileEntity rawTile = worldIn.getTileEntity(posIn.offset(facing));
+            TileEntity rawTile = this.tileTable.getInventory().getWorld().getTileEntity(this.tileTable.getInventory().getPos().offset(facing));
             if (rawTile instanceof TileEntityChest) {
-                tileChest = new AccessibleTile<>((TileEntityChest) rawTile, 0, 9, 3, 8, 75);
+                this.tileChest = new AccessibleTile<>((TileEntityChest) rawTile, 0, 9, 3, 8, 75);
                 break;
             }
         }
 
-        int guiY = 19 + tileTable.getHeight() * tileTable.getY();
+        int guiY = 19 + this.tileTable.getHeight() * this.tileTable.getY();
 
-        if (tileChest != null) {
-            guiY += 5 + tileTable.getHeight() * tileTable.getY();
+        if (this.tileChest != null) {
+            guiY += 5 + this.tileTable.getHeight() * this.tileTable.getY();
         }
 
         guiY += 5;
 
-        machineGuiHeight = Math.max(guiY, 72);
+        this.machineGuiSizeY = Math.max(guiY, 72);
 
-        addSlotToContainer(new SlotCrafting(playerInventory.player, craftMatrix, craftResult, 0, 124, 35));
+        addMachineSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 0, 124, 35));
 
-        resultSlot = inventorySlots.size();
+        this.resultSlot = this.inventorySlots.size(); // as of now
 
-        for(int y = 0; y < tileTable.getHeight(); ++y) {
-            for(int x = 0; x < tileTable.getWidth(); ++x) {
-                addSlotToContainer(new SlotWithTexture(craftMatrix, tileTable.getStart() + x + y * tileTable.getWidth(), tileTable.getX() + x * 18, tileTable.getY() + y * 18, this));
+        for(int y = 0; y < this.tileTable.getHeight(); ++y) {
+            for(int x = 0; x < this.tileTable.getWidth(); ++x) {
+                addSlotToContainer(new SlotWithTexture(this.craftMatrix, this.tileTable.getStart() + x + y * this.tileTable.getWidth(), this.tileTable.getX() + x * 18, this.tileTable.getY() + y * 18, this));
             }
         }
 
-        machineSlot = inventorySlots.size();
+        this.machineSlot = this.inventorySlots.size(); // as of now
 
-        if (tileChest != null) {
-            for(int y = 0; y < tileChest.getHeight(); ++y) {
-                for(int x = 0; x < tileChest.getWidth(); ++x) {
-                    addSlotToContainer(new SlotWithTexture(tileChest.getInventory(), tileChest.getStart() + x + y * tileChest.getWidth(), tileChest.getX() + x * 18, tileChest.getY() + y * 18, this));
+        if (this.tileChest != null) {
+            for(int y = 0; y < this.tileChest.getHeight(); ++y) {
+                for(int x = 0; x < this.tileChest.getWidth(); ++x) {
+                    addSlotToContainer(new SlotWithTexture(this.tileChest.getInventory(), this.tileChest.getStart() + x + y * this.tileChest.getWidth(), this.tileChest.getX() + x * 18, this.tileChest.getY() + y * 18, this));
                 }
             }
         }
 
-        sizeInventory = inventorySlots.size();
+        this.playerSlotIndex = this.inventorySlots.size(); // as of now
 
-        setupPlayerSlots(playerInventory, machineGuiHeight);
+        setupPlayerSlots(player, this.machineGuiSizeY);
     }
 
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
-        slotChangedCraftingGrid(world, player, craftMatrix, craftResult);
+        slotChangedCraftingGrid(this.tileTable.getInventory().getWorld(), this.player.player, this.craftMatrix, this.craftResult);
     }
 
     @Override
     public void onContainerClosed(EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
 
-        if (!world.isRemote) {
-            clearContainer(playerIn, world, craftMatrix);
-            tileChest = null;
+        if (!this.tileTable.getInventory().getWorld().isRemote) {
+            clearContainer(playerIn, this.tileTable.getInventory().getWorld(), this.craftMatrix);
+            this.tileChest = null;
         }
     }
 
     @Override
-    public boolean canTransferToMachineInventory(ItemStack itemStackIn) {
+    public void setMachineInventorySlots(InventoryPlayer player) {
+
+    }
+
+    @Override
+    public boolean canTransferToMachineInventory(ItemStack itemStack) {
         return true;
     }
 
     @Override
-    public boolean transferStackToMachineInventory(ItemStack itemStackIn) {
-        return mergeItemStack(itemStackIn, machineSlot, sizeInventory, false)
-                || mergeItemStack(itemStackIn, resultSlot, machineSlot, false);
+    public boolean transferStackToMachineInventory(ItemStack itemStack) {
+        return mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, false)
+                || mergeItemStack(itemStack, this.resultSlot, this.machineSlot, false);
     }
 
     @Override
-    public boolean transferStackFromMachineInventory(ItemStack itemStackIn, int index) {
-        if (index == resultSlot) {
-            int stackSize = canMergeItemStack(itemStackIn, machineSlot, sizeInventory, true);
+    public boolean transferStackFromMachineInventory(ItemStack itemStack, int index) {
+        if (index == this.resultSlot) {
+            int stackSize = canMergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, true);
 
             if (stackSize == 0) {
-                return mergeItemStack(itemStackIn, machineSlot, sizeInventory, true);
+                return mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, true);
             } else {
-                ItemStack _itemStack = itemStackIn.copy();
+                ItemStack _itemStack = itemStack.copy();
                 _itemStack.setCount(stackSize);
 
-                if (canMergeItemStack(_itemStack, sizeInventory, sizeInventory + 36, true) == 0) {
-                    mergeItemStack(itemStackIn, machineSlot, sizeInventory, true);
-                    mergeItemStack(itemStackIn, sizeInventory, sizeInventory + 36, true);
+                if (canMergeItemStack(_itemStack, this.playerSlotIndex, this.playerSlotIndex + 36, true) == 0) {
+                    mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, true);
+                    mergeItemStack(itemStack, this.playerSlotIndex, this.playerSlotIndex + 36, true);
                     return true;
                 }
             }
             return false;
         } else {
-            if (index >= resultSlot && index < machineSlot) {
-                if (mergeItemStack(itemStackIn, 0, machineSlot, false)) {
+            if (index >= this.resultSlot && index < this.machineSlot) {
+                if (mergeItemStack(itemStack, 0, this.machineSlot, false)) {
                     return true;
                 }
-            } else if (index < machineSlot
-                    && mergeItemStack(itemStackIn, machineSlot, resultSlot, false)) {
+            } else if (index < this.machineSlot
+                    && mergeItemStack(itemStack, this.machineSlot, this.resultSlot, false)) {
                 return true;
             }
 
-            return transferStackToPlayerInventory(itemStackIn, false);
+            return transferStackToPlayerInventory(itemStack, false);
         }
     }
 

@@ -21,8 +21,9 @@ public class ClaySpatula extends ClayiumItem implements IModifyCC {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
-            ((TileEntityClayContainer) worldIn.getTileEntity(pos)).reverseIsPipe();
-            worldIn.addBlockEvent(pos, worldIn.getBlockState(pos).getBlock(), 0, 0);
+            TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
+            tecc.reverseIsPipe();
+            tecc.updateEntity();
 
             return EnumActionResult.SUCCESS;
         }

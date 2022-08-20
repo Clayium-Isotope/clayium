@@ -1,29 +1,34 @@
-package mods.clayium.machine.common;
+package mods.clayium.gui;
 
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.SlotWithTexture;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiClayMachineTemp extends GuiContainer {
-    protected final TileEntity tile;
-    protected final Block block;
-    protected final ContainerClayMachineTemp container;
+public abstract class GuiTemp extends GuiContainer {
+    protected final IInventory tile;
+    protected final ContainerTemp container;
     protected final int machineHeight;
     protected ResourceLocation coverTexture;
 
-    public GuiClayMachineTemp(ContainerClayMachineTemp container, TileEntity tile, Block block, int height) {
+    public GuiTemp(ContainerTemp container) {
         super(container);
-        this.tile = tile;
-        this.block = block;
+
+        this.tile = container.tileEntity;
         this.container = container;
         xSize = 176;
-        ySize = height + 94;
-        machineHeight = height;
+        ySize = this.container.machineGuiSizeY + 94;
+        machineHeight = this.container.machineGuiSizeY;
     }
+
+    @Override
+    public void initGui() {
+        super.initGui();
+        addButtons();
+    }
+
+    protected void addButtons() {}
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -34,15 +39,12 @@ public class GuiClayMachineTemp extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        fontRenderer.drawString(tile.getDisplayName().getUnformattedText(), 6, 6, 4210752);
+        fontRenderer.drawString(this.container.tileEntity.getDisplayName().getUnformattedText(), 6, 6, 4210752);
         fontRenderer.drawString(I18n.format("container.inventory"), 8, machineHeight, 4210752);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        guiLeft = (width - xSize) / 2;
-        guiTop = (height - ySize) / 2;
-
         mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/back.png"));
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, machineHeight);
         mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/playerinventory.png"));

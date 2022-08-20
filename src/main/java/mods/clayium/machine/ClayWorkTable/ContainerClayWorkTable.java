@@ -1,10 +1,10 @@
 package mods.clayium.machine.ClayWorkTable;
 
+import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable.ClayWorkTableSlots;
-import mods.clayium.machine.common.ContainerClayMachineTemp;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,40 +12,11 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerClayWorkTable extends ContainerClayMachineTemp {
+public class ContainerClayWorkTable extends ContainerTemp {
     private int kneadTime, kneadedTimes, cookingMethod;
 
     public ContainerClayWorkTable(InventoryPlayer player, TileEntityClayWorkTable tileEntity) {
-        super(tileEntity);
-
-        sizeInventory = 4;
-
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable, stack, ItemStack.EMPTY);
-            }
-        });
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return ClayiumItems.isWorkTableTool(stack);
-            }
-        });
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 142, 29, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return false;
-            }
-        });
-        this.addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 142, 54) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return false;
-            }
-        });
-
-        setupPlayerSlots(player);
+        super(player, tileEntity);
     }
 
     @Override
@@ -72,6 +43,52 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
     }
 
     @Override
+    public void setMachineInventorySlots(InventoryPlayer player) {
+        addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable, stack, ItemStack.EMPTY);
+            }
+        });
+
+        addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return ClayiumItems.isWorkTableTool(stack);
+            }
+        });
+
+        addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.PRODUCT.ordinal(), 142, 29, RectangleTexture.LargeSlotTexture) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return false;
+            }
+        });
+
+        addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.CHANGE.ordinal(), 142, 54) {
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean canTransferToMachineInventory(ItemStack itemStack) {
+        return true;
+    }
+
+    @Override
+    public boolean transferStackToMachineInventory(ItemStack itemStack) {
+        return true;
+    }
+
+    @Override
+    public boolean transferStackFromMachineInventory(ItemStack itemStack, int index) {
+        return true;
+    }
+
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
@@ -85,13 +102,13 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
 
             // container[result, change] -> inventory
             if (index == ClayWorkTableSlots.PRODUCT.ordinal() || index == ClayWorkTableSlots.CHANGE.ordinal()) {
-                if (!this.mergeItemStack(itemstack1, sizeInventory, sizeInventory + 36, true)) {
+                if (!this.mergeItemStack(itemstack1, this.playerSlotIndex, this.playerSlotIndex + 36, true)) {
                     return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             } else {
-                if (index >= sizeInventory) { // belongings ->
+                if (index >= this.playerSlotIndex) { // belongings ->
                     if (ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable,
                             itemstack1, ((TileEntityClayWorkTable) tileEntity).getStackInSlot(ClayWorkTableSlots.TOOL))
                     ) { // -> container[material]
@@ -103,18 +120,18 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
                             return ItemStack.EMPTY;
                         }
                     } else { // belongings -> belongings
-                        if (index < sizeInventory + 27) { // inventory -> hotbar
-                            if (!this.mergeItemStack(itemstack1, sizeInventory + 27, sizeInventory + 36, false)) {
+                        if (index < this.playerSlotIndex + 27) { // inventory -> hotbar
+                            if (!this.mergeItemStack(itemstack1, this.playerSlotIndex + 27, this.playerSlotIndex + 36, false)) {
                                 return ItemStack.EMPTY;
                             }
-                        } else if (index < sizeInventory + 36) { // hotbar -> inventory
-                            if (!this.mergeItemStack(itemstack1, sizeInventory, sizeInventory + 27, false)) {
+                        } else if (index < this.playerSlotIndex + 36) { // hotbar -> inventory
+                            if (!this.mergeItemStack(itemstack1, this.playerSlotIndex, this.playerSlotIndex + 27, false)) {
                                 return ItemStack.EMPTY;
                             }
                         }
                     }
                 } else { // container -> belongings
-                    if (!this.mergeItemStack(itemstack1, sizeInventory, sizeInventory + 36, false)) {
+                    if (!this.mergeItemStack(itemstack1, this.playerSlotIndex, this.playerSlotIndex + 36, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
@@ -134,11 +151,5 @@ public class ContainerClayWorkTable extends ContainerClayMachineTemp {
         }
 
         return itemstack;
-    }
-
-    @Override
-    public boolean enchantItem(EntityPlayer playerIn, int id) {
-        ((TileEntityClayWorkTable) tileEntity).pushButton(playerIn, id);
-        return true;
     }
 }

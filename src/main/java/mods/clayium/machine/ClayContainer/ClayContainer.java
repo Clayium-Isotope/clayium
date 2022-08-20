@@ -18,7 +18,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -53,13 +56,22 @@ public abstract class ClayContainer extends BlockContainer {
         setUnlocalizedName(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
+        setDefaultState(this.getDefaultState()
+                .withProperty(ClayContainerState.ARM_UP, false)
+                .withProperty(ClayContainerState.ARM_DOWN, false)
+                .withProperty(ClayContainerState.ARM_NORTH, false)
+                .withProperty(ClayContainerState.ARM_SOUTH, false)
+                .withProperty(ClayContainerState.ARM_WEST, false)
+                .withProperty(ClayContainerState.ARM_EAST, false)
+                .withProperty(ClayContainerState.IS_PIPE, false)
+        );
     }
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-//        TileEntityClayContainer te = (TileEntityClayContainer) worldIn.getTileEntity(pos);
-//        assert te != null;
-//        InventoryHelper.dropInventoryItems(worldIn, pos, te);
+        if (worldIn.getTileEntity(pos) instanceof IInventory)
+            InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) worldIn.getTileEntity(pos));
+
         super.breakBlock(worldIn, pos, state);
     }
 
@@ -68,8 +80,8 @@ public abstract class ClayContainer extends BlockContainer {
         if (this.teClass == null) return null;
 
         try {
-            // TileEntity Constructor mustn't have any arguments
-            return teClass.newInstance();
+            // TileEntity Constructor must have int:TIER argument
+            return teClass.getDeclaredConstructor(int.class).newInstance(this.tier);
         } catch (Exception exception) {
             ClayiumCore.logger.catching(exception);
             return null;
@@ -80,11 +92,16 @@ public abstract class ClayContainer extends BlockContainer {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) return true;
 
-        for (ItemStack stack : playerIn.getHeldEquipment()) {
-            if (stack.getItem() instanceof IModifyCC) return false;
-        }
+        // the used item which implements IModifyCC calls own Item#onItemUse
+        if (playerIn.getHeldItem(hand).getItem() instanceof IModifyCC) return false;
 
-        return onBlockRightClicked(worldIn, pos, playerIn, facing, hitX, hitY, hitZ);
+        worldIn.markBlockRangeForRenderUpdate(pos, pos);
+
+        // for looks like incomplete
+        ClayContainerState.checkSurroundConnection(worldIn, pos, worldIn.getTileEntity(pos));
+
+        openGui(worldIn, pos, playerIn);
+        return true;
     }
 
     protected void openGui(int guiId, World world, BlockPos pos, EntityPlayer player) {
@@ -97,17 +114,8 @@ public abstract class ClayContainer extends BlockContainer {
             openGui(((ClayContainer) block).guiId, world, pos, player);
     }
 
-    protected boolean onBlockRightClicked(World world, BlockPos pos, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-        world.markBlockRangeForRenderUpdate(pos, pos);
-        world.addBlockEvent(pos, this, 0, 0);
-        openGui(world, pos, player);
-        return true;
-    }
-
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, state.withProperty(ClayContainerState.IS_PIPE, false), 2);
-
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
@@ -236,18 +244,19 @@ public abstract class ClayContainer extends BlockContainer {
 //            );
         }
 
-        public static boolean renderAsPipe(IBlockAccess world, BlockPos pos) {
-            if (!(world.getBlockState(pos).getBlock() instanceof ClayContainer)
-                    || !((ClayContainer) world.getBlockState(pos).getBlock()).canBePipe()) return false;
+        public static boolean renderAsPipe(@Nullable TileEntity tile) {
+            if (tile == null) return false;
 
-//            return world.getBlockState(pos).getValue(IS_PIPE);
-            return world.getTileEntity(pos) instanceof TileEntityClayContainer
-                    && ((TileEntityClayContainer) world.getTileEntity(pos)).isPipe();
+            if (!(tile.getBlockType() instanceof ClayContainer)
+                    || !((ClayContainer) tile.getBlockType()).canBePipe()) return false;
+
+            return tile instanceof TileEntityClayContainer
+                    && ((TileEntityClayContainer) tile).isPipe();
         }
 
         @Override
         public RayTraceResult collisionRayTrace(World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
-            if (!renderAsPipe(worldIn, pos)) {
+            if (!renderAsPipe(worldIn.getTileEntity(pos))) {
 //                super.setBlockBoundsBasedOnState((IBlockAccess) world, x, y, z);
                 this.aabb = fullBB();
                 return super.collisionRayTrace(worldIn, pos, start, end);
@@ -274,7 +283,7 @@ public abstract class ClayContainer extends BlockContainer {
 
         @Override
         public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185908_6_) {
-            if (!renderAsPipe(worldIn, pos)) {
+            if (!renderAsPipe(worldIn.getTileEntity(pos))) {
                 if (entityBox.intersects(fullBB().offset(pos))) {
                     collidingBoxes.add(fullBB().offset(pos));
                 }
@@ -314,18 +323,21 @@ public abstract class ClayContainer extends BlockContainer {
             return true;
         }
 
-        @Override
-        public boolean onBlockEventReceived(World worldIn, BlockPos pos, int id, int param) {
-            if (!(worldIn.getTileEntity(pos) instanceof TileEntityClayContainer))
-                return false;
+        public static IBlockState checkSurroundConnection(World worldIn, BlockPos pos, TileEntity here) {
+            if (!(worldIn.getBlockState(pos) instanceof ClayContainerState))
+                return worldIn.getBlockState(pos);
 
-            worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(IS_PIPE, renderAsPipe(worldIn, pos)));
-            updateSurroundConnection(worldIn, pos);
+            NBTTagCompound tag = here.writeToNBT(new NBTTagCompound());
+            worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(IS_PIPE, renderAsPipe(here)));
+            for (EnumFacing facing : EnumFacing.VALUES) {
+                changeConnectionState(worldIn, pos, here, facing);
+            }
+            worldIn.getTileEntity(pos).readFromNBT(tag);
 
-            return true;
+            return worldIn.getBlockState(pos);
         }
 
-        private IProperty<Boolean> getFacingProperty(EnumFacing facing) {
+        private static IProperty<Boolean> getFacingProperty(EnumFacing facing) {
             switch (facing) {
                 case UP: return ARM_UP;
                 case DOWN: return ARM_DOWN;
@@ -341,96 +353,32 @@ public abstract class ClayContainer extends BlockContainer {
             return this.getValue(getFacingProperty(facing));
         }
 
-        public void updateSurroundConnection(World world, BlockPos pos) {
-            for (EnumFacing facing : EnumFacing.VALUES) {
-                changeConnectionState(world, pos, facing);
-            }
-        }
-
-        public void changeConnectionState(World world, BlockPos pos, EnumFacing facing) {
+        public static void changeConnectionState(World world, BlockPos pos, TileEntity here, EnumFacing facing) {
             world.setBlockState(pos, world.getBlockState(pos).withProperty(
-                    getFacingProperty(facing), checkPipeConnection(world.getTileEntity(pos), world.getTileEntity(pos.offset(facing)), facing)
-            ));
-
-            world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+                    getFacingProperty(facing), checkPipeConnection(here, world.getTileEntity(pos.offset(facing)), facing)
+            ), 2);
         }
 
         @Override
         public void neighborChanged(World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-            changeConnectionState(worldIn, pos, EnumFacing.getFacingFromVector(fromPos.getX() - pos.getX(), fromPos.getY() - pos.getY(), fromPos.getZ() - pos.getZ()));
+            EnumFacing facing = EnumFacing.getFacingFromVector(fromPos.getX() - pos.getX(), fromPos.getY() - pos.getY(), fromPos.getZ() - pos.getZ());
+
+            NBTTagCompound tag = worldIn.getTileEntity(pos).writeToNBT(new NBTTagCompound());
+            changeConnectionState(worldIn, pos, worldIn.getTileEntity(pos), facing);
+            worldIn.getTileEntity(pos).readFromNBT(tag);
         }
 
-        public static boolean checkPipeConnection(@Nullable TileEntity te1, @Nullable TileEntity te2, EnumFacing direction) {
-            if (PipeConnectType.checkConnection(getConnectionAsImport(te1, direction, te2), getConnectionAsExport(te2, direction.getOpposite(), te1))) return true;
-            if (PipeConnectType.checkConnection(getConnectionAsExport(te1, direction, te2), getConnectionAsImport(te2, direction.getOpposite(), te1))) return true;
+        private static boolean checkPipeConnection(TileEntity myself, TileEntity customer, EnumFacing direction) {
+            if (!(myself instanceof TileEntityClayContainer) || !(customer instanceof IInventory)) return false;
 
-            return false;
-        }
+            if (((TileEntityClayContainer) myself).importRoutes.get(direction) != -1 || ((TileEntityClayContainer) myself).exportRoutes.get(direction) != -1)
+                return (((TileEntityClayContainer) myself).importRoutes.get(direction) != -1 && ((TileEntityClayContainer) myself).autoExtract)
+                    || (((TileEntityClayContainer) myself).exportRoutes.get(direction) != -1 && ((TileEntityClayContainer) myself).autoInsert);
 
-        public static PipeConnectType getConnectionAsImport(TileEntity from, EnumFacing side, TileEntity to) {
-//            if (!(from instanceof net.minecraft.inventory.IInventory)) return PipeConnectType.Impossible;
-//
-//            if (from instanceof IEnergyConnection && ((IEnergyConnection) from).canConnectEnergy(side)
-//                    && to instanceof IEnergyConnection && ((IEnergyConnection) to).canConnectEnergy(side.getOpposite()))
-//                return PipeConnectType.Forced;
-//
-//            if (!(from instanceof TileEntityClayContainer)) return PipeConnectType.Trying;
-//            TileEntityClayContainer container = (TileEntityClayContainer) from;
-//
-//            if (container instanceof mods.clayium.block.tile.TileFluidTranslator && to instanceof net.minecraftforge.fluids.IFluidHandler) {
-//                if (!(to instanceof mods.clayium.block.tile.TileFluidTranslator)) {
-//                    return PipeConnectType.Forced;
-//                }
-//            }
-//            if (this.getBlock().insertRoutes.get(side) != -1) {
-//                return container.autoExtract ? PipeConnectType.Trying : PipeConnectType.NoIntention;
-//            }
-//            return (container instanceof mods.clayium.block.tile.TileClayBuffer
-//                    || container instanceof mods.clayium.block.tile.TileMultitrackBuffer
-//                    || container instanceof mods.clayium.block.tile.TileStorageContainer) ? PipeConnectType.NoIntention : PipeConnectType.Impossible;
-            if (from instanceof TileEntityClayContainer && to instanceof TileEntityClayContainer)
-                return PipeConnectType.Trying;
-            else return PipeConnectType.Impossible;
-        }
+            if (!(customer instanceof TileEntityClayContainer)) return false;
 
-        public static PipeConnectType getConnectionAsExport(TileEntity from, EnumFacing side, TileEntity to) {
-//            if (!(from instanceof net.minecraft.inventory.IInventory)) return PipeConnectType.Impossible;
-//
-//            if (from instanceof IEnergyConnection && ((IEnergyConnection) from).canConnectEnergy(side)
-//                    && to instanceof IEnergyConnection && ((IEnergyConnection) to).canConnectEnergy(side.getOpposite()))
-//                return PipeConnectType.Forced;
-//
-//            if (!(from instanceof TileEntityClayContainer)) return PipeConnectType.Trying;
-//            TileEntityClayContainer container = (TileEntityClayContainer) from;
-//
-//            if (container instanceof mods.clayium.block.tile.TileFluidTranslator && to instanceof net.minecraftforge.fluids.IFluidHandler) {
-//                if (!(to instanceof mods.clayium.block.tile.TileFluidTranslator)) {
-//                    return PipeConnectType.Forced;
-//                }
-//            }
-//            if (this.getBlock().extractRoutes.get(side) != -1) {
-//                return container.autoInsert ? PipeConnectType.Trying : PipeConnectType.NoIntention;
-//            }
-//            return (container instanceof mods.clayium.block.tile.TileClayBuffer
-//                    || container instanceof mods.clayium.block.tile.TileMultitrackBuffer
-//                    || container instanceof mods.clayium.block.tile.TileStorageContainer) ? PipeConnectType.NoIntention : PipeConnectType.Impossible;
-
-            if (from instanceof TileEntityClayContainer && to instanceof TileEntityClayContainer)
-                return PipeConnectType.Trying;
-            else return PipeConnectType.Impossible;
-        }
-
-        private enum PipeConnectType {
-            Impossible,
-            NoIntention,
-            Trying,
-            Forced;
-
-            public static boolean checkConnection(PipeConnectType from, PipeConnectType to) {
-                if (from == Impossible || to == Impossible) return false;
-
-                return !(from == NoIntention && to == NoIntention);
-            }
+            return (((TileEntityClayContainer) customer).importRoutes.get(direction.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoExtract)
+                    || (((TileEntityClayContainer) customer).exportRoutes.get(direction.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoInsert);
         }
     }
 }

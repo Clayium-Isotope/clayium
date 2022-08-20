@@ -2,19 +2,17 @@ package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
-import mods.clayium.machine.common.GuiClayMachineTemp;
-import mods.clayium.machine.common.IClicker;
-import net.minecraft.block.Block;
+import mods.clayium.gui.GuiTemp;
+import mods.clayium.machine.common.IHasButton;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
 
 // TODO still added an integration between JEI. see from ordinal
-public class GuiClayWorkTable extends GuiClayMachineTemp {
-    public GuiClayWorkTable(InventoryPlayer invPlayer, TileEntityClayWorkTable tileEntity, Block block) {
-        super(new ContainerClayWorkTable(invPlayer, tileEntity), tileEntity, block, 72);
+public class GuiClayWorkTable extends GuiTemp {
+    public GuiClayWorkTable(ContainerClayWorkTable container) {
+        super(container);
     }
 
     @Override
@@ -26,7 +24,7 @@ public class GuiClayWorkTable extends GuiClayMachineTemp {
         drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 112, ((TileEntityClayWorkTable) tile).getCookProgressScaled(80), 16);
 
         for (GuiButton button : buttonList) {
-            button.enabled = ((IClicker) tile).isButtonEnable(button.id);
+            button.enabled = ((IHasButton) tile).isButtonEnable(button.id);
         }
     }
 

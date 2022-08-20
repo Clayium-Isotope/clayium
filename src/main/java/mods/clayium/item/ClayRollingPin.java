@@ -23,13 +23,13 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
-            tecc.insertRoutes.replace(facing, tecc.insertRoutes.get(facing) + 1);
+            tecc.importRoutes.replace(facing, tecc.importRoutes.get(facing) + 1);
 
-            if (tecc.listSlotsInsert.size() <= tecc.insertRoutes.get(facing)) {
-                tecc.insertRoutes.replace(facing, -1);
+            if (tecc.listSlotsImport.size() <= tecc.importRoutes.get(facing)) {
+                tecc.importRoutes.replace(facing, -1);
                 player.sendMessage(new TextComponentString("Disabled"));
             } else {
-                player.sendMessage(new TextComponentString("Set insert route " + tecc.insertRoutes.get(facing)));
+                player.sendMessage(new TextComponentString("Set insert route " + tecc.importRoutes.get(facing)));
             }
 
             tecc.updateEntity();
