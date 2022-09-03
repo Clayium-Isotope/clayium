@@ -32,6 +32,7 @@ public class UtilTransfer {
             if (luggage.isEmpty()) continue;
             if (sidedFrom != null && !sidedFrom.canExtractItem(outSlot, luggage, facing)) continue;
 
+            // some items exist on the slot wanna put
             if (luggage.isStackable()) {
                 for (int inSlot : inSlots) {
                     receiver = to.getStackInSlot(inSlot);
@@ -49,12 +50,17 @@ public class UtilTransfer {
                     luggage.shrink(moves);
 
                     if (luggage.isEmpty()) from.setInventorySlotContents(outSlot, ItemStack.EMPTY);
-                    if (transferred <= 0) return 0;
+                    if (transferred <= 0) {
+                        to.markDirty();
+                        from.markDirty();
+                        return 0;
+                    }
                     if (luggage.isEmpty()) break;
                 }
             }
 
-            if (luggage.getCount() > 0) {
+            // case: the slot wanna put is empty
+            if (!luggage.isEmpty()) {
                 for (int inSlot : inSlots) {
                     receiver = to.getStackInSlot(inSlot);
 
@@ -71,13 +77,17 @@ public class UtilTransfer {
                     luggage.shrink(stackSize);
 
                     if (luggage.isEmpty()) from.setInventorySlotContents(outSlot, ItemStack.EMPTY);
-                    if (transferred <= 0) return 0;
+                    if (transferred <= 0) {
+                        to.markDirty();
+                        from.markDirty();
+                        return 0;
+                    }
                     if (luggage.isEmpty()) break;
                 }
             }
         }
 
-//        if (transferred != maxTransfer)
+        if (transferred != maxTransfer)
         {
             to.markDirty();
             from.markDirty();
@@ -97,7 +107,7 @@ public class UtilTransfer {
         TileEntity from = to.getWorld().getTileEntity(to.getPos().offset(direction));
         if (!(to instanceof IInventory) || !(from instanceof IInventory)) return maxTransfer;
 
-        return transfer((IInventory) from, getSlots(from, direction.getOpposite()), direction, (IInventory) to, toSlots, maxTransfer);
+        return transfer((IInventory) from, getSlots(from, direction.getOpposite()), direction.getOpposite(), (IInventory) to, toSlots, maxTransfer);
     }
 
     private static int[] getSlots(TileEntity te, EnumFacing facing) {

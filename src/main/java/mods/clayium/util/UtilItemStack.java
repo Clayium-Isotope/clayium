@@ -7,7 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class UtilItemStack {
@@ -55,6 +57,10 @@ public class UtilItemStack {
     @Deprecated // Use ItemStack.areItemStackTagsEqual
     public static boolean areTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
+    }
+
+    public static boolean areKindEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        return ItemStack.areItemsEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
     public static boolean haveSameOD(ItemStack itemstack1, ItemStack itemstack2) {
