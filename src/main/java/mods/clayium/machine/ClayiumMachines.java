@@ -1,16 +1,20 @@
 package mods.clayium.machine;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayBuffer.ClayBuffer;
+import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
-import mods.clayium.machine.common.ClayMachineTempTiered;
 import net.minecraft.block.Block;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 public class ClayiumMachines {
-    public static final Map<EnumMachineKind, Map<TierPrefix, ClayMachineTempTiered>> machineMap = new EnumMap<>(EnumMachineKind.class);
+    public static final Map<EnumMachineKind, Map<TierPrefix, ClayContainer>> machineMap = new EnumMap<>(EnumMachineKind.class);
 
     public static void registerMachines() {
         add(EnumMachineKind.workTable, 0, new ClayWorkTable());
@@ -25,7 +29,7 @@ public class ClayiumMachines {
         add(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
     }
 
-    private static void add(EnumMachineKind kind, int tier, ClayMachineTempTiered block) {
+    private static void add(EnumMachineKind kind, int tier, ClayContainer block) {
         TierPrefix _tier = TierPrefix.get(tier);
 
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
@@ -58,7 +62,7 @@ public class ClayiumMachines {
     public static List<Block> getBlocks() {
         List<Block> res = new ArrayList<>();
 
-        for (Map<TierPrefix, ClayMachineTempTiered> kind : machineMap.values()) {
+        for (Map<TierPrefix, ClayContainer> kind : machineMap.values()) {
             res.addAll(kind.values());
         }
 

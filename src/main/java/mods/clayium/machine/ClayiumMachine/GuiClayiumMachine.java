@@ -2,24 +2,22 @@ package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
-import mods.clayium.machine.common.GuiClayMachineTemp;
-import mods.clayium.machine.common.IClicker;
+import mods.clayium.gui.GuiTemp;
+import mods.clayium.machine.common.IHasButton;
 import mods.clayium.util.UtilLocale;
-import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 // TODO still added an integration between JEI. see from ordinal
-public class GuiClayiumMachine extends GuiClayMachineTemp {
+public class GuiClayiumMachine extends GuiTemp {
     private final int progressBarSizeX = 22;
     private final int progressBarSizeY = 16;
     private final int progressBarPosX = (xSize - this.progressBarSizeX) / 2;
     private final int progressBarPosY = 35;
 
-    public GuiClayiumMachine(InventoryPlayer invPlayer, TileEntityClayiumMachine tile, Block block) {
-        super(new ContainerClayiumMachine(invPlayer, tile), tile, block, 72);
+    public GuiClayiumMachine(ContainerClayiumMachine container) {
+        super(container);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class GuiClayiumMachine extends GuiClayMachineTemp {
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 96, progressBarSizeX, progressBarSizeY);
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, ((TileEntityClayiumMachine) tile).getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
 
-        buttonList.get(0).enabled = ((TileEntityClayiumMachine) tile).canPushButton(0) == IClicker.ButtonProperty.PERMIT;
+        buttonList.get(0).enabled = ((TileEntityClayiumMachine) tile).canPushButton(0) == IHasButton.ButtonProperty.PERMIT;
     }
 
     @Override

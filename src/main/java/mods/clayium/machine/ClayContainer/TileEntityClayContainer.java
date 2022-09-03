@@ -60,9 +60,16 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     protected int autoInsertCount = 2;
     protected int autoExtractCount = 0;
 
-    protected TileEntityClayContainer(int invSize) {
-        super();
-        this.containerItemStacks = NonNullList.withSize(invSize, ItemStack.EMPTY);
+    public int clayEnergySlot = -1;
+    protected int tier;
+
+    public int getTier() {
+        return tier;
+    }
+
+    // TileEntityが作成されるとき、引数無しが適切なので、初期化の関数を分ける
+    public void initByTier(int tier) {
+        this.tier = tier;
     }
 
     public int getInventoryStackLimit() {
@@ -168,6 +175,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
         this.autoInsertCount = compound.getInteger("AutoInsertCount");
         this.autoExtractCount = compound.getInteger("AutoExtractCount");
+
+        initByTier(compound.getInteger("Tier"));
     }
 
     @Override
@@ -186,6 +195,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
         compound.setInteger("AutoInsertCount", this.autoInsertCount);
         compound.setInteger("AutoExtractCount", this.autoExtractCount);
+
+        compound.setInteger("Tier", this.tier);
 
         return compound;
     }

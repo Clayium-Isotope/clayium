@@ -1,30 +1,32 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.common.IClicker;
-import mods.clayium.machine.common.TileEntitySidedClayContainer;
+import mods.clayium.machine.common.IHasButton;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.RecipeElement;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayiumMachine extends TileEntitySidedClayContainer implements IClicker, ITickable {
-    private enum MachineSlots {
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable {
+    public enum MachineSlots {
         MATERIAL,
         PRODUCT,
         ENERGY
     }
 
-    private final int tier;
-    private final ClayiumRecipe recipeCards;
+    protected EnumMachineKind kind;
+    private ClayiumRecipe recipeCards;
     private RecipeElement doingRecipe = RecipeElement.FLAT;
 
     private long craftTime;
@@ -32,17 +34,44 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
     private long debtEnergy;
 
     public long containEnergy;
-    public final int clayEnergySlot = MachineSlots.ENERGY.ordinal();
 
-    public TileEntityClayiumMachine(int tier, EnumMachineKind kind) {
-        super(MachineSlots.values().length);
+    public TileEntityClayiumMachine() {
+        this.containerItemStacks = NonNullList.withSize(MachineSlots.values().length, ItemStack.EMPTY);
 
-        this.tier = tier;
-        this.recipeCards = kind.getRecipe();
+        this.listSlotsImport.add(new int[] {MachineSlots.MATERIAL.ordinal()});
+        this.listSlotsExport.add(new int[] {MachineSlots.PRODUCT.ordinal()});
+
+        this.maxAutoExtract = new int[] {-1, 1};
+        this.maxAutoInsert = new int[] {-1};
+
+        this.autoInsert = true;
+        this.autoExtract = true;
+        this.clayEnergySlot = MachineSlots.ENERGY.ordinal();
+    }
+
+    public void setKind(EnumMachineKind kind) {
+        this.kind = kind;
+        if (kind != null) {
+            this.recipeCards = kind.getRecipe();
+        }
     }
 
     public ItemStack getStackInSlot(MachineSlots index) {
         return super.getStackInSlot(index.ordinal());
+    }
+
+    @Override
+    public boolean hasSpecialDrops() {
+        return true;
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        super.getDrops(drops, world, pos, state, fortune);
+
+        drops.add(getStackInSlot(MachineSlots.MATERIAL));
+        drops.add(getStackInSlot(MachineSlots.PRODUCT));
+        drops.add(getStackInSlot(this.clayEnergySlot));
     }
 
     @Override
@@ -82,13 +111,15 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
 
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
-
         craftTime = tagCompound.getLong("CraftTime");
         timeToCraft = tagCompound.getLong("TimeToCraft");
         debtEnergy = tagCompound.getLong("ConsumingEnergy");
 
         containEnergy = tagCompound.getLong("ClayEnergy");
+
+        setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
+
+        super.readFromNBT(tagCompound);
     }
 
     @Override
@@ -100,6 +131,8 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
         tagCompound.setLong("ConsumingEnergy", debtEnergy);
 
         tagCompound.setLong("ClayEnergy", containEnergy);
+
+        tagCompound.setString("MachineId", this.kind.getRegisterName());
 
         return tagCompound;
     }
@@ -162,7 +195,7 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
         ItemStack itemstack = doingRecipe.getResult().getResults().get(0);
 
         if (getStackInSlot(MachineSlots.PRODUCT).isEmpty()) {
-            machineInventory.set(MachineSlots.PRODUCT.ordinal(), itemstack.copy());
+            containerItemStacks.set(MachineSlots.PRODUCT.ordinal(), itemstack.copy());
         } else if (getStackInSlot(MachineSlots.PRODUCT).isItemEqual(itemstack)) {
             getStackInSlot(MachineSlots.PRODUCT).grow(itemstack.getCount());
         }
@@ -198,28 +231,6 @@ public class TileEntityClayiumMachine extends TileEntitySidedClayContainer imple
         containEnergy += getClayEnergy(itemstack);
         itemstack.shrink(1);
         return true;
-    }
-
-    static boolean hasClayEnergy(ItemStack itemstack) {
-        return getClayEnergy(itemstack) > 0L;
-    }
-
-    static long getClayEnergy(ItemStack itemstack) {
-        if (!itemstack.isEmpty() && itemstack.getItem() instanceof IClayEnergy) {
-            return ((IClayEnergy) itemstack.getItem()).getClayEnergy();
-        }
-
-        return 0L;
-    }
-
-    @Override
-    public int[] getSlotsForFace(EnumFacing side) {
-        return new int[0];
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return index != MachineSlots.ENERGY.ordinal();
     }
 
     @Override

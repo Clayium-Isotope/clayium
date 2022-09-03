@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayContainer;
 //import cofh.redstoneflux.api.IEnergyConnection;
 
 import com.google.common.collect.ImmutableMap;
+import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IModifyCC;
@@ -42,12 +43,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ClayContainer extends BlockContainer {
-    private final Class<? extends TileEntity> teClass;
+public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
+    private final Class<? extends TileEntityClayContainer> teClass;
     private final int guiId;
-    private final int tier;
+    protected final int tier;
 
-    public ClayContainer(Material material, Class<? extends TileEntity> teClass, String modelPath, int guiId, int tier) {
+    public ClayContainer(Material material, Class<? extends TileEntityClayContainer> teClass, String modelPath, int guiId, int tier) {
         super(material);
         this.teClass = teClass;
         this.guiId = guiId;
@@ -56,15 +57,18 @@ public abstract class ClayContainer extends BlockContainer {
         setUnlocalizedName(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
-        setDefaultState(this.getDefaultState()
-                .withProperty(ClayContainerState.ARM_UP, false)
-                .withProperty(ClayContainerState.ARM_DOWN, false)
-                .withProperty(ClayContainerState.ARM_NORTH, false)
-                .withProperty(ClayContainerState.ARM_SOUTH, false)
-                .withProperty(ClayContainerState.ARM_WEST, false)
-                .withProperty(ClayContainerState.ARM_EAST, false)
-                .withProperty(ClayContainerState.IS_PIPE, false)
-        );
+
+        if (this.getDefaultState() instanceof ClayContainerState) {
+            setDefaultState(this.getDefaultState()
+                    .withProperty(ClayContainerState.ARM_UP, false)
+                    .withProperty(ClayContainerState.ARM_DOWN, false)
+                    .withProperty(ClayContainerState.ARM_NORTH, false)
+                    .withProperty(ClayContainerState.ARM_SOUTH, false)
+                    .withProperty(ClayContainerState.ARM_WEST, false)
+                    .withProperty(ClayContainerState.ARM_EAST, false)
+                    .withProperty(ClayContainerState.IS_PIPE, false)
+            );
+        }
     }
 
     @Override
@@ -80,8 +84,9 @@ public abstract class ClayContainer extends BlockContainer {
         if (this.teClass == null) return null;
 
         try {
-            // TileEntity Constructor must have int:TIER argument
-            return teClass.getDeclaredConstructor(int.class).newInstance(this.tier);
+            TileEntityClayContainer tecc = teClass.newInstance();
+            tecc.initByTier(this.tier);
+            return tecc;
         } catch (Exception exception) {
             ClayiumCore.logger.catching(exception);
             return null;
@@ -114,6 +119,10 @@ public abstract class ClayContainer extends BlockContainer {
             openGui(((ClayContainer) block).guiId, world, pos, player);
     }
 
+    /**
+     * Modifying Place States -> getStateForPlacement
+     * Modifying Place Fields -> onBlockPlacedBy
+     */
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if (stack.hasDisplayName()) {
@@ -171,7 +180,15 @@ public abstract class ClayContainer extends BlockContainer {
         return getDefaultState().withProperty(ClayContainerState.IS_PIPE, meta == 1);
     }
 
+    @Override
+    public int getTier(ItemStack stackIn) {
+        return this.tier;
+    }
 
+    @Override
+    public int getTier(IBlockAccess access, BlockPos posIn) {
+        return this.tier;
+    }
 
     private static class ClayContainerStateContainer extends BlockStateContainer {
         public ClayContainerStateContainer(Block blockIn) {

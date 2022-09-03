@@ -1,9 +1,9 @@
 package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotWithTexture;
-import mods.clayium.machine.common.ContainerClayMachineTemp;
 import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,41 +11,13 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerClayiumMachine extends ContainerClayMachineTemp {
+public class ContainerClayiumMachine extends ContainerTemp {
     private long craftTime, timeToCraft, debtEnergy, containEnergy;
     private final int materialSlotIndex = 0;
     private final int resultSlotIndex = 1;
 
     public ContainerClayiumMachine(InventoryPlayer player, TileEntityClayiumMachine tile) {
-        super(tile);
-        sizeInventory = 3;
-
-        addSlotToContainer(new SlotWithTexture(tileEntity, 0, 44, 35, RectangleTexture.LargeSlotTexture));
-        addSlotToContainer(new SlotWithTexture(tileEntity, 1, 116, 35, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack itemstack) {
-                return false;
-            }
-        });
-        addSlotToContainer(new Slot(tileEntity, 2, -12, 72 - 16) {
-            @Override
-            public int getSlotStackLimit() {
-                assert tileEntity instanceof TileEntityClayiumMachine;
-                return ((TileEntityClayiumMachine) tileEntity).getClayEnergyStorageSize();
-            }
-
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return ClayiumBlocks.compressedClay.contains(stack.getItem());
-            }
-
-            @Override
-            public boolean canTakeStack(EntityPlayer playerIn) {
-                return false;
-            }
-        });
-
-        setupPlayerSlots(player);
+        super(player, tile);
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
@@ -65,7 +37,7 @@ public class ContainerClayiumMachine extends ContainerClayMachineTemp {
 
     @Override
     public boolean enchantItem(EntityPlayer playerIn, int id) {
-        ((TileEntityClayiumMachine) tileEntity).pushButton(playerIn, id);
+        tileEntity.pushButton(playerIn, id);
         return true;
     }
 
@@ -95,5 +67,35 @@ public class ContainerClayiumMachine extends ContainerClayMachineTemp {
         this.timeToCraft = this.tileEntity.getField(1);
         this.debtEnergy = this.tileEntity.getField(2);
         this.containEnergy = this.tileEntity.getField(3);
+    }
+
+    @Override
+    public void setMachineInventorySlots(InventoryPlayer player) {
+        addSlotToContainer(new SlotWithTexture(tileEntity, 0, 44, 35, RectangleTexture.LargeSlotTexture));
+
+        addSlotToContainer(new SlotWithTexture(tileEntity, 1, 116, 35, RectangleTexture.LargeSlotTexture) {
+            @Override
+            public boolean isItemValid(ItemStack itemstack) {
+                return false;
+            }
+        });
+
+        addSlotToContainer(new Slot(tileEntity, 2, -12, 72 - 16) {
+            @Override
+            public int getSlotStackLimit() {
+                assert tileEntity instanceof TileEntityClayiumMachine;
+                return tileEntity.getClayEnergyStorageSize();
+            }
+
+            @Override
+            public boolean isItemValid(ItemStack stack) {
+                return ClayiumBlocks.compressedClay.contains(stack.getItem());
+            }
+
+            @Override
+            public boolean canTakeStack(EntityPlayer playerIn) {
+                return false;
+            }
+        });
     }
 }

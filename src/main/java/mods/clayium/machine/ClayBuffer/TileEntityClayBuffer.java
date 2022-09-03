@@ -3,24 +3,18 @@ package mods.clayium.machine.ClayBuffer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.INormalInventory;
 import mods.clayium.util.UtilTier;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 
 import java.util.stream.IntStream;
 
 public class TileEntityClayBuffer extends TileEntityClayContainer implements INormalInventory {
     private int inventoryX;
     private int inventoryY;
-    private int tier;
 
-    // TileEntity#create() がチャンクのロード時にstaticで呼ばれるので、エラー回避用コンストラクタ
-    public TileEntityClayBuffer() { this(0); }
-
-    public TileEntityClayBuffer(int tier) {
-        super(54);
-
-        if (tier != 0)
-            initByTier(tier);
+    public TileEntityClayBuffer() {
+        this.containerItemStacks = NonNullList.withSize(54, ItemStack.EMPTY);
     }
 
     @Override
@@ -48,7 +42,9 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
         return 0;
     }
 
-    private void initByTier(int tier) {
+    @Override
+    public void initByTier(int tier) {
+        if (this.tier == tier) return;
         this.tier = tier;
 
         switch (this.tier) {
@@ -102,17 +98,12 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        //
-        initByTier(compound.getInteger("Tier"));
-
-        super.readFromNBT(compound);
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return true;
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setInteger("Tier", this.tier);
-
-        return super.writeToNBT(compound);
+    public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return true;
     }
 }

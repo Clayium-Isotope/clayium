@@ -12,6 +12,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -32,7 +33,8 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
     private int cookingMethod = -1;
 
     public TileEntityClayWorkTable() {
-        super(ClayWorkTableSlots.values().length);
+        this.containerItemStacks = NonNullList.withSize(ClayWorkTableSlots.values().length, ItemStack.EMPTY);
+        initByTier(0);
     }
 
     public ItemStack getStackInSlot(ClayWorkTableSlots slot) {

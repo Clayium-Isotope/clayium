@@ -12,7 +12,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
@@ -25,8 +24,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class ClaySidedContainer extends ClayContainer {
-    public ClaySidedContainer(Material material, Class<? extends TileEntity> teClass, String modelPath, int guiId) {
-        super(material, teClass, modelPath, guiId, -1);
+    public ClaySidedContainer(Material material, Class<? extends TileEntityClayContainer> teClass, String modelPath, int guiId, int tier) {
+        super(material, teClass, modelPath, guiId, tier);
+
+        setDefaultState(this.getDefaultState()
+                .withProperty(ClaySidedContainerState.FACING, EnumFacing.NORTH)
+        );
     }
 
     @Nullable
@@ -50,7 +53,7 @@ public abstract class ClaySidedContainer extends ClayContainer {
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, state.withProperty(ClaySidedContainerState.FACING, placer.getHorizontalFacing().getOpposite()), 2);
+        worldIn.setBlockState(pos, state.withProperty(ClaySidedContainerState.FACING, placer.getHorizontalFacing().getOpposite()), 3);
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
 

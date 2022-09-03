@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayBuffer;
 
 import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.machine.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,8 +17,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ClayBuffer extends ClayContainer {
-    public ClayBuffer() {
-        super(Material.CLAY, TileEntityClayBuffer.class, "buffer", 11, 4);
+    public ClayBuffer(int tier) {
+        super(Material.CLAY, TileEntityClayBuffer.class, TierPrefix.get(tier).getPrefix() + "_buffer", 11, tier);
 
         setSoundType(SoundType.METAL);
         setHardness(2.0F);
