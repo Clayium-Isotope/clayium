@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -14,10 +15,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collector;
 
 public class TileEntityClayContainer extends TileGeneric implements ISidedInventory, ITickable {
     private boolean isLoaded;
@@ -28,6 +27,13 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
     protected boolean isPipe = false;
 
+    /**
+     * -2: energy
+     * -1: none,
+     * 0: white,
+     * 1: red,
+     * 2: purple
+     */
     public Map<EnumFacing, Integer> importRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
         put(EnumFacing.UP,    -1);
         put(EnumFacing.DOWN,  -1);
@@ -37,6 +43,12 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         put(EnumFacing.EAST,  -1);
     }};
     public List<int[]> listSlotsImport = new ArrayList<>();
+    /**
+     * -1: none,
+     * 0: white,
+     * 1: green,
+     * 2: cyan
+     */
     public Map<EnumFacing, Integer> exportRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
         put(EnumFacing.UP,    -1);
         put(EnumFacing.DOWN,  -1);
@@ -46,7 +58,14 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         put(EnumFacing.EAST,  -1);
     }};
     public List<int[]> listSlotsExport = new ArrayList<>();
-    public EnumFacing cePort;
+    public EnumMap<EnumFacing, ItemStack> filters = new EnumMap<EnumFacing, ItemStack>(EnumFacing.class) {{
+        put(EnumFacing.UP,    ItemStack.EMPTY);
+        put(EnumFacing.DOWN,  ItemStack.EMPTY);
+        put(EnumFacing.NORTH, ItemStack.EMPTY);
+        put(EnumFacing.SOUTH, ItemStack.EMPTY);
+        put(EnumFacing.WEST,  ItemStack.EMPTY);
+        put(EnumFacing.EAST,  ItemStack.EMPTY);
+    }};
 
     public boolean autoExtract = true;
     public boolean autoInsert = true;
@@ -109,6 +128,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
         }
+
+        this.markDirty();
     }
 
     public boolean isEmpty() {
@@ -247,28 +268,97 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         return 0;
     }
 
+    public boolean acceptEnergyClay() {
+        return true;
+    }
+
+    public static boolean hasClayEnergy(ItemStack itemstack) {
+        return getClayEnergy(itemstack) > 0L;
+    }
+
+    public static long getClayEnergy(ItemStack itemstack) {
+        if (!itemstack.isEmpty() && itemstack.getItem() instanceof IClayEnergy) {
+            return ((IClayEnergy) itemstack.getItem()).getClayEnergy();
+        }
+
+        return 0L;
+    }
+
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return true;
+        if (index == this.clayEnergySlot) {
+            return acceptEnergyClay()
+                    && hasClayEnergy(stack) && (this.containerItemStacks.get(index).isEmpty() || this.containerItemStacks.get(index).getCount() < this.clayEnergyStorageSize);
+        }
+
+        for (int[] slots : this.listSlotsImport) {
+            if (Arrays.stream(slots).anyMatch(e -> e == index))
+                return true;
+        }
+        return false;
     }
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return true;
+//        ItemStack filter = this.filters.get(direction);
+//        if (ItemFilterTemp.isFilter(filter) && !ItemFilterTemp.match(filter, itemstack)) return false;
+
+        int route = this.importRoutes.get(direction);
+        if (route >= 0 && route < this.listSlotsImport.size()) {
+            for (int _slot : this.listSlotsImport.get(route))
+                if (_slot == index)
+                    return true;
+        }
+
+        return false;
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return true;
+//        ItemStack filter = this.filters.get(direction);
+//        if (ItemFilterTemp.isFilter(filter) && !ItemFilterTemp.match(filter, itemstack)) return false;
+
+        int route = this.exportRoutes.get(direction);
+        if (route >= 0 && route < this.listSlotsExport.size()) {
+            if (Arrays.stream(this.listSlotsExport.get(route)).anyMatch(e -> e == index))
+
+//            for (int _slot : this.listSlotsExport.get(route))
+//                if (_slot == index)
+                    return true;
+        }
+
+        return false;
     }
 
     @Override
     public int[] getSlotsForFace(EnumFacing side) {
-        if (this.importRoutes.get(side) != -1) {
-            return this.listSlotsImport.get(this.importRoutes.get(side));
+        Boolean[] flags = new Boolean[this.containerItemStacks.size()];
+        switch (this.importRoutes.get(side)) {
+            case -2:
+                flags[this.clayEnergySlot] = true;
+                break;
+            case -1:
+                break;
+            default:
+                for (int slot : this.listSlotsImport.get(this.importRoutes.get(side))) {
+                    flags[slot] = true;
+                }
         }
 
-        return new int[0];
+        if (this.exportRoutes.get(side) != -1) {
+            for (int slot : this.listSlotsExport.get(this.exportRoutes.get(side))) {
+                flags[slot] = true;
+            }
+        }
+
+        Collector<Boolean, ArrayList<Integer>, int[]> verifiedIndexJoiner = Collector.of(
+                ArrayList::new,
+                (list, flag) -> list.add(flag ? list.size() : -1),
+                (list, list1) -> { list.addAll(list1); return list; },
+                list -> list.stream().mapToInt(e -> e).filter(e -> e != -1).toArray()
+        );
+
+        return Arrays.stream(flags).collect(verifiedIndexJoiner);
     }
 
     /**
@@ -320,6 +410,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
             int route = this.importRoutes.get(facing);
             if (0 <= route && route < this.listSlotsImport.size()) {
                 UtilTransfer.extract(this, this.listSlotsImport.get(route), facing, this.maxAutoExtractDefault);
+            } else if (route == -2) {
+                UtilTransfer.extract(this, new int[] { this.clayEnergySlot }, facing, this.maxAutoExtractDefault);
             } else {
                 this.importRoutes.replace(facing, -1);
             }

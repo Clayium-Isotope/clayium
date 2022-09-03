@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -22,9 +23,18 @@ import java.util.Map;
 public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayContainer> {
     private final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
 
+    private final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 0.0d), 0f, 0f);
+    private final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 1.0d), 0f, 0f);
+    private final PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 0.0d), 0f, 0f);
+    private final PositionTextureVertex ptv3 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 1.0d), 0f, 0f);
+    private final PositionTextureVertex ptv4 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 0.0d), 0f, 0f);
+    private final PositionTextureVertex ptv5 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 1.0d), 0f, 0f);
+    private final PositionTextureVertex ptv6 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 0.0d), 0f, 0f);
+    private final PositionTextureVertex ptv7 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 1.0d), 0f, 0f);
+
     @Override
     public void render(TileEntityClayContainer te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        if (te.isInvalid()) return;
+        if (te == null || te.isInvalid()) return;
 
         ModelClayContainer modelCC = new ModelClayContainer(buffer);
 
@@ -34,7 +44,7 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
             GlStateManager.pushMatrix();
             GlStateManager.matrixMode(GL11.GL_MODELVIEW);
         } else {
-            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-3.png"));
+            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-" + (te.getTier() - 1) + ".png"));
         }
 
         GlStateManager.pushMatrix();
@@ -45,45 +55,31 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
         if (!ClayContainer.ClayContainerState.renderAsPipe(te)) {
             modelCC.renderBlocked();
 
-            PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 0.0d), 0f, 0f);
-            PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 1.0d), 0f, 0f);
-            PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 0.0d), 0f, 0f);
-            PositionTextureVertex ptv3 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 1.0d), 0f, 0f);
-            PositionTextureVertex ptv4 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 0.0d), 0f, 0f);
-            PositionTextureVertex ptv5 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 1.0d), 0f, 0f);
-            PositionTextureVertex ptv6 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 0.0d), 0f, 0f);
-            PositionTextureVertex ptv7 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 1.0d), 0f, 0f);
+            if (te.getBlockType() instanceof ClayiumMachine) {
+                ResourceLocation face = ((ClayiumMachine) te.getBlockType()).getMachineKind().getFaceResource();
+                if (face != null) {
+                    this.bindTexture(face);
+                    pasteBoundTexToBlockFace(te.getBlockState().getValue(ClaySidedContainer.ClaySidedContainerState.FACING));
+                }
+            }
 
-            if (bindImportBlockTexAsCan(te.importRoutes, EnumFacing.DOWN))
-                new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-            if (bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.DOWN))
-                new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
+            bindImportBlockTexAsCan(te.importRoutes, EnumFacing.DOWN);
+            bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.DOWN);
 
-            if (bindImportBlockTexAsCan(te.importRoutes, EnumFacing.UP))
-                new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-            if (bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.UP))
-                new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
+            bindImportBlockTexAsCan(te.importRoutes, EnumFacing.UP);
+            bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.UP);
 
-            if (bindImportBlockTexAsCan(te.importRoutes, EnumFacing.SOUTH))
-                new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-            if (bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.SOUTH))
-                new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
+            bindImportBlockTexAsCan(te.importRoutes, EnumFacing.SOUTH);
+            bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.SOUTH);
 
-            if (bindImportBlockTexAsCan(te.importRoutes, EnumFacing.NORTH))
-                new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-            if (bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.NORTH))
-                new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
+            bindImportBlockTexAsCan(te.importRoutes, EnumFacing.NORTH);
+            bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.NORTH);
 
-            if (bindImportBlockTexAsCan(te.importRoutes, EnumFacing.WEST))
-                new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-            if (bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.WEST))
-                new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
+            bindImportBlockTexAsCan(te.importRoutes, EnumFacing.WEST);
+            bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.WEST);
 
-            if (bindImportBlockTexAsCan(te.importRoutes, EnumFacing.EAST))
-                new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-            if (bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.EAST))
-                new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
-
+            bindImportBlockTexAsCan(te.importRoutes, EnumFacing.EAST);
+            bindExportBlockTexAsCan(te.exportRoutes, EnumFacing.EAST);
 
         } else {
             modelCC.renderPiped(te.getBlockState(), buffer);
@@ -91,45 +87,33 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
             if (rendererDispatcher.entity instanceof EntityPlayer
                     && ClayiumItems.hasPipingTools((EntityPlayer) rendererDispatcher.entity)) {
                 if (te.getBlockState().isTheFacingActivated(EnumFacing.DOWN)) {
-                    if (bindImportPipeTexAsCan(te.importRoutes, EnumFacing.DOWN))
-                        modelCC.renderPipeDown(buffer);
-                    if (bindExportPipeTexAsCan(te.exportRoutes, EnumFacing.DOWN))
-                        modelCC.renderPipeDown(buffer);
+                    bindImportPipeTexAsCan(modelCC, te.importRoutes, EnumFacing.DOWN);
+                    bindExportPipeTexAsCan(modelCC, te.exportRoutes, EnumFacing.DOWN);
                 }
 
                 if (te.getBlockState().isTheFacingActivated(EnumFacing.UP)) {
-                    if (bindImportPipeTexAsCan(te.importRoutes, EnumFacing.UP))
-                        modelCC.renderPipeUp(buffer);
-                    if (bindExportPipeTexAsCan(te.exportRoutes, EnumFacing.UP))
-                        modelCC.renderPipeUp(buffer);
+                    bindImportPipeTexAsCan(modelCC, te.importRoutes, EnumFacing.UP);
+                    bindExportPipeTexAsCan(modelCC, te.exportRoutes, EnumFacing.UP);
                 }
 
                 if (te.getBlockState().isTheFacingActivated(EnumFacing.NORTH)) {
-                    if (bindImportPipeTexAsCan(te.importRoutes, EnumFacing.NORTH))
-                        modelCC.renderPipeNorth(buffer);
-                    if (bindExportPipeTexAsCan(te.exportRoutes, EnumFacing.NORTH))
-                        modelCC.renderPipeNorth(buffer);
+                    bindImportPipeTexAsCan(modelCC, te.importRoutes, EnumFacing.NORTH);
+                    bindExportPipeTexAsCan(modelCC, te.exportRoutes, EnumFacing.NORTH);
                 }
 
                 if (te.getBlockState().isTheFacingActivated(EnumFacing.SOUTH)) {
-                    if (bindImportPipeTexAsCan(te.importRoutes, EnumFacing.SOUTH))
-                        modelCC.renderPipeSouth(buffer);
-                    if (bindExportPipeTexAsCan(te.exportRoutes, EnumFacing.SOUTH))
-                        modelCC.renderPipeSouth(buffer);
+                    bindImportPipeTexAsCan(modelCC, te.importRoutes, EnumFacing.SOUTH);
+                    bindExportPipeTexAsCan(modelCC, te.exportRoutes, EnumFacing.SOUTH);
                 }
 
                 if (te.getBlockState().isTheFacingActivated(EnumFacing.WEST)) {
-                    if (bindImportPipeTexAsCan(te.importRoutes, EnumFacing.WEST))
-                        modelCC.renderPipeWest(buffer);
-                    if (bindExportPipeTexAsCan(te.exportRoutes, EnumFacing.WEST))
-                        modelCC.renderPipeWest(buffer);
+                    bindImportPipeTexAsCan(modelCC, te.importRoutes, EnumFacing.WEST);
+                    bindExportPipeTexAsCan(modelCC, te.exportRoutes, EnumFacing.WEST);
                 }
 
                 if (te.getBlockState().isTheFacingActivated(EnumFacing.EAST)) {
-                    if (bindImportPipeTexAsCan(te.importRoutes, EnumFacing.EAST))
-                        modelCC.renderPipeEast(buffer);
-                    if (bindExportPipeTexAsCan(te.exportRoutes, EnumFacing.EAST))
-                        modelCC.renderPipeEast(buffer);
+                    bindImportPipeTexAsCan(modelCC, te.importRoutes, EnumFacing.EAST);
+                    bindExportPipeTexAsCan(modelCC, te.exportRoutes, EnumFacing.EAST);
                 }
             }
         }
@@ -144,47 +128,99 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
         }
     }
 
-    private boolean bindImportBlockTexAsCan(Map<EnumFacing, Integer> routes, EnumFacing facing) {
-        if (routes.get(facing) == -1) return false;
+    private void bindImportBlockTexAsCan(Map<EnumFacing, Integer> routes, EnumFacing facing) {
+        if (routes.get(facing) == -1) return;
 
-        if (routes.get(facing) == 0)
+        if (routes.get(facing) == -2)
+            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy.png"));
+        else if (routes.get(facing) == 0)
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import.png"));
         else
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_" + routes.get(facing) + ".png"));
 
-        return true;
+        pasteBoundTexToBlockFace(facing);
     }
 
-    private boolean bindExportBlockTexAsCan(Map<EnumFacing, Integer> routes, EnumFacing facing) {
-        if (routes.get(facing) == -1) return false;
+    private void bindExportBlockTexAsCan(Map<EnumFacing, Integer> routes, EnumFacing facing) {
+        if (routes.get(facing) == -1) return;
 
         if (routes.get(facing) == 0)
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/export.png"));
         else
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/export_" + routes.get(facing) + ".png"));
 
-        return true;
+        pasteBoundTexToBlockFace(facing);
     }
 
-    private boolean bindImportPipeTexAsCan(Map<EnumFacing, Integer> routes, EnumFacing facing) {
-        if (routes.get(facing) == -1) return false;
+    private void bindImportPipeTexAsCan(ModelClayContainer modelCC, Map<EnumFacing, Integer> routes, EnumFacing facing) {
+        if (routes.get(facing) == -1) return;
 
-        if (routes.get(facing) == 0)
+        if (routes.get(facing) == -2)
+            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy_p.png"));
+        else if (routes.get(facing) == 0)
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_p.png"));
         else
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_" + routes.get(facing) + "_p.png"));
 
-        return true;
+        pasteBoundTexToPipeFace(modelCC, facing);
     }
 
-    private boolean bindExportPipeTexAsCan(Map<EnumFacing, Integer> routes, EnumFacing facing) {
-        if (routes.get(facing) == -1) return false;
+    private void bindExportPipeTexAsCan(ModelClayContainer modelCC, Map<EnumFacing, Integer> routes, EnumFacing facing) {
+        if (routes.get(facing) == -1) return;
 
         if (routes.get(facing) == 0)
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/export_p.png"));
         else
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/export_" + routes.get(facing) + "_p.png"));
 
-        return true;
+        pasteBoundTexToPipeFace(modelCC, facing);
+    }
+
+    protected void pasteBoundTexToBlockFace(EnumFacing facing) {
+        PositionTextureVertex[] ptvs = new PositionTextureVertex[4];
+        switch (facing) {
+            case DOWN:
+                ptvs = new PositionTextureVertex[] {ptv3, ptv7, ptv6, ptv2};
+                break;
+            case UP:
+                ptvs = new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4};
+                break;
+            case SOUTH:
+                ptvs = new PositionTextureVertex[] {ptv4, ptv0, ptv2, ptv6};
+                break;
+            case NORTH:
+                ptvs = new PositionTextureVertex[] {ptv1, ptv5, ptv7, ptv3};
+                break;
+            case WEST:
+                ptvs = new PositionTextureVertex[] {ptv0, ptv1, ptv3, ptv2};
+                break;
+            case EAST:
+                ptvs = new PositionTextureVertex[] {ptv5, ptv4, ptv6, ptv7};
+                break;
+        }
+        new TexturedQuad(ptvs, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
+    }
+
+    protected void pasteBoundTexToPipeFace(ModelClayContainer modelCC, EnumFacing facing) {
+        switch (facing) {
+            case DOWN:
+                modelCC.renderPipeDown(buffer);
+                break;
+            case UP:
+                modelCC.renderPipeUp(buffer);
+                break;
+            case SOUTH:
+                modelCC.renderPipeSouth(buffer);
+                break;
+            case NORTH:
+                modelCC.renderPipeNorth(buffer);
+                break;
+            case WEST:
+                modelCC.renderPipeWest(buffer);
+                break;
+            case EAST:
+                modelCC.renderPipeEast(buffer);
+                break;
+        }
     }
 }

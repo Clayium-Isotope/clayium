@@ -5,7 +5,6 @@ import mods.clayium.block.common.BlockTierTied;
 import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.common.MaterialBlock;
 import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.machine.ClayBuffer.ClayBuffer;
 import mods.clayium.machine.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -94,8 +93,6 @@ public class ClayiumBlocks {
             siliconeColored.add(new SiliconeColored(color));
         }
         blocks.addAll(siliconeColored);
-
-        blocks.add(buffer);
     }
 
     public static List<Block> getBlocks() {
@@ -128,8 +125,6 @@ public class ClayiumBlocks {
     public static final BlockDamaged CAReactorHull = new BlockDamaged();
     public static final BlockDamaged materialBlock = new BlockDamaged();
     public static final BlockDamaged siliconeColored = new BlockDamaged();
-
-    public static final Block buffer = new ClayBuffer();
 
     private static final List<Block> blocks = new ArrayList<>();
 }

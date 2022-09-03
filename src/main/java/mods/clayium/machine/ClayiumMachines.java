@@ -26,7 +26,23 @@ public class ClayiumMachines {
         add(EnumMachineKind.cuttingMachine, new int[] { 1, 2, 3, 4 });
         add(EnumMachineKind.lathe, new int[] { 1, 2, 3, 4 });
 
+//        add(EnumMachineKind.cobblestoneGenerator, new int[] { 1, 2, 3, 4, 5, 6, 7 });
+//
+//        add(EnumMachineKind.condenser, new int[] { 2, 3, 4, 5, 10 });
+//        add(EnumMachineKind.grinder, new int[]{ 2, 3, 4, 5, 6, 10 });
+//        add(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });
         add(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
+        add(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
+
+//        add(EnumMachineKind.assembler, new int[] { 3, 4, 6, 10});
+//        add(EnumMachineKind.inscriber, new int[] { 3, 4 });
+//        add(EnumMachineKind.centrifuge, new int[] { 3, 4, 5, 6 });
+//        add(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
+
+
+//        add(EnumMachineKind.creativeCESource, 13);
+//
+//        add(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 });
     }
 
     private static void add(EnumMachineKind kind, int tier, ClayContainer block) {
@@ -39,6 +55,21 @@ public class ClayiumMachines {
         }
 
         machineMap.get(kind).put(_tier, block);
+    }
+
+    /**
+     * @param blockClass whose constructor should have the (I)tier argument
+     */
+    private static void add(EnumMachineKind kind, int[] tiers, Class<? extends ClayContainer> blockClass) {
+        if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
+
+        for (int tier : tiers) {
+            try {
+                ClayContainer block = blockClass.getDeclaredConstructor(int.class).newInstance(tier);
+
+                add(kind, tier, block);
+            } catch (Exception ignore) {}
+        }
     }
 
     private static void add(EnumMachineKind kind, int tier) {

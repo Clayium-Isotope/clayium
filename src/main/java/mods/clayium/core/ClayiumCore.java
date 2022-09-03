@@ -2,6 +2,7 @@ package mods.clayium.core;
 
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.common.IItemBlockHolder;
+import mods.clayium.block.itemblock.ItemBlockTiered;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
@@ -15,6 +16,9 @@ import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -113,8 +117,8 @@ public class ClayiumCore {
 
         GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));
         GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_crafting_table"));
-        GameRegistry.registerTileEntity(TileEntityClayiumMachine.class, new ResourceLocation(ClayiumCore.ModId, "machine"));
         ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new ClayContainerTESR());
+        ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new ClayContainerTESR());
 
 //        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
 //        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);
@@ -153,8 +157,7 @@ public class ClayiumCore {
 
         for (Block block : ClayiumMachines.getBlocks()) {
             assert block.getRegistryName() != null;
-            Item item = block instanceof IItemBlockHolder ? ((IItemBlockHolder) block).getItemBlock() : new ItemBlock(block);
-            event.getRegistry().register(item.setRegistryName(block.getRegistryName()));
+            event.getRegistry().register((new ItemBlockTiered(block)).setRegistryName(block.getRegistryName()));
         }
 
         event.getRegistry().registerAll(ClayiumItems.getItems().toArray(new Item[0]));
@@ -174,6 +177,13 @@ public class ClayiumCore {
             assert block.getRegistryName() != null;
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
                     new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getResourcePath(), "inventory"));
+            // Custom blockstate mapping
+            net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                @Override
+                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                    return new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":empty");
+                }
+            });
         }
 
         for (Item item : ClayiumItems.getItems()) {

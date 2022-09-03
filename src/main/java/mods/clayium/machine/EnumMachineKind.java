@@ -1,7 +1,12 @@
 package mods.clayium.machine;
 
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nullable;
+import java.util.Objects;
 
 public enum EnumMachineKind {
     // Tier 0 ~
@@ -103,4 +108,18 @@ public enum EnumMachineKind {
 
     private final String kind;
     private final ClayiumRecipe recipe;
+
+    @Nullable
+    public static EnumMachineKind fromName(String name) {
+        for (EnumMachineKind kind : EnumMachineKind.values()) {
+            if (Objects.equals(kind.getRegisterName(), name)) return kind;
+        }
+        return null;
+    }
+
+    public ResourceLocation getFaceResource() {
+        if (this.recipe == null) return null;
+
+        return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.kind.replaceAll("_", "") + ".png");
+    }
 }

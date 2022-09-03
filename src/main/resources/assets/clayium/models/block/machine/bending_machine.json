@@ -1,6 +1,0 @@
-{
-  "parent": "clayium:block/machine_face_temp",
-  "textures": {
-    "face": "clayium:blocks/machine/bendingmachine"
-  }
-}
