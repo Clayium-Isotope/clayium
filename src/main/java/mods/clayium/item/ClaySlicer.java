@@ -23,14 +23,15 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
-            tecc.exportRoutes.replace(facing, tecc.exportRoutes.get(facing) + 1);
+            int dist = tecc.exportRoutes.get(facing) + 1;
 
-            if (tecc.listSlotsExport.size() <= tecc.exportRoutes.get(facing)) {
-                tecc.exportRoutes.replace(facing, -1);
+            if (tecc.listSlotsExport.size() <= dist) {
+                dist = -1;
                 player.sendMessage(new TextComponentString("Disabled"));
             } else {
-                player.sendMessage(new TextComponentString("Set extract route " + tecc.exportRoutes.get(facing)));
+                player.sendMessage(new TextComponentString("Set extract route " + dist));
             }
+            tecc.exportRoutes.replace(facing, dist);
 
             tecc.updateEntity();
             return EnumActionResult.SUCCESS;

@@ -3,6 +3,7 @@ package mods.clayium.item;
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -23,15 +24,28 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
-            tecc.importRoutes.replace(facing, tecc.importRoutes.get(facing) + 1);
 
-            if (tecc.listSlotsImport.size() <= tecc.importRoutes.get(facing)) {
-                tecc.importRoutes.replace(facing, -1);
-                player.sendMessage(new TextComponentString("Disabled"));
-            } else {
-                player.sendMessage(new TextComponentString("Set insert route " + tecc.importRoutes.get(facing)));
+            int dist = tecc.importRoutes.get(facing) + 1;
+            if (tecc.listSlotsImport.size() <= dist) {
+                if (tecc instanceof TileEntityClayiumMachine)
+                    dist = -2;
+                else
+                    dist = -1;
             }
 
+            switch (dist) {
+                case -2:
+                    player.sendMessage(new TextComponentString("Set insert route energy"));
+                    break;
+                case -1:
+                    player.sendMessage(new TextComponentString("Disabled"));
+                    break;
+                default:
+                    player.sendMessage(new TextComponentString("Set insert route " + tecc.importRoutes.get(facing)));
+                    break;
+            }
+
+            tecc.importRoutes.replace(facing, dist);
             tecc.updateEntity();
             return EnumActionResult.SUCCESS;
         }
