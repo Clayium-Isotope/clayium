@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -35,7 +36,9 @@ public class ClayiumClientProxy implements IClayiumProxy {
 	public void serverLoad(FMLServerStartingEvent event) {}
 
 	public EnumFacing getHittingSide(EntityPlayer player) {
-		return Minecraft.getMinecraft().getRenderViewEntity().rayTrace(9999.0D, 0.0F).sideHit;
+//		return Minecraft.getMinecraft().getRenderViewEntity().rayTrace(9999.0D, 0.0F).sideHit;
+		RayTraceResult rtr = net.minecraftforge.common.ForgeHooks.rayTraceEyes(player, 9999.0D);
+		return rtr == null ? EnumFacing.NORTH : rtr.sideHit;
 	}
 
 	public EntityPlayer getClientPlayer() {
