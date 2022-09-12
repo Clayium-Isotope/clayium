@@ -6,41 +6,40 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.IllegalFormatException;
 import java.util.List;
 
 public class UtilLocale {
-    static String[] CENumerals = new String[]{"u", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y"};
-    static String[] SNumerals = new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y"};
+    // 'long' type can't represent numerals above Tera in the SI prefix
+    // FIXME if anyone contains much CE greater than (LONG_MAX / 1,000,000), how to represent?
+    static String[] CENumerals = new String[]{"u", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R"};
+    static String[] SNumerals = new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R"};
     private static final int maxLineTooltip = 12;
 
-    public UtilLocale() {}
-
-    public static String ClayEnergyNumeral(double ce, boolean flag) {
+    public static String ClayEnergyNumeral(double ce, boolean lessInfo) {
         double n = ce * 10.0D;
         String s = "";
 
         if (n == 0.0D) {
-            return String.valueOf(n);
+            return "0";
         }
 
         if (n < 0.0D) {
-            --n;
+            n *= -1;
             s = "-";
         }
 
         int k = (int)Math.floor(Math.log10(n));
         int p = Math.min(k / 3, CENumerals.length - 1);
-        int d = (int)(n * 1000.0D / Math.pow(10.0D, (double)(p * 3)));
+        int d = (int)(n * 1000.0D / Math.pow(10.0D, p * 3));
 
-        return s + ClayEnergyNumeral(d, p, p == 0 || flag);
+        return s + ClayEnergyNumeral(d, p, p == 0 || lessInfo);
     }
 
     public static String ClayEnergyNumeral(double ce) {
         return ClayEnergyNumeral(ce, true);
     }
 
-    public static String ClayEnergyNumeral(long ce, boolean flag) {
+    public static String ClayEnergyNumeral(long ce, boolean lessInfo) {
         long n = ce * 10L;
         String s = "";
 
@@ -49,7 +48,7 @@ public class UtilLocale {
         }
 
         if (n < 0L) {
-            --n;
+            n *= -1;
             s = "-";
         }
 
@@ -57,15 +56,15 @@ public class UtilLocale {
         int p = Math.min(k / 3, CENumerals.length - 1);
         int d = (int)((double)n * 1000.0D / Math.pow(10.0D, (double)(p * 3)));
 
-        return s + ClayEnergyNumeral(d, p, p == 0 || flag);
+        return s + ClayEnergyNumeral(d, p, p == 0 || lessInfo);
     }
 
     public static String ClayEnergyNumeral(long ce) {
         return ClayEnergyNumeral(ce, true);
     }
 
-    protected static String ClayEnergyNumeral(int d, int p, boolean flag) {
-        if (d % 10 == 0 && flag) {
+    protected static String ClayEnergyNumeral(int d, int p, boolean lessInfo) {
+        if (d % 10 == 0 && lessInfo) {
             if (d % 100 != 0) {
                 return d / 1000 + "." + d / 100 % 10 + d / 10 % 10 + CENumerals[p];
             }
@@ -91,7 +90,7 @@ public class UtilLocale {
 
         int k = (int)Math.floor(Math.log10((double)n));
         if (k < 5) {
-            return s + String.valueOf(n);
+            return s + n;
         }
 
         int p = Math.min(k / 3, SNumerals.length - 1);

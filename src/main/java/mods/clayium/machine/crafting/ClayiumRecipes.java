@@ -2,20 +2,16 @@ package mods.clayium.machine.crafting;
 
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.itemblock.ItemBlockTiered;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.TierPrefix;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -85,7 +81,7 @@ public class ClayiumRecipes {
         registerMainMaterials();
         registerHulls();
         registerMachines();
-        registerCWTableRecipe();
+        registerClayWorkTableRecipe();
         registerMaterials();
         registerTools();
     }
@@ -116,7 +112,7 @@ public class ClayiumRecipes {
         res.setCount(newSize);
         return res;
     }
-    private static ItemStack W(Item item) {
+    private static ItemStack w(Item item) {
         return new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE);
     }
 
@@ -128,7 +124,7 @@ public class ClayiumRecipes {
     }
 
     public static boolean hasResult(ClayiumRecipe recipes, List<ItemStack> stack) {
-        for (RecipeElement recipe : recipes)
+        for (RecipeElement recipe : recipes.values())
             if (recipe.getCondition().match(stack)) return true;
 
         return false;
@@ -139,7 +135,7 @@ public class ClayiumRecipes {
     }
 
     public static RecipeElement getRecipeElement(ClayiumRecipe recipes, NonNullList<ItemStack> referStacks, int method, int tier) {
-        for (RecipeElement recipe : recipes) {
+        for (RecipeElement recipe : recipes.values()) {
             if (recipe.getCondition().match(referStacks, method, tier)) {
                 return recipe;
             }
@@ -148,25 +144,35 @@ public class ClayiumRecipes {
         return RecipeElement.FLAT;
     }
 
-    public static void registerCWTableRecipe() {
+    public static RecipeElement getRecipeElement(ClayiumRecipe recipes, int hash) {
+        for (Integer recipe : recipes.keySet()) {
+            if (recipe == hash) {
+                return recipes.get(recipe);
+            }
+        }
+
+        return RecipeElement.FLAT;
+    }
+
+    public static void registerClayWorkTableRecipe() {
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ItemStack.EMPTY), 4);
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY), 1, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY), 30);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), W(ClayiumItems.rollingPin)), 2, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), w(ClayiumItems.rollingPin)), 2, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ItemStack.EMPTY), 4);
 
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ItemStack.EMPTY), 1, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ItemStack.EMPTY), 10);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), W(ClayiumItems.rollingPin)), 2, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 1);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), W(ClayiumItems.slicer)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY), 3);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), W(ClayiumItems.spatula)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY), 3);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 6), W(ClayiumItems.rollingPin)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ItemStack.EMPTY), 10);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), w(ClayiumItems.rollingPin)), 2, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 1);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), w(ClayiumItems.slicer)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY), 3);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), w(ClayiumItems.spatula)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY), 3);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 6), w(ClayiumItems.rollingPin)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ItemStack.EMPTY), 10);
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 3), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY), 40);
 
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), W(ClayiumItems.slicer)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), W(ClayiumItems.spatula)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), W(ClayiumItems.spatula)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing)), 2);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.slicer)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.spatula)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.spatula)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing)), 2);
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY), 2, ii(i(ClayiumItems.rawSlicer), ItemStack.EMPTY), 15);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), W(ClayiumItems.rollingPin)), 3, ii(i(ClayiumItems.rawSlicer), ItemStack.EMPTY), 2);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), W(ClayiumItems.spatula)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick)), 1);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.rollingPin)), 3, ii(i(ClayiumItems.rawSlicer), ItemStack.EMPTY), 2);
+        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), w(ClayiumItems.spatula)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick)), 1);
 
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ItemStack.EMPTY), 3);
         clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), i(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ItemStack.EMPTY), 7);

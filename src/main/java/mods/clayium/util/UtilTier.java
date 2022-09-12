@@ -52,4 +52,24 @@ public class UtilTier {
             return null;
         }
     }
+
+    public static boolean canAutoTransfer(int tier) {
+        return tier >= 3;
+    }
+
+    /**
+     * true: Pushing the button is the only way to produce CE
+     * false: kinds of Clay Energy Block are the only way to produce CE
+     */
+    public static boolean canManufactureCraft(int tier) {
+        return tier <= 2;
+    }
+
+    public static boolean acceptWaterWheel(int tier) {
+        return tier == 2 || tier == 3;
+    }
+
+    public static boolean acceptEnergyClay(int tier) {
+        return tier >= 4;
+    }
 }

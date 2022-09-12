@@ -5,6 +5,7 @@ import mods.clayium.machine.ClayContainer.ClaySidedContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.TierPrefix;
 import mods.clayium.util.UtilLocale;
+import mods.clayium.util.UtilTier;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -74,7 +75,8 @@ public class ClayiumMachine extends ClaySidedContainer {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayiumMachine) {
             TileEntityClayiumMachine tecm = (TileEntityClayiumMachine) worldIn.getTileEntity(pos);
             tecm.importRoutes.replace(EnumFacing.UP, 0);
-            tecm.importRoutes.replace(placer.getHorizontalFacing(), -2);
+            if (!UtilTier.canManufactureCraft(this.tier))
+                tecm.importRoutes.replace(placer.getHorizontalFacing(), -2);
             tecm.exportRoutes.replace(EnumFacing.DOWN, 0);
         }
     }

@@ -5,6 +5,7 @@ import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
 import mods.clayium.machine.common.IHasButton;
 import mods.clayium.util.UtilLocale;
+import mods.clayium.util.UtilTier;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -35,22 +36,14 @@ public class GuiClayiumMachine extends GuiTemp {
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 96, progressBarSizeX, progressBarSizeY);
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, ((TileEntityClayiumMachine) tile).getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
 
-        buttonList.get(0).enabled = ((TileEntityClayiumMachine) tile).canPushButton(0) == IHasButton.ButtonProperty.PERMIT;
+        if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getTier()))
+            buttonList.get(0).enabled = ((TileEntityClayiumMachine) this.tile).canPushButton(0) == IHasButton.ButtonProperty.PERMIT;
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
-
-        buttonList.add(new GuiPictureButton(1, guiLeft + (xSize - 16) / 2, guiTop + 56, 0, 48));
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreen(mouseX, mouseY, partialTicks);
-
-        itemRender.renderItemAndEffectIntoGUI(((TileEntityClayiumMachine) tile).getStackInSlot(((TileEntityClayiumMachine) tile).clayEnergySlot), guiLeft - 12, guiTop + machineHeight - 16);
-        itemRender.renderItemOverlayIntoGUI(fontRenderer, ((TileEntityClayiumMachine) tile).getStackInSlot(((TileEntityClayiumMachine) tile).clayEnergySlot), guiLeft - 12, guiTop + machineHeight - 16, null);
+    protected void addButtons() {
+        if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getTier()))
+            buttonList.add(new GuiPictureButton(0, guiLeft + (xSize - 16) / 2, guiTop + 56, 0, 48));
     }
 
     @Override

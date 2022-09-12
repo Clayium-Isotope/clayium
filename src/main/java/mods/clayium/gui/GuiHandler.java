@@ -12,7 +12,7 @@ import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.ContainerNormalInventory;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
@@ -49,7 +49,7 @@ public class GuiHandler implements IGuiHandler {
     @Nullable
     @Override
     @SideOnly(Side.CLIENT)
-    public Gui getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    public GuiContainer getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
 
         if (tile != null) {

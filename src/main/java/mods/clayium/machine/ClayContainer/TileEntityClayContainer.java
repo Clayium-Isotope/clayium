@@ -79,6 +79,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     protected int autoInsertCount = 2;
     protected int autoExtractCount = 0;
 
+    // be careful with ArrayIndexOutOfBoundsException
     public int clayEnergySlot = -1;
     protected int tier;
 
@@ -287,8 +288,9 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
         if (index == this.clayEnergySlot) {
-            return acceptEnergyClay()
-                    && hasClayEnergy(stack) && (this.containerItemStacks.get(index).isEmpty() || this.containerItemStacks.get(index).getCount() < this.clayEnergyStorageSize);
+            return acceptEnergyClay() && hasClayEnergy(stack)
+                    && (this.containerItemStacks.get(this.clayEnergySlot).isEmpty()
+                        || this.containerItemStacks.get(this.clayEnergySlot).getCount() < this.clayEnergyStorageSize);
         }
 
         for (int[] slots : this.listSlotsImport) {
@@ -304,10 +306,10 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 //        if (ItemFilterTemp.isFilter(filter) && !ItemFilterTemp.match(filter, itemstack)) return false;
 
         int route = this.importRoutes.get(direction);
+        if (route == -2 && index == this.clayEnergySlot) return isItemValidForSlot(index, itemStackIn);
+
         if (route >= 0 && route < this.listSlotsImport.size()) {
-            for (int _slot : this.listSlotsImport.get(route))
-                if (_slot == index)
-                    return true;
+            return Arrays.stream(this.listSlotsImport.get(route)).anyMatch(e -> e == index);
         }
 
         return false;
@@ -320,11 +322,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
         int route = this.exportRoutes.get(direction);
         if (route >= 0 && route < this.listSlotsExport.size()) {
-            if (Arrays.stream(this.listSlotsExport.get(route)).anyMatch(e -> e == index))
-
-//            for (int _slot : this.listSlotsExport.get(route))
-//                if (_slot == index)
-                    return true;
+            return Arrays.stream(this.listSlotsExport.get(route)).anyMatch(e -> e == index);
         }
 
         return false;
@@ -406,14 +404,24 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     }
 
     private void doAutoTakeIn() {
+        int transferred = this.maxAutoExtractDefault;
+        int route;
         for (EnumFacing facing : EnumFacing.VALUES) {
-            int route = this.importRoutes.get(facing);
-            if (0 <= route && route < this.listSlotsImport.size()) {
-                UtilTransfer.extract(this, this.listSlotsImport.get(route), facing, this.maxAutoExtractDefault);
-            } else if (route == -2) {
-                UtilTransfer.extract(this, new int[] { this.clayEnergySlot }, facing, this.maxAutoExtractDefault);
+            route = this.importRoutes.get(facing);
+            if (route != -2 && (0 > route || route >= this.listSlotsImport.size())) {
+                if (route != -1)
+                    this.importRoutes.replace(facing, -1);
+                continue;
+            }
+
+            if (route == -2) {
+                transferred = UtilTransfer.extract(this, new int[] { this.clayEnergySlot }, facing, clayEnergyStorageSize - this.containerItemStacks.get(this.clayEnergySlot).getCount());
             } else {
-                this.importRoutes.replace(facing, -1);
+                transferred = UtilTransfer.extract(this, this.listSlotsImport.get(route), facing, transferred);
+            }
+
+            if (transferred == 0) {
+                return;
             }
         }
     }

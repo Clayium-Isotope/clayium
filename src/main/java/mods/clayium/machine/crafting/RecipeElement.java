@@ -13,6 +13,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class RecipeElement {
     public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, 0, 0, ItemStack.EMPTY, 0, 0);
@@ -224,9 +225,41 @@ public class RecipeElement {
         }
         return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (this == o) return true;
+        if (!(o instanceof RecipeElement)) return false;
+        RecipeElement other = (RecipeElement) o;
+
+        return this.condition.tier == other.condition.tier
+                && this.condition.method == other.condition.method
+                && this.result.energy == other.result.energy
+                && this.result.time == other.result.time
+                && this.condition.materials.equals(other.condition.materials)
+                && this.result.results.equals(other.result.results);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = Objects.hash(this.condition.tier, this.condition.method, this.result.energy, this.result.time);
+
+        for (ItemStack stack : this.condition.materials) {
+            if (stack.getItem().getRegistryName() != null)
+                hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+        }
+
+        for (ItemStack stack : this.result.results) {
+            if (stack.getItem().getRegistryName() != null)
+                hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+        }
+
+        return hash;
+    }
 }
 
-// TODO RecipeElement implement IRecipe
+// TODO RecipeElement implement IRecipe and use Ingredient instead of ItemStack
 class _RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
     private final NonNullList<ItemStack> materials;
