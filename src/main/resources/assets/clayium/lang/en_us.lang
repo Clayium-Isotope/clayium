@@ -58,6 +58,10 @@ tile.clay_crafting_table.tooltip.line1=A convenient version of vanilla Crafting 
 tile.clay_crafting_table.tooltip.line2=__DETAIL__
 tile.clay_crafting_table.tooltip.line3=You can access the content of a nearby chest while using it.
 
+tile.energetic_clay_condenser_mk1.name=Energetic Clay Condenser Mk I
+tile.energetic_clay_condenser_mk1.tooltip.line1=To obtain the first Energetic Clay.
+tile.energetic_clay_condenser_mk2.name=Energetic Clay Condenser Mk II
+
 tile.clay_bending_machine.name=Clay Bending Machine
 tile.clay_bending_machine.tooltip.line1=The first machine.
 tile.dense_clay_bending_machine.name=Dense Clay Bending Machine
@@ -96,23 +100,23 @@ tile.advanced_cobblestone_generator.name=Advanced Cobblestone Generator
 tile.precision_cobblestone_generator.name=Precision Cobblestone Generator
 tile.clay_steel_cobblestone_generator.name=Clay Steel Cobblestone Generator
 
-# tile.blockDenseClayCondenser.name=Dense Clay Condenser
-# tile.blockSimpleCondenser.name=Simple Condenser
-# tile.blockBasicCondenser.name=Basic Condenser
-# tile.blockAdvancedCondenser.name=Advanced Condenser
-# tile.blockAntimatterCondenser.name=Antimatter Condenser
+tile.dense_clay_condenser.name=Dense Clay Condenser
+tile.simple_condenser.name=Simple Condenser
+tile.basic_condenser.name=Basic Condenser
+tile.advanced_condenser.name=Advanced Condenser
+tile.antimatter_condenser.name=Antimatter Condenser
 
-# tile.blockDenseClayGrinder.name=Dense Clay Grinder
-# tile.blockDenseClayGrinder.tooltip.line1=Grinds Dense Clay Ores.
-# tile.blockSimpleGrinder.name=Simple Grinder
-# tile.blockBasicGrinder.name=Basic Grinder
-# tile.blockAdvancedGrinder.name=Advanced Grinder
-# tile.blockPrecisionGrinder.name=Precision Grinder
-# tile.blockAntimatterGrinder.name=Antimatter Grinder
+tile.dense_clay_grinder.name=Dense Clay Grinder
+tile.dense_clay_grinder.tooltip.line1=Grinds Dense Clay Ores.
+tile.simple_grinder.name=Simple Grinder
+tile.basic_grinder.name=Basic Grinder
+tile.advanced_grinder.name=Advanced Grinder
+tile.precision_grinder.name=Precision Grinder
+tile.antimatter_grinder.name=Antimatter Grinder
 
-# tile.blockDenseClayDecomposer.name=Dense Clay Decomposer
-# tile.blockSimpleDecomposer.name=Simple Decomposer
-# tile.blockBasicDecomposer.name=Basic Decomposer
+tile.dense_clay_decomposer.name=Dense Clay Decomposer
+tile.simple_decomposer.name=Simple Decomposer
+tile.basic_decomposer.name=Basic Decomposer
 
 tile.clay_milling_machine.name=Elemental Milling Machine
 tile.clay_milling_machine.tooltip.line1=To obtain the first circuit.
@@ -125,6 +129,14 @@ tile.basic_milling_machine.name=Basic Milling Machine
 # tile.blockAntimatterAssembler.name=Antimatter Assembler
 # tooltip.Assembler.line1=Say goodbye to complicated craft.
 
+tile.basic_smelter.name=Basic Smelter
+tile.advanced_smelter.name=Advanced Smelter
+tile.precision_smelter.name=Precision Smelter
+tile.clay_steel_smelter.name=Clay Steel Smelter
+tile.clayium_smelter.name=Clayium Smelter
+tile.ultimate_smelter.name=Ultimate Smelter
+tooltip.smelter.line1=Furnace powered by CE.
+
 tile.basic_buffer.name=Basic Buffer
 tile.advanced_buffer.name=Advanced Buffer
 tile.precision_buffer.name=Precision Buffer
@@ -135,7 +147,7 @@ tile.antimatter_buffer.name=Antimatter Buffer
 tile.pure_antimatter_buffer.name=Pure Antimatter Buffer
 tile.oec_buffer.name=OEC Buffer
 tile.opa_buffer.name=OPA Buffer
-tooltip.Buffer.line1=Transfers items. Acts as an item pipe.
+tooltip.buffer.line1=Transfers items. Acts as an item pipe.
 
 # Item Part
 

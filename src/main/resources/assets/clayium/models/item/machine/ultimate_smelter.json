@@ -1,0 +1,7 @@
+{
+  "parent": "clayium:block/machine_temp",
+  "textures": {
+    "hull": "clayium:blocks/machinehull-8",
+    "face": "clayium:blocks/machine/smelter"
+  }
+}

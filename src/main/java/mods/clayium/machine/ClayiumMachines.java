@@ -22,6 +22,9 @@ public class ClayiumMachines {
         add(EnumMachineKind.workTable, 0, new ClayWorkTable());
         add(EnumMachineKind.craftingTable, 0, new ClayCraftingTable());
 
+        add(EnumMachineKind.ECCondenser, 3, "mk1");
+        add(EnumMachineKind.ECCondenser, 4, "mk2");
+
         add(EnumMachineKind.bendingMachine, new int[] { 1, 2, 3, 4, 5, 6, 7, 9 });
         add(EnumMachineKind.wireDrawingMachine, new int[] { 1, 2, 3, 4 });
         add(EnumMachineKind.pipeDrawingMachine, new int[] { 1, 2, 3, 4 });
@@ -30,17 +33,17 @@ public class ClayiumMachines {
 
         add(EnumMachineKind.cobblestoneGenerator, new int[] { 1, 2, 3, 4, 5, 6, 7 }, CobblestoneGenerator.class);
 
-//        add(EnumMachineKind.condenser, new int[] { 2, 3, 4, 5, 10 });
-//        add(EnumMachineKind.grinder, new int[]{ 2, 3, 4, 5, 6, 10 });
-//        add(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });
+        add(EnumMachineKind.condenser, new int[] { 2, 3, 4, 5, 10 });
+        add(EnumMachineKind.grinder, new int[]{ 2, 3, 4, 5, 6, 10 });
+        add(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });
         add(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
-        add(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
 
 //        add(EnumMachineKind.assembler, new int[] { 3, 4, 6, 10});
 //        add(EnumMachineKind.inscriber, new int[] { 3, 4 });
 //        add(EnumMachineKind.centrifuge, new int[] { 3, 4, 5, 6 });
-//        add(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
+        add(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
 
+        add(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
 
 //        add(EnumMachineKind.creativeCESource, 13);
 //

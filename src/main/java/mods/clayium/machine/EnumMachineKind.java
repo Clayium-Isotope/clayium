@@ -32,7 +32,7 @@ public enum EnumMachineKind {
     assembler("assembler", ClayiumRecipes.assembler),
     inscriber("inscriber", ClayiumRecipes.inscriber),
     centrifuge("centrifuge", ClayiumRecipes.centrifuge),
-    ECCondenser("ec_condenser", ClayiumRecipes.energeticClayCondenser),
+    ECCondenser("energetic_clay_condenser", ClayiumRecipes.energeticClayCondenser, "eccondenser"),
 
     // Tier 4 ~
     smelter("smelter", ClayiumRecipes.smelter),
@@ -94,8 +94,13 @@ public enum EnumMachineKind {
     metalChest("metal_chest", null);
 
     EnumMachineKind(String kind, ClayiumRecipe recipe) {
+        this(kind, recipe, kind.replaceAll("_", ""));
+    }
+
+    EnumMachineKind(String kind, ClayiumRecipe recipe, String facePath) {
         this.kind = kind;
         this.recipe = recipe;
+        this.facePath = facePath;
     }
 
     public String getRegisterName() {
@@ -108,6 +113,7 @@ public enum EnumMachineKind {
 
     private final String kind;
     private final ClayiumRecipe recipe;
+    public final String facePath;
 
     @Nullable
     public static EnumMachineKind fromName(String name) {
@@ -118,6 +124,6 @@ public enum EnumMachineKind {
     }
 
     public ResourceLocation getFaceResource() {
-        return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.kind.replaceAll("_", "") + ".png");
+        return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.facePath + ".png");
     }
 }

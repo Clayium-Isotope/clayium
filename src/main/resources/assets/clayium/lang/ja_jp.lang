@@ -58,6 +58,10 @@ tile.clay_crafting_table.tooltip.line1=ちょっと便利な作業台
 tile.clay_crafting_table.tooltip.line2=__DETAIL__
 tile.clay_crafting_table.tooltip.line3=クラフト時隣接チェストにアクセス可能
 
+tile.energetic_clay_condenser_mk1.name=エネルギー粘土凝縮機 Mk I
+tile.energetic_clay_condenser_mk1.tooltip.line1=初めてのエネルギー粘土
+tile.energetic_clay_condenser_mk2.name=エネルギー粘土凝縮機 Mk II
+
 tile.clay_bending_machine.name=粘土プレート作成機
 tile.clay_bending_machine.tooltip.line1=初めての機械
 tile.dense_clay_bending_machine.name=高密度粘土プレート作成機
@@ -96,23 +100,23 @@ tile.advanced_cobblestone_generator.name=発展丸石製造機
 tile.precision_cobblestone_generator.name=精密丸石製造機
 tile.clay_steel_cobblestone_generator.name=粘土鋼丸石製造機
 
-# tile.blockDenseClayCondenser.name=高密度粘土コンデンサー
-# tile.blockSimpleCondenser.name=簡易コンデンサー
-# tile.blockBasicCondenser.name=コンデンサー
-# tile.blockAdvancedCondenser.name=発展コンデンサー
-# tile.blockAntimatterCondenser.name=反物質コンデンサー
+tile.dense_clay_condenser.name=高密度粘土コンデンサー
+tile.simple_condenser.name=簡易コンデンサー
+tile.basic_condenser.name=コンデンサー
+tile.advanced_condenser.name=発展コンデンサー
+tile.antimatter_condenser.name=反物質コンデンサー
 
-# tile.blockDenseClayGrinder.name=高密度粘土粉砕機
-# tile.blockDenseClayGrinder.tooltip.line1=高密度粘土鉱石を粉砕しよう
-# tile.blockSimpleGrinder.name=簡易粉砕機
-# tile.blockBasicGrinder.name=粉砕機
-# tile.blockAdvancedGrinder.name=発展粉砕機
-# tile.blockPrecisionGrinder.name=精密粉砕機
-# tile.blockAntimatterGrinder.name=反物質粉砕機
+tile.dense_clay_grinder.name=高密度粘土粉砕機
+tile.dense_clay_grinder.tooltip.line1=高密度粘土鉱石を粉砕しよう
+tile.simple_grinder.name=簡易粉砕機
+tile.basic_grinder.name=粉砕機
+tile.advanced_grinder.name=発展粉砕機
+tile.precision_grinder.name=精密粉砕機
+tile.antimatter_grinder.name=反物質粉砕機
 
-# tile.blockDenseClayDecomposer.name=高密度粘土分解機
-# tile.blockSimpleDecomposer.name=簡易分解機
-# tile.blockBasicDecomposer.name=分解機
+tile.dense_clay_decomposer.name=高密度粘土分解機
+tile.simple_decomposer.name=簡易分解機
+tile.basic_decomposer.name=分解機
 
 tile.clay_milling_machine.name=初期型フライス盤
 tile.clay_milling_machine.tooltip.line1=初めての回路
@@ -125,6 +129,14 @@ tile.basic_milling_machine.name=フライス盤
 # tile.blockAntimatterAssembler.name=反物質組立機
 # tooltip.Assembler.line1=複雑なレシピにウンザリしたあなたへ
 
+tile.basic_smelter.name=精錬機
+tile.advanced_smelter.name=発展精錬機
+tile.precision_smelter.name=精密精錬機
+tile.clay_steel_smelter.name=粘土鋼精錬機
+tile.clayium_smelter.name=クレイウム精錬機
+tile.ultimate_smelter.name=究極精錬機
+tooltip.smelter.line1=粘土エネルギーで動くかまど
+
 tile.basic_buffer.name=バッファー
 tile.advanced_buffer.name=発展バッファー
 tile.precision_buffer.name=精密バッファー
@@ -135,7 +147,7 @@ tile.antimatter_buffer.name=反物質バッファー
 tile.pure_antimatter_buffer.name=純反物質バッファー
 tile.oec_buffer.name=OEC バッファー
 tile.opa_buffer.name=OPA バッファー
-tooltip.Buffer.line1=いわゆるアイテムパイプ
+tooltip.buffer.line1=いわゆるアイテムパイプ
 
 # Item Part
 

@@ -4,6 +4,7 @@ import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.JsonHelper;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import mods.clayium.util.UtilTier;
@@ -25,11 +26,13 @@ public class ClayiumMachine extends ClaySidedContainer {
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, int tier, Class<? extends TileEntityClayContainer> teClass, int guiID) {
         super(Material.IRON, teClass,
-                suffix.isEmpty()
+                suffix == null || suffix.equals("")
                         ? TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName()
                         : kind.getRegisterName() + "_" + suffix,
                 guiID, tier);
         this.machineKind = kind;
+
+        JsonHelper.genItemJson(TierPrefix.get(tier), kind, this.getRegistryName().getResourcePath());
     }
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
@@ -37,7 +40,7 @@ public class ClayiumMachine extends ClaySidedContainer {
     }
 
     public ClayiumMachine(EnumMachineKind kind, int tier) {
-        this(kind, "", tier);
+        this(kind, null, tier);
     }
 
     @Override
@@ -75,6 +78,6 @@ public class ClayiumMachine extends ClaySidedContainer {
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        UtilLocale.localizeTooltip(tooltip, machineKind.getRegisterName());
+        UtilLocale.localizeTooltip(tooltip, "tooltip." + machineKind.getRegisterName());
     }
 }

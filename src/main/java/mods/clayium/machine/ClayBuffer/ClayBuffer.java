@@ -30,7 +30,7 @@ public class ClayBuffer extends ClayContainer {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, "tooltip.Buffer");
+        UtilLocale.localizeTooltip(tooltip, "tooltip.buffer");
         super.addInformation(stack, player, tooltip, advanced);
     }
 
