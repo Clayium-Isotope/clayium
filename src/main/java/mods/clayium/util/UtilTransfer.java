@@ -7,6 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class UtilTransfer {
@@ -119,5 +122,115 @@ public class UtilTransfer {
         }
 
         return IntStream.range(0, ((IInventory) te).getSizeInventory()).toArray();
+    }
+
+    public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
+        if (itemstack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack res = itemstack.copy();
+        if (inventory.get(index).isEmpty()) {
+            inventory.set(index, res.splitStack(Math.min(res.getCount(), inventoryStackLimit)));
+        } else if (UtilItemStack.areKindEqual(inventory.get(index), itemstack)) {
+            int a = Math.min(itemstack.getCount(), inventory.get(index).getMaxStackSize() - inventory.get(index).getCount());
+            inventory.get(index).grow(a);
+            res.shrink(a);
+        }
+
+        if (res.getCount() <= 0) {
+            res = ItemStack.EMPTY;
+        }
+
+        return res;
+    }
+
+    public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+        if (itemstack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack res = itemstack.copy();
+
+        int k;
+        for(k = i; k < j; ++k) {
+            if (!inventory.get(k).isEmpty()) {
+                res = produceItemStack(res, inventory, k, inventoryStackLimit);
+            }
+        }
+
+        for(k = i; k < j; ++k) {
+            if (inventory.get(k).isEmpty()) {
+                res = produceItemStack(res, inventory, k, inventoryStackLimit);
+            }
+        }
+
+        return res;
+    }
+
+    public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+        if (itemstacks.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        for(int k = 0; k < itemstacks.size(); ++k) {
+            itemstacks.set(k, produceItemStack(itemstacks.get(k), inventory, i, j, inventoryStackLimit));
+        }
+
+        return itemstacks;
+    }
+
+    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
+        if (itemstack.isEmpty()) {
+            return 0;
+        }
+
+        ItemStack res = itemstack.copy();
+        int stackSize = itemstack.getCount();
+        if (inventory.get(index).isEmpty()) {
+            return inventoryStackLimit;
+        }
+
+        return UtilItemStack.areKindEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
+    }
+
+    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+        int rest = 0;
+
+        for(int k = i; k < j; ++k) {
+            rest += canProduceItemStack(itemstack, inventory, k, inventoryStackLimit);
+        }
+
+        return rest;
+    }
+
+    public static boolean canProduceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+        if (!itemstacks.isEmpty()) {
+            List<ItemStack> copyItemstacks = getHardCopy(itemstacks);
+            List<ItemStack> copyInventory = getHardCopy(inventory);
+
+            for (ItemStack copyItemstack : copyItemstacks) {
+                if (!produceItemStack(copyItemstack, copyInventory, i, j, inventoryStackLimit).isEmpty()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static List<ItemStack> getHardCopy(List<ItemStack> itemstacks) {
+        if (itemstacks == null || itemstacks.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<ItemStack> res = new ArrayList<>(itemstacks.size());
+
+        for(int i = 0; i < itemstacks.size(); ++i) {
+            if (!itemstacks.get(i).isEmpty()) {
+                res.set(i, itemstacks.get(i).copy());
+            }
+        }
+
+        return res;
     }
 }

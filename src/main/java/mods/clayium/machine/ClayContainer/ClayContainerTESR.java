@@ -2,7 +2,6 @@ package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -55,12 +54,13 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
         if (!ClayContainer.ClayContainerState.renderAsPipe(te)) {
             modelCC.renderBlocked();
 
-            if (te.getBlockType() instanceof ClayiumMachine) {
-                ResourceLocation face = ((ClayiumMachine) te.getBlockType()).getMachineKind().getFaceResource();
-                if (face != null) {
-                    this.bindTexture(face);
+            ResourceLocation face = te.getFaceResource();
+            if (face != null) {
+                this.bindTexture(face);
+                if (te.getBlockState() instanceof ClaySidedContainer.ClaySidedContainerState)
                     pasteBoundTexToBlockFace(te.getBlockState().getValue(ClaySidedContainer.ClaySidedContainerState.FACING));
-                }
+                if (te.getBlockState() instanceof ClayDirectionalContainer.ClayDirectionalContainerState)
+                    pasteBoundTexToBlockFace(te.getBlockState().getValue(ClayDirectionalContainer.ClayDirectionalContainerState.FACING));
             }
 
             bindImportBlockTexAsCan(te.importRoutes, EnumFacing.DOWN);

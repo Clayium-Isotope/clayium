@@ -2,8 +2,9 @@ package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.TierPrefix;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import mods.clayium.util.UtilTier;
 import net.minecraft.block.material.Material;
@@ -12,9 +13,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -24,13 +23,17 @@ import java.util.List;
 public class ClayiumMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
-        super(Material.IRON, TileEntityClayiumMachine.class,
+    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier, Class<? extends TileEntityClayContainer> teClass, int guiID) {
+        super(Material.IRON, teClass,
                 suffix.isEmpty()
                         ? TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName()
                         : kind.getRegisterName() + "_" + suffix,
-                GuiHandler.clayBendingMachineGuiID, tier);
+                guiID, tier);
         this.machineKind = kind;
+    }
+
+    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
+        this(kind, suffix, tier, TileEntityClayiumMachine.class, GuiHandler.clayMachineGuiID);
     }
 
     public ClayiumMachine(EnumMachineKind kind, int tier) {
@@ -38,40 +41,16 @@ public class ClayiumMachine extends ClaySidedContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        TileEntityClayiumMachine tecm = new TileEntityClayiumMachine();
-        tecm.initByTier(this.tier);
-        tecm.setKind(this.machineKind);
-        return tecm;
-    }
-
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        if (!worldIn.isRemote) {
-            IBlockState north = worldIn.getBlockState(pos.north());
-            IBlockState east = worldIn.getBlockState(pos.east());
-            IBlockState south = worldIn.getBlockState(pos.south());
-            IBlockState west = worldIn.getBlockState(pos.west());
-            EnumFacing face = state.getValue(ClaySidedContainer.ClaySidedContainerState.FACING);
-
-            if (face == EnumFacing.NORTH && north.isFullBlock() && !south.isFullBlock()) face = EnumFacing.SOUTH;
-            else if (face == EnumFacing.SOUTH && south.isFullBlock() && !north.isFullBlock()) face = EnumFacing.NORTH;
-            else if (face == EnumFacing.EAST && east.isFullBlock() && !west.isFullBlock()) face = EnumFacing.WEST;
-            else if (face == EnumFacing.WEST && west.isFullBlock() && !east.isFullBlock()) face = EnumFacing.EAST;
-
-            worldIn.setBlockState(pos, state.withProperty(ClaySidedContainer.ClaySidedContainerState.FACING, face), 2);
+    public TileEntityClayContainer createNewTileEntity(World worldIn, int meta) {
+        TileEntityClayContainer tecc = super.createNewTileEntity(worldIn, meta);
+        if (tecc instanceof TileEntityClayiumMachine) {
+            ((TileEntityClayiumMachine) tecc).setKind(this.machineKind);
         }
-    }
-
-    @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return this.getDefaultState().withProperty(ClaySidedContainer.ClaySidedContainerState.FACING, placer.getHorizontalFacing().getOpposite());
+        return tecc;
     }
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, state.withProperty(ClaySidedContainer.ClaySidedContainerState.FACING, placer.getHorizontalFacing().getOpposite()), 3);
-
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayiumMachine) {
             TileEntityClayiumMachine tecm = (TileEntityClayiumMachine) worldIn.getTileEntity(pos);
             tecm.importRoutes.replace(EnumFacing.UP, 0);
@@ -81,29 +60,12 @@ public class ClayiumMachine extends ClaySidedContainer {
         }
     }
 
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        EnumFacing face = EnumFacing.getFront(meta);
-        if (face.getAxis() == EnumFacing.Axis.Y) face = EnumFacing.NORTH;
-        return this.getDefaultState().withProperty(ClaySidedContainer.ClaySidedContainerState.FACING, face);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(ClaySidedContainer.ClaySidedContainerState.FACING).getIndex();
-    }
-
     public static void updateBlockState(World world, BlockPos pos) {
         TileEntity tileentity = world.getTileEntity(pos);
         if (tileentity != null) {
             tileentity.validate();
             world.setTileEntity(pos, tileentity);
         }
-    }
-
-    @Override
-    public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.TRANSLUCENT;
     }
 
     public EnumMachineKind getMachineKind() {

@@ -24,10 +24,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -80,7 +77,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntityClayContainer createNewTileEntity(World worldIn, int meta) {
         if (this.teClass == null) return null;
 
         try {
@@ -147,6 +144,11 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         return EnumBlockRenderType.MODEL;
     }
 
+    @Override
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.SOLID;
+    }
+
     public boolean canBePipe() {
         return true;
     }
@@ -191,12 +193,19 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     private static class ClayContainerStateContainer extends BlockStateContainer {
-        public ClayContainerStateContainer(Block blockIn) {
-            super(blockIn, ClayContainerState.getPropertyList().toArray(new IProperty[0]));
+        public ClayContainerStateContainer(ClayContainer blockIn) {
+            super(blockIn,
+                    blockIn instanceof ClaySidedContainer ? ClaySidedContainer.ClaySidedContainerState.getPropertyList().toArray(new IProperty[0])
+                    : blockIn instanceof ClayDirectionalContainer ? ClayDirectionalContainer.ClayDirectionalContainerState.getPropertyList().toArray(new IProperty[0])
+                    : ClayContainerState.getPropertyList().toArray(new IProperty[0]));
         }
 
         @Override
         protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties, @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
+            if (block instanceof ClaySidedContainer)
+                return new ClaySidedContainer.ClaySidedContainerState(block, properties);
+            if (block instanceof ClayDirectionalContainer)
+                return new ClayDirectionalContainer.ClayDirectionalContainerState(block, properties);
             return new ClayContainerState(block, properties);
         }
     }

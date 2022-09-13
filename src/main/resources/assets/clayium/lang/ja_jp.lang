@@ -63,6 +63,10 @@ tile.clay_bending_machine.tooltip.line1=初めての機械
 tile.dense_clay_bending_machine.name=高密度粘土プレート作成機
 tile.simple_bending_machine.name=簡易プレート作成機
 tile.basic_bending_machine.name=プレート作成機
+tile.advanced_bending_machine.name=発展プレート作成機
+tile.precision_bending_machine.name=精密プレート作成機
+tile.clay_steel_bending_machine.name=粘土鋼プレート作成機
+tile.ultimate_bending_machine.name=究極プレート作成機
 
 tile.clay_wire_drawing_machine.name=粘土ワイヤー圧延機
 tile.dense_clay_wire_drawing_machine.name=高密度粘土ワイヤー圧延機
@@ -88,6 +92,9 @@ tile.clay_cobblestone_generator.name=粘土丸石製造機
 tile.dense_clay_cobblestone_generator.name=高密度粘土丸石製造機
 tile.simple_cobblestone_generator.name=簡易丸石製造機
 tile.basic_cobblestone_generator.name=丸石製造機
+tile.advanced_cobblestone_generator.name=発展丸石製造機
+tile.precision_cobblestone_generator.name=精密丸石製造機
+tile.clay_steel_cobblestone_generator.name=粘土鋼丸石製造機
 
 # tile.blockDenseClayCondenser.name=高密度粘土コンデンサー
 # tile.blockSimpleCondenser.name=簡易コンデンサー
@@ -117,6 +124,18 @@ tile.basic_milling_machine.name=フライス盤
 # tile.blockPrecisionAssembler.name=精密組立機
 # tile.blockAntimatterAssembler.name=反物質組立機
 # tooltip.Assembler.line1=複雑なレシピにウンザリしたあなたへ
+
+tile.basic_buffer.name=バッファー
+tile.advanced_buffer.name=発展バッファー
+tile.precision_buffer.name=精密バッファー
+tile.clay_steel_buffer.name=粘土鋼バッファー
+tile.clayium_buffer.name=クレイウムバッファー
+tile.ultimate_buffer.name=究極バッファー
+tile.antimatter_buffer.name=反物質バッファー
+tile.pure_antimatter_buffer.name=純反物質バッファー
+tile.oec_buffer.name=OEC バッファー
+tile.opa_buffer.name=OPA バッファー
+tooltip.Buffer.line1=いわゆるアイテムパイプ
 
 # Item Part
 

@@ -27,7 +27,7 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
 
             int dist = tecc.importRoutes.get(facing) + 1;
             if (tecc.listSlotsImport.size() <= dist) {
-                if (UtilTier.canManufactureCraft(tecc.getTier()))
+                if (!UtilTier.canManufactureCraft(tecc.getTier()))
                     dist = -2;
                 else
                     dist = -1;

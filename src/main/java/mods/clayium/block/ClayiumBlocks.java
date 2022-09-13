@@ -5,7 +5,7 @@ import mods.clayium.block.common.BlockTierTied;
 import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.common.MaterialBlock;
 import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.machine.TierPrefix;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

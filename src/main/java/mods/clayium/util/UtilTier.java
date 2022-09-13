@@ -4,10 +4,10 @@ import javax.annotation.Nullable;
 
 public class UtilTier {
     public enum BufferTransport {
-        _0(0, 0, 0, 0),
-        _1(0, 0, 0, 0),
-        _2(0, 0, 0, 0),
-        _3(0, 0, 0, 0),
+        _0(8, 8, 1, 1),
+        _1(8, 8, 1, 1),
+        _2(8, 8, 1, 1),
+        _3(8, 8, 1, 1),
         _4(8, 8, 1, 1),
         _5(4, 4, 4, 4),
         _6(2, 2, 16, 16),
@@ -58,7 +58,7 @@ public class UtilTier {
     }
 
     /**
-     * true: Pushing the button is the only way to produce CE
+     * @return true: Pushing the button is the only way to produce CE<p>
      * false: kinds of Clay Energy Block are the only way to produce CE
      */
     public static boolean canManufactureCraft(int tier) {

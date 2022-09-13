@@ -118,8 +118,6 @@ public enum EnumMachineKind {
     }
 
     public ResourceLocation getFaceResource() {
-        if (this.recipe == null) return null;
-
         return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.kind.replaceAll("_", "") + ".png");
     }
 }

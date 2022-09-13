@@ -63,6 +63,10 @@ tile.clay_bending_machine.tooltip.line1=The first machine.
 tile.dense_clay_bending_machine.name=Dense Clay Bending Machine
 tile.simple_bending_machine.name=Simple Bending Machine
 tile.basic_bending_machine.name=Basic Bending Machine
+tile.advanced_bending_machine.name=Advanced Bending Machine
+tile.precision_bending_machine.name=Precision Bending Machine
+tile.clay_steel_bending_machine.name=Clay Steel Bending Machine
+tile.ultimate_bending_machine.name=Ultimate Bending Machine
 
 tile.clay_wire_drawing_machine.name=Clay Wire Drawing Machine
 tile.dense_clay_wire_drawing_machine.name=Dense Clay Wire Drawing Machine
@@ -88,6 +92,9 @@ tile.clay_cobblestone_generator.name=Clay Cobblestone Generator
 tile.dense_clay_cobblestone_generator.name=Dense Clay Cobblestone Generator
 tile.simple_cobblestone_generator.name=Simple Cobblestone Generator
 tile.basic_cobblestone_generator.name=Basic Cobblestone Generator
+tile.advanced_cobblestone_generator.name=Advanced Cobblestone Generator
+tile.precision_cobblestone_generator.name=Precision Cobblestone Generator
+tile.clay_steel_cobblestone_generator.name=Clay Steel Cobblestone Generator
 
 # tile.blockDenseClayCondenser.name=Dense Clay Condenser
 # tile.blockSimpleCondenser.name=Simple Condenser
@@ -117,6 +124,18 @@ tile.basic_milling_machine.name=Basic Milling Machine
 # tile.blockPrecisionAssembler.name=Precision Assembler
 # tile.blockAntimatterAssembler.name=Antimatter Assembler
 # tooltip.Assembler.line1=Say goodbye to complicated craft.
+
+tile.basic_buffer.name=Basic Buffer
+tile.advanced_buffer.name=Advanced Buffer
+tile.precision_buffer.name=Precision Buffer
+tile.clay_steel_buffer.name=Clay Steel Buffer
+tile.clayium_buffer.name=Clayium Buffer
+tile.ultimate_buffer.name=Ultimate Buffer
+tile.antimatter_buffer.name=Antimatter Buffer
+tile.pure_antimatter_buffer.name=Pure Antimatter Buffer
+tile.oec_buffer.name=OEC Buffer
+tile.opa_buffer.name=OPA Buffer
+tooltip.Buffer.line1=Transfers items. Acts as an item pipe.
 
 # Item Part
 

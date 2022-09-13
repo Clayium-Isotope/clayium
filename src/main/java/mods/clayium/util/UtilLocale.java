@@ -144,9 +144,18 @@ public class UtilLocale {
     }
 
     public static void localizeTooltip(List<String> tooltip, String name, Object... args) {
+        String keyBase = name;
+        if (name.startsWith("tooltip.")) {
+            keyBase += ".line";
+        } else {
+            keyBase += ".tooltip.line";
+        }
+
+        String key;
+        String loc;
         for (int i = 1; i < maxLineTooltip; i++) {
-            String key = name + ".tooltip.line" + i;
-            String loc = I18n.format(key, args);
+            key = keyBase + i;
+            loc = I18n.format(key, args);
 
             if (loc.equals(key) || loc.equals("")) return;
 

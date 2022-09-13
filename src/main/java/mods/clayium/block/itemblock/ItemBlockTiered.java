@@ -3,7 +3,6 @@ package mods.clayium.block.itemblock;
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.item.common.ITieredItem;
 import mods.clayium.item.common.ItemTiered;
-import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
@@ -28,11 +27,11 @@ public class ItemBlockTiered extends ItemBlock implements ITieredItem {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        this.block.addInformation(stack, worldIn, tooltip, flagIn);
+
         if (tier >= 0) {
             tooltip.add(ItemTiered.getTieredToolTip(tier));
         }
-
-        UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
     }
 
     @Override

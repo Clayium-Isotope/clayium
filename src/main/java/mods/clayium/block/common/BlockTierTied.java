@@ -1,6 +1,6 @@
 package mods.clayium.block.common;
 
-import mods.clayium.machine.TierPrefix;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 
 import java.util.ArrayList;

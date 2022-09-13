@@ -1,4 +1,4 @@
-package mods.clayium.machine;
+package mods.clayium.util;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.ClayiumMaterial;

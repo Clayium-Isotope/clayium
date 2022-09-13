@@ -36,7 +36,7 @@ public class GuiHandler implements IGuiHandler {
                     return new ContainerClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile);
                 case clayCraftingTableGuiID:
                     return new ContainerClayCraftingTable(player.inventory, (TileEntityClayCraftingTable) tile);
-                case clayBendingMachineGuiID:
+                case clayMachineGuiID:
                     return new ContainerClayiumMachine(player.inventory, (TileEntityClayiumMachine) tile);
                 case clayBufferGuiID:
                     return new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile);
@@ -58,7 +58,7 @@ public class GuiHandler implements IGuiHandler {
                     return new GuiClayWorkTable(new ContainerClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile));
                 case clayCraftingTableGuiID:
                     return new GuiClayCraftingTable(new ContainerClayCraftingTable(player.inventory, (TileEntityClayCraftingTable) tile));
-                case clayBendingMachineGuiID:
+                case clayMachineGuiID:
                     return new GuiClayiumMachine(new ContainerClayiumMachine(player.inventory, (TileEntityClayiumMachine) tile));
                 case clayBufferGuiID:
                     return new GuiMultiPageContainer(new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile));
@@ -69,7 +69,7 @@ public class GuiHandler implements IGuiHandler {
     }
 
     public static final int clayWorkTableGuiID = 0;
-    public static final int clayBendingMachineGuiID = 9;
+    public static final int clayMachineGuiID = 9;
     public static final int clayBufferGuiID = 11;
     public static final int clayCraftingTableGuiID = 30;
 }

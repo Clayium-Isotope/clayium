@@ -11,10 +11,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collector;
 
@@ -81,7 +85,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
     // be careful with ArrayIndexOutOfBoundsException
     public int clayEnergySlot = -1;
-    protected int tier;
+    protected int tier = -1;
 
     public int getTier() {
         return tier;
@@ -435,5 +439,11 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
                 this.exportRoutes.replace(facing, -1);
             }
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Nullable
+    public ResourceLocation getFaceResource() {
+        return null;
     }
 }

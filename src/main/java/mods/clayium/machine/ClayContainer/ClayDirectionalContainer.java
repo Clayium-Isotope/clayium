@@ -1,10 +1,8 @@
 package mods.clayium.machine.ClayContainer;
 
-//import cofh.redstoneflux.api.IEnergyConnection;
-
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -21,37 +19,26 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ClaySidedContainer extends ClayContainer {
-    public ClaySidedContainer(Material material, Class<? extends TileEntityClayContainer> teClass, String modelPath, int guiId, int tier) {
+public abstract class ClayDirectionalContainer extends ClayContainer {
+    public ClayDirectionalContainer(Material material, Class<? extends TileEntityClayContainer> teClass, String modelPath, int guiId, int tier) {
         super(material, teClass, modelPath, guiId, tier);
 
         setDefaultState(this.getDefaultState()
-                .withProperty(ClaySidedContainerState.FACING, EnumFacing.NORTH)
+                .withProperty(ClayDirectionalContainerState.FACING, EnumFacing.NORTH)
         );
     }
 
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
-            IBlockState north = worldIn.getBlockState(pos.north());
-            IBlockState east = worldIn.getBlockState(pos.east());
-            IBlockState south = worldIn.getBlockState(pos.south());
-            IBlockState west = worldIn.getBlockState(pos.west());
-            EnumFacing face = state.getValue(ClaySidedContainerState.FACING);
-
-            if (face == EnumFacing.NORTH && north.isFullBlock() && !south.isFullBlock()) face = EnumFacing.SOUTH;
-            else if (face == EnumFacing.SOUTH && south.isFullBlock() && !north.isFullBlock()) face = EnumFacing.NORTH;
-            else if (face == EnumFacing.EAST && east.isFullBlock() && !west.isFullBlock()) face = EnumFacing.WEST;
-            else if (face == EnumFacing.WEST && west.isFullBlock() && !east.isFullBlock()) face = EnumFacing.EAST;
-
-            worldIn.setBlockState(pos, state.withProperty(ClaySidedContainerState.FACING, face), 2);
+            worldIn.setBlockState(pos, state.withProperty(ClayDirectionalContainerState.FACING, state.getValue(ClayDirectionalContainerState.FACING)), 2);
         }
     }
 
     @Nullable
     @Override
     public EnumFacing[] getValidRotations(World world, BlockPos pos) {
-        return EnumFacing.HORIZONTALS;
+        return EnumFacing.VALUES;
     }
 
     @Override
@@ -62,32 +49,30 @@ public abstract class ClaySidedContainer extends ClayContainer {
         if (axes == null || axes.length == 0) return false;
         EnumFacing candidacy = Arrays.stream(axes).anyMatch(_axis -> axis == _axis) ? axis : axes[0];
 
-        world.setBlockState(pos, world.getBlockState(pos).withProperty(ClaySidedContainerState.FACING, candidacy));
+        world.setBlockState(pos, world.getBlockState(pos).withProperty(ClayDirectionalContainerState.FACING, candidacy));
 
         return true;
     }
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return this.getDefaultState().withProperty(ClaySidedContainerState.FACING, placer.getHorizontalFacing().getOpposite());
+        return this.getDefaultState().withProperty(ClayDirectionalContainerState.FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer));
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        EnumFacing face = EnumFacing.getFront(meta);
-        if (face.getAxis() == EnumFacing.Axis.Y) face = EnumFacing.NORTH;
-        return this.getDefaultState().withProperty(ClaySidedContainerState.FACING, face);
+        return this.getDefaultState().withProperty(ClayDirectionalContainerState.FACING, EnumFacing.getFront(meta));
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(ClaySidedContainerState.FACING).getIndex();
+        return state.getValue(ClayDirectionalContainerState.FACING).getIndex();
     }
 
-    public static class ClaySidedContainerState extends ClayContainerState {
-        public static final PropertyDirection FACING = BlockHorizontal.FACING;
+    public static class ClayDirectionalContainerState extends ClayContainerState {
+        public static final PropertyDirection FACING = BlockDirectional.FACING;
 
-        protected ClaySidedContainerState(Block blockIn, ImmutableMap<IProperty<?>, Comparable<?>> propertiesIn) {
+        protected ClayDirectionalContainerState(Block blockIn, ImmutableMap<IProperty<?>, Comparable<?>> propertiesIn) {
             super(blockIn, propertiesIn);
         }
 

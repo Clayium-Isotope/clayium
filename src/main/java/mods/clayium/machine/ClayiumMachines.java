@@ -6,6 +6,8 @@ import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
+import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 
 import java.util.ArrayList;
@@ -26,8 +28,8 @@ public class ClayiumMachines {
         add(EnumMachineKind.cuttingMachine, new int[] { 1, 2, 3, 4 });
         add(EnumMachineKind.lathe, new int[] { 1, 2, 3, 4 });
 
-//        add(EnumMachineKind.cobblestoneGenerator, new int[] { 1, 2, 3, 4, 5, 6, 7 });
-//
+        add(EnumMachineKind.cobblestoneGenerator, new int[] { 1, 2, 3, 4, 5, 6, 7 }, CobblestoneGenerator.class);
+
 //        add(EnumMachineKind.condenser, new int[] { 2, 3, 4, 5, 10 });
 //        add(EnumMachineKind.grinder, new int[]{ 2, 3, 4, 5, 6, 10 });
 //        add(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });

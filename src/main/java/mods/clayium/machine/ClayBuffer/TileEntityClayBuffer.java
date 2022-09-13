@@ -10,8 +10,8 @@ import net.minecraft.util.NonNullList;
 import java.util.stream.IntStream;
 
 public class TileEntityClayBuffer extends TileEntityClayContainer implements INormalInventory {
-    private int inventoryX;
-    private int inventoryY;
+    protected int inventoryX;
+    protected int inventoryY;
 
     public TileEntityClayBuffer() {
         this.containerItemStacks = NonNullList.withSize(54, ItemStack.EMPTY);

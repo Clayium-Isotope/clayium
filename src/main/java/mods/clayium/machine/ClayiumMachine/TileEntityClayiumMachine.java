@@ -13,10 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable {
     public enum MachineSlots {
@@ -252,5 +255,13 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.debtEnergy = 0L;
         this.doingRecipe = RecipeElement.FLAT;
         return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Nullable
+    @Override
+    public ResourceLocation getFaceResource() {
+        if (kind == null) return null;
+        return this.kind.getFaceResource();
     }
 }
