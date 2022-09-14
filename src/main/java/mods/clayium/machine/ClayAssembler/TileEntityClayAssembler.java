@@ -23,9 +23,9 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         this.containerItemStacks = NonNullList.withSize(AssemblerSlots.values().length, ItemStack.EMPTY);
         this.clayEnergySlot = AssemblerSlots.ENERGY.ordinal();
 
+        this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_2.ordinal() });
-        this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.ENERGY.ordinal() });
         this.listSlotsExport.add(new int[]{ AssemblerSlots.PRODUCT.ordinal() });
         this.maxAutoExtract = new int[] {-1, -1, -1, 1};

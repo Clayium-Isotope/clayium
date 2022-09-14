@@ -25,7 +25,7 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
             int dist = tecc.exportRoutes.get(facing) + 1;
 
-            if (tecc.listSlotsExport.size() <= dist) {
+            if (tecc.listSlotsExport.size() <= dist || tecc.listSlotsExport.get(0).length >= 2 && dist == tecc.listSlotsExport.get(0).length + 1) {
                 dist = -1;
                 player.sendMessage(new TextComponentString("Disabled"));
             } else {

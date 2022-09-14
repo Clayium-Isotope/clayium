@@ -26,7 +26,7 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
 
             int dist = tecc.importRoutes.get(facing) + 1;
-            if (tecc.listSlotsImport.size() <= dist) {
+            if (tecc.listSlotsImport.size() <= dist || (tecc.listSlotsImport.get(0).length >= 2 && dist == tecc.listSlotsImport.get(0).length + 1)) {
                 if (!UtilTier.canManufactureCraft(tecc.getTier()))
                     dist = -2;
                 else
@@ -41,7 +41,7 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
                     player.sendMessage(new TextComponentString("Disabled"));
                     break;
                 default:
-                    player.sendMessage(new TextComponentString("Set insert route " + tecc.importRoutes.get(facing)));
+                    player.sendMessage(new TextComponentString("Set insert route " + dist));
                     break;
             }
 
