@@ -76,8 +76,7 @@ public class RecipeElement {
 
         public static boolean inclusion(ItemStack from, ItemStack comes) {
             if (from.isEmpty()) return true;
-            if (from.getItem() != comes.getItem()) return false;
-            if (from.getCount() > comes.getCount()) return false;
+            if (UtilItemStack.areTypeEqual(from, comes) && from.getCount() <= comes.getCount()) return true;
             if (from.getHasSubtypes() && comes.getHasSubtypes()) return from.isItemEqual(comes);
             if (from.getItemDamage() == OreDictionary.WILDCARD_VALUE) return true;
             return false;

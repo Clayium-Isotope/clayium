@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class ClayCraftingTable extends ClayContainer {
     public ClayCraftingTable() {
-        super(Material.CLAY, TileEntityClayCraftingTable.class, "clay_crafting_table", GuiHandler.clayCraftingTableGuiID, 0);
+        super(Material.CLAY, TileEntityClayCraftingTable.class, "clay_crafting_table", GuiHandler.GuiIdClayCraftingTable, 0);
         setSoundType(SoundType.GROUND);
         setHarvestLevel("shovel", 0);
         setHardness(1F);

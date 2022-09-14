@@ -21,14 +21,17 @@ public class TileGeneric extends TileEntity {
         return false;
     }
 
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public final void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         ItemStack stack = getNormalDrop(world.getBlockState(pos).getBlock(), fortune);
         drops.add(stack);
+        addSpecialDrops(drops);
     }
 
     public static ItemStack getNormalDrop(Block blockIn, int fortune) {
         return new ItemStack(blockIn.getItemDropped(blockIn.getDefaultState(), random, fortune));
     }
+
+    public void addSpecialDrops(NonNullList<ItemStack> drops) {}
 
     public void pushButton(EntityPlayer playerIn, int button) {}
 

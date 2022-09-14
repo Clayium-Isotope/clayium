@@ -132,7 +132,7 @@ public class UtilTransfer {
         ItemStack res = itemstack.copy();
         if (inventory.get(index).isEmpty()) {
             inventory.set(index, res.splitStack(Math.min(res.getCount(), inventoryStackLimit)));
-        } else if (UtilItemStack.areKindEqual(inventory.get(index), itemstack)) {
+        } else if (UtilItemStack.areTypeEqual(inventory.get(index), itemstack)) {
             int a = Math.min(itemstack.getCount(), inventory.get(index).getMaxStackSize() - inventory.get(index).getCount());
             inventory.get(index).grow(a);
             res.shrink(a);
@@ -191,7 +191,7 @@ public class UtilTransfer {
             return inventoryStackLimit;
         }
 
-        return UtilItemStack.areKindEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
+        return UtilItemStack.areTypeEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
     }
 
     public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {

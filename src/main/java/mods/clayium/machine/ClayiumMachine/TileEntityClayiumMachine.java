@@ -7,50 +7,49 @@ import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
 public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable {
-    public enum MachineSlots {
+    enum MachineSlots {
         MATERIAL,
         PRODUCT,
         ENERGY
     }
 
     protected EnumMachineKind kind;
-    private ClayiumRecipe recipeCards;
+    protected ClayiumRecipe recipeCards;
     public RecipeElement doingRecipe = RecipeElement.FLAT;
 
-    private long craftTime;
-    private long timeToCraft;
-    private long debtEnergy;
+    protected long craftTime;
+    protected long timeToCraft;
+    protected long debtEnergy;
 
     public long containEnergy;
 
-    public TileEntityClayiumMachine() {
+    @Override
+    public void initParams() {
         this.containerItemStacks = NonNullList.withSize(MachineSlots.values().length, ItemStack.EMPTY);
 
-        this.listSlotsImport.add(new int[]{MachineSlots.MATERIAL.ordinal()});
-        this.listSlotsExport.add(new int[]{MachineSlots.PRODUCT.ordinal()});
+        this.listSlotsImport.add(new int[] { MachineSlots.MATERIAL.ordinal() });
+        this.listSlotsExport.add(new int[] { MachineSlots.PRODUCT.ordinal() });
 
-        this.maxAutoExtract = new int[]{-1, 1};
-        this.maxAutoInsert = new int[]{-1};
+        this.maxAutoExtract = new int[] { -1, 1 };
+        this.maxAutoInsert = new int[] { -1 };
 
         this.autoInsert = true;
         this.autoExtract = true;
 
         this.clayEnergySlot = -1;
+        this.slotsDrop = new int[] { MachineSlots.MATERIAL.ordinal(), MachineSlots.PRODUCT.ordinal(), MachineSlots.ENERGY.ordinal() };
     }
 
     @Override
@@ -77,15 +76,6 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     @Override
     public boolean hasSpecialDrops() {
         return true;
-    }
-
-    @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        super.getDrops(drops, world, pos, state, fortune);
-
-        drops.add(getStackInSlot(MachineSlots.MATERIAL));
-        drops.add(getStackInSlot(MachineSlots.PRODUCT));
-        drops.add(getStackInSlot(this.clayEnergySlot));
     }
 
     @Override
@@ -234,7 +224,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
      * これを呼ぶとき、{@link TileEntityClayiumMachine#doingRecipe}は{@link RecipeElement#FLAT}かそれに準ずる状態にあるべき。
      * @return 何かに使えるかもしれないので、成功でtrue、失敗でfalseを返す。
      */
-    private boolean setNewRecipe() {
+    protected boolean setNewRecipe() {
         RecipeElement _recipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
 
         this.craftTime = 0L;

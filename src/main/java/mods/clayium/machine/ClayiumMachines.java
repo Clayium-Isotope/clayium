@@ -1,6 +1,7 @@
 package mods.clayium.machine;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayAssembler.ClayAssembler;
 import mods.clayium.machine.ClayBuffer.ClayBuffer;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
@@ -10,6 +11,8 @@ import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -38,7 +41,7 @@ public class ClayiumMachines {
         add(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });
         add(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
 
-//        add(EnumMachineKind.assembler, new int[] { 3, 4, 6, 10});
+        add(EnumMachineKind.assembler, new int[] { 3, 4, 6, 10 }, ClayAssembler.class);
 //        add(EnumMachineKind.inscriber, new int[] { 3, 4 });
 //        add(EnumMachineKind.centrifuge, new int[] { 3, 4, 5, 6 });
         add(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
@@ -63,17 +66,37 @@ public class ClayiumMachines {
     }
 
     /**
-     * @param blockClass whose constructor should have the (I)tier argument
+     * @param blockClass whose constructor argument has at least (int)tier, or in addition ({@link EnumMachineKind})kind
      */
     private static void add(EnumMachineKind kind, int[] tiers, Class<? extends ClayContainer> blockClass) {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
-        for (int tier : tiers) {
-            try {
-                ClayContainer block = blockClass.getDeclaredConstructor(int.class).newInstance(tier);
+        Constructor<? extends ClayContainer> constructor;
 
-                add(kind, tier, block);
-            } catch (Exception ignore) {}
+        try {
+            constructor = blockClass.getDeclaredConstructor(int.class);
+
+            for (int tier : tiers) {
+                add(kind, tier, constructor.newInstance(tier));
+            }
+
+            return;
+        } catch (NoSuchMethodException ignore) {
+            // if the constructor hadn't found, try another constructor.
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException instanceException) {
+            ClayiumCore.logger.error(instanceException);
+            return;
+        }
+
+        // maybe here is for ClayAssembler
+        try {
+            constructor = blockClass.getDeclaredConstructor(EnumMachineKind.class, int.class);
+
+            for (int tier : tiers) {
+                add(kind, tier, constructor.newInstance(kind, tier));
+            }
+        } catch (Exception e) {
+            ClayiumCore.logger.error(e);
         }
     }
 

@@ -8,7 +8,7 @@ import net.minecraft.block.material.Material;
 
 public class ClayWorkTable extends ClayContainer {
 	public ClayWorkTable() {
-		super(Material.ROCK, TileEntityClayWorkTable.class, "clay_work_table", GuiHandler.clayWorkTableGuiID, 0);
+		super(Material.ROCK, TileEntityClayWorkTable.class, "clay_work_table", GuiHandler.GuiIdClayWorkTable, 0);
 		setSoundType(SoundType.GROUND);
 		setHarvestLevel("shovel", 0);
 		setHardness(1F);

@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class CobblestoneGenerator extends ClayDirectionalContainer {
     public CobblestoneGenerator(int tier) {
-        super(Material.IRON, TileEntityCobblestoneGenerator.class, TierPrefix.get(tier).getPrefix() + "_" + EnumMachineKind.cobblestoneGenerator.getRegisterName(), GuiHandler.clayBufferGuiID, tier);
+        super(Material.IRON, TileEntityCobblestoneGenerator.class, TierPrefix.get(tier).getPrefix() + "_" + EnumMachineKind.cobblestoneGenerator.getRegisterName(), GuiHandler.GuiIdNormalInventory, tier);
 
         setSoundType(SoundType.METAL);
         setHardness(2.0F);

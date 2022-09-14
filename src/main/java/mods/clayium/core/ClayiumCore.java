@@ -7,6 +7,7 @@ import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumShapedMaterial;
+import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayContainer.ClayContainerTESR;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
@@ -121,6 +122,7 @@ public class ClayiumCore {
         ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new ClayContainerTESR());
         ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new ClayContainerTESR());
         ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new ClayContainerTESR());
+        ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new ClayContainerTESR());
 
 //        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
 //        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);

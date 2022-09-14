@@ -56,9 +56,9 @@ public class ClayiumRecipe extends HashMap<Integer, RecipeElement> {
         this.put(element.hashCode(), element);
     }
 
-    public RecipeElement getRecipe(List<ItemStack> materials, int method, int tier) {
+    public RecipeElement getRecipe(List<ItemStack> materials, int tier) {
         for (RecipeElement element : this.values()) {
-            if (element.getCondition().match(materials, method, tier)) {
+            if (element.getCondition().match(materials, -1, tier)) {
                 return element;
             }
         }

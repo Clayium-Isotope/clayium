@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ClayBuffer extends ClayContainer {
     public ClayBuffer(int tier) {
-        super(Material.CLAY, TileEntityClayBuffer.class, TierPrefix.get(tier).getPrefix() + "_" + EnumMachineKind.buffer.getRegisterName(), GuiHandler.clayBufferGuiID, tier);
+        super(Material.CLAY, TileEntityClayBuffer.class, TierPrefix.get(tier).getPrefix() + "_" + EnumMachineKind.buffer.getRegisterName(), GuiHandler.GuiIdNormalInventory, tier);
 
         setSoundType(SoundType.METAL);
         setHardness(2.0F);

@@ -12,11 +12,18 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerClayiumMachine extends ContainerTemp {
-    private final int materialSlotIndex = 0;
-    private final int resultSlotIndex = 1;
+    protected int materialSlotIndex;
+    protected int resultSlotIndex;
 
     public ContainerClayiumMachine(InventoryPlayer player, TileEntityClayiumMachine tile) {
         super(player, tile);
+    }
+
+    @Override
+    protected void initParameters(InventoryPlayer player) {
+        super.initParameters(player);
+        materialSlotIndex = TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal();
+        resultSlotIndex = TileEntityClayiumMachine.MachineSlots.PRODUCT.ordinal();
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

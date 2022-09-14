@@ -1,5 +1,7 @@
 package mods.clayium.gui;
 
+import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
+import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayContainer.GuiMultiPageContainer;
 import mods.clayium.machine.ClayCraftingTable.ContainerClayCraftingTable;
@@ -32,14 +34,16 @@ public class GuiHandler implements IGuiHandler {
 
         if (tile != null) {
             switch (ID) {
-                case clayWorkTableGuiID:
+                case GuiIdClayWorkTable:
                     return new ContainerClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile);
-                case clayCraftingTableGuiID:
+                case GuiIdClayCraftingTable:
                     return new ContainerClayCraftingTable(player.inventory, (TileEntityClayCraftingTable) tile);
-                case clayMachineGuiID:
+                case GuiIdClayMachines:
                     return new ContainerClayiumMachine(player.inventory, (TileEntityClayiumMachine) tile);
-                case clayBufferGuiID:
+                case GuiIdNormalInventory:
                     return new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile);
+                case GuiIdClayAssembler:
+                    return new ContainerClayAssembler(player.inventory, (TileEntityClayAssembler) tile);
             }
         }
 
@@ -54,22 +58,51 @@ public class GuiHandler implements IGuiHandler {
 
         if (tile != null) {
             switch (ID) {
-                case clayWorkTableGuiID:
+                case GuiIdClayWorkTable:
                     return new GuiClayWorkTable(new ContainerClayWorkTable(player.inventory, (TileEntityClayWorkTable) tile));
-                case clayCraftingTableGuiID:
+                case GuiIdClayCraftingTable:
                     return new GuiClayCraftingTable(new ContainerClayCraftingTable(player.inventory, (TileEntityClayCraftingTable) tile));
-                case clayMachineGuiID:
+                case GuiIdClayMachines:
                     return new GuiClayiumMachine(new ContainerClayiumMachine(player.inventory, (TileEntityClayiumMachine) tile));
-                case clayBufferGuiID:
+                case GuiIdNormalInventory:
                     return new GuiMultiPageContainer(new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile));
+                case GuiIdClayAssembler:
+                    return new GuiClayiumMachine(new ContainerClayAssembler(player.inventory, (TileEntityClayAssembler) tile));
             }
         }
 
         return null;
     }
 
-    public static final int clayWorkTableGuiID = 0;
-    public static final int clayMachineGuiID = 9;
-    public static final int clayBufferGuiID = 11;
-    public static final int clayCraftingTableGuiID = 30;
+    public static final int GuiIdClayWorkTable = 0;
+    public static final int GuiIdClayMachines = 1;
+    public static final int GuiIdClayAssembler = 2;
+    public static final int GuiIdClayCentrifuge = 3;
+    public static final int GuiIdClayChemicalReactor = 4;
+    public static final int GuiIdAutoClayCondenser = 5;
+    public static final int GuiIdChemicalMetalSeparator = 6;
+    public static final int GuiIdClayBlastFurnace = 7;
+    public static final int GuiIdClayReactor = 8;
+    public static final int GuiIdCAReactor = 9;
+    public static final int GuiIdClayWaterWheel = 10;
+    public static final int GuiIdNormalInventory = 11;
+    public static final int GuiIdSolarClayFabricator = 12;
+    public static final int GuiIdClayEnergyLaser = 13;
+    public static final int GuiIdClayDistributor = 14;
+    public static final int GuiIdStorageContainer = 15;
+    public static final int GuiIdAreaMiner = 16;
+    public static final int GuiIdAutoCrafter = 17;
+    public static final int GuiIdCACollector = 18;
+    public static final int GuiIdAutoTrader = 19;
+    public static final int GuiIdItemFilterWhitelist = 20;
+    public static final int GuiIdItemFilterString = 21;
+    public static final int GuiIdVacuumContainer = 22;
+    public static final int GuiIdGadgetHolder = 23;
+    public static final int GuiIdAreaActivator = 24;
+    public static final int GuiIdClayCraftingTable = 30;
+    public static final int GuiIdMultitrackBuffer = 31;
+    public static final int GuiIdPANAdapter = 40;
+    public static final int GuiIdPANCore = 41;
+    public static final int GuiIdRFGenerator = 90;
+    public static final int GuiIdClayInterface = 99;
 }

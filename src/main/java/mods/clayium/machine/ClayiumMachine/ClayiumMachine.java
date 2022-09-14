@@ -36,7 +36,7 @@ public class ClayiumMachine extends ClaySidedContainer {
     }
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
-        this(kind, suffix, tier, TileEntityClayiumMachine.class, GuiHandler.clayMachineGuiID);
+        this(kind, suffix, tier, TileEntityClayiumMachine.class, GuiHandler.GuiIdClayMachines);
     }
 
     public ClayiumMachine(EnumMachineKind kind, int tier) {

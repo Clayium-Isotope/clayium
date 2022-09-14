@@ -28,6 +28,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     protected NonNullList<ItemStack> containerItemStacks;
     protected String customName;
     protected int clayEnergyStorageSize = 1;
+    protected int[] slotsDrop;
 
     protected boolean isPipe = false;
 
@@ -86,6 +87,12 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     // be careful with ArrayIndexOutOfBoundsException
     public int clayEnergySlot = -1;
     protected int tier = -1;
+
+    public TileEntityClayContainer() {
+        initParams();
+    }
+
+    public void initParams() {}
 
     public int getTier() {
         return tier;
@@ -169,6 +176,14 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         if (this.world.getTileEntity(this.pos) == this)
             return player.getDistanceSq(this.pos.add(0.5D, 0.5D, 0.5D)) <= 64.0D;
         return false;
+    }
+
+    @Override
+    public void addSpecialDrops(NonNullList<ItemStack> drops) {
+        // I hope not to cause IndexOutOfBoundsException
+        for (int i : this.slotsDrop) {
+            drops.add(this.containerItemStacks.get(i));
+        }
     }
 
     @Override
