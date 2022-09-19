@@ -99,7 +99,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     }
 
     // TileEntityが作成されるとき、引数無しが適切なので、初期化の関数を分ける
-    public void initByTier(int tier) {
+    public void initParamsByTier(int tier) {
         this.tier = tier;
     }
 
@@ -217,7 +217,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         this.autoInsertCount = compound.getInteger("AutoInsertCount");
         this.autoExtractCount = compound.getInteger("AutoExtractCount");
 
-        initByTier(compound.getInteger("Tier"));
+        initParamsByTier(compound.getInteger("Tier"));
     }
 
     @Override

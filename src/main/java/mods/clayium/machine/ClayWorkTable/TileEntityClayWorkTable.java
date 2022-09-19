@@ -34,7 +34,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
 
     public TileEntityClayWorkTable() {
         this.containerItemStacks = NonNullList.withSize(ClayWorkTableSlots.values().length, ItemStack.EMPTY);
-        initByTier(0);
+        initParamsByTier(0);
     }
 
     public ItemStack getStackInSlot(ClayWorkTableSlots slot) {

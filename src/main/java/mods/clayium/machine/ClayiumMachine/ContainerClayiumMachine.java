@@ -1,14 +1,13 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
+import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerClayiumMachine extends ContainerTemp {
@@ -59,23 +58,7 @@ public class ContainerClayiumMachine extends ContainerTemp {
         });
 
         if (UtilTier.canManufactureCraft(this.tileEntity.getTier())) {
-            addMachineSlotToContainer(new Slot(this.tileEntity, TileEntityClayiumMachine.MachineSlots.ENERGY.ordinal(), -12, machineGuiSizeY - 16) {
-                @Override
-                public int getSlotStackLimit() {
-                    return tileEntity.getClayEnergyStorageSize();
-                }
-
-                @Override
-                public boolean isItemValid(ItemStack stack) {
-                    if (UtilTier.canManufactureCraft(tileEntity.getTier())) return false;
-                    return ClayiumBlocks.compressedClay.contains(stack.getItem());
-                }
-
-                @Override
-                public boolean canTakeStack(EntityPlayer playerIn) {
-                    return true;
-                }
-            });
+            addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayiumMachine.MachineSlots.ENERGY.ordinal(), machineGuiSizeY));
         }
     }
 }

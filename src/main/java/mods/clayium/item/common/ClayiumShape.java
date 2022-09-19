@@ -27,7 +27,8 @@ public enum ClayiumShape {
     ball("ball"),
     dust("dust"),
     ingot("ingot"),
-    gem("gem");
+    gem("gem"),
+    crystal("crystal");
 
     ClayiumShape(String name) {
         this.name = name;

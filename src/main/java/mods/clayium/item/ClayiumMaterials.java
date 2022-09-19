@@ -359,6 +359,37 @@ public class ClayiumMaterials {
         return shape.getName() + material.getODName();
     }
 
+    public static ItemStack getODExist(String oreName, int stackSize) {
+        List<ItemStack> oreList = OreDictionary.getOres(oreName);
+        if (oreList != null && oreList.size() > 0) {
+            ItemStack res = oreList.get(0).copy();
+            res.setCount(stackSize);
+            return res;
+        } else {
+            return null;
+        }
+    }
+
+    public static ItemStack getODExist(String oreName) {
+        return getODExist(oreName, 1);
+    }
+
+    public static ItemStack getODExist(ClayiumMaterial material, ClayiumShape shape, int stackSize) {
+        return getODExist(getOreName(material, shape), stackSize);
+    }
+
+    public static ItemStack getODExist(ClayiumMaterial material, ClayiumShape shape) {
+        return getODExist(material, shape, 1);
+    }
+
+    public static boolean existOD(String oreName) {
+        return getODExist(oreName) != null;
+    }
+
+    public static boolean existOD(ClayiumMaterial material, ClayiumShape shape) {
+        return getODExist(material, shape) != null;
+    }
+
     private static ItemStack I(Item item) {
         return new ItemStack(item);
     }

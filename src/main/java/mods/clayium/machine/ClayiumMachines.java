@@ -3,6 +3,8 @@ package mods.clayium.machine;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayAssembler.ClayAssembler;
 import mods.clayium.machine.ClayBuffer.ClayBuffer;
+import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
+import mods.clayium.machine.ClayChemicalReactor.ClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
@@ -10,6 +12,7 @@ import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -23,10 +26,14 @@ public class ClayiumMachines {
 
     public static void registerMachines() {
         add(EnumMachineKind.workTable, 0, new ClayWorkTable());
+        clayWorkTable = get(EnumMachineKind.workTable, 0);
         add(EnumMachineKind.craftingTable, 0, new ClayCraftingTable());
+        clayCraftingTable = get(EnumMachineKind.craftingTable, 0);
 
         add(EnumMachineKind.ECCondenser, 3, "mk1");
+        energeticClayCondenserMK1 = get(EnumMachineKind.ECCondenser, TierPrefix.simple);
         add(EnumMachineKind.ECCondenser, 4, "mk2");
+        energeticClayCondenserMK2 = get(EnumMachineKind.ECCondenser, TierPrefix.basic);
 
         add(EnumMachineKind.bendingMachine, new int[] { 1, 2, 3, 4, 5, 6, 7, 9 });
         add(EnumMachineKind.wireDrawingMachine, new int[] { 1, 2, 3, 4 });
@@ -40,17 +47,18 @@ public class ClayiumMachines {
         add(EnumMachineKind.grinder, new int[]{ 2, 3, 4, 5, 6, 10 });
         add(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });
         add(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
+        elementalMillingMachine = get(EnumMachineKind.millingMachine, TierPrefix.clay);
 
         add(EnumMachineKind.assembler, new int[] { 3, 4, 6, 10 }, ClayAssembler.class);
-//        add(EnumMachineKind.inscriber, new int[] { 3, 4 });
-//        add(EnumMachineKind.centrifuge, new int[] { 3, 4, 5, 6 });
+        add(EnumMachineKind.inscriber, new int[] { 3, 4 }, ClayAssembler.class);
+        add(EnumMachineKind.centrifuge, new int[] { 3, 4, 5, 6 }, ClayCentrifuge.class);
         add(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
 
         add(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
+//        add(EnumMachineKind.multitrackBuffer, new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, MultitrackBuffer.class)
+//        add(EnumMachineKind.creativeCESource, 13, TileEntityCreativeEnergySource.class);
 
-//        add(EnumMachineKind.creativeCESource, 13);
-//
-//        add(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 });
+        add(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 }, ClayChemicalReactor.class);
     }
 
     private static void add(EnumMachineKind kind, int tier, ClayContainer block) {
@@ -112,7 +120,9 @@ public class ClayiumMachines {
     }
 
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
-        return machineMap.get(kind).get(tier);
+        if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
+            return machineMap.get(kind).get(tier);
+        return Blocks.AIR;
     }
     public static Block get(EnumMachineKind kind, int tier) {
         return get(kind, TierPrefix.get(tier));
@@ -127,4 +137,26 @@ public class ClayiumMachines {
 
         return res;
     }
+
+    // aliases
+    public static Block clayWorkTable = Blocks.AIR;
+    public static Block clayCraftingTable = Blocks.AIR;
+    public static Block elementalMillingMachine = Blocks.AIR;
+    public static Block energeticClayCondenserMK1 = Blocks.AIR;
+    public static Block energeticClayCondenserMK2 = Blocks.AIR;
+    public static Block energeticClayDecomposer = Blocks.AIR;
+    public static Block solarClayFabricatorMK1 = Blocks.AIR;
+    public static Block solarClayFabricatorMK2 = Blocks.AIR;
+    public static Block lithiumSolarClayFabricator = Blocks.AIR;
+    public static Block autoClayCondenserMK1 = Blocks.AIR;
+    public static Block autoClayCondenserMK2 = Blocks.AIR;
+    public static Block blastFurnace = Blocks.AIR;
+    public static Block chemicalMetalSeparator = Blocks.AIR;
+    public static Block clayReactor = Blocks.AIR;
+    public static Block quartzCrucible = Blocks.AIR;
+    public static Block laserReflector = Blocks.AIR;
+    public static Block clayFabricatorMK1 = Blocks.AIR;
+    public static Block clayFabricatorMK2 = Blocks.AIR;
+    public static Block clayFabricatorMK3 = Blocks.AIR;
+    public static Block CACollector = Blocks.AIR;
 }

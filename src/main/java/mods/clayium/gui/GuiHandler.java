@@ -3,6 +3,10 @@ package mods.clayium.gui;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.ClayCentrifuge.ContainerClayCentrifuge;
+import mods.clayium.machine.ClayCentrifuge.TileEntityClayCentrifuge;
+import mods.clayium.machine.ClayChemicalReactor.ContainerClayChemicalReactor;
+import mods.clayium.machine.ClayChemicalReactor.TileEntityClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.GuiMultiPageContainer;
 import mods.clayium.machine.ClayCraftingTable.ContainerClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.GuiClayCraftingTable;
@@ -44,6 +48,10 @@ public class GuiHandler implements IGuiHandler {
                     return new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile);
                 case GuiIdClayAssembler:
                     return new ContainerClayAssembler(player.inventory, (TileEntityClayAssembler) tile);
+                case GuiIdClayCentrifuge:
+                    return new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile);
+                case GuiIdClayChemicalReactor:
+                    return new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile);
             }
         }
 
@@ -68,6 +76,10 @@ public class GuiHandler implements IGuiHandler {
                     return new GuiMultiPageContainer(new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile));
                 case GuiIdClayAssembler:
                     return new GuiClayiumMachine(new ContainerClayAssembler(player.inventory, (TileEntityClayAssembler) tile));
+                case GuiIdClayCentrifuge:
+                    return new GuiClayiumMachine(new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile));
+                case GuiIdClayChemicalReactor:
+                    return new GuiClayiumMachine(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile));
             }
         }
 

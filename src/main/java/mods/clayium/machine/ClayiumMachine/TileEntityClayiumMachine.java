@@ -27,7 +27,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     protected EnumMachineKind kind;
     protected ClayiumRecipe recipeCards;
-    public RecipeElement doingRecipe = RecipeElement.FLAT;
+    protected RecipeElement doingRecipe = RecipeElement.FLAT;
 
     protected long craftTime;
     protected long timeToCraft;
@@ -53,8 +53,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     @Override
-    public void initByTier(int tier) {
-        super.initByTier(tier);
+    public void initParamsByTier(int tier) {
+        super.initParamsByTier(tier);
 
         if (UtilTier.canManufactureCraft(this.tier))
             this.clayEnergySlot = -1;

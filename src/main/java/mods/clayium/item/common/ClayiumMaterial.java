@@ -4,6 +4,7 @@ import mods.clayium.core.ClayiumConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public enum ClayiumMaterial {
@@ -163,147 +164,152 @@ public enum ClayiumMaterial {
     emerald("emerald", "Emerald", 1857),
     stone("stone", "Stone", 2048),
 
+    // laziness
+    PLASTIC("Plastic", 1032),
+    CINNABAR("Cinnabar", 1040),
     saltpeter("saltpeter", "Saltpeter", 1041, $ -> $.setColor(190, 200, 210, 255, 240, 230)),
-
-//    public static CMaterial PLASTIC;
-//    public static CMaterial CINNABAR;
-//    public static CMaterial SALTPETER;
-//    public static CMaterial RUBY;
-//    public static CMaterial SAPPHIRE;
-//    public static CMaterial PERIDOT;
-//    public static CMaterial AMBER;
-//    public static CMaterial AMETHYST;
-//
-//    public static CMaterial REDSTONE_ALLOY;
-//    public static CMaterial CONDUCTIVE_IRON;
-//    public static CMaterial ENERGETIC_ALLOY;
-//    public static CMaterial ELECTRICAL_STEEL;
-//    public static CMaterial DARK_STEEL;
-//    public static CMaterial PHASED_IRON;
-//    public static CMaterial PHASED_GOLD;
-//    public static CMaterial SOULARIUM;
-//    public static CMaterial SIGNALUM;
-//    public static CMaterial LUMIUM;
-//
-//    public static CMaterial ENDERIUM;
-//    public static CMaterial ELECTRUM_FLUX;
-//    public static CMaterial CRYSTAL_FLUX;
-//    public static CMaterial APATITE;
-//    public static CMaterial CERTUS_QUARTZ;
-//    public static CMaterial FLUIX;
-//    public static CMaterial ARDITE;
-//    public static CMaterial ALUMINUM_BRASS;
-//
-//    public static CMaterial PIG_IRON;
-//    public static CMaterial ALUMITE;
-//    public static CMaterial MANYULLYN;
-//    public static CMaterial FAIRY;
-//    public static CMaterial POKEFENNIUM;
-//    public static CMaterial RED_AURUM;
-//    public static CMaterial DRULLOY;
-//    public static CMaterial RED_ALLOY;
-//    public static CMaterial ELECTROTINE;
-//    public static CMaterial ELECTROTINE_ALLOY;
-//    public static CMaterial REFINED_GLOWSTONE;
-//    public static CMaterial REFINED_OBSIDIAN;
-//    public static CMaterial UNSTABLE;
-//    public static CMaterial HSLA;
-//    public static CMaterial GRAPHITE;
-//    public static CMaterial YELLORIUM;
-//    public static CMaterial CYANITE;
-//    public static CMaterial BLUTONIUM;
-//    public static CMaterial LUDICRITE;
-//    public static CMaterial METEORIC_IRON;
-//    public static CMaterial DESH;
-//    public static CMaterial IRON_COMPRESSED;
-//    public static CMaterial FZ_DARK_IRON;
-//    public static CMaterial THAUMIUM;
-//    public static CMaterial VOID;
-//    public static CMaterial MANASTEEL;
-//    public static CMaterial TERRASTEEL;
-//    public static CMaterial ELVEN_ELEMENTIUM;
-//    public static CMaterial TOPAZ;
-//    public static CMaterial MALACHITE;
-//    public static CMaterial TANZANITE;
-//    public static CMaterial HEE_ENDIUM;
-//    public static CMaterial DILITHIUM;
-//    public static CMaterial FORCICIUM;
-//    public static CMaterial NIKOLITE;
-//    public static CMaterial QUARTZITE;
-//    public static CMaterial MONAZITE;
-//    public static CMaterial NITER;
-//    public static CMaterial TUNGSTEN_STEEL;
-//    public static CMaterial CUPRONICKEL;
-//    public static CMaterial NICHROME;
-//    public static CMaterial KANTHAL;
-//    public static CMaterial STAINLESS_STEEL;
-//    public static CMaterial COBALT_BRASS;
-//    public static CMaterial MAGNALIUM;
-//    public static CMaterial SOLDERING_ALLOY;
-//    public static CMaterial BATTERY_ALLOY;
-//    public static CMaterial VANADIUM_GALLIUM;
-//    public static CMaterial YTTRIUM_BARIUM_CUPRATE;
-//    public static CMaterial NIOBIUM_TITANIUM;
-//    public static CMaterial ULTIMET;
-//    public static CMaterial TIN_ALLOY;
-//    public static CMaterial BLUE_ALLOY;
-//    public static CMaterial WROUGHT_IRON;
-//    public static CMaterial ANNEALED_COPPER;
-//    public static CMaterial IRON_MAGNETIC;
-//    public static CMaterial STEEL_MAGNETIC;
-//    public static CMaterial NEODYMIUM_MAGNETIC;
-//    public static CMaterial LIGNITE;
-//    public static CMaterial LAZURITE;
-//    public static CMaterial SODALITE;
-//    public static CMaterial GREEN_SAPPHIRE;
-//    public static CMaterial GARNET_RED;
-//    public static CMaterial GARNET_YELLOW;
-//    public static CMaterial OPAL;
-//    public static CMaterial JASPER;
-//    public static CMaterial BLUE_TOPAZ;
-//    public static CMaterial FORCE;
-//    public static CMaterial FORCILLIUM;
-//    public static CMaterial GLASS;
-//    public static CMaterial PROMETHEUM;
-//    public static CMaterial DEEP_IRON;
-//    public static CMaterial INFUSCOLIUM;
-//    public static CMaterial OURECLASE;
-//    public static CMaterial AREDRITE;
-//    public static CMaterial ASTRAL_SILVER;
-//    public static CMaterial CARMOT;
-//    public static CMaterial MITHRIL;
-//    public static CMaterial RUBRACIUM;
-//    public static CMaterial ORICHALCUM;
-//    public static CMaterial ADAMANTINE;
-//    public static CMaterial ATLARUS;
-//    public static CMaterial IGNATIUS;
-//    public static CMaterial SHADOW_IRON;
-//    public static CMaterial LEMURITE;
-//    public static CMaterial MIDASIUM;
-//    public static CMaterial VYROXERES;
-//    public static CMaterial CERUCLASE;
-//    public static CMaterial ALDUORITE;
-//    public static CMaterial KALENDRITE;
-//    public static CMaterial VULCANITE;
-//    public static CMaterial SANGUINITE;
-//    public static CMaterial EXIMITE;
-//    public static CMaterial MEUTOITE;
-//    public static CMaterial HEPATIZON;
-//    public static CMaterial DAMASCUS_STEEL;
-//    public static CMaterial ANGMALLEN;
-//    public static CMaterial BLACK_STEEL;
-//    public static CMaterial QUICKSILVER;
-//    public static CMaterial HADEROTH;
-//    public static CMaterial CELENEGIL;
-//    public static CMaterial TARTARITE;
-//    public static CMaterial SHADOW_STEEL;
-//    public static CMaterial INOLASHITE;
-//    public static CMaterial AMORDRINE;
-//    public static CMaterial DESICHALKOS;
-//    public static CMaterial NINJA;
-//    public static CMaterial YELLOWSTONE;
-//    public static CMaterial BLUESTONE;
-//    public static CMaterial ALUMINIUM_OD;
+    RUBY("Ruby", 1858),
+    SAPPHIRE("Sapphire", 1859),
+    PERIDOT("Peridot", 1860),
+    AMBER("Amber", 1861),
+    AMETHYST("Amethyst", 1862),
+    REDSTONE_ALLOY("RedstoneAlloy", 1408),
+    CONDUCTIVE_IRON("ConductiveIron", 1409),
+    ENERGETIC_ALLOY("EnergeticAlloy", 1410),
+    ELECTRICAL_STEEL("ElectricalSteel", 1411),
+    DARK_STEEL("DarkSteel", 1412),
+    PHASED_IRON("PhasedIron", 1413),
+    PHASED_GOLD("PhasedGold", 1414),
+    SOULARIUM("Soularium", 1415),
+    SIGNALUM("Signalum", 1424),
+    LUMIUM("Lumium", 1425),
+    ENDERIUM("Enderium", 1426),
+    ELECTRUM_FLUX("ElectrumFlux", 1428),
+    CRYSTAL_FLUX("CrystalFlux", 2016),
+    APATITE("Apatite", 1044),
+    CERTUS_QUARTZ("CertusQuartz", 1048),
+    FLUIX("Fluix", 1049),
+    ARDITE("Ardite", 320),
+    ALUMINUM_BRASS("AluminumBrass", 1432),
+    PIG_IRON("PigIron", 1433),
+    ALUMITE("Alumite", 1434),
+    MANYULLYN("Manyullyn", 1435),
+    FAIRY("Fairy", 1440),
+    POKEFENNIUM("Pokefennium", 1441),
+    RED_AURUM("Red_aurum", 1442),
+    DRULLOY("Drulloy", 1443),
+    RED_ALLOY("RedAlloy", 1448),
+    ELECTROTINE("Electrotine", 1060),
+    ELECTROTINE_ALLOY("ElectrotineAlloy", 1449),
+    REFINED_GLOWSTONE("RefinedGlowstone", 1600),
+    REFINED_OBSIDIAN("RefinedObsidian", 1601),
+    UNSTABLE("Unstable", 1728),
+    HSLA("HSLA", 1608),
+    YELLORIUM("Yellorium", 324),
+    CYANITE("Cyanite", 325),
+    BLUTONIUM("Blutonium", 326),
+    LUDICRITE("Ludicrite", 327),
+    GRAPHITE("Graphite", 1056),
+    METEORIC_IRON("MeteoricIron", 336),
+    DESH("Desh", 337),
+    IRON_COMPRESSED("IronCompressed", 1604),
+    FZ_DARK_IRON("FzDarkIron", 332),
+    THAUMIUM("Thaumium", 1664),
+    VOID("Void", 1665),
+    MANASTEEL("Manasteel", 1668),
+    TERRASTEEL("Terrasteel", 1669),
+    ELVEN_ELEMENTIUM("ElvenElementium", 1670),
+    TOPAZ("Manasteel", 1863),
+    MALACHITE("Malachite", 1864),
+    TANZANITE("Tanzanite", 1865),
+    HEE_ENDIUM("HeeEndium", 1696),
+    DILITHIUM("Dilithium", 1880),
+    FORCICIUM("Forcicium", 1884),
+    GALLIUM("Gallium", 31),
+    YTTRIUM("Yttrium", 39),
+    NIOBIUM("Niobium", 41),
+    URANIUM_235("Uranium235", 288),
+    PLUTONIUM_241("Plutonium241", 289),
+    NAQUADAH("Naquadah", 296),
+    NAQUADAH_ENRICHED("NaquadahEnriched", 297),
+    NAQUADRIA("Naquadria", 298),
+    NEUTRONIUM("Neutronium", 299),
+    NIKOLITE("Nikolite", 1064),
+    QUARTZITE("Quartzite", 1088),
+    MONAZITE("Monazite", 1089),
+    NITER("Niter", 1090),
+    TUNGSTEN_STEEL("TungstenSteel", 1472),
+    CUPRONICKEL("Cupronickel", 1473),
+    NICHROME("Nichrome", 1474),
+    KANTHAL("Kanthal", 1475),
+    STAINLESS_STEEL("StainlessSteel", 1476),
+    COBALT_BRASS("CobaltBrass", 1477),
+    MAGNALIUM("Magnalium", 1478),
+    SOLDERING_ALLOY("SolderingAlloy", 1479),
+    BATTERY_ALLOY("BatteryAlloy", 1480),
+    VANADIUM_GALLIUM("VanadiumGallium", 1481),
+    YTTRIUM_BARIUM_CUPRATE("YttriumBariumCuprate", 1482),
+    NIOBIUM_TITANIUM("NiobiumTitanium", 1483),
+    ULTIMET("Ultimet", 1484),
+    TIN_ALLOY("TinAlloy", 1485),
+    BLUE_ALLOY("BlueAlloy", 1486),
+    WROUGHT_IRON("WroughtIron", 1552),
+    ANNEALED_COPPER("AnnealedCopper", 1553),
+    IRON_MAGNETIC("IronMagnetic", 1568),
+    STEEL_MAGNETIC("SteelMagnetic", 1569),
+    NEODYMIUM_MAGNETIC("NeodymiumMagnetic", 1570),
+    LIGNITE("Lignite", 1808),
+    LAZURITE("Lazurite", 1840),
+    SODALITE("Sodalite", 1841),
+    GREEN_SAPPHIRE("GreenSaphire", 1888),
+    GARNET_RED("GarnetRed", 1892),
+    GARNET_YELLOW("GarnetYellow", 1893),
+    OPAL("Opal", 1896),
+    JASPER("Jasper", 1897),
+    BLUE_TOPAZ("BlueTopaz", 1920),
+    FORCE("Force", 1984),
+    FORCILLIUM("Forcillium", 1988),
+    GLASS("Glass", 2176),
+    PROMETHEUM("Prometheum", 352),
+    DEEP_IRON("DeepIron", 353),
+    INFUSCOLIUM("Infuscolium", 354),
+    OURECLASE("Oureclase", 355),
+    AREDRITE("Aredrite", 356),
+    ASTRAL_SILVER("AstralSilver", 357),
+    CARMOT("Carmot", 358),
+    MITHRIL("Mithril", 359),
+    RUBRACIUM("Rubracium", 360),
+    ORICHALCUM("Orichalcum", 361),
+    ADAMANTINE("Adamantine", 362),
+    ATLARUS("Atlarus", 363),
+    IGNATIUS("Ignatius", 368),
+    SHADOW_IRON("ShadowIron", 369),
+    LEMURITE("Lemurite", 370),
+    MIDASIUM("Midasium", 371),
+    VYROXERES("Vyroxeres", 372),
+    CERUCLASE("Ceruclase", 373),
+    ALDUORITE("Alduorite", 374),
+    KALENDRITE("Kalendrite", 375),
+    VULCANITE("Vulcanite", 376),
+    SANGUINITE("Sanguinite", 377),
+    EXIMITE("Eximite", 380),
+    MEUTOITE("Meutoite", 381),
+    HEPATIZON("Hepatizon", 1504),
+    DAMASCUS_STEEL("DamascusSteel", 1505),
+    ANGMALLEN("Angmallen", 1506),
+    BLACK_STEEL("BlackSteel", 1508),
+    QUICKSILVER("QuickSilver", 1509),
+    HADEROTH("Haderoth", 1510),
+    CELENEGIL("Celenegil", 1511),
+    TARTARITE("Tartarite", 1512),
+    SHADOW_STEEL("ShadowSteel", 1516),
+    INOLASHITE("Inolashite", 1517),
+    AMORDRINE("Amordrine", 1518),
+    DESICHALKOS("Desichalkos", 1519),
+    NINJA("Ninja", 1468),
+    YELLOWSTONE("Yellowstone", 1068),
+    BLUESTONE("Bluestone", 1069),
+    ALUMINIUM_OD("Aluminium", 4096),
 
     ;
     public static final ClayiumMaterial mainAluminium = ClayiumConfiguration.cfgHardcoreAluminium ? impureAluminium : aluminium;
@@ -314,6 +320,10 @@ public enum ClayiumMaterial {
             compressedPureAntimatter_4, compressedPureAntimatter_5, compressedPureAntimatter_6, compressedPureAntimatter_7,
             octuplePureAntimatter
     );
+
+    ClayiumMaterial(String ODName, int id) {
+        this(ODName.toLowerCase(Locale.ROOT), ODName, id, 1.0F);
+    }
 
     ClayiumMaterial(String name, String ODName, int id) {
         this(name, ODName, id, 1.0F);
@@ -391,4 +401,45 @@ public enum ClayiumMaterial {
             curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium,
             silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth
     );
+/*
+    public static final List<ClayiumMaterial> ingotAndPlateToDust = Arrays.asList(
+            rubidium, caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium,
+            curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium,
+            silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth, carbon,
+            gallium, yttrium, niobium, uranium235, plutonium241, naquadah, naquadahEnriched, naquadria, neutronium,
+            ardite, yellorium, cyanite, blutonium, ludicrite, fz_darkIron, meteoricIron, desh, prometheum, deepIron, infuscolium,
+            oureclase, aredrite, astralSilver, carmot, mithril, rubracium, orichalcum, adamantite, atlarus, ignatius, shadowIron,
+            lemurite, midasium, vyroxeres, ceruclase, alduorite, kalendrite, vulcanite, sangunite, eximite, meutoite, plastic,
+            graphite, redstoneAlloy, conductiveIron, energeticAlloy, electricalSteel, darkSteel, phasedIron, phasedGold,
+            soularium, signalum, lumium, enderium, electrumFlux, aluminiumBrass, pigIron, alumite, manyullyn, fairy, pokefennium,
+            redAurum, drulloy, redAlloy, electrotineAlloy, tungstenSteel, cupronickel, nichrome, kanthal, stainlessSteel,
+            cobaltBrass, magnalium, solderingAlloy, batteryAlloy, vanadiumGallium, yttriumBariumCuprate, ultimet, tinAlloy,
+            blueAlloy, hepatizon, damascusSteel, angmallen, blackSteel, quicksilver, haderoth, celenegil, tartarite, shadowSteel,
+            inolashite, amordrine, desichalkos, wroughtIron, annealedCopper, ironMagnetic, steelMagnetic, neodymiumMagnetic,
+            refinedGlowstone, refinedObsidian, ironCompressed, thaumium, _void, manasteel, terrasteel, elvenElementium,
+            heeEndium,unstable, ninja
+    );
+
+    public static final List<ClayiumMaterial> gems = Arrays.asList(
+            quartz, lapis, diamond, emerald, ruby, sapphire, peridot, amber, amethyst, apatite, crystalFlux, malachite,
+            tanzanite, topaz, dilithium, forcicium, greenSapphire, opal, jasper, blueTopaz, forcillium, monazite, force,
+            quartzite, lazurite, sodalite, garnetRed, garnetYellow, niter, phosphorus, lignite, glass, iridium
+    );
+
+    public static final List<ClayiumMaterial> crystals = Arrays.asList(
+            cinnabar, certusQuartz, fluix
+    );
+
+    public static final List<ClayiumMaterial> ores = Arrays.asList(
+            silicon, aluminium, aluminiumOD, coal, iron, gold, magnesium, sodium, lithium, zirconium, zinc, manganese,
+            calcium, potassium, nickel, beryllium, lead, hafnium, chrome, titanium, strontium, barium, copper, rubidium,
+            caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium, curium,
+            lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium, silver,
+            platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth, gallium, yttrium,
+            niobium, naquadah, naquadahEnriched, naquadria, ardite, yellorium, fz_darkIron, meteoricIron, desh, graphite,
+            prometheum, deepIron, infuscolium, oureclase, aredrite, astralSilver, carmot, mithril, rubracium, orichalcum,
+            adamantite, atlasus, ignatius, shadowIron, lemurite, midasium, vyroxeres, cericlase, alduorite, kalendrite,
+            vulcanite, sanguinite, eximite, meutoite
+    );
+ */
 }

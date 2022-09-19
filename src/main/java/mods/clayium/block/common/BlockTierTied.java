@@ -2,6 +2,7 @@ package mods.clayium.block.common;
 
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -22,8 +23,12 @@ public class BlockTierTied extends EnumMap<TierPrefix, Block> {
         return res;
     }
 
-    public Block get(TierPrefix key) {
-        return super.get(key);
+    public ItemStack get(TierPrefix key) {
+        return new ItemStack(super.get(key));
+    }
+
+    public ItemStack get(TierPrefix key, int amount) {
+        return new ItemStack(super.get(key), amount);
     }
 
     public Block get(int tier) throws IllegalAccessException {

@@ -27,8 +27,8 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
         this.autoExtract = false;
     }
 
-    public void initByTier(int tier) {
-        super.initByTier(tier);
+    public void initParamsByTier(int tier) {
+        super.initParamsByTier(tier);
         this.listSlotsImport = new ArrayList<>();
         switch(tier) {
             case 1:

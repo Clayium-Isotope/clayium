@@ -43,7 +43,7 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     }
 
     @Override
-    public void initByTier(int tier) {
+    public void initParamsByTier(int tier) {
         if (this.tier == tier) return;
         this.tier = tier;
 

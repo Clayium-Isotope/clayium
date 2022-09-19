@@ -1,12 +1,10 @@
 package mods.clayium.machine.ClayAssembler;
 
-import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.gui.RectangleTexture;
+import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerClayAssembler extends ContainerClayiumMachine {
@@ -33,21 +31,6 @@ public class ContainerClayAssembler extends ContainerClayiumMachine {
             }
         });
 
-        this.addMachineSlotToContainer(new Slot(this.tileEntity, TileEntityClayAssembler.AssemblerSlots.ENERGY.ordinal(), -12, machineGuiSizeY - 16) {
-            @Override
-            public int getSlotStackLimit() {
-                return tileEntity.getClayEnergyStorageSize();
-            }
-
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return ClayiumBlocks.compressedClay.contains(stack.getItem());
-            }
-
-            @Override
-            public boolean canTakeStack(EntityPlayer playerIn) {
-                return true;
-            }
-        });
+        this.addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayAssembler.AssemblerSlots.ENERGY.ordinal(), machineGuiSizeY));
     }
 }

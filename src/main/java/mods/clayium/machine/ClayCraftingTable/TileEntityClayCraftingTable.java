@@ -7,6 +7,6 @@ import net.minecraft.util.NonNullList;
 public class TileEntityClayCraftingTable extends TileEntityClayContainer {
     public TileEntityClayCraftingTable() {
         this.containerItemStacks = NonNullList.withSize(10, ItemStack.EMPTY);
-        initByTier(0);
+        initParamsByTier(0);
     }
 }

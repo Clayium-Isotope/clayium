@@ -26,7 +26,6 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_2.ordinal() });
-        this.listSlotsImport.add(new int[]{ AssemblerSlots.ENERGY.ordinal() });
         this.listSlotsExport.add(new int[]{ AssemblerSlots.PRODUCT.ordinal() });
         this.maxAutoExtract = new int[] {-1, -1, -1, 1};
         this.maxAutoInsert = new int[] {-1};
@@ -37,7 +36,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
     }
 
     @Override
-    public void initByTier(int tier) {
+    public void initParamsByTier(int tier) {
         this.tier = tier;
     }
 

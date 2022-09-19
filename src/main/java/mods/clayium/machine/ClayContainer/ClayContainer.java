@@ -82,7 +82,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
         try {
             TileEntityClayContainer tecc = teClass.newInstance();
-            tecc.initByTier(this.tier);
+            tecc.initParamsByTier(this.tier);
             return tecc;
         } catch (Exception exception) {
             ClayiumCore.logger.catching(exception);
