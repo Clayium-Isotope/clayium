@@ -44,12 +44,7 @@ public class ContainerClayWorkTable extends ContainerTemp {
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
-        addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack stack) {
-                return ClayiumRecipes.hasResult(ClayiumRecipes.clayWorkTable, stack, ItemStack.EMPTY);
-            }
-        });
+        addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.MATERIAL.ordinal(), 16, 29, RectangleTexture.LargeSlotTexture));
 
         addSlotToContainer(new SlotWithTexture(tileEntity, ClayWorkTableSlots.TOOL.ordinal(), 80, 17) {
             @Override

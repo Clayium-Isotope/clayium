@@ -26,9 +26,9 @@ public class ClayiumMachines {
 
     public static void registerMachines() {
         add(EnumMachineKind.workTable, 0, new ClayWorkTable());
-        clayWorkTable = get(EnumMachineKind.workTable, 0);
+        clayWorkTable = get(EnumMachineKind.workTable, TierPrefix.none);
         add(EnumMachineKind.craftingTable, 0, new ClayCraftingTable());
-        clayCraftingTable = get(EnumMachineKind.craftingTable, 0);
+        clayCraftingTable = get(EnumMachineKind.craftingTable, TierPrefix.none);
 
         add(EnumMachineKind.ECCondenser, 3, "mk1");
         energeticClayCondenserMK1 = get(EnumMachineKind.ECCondenser, TierPrefix.simple);
@@ -124,6 +124,7 @@ public class ClayiumMachines {
             return machineMap.get(kind).get(tier);
         return Blocks.AIR;
     }
+    // if tier is clear, use TierPrefix version.
     public static Block get(EnumMachineKind kind, int tier) {
         return get(kind, TierPrefix.get(tier));
     }
@@ -159,4 +160,6 @@ public class ClayiumMachines {
     public static Block clayFabricatorMK2 = Blocks.AIR;
     public static Block clayFabricatorMK3 = Blocks.AIR;
     public static Block CACollector = Blocks.AIR;
+    public static Block clayWaterWheel = Blocks.AIR;
+    public static Block denseClayWaterWheel = Blocks.AIR;
 }

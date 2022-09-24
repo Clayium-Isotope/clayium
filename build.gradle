@@ -47,6 +47,8 @@ minecraft {
             }
         }
     }
+
+    accessTransformer = file('src/main/resources/META-INF/clayium_at.cfg')
 }
 
 sourceSets {
@@ -54,9 +56,36 @@ sourceSets {
 }
 
 dependencies {
+    /* minecraft dependency is here */
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
+
+    // refer to: https://github.com/mezz/JustEnoughItems/issues/1959
+    // compile against the JEI API but do not include it at runtime
+    compileOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}:api")
+    // at runtime, use the full JEI jar
+    runtimeOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
 }
 
 tasks.withType(Jar) {
     compileJava.options.encoding = 'UTF-8'
+}
+
+repositories {
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+}
+
+// refer to: https://mcmodding.jp/modding/index.php/Access_Transformer利用
+jar {
+    manifest {
+        attributes 'FMLAT': 'clayium_at.cfg'
+    }
 }

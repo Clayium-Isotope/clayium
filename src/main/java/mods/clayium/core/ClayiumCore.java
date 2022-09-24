@@ -168,6 +168,7 @@ public class ClayiumCore {
         event.getRegistry().registerAll(ClayiumMaterials.getItems().toArray(new Item[0]));
     }
 
+    // フルパスで書かなきゃいけないものかしら。
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void registerModels(ModelRegistryEvent event) {
@@ -182,12 +183,14 @@ public class ClayiumCore {
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
                     new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getResourcePath(), "inventory"));
             // Custom blockstate mapping
-            net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
-                @Override
-                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                    return new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":empty");
-                }
-            });
+            if (block != ClayiumMachines.clayWorkTable || block != ClayiumMachines.clayCraftingTable) {
+                net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+                    @Override
+                    protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                        return new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":empty");
+                    }
+                });
+            }
         }
 
         for (Item item : ClayiumItems.getItems()) {

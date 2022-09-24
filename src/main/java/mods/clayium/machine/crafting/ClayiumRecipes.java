@@ -148,7 +148,7 @@ public class ClayiumRecipes {
     }
 
     public static boolean hasResult(ClayiumRecipe recipes, List<ItemStack> stack) {
-        for (RecipeElement recipe : recipes.values())
+        for (RecipeElement recipe : recipes)
             if (recipe.getCondition().match(stack)) return true;
 
         return false;
@@ -159,7 +159,7 @@ public class ClayiumRecipes {
     }
 
     public static RecipeElement getRecipeElement(ClayiumRecipe recipes, NonNullList<ItemStack> referStacks, int method, int tier) {
-        for (RecipeElement recipe : recipes.values()) {
+        for (RecipeElement recipe : recipes) {
             if (recipe.getCondition().match(referStacks, method, tier)) {
                 return recipe;
             }
@@ -169,9 +169,9 @@ public class ClayiumRecipes {
     }
 
     public static RecipeElement getRecipeElement(ClayiumRecipe recipes, int hash) {
-        for (Integer recipe : recipes.keySet()) {
-            if (recipe == hash) {
-                return recipes.get(recipe);
+        for (RecipeElement recipe : recipes) {
+            if (recipe.hashCode() == hash) {
+                return recipe;
             }
         }
 

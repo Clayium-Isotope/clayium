@@ -1,12 +1,19 @@
 package mods.clayium.machine.crafting;
 
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
+import mezz.jei.api.recipe.IRecipeWrapper;
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -15,8 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class RecipeElement {
+public class RecipeElement implements IRecipeWrapper {
     public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, 0, 0, ItemStack.EMPTY, 0, 0);
+    protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
 
     public RecipeElement(ItemStack materialIn, int method, int tier, ItemStack resultIn, long energy, long time) {
         this(Arrays.asList(materialIn), method, tier, Arrays.asList(resultIn), energy, time);
@@ -37,6 +45,38 @@ public class RecipeElement {
 
     private final RecipeCondition condition;
     private final RecipeResult result;
+
+    @Override
+    public void getIngredients(IIngredients iIngredients) {
+        if (this.getCondition().getMaterials().size() == 1)
+            iIngredients.setInput(VanillaTypes.ITEM, this.getCondition().getMaterials().get(0));
+        else if (this.getCondition().getMaterials().size() > 1)
+            iIngredients.setInputs(VanillaTypes.ITEM, this.getCondition().getMaterials());
+
+        if (this.getResult().getResults().size() == 1)
+            iIngredients.setOutput(VanillaTypes.ITEM, this.getResult().getResults().get(0));
+        else if (this.getResult().getResults().size() > 1)
+            iIngredients.setOutputs(VanillaTypes.ITEM, this.getResult().getResults());
+    }
+
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+        if (this.condition.method != -1) {
+            minecraft.fontRenderer.drawString("" + this.result.time, 28 + 16 * this.condition.method + 8 - minecraft.fontRenderer.getStringWidth("" + this.result.time) / 2, 37 - minecraft.fontRenderer.FONT_HEIGHT, -16777216);
+
+            minecraft.getTextureManager().bindTexture(TextureManager.RESOURCE_LOCATION_EMPTY);
+
+            for (int i = 0; i < 6; i++) {
+                if (i == this.condition.method) {
+                    minecraft.ingameGUI.drawTexturedModalRect(28 + 16 * i, 37, 16, 0, 16, 16);
+                } else {
+                    minecraft.currentScreen.drawTexturedModalRect(28 + 16 * i, 37, 0, 0, 16, 16);
+                }
+            }
+
+            minecraft.ingameGUI.drawTexturedModalRect(28, 37, 0, 32, 96, 16);
+        }
+    }
 
     public static class RecipeCondition {
         private final List<ItemStack> materials;
