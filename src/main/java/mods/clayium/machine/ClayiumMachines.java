@@ -10,6 +10,7 @@ import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
+import mods.clayium.machine.WaterWheel.WaterWheel;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -59,6 +60,10 @@ public class ClayiumMachines {
 //        add(EnumMachineKind.creativeCESource, 13, TileEntityCreativeEnergySource.class);
 
         add(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 }, ClayChemicalReactor.class);
+
+        add(EnumMachineKind.waterWheel, new int[] { 1, 2 }, WaterWheel.class);
+        clayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.clay);
+        denseClayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.denseClay);
     }
 
     private static void add(EnumMachineKind kind, int tier, ClayContainer block) {
