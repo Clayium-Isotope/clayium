@@ -57,8 +57,11 @@ public class ContainerClayiumMachine extends ContainerTemp {
             }
         });
 
-        if (UtilTier.canManufactureCraft(this.tileEntity.getTier())) {
-            addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayiumMachine.MachineSlots.ENERGY.ordinal(), machineGuiSizeY));
-        }
+        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayiumMachine.MachineSlots.ENERGY.ordinal(), machineGuiSizeY) {
+            @Override
+            public boolean isEnabled() {
+                return !UtilTier.canManufactureCraft(tileEntity.getTier());
+            }
+        });
     }
 }

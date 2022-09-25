@@ -3,7 +3,6 @@ package mods.clayium.plugin.jei;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.IRecipeCategory;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
@@ -16,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 import java.util.LinkedList;
 
-public class ClayWorkTableCategory implements IRecipeCategory<RecipeElement> {
+public class ClayWorkTableCategory extends ClayiumRecipeCategory {
     protected static final ResourceLocation clayWorkTable = new ResourceLocation(ClayiumCore.ModId, "textures/gui/_old/clayworktable.png");
     protected static final ResourceLocation button = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
     protected final IDrawable icon;
@@ -45,11 +44,6 @@ public class ClayWorkTableCategory implements IRecipeCategory<RecipeElement> {
     @Override
     public String getTitle() {
         return ClayiumMachines.clayWorkTable.getUnlocalizedName();
-    }
-
-    @Override
-    public String getModName() {
-        return ClayiumCore.ModName;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class ClayiumRecipes {
         }
     }
 
-    public static final ClayiumRecipe clayWorkTable = new ClayiumRecipe("ClayWorkTable");
+    public static final KneadingRecipe clayWorkTable = new KneadingRecipe();
 
     public static final SimpleMachineRecipe bendingMachine = new SimpleMachineRecipe("BendingMachine");
     public static final SimpleMachineRecipe wireDrawingMachine = new SimpleMachineRecipe("WireDrawingMachine");
@@ -179,28 +179,25 @@ public class ClayiumRecipes {
     }
 
     public static void registerClayWorkTableRecipe() {
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ItemStack.EMPTY), 4);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY), 1, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY), 30);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), w(ClayiumItems.rollingPin)), 2, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ItemStack.EMPTY), 4);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), 0, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ItemStack.EMPTY, 4L);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), 1, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY, 30);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), 2, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2), 4);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), 0, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ItemStack.EMPTY, 4);
 
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ItemStack.EMPTY), 1, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ItemStack.EMPTY), 10);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), w(ClayiumItems.rollingPin)), 2, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 1);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), w(ClayiumItems.slicer)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY), 3);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), w(ClayiumItems.spatula)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY), 3);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 6), w(ClayiumItems.rollingPin)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ItemStack.EMPTY), 10);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 3), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY), 40);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), 1, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ItemStack.EMPTY, 10);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), 2, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2), 1);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), 5, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY, 3);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 6), 2, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ItemStack.EMPTY, 10);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 3), 0, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY, 40);
 
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.slicer)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.spatula)), 3, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)), 4);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.spatula)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing)), 2);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY), 2, ii(i(ClayiumItems.rawSlicer), ItemStack.EMPTY), 15);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), w(ClayiumItems.rollingPin)), 3, ii(i(ClayiumItems.rawSlicer), ItemStack.EMPTY), 2);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), w(ClayiumItems.spatula)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick)), 1);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), 3, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2), 4);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), 4, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), 2);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), 1, i(ClayiumItems.rawSlicer), ItemStack.EMPTY, 15);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), 2, i(ClayiumItems.rawSlicer), ItemStack.EMPTY, 2);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), 4, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick), 1);
 
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ItemStack.EMPTY), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ItemStack.EMPTY), 3);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), i(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ItemStack.EMPTY), 7);
-        clayWorkTable.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), i(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ItemStack.EMPTY), 7);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), 0, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ItemStack.EMPTY, 3);
+        clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), 5, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ItemStack.EMPTY, 7);
     }
 
     public static void registerTools() {
@@ -208,11 +205,11 @@ public class ClayiumRecipes {
         GameRegistry.addSmelting(ClayiumItems.rawSlicer, new ItemStack(ClayiumItems.slicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawSpatula, new ItemStack(ClayiumItems.spatula), 1F);
 
-        assembler.addRecipe(oo(i(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE)), 0, 6,
+        assembler.addRecipe(oo(i(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE)), 6,
                 ii(ClayiumItems.IOTool), e(6), 20L);
-        assembler.addRecipe(oo(i(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.wrench)), 0, 6,
+        assembler.addRecipe(oo(i(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.wrench)), 6,
                 ii(ClayiumItems.pipingTool), e(6), 20L);
-        assembler.addRecipe(oo(ClayiumItems.IOTool, s(circuits.get(6), 2)), 0, 6,
+        assembler.addRecipe(oo(ClayiumItems.IOTool, s(circuits.get(6), 2)), 6,
                 ii(ClayiumItems.memoryCard), e(6), 20L);
 
 // TODO   assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle), s(circuits.get(6), 2)), 0, 6,
@@ -307,11 +304,11 @@ public class ClayiumRecipes {
         assembler.addRecipe(oo(CItems.itemGadget.get("AntimatterOverclock"), s(circuits[10], 4)), 0, 10,
                 ii(CItems.itemGadget.get("RepeatedlyAttack")), e(10), 120L);
  */
-        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.ingot, 16), circuits.get(6)), 0, 4,
+        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.ingot, 16), circuits.get(6)), 4,
                 ii(ClayiumItems.manipulator1), e(4), 20L);
-        assembler.addRecipe(oo(ClayiumItems.manipulator1, s(circuits.get(8), 6)), 0, 4,
+        assembler.addRecipe(oo(ClayiumItems.manipulator1, s(circuits.get(8), 6)), 4,
                 ii(ClayiumItems.manipulator2), e(8), 20L);
-        assembler.addRecipe(oo(i(ClayiumItems.manipulator2, 64), s(circuits.get(12), 6)), 0, 10,
+        assembler.addRecipe(oo(i(ClayiumItems.manipulator2, 64), s(circuits.get(12), 6)), 10,
                 ii(ClayiumItems.manipulator3), e(12), 20L);
 
 /* TODO
@@ -465,25 +462,25 @@ public class ClayiumRecipes {
         lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallRing), ClayiumCore.divideByProgressionRate(2));
 
 
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 5)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 5)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick, 9)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick, 9)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 8)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 8)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.block, 8)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.block, 8)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.grindingHead)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 8)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 8)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 5)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 5)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.shortStick, 9)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.shortStick, 9)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 8)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 8)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle)), 100L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block, 8)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block, 8)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead)), 100L, ClayiumCore.divideByProgressionRate(20));
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 8)), 0, 3,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 8)), 3,
                 ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 100L, ClayiumCore.divideByProgressionRate(20));
 
 /*
@@ -517,52 +514,52 @@ public class ClayiumRecipes {
         decomposer.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 3), 1L, ClayiumCore.divideByProgressionRate(60));
         decomposer.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), 4, ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 28), 1000L, ClayiumCore.divideByProgressionRate(60));
 
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 4L, ClayiumCore.divideByProgressionRate(20));
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 2)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust, 1)), 4L, ClayiumCore.divideByProgressionRate(20));
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 2)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 12), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 4L, ClayiumCore.divideByProgressionRate(20));
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 2)), 0, 4, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 12)), 10000L, ClayiumCore.divideByProgressionRate(12));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 4L, ClayiumCore.divideByProgressionRate(20));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 2)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust, 1)), 4L, ClayiumCore.divideByProgressionRate(20));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 2)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 12), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 4L, ClayiumCore.divideByProgressionRate(20));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 2)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 12)), 10000L, ClayiumCore.divideByProgressionRate(12));
 
 
-        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.salt, ClayiumShape.dust, 2), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.calciumChloride, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust)), e(5), 120L);
-        chemicalReactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.quartz, ClayiumShape.dust)), e(4), 120L);
-        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), i(Items.COAL)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), e(4), 120L);
-        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), i(Items.COAL, 1, 1)), 0, 0, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), e(4), 120L);
+        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.salt, ClayiumShape.dust, 2), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.calciumChloride, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust)), e(5), 120L);
+        chemicalReactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.quartz, ClayiumShape.dust)), e(4), 120L);
+        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), i(Items.COAL)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), e(4), 120L);
+        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), i(Items.COAL, 1, 1)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), e(4), 120L);
 
 
-        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.salt, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 0, 8, ii(ClayiumMaterials.get(ClayiumMaterial.quartz, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.calciumChloride, ClayiumShape.dust)), e(10.0D, 8), 1L);
-        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 0, 8, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), e(10.0D, 8), 1L);
-        blastFurnace.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.ingot)), e(7), 100L);
+        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.salt, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.quartz, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.calciumChloride, ClayiumShape.dust)), e(10.0D, 8), 1L);
+        chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), e(10.0D, 8), 1L);
+        blastFurnace.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.ingot)), e(7), 100L);
 
 
-        chemicalReactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 0, 5, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.mainAluminium, ClayiumShape.dust)), e(5), 30L);
+        chemicalReactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 5, ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.mainAluminium, ClayiumShape.dust)), e(5), 30L);
 
 
-        blastFurnace.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 2), ClayiumMaterials.get(ClayiumMaterial.impureManganese, ClayiumShape.dust)), 0, 6, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot, 2)), e(5.0D, 6), 200L);
-        blastFurnace.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureManganese, ClayiumShape.dust)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot)), e(5.0D, 7), 5L);
-        blastFurnace.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.getOD(ClayiumMaterial.manganese, ClayiumShape.dust)), 0, 8, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot)), e(5.0D, 8), 1L);
+        blastFurnace.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 2), ClayiumMaterials.get(ClayiumMaterial.impureManganese, ClayiumShape.dust)), 6, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot, 2)), e(5.0D, 6), 200L);
+        blastFurnace.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureManganese, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot)), e(5.0D, 7), 5L);
+        blastFurnace.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.getOD(ClayiumMaterial.manganese, ClayiumShape.dust)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot)), e(5.0D, 8), 1L);
 
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust, 4)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 50000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.hafnium, ClayiumShape.dust)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 500000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.barium, ClayiumShape.dust)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(3.0D, 7), 5000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.strontium, ClayiumShape.dust)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(7), 50000000L);
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust, 4)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 50000L);
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.hafnium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 500000L);
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.barium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(3.0D, 7), 5000000L);
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.strontium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(7), 50000000L);
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot)), 0, 8, ii(ClayiumMaterials.get(ClayiumMaterial.ultimateAlloy, ClayiumShape.ingot)), e(10.0D, 8), 1000000000L);
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.ultimateAlloy, ClayiumShape.ingot)), e(10.0D, 8), 1000000000L);
 
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust)), 0, 7, ii(ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 4)), e(7), 2000000L);
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 4)), e(7), 2000000L);
 
 
 // TODO        grinder.addRecipe(i(CBlocks.blockClayTreeLog), 5, ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), e(5), 200L);
-        reactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 0, 10, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(10), 1000000000000L);
-        reactor.addRecipe(ii(i(ClayiumItems.claySoul), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 0, 11, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(11), 100000000000000L);
+        reactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 10, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(10), 1000000000000L);
+        reactor.addRecipe(ii(i(ClayiumItems.claySoul), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 11, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(11), 100000000000000L);
 
 
-        reactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 0, 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumCore.divideByProgressionRate(200000000000000L));
+        reactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumCore.divideByProgressionRate(200000000000000L));
         CACondenser.addRecipe(i(ClayiumItems.antimatterSeed), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9), ClayiumCore.divideByProgressionRate(2000L));
 
 
-        CAInjector.addRecipe(ii(machines.get(10), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 0, 10, ii(i(ClayiumMachines.CACollector)), e(2.0D, 10), 4000L);
+        CAInjector.addRecipe(ii(machines.get(10), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 10, ii(i(ClayiumMachines.CACollector)), e(2.0D, 10), 4000L);
         CAReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), 10, ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem), e(0.1D, 10), ClayiumCore.divideByProgressionRate(300));
         for (i = 0; i < 8; i++) {
             condenser.addRecipe(ClayiumMaterials.get(ClayiumMaterial.compressedPureAntimatter.get(i), ClayiumShape.gem, 9), 10, ClayiumMaterials.get(ClayiumMaterial.compressedPureAntimatter.get(i + 1), ClayiumShape.gem), e(9), 6L);
@@ -601,7 +598,7 @@ public class ClayiumRecipes {
                 '#', ClayiumMaterials.get(CMaterials.OCTUPLE_PURE_ANTIMATTER, ClayiumShape.largePlate), 'C', i(ClayiumItems.clayPsyche), 'E', i(ClayiumItems.CEE));
 */
 
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.largePlate), circuits.get(6)), 0, 4,
+        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.largePlate), circuits.get(6)), 4,
                 ii(i(ClayiumBlocks.AZ91DHull)), e(6), 120L);
 //        GameRegistry.addRecipe(i(ClayiumBlocks.ZK60AHull), "###", "#C#", "###",
 //                '#', ClayiumMaterials.get(CMaterials.ZK60A_ALLOY, ClayiumShape.largePlate), 'C', i(ClayiumItems.precisionCircuit));
@@ -630,40 +627,40 @@ public class ClayiumRecipes {
         millingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate), i(ClayiumItems.clayCircuitBoard), 1L);
         millingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.plate), 3, i(ClayiumItems.CEEBoard), 2L, 32L);
 
-        assembler.addRecipe(ii(i(ClayiumItems.CEECircuit), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 0, 0,
+        assembler.addRecipe(ii(i(ClayiumItems.CEECircuit), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 0,
                 ii(i(ClayiumItems.CEE)), 8L, 20L);
-        inscriber.addRecipe(ii(i(ClayiumItems.CEEBoard), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0, 0,
+        inscriber.addRecipe(ii(i(ClayiumItems.CEEBoard), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0,
                 ii(i(ClayiumItems.CEECircuit)), 2L, 20L);
 
-        inscriber.addRecipe(ii(i(ClayiumItems.clayCircuitBoard), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 6)), 0, 0,
+        inscriber.addRecipe(ii(i(ClayiumItems.clayCircuitBoard), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 6)), 0,
                 ii(i(ClayiumItems.clayCircuit)), 2L, 20L);
-        inscriber.addRecipe(ii(i(ClayiumItems.clayCircuitBoard), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0, 0,
+        inscriber.addRecipe(ii(i(ClayiumItems.clayCircuitBoard), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0,
                 ii(i(ClayiumItems.basicCircuit)), 2L, 20L);
-        inscriber.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0, 0,
+        inscriber.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0,
                 ii(i(ClayiumItems.advancedCircuit)), 100L, 120L);
-        inscriber.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0, 0,
+        inscriber.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0,
                 ii(i(ClayiumItems.precisionCircuit)), 1000L, 120L);
-        assembler.addRecipe(ii(i(ClayiumItems.precisionCircuit), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 0, 6,
+        assembler.addRecipe(ii(i(ClayiumItems.precisionCircuit), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 32)), 6,
                 ii(i(ClayiumItems.integratedCircuit)), 10000L, 1200L);
 
-        assembler.addRecipe(oo(i(ClayiumItems.CEE), i(ClayiumItems.integratedCircuit)), 0, 6,
+        assembler.addRecipe(oo(i(ClayiumItems.CEE), i(ClayiumItems.integratedCircuit)), 6,
                 ii(i(ClayiumItems.laserParts)), e(6), 20L);
-        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.beryllium, ClayiumShape.dust, 8), i(ClayiumItems.integratedCircuit)), 0, 6,
+        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.beryllium, ClayiumShape.dust, 8), i(ClayiumItems.integratedCircuit)), 6,
                 ii(i(ClayiumItems.synchronousParts)), e(6), 432000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, 8), i(ClayiumItems.integratedCircuit)), 0, 11,
+        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, 8), i(ClayiumItems.integratedCircuit)), 11,
                 ii(i(ClayiumItems.teleportationParts)), e(11), 10000000000000L);
 
-        reactor.addRecipe(oo(i(ClayiumItems.integratedCircuit, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust)), 0, 7,
+        reactor.addRecipe(oo(i(ClayiumItems.integratedCircuit, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust)), 7,
                 ii(i(ClayiumItems.clayCore)), e(10.0D, 7), 8000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.clayCore, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 12)), 0, 8,
+        reactor.addRecipe(oo(i(ClayiumItems.clayCore, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 12)), 8,
                 ii(i(ClayiumItems.clayBrain)), e(10.0D, 8), 4000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.clayBrain, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 32)), 0, 9,
+        reactor.addRecipe(oo(i(ClayiumItems.clayBrain, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 32)), 9,
                 ii(i(ClayiumItems.claySpirit)), e(10.0D, 9), 10000000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.claySpirit, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 4)), 0, 10,
+        reactor.addRecipe(oo(i(ClayiumItems.claySpirit, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 4)), 10,
                 ii(i(ClayiumItems.claySoul)), e(10.0D, 10), 10000000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.claySoul, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 16)), 0, 11,
+        reactor.addRecipe(oo(i(ClayiumItems.claySoul, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 16)), 11,
                 ii(i(ClayiumItems.clayAnima)), e(30.0D, 11), 100000000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.clayAnima, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 12,
+        reactor.addRecipe(oo(i(ClayiumItems.clayAnima, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 12,
                 ii(i(ClayiumItems.clayPsyche)), e(90.0D, 12), 1000000000000000L);
     }
 
@@ -743,195 +740,195 @@ public class ClayiumRecipes {
 */
         for (int i = 1; i <= 13; i++) {
             if (i == 1) {
-                assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 0, 4,
+                assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4,
                         ii(i(ClayiumMachines.elementalMillingMachine)), e(i), 120L);
             }
             if (i >= 1) {
                 if (i <= 3) {
-                    assembler.addRecipe(ii(ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate), circuits.get(3)), 0, 4,
+                    assembler.addRecipe(ii(ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate), circuits.get(3)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.cobblestoneGenerator, i))), e(i), 40L);
                 }
                 if (i <= 4) {
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 3)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 3)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, i))), e(i), 120L);
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.wireDrawingMachine, i))), e(i), 120L);
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder, 2)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder, 2)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.pipeDrawingMachine, i))), e(i), 120L);
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.cuttingMachine, i))), e(i), 120L);
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.lathe, i))), e(i), 120L);
                 }
             }
 
             if (i >= 2) {
                 if (i <= 3) {
-                    assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 0, 4,
+                    assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.condenser, i))), e(i), 120L);
                 }
                 if (i <= 4) {
-                    assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear, 4)), 0, 4,
+                    assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear, 4)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.decomposer, i))), e(i), 120L);
                 }
                 if (i <= 6) {
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead, 1)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead, 1)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.grinder, i))), e(i), 120L);
                 }
             }
             if (i == 3) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumItems.CEE, 2)), 0, 4,
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumItems.CEE, 2)), 4,
                         ii(i(ClayiumMachines.energeticClayCondenserMK1)), e(i), 120L);
             }
             if (i >= 3) {
                 if (i <= 4) {
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.millingMachine, i))), e(i), 120L);
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i))), e(i), 40L);
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i)), circuits.get(4)), 0, 4,
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i)), circuits.get(4)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.inscriber, i))), e(i), 40L);
                 }
                 if (i <= 6) {
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle, Math.max(i - 4, 1))), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle, Math.max(i - 4, 1))), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.centrifuge, i))), e(i), 120L);
                 }
             }
             if (i == 4) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumItems.CEE, 2)), 0, 4,
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumItems.CEE, 2)), 4,
                         ii(i(ClayiumMachines.energeticClayCondenserMK2)), e(i), 120L);
             }
             if (i >= 4) {
-                assembler.addRecipe(ii(ClayiumMaterials.get(mats.get(i), ClayiumShape.plate), circuits.get(i)), 0, 4,
+                assembler.addRecipe(ii(ClayiumMaterials.get(mats.get(i), ClayiumShape.plate), circuits.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i), 16)), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i), 6), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i), 6), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.multitrackBuffer, i))), e(i), 40L);
                 if (ClayiumConfiguration.cfgEnableFluidCapsule)
 // TODO                   assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), i(CItems.itemsCapsule[0], 4)), 0, 4,
 //                            ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, i))), e(i), 40L);
                 if (i <= 7) {
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(3)), 0, 4,
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(3)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.cobblestoneGenerator, i))), e(i), 40L);
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(4)), 0, 4,
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(4)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.saltExtractor, i))), e(i), 40L);
-                    assembler.addRecipe(ii(machines.get(i), s(circuits.get(3), i - 3)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), s(circuits.get(3), i - 3)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i))), e(i), 120L);
                 }
                 if (i <= 5) {
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, i))), 0, 4,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, i))), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.condenser, i))), e(i), 120L);
-                    assembler.addRecipe(ii(machines.get(i), s(circuits.get(4), i - 3)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), s(circuits.get(4), i - 3)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, i))), e(i), 120L);
                 }
             }
             if (i >= 5) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, 6))), 0, 4,
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, 6))), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, i))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, i)), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 16)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, i)), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 16)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.redstoneInterface, i))), e(i), 40L);
                 if (i <= 7) {
-                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, (i - 4) * 3)), 0, 4,
+                    assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, (i - 4) * 3)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, i))), e(i), 120L);
                 }
             }
             if (i == 5) {
-                assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 8)), 0, 4,
+                assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 8)), 4,
                         ii(i(ClayiumMachines.solarClayFabricatorMK1)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(5)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(5)), 4,
                         ii(i(ClayiumMachines.autoClayCondenserMK1)), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 4)), machines.get(i)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 4)), machines.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i))), e(i), 40L);
                 if (ClayiumConfiguration.cfgEnableFluidCapsule)
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, i), 2), machines.get(i)), 0, 4,
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, i), 2), machines.get(i)), 4,
                             ii(i(ClayiumMachines.get(EnumMachineKind.fluidTransferMachine, i))), e(i), 40L);
             }
             if (i >= 6 && i <= 9) {
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5)), circuits.get(i)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5)), circuits.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, i))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i - 1)), machines.get(i)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i - 1)), machines.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i))), e(i), 40L);
             }
             if (i == 6) {
-                assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 0, 4,
+                assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4,
                         ii(i(ClayiumMachines.solarClayFabricatorMK2)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i)), i(ClayiumMachines.get(EnumMachineKind.clayInterface, i))), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i)), i(ClayiumMachines.get(EnumMachineKind.clayInterface, i))), 4,
                         ii(i(ClayiumMachines.blastFurnace)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5)), i(ClayiumMachines.get(EnumMachineKind.smelter, i))), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5)), i(ClayiumMachines.get(EnumMachineKind.smelter, i))), 4,
                         ii(i(ClayiumMachines.chemicalMetalSeparator)), e(i), 40L);
-                assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 0, 4,
+                assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 4)), circuits.get(i)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 4)), circuits.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 6))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i)), circuits.get(i)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i)), circuits.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.alloySmelter, i))), e(i), 40L);
             }
             if (i == 7) {
-                assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 0, 4,
+                assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4,
                         ii(i(ClayiumMachines.lithiumSolarClayFabricator)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(5)), 0, 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(5)), 4,
                         ii(i(ClayiumMachines.autoClayCondenserMK2)), e(i), 40L);
-                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.laserInterface, i))), 0, 6,
+                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.laserInterface, i))), 6,
                         ii(i(ClayiumMachines.clayReactor)), e(i), 1200L);
             }
             if (i >= 7) {
-                assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), i(ClayiumItems.laserParts, 1)), 0, 6,
+                assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), i(ClayiumItems.laserParts, 1)), 6,
                         ii(i(ClayiumMachines.get(EnumMachineKind.laserInterface, i))), e(i), 120L);
                 if (i <= 9) {
-                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), machines.get(i)), 0, 6,
+                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), machines.get(i)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.distributor, i))), e(i), 120L);
-                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(7)), 0, 6,
+                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(7)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.distributor, i))), e(i), 120L);
-                    assembler.addRecipe(oo(i(ClayiumMachines.clayReactor), i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, i))), 0, 6,
+                    assembler.addRecipe(oo(i(ClayiumMachines.clayReactor), i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, i))), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.transformer, i))), e(i), 120L);
                 }
                 if (i <= 10) {
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumItems.laserParts, 4)), 0, 6,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumItems.laserParts, 4)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.clayEnergyLaser, i))), e(i), 480L);
                 }
             }
             if (i == 8) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5))), 0, 4,
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5))), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, i))), e(i), 480L);
             }
             if (i >= 8 &&
                     i <= 9) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.smelter, i - 1), 16)), 0, 6,
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.smelter, i - 1), 16)), 6,
                         ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i))), e(i), 2000L);
             }
 
             if (i == 9) {
-                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.bendingMachine, 7), 4)), 0, 6,
+                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.bendingMachine, 7), 4)), 6,
                         ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, i))), e(i), 480L);
             }
             if (i >= 9) {
                 if (i == 9) {
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 0, 6,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, i))), e(i), 480L);
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.reactor, i), 16)), 0, 6,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.reactor, i), 16)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i))), e(i), 480L);
                 } else {
                     if (i <= 11) {
-                        assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 0, 10,
+                        assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 10,
                                 ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, i))), e(i), 480L);
                     }
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.CAInjector, i - 1), 2)), 0, 10,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.CAInjector, i - 1), 2)), 10,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i))), e(i), 480L);
                 }
             }
             if (i == 10) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.assembler, 6))), 0, 6,
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.assembler, 6))), 6,
                         ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i))), e(i), 40L);
             }
             if (i >= 10) {
-                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 0, 10,
+                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 10,
                         ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, i))), e(i), 120L);
                 if (i <= 12) {
-                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i)), i(ClayiumMachines.clayReactor)), 0, 10,
+                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i)), i(ClayiumMachines.clayReactor)), 10,
                             ii(i(ClayiumMachines.get(EnumMachineKind.transformer, i))), e(i), 120L);
                 }
             }
             if (i == 13) {
-                assembler.addRecipe(oo(machines.get(i), ClayiumBlocks.CAReactorCoil.get(TierPrefix.OPA)), 0, 10,
+                assembler.addRecipe(oo(machines.get(i), ClayiumBlocks.CAReactorCoil.get(TierPrefix.OPA)), 10,
                         ii(i(ClayiumMachines.energeticClayDecomposer)), e(i), 120L);
             }
         }
@@ -961,52 +958,52 @@ public class ClayiumRecipes {
             }
         }
 */
-        assembler.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust, 16)), 0, 0,
+        assembler.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust, 16)), 0,
                 ii(i(ClayiumMachines.quartzCrucible)), 1000L, 20L);
-        blastFurnace.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust), ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust, 8)), 0, 7,
+        blastFurnace.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust), ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust, 8)), 7,
                 ii(i(ClayiumMachines.laserReflector)), e(0.2D, 7), 100L);
 
-        reactor.addRecipe(ii(machines.get(8), i(ClayiumMachines.lithiumSolarClayFabricator)), 0, 8,
+        reactor.addRecipe(ii(machines.get(8), i(ClayiumMachines.lithiumSolarClayFabricator)), 8,
                 ii(i(ClayiumMachines.clayFabricatorMK1)), e(3.0D, 8), 100000000L);
-        reactor.addRecipe(ii(machines.get(9), i(ClayiumMachines.lithiumSolarClayFabricator)), 0, 9,
+        reactor.addRecipe(ii(machines.get(9), i(ClayiumMachines.lithiumSolarClayFabricator)), 9,
                 ii(i(ClayiumMachines.clayFabricatorMK2)), e(3.0D, 9), 100000000000L);
-        reactor.addRecipe(ii(i(ClayiumMachines.clayFabricatorMK2, 64), ClayiumBlocks.overclocker.get(TierPrefix.OPA, 16)), 0, 13,
+        reactor.addRecipe(ii(i(ClayiumMachines.clayFabricatorMK2, 64), ClayiumBlocks.overclocker.get(TierPrefix.OPA, 16)), 13,
                 ii(i(ClayiumMachines.clayFabricatorMK3)), e(10.0D, 13), 1000000000000000000L);
 
-        CAInjector.addRecipe(ii(machines.get(9), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 0, 9,
+        CAInjector.addRecipe(ii(machines.get(9), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 9,
                 ii(ClayiumBlocks.resonator.get(TierPrefix.antimatter)), e(2.0D, 9), 4000L);
-        CAInjector.addRecipe(ii(ClayiumBlocks.resonator.get(TierPrefix.antimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 11,
+        CAInjector.addRecipe(ii(ClayiumBlocks.resonator.get(TierPrefix.antimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 11,
                 ii(ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter)), e(2.0D, 11), 4000L);
-        CAInjector.addRecipe(ii(ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 12,
+        CAInjector.addRecipe(ii(ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 12,
                 ii(ClayiumBlocks.resonator.get(TierPrefix.OEC)), e(2.0D, 12), 4000L);
-        CAInjector.addRecipe(ii(ClayiumBlocks.resonator.get(TierPrefix.OEC, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 13,
+        CAInjector.addRecipe(ii(ClayiumBlocks.resonator.get(TierPrefix.OEC, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 13,
                 ii(ClayiumBlocks.resonator.get(TierPrefix.OPA)), e(2.0D, 13), 4000L);
 
-        CAInjector.addRecipe(ii(ClayiumBlocks.overclocker.get(TierPrefix.antimatter), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 0, 9,
+        CAInjector.addRecipe(ii(ClayiumBlocks.overclocker.get(TierPrefix.antimatter), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 9,
                 ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.antimatter)), e(2.0D, 9), 4000L);
-        CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.antimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 11,
+        CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.antimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 11,
                 ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.pureAntimatter)), e(2.0D, 11), 4000L);
-        CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.pureAntimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 12,
+        CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.pureAntimatter, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 12,
                 ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.OEC)), e(2.0D, 12), 4000L);
-        CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.OEC, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 0, 13,
+        CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.OEC, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 13,
                 ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.OPA)), e(2.0D, 13), 4000L);
 
-        reactor.addRecipe(oo(s(machines.get(10), 1), ClayiumBlocks.resonator.get(TierPrefix.antimatter, 8)), 0, 10,
+        reactor.addRecipe(oo(s(machines.get(10), 1), ClayiumBlocks.resonator.get(TierPrefix.antimatter, 8)), 10,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.antimatter)), e(5.0D, 10), 10000000000000L);
-        reactor.addRecipe(oo(s(machines.get(11), 4), ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter, 16)), 0, 11,
+        reactor.addRecipe(oo(s(machines.get(11), 4), ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter, 16)), 11,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.pureAntimatter)), e(5.0D, 11), 100000000000000L);
-        reactor.addRecipe(oo(s(machines.get(12), 16), ClayiumBlocks.resonator.get(TierPrefix.OEC, 32)), 0, 12,
+        reactor.addRecipe(oo(s(machines.get(12), 16), ClayiumBlocks.resonator.get(TierPrefix.OEC, 32)), 12,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.OEC)), e(5.0D, 12), 1000000000000000L);
-        reactor.addRecipe(oo(s(machines.get(13), 64), ClayiumBlocks.resonator.get(TierPrefix.OPA, 64)), 0, 13,
+        reactor.addRecipe(oo(s(machines.get(13), 64), ClayiumBlocks.resonator.get(TierPrefix.OPA, 64)), 13,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.OPA)), e(5.0D, 13), 1000000000000000L);
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(10), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.platinum, ClayiumShape.ingot)), 0, 10,
+        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(10), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.platinum, ClayiumShape.ingot)), 10,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.antimatter)), e(10), 10000000000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(11), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.iridium, ClayiumShape.ingot, 4)), 0, 11,
+        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(11), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.iridium, ClayiumShape.ingot, 4)), 11,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.pureAntimatter)), e(11), 100000000000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(12), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.mainOsmium, ClayiumShape.ingot, 16)), 0, 12,
+        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(12), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.mainOsmium, ClayiumShape.ingot, 16)), 12,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.OEC)), e(12), 1000000000000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(13), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.rhenium, ClayiumShape.ingot, 64)), 0, 13,
+        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(13), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.rhenium, ClayiumShape.ingot, 64)), 13,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.OPA)), e(13), 1000000000000000L);
 
 /* TODO PAN

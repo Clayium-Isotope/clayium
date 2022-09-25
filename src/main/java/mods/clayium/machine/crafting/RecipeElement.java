@@ -3,32 +3,28 @@ package mods.clayium.machine.crafting;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.UtilItemStack;
+import mods.clayium.util.UtilLocale;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class RecipeElement implements IRecipeWrapper {
-    public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, 0, 0, ItemStack.EMPTY, 0, 0);
-    protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
+    public static final RecipeElement FLAT = new RecipeElement(ItemStack.EMPTY, 0, ItemStack.EMPTY, 0, 0);
 
-    public RecipeElement(ItemStack materialIn, int method, int tier, ItemStack resultIn, long energy, long time) {
-        this(Arrays.asList(materialIn), method, tier, Arrays.asList(resultIn), energy, time);
+    public RecipeElement(ItemStack materialIn, int tier, ItemStack resultIn, long energy, long time) {
+        this(Arrays.asList(materialIn), -1, tier, Arrays.asList(resultIn), energy, time);
     }
 
     public RecipeElement(List<ItemStack> materialIn, int method, int tier, List<ItemStack> resultIn, long energy, long time) {
@@ -62,22 +58,16 @@ public class RecipeElement implements IRecipeWrapper {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        if (this.condition.method != -1) {
-            minecraft.fontRenderer.drawString("" + this.result.time, 28 + 16 * this.condition.method + 8 - minecraft.fontRenderer.getStringWidth("" + this.result.time) / 2, 37 - minecraft.fontRenderer.FONT_HEIGHT, -16777216);
+        minecraft.fontRenderer.drawString(this.condition.tier < 0 ? "" : "Tier: " + this.condition.tier, 6, 36, -16777216);
 
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-            minecraft.getTextureManager().bindTexture(buttonTex);
-
-            for (int i = 0; i < 6; i++) {
-                if (i == this.condition.method) {
-                    minecraft.ingameGUI.drawTexturedModalRect(28 + 16 * i, 37, 16, 0, 16, 16);
-                } else {
-                    minecraft.currentScreen.drawTexturedModalRect(28 + 16 * i, 37, 0, 0, 16, 16);
-                }
-            }
-
-            minecraft.ingameGUI.drawTexturedModalRect(28, 37, 0, 32, 96, 16);
+        String str;
+        if (this.result.energy < 0L) {
+            str = this.result.time < 0L ? "" : UtilLocale.craftTimeNumeral(this.result.time) + "t";
+        } else {
+            str = this.result.time < 0L ? UtilLocale.ClayEnergyNumeral(this.result.energy) + "CE" : UtilLocale.ClayEnergyNumeral(this.result.energy) + "CE/t x " + UtilLocale.craftTimeNumeral(this.result.time) + "t = " + UtilLocale.ClayEnergyNumeral((double)this.result.energy * (double)this.result.time) + "CE";
         }
+
+        minecraft.fontRenderer.drawString(str, 6, 45, -16777216);
     }
 
     public static class RecipeCondition {
