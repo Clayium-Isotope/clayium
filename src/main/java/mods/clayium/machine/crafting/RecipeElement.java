@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +65,8 @@ public class RecipeElement implements IRecipeWrapper {
         if (this.condition.method != -1) {
             minecraft.fontRenderer.drawString("" + this.result.time, 28 + 16 * this.condition.method + 8 - minecraft.fontRenderer.getStringWidth("" + this.result.time) / 2, 37 - minecraft.fontRenderer.FONT_HEIGHT, -16777216);
 
-            minecraft.getTextureManager().bindTexture(TextureManager.RESOURCE_LOCATION_EMPTY);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            minecraft.getTextureManager().bindTexture(buttonTex);
 
             for (int i = 0; i < 6; i++) {
                 if (i == this.condition.method) {
