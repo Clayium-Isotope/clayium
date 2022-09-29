@@ -1,19 +1,23 @@
 package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.core.ClayiumIntegration;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
+import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IHasButton;
+import mods.clayium.plugin.jei.JEICompatibility;
 import mods.clayium.util.UtilLocale;
 import mods.clayium.util.UtilTier;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
-// TODO still added an integration between JEI. see from ordinal
+import java.io.IOException;
+
 public class GuiClayiumMachine extends GuiTemp {
-    private final int progressBarSizeX = 22;
-    private final int progressBarSizeY = 16;
+    private final int progressBarSizeX = 24;
+    private final int progressBarSizeY = 17;
     private final int progressBarPosX = (xSize - this.progressBarSizeX) / 2;
     private final int progressBarPosY = 35;
 
@@ -26,6 +30,13 @@ public class GuiClayiumMachine extends GuiTemp {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
         fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((TileEntityClayiumMachine) tile).containEnergy, false)), 4, machineHeight - 12, 4210752);
+
+        if (ClayiumIntegration.JEI.loaded() && ((TileEntityClayiumMachine) this.tile).kind.hasRecipe()) {
+            if (this.guiLeft + this.progressBarPosX <= mouseX && this.guiTop + this.progressBarPosY <= mouseY
+                    && this.guiLeft + this.progressBarPosX + this.progressBarSizeX > mouseX && this.guiTop + this.progressBarPosY + this.progressBarSizeY > mouseY) {
+                this.drawHoveringText("Show Recipes", mouseX - this.guiLeft, mouseY - this.guiTop);
+            }
+        }
     }
 
     @Override
@@ -51,5 +62,20 @@ public class GuiClayiumMachine extends GuiTemp {
         if (button.enabled) {
             mc.playerController.sendEnchantPacket(inventorySlots.windowId, button.id);
         }
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        EnumMachineKind kind = ((TileEntityClayiumMachine) this.tile).kind;
+
+        if (ClayiumIntegration.JEI.loaded() && kind.hasRecipe()) {
+            if (this.guiLeft + this.progressBarPosX <= mouseX && this.guiTop + this.progressBarPosY <= mouseY
+                    && this.guiLeft + this.progressBarPosX + this.progressBarSizeX > mouseX && this.guiTop + this.progressBarPosY + this.progressBarSizeY > mouseY) {
+                ClayiumCore.logger.info("Will show category of " + kind.getRegisterName());
+                JEICompatibility.showMachineRecipes(kind);
+            }
+        }
+
+        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 }

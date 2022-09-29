@@ -3,6 +3,7 @@ package mods.clayium.core;
 import net.minecraftforge.fml.common.Loader;
 
 public enum ClayiumIntegration {
+    JEI("jei", "jei"),
     ;
 
     public final boolean isMod;
@@ -27,6 +28,6 @@ public enum ClayiumIntegration {
     }
 
     public boolean loaded() {
-        return enabled() && this.isMod && Loader.isModLoaded(this.modId);
+        return /*enabled() &&*/ this.isMod && Loader.isModLoaded(this.modId);
     }
 }

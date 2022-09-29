@@ -1,6 +1,10 @@
 package mods.clayium.machine;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.ContainerTemp;
+import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
+import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
+import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import net.minecraft.util.ResourceLocation;
@@ -10,29 +14,29 @@ import java.util.Objects;
 
 public enum EnumMachineKind {
     // Tier 0 ~
-    workTable("work_table", ClayiumRecipes.clayWorkTable),
+    workTable("work_table", ClayiumRecipes.clayWorkTable, SlotType.CLAY_WORK_TABLE),
     craftingTable("crafting_table", null),
 
     // Tier 1 ~
-    bendingMachine("bending_machine", ClayiumRecipes.bendingMachine),
-    wireDrawingMachine("wire_drawing_machine", ClayiumRecipes.wireDrawingMachine),
-    pipeDrawingMachine("pipe_drawing_machine", ClayiumRecipes.pipeDrawingMachine),
-    cuttingMachine("cutting_machine", ClayiumRecipes.cuttingMachine),
-    lathe("lathe", ClayiumRecipes.lathe),
-    millingMachine("milling_machine", ClayiumRecipes.millingMachine),
+    bendingMachine("bending_machine", ClayiumRecipes.bendingMachine, SlotType.MACHINE),
+    wireDrawingMachine("wire_drawing_machine", ClayiumRecipes.wireDrawingMachine, SlotType.MACHINE),
+    pipeDrawingMachine("pipe_drawing_machine", ClayiumRecipes.pipeDrawingMachine, SlotType.MACHINE),
+    cuttingMachine("cutting_machine", ClayiumRecipes.cuttingMachine, SlotType.MACHINE),
+    lathe("lathe", ClayiumRecipes.lathe, SlotType.MACHINE),
+    millingMachine("milling_machine", ClayiumRecipes.millingMachine, SlotType.MACHINE),
     cobblestoneGenerator("cobblestone_generator", null),
     waterWheel("water_wheel", null),
 
     // Tier 2 ~
-    condenser("condenser", ClayiumRecipes.condenser),
-    grinder("grinder", ClayiumRecipes.grinder),
-    decomposer("decomposer", ClayiumRecipes.decomposer),
+    condenser("condenser", ClayiumRecipes.condenser, SlotType.MACHINE),
+    grinder("grinder", ClayiumRecipes.grinder, SlotType.MACHINE),
+    decomposer("decomposer", ClayiumRecipes.decomposer, SlotType.MACHINE),
 
     // Tier 3 ~
-    assembler("assembler", ClayiumRecipes.assembler),
-    inscriber("inscriber", ClayiumRecipes.inscriber),
+    assembler("assembler", ClayiumRecipes.assembler, SlotType.ASSEMBLER),
+    inscriber("inscriber", ClayiumRecipes.inscriber, SlotType.ASSEMBLER),
     centrifuge("centrifuge", ClayiumRecipes.centrifuge),
-    ECCondenser("energetic_clay_condenser", ClayiumRecipes.energeticClayCondenser, "eccondenser"),
+    ECCondenser("energetic_clay_condenser", ClayiumRecipes.energeticClayCondenser, SlotType.MACHINE, "eccondenser"),
 
     // Tier 4 ~
     smelter("smelter", ClayiumRecipes.smelter),
@@ -94,12 +98,18 @@ public enum EnumMachineKind {
     metalChest("metal_chest", null);
 
     EnumMachineKind(String kind, ClayiumRecipe recipe) {
-        this(kind, recipe, kind.replaceAll("_", ""));
+        this(kind, recipe, SlotType.UNKNOWN);
     }
 
-    EnumMachineKind(String kind, ClayiumRecipe recipe, String facePath) {
+    EnumMachineKind(String kind, ClayiumRecipe recipe, SlotType slotType) {
+        this(kind, recipe, slotType, kind.replaceAll("_", ""));
+    }
+
+    EnumMachineKind(String kind, ClayiumRecipe recipe, SlotType slotType, String facePath) {
         this.kind = kind;
         this.recipe = recipe;
+        if (slotType == null) throw new NullPointerException("Slot Type of " + this.kind + " is null! This is bug.");
+        this.slotType = slotType;
         this.facePath = facePath;
     }
 
@@ -114,6 +124,7 @@ public enum EnumMachineKind {
     private final String kind;
     private final ClayiumRecipe recipe;
     public final String facePath;
+    public final SlotType slotType;
 
     @Nullable
     public static EnumMachineKind fromName(String name) {
@@ -125,5 +136,30 @@ public enum EnumMachineKind {
 
     public ResourceLocation getFaceResource() {
         return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.facePath + ".png");
+    }
+
+    public boolean hasRecipe() {
+        return this.recipe != null;
+    }
+
+    public static class SlotType {
+        public static final SlotType UNKNOWN = new SlotType(0, 0, 0, 36, ContainerTemp.class);
+        public static final SlotType CLAY_WORK_TABLE = new SlotType(0, 2, 4, 36, ContainerClayWorkTable.class);
+        public static final SlotType MACHINE = new SlotType(0, 1, 3, 36, ContainerClayiumMachine.class);
+        public static final SlotType ASSEMBLER = new SlotType(0, 2, 4, 36, ContainerClayAssembler.class);
+
+        public final int inStart;
+        public final int inCount;
+        public final int playerStart;
+        public final int playerCount;
+        public final Class<? extends ContainerTemp> containerClass;
+
+        SlotType(int inStart, int inCount, int playerStart, int playerCount, Class<? extends ContainerTemp> containerClass) {
+            this.inStart = inStart;
+            this.inCount = inCount;
+            this.playerStart = playerStart;
+            this.playerCount = playerCount;
+            this.containerClass = containerClass;
+        }
     }
 }

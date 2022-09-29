@@ -4,10 +4,10 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -33,7 +33,7 @@ public class ClayiumMachineCategory extends ClayiumRecipeCategory {
         progressBG = guiHelper.createDrawable(button, 80, 96, 22, 16);
         progressFG = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(button, 80, 112, 22, 16), 40, IDrawableAnimated.StartDirection.LEFT, false);
 
-        icon = guiHelper.createDrawableIngredient(new ItemStack(Items.CLAY_BALL));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(ClayiumMachines.get(kind)));
     }
 
     @Override

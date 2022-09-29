@@ -7,20 +7,29 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
-import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
-import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
+import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import net.minecraft.item.ItemStack;
+
+import java.util.Arrays;
 
 @JEIPlugin
 public class JEICompatibility implements IModPlugin {
+    public static IJeiRuntime jeiRuntime = null;
+
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         final IJeiHelpers helper = registry.getJeiHelpers();
         final IGuiHelper gui = helper.getGuiHelper();
 
         registry.addRecipeCategories(new ClayWorkTableCategory(gui));
-        registry.addRecipeCategories(new ClayiumMachineCategory(gui, EnumMachineKind.bendingMachine));
+        for (EnumMachineKind kind : EnumMachineKind.values()) {
+            if (kind == EnumMachineKind.workTable) continue;
+            if (!kind.hasRecipe()) continue;
+
+            registry.addRecipeCategories(new ClayiumMachineCategory(gui, kind));
+        }
         IModPlugin.super.registerCategories(registry);
     }
 
@@ -33,9 +42,38 @@ public class JEICompatibility implements IModPlugin {
         registry.addRecipes(ClayiumRecipes.clayWorkTable, ClayWorkTableCategory.categoryID);
         registry.addRecipeClickArea(GuiClayWorkTable.class, 48, 33, 80, 12, ClayWorkTableCategory.categoryID);
         recipeTransfer.addRecipeTransferHandler(ContainerClayWorkTable.class, ClayWorkTableCategory.categoryID, 0, 2, 4, 36);
+        registry.addRecipeCatalyst(new ItemStack(ClayiumMachines.clayWorkTable), ClayWorkTableCategory.categoryID);
 
-        registry.addRecipes(ClayiumRecipes.bendingMachine, ClayiumCore.ModId + "." + EnumMachineKind.bendingMachine.getRegisterName());
-        registry.addRecipeClickArea(GuiClayiumMachine.class, (176 - 22) / 2, 35, 22, 16, ClayiumCore.ModId + "." + EnumMachineKind.bendingMachine.getRegisterName());
-        recipeTransfer.addRecipeTransferHandler(ContainerClayiumMachine.class, ClayiumCore.ModId + "." + EnumMachineKind.bendingMachine.getRegisterName(), 0, 1, 3, 36);
+        for (EnumMachineKind kind : EnumMachineKind.values()) {
+            if (kind == EnumMachineKind.workTable) continue;
+            if (!kind.hasRecipe()) continue;
+
+            String categoryID = ClayiumCore.ModId + "." + kind.getRegisterName();
+            registry.addRecipes(kind.getRecipe(), categoryID);
+            recipeTransfer.addRecipeTransferHandler(kind.slotType.containerClass, categoryID, kind.slotType.inStart, kind.slotType.inCount, kind.slotType.playerStart, kind.slotType.playerCount);
+
+            for (ItemStack stack : ClayiumMachines.getSet(kind)) {
+                registry.addRecipeCatalyst(stack, categoryID);
+            }
+        }
+
+// use THIS.showMachineRecipes instead of...
+//        registry.addRecipeClickArea(GuiClayiumMachine.class, (176 - 22) / 2, 35, 22, 16, ClayiumCore.ModId + "." + EnumMachineKind.bendingMachine.getRegisterName());
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        JEICompatibility.jeiRuntime = jeiRuntime;
+    }
+
+    /**
+     * Use the static field, named {@link JEICompatibility#jeiRuntime}, to show each machines' category.<br>
+     * <br>
+     * REFER TO: https://github.com/SleepyTrousers/EnderIO/blob/b2754e2c08384a0c51b1289db6cf8f2607ea0d01/enderio-base/src/main/java/crazypants/enderio/base/integration/jei/JeiPlugin.java#L108-L110<br>
+     */
+    public static void showMachineRecipes(EnumMachineKind kind) {
+        if (JEICompatibility.jeiRuntime == null || !kind.hasRecipe()) return;
+
+        JEICompatibility.jeiRuntime.getRecipesGui().showCategories(Arrays.asList(ClayiumCore.ModId + "." + kind.getRegisterName()));
     }
 }

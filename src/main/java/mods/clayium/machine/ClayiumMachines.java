@@ -14,6 +14,7 @@ import mods.clayium.machine.WaterWheel.WaterWheel;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ClayiumMachines {
     public static final Map<EnumMachineKind, Map<TierPrefix, ClayContainer>> machineMap = new EnumMap<>(EnumMachineKind.class);
@@ -127,11 +129,31 @@ public class ClayiumMachines {
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
             return machineMap.get(kind).get(tier);
-        return Blocks.AIR;
+        return null;
     }
-    // if tier is clear, use TierPrefix version.
+    @Deprecated // iff tier is clear, use TierPrefix version.
     public static Block get(EnumMachineKind kind, int tier) {
         return get(kind, TierPrefix.get(tier));
+    }
+    /**
+     * @return the least tier machine of the kind
+     */
+    public static Block get(EnumMachineKind kind) {
+        Block block;
+
+        for (TierPrefix tier : TierPrefix.values()) {
+            block = get(kind, tier);
+            if (block != null) return block;
+        }
+
+        return null;
+// TODO change to    throw new NoSuchElementException(kind.getRegisterName() + " is not registered!");
+    }
+    /**
+     * @return all of registered machines which the kind has
+     */
+    public static List<ItemStack> getSet(EnumMachineKind kind) {
+        return machineMap.get(kind).values().stream().map(ItemStack::new).collect(Collectors.toList());
     }
 
     public static List<Block> getBlocks() {
