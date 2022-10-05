@@ -18,10 +18,7 @@ import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClayiumMachines {
@@ -153,6 +150,8 @@ public class ClayiumMachines {
      * @return all of registered machines which the kind has
      */
     public static List<ItemStack> getSet(EnumMachineKind kind) {
+        if (!machineMap.containsKey(kind))
+            return Collections.emptyList();
         return machineMap.get(kind).values().stream().map(ItemStack::new).collect(Collectors.toList());
     }
 

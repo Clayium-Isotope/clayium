@@ -115,6 +115,7 @@ public class ClayiumCore {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
+        ClayiumMaterials.supportRegisterMaterials();
         ClayiumRecipes.registerRecipes();
 
         GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));

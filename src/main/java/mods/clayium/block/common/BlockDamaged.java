@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockDamaged extends ArrayList<Block> {
+    protected static Random rand = new Random();
+
     public BlockDamaged() {
         super();
         init();
@@ -15,7 +17,6 @@ public class BlockDamaged extends ArrayList<Block> {
     public void init() {}
 
     public boolean contains(Item item) {
-        Random rand = new Random();
         for (Block block : this) {
             if (Item.getItemFromBlock(block).equals(item)) return true;
 //            if (block instanceof ClayiumBlock && ((ClayiumBlock) block).getItemBlock().equals(item)) return true;

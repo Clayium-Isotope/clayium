@@ -1,9 +1,7 @@
 package mods.clayium.item;
 
 import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.CompressedClay;
 import mods.clayium.block.common.MaterialBlock;
-import mods.clayium.block.itemblock.ItemBlockCompressedClay;
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.*;
@@ -11,6 +9,7 @@ import mods.clayium.util.ODHelper;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -70,26 +69,20 @@ public class ClayiumMaterials {
             materialShapeMap.put(material, new EnumMap<>(ClayiumShape.class));
         }
 
-        materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.block, I(((CompressedClay) ClayiumBlocks.compressedClay.get(0)).getItemBlock()));
-        materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
         for (ClayiumShape shape : ClayiumShape.clayPartShapes) {
             add(ClayiumMaterial.clay, shape, 1, true);
         }
         clayParts = materialShapeMap.get(ClayiumMaterial.clay);
 
-        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, I(((CompressedClay) ClayiumBlocks.compressedClay.get(1)).getItemBlock()));
-        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
         materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.largeBall, ItemStack.EMPTY);
         for (ClayiumShape shape : ClayiumShape.clayPartShapes) {
             add(ClayiumMaterial.denseClay, shape, 2, true);
         }
         denseClayParts = materialShapeMap.get(ClayiumMaterial.denseClay);
 
-        materialShapeMap.get(ClayiumMaterial.indClay).put(ClayiumShape.block, I(((CompressedClay) ClayiumBlocks.compressedClay.get(3)).getItemBlock()));
         add(ClayiumMaterial.indClay, ClayiumShape.plate, 3, true);
         add(ClayiumMaterial.indClay, ClayiumShape.largePlate, 3, true);
 
-        materialShapeMap.get(ClayiumMaterial.advClay).put(ClayiumShape.block, I(((CompressedClay) ClayiumBlocks.compressedClay.get(4)).getItemBlock()));
         add(ClayiumMaterial.advClay, ClayiumShape.plate, 4, true);
         add(ClayiumMaterial.advClay, ClayiumShape.largePlate, 4, true);
 
@@ -171,7 +164,6 @@ public class ClayiumMaterials {
         add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.dust, 12, false);
         add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.plate, 12, false);
         add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.largePlate, 12, false);
-        materialShapeMap.get(ClayiumMaterial.octupleEnergeticClay).put(ClayiumShape.block, I(new ItemBlockCompressedClay((CompressedClay) ClayiumBlocks.compressedClay.get(12))));
 
         addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.dust, 13, false);
         addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.gem, 13, false);
@@ -247,16 +239,19 @@ public class ClayiumMaterials {
         registerOre("blockAluminium", get(ClayiumMaterial.aluminium, ClayiumShape.block));
     }
 
+    public static void supportRegisterMaterials() {
+        materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.block, I(Blocks.CLAY));
+        materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
 
+        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(0)));
+        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
 
+        materialShapeMap.get(ClayiumMaterial.indClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(2)));
 
+        materialShapeMap.get(ClayiumMaterial.advClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(3)));
 
-
-
-
-
-
-
+        materialShapeMap.get(ClayiumMaterial.octupleEnergeticClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(12)));
+    }
 
     public static final Map<Integer, ClayiumMaterial> materials = new HashMap<>();
 
@@ -339,11 +334,13 @@ public class ClayiumMaterials {
     }
 
     public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape) {
-        return ODHelper.getODStack(shape.getName() + material.getODName());
+        return getOD(material, shape, 1);
     }
 
     public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape, int amount) {
-        return ODHelper.getODStack(shape.getName() + material.getODName(), amount);
+        ItemStack stack = ODHelper.getODStack(shape.getName() + material.getODName(), amount);
+        if (stack.isEmpty()) return get(material, shape, amount);
+        return stack;
     }
 
     private static void registerOre(ClayiumMaterial material, ClayiumShape shape) {
