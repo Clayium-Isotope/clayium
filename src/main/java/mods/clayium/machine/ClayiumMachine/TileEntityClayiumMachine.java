@@ -254,4 +254,11 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         if (kind == null) return null;
         return this.kind.getFaceResource();
     }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIOIcons() {
+        this.registerInsertIcons("import");
+        this.registerExtractIcons("export");
+    }
 }

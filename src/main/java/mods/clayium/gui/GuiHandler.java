@@ -17,6 +17,8 @@ import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.MultitrackBuffer.ContainerMultitrackBuffer;
+import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.common.ContainerNormalInventory;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,6 +54,8 @@ public class GuiHandler implements IGuiHandler {
                     return new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile);
                 case GuiIdClayChemicalReactor:
                     return new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile);
+                case GuiIdMultitrackBuffer:
+                    return new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile);
             }
         }
 
@@ -80,6 +84,8 @@ public class GuiHandler implements IGuiHandler {
                     return new GuiClayiumMachine(new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile));
                 case GuiIdClayChemicalReactor:
                     return new GuiClayiumMachine(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile));
+                case GuiIdMultitrackBuffer:
+                    return new GuiTemp(new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile));
             }
         }
 

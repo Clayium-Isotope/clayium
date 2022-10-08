@@ -1,7 +1,9 @@
 package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -35,9 +37,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     /**
      * -2: energy
      * -1: none,
-     * 0: white,
-     * 1: red,
-     * 2: purple
+     * 0: white
      */
     public Map<EnumFacing, Integer> importRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
         put(EnumFacing.UP,    -1);
@@ -50,9 +50,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     public List<int[]> listSlotsImport = new ArrayList<>();
     /**
      * -1: none,
-     * 0: white,
-     * 1: green,
-     * 2: cyan
+     * 0: white
      */
     public Map<EnumFacing, Integer> exportRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
         put(EnumFacing.UP,    -1);
@@ -90,6 +88,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
     public TileEntityClayContainer() {
         initParams();
+        registerIOIcons();
     }
 
     public void initParams() {}
@@ -422,7 +421,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         super.updateEntity();
     }
 
-    private void doAutoTakeIn() {
+    protected void doAutoTakeIn() {
         int transferred = this.maxAutoExtractDefault;
         int route;
         for (EnumFacing facing : EnumFacing.VALUES) {
@@ -445,7 +444,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         }
     }
 
-    private void doAutoTakeOut() {
+    protected void doAutoTakeOut() {
         for (EnumFacing facing : EnumFacing.VALUES) {
             int route = this.exportRoutes.get(facing);
             if (0 <= route && route < this.listSlotsExport.size()) {
@@ -456,9 +455,53 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         }
     }
 
+    public boolean relyOnClayEnergy() {
+        return !UtilTier.canManufactureCraft(this.tier) && this.clayEnergySlot != -1;
+    }
+
+    /* ========== Texture Part ========== */
+
     @SideOnly(Side.CLIENT)
     @Nullable
     public ResourceLocation getFaceResource() {
         return null;
     }
+
+    @SideOnly(Side.CLIENT)
+    public void registerInsertIcons(String... iconstrs) {
+        if (iconstrs != null) {
+            this.InsertIcons.clear();
+            this.InsertPipeIcons.clear();
+
+            for (String iconStr : iconstrs) {
+                this.InsertIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + ".png"));
+                this.InsertPipeIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + "_p.png"));
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerExtractIcons(String... iconstrs) {
+        if (iconstrs != null) {
+            this.ExtractIcons.clear();
+            this.ExtractPipeIcons.clear();
+
+            for (String iconStr : iconstrs) {
+                this.ExtractIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + ".png"));
+                this.ExtractPipeIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + "_p.png"));
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIOIcons() {}
+
+    @SideOnly(Side.CLIENT)
+    public final List<ResourceLocation> InsertIcons = new ArrayList<>();
+    @SideOnly(Side.CLIENT)
+    public final List<ResourceLocation> ExtractIcons = new ArrayList<>();
+    @SideOnly(Side.CLIENT)
+    public final List<ResourceLocation> InsertPipeIcons = new ArrayList<>();
+    @SideOnly(Side.CLIENT)
+    public final List<ResourceLocation> ExtractPipeIcons = new ArrayList<>();
 }

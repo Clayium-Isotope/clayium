@@ -15,6 +15,7 @@ import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
+import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
@@ -124,6 +125,7 @@ public class ClayiumCore {
         ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new ClayContainerTESR());
         ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new ClayContainerTESR());
         ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new ClayContainerTESR());
+        ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new ClayContainerTESR());
 
 //        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
 //        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);

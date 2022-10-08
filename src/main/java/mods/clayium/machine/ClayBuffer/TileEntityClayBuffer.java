@@ -6,6 +6,8 @@ import mods.clayium.util.UtilTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.stream.IntStream;
 
@@ -105,5 +107,12 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     @Override
     public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIOIcons() {
+        this.registerInsertIcons("import");
+        this.registerExtractIcons("export");
     }
 }

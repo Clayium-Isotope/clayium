@@ -20,7 +20,7 @@ public class ClayAssembler extends ClayiumMachine {
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayAssembler) {
             TileEntityClayAssembler teca = (TileEntityClayAssembler) worldIn.getTileEntity(pos);
-            teca.importRoutes.replace(EnumFacing.UP, 2);
+            teca.importRoutes.replace(EnumFacing.UP, 0);
             if (!UtilTier.canManufactureCraft(this.tier))
                 teca.importRoutes.replace(placer.getHorizontalFacing(), -2);
             teca.exportRoutes.replace(EnumFacing.DOWN, 0);

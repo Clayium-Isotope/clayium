@@ -149,6 +149,22 @@ tile.oec_buffer.name=OEC バッファー
 tile.opa_buffer.name=OPA バッファー
 tooltip.buffer.line1=いわゆるアイテムパイプ
 
+tile.basic_multitrack_buffer.name=複線バッファー
+tile.advanced_multitrack_buffer.name=発展複線バッファー
+tile.precision_multitrack_buffer.name=精密複線バッファー
+tile.clay_steel_multitrack_buffer.name=粘土鋼複線バッファー
+tile.clayium_multitrack_buffer.name=クレイウム複線バッファー
+tile.ultimate_multitrack_buffer.name=究極複線バッファー
+tile.antimatter_multitrack_buffer.name=反物質複線バッファー
+tile.pure_antimatter_multitrack_buffer.name=純反物質複線バッファー
+tile.oec_multitrack_buffer.name=OEC 複線バッファー
+tile.opa_multitrack_buffer.name=OPA 複線バッファー
+tooltip.multitrack_buffer.line1=__DETAIL__
+tooltip.multitrack_buffer.line2=スロットが幾つかに色分けされており、
+tooltip.multitrack_buffer.line3=複線バッファー同士のアイテム輸送は
+tooltip.multitrack_buffer.line4=各色グループごとに独立して行われる。
+tooltip.multitrack_buffer.line5=さらに、グループごとにフィルタースロットを持つ。
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=生の粘土めん棒

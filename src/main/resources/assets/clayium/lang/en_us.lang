@@ -149,6 +149,22 @@ tile.oec_buffer.name=OEC Buffer
 tile.opa_buffer.name=OPA Buffer
 tooltip.buffer.line1=Transfers items. Acts as an item pipe.
 
+tile.basic_multitrack_buffer.name=Basic Multitrack  Buffer
+tile.advanced_multitrack_buffer.name=Advanced Multitrack Buffer
+tile.precision_multitrack_buffer.name=Precision Multitrack Buffer
+tile.clay_steel_multitrack_buffer.name=Clay Steel Multitrack Buffer
+tile.clayium_multitrack_buffer.name=Clayium Multitrack Buffer
+tile.ultimate_multitrack_buffer.name=Ultimate Multitrack Buffer
+tile.antimatter_multitrack_buffer.name=Antimatter Multitrack Buffer
+tile.pure_antimatter_multitrack_buffer.name=Pure Antimatter Multitrack Buffer
+tile.oec_multitrack_buffer.name=OEC Multitrack Buffer
+tile.opa_multitrack_buffer.name=OPA Multitrack Buffer
+tooltip.multitrack_buffer.line1=__DETAIL__
+tooltip.multitrack_buffer.line2=This buffer's slots are separated into some color groups.
+tooltip.multitrack_buffer.line3=Transfer of items between two Multitrack Buffers
+tooltip.multitrack_buffer.line4=will be performed independently within each color group.
+tooltip.multitrack_buffer.line5=Moreover, this buffer has one filter slot per group.
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=Raw Clay Rolling Pin

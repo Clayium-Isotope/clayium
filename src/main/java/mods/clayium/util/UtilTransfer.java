@@ -1,11 +1,15 @@
 package mods.clayium.util;
 
 import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +17,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class UtilTransfer {
+    private static final IInventorySelector defaultSelector = new InventorySelector();
+
     /**
      * Transfer item(s) from a tile to another tile.
      *
@@ -99,18 +105,26 @@ public class UtilTransfer {
         return transferred;
     }
 
-    public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer) {
+    public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer, IInventorySelector selector) {
         TileEntity to = from.getWorld().getTileEntity(from.getPos().offset(direction));
         if (!(from instanceof IInventory) || !(to instanceof IInventory)) return maxTransfer;
 
         return transfer((IInventory) from, fromSlots, direction, (IInventory) to, getSlots(to, direction.getOpposite()), maxTransfer);
     }
 
-    public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer) {
+    public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer) {
+        return insert(from, fromSlots, direction, maxTransfer, defaultSelector);
+    }
+
+    public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer, IInventorySelector selector) {
         TileEntity from = to.getWorld().getTileEntity(to.getPos().offset(direction));
         if (!(to instanceof IInventory) || !(from instanceof IInventory)) return maxTransfer;
 
         return transfer((IInventory) from, getSlots(from, direction.getOpposite()), direction.getOpposite(), (IInventory) to, toSlots, maxTransfer);
+    }
+
+    public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer) {
+        return extract(to, toSlots, direction, maxTransfer, defaultSelector);
     }
 
     private static int[] getSlots(TileEntity te, EnumFacing facing) {
@@ -232,5 +246,120 @@ public class UtilTransfer {
         }
 
         return res;
+    }
+
+    public static class InventorySelector implements UtilTransfer.IInventorySelector {
+        protected IInventory selected = null;
+
+        public InventorySelector() {
+        }
+
+        public IInventory getSelectedInventory() {
+            return this.selected;
+        }
+
+        public boolean selectInventoryToInsertTo(TileEntity from, EnumFacing direction) {
+            IInventory to = this.selectInventoryToInsertTo(from.getWorld(), from.getPos(), direction);
+            if (to == null) {
+                return false;
+            } else {
+                this.selected = to;
+                return true;
+            }
+        }
+
+        public IInventory selectInventoryToInsertTo(World world, BlockPos pos, EnumFacing direction) {
+            TileEntity te = world.getTileEntity(pos.offset(direction));
+            if (!(te instanceof IInventory)) {
+                return null;
+            } else {
+                IInventory to = (IInventory)te;
+                Block block = world.getBlockState(pos.offset(direction)).getBlock();
+                if (block instanceof BlockChest) {
+                    IInventory chest = ((BlockChest)block).getContainer(world, pos.offset(direction), true);
+                    if (chest != null) {
+                        to = chest;
+                    }
+                }
+
+                return to;
+            }
+        }
+
+        public int[] getSlotToInsertTo(EnumFacing direction) {
+            if (this.selected == null) {
+                return null;
+            } else {
+                EnumFacing toSide = direction.getOpposite();
+                int[] toSlots;
+                if (!(this.selected instanceof ISidedInventory)) {
+                    toSlots = new int[this.selected.getSizeInventory()];
+
+                    for(int i = 0; i < this.selected.getSizeInventory(); toSlots[i] = i++);
+                } else {
+                    toSlots = ((ISidedInventory)this.selected).getSlotsForFace(toSide);
+                }
+
+                return toSlots;
+            }
+        }
+
+        public boolean selectInventoryToExtractFrom(TileEntity to, EnumFacing direction) {
+            IInventory from = this.selectInventoryToExtractFrom(to.getWorld(), to.getPos(), direction);
+            if (from == null) {
+                return false;
+            } else {
+                this.selected = from;
+                return true;
+            }
+        }
+
+        public IInventory selectInventoryToExtractFrom(World world, BlockPos pos, EnumFacing direction) {
+            TileEntity te = world.getTileEntity(pos.offset(direction));
+            if (!(te instanceof IInventory)) {
+                return null;
+            } else {
+                IInventory from = (IInventory)te;
+                Block block = world.getBlockState(pos.offset(direction)).getBlock();
+                if (block instanceof BlockChest) {
+                    IInventory chest = ((BlockChest)block).getContainer(world, pos.offset(direction), true);
+                    if (chest != null) {
+                        from = chest;
+                    }
+                }
+
+                return from;
+            }
+        }
+
+        public int[] getSlotToExtractFrom(EnumFacing direction) {
+            if (this.selected == null) {
+                return null;
+            } else {
+                EnumFacing fromSide = direction.getOpposite();
+                int[] fromSlots;
+                if (!(this.selected instanceof ISidedInventory)) {
+                    fromSlots = new int[this.selected.getSizeInventory()];
+
+                    for(int i = 0; i < this.selected.getSizeInventory(); fromSlots[i] = i++);
+                } else {
+                    fromSlots = ((ISidedInventory)this.selected).getSlotsForFace(fromSide);
+                }
+
+                return fromSlots;
+            }
+        }
+    }
+
+    interface IInventorySelector {
+        IInventory getSelectedInventory();
+
+        boolean selectInventoryToInsertTo(TileEntity var1, EnumFacing var2);
+
+        int[] getSlotToInsertTo(EnumFacing var1);
+
+        boolean selectInventoryToExtractFrom(TileEntity var1, EnumFacing var2);
+
+        int[] getSlotToExtractFrom(EnumFacing var1);
     }
 }

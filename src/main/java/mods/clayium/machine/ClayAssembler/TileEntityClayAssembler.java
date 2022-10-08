@@ -5,6 +5,8 @@ import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,5 +137,12 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         proceedCraft();
 
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIOIcons() {
+        this.registerInsertIcons("import", "import_1", "import_2");
+        this.registerExtractIcons("export");
     }
 }

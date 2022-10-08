@@ -6,7 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class GuiTemp extends GuiContainer {
+public class GuiTemp extends GuiContainer {
     protected final IInventory tile;
     protected final ContainerTemp container;
     protected final int machineHeight;

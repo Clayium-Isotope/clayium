@@ -10,6 +10,7 @@ import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
+import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
 import mods.clayium.machine.WaterWheel.WaterWheel;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
@@ -55,7 +56,7 @@ public class ClayiumMachines {
         add(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
 
         add(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
-//        add(EnumMachineKind.multitrackBuffer, new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, MultitrackBuffer.class)
+        add(EnumMachineKind.multitrackBuffer, new int[]{ 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, MultitrackBuffer.class);
 //        add(EnumMachineKind.creativeCESource, 13, TileEntityCreativeEnergySource.class);
 
         add(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 }, ClayChemicalReactor.class);
