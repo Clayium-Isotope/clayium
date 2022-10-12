@@ -242,6 +242,8 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        if (checkBlocked(itemStackIn, direction)) return false;
+
         return isItemValidForSlot(index, itemStackIn);
     }
 

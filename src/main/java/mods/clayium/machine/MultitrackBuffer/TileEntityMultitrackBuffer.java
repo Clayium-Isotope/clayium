@@ -1,5 +1,6 @@
 package mods.clayium.machine.MultitrackBuffer;
 
+import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
@@ -115,12 +116,13 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
         if (track < 0) {
             return true;
         } else {
-//            ItemStack filter = track + 54 < this.containerItemStacks.size() ? this.containerItemStacks.get(track + 54) : null;
-//            if (filter == null) {
+            ItemStack filter = track + 54 < this.containerItemStacks.size() ? this.containerItemStacks.get(track + 54) : ItemStack.EMPTY;
+            if (filter.isEmpty()) {
                 return true;
-//            } else {
-//                return ItemFilterTemp.isFilter(filter) && ItemFilterTemp.match(filter, itemstack) || ItemFilterTemp.matchBetweenItemstacks(filter, itemstack, false);
-//            }
+            } else {
+                return IFilter.isFilter(filter) && IFilter.match(filter, itemstack)
+                        || IFilter.matchBetweenItemstacks(filter, itemstack, false);
+            }
         }
     }
 
@@ -140,11 +142,15 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        if (checkBlocked(itemStackIn, direction)) return false;
+
         return this.canInsertItem(index, itemStackIn, direction, this.getTrack(index));
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        if (checkBlocked(itemStackIn, direction)) return false;
+
         return this.canExtractItem(index, itemStackIn, direction, this.getTrack(index));
     }
 

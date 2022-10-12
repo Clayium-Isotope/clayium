@@ -1,0 +1,13 @@
+{
+    "comment": "probably unnecessary",
+    "group": "clayium:tool",
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "clayium:filter_fuzzy"
+        }
+    ],
+    "result": {
+        "item": "clayium:filter_fuzzy"
+    }
+}

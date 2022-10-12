@@ -5,7 +5,9 @@ import mods.clayium.item.common.ClayPipingTools;
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.ItemDamaged;
 import mods.clayium.item.common.ItemTiered;
+import mods.clayium.item.filter.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +25,8 @@ public class ClayiumItems {
         try {
             for (Field field : ClayiumItems.class.getFields()) {
                 if (field.get(instance) instanceof Item) {
+                    if (field.get(instance) == Items.AIR) continue;
+
                     Item item = (Item) field.get(instance);
 
                     if (item instanceof ClayiumItem
@@ -84,11 +88,11 @@ public class ClayiumItems {
 
     /* Tools... */
     public static final Item rollingPin = new ClayRollingPin();
-    public static final Item rawRollingPin = new ClayiumItem("raw_clay_rolling_pin");
+    public static final Item rawRollingPin = new RawClayTools("raw_clay_rolling_pin");
     public static final Item slicer = new ClaySlicer();
-    public static final Item rawSlicer = new ClayiumItem("raw_clay_slicer");
+    public static final Item rawSlicer = new RawClayTools("raw_clay_slicer");
     public static final Item spatula = new ClaySpatula();
-    public static final Item rawSpatula = new ClayiumItem("raw_clay_spatula");
+    public static final Item rawSpatula = new RawClayTools("raw_clay_spatula");
 
     public static final Item IOTool = new ClayPipingTools("io_tool");
     public static final Item pipingTool = new ClayPipingTools("piping_tool");
@@ -100,6 +104,20 @@ public class ClayiumItems {
     public static final Item claySteelPickaxe = new ClaySteelPickaxe();
     public static final Item claySteelShovel = new ClaySteelShovel();
     /* ...Tools */
+
+    /* Filters... */
+    public static final Item filterDuplicator = new FilterDuplicator();
+    public static final Item filterWhitelist = new FilterWhitelist();
+    public static final Item filterBlacklist = new FilterBlacklist();
+    public static final Item filterFuzzy = new FilterWhitelist("filter_fuzzy", 7, true);
+    public static final Item filterOreDict = new FilterOreDict();
+    public static final Item filterItemName = new FilterItemName();
+    public static final Item filterUnlocalizedName = new FilterUnlocalizedName();
+    public static final Item filterUniqueId = new FilterRegistryName();
+    public static final Item filterModId = new FilterModId();
+    public static final Item filterItemDamage = new FilterItemDamage();
+    public static final Item filterBlockMetadata = new FilterBlockMetadata();
+    /* ...Filters */
     /* ...Elements */
 
     private static final List<Item> items = new ArrayList<>();

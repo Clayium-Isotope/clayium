@@ -101,12 +101,12 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return true;
+        return !checkBlocked(itemStackIn, direction);
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return true;
+        return !checkBlocked(itemStackIn, direction);
     }
 
     @SideOnly(Side.CLIENT)

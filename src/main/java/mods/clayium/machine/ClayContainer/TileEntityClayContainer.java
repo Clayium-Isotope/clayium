@@ -3,6 +3,8 @@ package mods.clayium.machine.ClayContainer;
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -217,6 +219,10 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         this.autoExtractCount = compound.getInteger("AutoExtractCount");
 
         initParamsByTier(compound.getInteger("Tier"));
+
+        if (compound.hasKey("Filters", 9)) {
+            UtilItemStack.tagList2EnumMap(compound.getTagList("Filters", 10), this.filters);
+        }
     }
 
     @Override
@@ -237,6 +243,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         compound.setInteger("AutoExtractCount", this.autoExtractCount);
 
         compound.setInteger("Tier", this.tier);
+
+        compound.setTag("Filters", UtilItemStack.enumMap2TagList(this.filters));
 
         return compound;
     }
@@ -320,8 +328,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-//        ItemStack filter = this.filters.get(direction);
-//        if (ItemFilterTemp.isFilter(filter) && !ItemFilterTemp.match(filter, itemstack)) return false;
+        if (checkBlocked(itemStackIn, direction)) return false;
 
         int route = this.importRoutes.get(direction);
         if (route == -2 && index == this.clayEnergySlot) return isItemValidForSlot(index, itemStackIn);
@@ -335,8 +342,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
     @Override
     public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-//        ItemStack filter = this.filters.get(direction);
-//        if (ItemFilterTemp.isFilter(filter) && !ItemFilterTemp.match(filter, itemstack)) return false;
+        if (checkBlocked(itemStackIn, direction)) return false;
 
         int route = this.exportRoutes.get(direction);
         if (route >= 0 && route < this.listSlotsExport.size()) {
@@ -344,6 +350,10 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         }
 
         return false;
+    }
+
+    protected boolean checkBlocked(ItemStack itemStackIn, EnumFacing direction) {
+        return IFilter.isFilter(this.filters.get(direction)) && !IFilter.match(this.filters.get(direction), itemStackIn);
     }
 
     @Override

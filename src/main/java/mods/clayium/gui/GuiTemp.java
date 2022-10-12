@@ -40,7 +40,7 @@ public class GuiTemp extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        fontRenderer.drawString(this.container.tileEntity.getDisplayName().getUnformattedText(), 6, 6, 4210752);
+        fontRenderer.drawString(this.container.getInventoryName(), 6, 6, 4210752);
         fontRenderer.drawString(I18n.format("container.inventory"), 8, machineHeight, 4210752);
     }
 

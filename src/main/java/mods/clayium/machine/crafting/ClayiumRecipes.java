@@ -233,14 +233,11 @@ public class ClayiumRecipes {
 // TODO    assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 3), i(ClayiumItems.synchronousParts, 2)), 0, 6,
 //                ii(i(CItems.itemSynchronizer)), e(6), 20L);
 
-/* TODO
-        assembler.addRecipe(oo(circuits.get(5), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 0, 4,
-                ii(i(CItems.itemFilterWhitelist)), 8L, 20L);
-        assembler.addRecipe(oo(circuits.get(6), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 0, 4,
-                ii(i(CItems.itemFilterItemName)), 8L, 20L);
-        assembler.addRecipe(oo(circuits.get(7), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 0, 4,
-                ii(i(CItems.itemFilterFuzzy)), 8L, 20L);
 
+        assembler.addRecipe(oo(circuits.get(5), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterWhitelist)), 8L, 20L);
+        assembler.addRecipe(oo(circuits.get(6), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterItemName)), 8L, 20L);
+        assembler.addRecipe(oo(circuits.get(7), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterFuzzy)), 8L, 20L);
+/* Use assets/recipes
         GameRegistry.addShapelessRecipe(i(CItems.itemFilterWhitelist), i(CItems.itemFilterBlacklist));
         GameRegistry.addShapelessRecipe(i(CItems.itemFilterBlacklist), i(CItems.itemFilterWhitelist));
         GameRegistry.addShapelessRecipe(i(CItems.itemFilterUnlocalizedName), i(CItems.itemFilterItemName));

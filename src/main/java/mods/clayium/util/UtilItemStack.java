@@ -3,13 +3,13 @@ package mods.clayium.util;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UtilItemStack {
@@ -172,32 +172,35 @@ public class UtilItemStack {
         return new ArrayList<>();
     }
 
-    public static List<ItemStack> getItemsFromTag(String name, ItemStack item) {
-        return item != null && item.hasTagCompound() ? getItemsFromTag(name, item.getTagCompound()) : new ArrayList<>();
+    public static List<ItemStack> getItemsFromTag(ItemStack item) {
+        return item != null && item.hasTagCompound() ? getItemsFromTag(item.getTagCompound()) : new ArrayList<>();
     }
 
-    public static List<ItemStack> getItemsFromTag(String name, NBTTagCompound tag) {
-        return tag != null ? tagList2ItemList(tag.getTagList(name, 10)) : new ArrayList<>();
+    public static List<ItemStack> getItemsFromTag(NBTTagCompound tag) {
+        return tag != null ? tagList2ItemList(tag.getTagList("Items", 10)) : new ArrayList<>();
     }
 
-    public static void setItemsToTag(String name, List<ItemStack> items, NBTTagCompound tag) {
+    public static void setItemsToTag(NBTTagCompound tag, List<ItemStack> items) {
         if (tag == null) tag = new NBTTagCompound();
-        tag.setTag(name, items2TagList(items));
+        tag.setTag("Items", items2TagList(items));
     }
 
+    /**
+     * Unknown sized TagList -> ItemStack list<br>
+     */
     public static List<ItemStack> tagList2ItemList(NBTTagList tagList) {
-        List<ItemStack> res = new ArrayList<>();
-        if (tagList == null) return res;
+        if (tagList == null || tagList.getTagType() != 10) return Collections.emptyList();
+        List<ItemStack> res = new ArrayList<>(tagList.tagCount());
 
-        for(int i = 0; i < tagList.tagCount(); ++i) {
-            NBTTagCompound tagCompound1 = tagList.getCompoundTagAt(i);
-            short byte0 = tagCompound1.getShort("Slot");
+        for (NBTBase tag : tagList) {
+            if (!(tag instanceof NBTTagCompound)) continue;
 
-            while(res.size() <= byte0) {
-                res.add(ItemStack.EMPTY);
-            }
+            int slot = ((NBTTagCompound) tag).getByte("Slot") & 255;
 
-            res.set(byte0, new ItemStack(tagCompound1));
+            if (slot >= res.size())
+                res.addAll(Collections.nCopies(slot - res.size() + 1, ItemStack.EMPTY));
+
+            res.set(slot, new ItemStack(((NBTTagCompound) tag)));
         }
 
         return res;
@@ -210,7 +213,7 @@ public class UtilItemStack {
     public static void tagList2Items(NBTTagList tagList, List<ItemStack> itemstacks) {
         if (tagList == null || itemstacks == null) return;
 
-        for(int i = 0; i < tagList.tagCount(); ++i) {
+        for (int i = 0; i < tagList.tagCount(); ++i) {
             NBTTagCompound tagCompound1 = tagList.getCompoundTagAt(i);
             short byte0 = tagCompound1.getShort("Slot");
             if (byte0 >= 0 && byte0 < itemstacks.size())
@@ -218,6 +221,8 @@ public class UtilItemStack {
         }
     }
 
+    /** @see net.minecraft.inventory.ItemStackHelper#saveAllItems(NBTTagCompound, NonNullList) */
+    @Deprecated
     public static NBTTagList items2TagList(List<ItemStack> items) {
         NBTTagList tagList = new NBTTagList();
         if (items == null) return tagList;
@@ -232,5 +237,29 @@ public class UtilItemStack {
         }
 
         return tagList;
+    }
+
+    public static <K extends Enum<K>> NBTTagList enumMap2TagList(EnumMap<K, ItemStack> map) {
+        NBTTagList list = new NBTTagList();
+        if (map.isEmpty()) return list;
+
+        for (Map.Entry<K, ItemStack> entry : map.entrySet()) {
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setByte("Slot", (byte) entry.getKey().ordinal());
+            entry.getValue().writeToNBT(compound);
+            list.appendTag(compound);
+        }
+
+        return list;
+    }
+
+    public static <K extends Enum<K>> void tagList2EnumMap(NBTTagList list, EnumMap<K, ItemStack> map) {
+        List<ItemStack> stacks = tagList2ItemList(list);
+        if (stacks.isEmpty()) return;
+
+        for (K key : map.keySet()) {
+            if (key.ordinal() >= stacks.size()) map.put(key, ItemStack.EMPTY);
+            else map.put(key, stacks.get(key.ordinal()));
+        }
     }
 }

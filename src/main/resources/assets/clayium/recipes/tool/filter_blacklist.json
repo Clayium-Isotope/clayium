@@ -1,0 +1,12 @@
+{
+    "group": "clayium:tool",
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "clayium:filter_whitelist"
+        }
+    ],
+    "result": {
+        "item": "clayium:filter_blacklist"
+    }
+}

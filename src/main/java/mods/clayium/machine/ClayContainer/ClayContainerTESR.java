@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.item.filter.IFilter;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -9,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -73,6 +75,8 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
             for (EnumFacing facing : EnumFacing.VALUES) {
                 bindImportBlockTexAsCan(te.importRoutes, te.InsertIcons, facing);
                 bindExportBlockTexAsCan(te.exportRoutes, te.ExtractIcons, facing);
+
+                bindFilterBlockTexAsCan(te.filters.get(facing), facing);
             }
 
         } else {
@@ -137,6 +141,13 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
             this.bindTexture(otherwise.get(routes.get(facing)));
 
         pasteBoundTexToPipeFace(modelCC, facing);
+    }
+
+    private void bindFilterBlockTexAsCan(ItemStack filter, EnumFacing facing) {
+        if (!(filter.getItem() instanceof IFilter)) return;
+
+        this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/filter.png"));
+        pasteBoundTexToBlockFace(facing);
     }
 
     protected void pasteBoundTexToBlockFace(EnumFacing facing) {

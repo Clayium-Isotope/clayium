@@ -1,0 +1,15 @@
+{
+    "group": "clayium:tool",
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "clayium:filter_metadata"
+        },
+        {
+            "item": "minecraft:clay"
+        }
+    ],
+    "result": {
+        "item": "clayium:filter_block_metadata"
+    }
+}
