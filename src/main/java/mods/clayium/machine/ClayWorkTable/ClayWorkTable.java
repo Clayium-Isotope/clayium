@@ -14,4 +14,9 @@ public class ClayWorkTable extends ClayContainer {
 		setHardness(1F);
 		setResistance(4F);
 	}
+
+	@Override
+	public boolean canBePipe() {
+		return false;
+	}
 }
