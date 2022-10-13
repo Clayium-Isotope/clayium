@@ -9,7 +9,7 @@ import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumShapedMaterial;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
-import mods.clayium.machine.ClayContainer.ClayContainerTESR;
+import mods.clayium.machine.ClayContainer.TESRClayContainer;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
@@ -121,11 +121,11 @@ public class ClayiumCore {
 
         GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));
         GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_crafting_table"));
-        ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new ClayContainerTESR());
-        ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new ClayContainerTESR());
-        ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new ClayContainerTESR());
-        ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new ClayContainerTESR());
-        ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new ClayContainerTESR());
+        ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new TESRClayContainer());
+        ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new TESRClayContainer());
+        ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new TESRClayContainer());
+        ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new TESRClayContainer());
+        ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new TESRClayContainer());
 
 //        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
 //        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);

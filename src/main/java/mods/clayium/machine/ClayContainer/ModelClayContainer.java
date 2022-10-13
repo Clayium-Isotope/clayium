@@ -45,7 +45,7 @@ public class ModelClayContainer extends ModelBase {
         this.hull.render(0.0625F);
     }
 
-    public void renderPiped(ClayContainer.ClayContainerState state, BufferBuilder builder) {
+    public void renderPiped(BlockStateClayContainer state, BufferBuilder builder) {
         renderPipeOrigin(builder);
         if (state.isTheFacingActivated(EnumFacing.UP)) renderPipeUp(builder);
         if (state.isTheFacingActivated(EnumFacing.DOWN)) renderPipeDown(builder);

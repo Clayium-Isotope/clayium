@@ -263,9 +263,9 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     /*
      * TESR のために、TE と Blockstate / Block の上手い橋渡しについて、模索中。
      */
-    public ClayContainer.ClayContainerState getBlockState() {
-        if (this.world.getBlockState(this.pos) instanceof ClayContainer.ClayContainerState)
-            return (ClayContainer.ClayContainerState) this.world.getBlockState(this.pos);
+    public BlockStateClayContainer getBlockState() {
+        if (this.world.getBlockState(this.pos) instanceof BlockStateClayContainer)
+            return (BlockStateClayContainer) this.world.getBlockState(this.pos);
         return null;
     }
 
@@ -426,7 +426,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
     @Override
     public void updateEntity() {
-        ClayContainer.ClayContainerState.checkSurroundConnection(this.world, this.pos, this);
+        BlockStateClayContainer.checkSurroundConnection(this.world, this.pos, this);
 
         super.updateEntity();
     }

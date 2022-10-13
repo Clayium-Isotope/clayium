@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @SideOnly(Side.CLIENT)
-public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayContainer> {
+public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayContainer> {
     private final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
 
     private final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 0.0d), 0f, 0f);
@@ -60,16 +60,16 @@ public class ClayContainerTESR extends TileEntitySpecialRenderer<TileEntityClayC
         GlStateManager.translate(x, y + 1.0d, z + 1.0d);
         GlStateManager.scale(1.0d, -1.0d, -1.0d);
 
-        if (!ClayContainer.ClayContainerState.renderAsPipe(te)) {
+        if (!BlockStateClayContainer.renderAsPipe(te)) {
             modelCC.renderBlocked();
 
             ResourceLocation face = te.getFaceResource();
             if (face != null) {
                 this.bindTexture(face);
-                if (te.getBlockState() instanceof ClaySidedContainer.ClaySidedContainerState)
-                    pasteBoundTexToBlockFace(te.getBlockState().getValue(ClaySidedContainer.ClaySidedContainerState.FACING));
-                if (te.getBlockState() instanceof ClayDirectionalContainer.ClayDirectionalContainerState)
-                    pasteBoundTexToBlockFace(te.getBlockState().getValue(ClayDirectionalContainer.ClayDirectionalContainerState.FACING));
+                if (te.getBlockState() instanceof BlockStateClaySidedContainer)
+                    pasteBoundTexToBlockFace(te.getBlockState().getValue(BlockStateClaySidedContainer.FACING));
+                if (te.getBlockState() instanceof BlockStateClayDirectionalContainer)
+                    pasteBoundTexToBlockFace(te.getBlockState().getValue(BlockStateClayDirectionalContainer.FACING));
             }
 
             for (EnumFacing facing : EnumFacing.VALUES) {
