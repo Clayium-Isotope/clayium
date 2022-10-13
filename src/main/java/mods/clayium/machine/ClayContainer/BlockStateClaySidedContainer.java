@@ -12,7 +12,7 @@ import net.minecraft.util.Rotation;
 import java.util.Arrays;
 import java.util.List;
 
-class BlockStateClaySidedContainer extends BlockStateClayContainer {
+public class BlockStateClaySidedContainer extends BlockStateClayContainer {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     protected BlockStateClaySidedContainer(Block blockIn, ImmutableMap<IProperty<?>, Comparable<?>> propertiesIn) {

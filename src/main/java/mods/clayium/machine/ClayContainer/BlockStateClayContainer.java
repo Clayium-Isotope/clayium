@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-class BlockStateClayContainer extends BlockStateContainer.StateImplementation {
+public class BlockStateClayContainer extends BlockStateContainer.StateImplementation {
     private static final float pipeWidth = 0.1875F;
     protected static final PropertyBool IS_PIPE = PropertyBool.create("is_pipe");
 
