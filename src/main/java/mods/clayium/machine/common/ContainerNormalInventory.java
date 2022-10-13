@@ -10,13 +10,11 @@ import net.minecraft.item.ItemStack;
 public class ContainerNormalInventory extends ContainerTemp {
     public static final int buttonIdPrevious = 6;
     public static final int buttonIdNext = 7;
-    private InventoryMultiPage impl;
+    private final InventoryMultiPage impl;
 
     public ContainerNormalInventory(InventoryPlayer player, TileEntityClayBuffer inventory) {
         super(player, inventory);
-    }
 
-    protected void initParameters(InventoryPlayer player) {
         this.impl = new InventoryMultiPage(this.tileEntity);
 
         if (!(this.tileEntity instanceof INormalInventory)) return;
@@ -29,8 +27,11 @@ public class ContainerNormalInventory extends ContainerTemp {
         if (isLargeCallback())
             this.machineGuiSizeX += 8;
 
-        super.initParameters(player);
+        postConstruct();
     }
+
+    @Override
+    protected void earlyConstruct() {}
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {

@@ -13,18 +13,45 @@ import net.minecraft.item.ItemStack;
 public class ContainerFilterWhitelist extends ContainerTemp {
     protected static final int inventoryX = 5;
     protected static final int inventoryY = 2;
-    protected int filterSlotIndex;
-    protected boolean onHotbar;
-    protected InventoryInItemStack impl;
+    protected final int filterSlotIndex;
+    protected final boolean onHotbar;
+    protected final InventoryInItemStack impl;
 
     public ContainerFilterWhitelist(EntityPlayer player) {
         super(player.inventory, null);
+
+        this.machineGuiSizeY = inventoryY * 18 + 18;
+
+        ItemStack filter = this.player.player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+        int index;
+        if (!filter.isEmpty() && IFilter.isFilter(filter)) {
+            index = this.player.currentItem;
+
+            this.onHotbar = true;
+        } else {
+            filter = this.player.player.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+            if (!filter.isEmpty() && IFilter.isFilter(filter)) {
+                index = this.player.getSizeInventory() - this.player.offHandInventory.size();
+            } else {
+                filter = ItemStack.EMPTY;
+                index = -1;
+            }
+
+            this.onHotbar = false;
+        }
+
+        if (filter.isEmpty()) ClayiumCore.logger.warn("unknown item");
+        this.impl = new InventoryInItemStack(filter, inventoryX * inventoryY);
+        this.filterSlotIndex = index;
+
+        postConstruct();
     }
 
     @Override
-    public void setMachineInventorySlots(InventoryPlayer player) {
-        if (this.impl == null) ClayiumCore.logger.warn("null implement! @ initial");
+    protected void earlyConstruct() {}
 
+    @Override
+    public void setMachineInventorySlots(InventoryPlayer player) {
         for(int j = 0; j < inventoryY; ++j) {
             for(int i = 0; i < inventoryX; ++i) {
                 this.addMachineSlotToContainer(new SlotMemory(this.impl, i + j * inventoryX, i * 18 + (this.machineGuiSizeX - 18 * inventoryX) / 2, j * 18 + 18));
@@ -77,35 +104,6 @@ public class ContainerFilterWhitelist extends ContainerTemp {
                 }
             });
         }
-    }
-
-    @Override
-    protected void initParameters(InventoryPlayer player) {
-        this.machineGuiSizeY = inventoryY * 18 + 18;
-
-        ItemStack filter = this.player.player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        int index;
-        if (!filter.isEmpty() && IFilter.isFilter(filter)) {
-            index = this.player.currentItem;
-
-            this.onHotbar = true;
-        } else {
-            filter = this.player.player.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
-            if (!filter.isEmpty() && IFilter.isFilter(filter)) {
-                index = this.player.getSizeInventory() - this.player.offHandInventory.size();
-            } else {
-                filter = ItemStack.EMPTY;
-                index = -1;
-            }
-
-            this.onHotbar = false;
-        }
-
-        if (filter.isEmpty()) ClayiumCore.logger.warn("unknown item");
-        this.impl = new InventoryInItemStack(filter, inventoryX * inventoryY);
-        this.filterSlotIndex = index;
-
-        super.initParameters(player);
     }
 
     @Override

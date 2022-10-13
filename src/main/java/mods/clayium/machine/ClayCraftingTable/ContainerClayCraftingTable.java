@@ -67,6 +67,9 @@ public class ContainerClayCraftingTable extends ContainerTemp {
     }
 
     @Override
+    protected void earlyConstruct() {}
+
+    @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
         slotChangedCraftingGrid(this.tileTable.getInventory().getWorld(), this.player.player, this.craftMatrix, this.craftResult);
     }

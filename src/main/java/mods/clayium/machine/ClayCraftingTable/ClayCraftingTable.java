@@ -32,4 +32,9 @@ public class ClayCraftingTable extends ClayContainer {
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
+
+    @Override
+    public boolean canBePipe() {
+        return false;
+    }
 }

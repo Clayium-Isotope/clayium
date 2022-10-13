@@ -172,13 +172,15 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        if (state.getValue(ClayContainerState.IS_PIPE))
+        if (state instanceof ClayContainerState && state.getValue(ClayContainerState.IS_PIPE))
             return 1;
         return 0;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
+        if (!(this.getDefaultState() instanceof ClayContainerState)) return getDefaultState();
+
         return getDefaultState().withProperty(ClayContainerState.IS_PIPE, meta == 1);
     }
 

@@ -21,8 +21,9 @@ public class ContainerClayiumMachine extends ContainerTemp {
     @Override
     protected void initParameters(InventoryPlayer player) {
         super.initParameters(player);
-        materialSlotIndex = TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal();
-        resultSlotIndex = TileEntityClayiumMachine.MachineSlots.PRODUCT.ordinal();
+
+        this.materialSlotIndex = TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal();
+        this.resultSlotIndex = TileEntityClayiumMachine.MachineSlots.PRODUCT.ordinal();
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

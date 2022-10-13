@@ -15,6 +15,7 @@ public class ContainerClayAssembler extends ContainerClayiumMachine {
     @Override
     protected void initParameters(InventoryPlayer player) {
         super.initParameters(player);
+
         this.resultSlotIndex = TileEntityClayAssembler.AssemblerSlots.PRODUCT.ordinal();
     }
 
