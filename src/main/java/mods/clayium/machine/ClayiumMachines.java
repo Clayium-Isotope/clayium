@@ -7,9 +7,11 @@ import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
 import mods.clayium.machine.ClayChemicalReactor.ClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
+import mods.clayium.machine.ClayEnergyLaser.ClayEnergyLaser;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
+import mods.clayium.machine.LaserReflector.LaserReflector;
 import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
 import mods.clayium.machine.WaterWheel.WaterWheel;
 import mods.clayium.util.TierPrefix;
@@ -64,6 +66,9 @@ public class ClayiumMachines {
         add(EnumMachineKind.waterWheel, new int[] { 1, 2 }, WaterWheel.class);
         clayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.clay);
         denseClayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.denseClay);
+
+        add(EnumMachineKind.clayEnergyLaser, new int[] { 7, 8, 9, 10 }, ClayEnergyLaser.class);
+        add(EnumMachineKind.laserReflector, 7, new LaserReflector());
     }
 
     private static void add(EnumMachineKind kind, int tier, Block block) {
@@ -182,7 +187,7 @@ public class ClayiumMachines {
     public static Block chemicalMetalSeparator = Blocks.AIR;
     public static Block clayReactor = Blocks.AIR;
     public static Block quartzCrucible = Blocks.AIR;
-    public static Block laserReflector = Blocks.AIR;
+    public static Block laserReflector = get(EnumMachineKind.laserReflector, 7);
     public static Block clayFabricatorMK1 = Blocks.AIR;
     public static Block clayFabricatorMK2 = Blocks.AIR;
     public static Block clayFabricatorMK3 = Blocks.AIR;

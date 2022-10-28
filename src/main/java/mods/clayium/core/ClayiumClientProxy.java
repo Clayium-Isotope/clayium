@@ -3,18 +3,33 @@ package mods.clayium.core;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.SiliconeColored;
 import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
+import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.ClayContainer.TESRClayContainer;
+import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
+import mods.clayium.machine.ClayEnergyLaser.TESRClayEnergyLaser;
+import mods.clayium.machine.ClayEnergyLaser.TileEntityClayEnergyLaser;
+import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
+import mods.clayium.machine.LaserReflector.TESRLaserReflector;
+import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
+import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -55,5 +70,18 @@ public class ClayiumClientProxy implements IClayiumProxy {
 				Minecraft.getMinecraft().getItemColors().registerItemColorHandler((IItemColor) coloredSilicone, coloredSilicone);
 			}
 		}
+	}
+
+	public void registerTileEntity() {
+		GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));
+		GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_crafting_table"));
+
+		ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayEnergyLaser.class, "clayium:laser", new TESRClayEnergyLaser());
+		ClientRegistry.registerTileEntity(TileEntityLaserReflector.class, "clayium:laser_reflector", new TESRLaserReflector());
 	}
 }

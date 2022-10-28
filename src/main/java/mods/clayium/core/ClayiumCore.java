@@ -7,15 +7,8 @@ import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumShapedMaterial;
-import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
-import mods.clayium.machine.ClayContainer.TESRClayContainer;
-import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
-import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
-import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
-import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
+import mods.clayium.machine.LaserReflector.TEISRLaserReflector;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
@@ -28,11 +21,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -119,13 +110,7 @@ public class ClayiumCore {
         ClayiumMaterials.supportRegisterMaterials();
         ClayiumRecipes.registerRecipes();
 
-        GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));
-        GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_crafting_table"));
-        ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new TESRClayContainer());
-        ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new TESRClayContainer());
-        ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new TESRClayContainer());
-        ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new TESRClayContainer());
-        ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new TESRClayContainer());
+        proxy.registerTileEntity();
 
 //        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
 //        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);
@@ -164,7 +149,13 @@ public class ClayiumCore {
 
         for (Block block : ClayiumMachines.getBlocks()) {
             assert block.getRegistryName() != null;
-            event.getRegistry().register((new ItemBlockTiered(block)).setRegistryName(block.getRegistryName()));
+
+            // TODO not completed
+            Item value = new ItemBlockTiered(block).setRegistryName(block.getRegistryName());
+            if (block == ClayiumMachines.laserReflector)
+                value.setTileEntityItemStackRenderer(new TEISRLaserReflector());
+
+            event.getRegistry().register(value);
         }
 
         event.getRegistry().registerAll(ClayiumItems.getItems().toArray(new Item[0]));

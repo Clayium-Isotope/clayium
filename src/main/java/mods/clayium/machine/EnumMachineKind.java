@@ -69,7 +69,7 @@ public enum EnumMachineKind {
     laserInterface("laser_interface", null),
     reactor("reactor", ClayiumRecipes.reactor),
     transformer("matter_transformer", ClayiumRecipes.transformer),
-    clayEnergyLaser("clay_energy_laser", null),
+    clayEnergyLaser("energy_laser", null),
     laserReflector("laser_reflector", null),
     claySapling("clay_sapling", null),
 

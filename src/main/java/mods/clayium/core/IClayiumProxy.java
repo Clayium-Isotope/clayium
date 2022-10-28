@@ -2,10 +2,10 @@ package mods.clayium.core;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public interface IClayiumProxy {
 	void preInit(FMLPreInitializationEvent event);
@@ -19,4 +19,6 @@ public interface IClayiumProxy {
 	EnumFacing getHittingSide(EntityPlayer player);
 
 	EntityPlayer getClientPlayer();
+
+	void registerTileEntity();
 }

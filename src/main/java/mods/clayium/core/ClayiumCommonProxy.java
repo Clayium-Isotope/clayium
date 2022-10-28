@@ -27,4 +27,7 @@ public class ClayiumCommonProxy implements IClayiumProxy {
 	public EntityPlayer getClientPlayer() {
 		return null;
 	}
+
+	@Override
+	public void registerTileEntity() {}
 }

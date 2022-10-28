@@ -14,6 +14,7 @@ import mods.clayium.machine.ClayContainer.GuiMultiPageContainer;
 import mods.clayium.machine.ClayCraftingTable.ContainerClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.GuiClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
+import mods.clayium.machine.ClayEnergyLaser.TileEntityClayEnergyLaser;
 import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
@@ -62,6 +63,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerFilterWhitelist(player);
             case GuiIdItemFilterString:
                 return new ContainerFilterString(player);
+            case GuiIdClayEnergyLaser:
+                return new ContainerNothing(player.inventory, (TileEntityClayEnergyLaser) tile);
         }
 
         return null;
@@ -94,6 +97,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiTemp(new ContainerFilterWhitelist(player));
             case GuiIdItemFilterString:
                 return new GuiFilterString(new ContainerFilterString(player));
+            case GuiIdClayEnergyLaser:
+                return new GuiTemp(new ContainerNothing(player.inventory, (TileEntityClayEnergyLaser) tile));
         }
 
         return null;
