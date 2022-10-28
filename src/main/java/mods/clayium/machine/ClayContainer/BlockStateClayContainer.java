@@ -142,7 +142,7 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
         }
     }
 
-    @Override
+    @Override // Note: if true, pushes back
     public boolean isFullCube() {
         return false;
     }

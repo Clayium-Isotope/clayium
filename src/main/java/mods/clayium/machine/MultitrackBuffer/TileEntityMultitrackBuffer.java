@@ -21,7 +21,6 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
         this.autoInsert = true;
         this.autoExtract = true;
         this.containerItemStacks = NonNullList.withSize(60, ItemStack.EMPTY);
-        this.clayEnergySlot = -1;
     }
 
     public void initParamsByTier(int tier) {

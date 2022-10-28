@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClayiumMachines {
-    public static final Map<EnumMachineKind, Map<TierPrefix, ClayContainer>> machineMap = new EnumMap<>(EnumMachineKind.class);
+    public static final Map<EnumMachineKind, Map<TierPrefix, Block>> machineMap = new EnumMap<>(EnumMachineKind.class);
 
     public static void registerMachines() {
         add(EnumMachineKind.workTable, 0, new ClayWorkTable());
@@ -66,7 +66,7 @@ public class ClayiumMachines {
         denseClayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.denseClay);
     }
 
-    private static void add(EnumMachineKind kind, int tier, ClayContainer block) {
+    private static void add(EnumMachineKind kind, int tier, Block block) {
         TierPrefix _tier = TierPrefix.get(tier);
 
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
@@ -159,7 +159,7 @@ public class ClayiumMachines {
     public static List<Block> getBlocks() {
         List<Block> res = new ArrayList<>();
 
-        for (Map<TierPrefix, ClayContainer> kind : machineMap.values()) {
+        for (Map<TierPrefix, Block> kind : machineMap.values()) {
             res.addAll(kind.values());
         }
 

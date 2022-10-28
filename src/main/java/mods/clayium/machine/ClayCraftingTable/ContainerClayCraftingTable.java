@@ -67,7 +67,9 @@ public class ContainerClayCraftingTable extends ContainerTemp {
     }
 
     @Override
-    protected void earlyConstruct() {}
+    protected boolean earlierConstruct() {
+        return false;
+    }
 
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {

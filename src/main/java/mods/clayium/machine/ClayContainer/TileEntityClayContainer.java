@@ -4,8 +4,8 @@ import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.UtilItemStack;
-import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -84,8 +84,6 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
     protected int autoInsertCount = 2;
     protected int autoExtractCount = 0;
 
-    // be careful with ArrayIndexOutOfBoundsException
-    public int clayEnergySlot = -1;
     protected int tier = -1;
 
     public TileEntityClayContainer() {
@@ -117,10 +115,6 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         if (this.clayEnergyStorageSize > 64) {
             this.clayEnergyStorageSize = 64;
         }
-    }
-
-    public int getClayEnergyStorageSize() {
-        return this.clayEnergyStorageSize;
     }
 
     public ItemStack getStackInSlot(int index) {
@@ -299,24 +293,12 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         return true;
     }
 
-    public static boolean hasClayEnergy(ItemStack itemstack) {
-        return getClayEnergy(itemstack) > 0L;
-    }
-
-    public static long getClayEnergy(ItemStack itemstack) {
-        if (!itemstack.isEmpty() && itemstack.getItem() instanceof IClayEnergy) {
-            return ((IClayEnergy) itemstack.getItem()).getClayEnergy();
-        }
-
-        return 0L;
-    }
-
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        if (index == this.clayEnergySlot) {
-            return acceptEnergyClay() && hasClayEnergy(stack)
-                    && (this.containerItemStacks.get(this.clayEnergySlot).isEmpty()
-                        || this.containerItemStacks.get(this.clayEnergySlot).getCount() < this.clayEnergyStorageSize);
+        if (this instanceof IClayEnergyConsumer && index == ((IClayEnergyConsumer) this).getEnergySlot()) {
+            return acceptEnergyClay() && IClayEnergy.hasClayEnergy(stack)
+                    && (((IClayEnergyConsumer) this).getEnergyStack().isEmpty()
+                        || ((IClayEnergyConsumer) this).getEnergyStack().getCount() < this.clayEnergyStorageSize);
         }
 
         for (int[] slots : this.listSlotsImport) {
@@ -331,7 +313,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         if (checkBlocked(itemStackIn, direction)) return false;
 
         int route = this.importRoutes.get(direction);
-        if (route == -2 && index == this.clayEnergySlot) return isItemValidForSlot(index, itemStackIn);
+        if (this instanceof IClayEnergyConsumer && route == -2 && index == ((IClayEnergyConsumer) this).getEnergySlot()) return isItemValidForSlot(index, itemStackIn);
 
         if (route >= 0 && route < this.listSlotsImport.size()) {
             return Arrays.stream(this.listSlotsImport.get(route)).anyMatch(e -> e == index);
@@ -361,7 +343,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         Boolean[] flags = new Boolean[this.containerItemStacks.size()];
         switch (this.importRoutes.get(side)) {
             case -2:
-                flags[this.clayEnergySlot] = true;
+                if (this instanceof IClayEnergyConsumer)
+                    flags[((IClayEnergyConsumer) this).getEnergySlot()] = true;
                 break;
             case -1:
                 break;
@@ -379,7 +362,7 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
 
         Collector<Boolean, ArrayList<Integer>, int[]> verifiedIndexJoiner = Collector.of(
                 ArrayList::new,
-                (list, flag) -> list.add(flag ? list.size() : -1),
+                (list, flag) -> list.add(flag != null && flag ? list.size() : -1),
                 (list, list1) -> { list.addAll(list1); return list; },
                 list -> list.stream().mapToInt(e -> e).filter(e -> e != -1).toArray()
         );
@@ -442,8 +425,8 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
                 continue;
             }
 
-            if (route == -2) {
-                transferred = UtilTransfer.extract(this, new int[] { this.clayEnergySlot }, facing, clayEnergyStorageSize - this.containerItemStacks.get(this.clayEnergySlot).getCount());
+            if (this instanceof IClayEnergyConsumer && route == -2) {
+                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, facing, clayEnergyStorageSize - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
             } else {
                 transferred = UtilTransfer.extract(this, this.listSlotsImport.get(route), facing, transferred);
             }
@@ -463,10 +446,6 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
                 this.exportRoutes.replace(facing, -1);
             }
         }
-    }
-
-    public boolean relyOnClayEnergy() {
-        return !UtilTier.canManufactureCraft(this.tier) && this.clayEnergySlot != -1;
     }
 
     /* ========== Texture Part ========== */

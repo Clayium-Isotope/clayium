@@ -3,6 +3,7 @@ package mods.clayium.item;
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +27,7 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
 
             int dist = tecc.importRoutes.get(facing) + 1;
             if (tecc.listSlotsImport.size() <= dist) {
-                if (tecc.relyOnClayEnergy())
+                if (tecc instanceof IClayEnergyConsumer && ((IClayEnergyConsumer) tecc).relyingCheckStrictly())
                     dist = -2;
                 else
                     dist = -1;

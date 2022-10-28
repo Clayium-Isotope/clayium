@@ -29,18 +29,20 @@ public abstract class ContainerTemp extends Container {
 
         if (this.tileEntity != null)
             this.tileEntity.openInventory(this.player.player);
-        earlyConstruct();
+
+        if (earlierConstruct())
+            postConstruct();
     }
 
-    protected void postConstruct() {
+    protected final void postConstruct() {
         initParameters(this.player);
         setMachineInventorySlots(this.player);
         addMachineInventorySlots(this.player);
         setupPlayerSlots(this.player);
     }
 
-    protected void earlyConstruct() {
-        postConstruct();
+    protected boolean earlierConstruct() {
+        return true;
     }
 
     protected void initParameters(InventoryPlayer player) {

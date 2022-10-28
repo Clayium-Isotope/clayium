@@ -61,7 +61,7 @@ public class ContainerClayiumMachine extends ContainerTemp {
         addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayiumMachine.MachineSlots.ENERGY.ordinal(), machineGuiSizeY) {
             @Override
             public boolean isEnabled() {
-                return !UtilTier.canManufactureCraft(tileEntity.getTier());
+                return !UtilTier.canManufactureCraft(tileEntity.getTier()) && super.isEnabled();
             }
         });
     }

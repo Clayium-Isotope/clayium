@@ -48,7 +48,9 @@ public class ContainerFilterWhitelist extends ContainerTemp {
     }
 
     @Override
-    protected void earlyConstruct() {}
+    protected boolean earlierConstruct() {
+        return false;
+    }
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {

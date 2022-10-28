@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IHasButton;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable {
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable, IClayEnergyConsumer {
     enum MachineSlots {
         MATERIAL,
         PRODUCT,
@@ -48,18 +49,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.autoInsert = true;
         this.autoExtract = true;
 
-        this.clayEnergySlot = -1;
         this.slotsDrop = new int[] { MachineSlots.MATERIAL.ordinal(), MachineSlots.PRODUCT.ordinal(), MachineSlots.ENERGY.ordinal() };
-    }
-
-    @Override
-    public void initParamsByTier(int tier) {
-        super.initParamsByTier(tier);
-
-        if (UtilTier.canManufactureCraft(this.tier))
-            this.clayEnergySlot = -1;
-        else
-            this.clayEnergySlot = MachineSlots.ENERGY.ordinal();
     }
 
     public void setKind(EnumMachineKind kind) {
@@ -153,31 +143,30 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         }
     }
 
-    public boolean compensateClayEnergy(long debt) {
-        return compensateClayEnergy(debt, true);
+    @Override
+    public long getContainEnergy() {
+        return this.containEnergy;
     }
 
-    public boolean compensateClayEnergy(long debt, boolean doConsume) {
-        if (debt > this.containEnergy) {
-            if (!produceClayEnergy()) return false;
-
-            return compensateClayEnergy(debt, doConsume);
-        }
-
-        if (doConsume) this.containEnergy -= debt;
-        return true;
+    @Override
+    public void setContainEnergy(long energy) {
+        this.containEnergy = energy;
     }
 
-    public boolean produceClayEnergy() {
-        if (this.clayEnergySlot < 0 || this.clayEnergySlot >= getSizeInventory()) return false;
-        ItemStack itemstack = getStackInSlot(this.clayEnergySlot);
-        if (itemstack.isEmpty()) return false;
+    @Override
+    public int getEnergySlot() {
+        if (UtilTier.canManufactureCraft(this.tier)) return -1;
+        return MachineSlots.ENERGY.ordinal();
+    }
 
-        if (!hasClayEnergy(itemstack)) return false;
-        containEnergy += getClayEnergy(itemstack);
-        itemstack.shrink(1);
+    @Override
+    public int getEnergyStorageSize() {
+        return this.clayEnergyStorageSize;
+    }
 
-        return true;
+    @Override
+    public boolean relyingCheckStrictly() {
+        return !UtilTier.canManufactureCraft(this.tier) && IClayEnergyConsumer.super.relyingCheckStrictly();
     }
 
     public void proceedCraft() {

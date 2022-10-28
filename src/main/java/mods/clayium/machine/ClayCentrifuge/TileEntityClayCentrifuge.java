@@ -22,7 +22,6 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(CentrifugeSlots.values().length, ItemStack.EMPTY);
-        this.clayEnergySlot = CentrifugeSlots.ENERGY.ordinal();
         this.listSlotsImport.add(new int[]{ CentrifugeSlots.MATERIAL.ordinal() });
         this.listSlotsExport.add(new int[]{ CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_2.ordinal(), CentrifugeSlots.PRODUCT_3.ordinal(), CentrifugeSlots.PRODUCT_4.ordinal() });
         this.maxAutoExtract = new int[]{-1, 1};
@@ -120,5 +119,10 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
         this.debtEnergy = 0L;
         this.doingRecipe = RecipeElement.FLAT;
         return false;
+    }
+
+    @Override
+    public int getEnergySlot() {
+        return CentrifugeSlots.ENERGY.ordinal();
     }
 }

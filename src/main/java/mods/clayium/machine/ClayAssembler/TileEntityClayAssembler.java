@@ -23,7 +23,6 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
     @Override
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(AssemblerSlots.values().length, ItemStack.EMPTY);
-        this.clayEnergySlot = AssemblerSlots.ENERGY.ordinal();
 
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal() });
@@ -137,6 +136,11 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         proceedCraft();
 
         return true;
+    }
+
+    @Override
+    public int getEnergySlot() {
+        return AssemblerSlots.ENERGY.ordinal();
     }
 
     @SideOnly(Side.CLIENT)

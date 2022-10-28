@@ -24,7 +24,6 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(ChemicalReactorSlots.values().length, ItemStack.EMPTY);
-        this.clayEnergySlot = ChemicalReactorSlots.ENERGY.ordinal();
         this.listSlotsImport.add(new int[]{ ChemicalReactorSlots.MATERIAL_1.ordinal(), ChemicalReactorSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ ChemicalReactorSlots.MATERIAL_1.ordinal() });
         this.listSlotsImport.add(new int[]{ ChemicalReactorSlots.MATERIAL_2.ordinal() });
@@ -154,5 +153,10 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
         proceedCraft();
 
         return true;
+    }
+
+    @Override
+    public int getEnergySlot() {
+        return ChemicalReactorSlots.ENERGY.ordinal();
     }
 }

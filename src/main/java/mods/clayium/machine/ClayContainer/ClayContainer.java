@@ -21,7 +21,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -105,7 +108,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     protected void openGui(World world, BlockPos pos, EntityPlayer player) {
         Block block = world.getBlockState(pos).getBlock();
-        if (block instanceof ClayContainer && world.getTileEntity(pos) instanceof TileGeneric)
+        if (block instanceof ClayContainer && world.getTileEntity(pos) instanceof TileGeneric && ((ClayContainer) block).guiId != -1)
             openGui(((ClayContainer) block).guiId, world, pos, player);
     }
 
@@ -135,11 +138,6 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
-    public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.SOLID;
     }
 
     public boolean canBePipe() {

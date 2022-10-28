@@ -1,7 +1,8 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -13,12 +14,16 @@ public class SlotEnergy extends Slot {
 
     @Override
     public int getSlotStackLimit() {
-        return ((TileEntityClayContainer) this.inventory).getClayEnergyStorageSize();
+        if (!(this.inventory instanceof IClayEnergyConsumer)) return 0;
+
+        return ((IClayEnergyConsumer) this.inventory).getEnergyStorageSize();
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return ClayiumBlocks.compressedClay.contains(stack.getItem());
+        return this.inventory instanceof IClayEnergyConsumer && IClayEnergy.hasClayEnergy(stack)
+                && (((IClayEnergyConsumer) this.inventory).getEnergyStack().isEmpty()
+                    || ((IClayEnergyConsumer) this.inventory).getEnergyStack().getCount() < ((IClayEnergyConsumer) this.inventory).getEnergyStorageSize());
     }
 
     @Override

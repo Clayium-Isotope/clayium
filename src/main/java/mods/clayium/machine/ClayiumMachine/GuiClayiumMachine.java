@@ -7,10 +7,8 @@ import mods.clayium.gui.GuiTemp;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IHasButton;
 import mods.clayium.plugin.jei.JEICompatibility;
-import mods.clayium.util.UtilLocale;
 import mods.clayium.util.UtilTier;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
@@ -28,8 +26,6 @@ public class GuiClayiumMachine extends GuiTemp {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((TileEntityClayiumMachine) tile).containEnergy, false)), 4, machineHeight - 12, 4210752);
 
         if (ClayiumIntegration.JEI.loaded() && ((TileEntityClayiumMachine) this.tile).kind.hasRecipe()) {
             if (this.guiLeft + this.progressBarPosX <= mouseX && this.guiTop + this.progressBarPosY <= mouseY
