@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "clayium:blocks/log_claytree_top",
+        "side": "clayium:blocks/log_claytree"
+    }
+}

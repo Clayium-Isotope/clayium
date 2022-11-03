@@ -2,8 +2,10 @@ package mods.clayium.plugin.jei;
 
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientRegistry;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
+import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
@@ -59,6 +61,8 @@ public class JEICompatibility implements IModPlugin {
 
 // use THIS.showMachineRecipes instead of...
 //        registry.addRecipeClickArea(GuiClayiumMachine.class, (176 - 22) / 2, 35, 22, 16, ClayiumCore.ModId + "." + EnumMachineKind.bendingMachine.getRegisterName());
+
+        registry.addIngredientInfo(Arrays.asList(new ItemStack(ClayiumBlocks.clayTreeSapling), new ItemStack(ClayiumBlocks.clayTreeLog), new ItemStack(ClayiumBlocks.clayTreeLeaf)), VanillaTypes.ITEM, "recipe.clay_tree.description");
     }
 
     @Override

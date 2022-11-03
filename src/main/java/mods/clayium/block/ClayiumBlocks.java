@@ -9,7 +9,6 @@ import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 
 import java.util.ArrayList;
@@ -94,6 +93,10 @@ public class ClayiumBlocks {
             siliconeColored.add(new SiliconeColored(color));
         }
         blocks.addAll(siliconeColored);
+
+        blocks.add(clayTreeSapling);
+        blocks.add(clayTreeLog);
+        blocks.add(clayTreeLeaf);
     }
 
     public static List<Block> getBlocks() {
@@ -127,7 +130,9 @@ public class ClayiumBlocks {
     public static final BlockDamaged materialBlock = new BlockDamaged();
     public static final BlockDamaged siliconeColored = new BlockDamaged();
 
-    public static final Block clayTreeSapling = Blocks.AIR;
+    public static final Block clayTreeSapling = new ClayTreeSapling();
+    public static final Block clayTreeLog = new ClayTreeLog();
+    public static final Block clayTreeLeaf = new ClayTreeLeaf();
 
     private static final List<Block> blocks = new ArrayList<>();
 }

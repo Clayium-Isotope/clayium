@@ -547,7 +547,7 @@ public class ClayiumRecipes {
         reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 4)), e(7), 2000000L);
 
 
-// TODO        grinder.addRecipe(i(CBlocks.blockClayTreeLog), 5, ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), e(5), 200L);
+        grinder.addRecipe(i(ClayiumBlocks.clayTreeLog), 5, ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), e(5), 200L);
         reactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 10, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(10), 1000000000000L);
         reactor.addRecipe(ii(i(ClayiumItems.claySoul), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 11, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(11), 100000000000000L);
 

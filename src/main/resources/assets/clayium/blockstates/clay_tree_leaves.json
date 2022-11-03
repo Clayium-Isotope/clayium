@@ -1,0 +1,7 @@
+{
+    "multipart": [
+        {
+            "apply": { "model": "clayium:clay_tree_leaves" }
+        }
+    ]
+}

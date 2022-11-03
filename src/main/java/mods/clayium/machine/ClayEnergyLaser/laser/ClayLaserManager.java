@@ -104,7 +104,7 @@ public class ClayLaserManager {
             m = Math.min(m, h);
         }
 
-        this.totalIrradiatedEnergy = m * this.totalIrradiatedEnergy / n;
+        this.totalIrradiatedEnergy = m * this.totalIrradiatedEnergy / (n == 0 ? 1 : n) ;
 
         if (this.laserEnergyHistory.size() >= historyLength)
             this.laserEnergyHistory.removeFirst();
