@@ -4,6 +4,7 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class NBTInventoryWrapper extends InventoryBasic {
@@ -16,11 +17,15 @@ public class NBTInventoryWrapper extends InventoryBasic {
     }
 
     public void loadFromTag() {
-        ItemStackHelper.loadAllItems(this.reference, ObfuscationReflectionHelper.getPrivateValue(InventoryBasic.class, this, "field_70482_c"));
+        ItemStackHelper.loadAllItems(this.reference, this.getContains());
     }
 
     public void writeToTag() {
-        ItemStackHelper.saveAllItems(this.reference, ObfuscationReflectionHelper.getPrivateValue(InventoryBasic.class, this, "field_70482_c"));
+        ItemStackHelper.saveAllItems(this.reference, this.getContains());
+    }
+
+    public NonNullList<ItemStack> getContains() {
+        return ObfuscationReflectionHelper.getPrivateValue(InventoryBasic.class, this, "field_70482_c");
     }
 
     public ItemStack getStackInSlot(int slot) {

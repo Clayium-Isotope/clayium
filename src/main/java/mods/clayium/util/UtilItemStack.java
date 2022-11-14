@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
@@ -22,6 +23,7 @@ public class UtilItemStack {
     }
 
     public static boolean areTypeEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        if (itemstack1 == null || itemstack2 == null) return false;
         return areItemDamageEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
@@ -177,7 +179,7 @@ public class UtilItemStack {
     }
 
     public static List<ItemStack> getItemsFromTag(NBTTagCompound tag) {
-        return tag != null ? tagList2ItemList(tag.getTagList("Items", 10)) : new ArrayList<>();
+        return tag != null ? tagList2ItemList(tag.getTagList("Items", Constants.NBT.TAG_COMPOUND)) : new ArrayList<>();
     }
 
     public static void setItemsToTag(NBTTagCompound tag, List<ItemStack> items) {
@@ -189,7 +191,7 @@ public class UtilItemStack {
      * Unknown sized TagList -> ItemStack list<br>
      */
     public static List<ItemStack> tagList2ItemList(NBTTagList tagList) {
-        if (tagList == null || tagList.getTagType() != 10) return Collections.emptyList();
+        if (tagList == null || tagList.getTagType() != Constants.NBT.TAG_COMPOUND) return Collections.emptyList();
         List<ItemStack> res = new ArrayList<>(tagList.tagCount());
 
         for (NBTBase tag : tagList) {

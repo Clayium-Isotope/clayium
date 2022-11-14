@@ -30,4 +30,10 @@ public class ClayiumCommonProxy implements IClayiumProxy {
 
 	@Override
 	public void registerTileEntity() {}
+
+	@Override
+	public void updateFlightStatus(int mode) {}
+
+	@Override
+	public void overclockPlayer(int delay) {}
 }

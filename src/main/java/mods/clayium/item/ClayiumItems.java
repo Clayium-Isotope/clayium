@@ -6,6 +6,7 @@ import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.ItemDamaged;
 import mods.clayium.item.common.ItemTiered;
 import mods.clayium.item.filter.*;
+import mods.clayium.item.gadget.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -118,6 +119,27 @@ public class ClayiumItems {
     public static final Item filterItemDamage = new FilterItemDamage();
     public static final Item filterBlockMetadata = new FilterBlockMetadata();
     /* ...Filters */
+
+    /* Gadget... */
+    public static final Item gadgetHolder = new GadgetHolder();
+
+    public static final Item gadgetAntimatterOverclock = new GadgetOverclock(0, 10);
+    public static final Item gadgetPureAntimatterOverclock = new GadgetOverclock(1, 11);
+    public static final Item gadgetOECOverclock = new GadgetOverclock(2, 12);
+    public static final Item gadgetOPAOverclock = new GadgetOverclock(3, 13);
+    public static final Item gadgetFlight0 = new GadgetFlight(0, 12, 0);
+    public static final Item gadgetFlight1 = new GadgetFlight(1, 13, 1);
+    public static final Item gadgetFlight2 = new GadgetFlight(2, 13, 2);
+    public static final Item gadgetHealth0 = new GadgetHealth(0, 6, 1);
+    public static final Item gadgetHealth1 = new GadgetHealth(1, 10, 4);
+    public static final Item gadgetHealth2 = new GadgetHealth(2, 12, 9);
+    public static final Item gadgetAutoEat0 = new GadgetAutoEat(0, 7);
+    public static final Item gadgetAutoEat1 = new GadgetAutoEat(1, 7);
+    public static final Item gadgetRepeatedlyAttack = new GadgetRepeatedlyAttack();
+    public static final Item gadgetLongArm0 = new GadgetLongArm(0, 6, 3.0F);
+    public static final Item gadgetLongArm1 = new GadgetLongArm(1, 8, 7.0F);
+    public static final Item gadgetLongArm2 = new GadgetLongArm(2, 12, 20.0F);
+    /* ...Gadget */
     /* ...Elements */
 
     private static final List<Item> items = new ArrayList<>();

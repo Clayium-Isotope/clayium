@@ -21,4 +21,8 @@ public interface IClayiumProxy {
 	EntityPlayer getClientPlayer();
 
 	void registerTileEntity();
+
+	void updateFlightStatus(int mode);
+
+	void overclockPlayer(int delay);
 }

@@ -3,6 +3,8 @@ package mods.clayium.gui;
 import mods.clayium.item.filter.ContainerFilterString;
 import mods.clayium.item.filter.ContainerFilterWhitelist;
 import mods.clayium.item.filter.GuiFilterString;
+import mods.clayium.item.gadget.ContainerGadgetAutoEat;
+import mods.clayium.item.gadget.ContainerGadgetHolder;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
@@ -65,6 +67,10 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerFilterString(player);
             case GuiIdClayEnergyLaser:
                 return new ContainerNothing(player.inventory, (TileEntityClayEnergyLaser) tile);
+            case GuiIdGadgetHolder:
+                return new ContainerGadgetHolder(player);
+            case GuiIdGadgetAutoEat:
+                return new ContainerGadgetAutoEat(player);
         }
 
         return null;
@@ -99,6 +105,10 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiFilterString(new ContainerFilterString(player));
             case GuiIdClayEnergyLaser:
                 return new GuiTemp(new ContainerNothing(player.inventory, (TileEntityClayEnergyLaser) tile));
+            case GuiIdGadgetHolder:
+                return new GuiTemp(new ContainerGadgetHolder(player));
+            case GuiIdGadgetAutoEat:
+                return new GuiTemp(new ContainerGadgetAutoEat(player));
         }
 
         return null;
@@ -128,7 +138,8 @@ public class GuiHandler implements IGuiHandler {
     public static final int GuiIdItemFilterString = 21;
     public static final int GuiIdVacuumContainer = 22;
     public static final int GuiIdGadgetHolder = 23;
-    public static final int GuiIdAreaActivator = 24;
+    public static final int GuiIdGadgetAutoEat = 24;
+    public static final int GuiIdAreaActivator = 25;
     public static final int GuiIdClayCraftingTable = 30;
     public static final int GuiIdMultitrackBuffer = 31;
     public static final int GuiIdPANAdapter = 40;
