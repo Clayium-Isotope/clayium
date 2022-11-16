@@ -23,7 +23,7 @@ public class KneadingRecipeElement extends RecipeElement {
     protected final long time;
 
     public KneadingRecipeElement(ItemStack materialIn, int method, ItemStack resultIn, ItemStack changeIn, long time) {
-        super(toolFromMethod(method).matchingStacks.length >= 1 ? Arrays.asList(materialIn, toolFromMethod(method).matchingStacks[0]) : Arrays.asList(materialIn),
+        super(toolFromMethod(method).getMatchingStacks().length >= 1 ? Arrays.asList(materialIn, toolFromMethod(method).getMatchingStacks()[0]) : Arrays.asList(materialIn),
                 method, 0, Arrays.asList(resultIn, changeIn), 0L, time);
         this.material = materialIn;
         this.method = method;
@@ -35,7 +35,7 @@ public class KneadingRecipeElement extends RecipeElement {
 
     @Override
     public void getIngredients(IIngredients iIngredients) {
-        iIngredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Arrays.asList(this.material), Arrays.asList(this.tool.matchingStacks)));
+        iIngredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Arrays.asList(this.material), Arrays.asList(this.tool.getMatchingStacks())));
         iIngredients.setOutputs(VanillaTypes.ITEM, Arrays.asList(this.result, ItemStack.EMPTY));
     }
 
