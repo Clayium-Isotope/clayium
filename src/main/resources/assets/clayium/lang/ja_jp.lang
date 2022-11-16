@@ -203,6 +203,13 @@ item.clay_steel_pickaxe.tooltip.line4=モード 2 : 任意範囲採掘モード
 item.clay_steel_pickaxe.tooltip.line5=採掘したい形に粘土ブロックを設置してから、
 item.clay_steel_pickaxe.tooltip.line6=それを右クリックすることで指定する
 
+item.clay_shooter_0.name=粘土銃
+item.clay_shooter_1.name=発展粘土銃
+item.clay_shooter_2.name=スナイパー粘土銃
+item.clay_shooter_3.name=スナイパー粘土銃プロ
+item.instant_teleporter.name=テレポートシューター
+item.instant_teleporter.tooltip.line1=着弾点にテレポートする
+
 item.filter_duplicator.copy.name=アイテムフィルター複製機
 item.filter_whitelist.name=ホワイトリストアイテムフィルター
 item.filter_whitelist.copy.name=ホワイトリストアイテムフィルター (コピー)

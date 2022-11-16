@@ -38,6 +38,8 @@ public class ClayiumConfiguration {
     };
     public static boolean cfgEnableRFGenerator = false;
     public static Map<ClayiumIntegration, Boolean> cfgModIntegration = new EnumMap<>(ClayiumIntegration.class);
+    public static final int EntityIdClayBall = 0;
+    public static final int EntityIdTeleportBall = 1;
 
     public void loadConfig(FMLPreInitializationEvent event) {
         cfg = new Configuration(event.getSuggestedConfigurationFile());

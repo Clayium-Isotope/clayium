@@ -210,6 +210,13 @@ item.clay_steel_shovel.tooltip.line4=Mode 2 : arbitrary area mode.
 item.clay_steel_shovel.tooltip.line5=You can set up the mining area by right-clicking Clay Blocks
 item.clay_steel_shovel.tooltip.line6=which are constructed in the shape you need.
 
+item.clay_shooter_0.name=Basic Clay Shooter
+item.clay_shooter_1.name=Advanced Clay Shooter
+item.clay_shooter_2.name=Sniper Clay Shooter
+item.clay_shooter_3.name=Sniper Clay Shooter Pro
+item.instant_teleporter.name=Instant Teleporter
+item.instant_teleporter.tooltip.line1=Teleports you to the point of impact.
+
 item.filter_duplicator.copy.name=Item Filter Duplicator
 item.filter_whitelist.name=White List Item Filter
 item.filter_whitelist.copy.name=White List Item Filter (Copy)

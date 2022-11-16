@@ -104,6 +104,11 @@ public class ClayiumItems {
     public static final Item clayShovel = new ClayShovel();
     public static final Item claySteelPickaxe = new ClaySteelPickaxe();
     public static final Item claySteelShovel = new ClaySteelShovel();
+
+    public static final Item clayShooter0 = new ClayShooter(10000, "clay_shooter_0", 6, 2, 1.2f, 25.0f, 4, 6, 0);
+    public static final Item clayShooter1 = new ClayShooter(1000, "clay_shooter_1", 6, 4, 4.5f, 3.0f, 7, 12, 0);
+    public static final Item clayShooter2 = new ClayShooter(8000, "clay_shooter_2", 6, 2, 15.0f, 0.0f, 25, 8, 20);
+    public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", 6, 3, 30.0f, 0.0f, 100, 8, 40);
     /* ...Tools */
 
     /* Filters... */
