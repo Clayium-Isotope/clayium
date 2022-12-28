@@ -21,6 +21,7 @@ public class ClayShooter extends ItemTiered {
     protected final float initialVelocity;
     protected final int lifespan;
     protected final float diffusion;
+    protected final float shootRate;
 
     protected float cooldown = 0;
 
@@ -46,11 +47,12 @@ public class ClayShooter extends ItemTiered {
         this.initialVelocity = bInitialVelocity;
         this.lifespan = bAliveTime;
         this.diffusion = bDiffusion;
+        this.shootRate = bShootRate;
 
         setFull3D();
     }
 
-    public static void shoot(World worldIn, EntityPlayer playerIn, ItemStack itemstack, float per, boolean critical) {
+    public void shoot(World worldIn, EntityPlayer playerIn, ItemStack itemstack, float per, boolean critical) {
         if (itemstack.getItem() instanceof ClayShooter) {
             ClayShooter shooter = (ClayShooter) itemstack.getItem();
 
@@ -61,15 +63,19 @@ public class ClayShooter extends ItemTiered {
                 playerIn.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 0.01F * (v - 6.0F), 6.0F / (v + 2.0F) + 0.2F);
             }
 
-            if (!worldIn.isRemote) {
-                EntityClayBall entityclayball = new EntityClayBall(worldIn, playerIn, shooter.lifespan, shooter.initialVelocity, shooter.diffusion, shooter.bulletDamage, 1, critical);
-                entityclayball.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, shooter.initialVelocity, shooter.diffusion);
-                worldIn.spawnEntity(entityclayball);
-            }
+            spawnBullet(worldIn, playerIn, itemstack, shooter, per, critical);
 
             if (!shooter.infinity && !playerIn.isCreative()) {
                 itemstack.damageItem((int) (per * (float) shooter.getChargeTime()) + 1, playerIn);
             }
+        }
+    }
+
+    protected void spawnBullet(World worldIn, EntityPlayer playerIn, ItemStack stack, ClayShooter shooter, float per, boolean critical) {
+        if (!worldIn.isRemote) {
+            EntityClayBall entityclayball = new EntityClayBall(worldIn, playerIn, shooter.lifespan, shooter.initialVelocity, shooter.diffusion, shooter.bulletDamage, 1, critical);
+            entityclayball.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, shooter.initialVelocity, shooter.diffusion);
+            worldIn.spawnEntity(entityclayball);
         }
     }
 
@@ -89,14 +95,6 @@ public class ClayShooter extends ItemTiered {
 
     public boolean isCharger() {
         return this.chargeTime > 0;
-    }
-
-    public int getCooldownTime() {
-        return this.cooldownTime;
-    }
-
-    public float getShootingRate() {
-        return 3.0f / 6;
     }
 
     public float getInitialVelocity() {
@@ -125,12 +123,10 @@ public class ClayShooter extends ItemTiered {
         } else {
             EntityPlayer player = (EntityPlayer) playerIn;
 
-            float rate = this.getShootingRate();
-
-            this.cooldown += rate;
+            this.cooldown += this.shootRate;
             while (this.cooldown >= 1.0F) {
                 this.cooldown--;
-                shoot(player.world, player, stack, 1.0f, false);
+                this.shoot(player.world, player, stack, 1.0f, false);
             }
         }
     }
@@ -171,7 +167,7 @@ public class ClayShooter extends ItemTiered {
                 velocity = 1.0F;
             }
 
-            ClayShooter.shoot(worldIn, player, stack, velocity, velocity == 1.0f);
+            this.shoot(worldIn, player, stack, velocity, velocity == 1.0f);
         }
     }
 }

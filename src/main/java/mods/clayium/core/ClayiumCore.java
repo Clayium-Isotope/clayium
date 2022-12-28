@@ -4,6 +4,7 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.common.IItemBlockHolder;
 import mods.clayium.block.itemblock.ItemBlockTiered;
 import mods.clayium.entity.EntityClayBall;
+import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
@@ -108,6 +109,8 @@ public class ClayiumCore {
 
         EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "clay_bullet"), EntityClayBall.class, "clay_bullet", ClayiumConfiguration.EntityIdClayBall, ClayiumCore.instance(), 128, 1, true);
         RenderingRegistry.registerEntityRenderingHandler(EntityClayBall.class, manager -> new RenderSnowball<>(manager, Items.CLAY_BALL, Minecraft.getMinecraft().getRenderItem()));
+        EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "teleport_bullet"), EntityTeleportBall.class, "teleport_bullet", ClayiumConfiguration.EntityIdTeleportBall, ClayiumCore.instance(), 128, 1, true);
+        RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBall.class, manager -> new RenderSnowball<>(manager, Items.ENDER_PEARL, Minecraft.getMinecraft().getRenderItem()));
 
         proxy.preInit(event);
     }

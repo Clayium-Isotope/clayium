@@ -109,6 +109,8 @@ public class ClayiumItems {
     public static final Item clayShooter1 = new ClayShooter(1000, "clay_shooter_1", 6, 4, 4.5f, 3.0f, 7, 12, 0);
     public static final Item clayShooter2 = new ClayShooter(8000, "clay_shooter_2", 6, 2, 15.0f, 0.0f, 25, 8, 20);
     public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", 6, 3, 30.0f, 0.0f, 100, 8, 40);
+
+    public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter", 11, 3, 30.0F, 0.0F, 100, 8, 40);
     /* ...Tools */
 
     /* Filters... */
