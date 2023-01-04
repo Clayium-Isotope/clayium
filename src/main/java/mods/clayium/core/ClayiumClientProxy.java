@@ -15,6 +15,7 @@ import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
 import mods.clayium.machine.LaserReflector.TESRLaserReflector;
 import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
+import mods.clayium.machine.QuartzCrucible.TileEntityQuartzCrucible;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -92,6 +93,8 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayEnergyLaser.class, "clayium:laser", new TESRClayEnergyLaser());
 		ClientRegistry.registerTileEntity(TileEntityLaserReflector.class, "clayium:laser_reflector", new TESRLaserReflector());
+
+		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 	}
 
 	public void updateFlightStatus(int mode) {

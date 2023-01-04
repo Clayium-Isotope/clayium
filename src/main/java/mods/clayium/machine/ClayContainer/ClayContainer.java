@@ -37,11 +37,11 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
-    private final Class<? extends TileEntityClayContainer> teClass;
+    private final Class<? extends TileGeneric> teClass;
     private final int guiId;
     protected final int tier;
 
-    public ClayContainer(Material material, Class<? extends TileEntityClayContainer> teClass, String modelPath, int guiId, int tier) {
+    public ClayContainer(Material material, Class<? extends TileGeneric> teClass, String modelPath, int guiId, int tier) {
         super(material);
         this.teClass = teClass;
         this.guiId = guiId;
@@ -73,12 +73,13 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     @Override
-    public TileEntityClayContainer createNewTileEntity(World worldIn, int meta) {
+    public TileGeneric createNewTileEntity(World worldIn, int meta) {
         if (this.teClass == null) return null;
 
         try {
-            TileEntityClayContainer tecc = teClass.newInstance();
-            tecc.initParamsByTier(this.tier);
+            TileGeneric tecc = teClass.newInstance();
+            if (tecc instanceof TileEntityClayContainer)
+                ((TileEntityClayContainer) tecc).initParamsByTier(this.tier);
             return tecc;
         } catch (Exception exception) {
             ClayiumCore.logger.catching(exception);

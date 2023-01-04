@@ -1,5 +1,6 @@
 package mods.clayium.machine.ClayiumMachine;
 
+import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
@@ -44,8 +45,8 @@ public class ClayiumMachine extends ClaySidedContainer {
     }
 
     @Override
-    public TileEntityClayContainer createNewTileEntity(World worldIn, int meta) {
-        TileEntityClayContainer tecc = super.createNewTileEntity(worldIn, meta);
+    public TileGeneric createNewTileEntity(World worldIn, int meta) {
+        TileGeneric tecc = super.createNewTileEntity(worldIn, meta);
         if (tecc instanceof TileEntityClayiumMachine) {
             ((TileEntityClayiumMachine) tecc).setKind(this.machineKind);
         }

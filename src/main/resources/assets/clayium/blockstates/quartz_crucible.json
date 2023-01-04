@@ -1,0 +1,81 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "clayium:machine/quartz_crucible"
+            }
+        },
+        {
+            "when": {
+                "level": "1"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_1"
+            }
+        },
+        {
+            "when": {
+                "level": "2"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_2"
+            }
+        },
+        {
+            "when": {
+                "level": "3"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_3"
+            }
+        },
+        {
+            "when": {
+                "level": "4"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_4"
+            }
+        },
+        {
+            "when": {
+                "level": "5"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_5"
+            }
+        },
+        {
+            "when": {
+                "level": "6"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_6"
+            }
+        },
+        {
+            "when": {
+                "level": "7"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_7"
+            }
+        },
+        {
+            "when": {
+                "level": "8"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_8"
+            }
+        },
+        {
+            "when": {
+                "level": "9"
+            },
+            "apply": {
+                "model": "clayium:machine/quartz_crucible_level_9"
+            }
+        }
+    ]
+}

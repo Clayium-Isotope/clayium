@@ -189,7 +189,7 @@ public class ClayiumCore {
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
                     new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getResourcePath(), "inventory"));
             // Custom blockstate mapping
-            if (block != ClayiumMachines.clayWorkTable && block != ClayiumMachines.clayCraftingTable) {
+            if (block != ClayiumMachines.clayWorkTable && block != ClayiumMachines.clayCraftingTable && block != ClayiumMachines.quartzCrucible) {
                 net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
                     @Override
                     protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
