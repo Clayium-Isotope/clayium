@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayCentrifuge;
 
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -49,12 +50,12 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
     }
 
     protected boolean canCraft(ItemStack material) {
-        if (material.isEmpty() || this.doingRecipe == RecipeElement.FLAT) {
+        if (material.isEmpty() || this.doingRecipe == RecipeElement.flat()) {
             return false;
         }
 
-        List<ItemStack> itemstacks = this.doingRecipe.getResult().getResults();
-        if (this.doingRecipe.getResult().getResults().isEmpty()) {
+        List<ItemStack> itemstacks = this.doingRecipe.getResults();
+        if (this.doingRecipe.getResults().isEmpty()) {
             return false;
         }
 
@@ -85,7 +86,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 //            this.isDoingWork = true;
         if (this.craftTime < this.timeToCraft) return;
 
-        List<ItemStack> itemstacks = this.doingRecipe.getResult().getResults();
+        List<ItemStack> itemstacks = this.doingRecipe.getResults();
 
         for(int i = 0; i < Math.min(this.resultSlotNum, itemstacks.size()); ++i) {
             if (this.getStackInSlot(i + 1).isEmpty()) {
@@ -100,16 +101,16 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
     @Override
     protected boolean setNewRecipe() {
-        RecipeElement _recipe = getRecipe(getStackInSlot(CentrifugeSlots.MATERIAL));
+        IRecipeElement _recipe = getRecipe(getStackInSlot(CentrifugeSlots.MATERIAL));
 
         this.craftTime = 0L;
 
-        if (canCraft(_recipe) && compensateClayEnergy(_recipe.getResult().getEnergy())) {
+        if (canCraft(_recipe) && compensateClayEnergy(_recipe.getEnergy())) {
             this.doingRecipe = _recipe;
 
-            this.debtEnergy = this.doingRecipe.getResult().getEnergy();
-            this.timeToCraft = this.doingRecipe.getResult().getTime();
-            getStackInSlot(CentrifugeSlots.MATERIAL).shrink(this.doingRecipe.getCondition().getStackSizes(getStackInSlot(CentrifugeSlots.MATERIAL))[0]);
+            this.debtEnergy = this.doingRecipe.getEnergy();
+            this.timeToCraft = this.doingRecipe.getTime();
+            getStackInSlot(CentrifugeSlots.MATERIAL).shrink(this.doingRecipe.getStackSizes(getStackInSlot(CentrifugeSlots.MATERIAL))[0]);
 
             proceedCraft();
             return true;
@@ -117,7 +118,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
         this.timeToCraft = 0L;
         this.debtEnergy = 0L;
-        this.doingRecipe = RecipeElement.FLAT;
+        this.doingRecipe = RecipeElement.flat();
         return false;
     }
 

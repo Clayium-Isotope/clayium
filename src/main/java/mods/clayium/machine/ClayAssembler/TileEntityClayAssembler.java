@@ -46,21 +46,21 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
     }
 
     protected boolean canCraft(List<ItemStack> materials) {
-        if (this.doingRecipe != RecipeElement.FLAT) return true;
+        if (this.doingRecipe != RecipeElement.flat()) return true;
 
         if (materials.isEmpty()) return false;
 
-        RecipeElement recipe = this.recipeCards.getRecipe(materials, this.tier);
-        if (recipe == RecipeElement.FLAT) {
+        RecipeElement recipe = (RecipeElement) this.recipeCards.getRecipe(e -> e.match(materials, -1, this.tier), RecipeElement.flat());
+        if (recipe == RecipeElement.flat()) {
             return false;
         }
 
         if (this.getStackInSlot(AssemblerSlots.PRODUCT).isEmpty()) {
             return true;
-        } else if (UtilItemStack.areTypeEqual(this.getStackInSlot(AssemblerSlots.PRODUCT), recipe.getResult().getResults().get(0))){
+        } else if (UtilItemStack.areTypeEqual(this.getStackInSlot(AssemblerSlots.PRODUCT), recipe.getResults().get(0))){
             return true;
         } else {
-            int result = this.getStackInSlot(AssemblerSlots.PRODUCT).getCount() + recipe.getResult().getResults().get(0).getCount();
+            int result = this.getStackInSlot(AssemblerSlots.PRODUCT).getCount() + recipe.getResults().get(0).getCount();
             return result <= this.getInventoryStackLimit() && result <= this.getStackInSlot(AssemblerSlots.PRODUCT).getMaxStackSize();
         }
     }
@@ -90,7 +90,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 //            this.isDoingWork = true;
         if (this.craftTime < this.timeToCraft) return;
 
-        ItemStack result = this.doingRecipe.getResult().getResults().get(0);
+        ItemStack result = this.doingRecipe.getResults().get(0);
         this.craftTime = 0L;
         if (this.getStackInSlot(AssemblerSlots.PRODUCT).isEmpty()) {
             this.setInventorySlotContents(AssemblerSlots.PRODUCT.ordinal(), result.copy());
@@ -116,19 +116,19 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
             mats.add(this.getStackInSlot(i));
         }
 
-        this.doingRecipe = this.recipeCards.getRecipe(mats, this.tier);
+        this.doingRecipe = this.recipeCards.getRecipe(e -> e.match(mats, -1, tier), RecipeElement.flat());
 
-        if (this.doingRecipe == RecipeElement.FLAT) return false;
+        if (this.doingRecipe == RecipeElement.flat()) return false;
 
-        if (!compensateClayEnergy(this.doingRecipe.getResult().getEnergy())) {
-            this.doingRecipe = RecipeElement.FLAT;
+        if (!compensateClayEnergy(this.doingRecipe.getEnergy())) {
+            this.doingRecipe = RecipeElement.flat();
             return false;
         }
 
-        this.debtEnergy = this.doingRecipe.getResult().getEnergy();
-        this.timeToCraft = this.doingRecipe.getResult().getTime();
+        this.debtEnergy = this.doingRecipe.getEnergy();
+        this.timeToCraft = this.doingRecipe.getTime();
 
-        int[] stackSizes = this.doingRecipe.getCondition().getStackSizes(getStackInSlot(perm[0]), getStackInSlot(perm[1]));
+        int[] stackSizes = this.doingRecipe.getStackSizes(getStackInSlot(perm[0]), getStackInSlot(perm[1]));
         for (int i = 0; i < perm.length; i++) {
             this.getStackInSlot(perm[i]).shrink(stackSizes[i]);
         }

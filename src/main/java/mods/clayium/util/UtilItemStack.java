@@ -10,10 +10,17 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class UtilItemStack {
+    /**
+     * Returns true if the same item, damage btw the ones.
+     * In other words, compare them without NBT and size
+     *
+     * If one/both of args be EMPTY, returns false owing to ItemStack.areItemsEqual
+     */
     public static boolean areItemDamageEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemsEqual(itemstack1, itemstack2) && areDamageEqual(itemstack1, itemstack2);
     }
@@ -22,11 +29,18 @@ public class UtilItemStack {
         return ItemStack.areItemsEqual(itemstack1, itemstack2) && (areDamageEqual(itemstack1, itemstack2) || itemstack1.getItem().isDamageable());
     }
 
-    public static boolean areTypeEqual(ItemStack itemstack1, ItemStack itemstack2) {
+    /**
+     * Returns true if the same item, damage and NBT btw the ones.
+     * In other words, compare them without size
+     */
+    public static boolean areTypeEqual(@Nullable ItemStack itemstack1, @Nullable ItemStack itemstack2) {
         if (itemstack1 == null || itemstack2 == null) return false;
         return areItemDamageEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
+    /**
+     * Returns true if the same item, damage, NBT and size btw the ones.
+     */
     public static boolean areStackEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return areTypeEqual(itemstack1, itemstack2) && areSizeEqual(itemstack1, itemstack2);
     }

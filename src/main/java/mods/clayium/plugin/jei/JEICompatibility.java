@@ -7,6 +7,9 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
@@ -45,6 +48,12 @@ public class JEICompatibility implements IModPlugin {
         registry.addRecipeClickArea(GuiClayWorkTable.class, 48, 33, 80, 12, ClayWorkTableCategory.categoryID);
         recipeTransfer.addRecipeTransferHandler(ContainerClayWorkTable.class, ClayWorkTableCategory.categoryID, 0, 2, 4, 36);
         registry.addRecipeCatalyst(new ItemStack(ClayiumMachines.clayWorkTable), ClayWorkTableCategory.categoryID);
+
+        registry.addIngredientInfo(Arrays.asList(
+                    ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot),
+                    new ItemStack(ClayiumMachines.quartzCrucible),
+                    ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.ingot)
+                ), VanillaTypes.ITEM, "recipe.quartz_crucible.description");
 
         for (EnumMachineKind kind : EnumMachineKind.values()) {
             if (kind == EnumMachineKind.workTable) continue;

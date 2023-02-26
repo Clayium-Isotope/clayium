@@ -5,7 +5,7 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IHasButton;
 import mods.clayium.machine.crafting.ClayiumRecipe;
-import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     protected EnumMachineKind kind;
     protected ClayiumRecipe recipeCards;
-    protected RecipeElement doingRecipe = RecipeElement.FLAT;
+    protected IRecipeElement doingRecipe = RecipeElement.flat();
 
     protected long craftTime;
     protected long timeToCraft;
@@ -72,7 +72,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public void update() {
         super.update();
 
-        if (this.doingRecipe == RecipeElement.FLAT) {
+        if (this.doingRecipe == RecipeElement.flat()) {
             setNewRecipe();
         } else if (compensateClayEnergy(this.debtEnergy)) {
             proceedCraft();
@@ -96,7 +96,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.containEnergy = tagCompound.getLong("ClayEnergy");
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
-        this.doingRecipe = ClayiumRecipes.getRecipeElement(this.recipeCards, tagCompound.getInteger("RecipeHash"));
+        this.doingRecipe = this.recipeCards.getRecipe(tagCompound.getInteger("RecipeHash"), RecipeElement.flat());
 
         super.readFromNBT(tagCompound);
     }
@@ -127,7 +127,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     @Override
     public ButtonProperty canPushButton(int button) {
-        if (this.doingRecipe != RecipeElement.FLAT) return ButtonProperty.PERMIT;
+        if (this.doingRecipe != RecipeElement.flat()) return ButtonProperty.PERMIT;
         return canProceedCraft() ? ButtonProperty.PERMIT : ButtonProperty.FAILURE;
     }
 
@@ -173,7 +173,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;
 
-        ItemStack itemstack = this.doingRecipe.getResult().getResults().get(0);
+        ItemStack itemstack = this.doingRecipe.getResults().get(0);
 
         if (getStackInSlot(MachineSlots.PRODUCT).isEmpty()) {
             setInventorySlotContents(MachineSlots.PRODUCT.ordinal(), itemstack.copy());
@@ -185,7 +185,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     public RecipeElement getRecipe(ItemStack stack) {
-        return recipeCards.getRecipe(stack, tier);
+        return (RecipeElement) recipeCards.getRecipe(e -> e.isCraftable(stack, tier), RecipeElement.flat());
     }
 
     protected boolean canCraft(ItemStack material) {
@@ -194,8 +194,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         return canCraft(getRecipe(material));
     }
 
-    protected boolean canCraft(RecipeElement recipe) {
-        ItemStack itemstack = recipe.getResult().getResults().get(0);
+    protected boolean canCraft(IRecipeElement recipe) {
+        ItemStack itemstack = recipe.getResults().get(0);
         if (itemstack.isEmpty()) return false;
         if (getStackInSlot(MachineSlots.PRODUCT).isEmpty()) return true;
         if (!getStackInSlot(MachineSlots.PRODUCT).isItemEqual(itemstack)) return false;
@@ -214,17 +214,16 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
      * @return 何かに使えるかもしれないので、成功でtrue、失敗でfalseを返す。
      */
     protected boolean setNewRecipe() {
-        RecipeElement _recipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
+        IRecipeElement _recipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
 
         this.craftTime = 0L;
 
-        if (canCraft(_recipe) && compensateClayEnergy(_recipe.getResult().getEnergy())) {
+        if (canCraft(_recipe) && compensateClayEnergy(_recipe.getEnergy())) {
             this.doingRecipe = _recipe;
 
-            this.debtEnergy = this.doingRecipe.getResult().getEnergy();
-            this.timeToCraft = this.doingRecipe.getResult().getTime();
-            getStackInSlot(MachineSlots.MATERIAL).shrink(this.doingRecipe.getCondition()
-                    .getStackSizes(getStackInSlot(MachineSlots.MATERIAL))[0]);
+            this.debtEnergy = this.doingRecipe.getEnergy();
+            this.timeToCraft = this.doingRecipe.getTime();
+            getStackInSlot(MachineSlots.MATERIAL).shrink(this.doingRecipe.getStackSizes(getStackInSlot(MachineSlots.MATERIAL))[0]);
 
             proceedCraft();
             return true;
@@ -232,7 +231,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         this.timeToCraft = 0L;
         this.debtEnergy = 0L;
-        this.doingRecipe = RecipeElement.FLAT;
+        this.doingRecipe = RecipeElement.flat();
         return false;
     }
 

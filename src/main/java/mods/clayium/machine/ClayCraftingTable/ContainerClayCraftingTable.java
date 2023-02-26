@@ -9,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.crafting.IRecipeContainer;
 
-public class ContainerClayCraftingTable extends ContainerTemp {
+public class ContainerClayCraftingTable extends ContainerTemp implements IRecipeContainer {
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public InventoryCraftResult craftResult = new InventoryCraftResult();
     private final AccessibleTile<TileEntityClayCraftingTable> tileTable;
@@ -137,5 +138,15 @@ public class ContainerClayCraftingTable extends ContainerTemp {
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
+    }
+
+    @Override
+    public InventoryCraftResult getCraftResult() {
+        return this.craftResult;
+    }
+
+    @Override
+    public InventoryCrafting getCraftMatrix() {
+        return this.craftMatrix;
     }
 }

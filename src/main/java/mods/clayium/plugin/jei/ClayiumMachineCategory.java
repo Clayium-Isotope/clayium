@@ -3,6 +3,7 @@ package mods.clayium.plugin.jei;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IRecipeCategory;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
@@ -13,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class ClayiumMachineCategory extends ClayiumRecipeCategory {
+public class ClayiumMachineCategory implements IRecipeCategory<RecipeElement> {
     protected static final ResourceLocation plate = new ResourceLocation(ClayiumCore.ModId, "textures/gui/nei.png");
     protected static final ResourceLocation button = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
 
@@ -61,13 +62,13 @@ public class ClayiumMachineCategory extends ClayiumRecipeCategory {
     public void setRecipe(IRecipeLayout iRecipeLayout, RecipeElement recipeElement, IIngredients iIngredients) {
         IGuiItemStackGroup stacks = iRecipeLayout.getItemStacks();
 
-        int len = recipeElement.getCondition().getMaterials().size();
+        int len = recipeElement.getMaterials().size();
         int i;
         for (i = 0; i < len; i++) {
             stacks.init(i, true, 17 * (4 - len + i), 13);
         }
 
-        len = recipeElement.getResult().getResults().size();
+        len = recipeElement.getResults().size();
         for (int j = 0; j < len; j++) {
             stacks.init(j + i, false, 97 + 17 * j, 13);
         }
@@ -79,5 +80,10 @@ public class ClayiumMachineCategory extends ClayiumRecipeCategory {
     public void drawExtras(Minecraft minecraft) {
         progressBG.draw(minecraft, 71, 14);
         progressFG.draw(minecraft, 71, 14);
+    }
+
+    @Override
+    public String getModName() {
+        return ClayiumCore.ModName;
     }
 }

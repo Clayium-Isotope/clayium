@@ -42,10 +42,10 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
     }
 
     protected boolean canCraft(List<ItemStack> materials) {
-        if (materials.stream().anyMatch(ItemStack::isEmpty) || this.doingRecipe == RecipeElement.FLAT)
+        if (materials.stream().anyMatch(ItemStack::isEmpty) || this.doingRecipe == RecipeElement.flat())
             return false;
 
-        List<ItemStack> itemstacks = this.doingRecipe.getResult().getResults();
+        List<ItemStack> itemstacks = this.doingRecipe.getResults();
         if (itemstacks.stream().anyMatch(ItemStack::isEmpty))
             return false;
 
@@ -98,8 +98,8 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
             itemstacks[i] = this.getStackInSlot(perm[i]);
         }
 
-        List<ItemStack> results = this.doingRecipe.getResult().getResults();
-        int[] consumedStackSize = this.doingRecipe.getCondition().getStackSizes(itemstacks);
+        List<ItemStack> results = this.doingRecipe.getResults();
+        int[] consumedStackSize = this.doingRecipe.getStackSizes(itemstacks);
 
         int i;
         for(i = 0; i < Math.min(this.resultSlotNum, results.size()); ++i) {
@@ -133,19 +133,19 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
             mats[i] = this.getStackInSlot(perm[i]);
         }
 
-        this.doingRecipe = this.recipeCards.getRecipe(Arrays.asList(mats), this.tier);
+        this.doingRecipe = this.recipeCards.getRecipe(e -> e.match(Arrays.asList(mats), -1, this.tier), RecipeElement.flat());
 
-        if (this.doingRecipe == RecipeElement.FLAT) return false;
+        if (this.doingRecipe == RecipeElement.flat()) return false;
 
-        if (!compensateClayEnergy(this.doingRecipe.getResult().getEnergy())) {
-            this.doingRecipe = RecipeElement.FLAT;
+        if (!compensateClayEnergy(this.doingRecipe.getEnergy())) {
+            this.doingRecipe = RecipeElement.flat();
             return false;
         }
 
-        this.debtEnergy = this.doingRecipe.getResult().getEnergy();
-        this.timeToCraft = this.doingRecipe.getResult().getTime();
+        this.debtEnergy = this.doingRecipe.getEnergy();
+        this.timeToCraft = this.doingRecipe.getTime();
 
-        int[] stackSizes = this.doingRecipe.getCondition().getStackSizes(getStackInSlot(perm[0]), getStackInSlot(perm[1]));
+        int[] stackSizes = this.doingRecipe.getStackSizes(getStackInSlot(perm[0]), getStackInSlot(perm[1]));
         for (int i = 0; i < perm.length; i++) {
             this.getStackInSlot(perm[i]).shrink(stackSizes[i]);
         }
