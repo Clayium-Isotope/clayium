@@ -97,6 +97,9 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 	}
 
+	/**
+	 * Copied from the original clayium to do the same performance
+	 */
 	public void updateFlightStatus(int mode) {
 		EntityPlayerSP player = (EntityPlayerSP) this.getClientPlayer();
 		if (mode == 0 || !player.capabilities.isFlying) return;
@@ -179,6 +182,9 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		player.motionZ = mi.moveForward * cos + mi.moveStrafe * sin;
 	}
 
+	/**
+	 * Copied from the original clayium to do the same performance
+	 */
 	public void overclockPlayer(int delay) {
 		int i;
 		try {
