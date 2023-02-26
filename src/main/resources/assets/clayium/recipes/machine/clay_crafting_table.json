@@ -1,0 +1,15 @@
+{
+    "group": "clayium:machine",
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "clayium:compressed_clay_0"
+        }
+    },
+    "result": {
+        "item": "clayium:clay_crafting_table"
+    }
+}
