@@ -4,9 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public interface IHasButton {
     enum ButtonProperty {
-        FAILURE,
-        PERMIT,
-        PROPOSE
+        FAILURE,  // 継続不可
+        PERMIT,   // 継続可
+        PROPOSE   // 変更
     }
 
     ButtonProperty canPushButton(int button);

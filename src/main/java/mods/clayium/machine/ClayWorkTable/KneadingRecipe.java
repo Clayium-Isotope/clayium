@@ -2,29 +2,30 @@ package mods.clayium.machine.ClayWorkTable;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.api.recipe.IRecipeWrapper;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.IngredientAlways;
+import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.oredict.OreDictionary;
+import org.lwjgl.opengl.GL11;
 
-import javax.annotation.Nonnull;
-import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Collections;
 
-public class KneadingRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe , IRecipeWrapper {
+public class KneadingRecipe extends RecipeElement {
+    protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
     public static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, TileEntityClayWorkTable.KneadingMethod.UNKNOWN, -1, ItemStack.EMPTY, ItemStack.EMPTY);
+    public static KneadingRecipe flat() {
+        return FLAT;
+    }
 
     /*private*/ final ItemStack material;
     /*private*/ final Ingredient tool;
@@ -33,13 +34,17 @@ public class KneadingRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements
     /*private*/ final ItemStack product;
     /*private*/ final ItemStack change;
 
-    private static final Ingredient Always = new IngredientAlways();
-    private static final Ingredient RP = Ingredient.fromItem(ClayiumItems.rollingPin);
-    private static final Ingredient SL_SP = Ingredient.fromItems(ClayiumItems.slicer, ClayiumItems.spatula);
-    private static final Ingredient SP = Ingredient.fromItem(ClayiumItems.spatula);
+    private static final ItemStack rollingPin   = new ItemStack(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE);
+    private static final ItemStack slicer       = new ItemStack(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE);
+    private static final ItemStack spatula      = new ItemStack(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE);
+
+    private static final Ingredient Always  = new IngredientAlways();
+    private static final Ingredient RP      = Ingredient.fromStacks(rollingPin);
+    private static final Ingredient SL_SP   = Ingredient.fromStacks(slicer, spatula);
+    private static final Ingredient SP      = Ingredient.fromStacks(spatula);
 
     public KneadingRecipe(ItemStack material, TileEntityClayWorkTable.KneadingMethod method, int time, ItemStack product, ItemStack change) {
-        super();
+        super(material, 0, product, 0, time);
         this.material = material;
         this.materialIng = NonNullList.from(Ingredient.EMPTY, Ingredient.fromStacks(material));
 
@@ -62,53 +67,27 @@ public class KneadingRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements
         this.product = product;
         this.change = change;
 
-        setRegistryName(ClayiumCore.ModId, this.material.getUnlocalizedName() + "_to_" + this.product.getUnlocalizedName()
-                + ( this.tool != Always ? "_w_" + this.tool.getMatchingStacks()[0].getUnlocalizedName() : "" ));
+        setRegistryName(ClayiumCore.ModId, this.material.getUnlocalizedName() + "_to_" + this.product.getUnlocalizedName() + this.method.toBeSuffix());
     }
 
     public boolean hasChange() {
-        return this.change.isEmpty();
+        return !this.change.isEmpty();
+    }
+
+    public ItemStack getRemainingTool(ItemStack tool) {
+        if (this.tool != Always) return ForgeHooks.getContainerItem(tool);
+        return tool;
     }
 
     @Override
     public boolean matches(InventoryCrafting _inv, World worldIn) {
-        return _inv instanceof InventoryKneading;
-    }
-
-    /**
-     * Returns EMPTY while inv must be working
-     */
-    @Override
-    public ItemStack getCraftingResult(InventoryCrafting _inv) {
-        assert _inv instanceof InventoryKneading : "Unexpected Calling around Clay Work Table Recipe";
-        InventoryKneading inv = (InventoryKneading) _inv;
-
-        if (inv.getCraftTime() < this.time) {
-            return ItemStack.EMPTY;
-        }
-
-        return this.product;
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
         return true;
-    }
-
-    @Override
-    public ItemStack getRecipeOutput() {
-        return this.product;
     }
 
     private final NonNullList<Ingredient> materialIng;
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.materialIng;
-    }
-
-    @Override
-    public boolean isDynamic() {
-        return true;
     }
 
     @Override
@@ -122,53 +101,21 @@ public class KneadingRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements
         ingredients.setOutputs(VanillaTypes.ITEM, Arrays.asList(this.product, this.change));
     }
 
-    // ===== REGISTRY PART =====
+    @Override
+    public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+        minecraft.fontRenderer.drawString("" + this.time, 28 + 16 * this.method.ordinal() + 8 - minecraft.fontRenderer.getStringWidth("" + this.time) / 2, 37 - minecraft.fontRenderer.FONT_HEIGHT, -16777216);
 
-    private static final Map<Integer, KneadingRecipe> recipeClayWorkTable;
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        minecraft.getTextureManager().bindTexture(buttonTex);
 
-    @Nonnull
-    public static KneadingRecipe byHash(int hash) {
-        KneadingRecipe recipe = recipeClayWorkTable.get(hash);
-        if (recipe == null) return FLAT;
-        return recipe;
-    }
-
-    @Nonnull
-    public static KneadingRecipe find(TileEntityClayWorkTable.KneadingMethod method, Predicate<KneadingRecipe> matcher) {
-        if (method == TileEntityClayWorkTable.KneadingMethod.UNKNOWN) return KneadingRecipe.FLAT;
-
-        for (KneadingRecipe value : recipeClayWorkTable.values()) {
-            if (method == value.method && matcher.test(value)) return value;
+        for (int i = 0; i < 6; i++) {
+            if (i == this.method.ordinal()) {
+                minecraft.currentScreen.drawTexturedModalRect(28 + 16 * i, 37, 16, 0, 16, 16);
+            } else {
+                minecraft.currentScreen.drawTexturedModalRect(28 + 16 * i, 37, 0, 0, 16, 16);
+            }
         }
 
-        return KneadingRecipe.FLAT;
-    }
-
-    private static void registerKneadingRecipes(List<KneadingRecipe> register) {
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), TileEntityClayWorkTable.KneadingMethod.Roll, 4, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), TileEntityClayWorkTable.KneadingMethod.Press, 30, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), TileEntityClayWorkTable.KneadingMethod.Bend, 4, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), TileEntityClayWorkTable.KneadingMethod.Roll, 4, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ItemStack.EMPTY));
-
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), TileEntityClayWorkTable.KneadingMethod.Press, 10, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), TileEntityClayWorkTable.KneadingMethod.Bend, 1, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), TileEntityClayWorkTable.KneadingMethod.Slice, 3, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 6), TileEntityClayWorkTable.KneadingMethod.Bend, 10, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 3), TileEntityClayWorkTable.KneadingMethod.Roll, 40, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ItemStack.EMPTY));
-
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), TileEntityClayWorkTable.KneadingMethod.CutRect, 4, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 2)));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), TileEntityClayWorkTable.KneadingMethod.CutCircle, 2, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing)));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), TileEntityClayWorkTable.KneadingMethod.Press, 15, new ItemStack(ClayiumItems.rawSlicer), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), TileEntityClayWorkTable.KneadingMethod.Bend, 2, new ItemStack(ClayiumItems.rawSlicer), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), TileEntityClayWorkTable.KneadingMethod.CutCircle, 1, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick)));
-
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), TileEntityClayWorkTable.KneadingMethod.Roll, 3, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ItemStack.EMPTY));
-        register.add(new KneadingRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), TileEntityClayWorkTable.KneadingMethod.Slice, 7, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ItemStack.EMPTY));
-    }
-
-    static {
-        List<KneadingRecipe> list = new ArrayList<>();
-        registerKneadingRecipes(list);
-        recipeClayWorkTable = list.stream().collect(Collectors.toMap(Object::hashCode, Function.identity()));
+        minecraft.currentScreen.drawTexturedModalRect(28, 37, 0, 32, 96, 16);
     }
 }

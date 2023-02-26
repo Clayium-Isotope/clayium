@@ -3,10 +3,11 @@ package mods.clayium.plugin.jei;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IRecipeCategory;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayWorkTable.KneadingRecipe;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 import java.util.LinkedList;
 
-public class ClayWorkTableCategory extends ClayiumRecipeCategory {
+public class ClayWorkTableCategory implements IRecipeCategory<KneadingRecipe> {
     protected static final ResourceLocation clayWorkTable = new ResourceLocation(ClayiumCore.ModId, "textures/gui/_old/clayworktable.png");
     protected static final ResourceLocation button = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
     protected final IDrawable icon;
@@ -58,7 +59,7 @@ public class ClayWorkTableCategory extends ClayiumRecipeCategory {
     }
 
     @Override
-    public void setRecipe(IRecipeLayout iRecipeLayout, RecipeElement recipeElement, IIngredients iIngredients) {
+    public void setRecipe(IRecipeLayout iRecipeLayout, KneadingRecipe recipeElement, IIngredients iIngredients) {
         IGuiItemStackGroup stacks = iRecipeLayout.getItemStacks();
         stacks.init(TileEntityClayWorkTable.ClayWorkTableSlots.MATERIAL.ordinal(), true, 4, 13);
         stacks.init(TileEntityClayWorkTable.ClayWorkTableSlots.TOOL.ordinal(), true, 67, 0);
@@ -67,7 +68,7 @@ public class ClayWorkTableCategory extends ClayiumRecipeCategory {
 
         stacks.set(iIngredients);
 
-        methods.add(recipeElement.getCondition().getMethod());
+        methods.add(recipeElement.getMethod());
     }
 
     @Override
@@ -76,5 +77,10 @@ public class ClayWorkTableCategory extends ClayiumRecipeCategory {
         progressFG.draw(minecraft, 36, 13);
 
         // buttons are drawn by RecipeElement#drawInfo
+    }
+
+    @Override
+    public String getModName() {
+        return ClayiumCore.ModName;
     }
 }

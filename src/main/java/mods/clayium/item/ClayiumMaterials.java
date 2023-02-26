@@ -69,12 +69,16 @@ public class ClayiumMaterials {
             materialShapeMap.put(material, new EnumMap<>(ClayiumShape.class));
         }
 
+        materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.ball, new ItemStack(Items.CLAY_BALL));
+        materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.block, new ItemStack(Blocks.CLAY));
         for (ClayiumShape shape : ClayiumShape.clayPartShapes) {
             add(ClayiumMaterial.clay, shape, 1, true);
         }
         clayParts = materialShapeMap.get(ClayiumMaterial.clay);
 
+        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.ball, ItemStack.EMPTY);
         materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.largeBall, ItemStack.EMPTY);
+        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, ItemStack.EMPTY);
         for (ClayiumShape shape : ClayiumShape.clayPartShapes) {
             add(ClayiumMaterial.denseClay, shape, 2, true);
         }
@@ -124,9 +128,9 @@ public class ClayiumMaterials {
             add(ClayiumMaterial.impureAluminium, ClayiumShape.ingot, 6, false);
             add(ClayiumMaterial.impureAluminium, ClayiumShape.plate, 6, false);
             add(ClayiumMaterial.impureAluminium, ClayiumShape.largePlate, 6, false);
-        }
-        else
+        } else {
             add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, false);
+        }
 
         addOD(ClayiumMaterial.claySteel, ClayiumShape.dust, 7, false);
         addOD(ClayiumMaterial.claySteel, ClayiumShape.ingot, 7, false);
@@ -274,7 +278,7 @@ public class ClayiumMaterials {
     }
 
     private static void add(ClayiumMaterial material, ClayiumShape shape, int tier, boolean hasUniqueIcon) {
-        if (materialShapeMap.containsKey(material) && materialShapeMap.get(material).containsKey(shape)) {
+        if (materialShapeMap.containsKey(material) && materialShapeMap.get(material).containsKey(shape) && !materialShapeMap.get(material).get(shape).isEmpty()) {
             ClayiumCore.logger.error("The item already exists  [" + material.getName() + "] [" + shape.getName() + "]");
             return;
         }

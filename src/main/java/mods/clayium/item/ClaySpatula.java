@@ -4,6 +4,7 @@ import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -29,5 +30,10 @@ public class ClaySpatula extends ClayiumItem implements IModifyCC {
         }
 
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack) {
+        return IModifyCC.super.getContainerItem(itemStack);
     }
 }

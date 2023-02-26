@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
-public class ClayiumRecipe extends ArrayList<RecipeElement> {
+public class ClayiumRecipe extends ArrayList<IRecipeElement> {
     private static final Map<String, ClayiumRecipe> id2Recipe = new HashMap<>();
 
     public ClayiumRecipe(String recipeId) {
@@ -36,26 +37,19 @@ public class ClayiumRecipe extends ArrayList<RecipeElement> {
     }
 
     public void addRecipe(List<ItemStack> materialIn, int tier, List<ItemStack> resultIn, long energy, long time) {
-        this.add(new RecipeElement(materialIn, -1, tier, resultIn, energy, time));
+        this.add(new RecipeElement(materialIn, tier, resultIn, energy, time));
     }
 
-    public RecipeElement getRecipe(List<ItemStack> materials, int tier) {
-        for (RecipeElement element : this) {
-            if (element.getCondition().match(materials, -1, tier)) {
-                return element;
-            }
+    @SuppressWarnings("unchecked")
+    public <T extends IRecipeElement> T getRecipe(Predicate<T> matcher, T flat) {
+        for (IRecipeElement element : this) {
+            if (matcher.test((T) element)) return (T) element;
         }
 
-        return RecipeElement.FLAT;
+        return flat;
     }
 
-    public RecipeElement getRecipe(ItemStack material, int tier) {
-        for (RecipeElement element : this) {
-            if (element.getCondition().isCraftable(material, tier)) {
-                return element;
-            }
-        }
-
-        return RecipeElement.FLAT;
+    public <T extends IRecipeElement> T getRecipe(int hash, T flat) {
+        return this.getRecipe(e -> e.hashCode() == hash, flat);
     }
 }

@@ -15,7 +15,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -37,7 +36,7 @@ public class ClayiumRecipes {
         }
     }
 
-    public static final KneadingRecipe clayWorkTable = new KneadingRecipe();
+    public static final ClayWorkTableRecipe clayWorkTable = new ClayWorkTableRecipe();
 
     public static final SimpleMachineRecipe bendingMachine = new SimpleMachineRecipe("BendingMachine");
     public static final SimpleMachineRecipe wireDrawingMachine = new SimpleMachineRecipe("WireDrawingMachine");
@@ -148,34 +147,14 @@ public class ClayiumRecipes {
     }
 
     public static boolean hasResult(ClayiumRecipe recipes, List<ItemStack> stack) {
-        for (RecipeElement recipe : recipes)
-            if (recipe.getCondition().match(stack)) return true;
+        for (IRecipeElement recipe : recipes)
+            if (recipe.match(stack)) return true;
 
         return false;
     }
 
     public static boolean hasResult(ClayiumRecipe recipes, ItemStack... stacks) {
         return hasResult(recipes, ii(stacks));
-    }
-
-    public static RecipeElement getRecipeElement(ClayiumRecipe recipes, NonNullList<ItemStack> referStacks, int method, int tier) {
-        for (RecipeElement recipe : recipes) {
-            if (recipe.getCondition().match(referStacks, method, tier)) {
-                return recipe;
-            }
-        }
-
-        return RecipeElement.FLAT;
-    }
-
-    public static RecipeElement getRecipeElement(ClayiumRecipe recipes, int hash) {
-        for (RecipeElement recipe : recipes) {
-            if (recipe.hashCode() == hash) {
-                return recipe;
-            }
-        }
-
-        return RecipeElement.FLAT;
     }
 
     public static void registerClayWorkTableRecipe() {

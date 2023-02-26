@@ -20,18 +20,17 @@ public class GuiClayWorkTable extends GuiTemp {
         drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 96, 80, 16);
         drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 112, ((TileEntityClayWorkTable) tile).getCookProgressScaled(80), 16);
 
-        for (GuiButton button : buttonList) {
-            button.enabled = ((IHasButton) tile).isButtonEnable(button.id);
+        for (GuiButton button : this.buttonList) {
+            button.enabled = ((IHasButton) this.tile).isButtonEnable(button.id);
         }
     }
 
     @Override
     public void initGui() {
         super.initGui();
-//        Keyboard.enableRepeatEvents(true);
 
         for (int i = 0; i < 6; i++) {
-            buttonList.add(new GuiPictureButton(i, guiLeft + 40 + 16 * i, guiTop + 52, 16 * i, 32));
+            addButton(new GuiPictureButton(i, guiLeft + 40 + 16 * i, guiTop + 52, 16 * i, 32));
         }
     }
 
