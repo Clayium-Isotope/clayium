@@ -547,8 +547,9 @@ public class ClayiumRecipes {
 /* Used assets/recipes
         GameRegistry.addRecipe(i(CBlocks.blockRawClayMachineHull, 1, 0), "###", "#o#", "###",
                 '#', ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), 'o', ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear));
+*/
         GameRegistry.addSmelting(ClayiumBlocks.rawClayMachineHull, new ItemStack(ClayiumBlocks.machineHulls.get(0)), 0.1F);
-        GameRegistry.addRecipe(i(CBlocks.blockMachineHull, 1, 1), "###", "#C#", "###",
+/*        GameRegistry.addRecipe(i(CBlocks.blockMachineHull, 1, 1), "###", "#C#", "###",
                 '#', ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), 'C', i(ClayiumItems.clayCircuit));
         GameRegistry.addRecipe(i(CBlocks.blockMachineHull, 1, 2), "###", "#C#", "###",
                 '#', ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.largePlate), 'C', CItems.itemMisc.get("SimpleCircuit"));
