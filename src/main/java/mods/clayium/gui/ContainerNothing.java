@@ -32,7 +32,7 @@ public class ContainerNothing extends ContainerTemp {
         return false;
     }
 
-    public boolean transferStackToMachineInventory(ItemStack itemstack1) {
+    public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
         return false;
     }
 

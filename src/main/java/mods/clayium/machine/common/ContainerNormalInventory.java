@@ -61,7 +61,7 @@ public class ContainerNormalInventory extends ContainerTemp {
         return true;
     }
 
-    public boolean transferStackToMachineInventory(ItemStack itemstack1) {
+    public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
         return mergeItemStack(itemstack1, 0, this.playerSlotIndex, false);
     }
 

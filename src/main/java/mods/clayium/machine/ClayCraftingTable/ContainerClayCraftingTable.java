@@ -98,7 +98,7 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
     }
 
     @Override
-    public boolean transferStackToMachineInventory(ItemStack itemStack) {
+    public boolean transferStackToMachineInventory(ItemStack itemStack, int index) {
         return mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, false)
                 || mergeItemStack(itemStack, this.resultSlot, this.machineSlot, false);
     }

@@ -99,7 +99,7 @@ public abstract class ContainerInItemStack extends ContainerTemp {
         return true;
     }
 
-    public boolean transferStackToMachineInventory(ItemStack itemstack1) {
+    public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
         return this.mergeItemStack(itemstack1, 0, this.playerSlotIndex, false);
     }
 

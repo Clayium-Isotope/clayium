@@ -121,7 +121,7 @@ public class ContainerFilterString extends ContainerTemp {
     }
 
     @Override
-    public boolean transferStackToMachineInventory(ItemStack itemstack1) {
+    public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
         return false;
     }
 

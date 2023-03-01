@@ -73,7 +73,7 @@ public class ContainerMultitrackBuffer extends ContainerTemp {
         return true;
     }
 
-    public boolean transferStackToMachineInventory(ItemStack itemstack1) {
+    public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
         int num = 0;
         TileEntityMultitrackBuffer tile = (TileEntityMultitrackBuffer) this.tileEntity;
 

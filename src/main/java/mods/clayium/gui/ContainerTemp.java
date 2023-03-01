@@ -1,5 +1,6 @@
 package mods.clayium.gui;
 
+import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IHasButton;
@@ -139,7 +140,7 @@ public abstract class ContainerTemp extends Container {
 
     public boolean transferStackFromPlayerInventory(ItemStack itemstack1, int index) {
         if (canTransferToMachineInventory(itemstack1))
-            return transferStackToMachineInventory(itemstack1);
+            return transferStackToMachineInventory(itemstack1, index);
 
         if (index >= this.playerSlotIndex && index < this.playerSlotIndex + 27)
             return mergeItemStack(itemstack1, this.playerSlotIndex + 27, this.playerSlotIndex + 36, false);
@@ -236,7 +237,7 @@ public abstract class ContainerTemp extends Container {
 
     public abstract boolean canTransferToMachineInventory(ItemStack itemStack);
 
-    public abstract boolean transferStackToMachineInventory(ItemStack itemStack);
+    public abstract boolean transferStackToMachineInventory(ItemStack itemStack, int index);
 
     public abstract boolean transferStackFromMachineInventory(ItemStack itemStack, int index);
 
@@ -511,5 +512,42 @@ public abstract class ContainerTemp extends Container {
         }
 
         return itemstack;
+    }
+
+    // Returns true when did put even if didn't complete
+    protected boolean tryMergeStack(ItemStack stack, int index) {
+        Slot slot = this.inventorySlots.get(index);
+        ItemStack stack1 = slot.getStack();
+
+        int maxSize = slot.getSlotStackLimit();
+        if (this.tileEntity instanceof IInventoryFlexibleStackLimit) {
+            maxSize = ((IInventoryFlexibleStackLimit) this.tileEntity).getInventoryStackLimit(index);
+        }
+        maxSize = Math.min(maxSize, stack.getMaxStackSize());
+
+        if (stack1.isEmpty() && slot.isItemValid(stack)) {
+            if (stack.getCount() > maxSize) {
+                slot.putStack(stack.splitStack(maxSize));
+            } else {
+                slot.putStack(stack.splitStack(stack.getCount()));
+            }
+            return true;
+        }
+
+        if (stack1.isStackable() && UtilItemStack.areTypeEqual(stack, stack1)) {
+            int newAmount = stack.getCount() + stack1.getCount();
+
+            if (newAmount > maxSize) {
+                stack.shrink(maxSize - stack1.getCount());
+                stack1.setCount(maxSize);
+            } else {
+                stack.setCount(0);
+                stack1.setCount(newAmount);
+            }
+            slot.onSlotChanged();
+            return true;
+        }
+
+        return false;
     }
 }
