@@ -14,14 +14,16 @@ import java.util.stream.IntStream;
 public class TileEntityClayBuffer extends TileEntityClayContainer implements INormalInventory {
     protected int inventoryX;
     protected int inventoryY;
+    protected boolean isBuffer = true;
 
     public TileEntityClayBuffer() {
         this.containerItemStacks = NonNullList.withSize(54, ItemStack.EMPTY);
     }
 
+    // Alternative for getAccessibleSlotsFromSide(int side)
     @Override
     public int[] getSlotsForFace(EnumFacing side) {
-        return IntStream.range(0, this.inventoryX * this.inventoryY).toArray();
+        return isBuffer ? IntStream.range(0, this.inventoryX * this.inventoryY).toArray() : super.getSlotsForFace(side);
     }
 
     @Override
@@ -89,6 +91,7 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
 
         this.listSlotsImport.add(inserts);
         this.listSlotsExport.add(extracts);
+        this.slotsDrop = inserts;
 
         UtilTier.BufferTransport config = UtilTier.BufferTransport.getByTier(tier);
         if (config != null) {
@@ -101,12 +104,12 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return !checkBlocked(itemStackIn, direction);
+        return isBuffer ? !checkBlocked(itemStackIn, direction) : super.canInsertItem(index, itemStackIn, direction);
     }
 
     @Override
     public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return !checkBlocked(itemStackIn, direction);
+        return isBuffer ? !checkBlocked(itemStackIn, direction) : super.canExtractItem(index, itemStackIn, direction);
     }
 
     @SideOnly(Side.CLIENT)

@@ -2,13 +2,10 @@ package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.IClayEnergy;
-import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,10 +20,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.Collector;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
-public class TileEntityClayContainer extends TileGeneric implements ISidedInventory, ITickable {
+public class TileEntityClayContainer extends TileGeneric implements IClayInventory, ITickable {
     private boolean isLoaded;
 
     protected NonNullList<ItemStack> containerItemStacks;
@@ -289,87 +288,6 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
         return 0;
     }
 
-    public boolean acceptEnergyClay() {
-        return true;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-        if (this instanceof IClayEnergyConsumer && index == ((IClayEnergyConsumer) this).getEnergySlot()) {
-            return acceptEnergyClay() && IClayEnergy.hasClayEnergy(stack)
-                    && (((IClayEnergyConsumer) this).getEnergyStack().isEmpty()
-                        || ((IClayEnergyConsumer) this).getEnergyStack().getCount() < this.clayEnergyStorageSize);
-        }
-
-        for (int[] slots : this.listSlotsImport) {
-            if (Arrays.stream(slots).anyMatch(e -> e == index))
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        if (checkBlocked(itemStackIn, direction)) return false;
-
-        int route = this.importRoutes.get(direction);
-        if (this instanceof IClayEnergyConsumer && route == -2 && index == ((IClayEnergyConsumer) this).getEnergySlot()) return isItemValidForSlot(index, itemStackIn);
-
-        if (route >= 0 && route < this.listSlotsImport.size()) {
-            return Arrays.stream(this.listSlotsImport.get(route)).anyMatch(e -> e == index);
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        if (checkBlocked(itemStackIn, direction)) return false;
-
-        int route = this.exportRoutes.get(direction);
-        if (route >= 0 && route < this.listSlotsExport.size()) {
-            return Arrays.stream(this.listSlotsExport.get(route)).anyMatch(e -> e == index);
-        }
-
-        return false;
-    }
-
-    protected boolean checkBlocked(ItemStack itemStackIn, EnumFacing direction) {
-        return IFilter.isFilter(this.filters.get(direction)) && !IFilter.match(this.filters.get(direction), itemStackIn);
-    }
-
-    @Override
-    public int[] getSlotsForFace(EnumFacing side) {
-        Boolean[] flags = new Boolean[this.containerItemStacks.size()];
-        switch (this.importRoutes.get(side)) {
-            case -2:
-                if (this instanceof IClayEnergyConsumer)
-                    flags[((IClayEnergyConsumer) this).getEnergySlot()] = true;
-                break;
-            case -1:
-                break;
-            default:
-                for (int slot : this.listSlotsImport.get(this.importRoutes.get(side))) {
-                    flags[slot] = true;
-                }
-        }
-
-        if (this.exportRoutes.get(side) != -1) {
-            for (int slot : this.listSlotsExport.get(this.exportRoutes.get(side))) {
-                flags[slot] = true;
-            }
-        }
-
-        Collector<Boolean, ArrayList<Integer>, int[]> verifiedIndexJoiner = Collector.of(
-                ArrayList::new,
-                (list, flag) -> list.add(flag != null && flag ? list.size() : -1),
-                (list, list1) -> { list.addAll(list1); return list; },
-                list -> list.stream().mapToInt(e -> e).filter(e -> e != -1).toArray()
-        );
-
-        return Arrays.stream(flags).collect(verifiedIndexJoiner);
-    }
-
     /**
      * Referred by {@link net.minecraft.tileentity.TileEntityHopper}#update()
      */
@@ -446,6 +364,41 @@ public class TileEntityClayContainer extends TileGeneric implements ISidedInvent
                 this.exportRoutes.replace(facing, -1);
             }
         }
+    }
+
+    @Override
+    public int getClayEnergyStorageSize() {
+        return this.clayEnergyStorageSize;
+    }
+
+    @Override
+    public List<int[]> getListSlotsImport() {
+        return this.listSlotsImport;
+    }
+
+    @Override
+    public List<int[]> getListSlotsExport() {
+        return this.listSlotsExport;
+    }
+
+    @Override
+    public Map<EnumFacing, Integer> getImportRoutes() {
+        return this.importRoutes;
+    }
+
+    @Override
+    public Map<EnumFacing, Integer> getExportRoutes() {
+        return this.exportRoutes;
+    }
+
+    @Override
+    public Map<EnumFacing, ItemStack> getFilters() {
+        return this.filters;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getContainerItemStacks() {
+        return this.containerItemStacks;
     }
 
     /* ========== Texture Part ========== */

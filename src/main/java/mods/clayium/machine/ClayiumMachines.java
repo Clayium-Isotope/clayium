@@ -14,6 +14,7 @@ import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
 import mods.clayium.machine.LaserReflector.LaserReflector;
 import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.QuartzCrucible;
+import mods.clayium.machine.SaltExtractor.SaltExtractor;
 import mods.clayium.machine.WaterWheel.WaterWheel;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
@@ -73,6 +74,8 @@ public class ClayiumMachines {
 
         add(EnumMachineKind.quartzCrucible, 5, new QuartzCrucible());
         quartzCrucible = get(EnumMachineKind.quartzCrucible, 5);
+
+        add(EnumMachineKind.saltExtractor, new int[] { 4, 5, 6, 7 }, SaltExtractor.class);
     }
 
     private static void add(EnumMachineKind kind, int tier, Block block) {

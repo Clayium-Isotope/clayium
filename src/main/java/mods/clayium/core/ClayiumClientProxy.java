@@ -16,6 +16,7 @@ import mods.clayium.machine.LaserReflector.TESRLaserReflector;
 import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.TileEntityQuartzCrucible;
+import mods.clayium.machine.SaltExtractor.TileEntitySaltExtractor;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -91,6 +92,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntitySaltExtractor.class, "clayium:salt_extractor", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayEnergyLaser.class, "clayium:laser", new TESRClayEnergyLaser());
 		ClientRegistry.registerTileEntity(TileEntityLaserReflector.class, "clayium:laser_reflector", new TESRLaserReflector());
 

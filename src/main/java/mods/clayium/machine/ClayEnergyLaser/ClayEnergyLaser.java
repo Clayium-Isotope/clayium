@@ -2,12 +2,10 @@ package mods.clayium.machine.ClayEnergyLaser;
 
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayContainer.ClayDirectionalContainer;
+import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,9 +18,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ClayEnergyLaser extends ClayDirectionalContainer {
+public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
     public ClayEnergyLaser(int tier) {
-        super(Material.IRON, TileEntityClayEnergyLaser.class, TierPrefix.get(tier).getPrefix() + "_" + EnumMachineKind.clayEnergyLaser.getRegisterName(), GuiHandler.GuiIdClayEnergyLaser, tier);
+        super(TileEntityClayEnergyLaser.class, EnumMachineKind.clayEnergyLaser, GuiHandler.GuiIdClayEnergyLaser, tier);
     }
 
     public void updatePower(World worldIn, BlockPos pos) {

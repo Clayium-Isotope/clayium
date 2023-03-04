@@ -13,7 +13,12 @@ gui.Common.clayLaser=レーザー %1$s
 gui.Common.resonance=共鳴率 %1$s
 gui.Common.overclockFactor=オーバークロック x%1$s
 
+# JEI Part
+
 recipe.clay_tree.description=粘土樹はリチウムの良い入手源であるが、地上世界には生成されない。粘土樹の苗木は、地面に植えられたバニラの苗木に粘土レーザーを照射することで得られる。レーザーのエネルギー値は 1000 以上でなければならない。
+
+recipe.QuartzCrucible.timeToCraft=%1$st = %2$s秒
+recipe.QuartzCrucible.description=クォーツるつぼは最初のシリコンの入手に使われる。クォーツるつぼの中に不純なシリコンインゴットを投入し、暫く待った後で糸を投入する。
 
 # Block Part
 
@@ -167,9 +172,24 @@ tooltip.multitrack_buffer.line3=複線バッファー同士のアイテム輸送
 tooltip.multitrack_buffer.line4=各色グループごとに独立して行われる。
 tooltip.multitrack_buffer.line5=さらに、グループごとにフィルタースロットを持つ。
 
-tile.blockClayTreeSapling.name=粘土樹の苗木
-tile.blockClayTreeLog.name=粘土樹の原木
-tile.blockClayTreeLeaf.name=粘土樹の葉
+tile.basic_salt_extractor.name=塩析出装置
+tile.advanced_salt_extractor.name=発展塩析出装置
+tile.precision_salt_extractor.name=精密塩析出装置
+tile.clay_steel_salt_extractor.name=粘土鋼塩析出装置
+tooltip.salt_extractor.line1=水から塩分を抽出する
+tooltip.salt_extractor.line2=__DETAIL__
+tooltip.salt_extractor.line3=隣に水源を置き、粘土エネルギーを与えること。
+
+tile.clay_tree_sapling.name=粘土樹の苗木
+tile.clay_tree_log.name=粘土樹の原木
+tile.clay_tree_leaf.name=粘土樹の葉
+
+tile.quartz_crucible.name=クォーツるつぼ
+tile.quartz_crucible.tooltip.line1=不純なシリコンを純化
+tile.quartz_crucible.tooltip.line2=__DETAIL__
+tile.quartz_crucible.tooltip.line3=1. 不純なシリコンインゴットをドロップ
+tile.quartz_crucible.tooltip.line4=2. 少々待つ
+tile.quartz_crucible.tooltip.line5=3. 糸をドロップ
 
 # Item Part
 

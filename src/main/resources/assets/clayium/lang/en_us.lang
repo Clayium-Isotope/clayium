@@ -13,7 +13,12 @@ gui.Common.clayLaser=Laser : %1$s
 gui.Common.resonance=Resonance %1$s
 gui.Common.overclockFactor=Overclock x%1$s
 
+# JEI Part
+
 recipe.clay_tree.description=A Clay Tree is a good source of Lithium, but it isn't generated in the Overworld. A sapling of Clay Tree is obtained by irradiating a vanilla sapling, planted on the ground, with Clay Laser. The energy value of Clay Laser must be higher than 1000.
+
+recipe.quartz_crucible.timeToCraft=%1$st = %2$ssec
+recipe.quartz_crucible.description=Quartz Crucible is a device to get the first Silicon Ingot. Throw Impure Silicon Ingots in a Quartz Crucible, wait a few seconds, and throw a String in it.
 
 # Block Part
 
@@ -167,9 +172,24 @@ tooltip.multitrack_buffer.line3=Transfer of items between two Multitrack Buffers
 tooltip.multitrack_buffer.line4=will be performed independently within each color group.
 tooltip.multitrack_buffer.line5=Moreover, this buffer has one filter slot per group.
 
-tile.blockClayTreeSapling.name=Clay Tree Sapling
-tile.blockClayTreeLog.name=Clay Tree Log
-tile.blockClayTreeLeaf.name=Clay Tree Leaf
+tile.basic_salt_extractor.name=Basic Salt Extractor
+tile.advanced_salt_extractor.name=Advanced Salt Extractor
+tile.precision_salt_extractor.name=Precision Salt Extractor
+tile.clay_steel_salt_extractor.name=Clay Steel Salt Extractor
+tooltip.salt_extractor.line1=Extracts salt from water.
+tooltip.salt_extractor.line2=__DETAIL__
+tooltip.salt_extractor.line3=Requires CE and water source next to it.
+
+tile.clay_tree_sapling.name=Clay Tree Sapling
+tile.clay_tree_log.name=Clay Tree Log
+tile.clay_tree_leaf.name=Clay Tree Leaf
+
+tile.quartz_crucible.name=Quartz Crucible
+tile.quartz_crucible.tooltip.line1=Purifies impure silicon.
+tile.quartz_crucible.tooltip.line2=__DETAIL__
+tile.quartz_crucible.tooltip.line3=1. Drop Impure Silicon Ingots.
+tile.quartz_crucible.tooltip.line4=2. Wait a few minutes.
+tile.quartz_crucible.tooltip.line5=3. Drop a string.
 
 # Item Part
 

@@ -13,7 +13,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
     public int progress = 0;
@@ -21,15 +20,17 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
     public static int progressMax = 100;
     public int externalControlState = 0;
     public boolean isDoingWork = false;
+    protected boolean isCobblestoneGenerator = true;
 
     public TileEntityCobblestoneGenerator() {
         this.autoInsert = true;
         this.autoExtract = false;
+        this.isBuffer = false;
     }
 
     public void initParamsByTier(int tier) {
         super.initParamsByTier(tier);
-        this.listSlotsImport = new ArrayList<>();
+        this.listSlotsImport.clear();
         switch(tier) {
             case 1:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(2);
@@ -56,12 +57,12 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        return false;
+        return isCobblestoneGenerator ? false : super.isItemValidForSlot(slot, itemstack);
     }
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return false;
+        return isCobblestoneGenerator ? false : super.canInsertItem(index, itemStackIn, direction);
     }
 
     @Override
