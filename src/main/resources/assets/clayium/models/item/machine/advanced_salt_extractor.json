@@ -1,0 +1,7 @@
+{
+    "parent": "clayium:block/machine_temp",
+    "textures": {
+        "hull": "clayium:blocks/machinehull-4",
+        "face": "clayium:blocks/machine/saltextractor"
+    }
+}
