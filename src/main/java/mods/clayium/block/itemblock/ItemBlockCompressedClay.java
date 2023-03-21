@@ -25,7 +25,7 @@ public class ItemBlockCompressedClay extends ItemBlockTiered implements IClayEne
     @Override
     public long getClayEnergy() {
         if (meta < 4) return 0L;
-        return (long) Math.pow(10.0D, meta + 1);
+        return (long) Math.pow(10.0D, this.getTier());
     }
 
     @Override

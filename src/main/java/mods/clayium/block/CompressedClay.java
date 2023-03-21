@@ -8,7 +8,7 @@ import net.minecraft.item.ItemBlock;
 
 public class CompressedClay extends BlockTiered {
     public CompressedClay(int meta) {
-        super(Material.CLAY, "compressed_clay_", meta);
+        super(Material.CLAY, "compressed_clay_", meta, meta + 1);
         setSoundType(SoundType.GROUND);
         setHarvestLevel("shovel", 0);
         setHardness(1F);

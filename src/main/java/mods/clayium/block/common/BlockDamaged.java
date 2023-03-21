@@ -2,6 +2,7 @@ package mods.clayium.block.common;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,5 +24,9 @@ public class BlockDamaged extends ArrayList<Block> {
             if (block.getItemDropped(block.getDefaultState(), rand, 0) == item) return true;
         }
         return false;
+    }
+
+    public ItemStack get(int meta, int amount) {
+        return new ItemStack(this.get(meta), amount/*TODO, meta*/);
     }
 }

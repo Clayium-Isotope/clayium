@@ -247,14 +247,14 @@ public class ClayiumMaterials {
         materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.block, I(Blocks.CLAY));
         materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
 
-        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(0)));
+        materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, ClayiumBlocks.compressedClay.get(0, 1));
         materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.ball, I(Items.CLAY_BALL));
 
-        materialShapeMap.get(ClayiumMaterial.indClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(2)));
+        materialShapeMap.get(ClayiumMaterial.indClay).put(ClayiumShape.block, ClayiumBlocks.compressedClay.get(2, 1));
 
-        materialShapeMap.get(ClayiumMaterial.advClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(3)));
+        materialShapeMap.get(ClayiumMaterial.advClay).put(ClayiumShape.block, ClayiumBlocks.compressedClay.get(3, 1));
 
-        materialShapeMap.get(ClayiumMaterial.octupleEnergeticClay).put(ClayiumShape.block, I(ClayiumBlocks.compressedClay.get(12)));
+        materialShapeMap.get(ClayiumMaterial.octupleEnergeticClay).put(ClayiumShape.block, ClayiumBlocks.compressedClay.get(12, 1));
     }
 
     public static final Map<Integer, ClayiumMaterial> materials = new HashMap<>();
@@ -356,7 +356,7 @@ public class ClayiumMaterials {
         ODReserve.put(key, stack);
     }
 
-    private static String getOreName(ClayiumMaterial material, ClayiumShape shape) {
+    public static String getOreName(ClayiumMaterial material, ClayiumShape shape) {
         return shape.getName() + material.getODName();
     }
 
