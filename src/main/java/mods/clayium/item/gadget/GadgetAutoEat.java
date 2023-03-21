@@ -3,7 +3,7 @@ package mods.clayium.item.gadget;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.filter.IFilter;
-import mods.clayium.util.UtilItemStack;
+import mods.clayium.util.UtilCollect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -108,7 +108,7 @@ public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
             return true;
         }
 
-        List<ItemStack> filters = UtilItemStack.tagList2ItemList(gadget.getTagCompound().getTagList("Items", Constants.NBT.TAG_COMPOUND));
+        List<ItemStack> filters = UtilCollect.tagList2ItemList(gadget.getTagCompound().getTagList("Items", Constants.NBT.TAG_COMPOUND));
         if (filters.isEmpty()) {
             return true;
         }

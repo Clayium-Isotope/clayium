@@ -3,15 +3,14 @@ package mods.clayium.util;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class UtilItemStack {
@@ -32,6 +31,8 @@ public class UtilItemStack {
     /**
      * Returns true if the same item, damage and NBT btw the ones.
      * In other words, compare them without size
+     *
+     * TODO: rename to areItemDamageTagEqual
      */
     public static boolean areTypeEqual(@Nullable ItemStack itemstack1, @Nullable ItemStack itemstack2) {
         if (itemstack1 == null || itemstack2 == null) return false;
@@ -75,11 +76,19 @@ public class UtilItemStack {
         return ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
+    /**
+     * @return true when stacks' contain item and tag are equal.
+     * Several params are ignored: damage and size.
+     *
+     * TODO: rename to areItemTagEqual
+     */
     public static boolean areKindEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemsEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
     public static boolean haveSameOD(ItemStack itemstack1, ItemStack itemstack2) {
+        if (itemstack1.isEmpty() || itemstack2.isEmpty()) return false;
+
         for (int id : OreDictionary.getOreIDs(itemstack1))
             for (int id1 : OreDictionary.getOreIDs(itemstack2))
                 if (id1 == id)
@@ -89,6 +98,8 @@ public class UtilItemStack {
     }
 
     public static boolean hasOreName(ItemStack itemstack, String orename) {
+        if (itemstack.isEmpty()) return false;
+
         for (int i : OreDictionary.getOreIDs(itemstack))
             if (OreDictionary.getOreName(i).equals(orename))
                 return true;
@@ -97,6 +108,8 @@ public class UtilItemStack {
     }
 
     public static boolean hasOreName(ItemStack itemstack, int oreid) {
+        if (itemstack.isEmpty()) return false;
+
         for (int i : OreDictionary.getOreIDs(itemstack))
             if (i == oreid)
                 return true;
@@ -105,6 +118,8 @@ public class UtilItemStack {
     }
 
     public static String[] getOreNames(ItemStack itemstack) {
+        if (itemstack.isEmpty()) return new String[0];
+
         int[] ids = OreDictionary.getOreIDs(itemstack);
         String[] res = new String[ids.length];
 
@@ -125,7 +140,7 @@ public class UtilItemStack {
      */
 
     public static int getItemStackHashCode(ItemStack item) {
-        if (item == ItemStack.EMPTY) return 0;
+        if (item.isEmpty()) return 0;
 
         int result = 1;
         result = 31 * result + item.getItem().getRegistryName().hashCode();
@@ -193,89 +208,11 @@ public class UtilItemStack {
     }
 
     public static List<ItemStack> getItemsFromTag(NBTTagCompound tag) {
-        return tag != null ? tagList2ItemList(tag.getTagList("Items", Constants.NBT.TAG_COMPOUND)) : new ArrayList<>();
+        return tag != null ? UtilCollect.tagList2ItemList(tag.getTagList("Items", Constants.NBT.TAG_COMPOUND)) : new ArrayList<>();
     }
 
     public static void setItemsToTag(NBTTagCompound tag, List<ItemStack> items) {
         if (tag == null) tag = new NBTTagCompound();
-        tag.setTag("Items", items2TagList(items));
-    }
-
-    /**
-     * Unknown sized TagList -> ItemStack list<br>
-     */
-    public static List<ItemStack> tagList2ItemList(NBTTagList tagList) {
-        if (tagList == null || tagList.getTagType() != Constants.NBT.TAG_COMPOUND) return Collections.emptyList();
-        List<ItemStack> res = new ArrayList<>(tagList.tagCount());
-
-        for (NBTBase tag : tagList) {
-            if (!(tag instanceof NBTTagCompound)) continue;
-
-            int slot = ((NBTTagCompound) tag).getByte("Slot") & 255;
-
-            if (slot >= res.size())
-                res.addAll(Collections.nCopies(slot - res.size() + 1, ItemStack.EMPTY));
-
-            res.set(slot, new ItemStack(((NBTTagCompound) tag)));
-        }
-
-        return res;
-    }
-
-    public static ItemStack[] tagList2Items(NBTTagList tagList) {
-        return tagList2ItemList(tagList).toArray(new ItemStack[0]);
-    }
-
-    public static void tagList2Items(NBTTagList tagList, List<ItemStack> itemstacks) {
-        if (tagList == null || itemstacks == null) return;
-
-        for (int i = 0; i < tagList.tagCount(); ++i) {
-            NBTTagCompound tagCompound1 = tagList.getCompoundTagAt(i);
-            short byte0 = tagCompound1.getShort("Slot");
-            if (byte0 >= 0 && byte0 < itemstacks.size())
-                itemstacks.set(byte0, new ItemStack(tagCompound1));
-        }
-    }
-
-    /** @see net.minecraft.inventory.ItemStackHelper#saveAllItems(NBTTagCompound, NonNullList) */
-    @Deprecated
-    public static NBTTagList items2TagList(List<ItemStack> items) {
-        NBTTagList tagList = new NBTTagList();
-        if (items == null) return tagList;
-
-        for(int i = 0; i < items.size(); ++i) {
-            if (items.get(i) != null) {
-                NBTTagCompound tagCompound1 = new NBTTagCompound();
-                tagCompound1.setShort("Slot", (short) i);
-                items.get(i).writeToNBT(tagCompound1);
-                tagList.appendTag(tagCompound1);
-            }
-        }
-
-        return tagList;
-    }
-
-    public static <K extends Enum<K>> NBTTagList enumMap2TagList(EnumMap<K, ItemStack> map) {
-        NBTTagList list = new NBTTagList();
-        if (map.isEmpty()) return list;
-
-        for (Map.Entry<K, ItemStack> entry : map.entrySet()) {
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setByte("Slot", (byte) entry.getKey().ordinal());
-            entry.getValue().writeToNBT(compound);
-            list.appendTag(compound);
-        }
-
-        return list;
-    }
-
-    public static <K extends Enum<K>> void tagList2EnumMap(NBTTagList list, EnumMap<K, ItemStack> map) {
-        List<ItemStack> stacks = tagList2ItemList(list);
-        if (stacks.isEmpty()) return;
-
-        for (K key : map.keySet()) {
-            if (key.ordinal() >= stacks.size()) map.put(key, ItemStack.EMPTY);
-            else map.put(key, stacks.get(key.ordinal()));
-        }
+        tag.setTag("Items", UtilCollect.items2TagList(items));
     }
 }
