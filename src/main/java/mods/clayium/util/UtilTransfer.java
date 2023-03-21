@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public class UtilTransfer {
@@ -208,10 +209,13 @@ public class UtilTransfer {
         return UtilItemStack.areTypeEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
     }
 
-    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+    /**
+     * @return How many space <B>inventory</B> has in {@code [startIncl, endExcl)} to insert <B>itemstack</B>
+     */
+    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
         int rest = 0;
 
-        for(int k = i; k < j; ++k) {
+        for(int k = startIncl; k < endExcl; ++k) {
             rest += canProduceItemStack(itemstack, inventory, k, inventoryStackLimit);
         }
 
@@ -248,6 +252,71 @@ public class UtilTransfer {
         return res;
     }
 
+    /**
+     * Sum each stack size of inv [start, end)
+     */
+    public static int countItemStack(ItemStack itemstack, List<ItemStack> inventory, int start, int end) {
+        if (start < 0 || end <= start || end >= inventory.size()) return 0;
+
+        int res = 0;
+
+        for (int k = start; k < end; ++k) {
+            if (!inventory.get(k).isEmpty() && UtilItemStack.areTypeEqual(inventory.get(k), itemstack)) {
+                res += inventory.get(k).getCount();
+            }
+        }
+
+        return res;
+    }
+
+    public static int countItemStack(Predicate<ItemStack> predicate, List<ItemStack> inventory, int start, int end) {
+        if (start < 0 || end <= start || end >= inventory.size()) return 0;
+
+        int res = 0;
+
+        for (int k = start; k < end; ++k) {
+            if (!inventory.get(k).isEmpty() && predicate.test(inventory.get(k))) {
+                res += inventory.get(k).getCount();
+            }
+        }
+
+        return res;
+    }
+
+    public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j) {
+        int stackSize = itemstack.getCount();
+
+        for(int k = i; k < j; ++k) {
+            if (!inventory.get(k).isEmpty() && UtilItemStack.areTypeEqual(inventory.get(k), itemstack)) {
+                int n = Math.min(stackSize, inventory.get(k).getCount());
+                stackSize -= n;
+                inventory.get(k).shrink(n);
+                if (inventory.get(k).getCount() <= 0) {
+                    inventory.set(k, ItemStack.EMPTY);
+                }
+            }
+        }
+
+        if (stackSize <= 0) {
+            return ItemStack.EMPTY;
+        } else {
+            ItemStack res = itemstack.copy();
+            res.setCount(stackSize);
+            return res;
+        }
+    }
+
+    public static List<ItemStack> consumeItemStack(List<ItemStack> itemstack, List<ItemStack> inventory, int i, int j) {
+        List<ItemStack> res = new ArrayList<>(itemstack.size());
+
+        for (ItemStack stack : itemstack) {
+            res.add(consumeItemStack(stack, inventory, i, j));
+        }
+
+        return res;
+    }
+
+    // TODO will substitute ItemStackHandler for this
     public static class InventorySelector implements UtilTransfer.IInventorySelector {
         protected IInventory selected = null;
 

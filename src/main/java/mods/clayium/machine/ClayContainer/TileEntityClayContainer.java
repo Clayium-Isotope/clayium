@@ -3,7 +3,8 @@ package mods.clayium.machine.ClayContainer;
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.UtilItemStack;
+import mods.clayium.util.UtilCollect;
+import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
@@ -99,6 +100,17 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     // TileEntityが作成されるとき、引数無しが適切なので、初期化の関数を分ける
     public void initParamsByTier(int tier) {
         this.tier = tier;
+        this.setDefaultTransportation(tier);
+    }
+
+    protected void setDefaultTransportation(int tier) {
+        UtilTier.MachineTransport config = UtilTier.MachineTransport.getByTier(tier);
+        if (config != null) {
+            this.autoInsertInterval = config.autoInsertInterval;
+            this.autoExtractInterval = config.autoExtractInterval;
+            this.maxAutoInsertDefault = config.maxAutoInsertDefault;
+            this.maxAutoExtractDefault = config.maxAutoExtractDefault;
+        }
     }
 
     public int getInventoryStackLimit() {
@@ -214,7 +226,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         initParamsByTier(compound.getInteger("Tier"));
 
         if (compound.hasKey("Filters", 9)) {
-            UtilItemStack.tagList2EnumMap(compound.getTagList("Filters", 10), this.filters);
+            UtilCollect.tagList2EnumMap(compound.getTagList("Filters", 10), this.filters);
         }
     }
 
@@ -237,7 +249,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
         compound.setInteger("Tier", this.tier);
 
-        compound.setTag("Filters", UtilItemStack.enumMap2TagList(this.filters));
+        compound.setTag("Filters", UtilCollect.enumMap2TagList(this.filters));
 
         return compound;
     }
@@ -294,6 +306,15 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     @Override
     public void update() {
         // on Tick Loop
+        this.doTransfer();
+
+        if (!this.isLoaded) {
+            this.isLoaded = true;
+            updateEntity();
+        }
+    }
+
+    protected void doTransfer() {
         if (!this.world.isRemote) {
             if (this.autoExtract) {
                 this.autoExtractCount++;
@@ -317,11 +338,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
             } else {
                 this.autoInsertCount = 0;
             }
-        }
-
-        if (!this.isLoaded) {
-            this.isLoaded = true;
-            updateEntity();
         }
     }
 

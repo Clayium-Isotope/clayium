@@ -93,6 +93,11 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
         this.listSlotsExport.add(extracts);
         this.slotsDrop = inserts;
 
+        this.setDefaultTransportation(this.tier);
+    }
+
+    @Override
+    protected void setDefaultTransportation(int tier) {
         UtilTier.BufferTransport config = UtilTier.BufferTransport.getByTier(tier);
         if (config != null) {
             this.autoInsertInterval = config.autoInsertInterval;

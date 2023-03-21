@@ -34,22 +34,72 @@ public class UtilTier {
         @Nullable
         public static BufferTransport getByTier(int tier) {
             switch(tier) {
-                case 0: return BufferTransport._0;
-                case 1: return BufferTransport._1;
-                case 2: return BufferTransport._2;
-                case 3: return BufferTransport._3;
-                case 4: return BufferTransport._4;
-                case 5: return BufferTransport._5;
-                case 6: return BufferTransport._6;
-                case 7: return BufferTransport._7;
-                case 8: return BufferTransport._8;
-                case 9: return BufferTransport._9;
-                case 10: return BufferTransport._10;
-                case 11: return BufferTransport._11;
-                case 12: return BufferTransport._12;
-                case 13: return BufferTransport._13;
+                case 0:     return _0;
+                case 1:     return _1;
+                case 2:     return _2;
+                case 3:     return _3;
+                case 4:     return _4;
+                case 5:     return _5;
+                case 6:     return _6;
+                case 7:     return _7;
+                case 8:     return _8;
+                case 9:     return _9;
+                case 10:    return _10;
+                case 11:    return _11;
+                case 12:    return _12;
+                case 13:    return _13;
+                default:    return null;
             }
-            return null;
+        }
+    }
+
+    public enum MachineTransport {
+        _0(20, 20, 8, 8),
+        _1(20, 20, 8, 8),
+        _2(20, 20, 8, 8),
+        _3(20, 20, 8, 8),
+        _4(20, 20, 8, 8),
+        _5(2, 2, 16, 16),
+        _6(1, 1, 64, 64),
+        _7(1, 1, 64, 64),
+        _8(1, 1, 64, 64),
+        _9(1, 1, 64, 64),
+        _10(1, 1, 64, 64),
+        _11(1, 1, 64, 64),
+        _12(1, 1, 64, 64),
+        _13(1, 1, 64, 64);
+
+        public final int autoInsertInterval;
+        public final int autoExtractInterval;
+        public final int maxAutoInsertDefault;
+        public final int maxAutoExtractDefault;
+
+        MachineTransport(int insertInterval, int extractInterval, int maxInsert, int maxExtract) {
+            this.autoInsertInterval = insertInterval;
+            this.autoExtractInterval = extractInterval;
+            this.maxAutoInsertDefault = maxInsert;
+            this.maxAutoExtractDefault = maxExtract;
+        }
+
+        @Nullable
+        public static MachineTransport getByTier(int tier) {
+            switch(tier) {
+                case 0:     return _0;
+                case 1:     return _1;
+                case 2:     return _2;
+                case 3:     return _3;
+                case 4:     return _4;
+                case 5:     return _5;
+                case 6:     return _6;
+                case 7:     return _7;
+                case 8:     return _8;
+                case 9:     return _9;
+                case 10:    return _10;
+                case 11:    return _11;
+                case 12:    return _12;
+                case 13:    return _13;
+                default:    return null;
+            }
         }
     }
 
