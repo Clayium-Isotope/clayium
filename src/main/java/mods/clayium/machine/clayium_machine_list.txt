@@ -1,0 +1,139 @@
+blockClayWorkTable = (new ClayWorkTable())
+blockClayCraftingTable = (new ClayCraftingTable(0))
+blockElementalMillingMachine = (new ClayMachines("MillingMachine", 1))
+blockEnergeticClayCondenser = (new ClayMachines("ECCondenser", 3))
+blockEnergeticClayCondenserMK2 = (new ClayMachines("ECCondenser", 4))
+blocksBendingMachine = registerTieredMachines("BendingMachine", new int[]{1, 2, 3, 4, 5, 6, 7, 9});
+blocksWireDrawingMachine = registerTieredMachines("WireDrawingMachine", new int[]{1, 2, 3, 4});
+blocksPipeDrawingMachine = registerTieredMachines("PipeDrawingMachine", new int[]{1, 2, 3, 4});
+blocksCuttingMachine = registerTieredMachines("CuttingMachine", new int[]{1, 2, 3, 4});
+blocksLathe = registerTieredMachines("Lathe", new int[]{1, 2, 3, 4});
+blocksCobblestoneGenerator = new Block[16];
+
+int i;
+for(i = 1; i <= 7; ++i) {
+    blocksCobblestoneGenerator[i] = new CobblestoneGenerator(i);
+    blocksCobblestoneGenerator[i].setBlockName("block" + tierPrefix[i] + "CobblestoneGenerator")
+    }
+
+blocksCondenser = registerTieredMachines("Condenser", new int[]{2, 3, 4, 5, 10});
+blocksGrinder = registerTieredMachines("Grinder", new int[]{2, 3, 4, 5, 6, 10});
+blocksDecomposer = registerTieredMachines("Decomposer", new int[]{2, 3, 4});
+blocksMillingMachine = registerTieredMachines("MillingMachine", new int[]{3, 4});
+blocksAssembler = registerTieredMachines("Assembler", new int[]{3, 4, 6, 10}, ClayAssembler.class, ItemBlockTiered.class);
+blocksInscriber = registerTieredMachines("Inscriber", new int[]{3, 4}, ClayAssembler.class, ItemBlockTiered.class);
+blocksCentrifuge = registerTieredMachines("Centrifuge", new int[]{3, 4, 5, 6}, TileClayCentrifuge.class, 3);
+blocksSmelter = registerTieredMachines("Smelter", new int[]{4, 5, 6, 7, 8, 9});
+blocksBuffer = registerTieredContainers("Buffer", new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, ClayBuffer.class);
+blocksMultitrackBuffer = registerTieredContainers("MultitrackBuffer", new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, MultitrackBuffer.class);
+blockCreativeCESource = (new ClayNoRecipeMachines("", 13, TileCreativeEnergySource.class, 11, 2))
+blocksChemicalReactor = registerTieredMachines("ChemicalReactor", new int[]{4, 5, 8}, ClayChemicalReactor.class, ItemBlockTiered.class);
+blocksSaltExtractor = registerTieredContainers("SaltExtractor", new int[]{4, 5, 6, 7}, SaltExtractor.class);
+blockAutoClayCondenser = (new ClayMachines("clayium:autoclaycondenser", 5, TileAutoClayCondenser.class, 5))
+blockAutoClayCondenserMK2 = (new ClayMachines("clayium:autoclaycondenser", 7, TileAutoClayCondenser.class, 5))
+blockQuartzCrucible = new QuartzCrucible();
+blockSolarClayFabricatorMK1 = (new SolarClayFabricator((String)null, 5))
+blockSolarClayFabricatorMK2 = (new SolarClayFabricator((String)null, 6))
+blockLithiumSolarClayFabricator = (new SolarClayFabricator((String)null, 7))
+blockClayFabricatorMK1 = (new ClayFabricator(8))
+blockClayFabricatorMK2 = (new ClayFabricator(9))
+blockClayFabricatorMK3 = (new ClayFabricator(13))
+blockChemicalMetalSeparator = (new ClayMachines("clayium:chemicalmetalseparator", 6, TileChemicalMetalSeparator.class, 6))
+blocksAlloySmelter = registerTieredMachines("AlloySmelter", new int[]{6}, ClayAssembler.class, ItemBlockTiered.class);
+blockClayBlastFurnace = (new ClayBlastFurnace("BlastFurnace", 6))
+blocksClayInterface = registerTieredContainers("ClayInterface", new int[]{5, 6, 7, 8, 9, 10, 11, 12, 13}, ClayInterface.class);
+blocksRedstoneInterface = registerTieredContainers("RedstoneInterface", new int[]{5, 6, 7, 8, 9, 10, 11, 12, 13}, RedstoneInterface.class);
+blocksElectrolysisReactor = registerTieredMachines("ElectrolysisReactor", new int[]{6, 7, 8, 9});
+blocksClayLaserInterface = registerTieredContainers("LaserClayInterface", new int[]{7, 8, 9, 10, 11, 12, 13}, ClayLaserInterface.class);
+blocksDistributor = registerTieredContainers("Distributor", new int[]{7, 8, 9}, ClayDistributor.class);
+blocksAutoCrafter = registerTieredContainers("AutoCrafter", new int[]{5, 6, 7, 8, 9}, ClayAutoCrafter.class);
+blockClayReactor = (new ClayReactor("Reactor", 7))
+blocksTransformer = registerTieredMachines("MatterTransformer", new int[]{7, 8, 9, 10, 11, 12});
+blocksCACondenser = registerTieredMachines("CACondenser", new int[]{9, 10, 11}, TileCACondenser.class);
+blocksCAInjector = registerTieredMachines("CAInjector", new int[]{9, 10, 11, 12, 13}, TileCAInjector.class, ClayAssembler.class, ItemBlockTiered.class);
+blockCACollector = (new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1))
+blockResonator = new BlockResonator(Material.iron);
+((BlockResonator)blockResonator)
+((BlockResonator)blockResonator)
+((BlockResonator)blockResonator)
+((BlockResonator)blockResonator)
+blockOverclocker = new BlockOverclocker(Material.iron);
+((BlockOverclocker)blockOverclocker)
+((BlockOverclocker)blockOverclocker)
+((BlockOverclocker)blockOverclocker)
+((BlockOverclocker)blockOverclocker)
+blockEnergyStorageUpgrade = new BlockEnergyStorageUpgrade(Material.iron);
+((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
+((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
+((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
+((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
+blockCAReactorCoil = new BlockDamaged(Material.iron) {
+    public List getTooltip(ItemStack itemStack) {
+List ret = UtilLocale.localizeTooltip("tooltip.CAReactorCoil");
+ret.addAll(super.getTooltip(itemStack));
+return ret;
+    }
+};
+blockCAReactorHull = new BlockDamaged(Material.iron, 10);
+blocksCAReactorCore = registerTieredMachines("CAReactor", new int[]{10, 11, 12, 13}, TileCAReactor.class, 9, CAReactor.class, ItemBlockTiered.class);
+blockEnergeticClayDecomposer = (new ClayMachines("ECDecomposer", 13))
+blockStorageContainer = (new StorageContainer(Material.iron, "clayium:az91dhull"))
+blockVacuumContainer = (new VacuumContainer(Material.iron, "clayium:az91dhull"))
+blockAutoTrader = (new AutoTrader(8))
+blockClayMarker = (new ClayMarker(7, Blocks.clay, TileClayMarker.class))
+blockClayOpenPitMarker = (new ClayMarker(8, blockCompressedClay, TileClayOpenPitMarker.class))
+blockClayGroundLevelingMarker = (new ClayMarker(8, blockCompressedClay, 1, TileClayGroundLevelingMarker.class))
+blockClayPrismMarker = (new ClayMarker(8, blockCompressedClay, 2, TileClayPrismMarker.class))
+blockMiner = (new AreaMiner(6, "clayium:areaminer"))
+blockAreaCollector = (new AreaCollector(7))
+blockAreaMiner = (new AreaMiner(8, "clayium:areaminer"))
+blockAdvancedAreaMiner = (new AreaMiner(9, "clayium:advareaminer"))
+blockAreaReplacer = (new AreaMiner(10, "clayium:areareplacer"))
+blockActivator = (new AreaActivator(6))
+blockAreaActivator = (new AreaActivator(8))
+blockClayWaterWheel = (new WaterWheel("Clay Water Wheel", 1))
+blockDenseClayWaterWheel = (new WaterWheel("Dense Clay Water Wheel", 2))
+blocksClayEnergyLaser = registerTieredContainers("ClayEnergyLaser", new int[]{7, 8, 9, 10}, ClayEnergyLaser.class);
+blockLaserReflector = (new LaserReflector())
+blockClayTreeSapling = (new ClayTreeSapling())
+blockClayTreeLeaf = (new ClayTreeLeaf())
+blockClayTreeLog = (new ClayTreeLog())
+blockClayChunkLoader = (new ClayChunkLoader(6))
+blockPANCore = (new PANCore())
+blocksPANAdapter = registerTieredContainers("PANAdapter", new int[]{10, 11, 12, 13}, PANAdapter.class);
+blocksPANDuplicator = registerTieredContainers("PANDuplicator", new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, PANDuplicator.class);
+
+for(i = 4; i <= 13; ++i) {
+    ((PANDuplicator)blocksPANDuplicator[i])
+}
+
+blockPANCable = (new PANCable())
+blockMetalChest = (new MetalChest())
+if (ClayiumCore.cfgEnableFluidCapsule) {
+    blocksFluidTranslator = registerTieredContainers("FluidTranslator", new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, FluidTranslator.class);
+        blocksFluidTransferMachine = registerTieredMachines("FluidTransferMachine", new int[]{5}, ClayChemicalReactor.class, ItemBlockTiered.class);
+}
+
+blockMaterial = new BlockDamaged(Material.iron);
+blockSiliconeColored = new BlockSiliconeColored();
+blocksRFGenerator = new HashMap();
+Map<String, Map<String, Object>> configMap = ClayRFGenerator.getConfigMap();
+if (configMap != null) {
+    Iterator var1 = configMap.entrySet()
+
+    while(var1.hasNext()) {
+Entry<String, Map<String, Object>> entry = (Entry)var1.next();
+String blockName = (String)entry.getKey();
+Map<String, Object> config = (Map)entry.getValue();
+Object obj = config.get("IconName");
+if (obj instanceof String) {
+    String iconName = (String)obj;
+    obj = config.get("Tier");
+    if (obj instanceof Integer) {
+int tier = (Integer)obj;
+Block block = (new ClayRFGenerator(blockName, iconName, tier))
+blocksRFGenerator.put(blockName, block);
+    }
+}
+    }
+}
