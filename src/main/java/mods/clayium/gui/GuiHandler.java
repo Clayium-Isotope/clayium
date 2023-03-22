@@ -5,6 +5,11 @@ import mods.clayium.item.filter.ContainerFilterWhitelist;
 import mods.clayium.item.filter.GuiFilterString;
 import mods.clayium.item.gadget.ContainerGadgetAutoEat;
 import mods.clayium.item.gadget.ContainerGadgetHolder;
+import mods.clayium.machine.AutoClayCondenser.ContainerAutoClayCondenser;
+import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
+import mods.clayium.machine.ChemicalMetalSeparator.ContainerChemicalMetalSeparator;
+import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
+import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
@@ -71,6 +76,10 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerGadgetHolder(player);
             case GuiIdGadgetAutoEat:
                 return new ContainerGadgetAutoEat(player);
+            case GuiIdChemicalMetalSeparator:
+                return new ContainerChemicalMetalSeparator(player.inventory, (TileEntityChemicalMetalSeparator) tile);
+            case GuiIdAutoClayCondenser:
+                return new ContainerAutoClayCondenser(player.inventory, (TileEntityAutoClayCondenser) tile);
         }
 
         return null;
@@ -109,6 +118,10 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiTemp(new ContainerGadgetHolder(player));
             case GuiIdGadgetAutoEat:
                 return new GuiTemp(new ContainerGadgetAutoEat(player));
+            case GuiIdChemicalMetalSeparator:
+                return new GuiChemicalMetalSeparator(new ContainerChemicalMetalSeparator(player.inventory, (TileEntityChemicalMetalSeparator) tile));
+            case GuiIdAutoClayCondenser:
+                return new GuiTemp(new ContainerAutoClayCondenser(player.inventory, (TileEntityAutoClayCondenser) tile));
         }
 
         return null;

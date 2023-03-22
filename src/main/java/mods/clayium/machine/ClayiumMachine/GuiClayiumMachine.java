@@ -38,6 +38,7 @@ public class GuiClayiumMachine extends GuiTemp {
     @Override
     protected void supplyDraw() {
         super.supplyDraw();
+        this.calculateProgressBarOffsets();
 
         mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png"));
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 96, progressBarSizeX, progressBarSizeY);

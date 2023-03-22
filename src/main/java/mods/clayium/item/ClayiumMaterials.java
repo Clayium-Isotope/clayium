@@ -129,7 +129,7 @@ public class ClayiumMaterials {
             add(ClayiumMaterial.impureAluminium, ClayiumShape.plate, 6, false);
             add(ClayiumMaterial.impureAluminium, ClayiumShape.largePlate, 6, false);
         } else {
-            add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, false);
+            add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, -1, false);
         }
 
         addOD(ClayiumMaterial.claySteel, ClayiumShape.dust, 7, false);
@@ -189,8 +189,8 @@ public class ClayiumMaterials {
 
         addOD(ClayiumMaterial.orgClay, ClayiumShape.dust, false);
 
-        add(ClayiumMaterial.impureRedstone, ClayiumShape.dust, false);
-        add(ClayiumMaterial.impureGlowstone, ClayiumShape.dust, false);
+        add(ClayiumMaterial.impureRedstone, ClayiumShape.dust, -1, false);
+        add(ClayiumMaterial.impureGlowstone, ClayiumShape.dust, -1, false);
 
         add(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot, 8, false);
 
@@ -200,7 +200,7 @@ public class ClayiumMaterials {
         }
 
         for (ClayiumMaterial metal : ClayiumMaterial.impureMetals) {
-            add(metal, ClayiumShape.dust, false);
+            add(metal, ClayiumShape.dust, -1, false);
         }
 
         for (ClayiumMaterial metal : Arrays.asList(ClayiumMaterial.zincalminiumAlloy, ClayiumMaterial.zinconiumAlloy)) {

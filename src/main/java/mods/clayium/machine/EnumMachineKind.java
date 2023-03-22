@@ -110,7 +110,7 @@ public enum EnumMachineKind {
         this.recipe = recipe == null ? ClayiumRecipes.EMPTY : recipe;
         if (slotType == null) throw new NullPointerException("Slot Type of " + this.kind + " is null! This is bug.");
         this.slotType = slotType;
-        this.facePath = new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + facePath + ".png");;
+        this.facePath = facePath;
     }
 
     public String getRegisterName() {
@@ -123,7 +123,7 @@ public enum EnumMachineKind {
 
     private final String kind;
     private final ClayiumRecipe recipe;
-    public final ResourceLocation facePath;
+    public final String facePath;
     public final SlotType slotType;
 
     public static EnumMachineKind fromName(String name) {
@@ -134,7 +134,7 @@ public enum EnumMachineKind {
     }
 
     public ResourceLocation getFaceResource() {
-        return this.facePath;
+        return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.facePath + ".png");
     }
 
     public boolean hasRecipe() {

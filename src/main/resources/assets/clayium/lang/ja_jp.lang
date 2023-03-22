@@ -184,12 +184,53 @@ tile.clay_tree_sapling.name=粘土樹の苗木
 tile.clay_tree_log.name=粘土樹の原木
 tile.clay_tree_leaf.name=粘土樹の葉
 
+tile.auto_clay_condenser_mk1.name=全自動粘土圧縮機 Mk I
+tile.auto_clay_condenser_mk1.tooltip.line1=全自動粘土工場の効率化に
+tile.auto_clay_condenser_mk2.name=全自動粘土圧縮機 Mk II
+tile.auto_clay_condenser_mk2.tooltip.line1=全自動粘土工場の効率化に
+tile.auto_clay_condenser_mk2.tooltip.line2=圧縮速度がさらに上昇
 tile.quartz_crucible.name=クォーツるつぼ
 tile.quartz_crucible.tooltip.line1=不純なシリコンを純化
 tile.quartz_crucible.tooltip.line2=__DETAIL__
 tile.quartz_crucible.tooltip.line3=1. 不純なシリコンインゴットをドロップ
 tile.quartz_crucible.tooltip.line4=2. 少々待つ
 tile.quartz_crucible.tooltip.line5=3. 糸をドロップ
+
+tile.solar_clay_fabricator_mk1.name=ソーラー粘土製造機 Mk I
+tile.solar_clay_fabricator_mk1.tooltip.line1=太陽光エネルギーにより
+tile.solar_clay_fabricator_mk1.tooltip.line2=粘土の圧縮段階を 1 上げる
+tile.solar_clay_fabricator_mk1.tooltip.line3=__DETAIL__
+tile.solar_clay_fabricator_mk1.tooltip.line4=発展工業用粘土まで対応
+tile.solar_clay_fabricator_mk2.name=ソーラー粘土製造機 Mk II
+tile.solar_clay_fabricator_mk2.tooltip.line1=太陽光エネルギーにより
+tile.solar_clay_fabricator_mk2.tooltip.line2=粘土の圧縮段階を 1 上げる
+tile.solar_clay_fabricator_mk2.tooltip.line3=__DETAIL__
+tile.solar_clay_fabricator_mk2.tooltip.line4=圧縮エネルギー粘土まで対応
+tile.solar_clay_fabricator_mk3.name=リチウムソーラー粘土製造機
+tile.solar_clay_fabricator_mk3.tooltip.line1=太陽光エネルギーにより
+tile.solar_clay_fabricator_mk3.tooltip.line2=粘土の圧縮段階を 1 上げる
+tile.solar_clay_fabricator_mk3.tooltip.line3=__DETAIL__
+tile.solar_clay_fabricator_mk3.tooltip.line4=4 重圧縮エネルギー粘土まで対応
+tile.solar_clay_fabricator_mk3.tooltip.line5=さらに、3 重圧縮エネルギー粘土の
+tile.solar_clay_fabricator_mk3.tooltip.line6=代わりにリチウムインゴットを投入可能
+tile.clay_fabricator_mk1.name=粘土製造機 Mk I
+tile.clay_fabricator_mk1.tooltip.line1=粘土を複製
+tile.clay_fabricator_mk1.tooltip.line2=__DETAIL__
+tile.clay_fabricator_mk1.tooltip.line3=6 重圧縮エネルギー粘土まで対応
+tile.clay_fabricator_mk1.tooltip.line4=複製スピードは粘土の圧縮回数や
+tile.clay_fabricator_mk1.tooltip.line5=そのスタックサイズに依存する
+tile.clay_fabricator_mk2.name=粘土製造機 Mk II
+tile.clay_fabricator_mk2.tooltip.line1=あらゆる粘土を複製
+tile.clay_fabricator_mk2.tooltip.line2=__DETAIL__
+tile.clay_fabricator_mk2.tooltip.line3=6 重圧縮エネルギー粘土までは Mk I の方が効果的
+tile.clay_fabricator_mk2.tooltip.line4=複製スピードは粘土の圧縮回数や
+tile.clay_fabricator_mk2.tooltip.line5=そのスタックサイズに依存する
+tile.clay_fabricator_mk3.name=粘土製造機 Mk III
+tile.clay_fabricator_mk3.tooltip.line1=あらゆる粘土を瞬時に複製
+
+tile.precision_alloy_smelter.name=合金精錬機
+
+tile.precision_chemical_metal_separator.name=金属分離機
 
 # Item Part
 

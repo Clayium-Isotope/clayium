@@ -87,9 +87,10 @@ public class ClayiumCore {
                 tab.add(new ItemStack(block));
             }
 
-            for (Item item : ClayiumMaterials.getItems()) {
-                tab.add(new ItemStack(item));
-            }
+//            for (Item item : ClayiumMaterials.getItems()) {
+//                tab.add(new ItemStack(item));
+//            }
+            tab.addAll(ClayiumMaterials.getMaterials());
 
             for (Block block : ClayiumMachines.getBlocks()) {
                 tab.add(new ItemStack(block));

@@ -3,12 +3,16 @@ package mods.clayium.core;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.SiliconeColored;
 import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
+import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.ClayChemicalReactor.TileEntityClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.TESRClayContainer;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayEnergyLaser.TESRClayEnergyLaser;
 import mods.clayium.machine.ClayEnergyLaser.TileEntityClayEnergyLaser;
+import mods.clayium.machine.ClayFabricator.TileEntityClayFabricator;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
@@ -17,6 +21,7 @@ import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.TileEntityQuartzCrucible;
 import mods.clayium.machine.SaltExtractor.TileEntitySaltExtractor;
+import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -95,6 +100,11 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntitySaltExtractor.class, "clayium:salt_extractor", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayEnergyLaser.class, "clayium:laser", new TESRClayEnergyLaser());
 		ClientRegistry.registerTileEntity(TileEntityLaserReflector.class, "clayium:laser_reflector", new TESRLaserReflector());
+		ClientRegistry.registerTileEntity(TileEntityClayChemicalReactor.class, "clayium:chemical_reactor", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityAutoClayCondenser.class, "clayium:auto_clay_condenser", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntitySolarClayFabricator.class, "clayium:solar_clay_fabricator", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayFabricator.class, "clayium:clay_fabricator", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityChemicalMetalSeparator.class, "clayium:chemical_metal_separator", new TESRClayContainer());
 
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 	}

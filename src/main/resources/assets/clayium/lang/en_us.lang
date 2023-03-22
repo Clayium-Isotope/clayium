@@ -184,12 +184,53 @@ tile.clay_tree_sapling.name=Clay Tree Sapling
 tile.clay_tree_log.name=Clay Tree Log
 tile.clay_tree_leaf.name=Clay Tree Leaf
 
+tile.auto_clay_condenser_mk1.name=Automatic Clay Condenser Mk I
+tile.auto_clay_condenser_mk1.tooltip.line1=Condenses clay automatically.
+tile.auto_clay_condenser_mk2.name=Automatic Clay Condenser Mk II
+tile.auto_clay_condenser_mk2.tooltip.line1=Condenses clay automatically.
+tile.auto_clay_condenser_mk2.tooltip.line2=Much faster than Mk I.
 tile.quartz_crucible.name=Quartz Crucible
 tile.quartz_crucible.tooltip.line1=Purifies impure silicon.
 tile.quartz_crucible.tooltip.line2=__DETAIL__
 tile.quartz_crucible.tooltip.line3=1. Drop Impure Silicon Ingots.
 tile.quartz_crucible.tooltip.line4=2. Wait a few minutes.
 tile.quartz_crucible.tooltip.line5=3. Drop a string.
+
+tile.solar_clay_fabricator_mk1.name=Solar Clay Fabricator Mk I
+tile.solar_clay_fabricator_mk1.tooltip.line1=Increases the number of compression of clay
+tile.solar_clay_fabricator_mk1.tooltip.line2=by 1 with solar energy.
+tile.solar_clay_fabricator_mk1.tooltip.line3=__DETAIL__
+tile.solar_clay_fabricator_mk1.tooltip.line4=Can accept up to Advanced Industrious Clay.
+tile.solar_clay_fabricator_mk2.name=Solar Clay Fabricator Mk II
+tile.solar_clay_fabricator_mk2.tooltip.line1=Increases the number of compression of clay
+tile.solar_clay_fabricator_mk2.tooltip.line2=by 1 with solar energy.
+tile.solar_clay_fabricator_mk2.tooltip.line3=__DETAIL__
+tile.solar_clay_fabricator_mk2.tooltip.line4=Can accept up to Compressed Energetic Clay.
+tile.solar_clay_fabricator_mk3.name=Lithium-Solar Clay Fabricator
+tile.solar_clay_fabricator_mk3.tooltip.line1=Increases the number of compression of clay
+tile.solar_clay_fabricator_mk3.tooltip.line2=by 1 with solar energy.
+tile.solar_clay_fabricator_mk3.tooltip.line3=__DETAIL__
+tile.solar_clay_fabricator_mk3.tooltip.line4=Can accept up to Quadruple Compressed Energetic Clay.
+tile.solar_clay_fabricator_mk3.tooltip.line5=You can use a lithium ingot instead of
+tile.solar_clay_fabricator_mk3.tooltip.line6=a Triple Compressed Energetic Clay Block.
+tile.clay_fabricator_mk1.name=Clay Fabricator Mk I
+tile.clay_fabricator_mk1.tooltip.line1=Duplicates clay.
+tile.clay_fabricator_mk1.tooltip.line2=__DETAIL__
+tile.clay_fabricator_mk1.tooltip.line3=Can accept up to Sextuple Compressed Energetic Clay.
+tile.clay_fabricator_mk1.tooltip.line4=The production speed rate depends on
+tile.clay_fabricator_mk1.tooltip.line5=the clay block's tier and stack size.
+tile.clay_fabricator_mk2.name=Clay Fabricator Mk II
+tile.clay_fabricator_mk2.tooltip.line1=Duplicates clay.
+tile.clay_fabricator_mk2.tooltip.line2=__DETAIL__
+tile.clay_fabricator_mk2.tooltip.line3=Mk I is suitable for up to Sextuple Compressed Energetic Clay.
+tile.clay_fabricator_mk2.tooltip.line4=The production speed rate depends on
+tile.clay_fabricator_mk2.tooltip.line5=the clay block's tier and stack size.
+tile.clay_fabricator_mk3.name=Clay Fabricator Mk III
+tile.clay_fabricator_mk3.tooltip.line1=Duplicates clay instantly.
+
+tile.precision_alloy_smelter.name=Alloy Smelter
+
+tile.precision_chemical_metal_separator.name=Chemical Metal Separator
 
 # Item Part
 

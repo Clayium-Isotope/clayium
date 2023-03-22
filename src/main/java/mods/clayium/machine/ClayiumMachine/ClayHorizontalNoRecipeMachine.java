@@ -5,6 +5,7 @@ import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.JsonHelper;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
@@ -19,18 +20,24 @@ import java.util.List;
 public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int guiId, int tier) {
-        super(Material.IRON, teClass, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), guiId, tier);
+    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, String suffix, int guiId, int tier) {
+        super(Material.IRON, teClass, (suffix.isEmpty() ? (TierPrefix.get(tier).getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
         this.machineKind = kind;
 
         setSoundType(SoundType.METAL);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
+
+        JsonHelper.genItemJson(TierPrefix.get(tier), kind, this.getRegistryName().getResourcePath());
     }
 
     public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int tier) {
         this(teClass, kind, GuiHandler.GuiIdNormalInventory, tier);
+    }
+
+    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int guiId, int tier) {
+        this(teClass, kind, "", guiId, tier);
     }
 
     @Override

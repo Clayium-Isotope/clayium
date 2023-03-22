@@ -34,6 +34,12 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     protected long craftTime;
     protected long timeToCraft;
     protected long debtEnergy;
+    protected boolean isDoingWork;
+
+    public float multCraftTime = 1.0F;
+    public float multConsumingEnergy = 1.0F;
+    public float initCraftTime = 1.0F;
+    public float initConsumingEnergy = 1.0F;
 
     public long containEnergy;
 
