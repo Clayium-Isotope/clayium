@@ -22,7 +22,7 @@ import java.util.Collections;
 
 public class KneadingRecipe extends RecipeElement {
     protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
-    public static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, TileEntityClayWorkTable.KneadingMethod.UNKNOWN, -1, ItemStack.EMPTY, ItemStack.EMPTY);
+    private static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, TileEntityClayWorkTable.KneadingMethod.UNKNOWN, -1, ItemStack.EMPTY, ItemStack.EMPTY);
     public static KneadingRecipe flat() {
         return FLAT;
     }
@@ -77,6 +77,12 @@ public class KneadingRecipe extends RecipeElement {
     public ItemStack getRemainingTool(ItemStack tool) {
         if (this.tool != Always) return ForgeHooks.getContainerItem(tool);
         return tool;
+    }
+
+
+    @Override
+    public boolean isFlat() {
+        return this.equals(FLAT);
     }
 
     @Override

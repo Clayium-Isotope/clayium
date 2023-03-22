@@ -154,4 +154,6 @@ public interface IRecipeElement extends IRecipeWrapper {
         }
         return null;
     }
+
+    boolean isFlat();
 }

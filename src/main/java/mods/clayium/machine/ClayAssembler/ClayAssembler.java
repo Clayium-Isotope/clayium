@@ -16,6 +16,10 @@ public class ClayAssembler extends ClayiumMachine {
         super(kind, "", tier, TileEntityClayAssembler.class, GuiHandler.GuiIdClayAssembler);
     }
 
+    public ClayAssembler(EnumMachineKind kind, int tier, Class<? extends TileEntityClayAssembler> teClass) {
+        super(kind, "", tier, teClass, GuiHandler.GuiIdClayAssembler);
+    }
+
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayAssembler) {

@@ -25,17 +25,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ClayiumRecipes {
-    private static class SimpleMachineRecipe extends ClayiumRecipe {
+    static class SimpleMachineRecipe extends ClayiumRecipe {
         SimpleMachineRecipe(String id) {
             super(id);
         }
     }
-    private static class SmeltingRecipe extends SimpleMachineRecipe {
-        SmeltingRecipe(String id) {
-            super(id);
-        }
-    }
 
+    public static final ClayiumRecipe EMPTY = new ClayiumRecipe("");
     public static final ClayWorkTableRecipe clayWorkTable = new ClayWorkTableRecipe();
 
     public static final SimpleMachineRecipe bendingMachine = new SimpleMachineRecipe("BendingMachine");
@@ -60,7 +56,7 @@ public class ClayiumRecipes {
     public static final ClayiumRecipe alloySmelter = new ClayiumRecipe("AlloySmelter");
     public static final ClayiumRecipe blastFurnace = new ClayiumRecipe("BlastFurnace");
     public static final SimpleMachineRecipe electrolysisReactor = new SimpleMachineRecipe("ElectrolysisReactor");
-    public static final ClayiumRecipe reactor = new ClayiumRecipe("Reactor");
+    public static final ClayiumRecipe clayReactor = new ClayiumRecipe("ClayReactor");
     public static final SimpleMachineRecipe transformer = new SimpleMachineRecipe("MatterTransformer");
 
     public static final SimpleMachineRecipe CACondenser = new SimpleMachineRecipe("CACondenser");
@@ -319,38 +315,38 @@ public class ClayiumRecipes {
                 i(ClayiumBlocks.compressedClay.get(1), 1, 1));
 */
 
-        condenser.addRecipe(i(Blocks.CLAY, 9), i(ClayiumBlocks.compressedClay.get(0), 1), 1L, 4L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(0), 9, 0), i(ClayiumBlocks.compressedClay.get(1), 1, 1), 1L, 4L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(1), 9, 1), i(ClayiumBlocks.compressedClay.get(2), 1, 2), 10L, 4L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(2), 9, 2), i(ClayiumBlocks.compressedClay.get(3), 1, 3), 100L, 4L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(3), 9, 3), 4, i(ClayiumBlocks.compressedClay.get(4), 1, 4), 100L, 16L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(4), 9, 4), 4, i(ClayiumBlocks.compressedClay.get(5), 1, 5), 1000L, 16L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(5), 9, 5), 4, i(ClayiumBlocks.compressedClay.get(6), 1, 6), 10000L, 13L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(6), 9, 6), 5, i(ClayiumBlocks.compressedClay.get(7), 1, 7), 100000L, 10L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(7), 9, 7), 5, i(ClayiumBlocks.compressedClay.get(8), 1, 8), 1000000L, 8L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(8), 9, 8), 5, i(ClayiumBlocks.compressedClay.get(9), 1, 9), 10000000L, 6L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(9), 9, 9), 5, i(ClayiumBlocks.compressedClay.get(10), 1, 10), 100000000L, 4L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(10), 9, 10), 5, i(ClayiumBlocks.compressedClay.get(11), 1, 11), 1000000000L, 3L);
-        condenser.addRecipe(i(ClayiumBlocks.compressedClay.get(11), 9, 11), 5, i(ClayiumBlocks.compressedClay.get(12), 1, 12), 1000000000L, 25L);
+        condenser.addRecipe(i(Blocks.CLAY, 9), ClayiumBlocks.compressedClay.get(0, 1), 1L, 4L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(0, 9), ClayiumBlocks.compressedClay.get(1, 1), 1L, 4L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(1, 9), ClayiumBlocks.compressedClay.get(2, 1), 10L, 4L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(2, 9), ClayiumBlocks.compressedClay.get(3, 1), 100L, 4L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(3, 9), 4, ClayiumBlocks.compressedClay.get(4, 1), 100L, 16L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(4, 9), 4, ClayiumBlocks.compressedClay.get(5, 1), 1000L, 16L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(5, 9), 4, ClayiumBlocks.compressedClay.get(6, 1), 10000L, 13L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(6, 9), 5, ClayiumBlocks.compressedClay.get(7, 1), 100000L, 10L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(7, 9), 5, ClayiumBlocks.compressedClay.get(8, 1), 1000000L, 8L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(8, 9), 5, ClayiumBlocks.compressedClay.get(9, 1), 10000000L, 6L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(9, 9), 5, ClayiumBlocks.compressedClay.get(10, 1), 100000000L, 4L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(10, 9), 5, ClayiumBlocks.compressedClay.get(11, 1), 1000000000L, 3L);
+        condenser.addRecipe(ClayiumBlocks.compressedClay.get(11, 9), 5, ClayiumBlocks.compressedClay.get(12, 1), 1000000000L, 25L);
 
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(3), 9, 3), 3, i(ClayiumBlocks.compressedClay.get(4), 1, 4), 1L, 16L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(4), 9, 4), 3, i(ClayiumBlocks.compressedClay.get(5), 1, 5), 10L, 32L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(5), 9, 5), 3, i(ClayiumBlocks.compressedClay.get(6), 1, 6), 100L, 64L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(6), 9, 6), 4, i(ClayiumBlocks.compressedClay.get(7), 1, 7), 1000L, 64L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(7), 9, 7), 4, i(ClayiumBlocks.compressedClay.get(8), 1, 8), 10000L, 64L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(8), 9, 8), 4, i(ClayiumBlocks.compressedClay.get(9), 1, 9), 100000L, 64L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(9), 9, 9), 4, i(ClayiumBlocks.compressedClay.get(10), 1, 10), 1000000L, 64L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(10), 9, 10), 4, i(ClayiumBlocks.compressedClay.get(11), 1, 11), 10000000L, 64L);
-        energeticClayCondenser.addRecipe(i(ClayiumBlocks.compressedClay.get(11), 9, 11), 4, i(ClayiumBlocks.compressedClay.get(12), 1, 12), 10000000L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(3, 9), 3, ClayiumBlocks.compressedClay.get(4, 1), 1L, 16L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(4, 9), 3, ClayiumBlocks.compressedClay.get(5, 1), 10L, 32L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(5, 9), 3, ClayiumBlocks.compressedClay.get(6, 1), 100L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(6, 9), 4, ClayiumBlocks.compressedClay.get(7, 1), 1000L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(7, 9), 4, ClayiumBlocks.compressedClay.get(8, 1), 10000L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(8, 9), 4, ClayiumBlocks.compressedClay.get(9, 1), 100000L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(9, 9), 4, ClayiumBlocks.compressedClay.get(10, 1), 1000000L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(10, 9), 4, ClayiumBlocks.compressedClay.get(11, 1), 10000000L, 64L);
+        energeticClayCondenser.addRecipe(ClayiumBlocks.compressedClay.get(11, 9), 4, ClayiumBlocks.compressedClay.get(12, 1), 10000000L, 64L);
 
         decomposer.addRecipe(i(Blocks.CLAY), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 4), 1L, 3L);
-        decomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(0), 1, 0), i(Blocks.CLAY, 9), 1L, 3L);
-        decomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(1), 1, 1), i(ClayiumBlocks.compressedClay.get(0), 9, 0), 1L, 3L);
-        decomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(2), 1, 2), i(ClayiumBlocks.compressedClay.get(1), 9, 1), 1L, 10L);
-        decomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(3), 1, 3), i(ClayiumBlocks.compressedClay.get(2), 9, 2), 1L, 20L);
+        decomposer.addRecipe(ClayiumBlocks.compressedClay.get(0, 1), i(Blocks.CLAY, 9), 1L, 3L);
+        decomposer.addRecipe(ClayiumBlocks.compressedClay.get(1, 1), ClayiumBlocks.compressedClay.get(0, 9), 1L, 3L);
+        decomposer.addRecipe(ClayiumBlocks.compressedClay.get(2, 1), ClayiumBlocks.compressedClay.get(1, 9), 1L, 10L);
+        decomposer.addRecipe(ClayiumBlocks.compressedClay.get(3, 1), ClayiumBlocks.compressedClay.get(2, 9), 1L, 20L);
 
         energeticClayDecomposer.addRecipe(i(Blocks.CLAY), 13, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 4), 1L, 0L);
-        energeticClayDecomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(0), 1, 0), 13, i(Blocks.CLAY, 9), 1L, 0L);
+        energeticClayDecomposer.addRecipe(ClayiumBlocks.compressedClay.get(0, 1), 13, i(Blocks.CLAY, 9), 1L, 0L);
         int i;
         for (i = 0; i < 12; i++) {
             energeticClayDecomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(i + 1), 1, i + 1), 13, i(ClayiumBlocks.compressedClay.get(i), 9, i), 1L, 0L);
@@ -515,23 +511,23 @@ public class ClayiumRecipes {
         blastFurnace.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.getOD(ClayiumMaterial.manganese, ClayiumShape.dust)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.claySteel, ClayiumShape.ingot)), e(5.0D, 8), 1L);
 
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust, 4)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 50000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.hafnium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 500000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.barium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(3.0D, 7), 5000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.strontium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(7), 50000000L);
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust, 4)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 50000L);
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.hafnium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(10.0D, 7), 500000L);
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.barium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(3.0D, 7), 5000000L);
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.strontium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.dust, 8)), e(7), 50000000L);
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.ultimateAlloy, ClayiumShape.ingot)), e(10.0D, 8), 1000000000L);
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot)), 8, ii(ClayiumMaterials.get(ClayiumMaterial.ultimateAlloy, ClayiumShape.ingot)), e(10.0D, 8), 1000000000L);
 
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 4)), e(7), 2000000L);
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 8), ClayiumMaterials.getOD(ClayiumMaterial.lithium, ClayiumShape.dust)), 7, ii(ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 4)), e(7), 2000000L);
 
 
         grinder.addRecipe(i(ClayiumBlocks.clayTreeLog), 5, ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), e(5), 200L);
-        reactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 10, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(10), 1000000000000L);
-        reactor.addRecipe(ii(i(ClayiumItems.claySoul), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 11, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(11), 100000000000000L);
+        clayReactor.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 10, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(10), 1000000000000L);
+        clayReactor.addRecipe(ii(i(ClayiumItems.claySoul), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 11, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(11), 100000000000000L);
 
 
-        reactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumCore.divideByProgressionRate(200000000000000L));
+        clayReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumCore.divideByProgressionRate(200000000000000L));
         CACondenser.addRecipe(i(ClayiumItems.antimatterSeed), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9), ClayiumCore.divideByProgressionRate(2000L));
 
 
@@ -548,7 +544,7 @@ public class ClayiumRecipes {
         GameRegistry.addRecipe(i(CBlocks.blockRawClayMachineHull, 1, 0), "###", "#o#", "###",
                 '#', ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), 'o', ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear));
 */
-        GameRegistry.addSmelting(ClayiumBlocks.rawClayMachineHull, new ItemStack(ClayiumBlocks.machineHulls.get(0)), 0.1F);
+        GameRegistry.addSmelting(ClayiumBlocks.rawClayMachineHull, ClayiumBlocks.machineHulls.get(0, 1), 0.1F);
 /*        GameRegistry.addRecipe(i(CBlocks.blockMachineHull, 1, 1), "###", "#C#", "###",
                 '#', ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), 'C', i(ClayiumItems.clayCircuit));
         GameRegistry.addRecipe(i(CBlocks.blockMachineHull, 1, 2), "###", "#C#", "###",
@@ -624,20 +620,20 @@ public class ClayiumRecipes {
                 ii(i(ClayiumItems.laserParts)), e(6), 20L);
         assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.beryllium, ClayiumShape.dust, 8), i(ClayiumItems.integratedCircuit)), 6,
                 ii(i(ClayiumItems.synchronousParts)), e(6), 432000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, 8), i(ClayiumItems.integratedCircuit)), 11,
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, 8), i(ClayiumItems.integratedCircuit)), 11,
                 ii(i(ClayiumItems.teleportationParts)), e(11), 10000000000000L);
 
-        reactor.addRecipe(oo(i(ClayiumItems.integratedCircuit, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust)), 7,
+        clayReactor.addRecipe(oo(i(ClayiumItems.integratedCircuit, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust)), 7,
                 ii(i(ClayiumItems.clayCore)), e(10.0D, 7), 8000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.clayCore, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 12)), 8,
+        clayReactor.addRecipe(oo(i(ClayiumItems.clayCore, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 12)), 8,
                 ii(i(ClayiumItems.clayBrain)), e(10.0D, 8), 4000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.clayBrain, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 32)), 9,
+        clayReactor.addRecipe(oo(i(ClayiumItems.clayBrain, 6), ClayiumMaterials.get(ClayiumMaterial.excClay, ClayiumShape.dust, 32)), 9,
                 ii(i(ClayiumItems.claySpirit)), e(10.0D, 9), 10000000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.claySpirit, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 4)), 10,
+        clayReactor.addRecipe(oo(i(ClayiumItems.claySpirit, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 4)), 10,
                 ii(i(ClayiumItems.claySoul)), e(10.0D, 10), 10000000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.claySoul, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 16)), 11,
+        clayReactor.addRecipe(oo(i(ClayiumItems.claySoul, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 16)), 11,
                 ii(i(ClayiumItems.clayAnima)), e(30.0D, 11), 100000000000000L);
-        reactor.addRecipe(oo(i(ClayiumItems.clayAnima, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 12,
+        clayReactor.addRecipe(oo(i(ClayiumItems.clayAnima, 6), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 12,
                 ii(i(ClayiumItems.clayPsyche)), e(90.0D, 12), 1000000000000000L);
     }
 
@@ -881,7 +877,7 @@ public class ClayiumRecipes {
                 if (i == 9) {
                     assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, i))), e(i), 480L);
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.reactor, i), 16)), 6,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.clayReactor, i), 16)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i))), e(i), 480L);
                 } else {
                     if (i <= 11) {
@@ -940,11 +936,11 @@ public class ClayiumRecipes {
         blastFurnace.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust), ClayiumMaterials.getOD(ClayiumMaterial.quartz, ClayiumShape.dust, 8)), 7,
                 ii(i(ClayiumMachines.laserReflector)), e(0.2D, 7), 100L);
 
-        reactor.addRecipe(ii(machines.get(8), i(ClayiumMachines.lithiumSolarClayFabricator)), 8,
+        clayReactor.addRecipe(ii(machines.get(8), i(ClayiumMachines.lithiumSolarClayFabricator)), 8,
                 ii(i(ClayiumMachines.clayFabricatorMK1)), e(3.0D, 8), 100000000L);
-        reactor.addRecipe(ii(machines.get(9), i(ClayiumMachines.lithiumSolarClayFabricator)), 9,
+        clayReactor.addRecipe(ii(machines.get(9), i(ClayiumMachines.lithiumSolarClayFabricator)), 9,
                 ii(i(ClayiumMachines.clayFabricatorMK2)), e(3.0D, 9), 100000000000L);
-        reactor.addRecipe(ii(i(ClayiumMachines.clayFabricatorMK2, 64), ClayiumBlocks.overclocker.get(TierPrefix.OPA, 16)), 13,
+        clayReactor.addRecipe(ii(i(ClayiumMachines.clayFabricatorMK2, 64), ClayiumBlocks.overclocker.get(TierPrefix.OPA, 16)), 13,
                 ii(i(ClayiumMachines.clayFabricatorMK3)), e(10.0D, 13), 1000000000000000000L);
 
         CAInjector.addRecipe(ii(machines.get(9), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 9,
@@ -965,22 +961,22 @@ public class ClayiumRecipes {
         CAInjector.addRecipe(ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.OEC, 16), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 64)), 13,
                 ii(ClayiumBlocks.energyStorageUpgrade.get(TierPrefix.OPA)), e(2.0D, 13), 4000L);
 
-        reactor.addRecipe(oo(s(machines.get(10), 1), ClayiumBlocks.resonator.get(TierPrefix.antimatter, 8)), 10,
+        clayReactor.addRecipe(oo(s(machines.get(10), 1), ClayiumBlocks.resonator.get(TierPrefix.antimatter, 8)), 10,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.antimatter)), e(5.0D, 10), 10000000000000L);
-        reactor.addRecipe(oo(s(machines.get(11), 4), ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter, 16)), 11,
+        clayReactor.addRecipe(oo(s(machines.get(11), 4), ClayiumBlocks.resonator.get(TierPrefix.pureAntimatter, 16)), 11,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.pureAntimatter)), e(5.0D, 11), 100000000000000L);
-        reactor.addRecipe(oo(s(machines.get(12), 16), ClayiumBlocks.resonator.get(TierPrefix.OEC, 32)), 12,
+        clayReactor.addRecipe(oo(s(machines.get(12), 16), ClayiumBlocks.resonator.get(TierPrefix.OEC, 32)), 12,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.OEC)), e(5.0D, 12), 1000000000000000L);
-        reactor.addRecipe(oo(s(machines.get(13), 64), ClayiumBlocks.resonator.get(TierPrefix.OPA, 64)), 13,
+        clayReactor.addRecipe(oo(s(machines.get(13), 64), ClayiumBlocks.resonator.get(TierPrefix.OPA, 64)), 13,
                 ii(ClayiumBlocks.overclocker.get(TierPrefix.OPA)), e(5.0D, 13), 1000000000000000L);
 
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(10), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.platinum, ClayiumShape.ingot)), 10,
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(mats.get(10), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.platinum, ClayiumShape.ingot)), 10,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.antimatter)), e(10), 10000000000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(11), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.iridium, ClayiumShape.ingot, 4)), 11,
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(mats.get(11), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.iridium, ClayiumShape.ingot, 4)), 11,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.pureAntimatter)), e(11), 100000000000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(12), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.mainOsmium, ClayiumShape.ingot, 16)), 12,
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(mats.get(12), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.mainOsmium, ClayiumShape.ingot, 16)), 12,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.OEC)), e(12), 1000000000000000L);
-        reactor.addRecipe(oo(ClayiumMaterials.get(mats.get(13), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.rhenium, ClayiumShape.ingot, 64)), 13,
+        clayReactor.addRecipe(oo(ClayiumMaterials.get(mats.get(13), ClayiumShape.plate, 6), ClayiumMaterials.getOD(ClayiumMaterial.rhenium, ClayiumShape.ingot, 64)), 13,
                 ii(ClayiumBlocks.CAReactorCoil.get(TierPrefix.OPA)), e(13), 1000000000000000L);
 
 /* TODO PAN

@@ -9,11 +9,11 @@ import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 
 public enum EnumMachineKind {
     // Tier 0 ~
+    EMPTY("", null),
     workTable("work_table", ClayiumRecipes.clayWorkTable, SlotType.CLAY_WORK_TABLE),
     craftingTable("crafting_table", null),
 
@@ -51,7 +51,7 @@ public enum EnumMachineKind {
     // Tier 5 ~
     autoClayCondenser("auto_clay_condenser", null),
     quartzCrucible("quartz_crucible", null),
-    solarClayFabricator("solar_clay_fabricator", null),
+    solarClayFabricator("solar_clay_fabricator", null, SlotType.MACHINE, "solar"),
     clayInterface("clay_interface", null),
     redstoneInterface("redstone_interface", null),
     autoCrafter("auto_crafter", null),
@@ -67,7 +67,7 @@ public enum EnumMachineKind {
     // Tier 7 ~
     distributor("distributor", null),
     laserInterface("laser_interface", null),
-    reactor("reactor", ClayiumRecipes.reactor),
+    clayReactor("reactor", ClayiumRecipes.clayReactor),
     transformer("matter_transformer", ClayiumRecipes.transformer),
     clayEnergyLaser("energy_laser", null),
     laserReflector("laser_reflector", null),
@@ -107,10 +107,10 @@ public enum EnumMachineKind {
 
     EnumMachineKind(String kind, ClayiumRecipe recipe, SlotType slotType, String facePath) {
         this.kind = kind;
-        this.recipe = recipe;
+        this.recipe = recipe == null ? ClayiumRecipes.EMPTY : recipe;
         if (slotType == null) throw new NullPointerException("Slot Type of " + this.kind + " is null! This is bug.");
         this.slotType = slotType;
-        this.facePath = facePath;
+        this.facePath = new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + facePath + ".png");;
     }
 
     public String getRegisterName() {
@@ -123,19 +123,18 @@ public enum EnumMachineKind {
 
     private final String kind;
     private final ClayiumRecipe recipe;
-    public final String facePath;
+    public final ResourceLocation facePath;
     public final SlotType slotType;
 
-    @Nullable
     public static EnumMachineKind fromName(String name) {
         for (EnumMachineKind kind : EnumMachineKind.values()) {
             if (Objects.equals(kind.getRegisterName(), name)) return kind;
         }
-        return null;
+        return EMPTY;
     }
 
     public ResourceLocation getFaceResource() {
-        return new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machine/" + this.facePath + ".png");
+        return this.facePath;
     }
 
     public boolean hasRecipe() {

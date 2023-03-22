@@ -65,6 +65,11 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
         return time;
     }
 
+    @Override
+    public boolean isFlat() {
+        return this.equals(FLAT);
+    }
+
     private static boolean runner(List<ItemStack> materials, NonNullList<ItemStack> invStacks, int ingIdx, LinkedList<Integer> assigned) {
         if (ingIdx >= materials.size()) {
             return true;

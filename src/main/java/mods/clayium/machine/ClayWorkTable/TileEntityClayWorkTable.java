@@ -17,7 +17,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
     private static final int[] slotsTop = new int[] { ClayWorkTableSlots.TOOL.ordinal() };
     private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
     private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(), ClayWorkTableSlots.CHANGE.ordinal() };
-    private KneadingRecipe currentRecipe = KneadingRecipe.FLAT;
+    private KneadingRecipe currentRecipe = KneadingRecipe.flat();
     private long craftTime;
     private long timeToCraft;
 
@@ -27,7 +27,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
     }
 
     public boolean onWorking() {
-        return this.currentRecipe != KneadingRecipe.FLAT && this.craftTime >= 0;
+        return this.currentRecipe != KneadingRecipe.flat() && this.craftTime >= 0;
     }
 
     public ItemStack getStackInSlot(ClayWorkTableSlots index) {
@@ -73,7 +73,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
     @SideOnly(Side.CLIENT)
     public int getCookProgressScaled(int pixels) {
 //        return this.timeToCraft != 0 && this.currentRecipe != KneadingRecipe.FLAT ? (int) (this.craftTime * pixels / this.timeToCraft) : 0;
-        return this.currentRecipe != KneadingRecipe.FLAT ? (int) (this.craftTime * pixels / this.currentRecipe.time) : 0;
+        return this.currentRecipe != KneadingRecipe.flat() ? (int) (this.craftTime * pixels / this.currentRecipe.time) : 0;
     }
 
     public ButtonProperty canPushButton(int button) {
@@ -84,7 +84,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
             return this.currentRecipe.method == method ? ButtonProperty.PERMIT : ButtonProperty.FAILURE;
         }
 
-        return ClayiumRecipes.clayWorkTable.getRecipe(recipe -> recipe.method == method && this.match(recipe), KneadingRecipe.flat()) != KneadingRecipe.FLAT
+        return !ClayiumRecipes.clayWorkTable.getRecipe(recipe -> recipe.method == method && this.match(recipe), KneadingRecipe.flat()).equals(KneadingRecipe.flat())
                 ? ButtonProperty.PERMIT : ButtonProperty.FAILURE;
     }
 
@@ -99,7 +99,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
             this.growSlotContent(ClayWorkTableSlots.PRODUCT, this.currentRecipe.product);
             this.growSlotContent(ClayWorkTableSlots.CHANGE, this.currentRecipe.change);
 
-            this.currentRecipe = KneadingRecipe.FLAT;
+            this.currentRecipe = KneadingRecipe.flat();
             this.craftTime = -1;
         } else {
             KneadingMethod method = KneadingMethod.fromId(button);
@@ -107,7 +107,7 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
 
             KneadingRecipe suggest = ClayiumRecipes.clayWorkTable.getRecipe(recipe -> recipe.method == method && this.match(recipe), KneadingRecipe.flat());
 
-            if (suggest == KneadingRecipe.FLAT) return;
+            if (suggest == KneadingRecipe.flat()) return;
 
             this.currentRecipe = suggest;
             this.craftTime = 1;

@@ -50,7 +50,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
     }
 
     protected boolean canCraft(ItemStack material) {
-        if (material.isEmpty() || this.doingRecipe == RecipeElement.flat()) {
+        if (material.isEmpty()) {
             return false;
         }
 
@@ -96,7 +96,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
             }
         }
 
-        setNewRecipe();
+        this.isDoingWork = setNewRecipe();
     }
 
     @Override

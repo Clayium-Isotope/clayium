@@ -46,7 +46,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
     }
 
     protected boolean canCraft(List<ItemStack> materials) {
-        if (this.doingRecipe != RecipeElement.flat()) return true;
+        if (this.isDoingWork) return true;
 
         if (materials.isEmpty()) return false;
 
@@ -98,7 +98,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
             this.getStackInSlot(AssemblerSlots.PRODUCT).grow(result.getCount());
         }
 
-        setNewRecipe();
+        this.isDoingWork = setNewRecipe();
     }
 
     @Override
