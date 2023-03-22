@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
@@ -72,10 +73,10 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
         if (this.canCraft(Arrays.asList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1))))
             return new int[]{ 1, 0 };
 
-        if (this.canCraft(Arrays.asList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1))))
+        if (this.canCraft(Collections.singletonList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1))))
             return new int[]{ 0 };
 
-        if (this.canCraft(Arrays.asList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2))))
+        if (this.canCraft(Collections.singletonList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2))))
             return new int[]{ 1 };
 
         return null;
@@ -87,7 +88,6 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
 
     public void proceedCraft() {
         ++this.craftTime;
-//        this.isDoingWork = true;
         if (this.craftTime < this.timeToCraft) return;
 
         int[] perm = this.getCraftPermutation();
