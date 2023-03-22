@@ -44,6 +44,10 @@ public class ClayiumMachine extends ClaySidedContainer {
         this(kind, null, tier);
     }
 
+    public ClayiumMachine(EnumMachineKind kind, int tier, Class<? extends TileEntityClayContainer> teClass) {
+        this(kind, null, tier, teClass, GuiHandler.GuiIdClayMachines);
+    }
+
     @Override
     public TileGeneric createNewTileEntity(World worldIn, int meta) {
         TileGeneric tecc = super.createNewTileEntity(worldIn, meta);

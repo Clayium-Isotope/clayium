@@ -3,8 +3,10 @@ package mods.clayium.machine.common;
 import mods.clayium.item.common.IClayEnergy;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 
 public interface IClayEnergyConsumer extends IInventory {
+    @Deprecated // I don't know what does it mean.
     default boolean relyingCheckStrictly() {
         return this.getEnergySlot() != -1;
     }
@@ -18,6 +20,7 @@ public interface IClayEnergyConsumer extends IInventory {
     int getEnergyStorageSize();
 
     default ItemStack getEnergyStack() {
+        if (this.getEnergySlot() == -1) return ItemStack.EMPTY;
         return this.getStackInSlot(this.getEnergySlot());
     }
 
@@ -46,5 +49,12 @@ public interface IClayEnergyConsumer extends IInventory {
 
         if (doConsume) this.setContainEnergy(this.getContainEnergy() - debt);
         return true;
+    }
+
+    /**
+     * TRUE ensures that the TileEntity inherits {@link IClayEnergyConsumer}
+     */
+    static boolean hasClayEnergy(TileEntity te) {
+        return te instanceof IClayEnergyConsumer && ((IClayEnergyConsumer) te).getEnergySlot() != -1;
     }
 }

@@ -117,4 +117,12 @@ public interface IClayInventory extends ISidedInventory {
 
         return Arrays.stream(flags).collect(verifiedIndexJoiner);
     }
+
+    default void setImportRoute(EnumFacing facing, int route) {
+        this.getImportRoutes().put(facing, route);
+    }
+
+    default void setExportRoute(EnumFacing facing, int route) {
+        this.getExportRoutes().put(facing, route);
+    }
 }

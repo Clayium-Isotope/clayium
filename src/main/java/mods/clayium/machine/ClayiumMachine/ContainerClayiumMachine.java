@@ -4,6 +4,7 @@ import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,7 +50,12 @@ public class ContainerClayiumMachine extends ContainerTemp {
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
-        addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal(), 44, 35, RectangleTexture.LargeSlotTexture));
+        addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal(), 44, 35, RectangleTexture.LargeSlotTexture) {
+            @Override
+            public boolean isItemValid(ItemStack itemstack) {
+                return tileEntity.isItemValidForSlot(TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal(), itemstack);
+            }
+        });
 
         addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, TileEntityClayiumMachine.MachineSlots.PRODUCT.ordinal(), 116, 35, RectangleTexture.LargeSlotTexture) {
             @Override
@@ -58,11 +64,13 @@ public class ContainerClayiumMachine extends ContainerTemp {
             }
         });
 
-        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayiumMachine.MachineSlots.ENERGY.ordinal(), machineGuiSizeY) {
-            @Override
-            public boolean isEnabled() {
-                return !UtilTier.canManufactureCraft(tileEntity.getTier()) && super.isEnabled();
-            }
-        });
+        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity)) {
+            addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY) {
+                @Override
+                public boolean isEnabled() {
+                    return !UtilTier.canManufactureCraft(tileEntity.getTier()) && super.isEnabled();
+                }
+            });
+        }
     }
 }

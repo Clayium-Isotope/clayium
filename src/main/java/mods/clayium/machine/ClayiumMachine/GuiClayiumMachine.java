@@ -14,10 +14,10 @@ import net.minecraft.util.ResourceLocation;
 import java.io.IOException;
 
 public class GuiClayiumMachine extends GuiTemp {
-    private final int progressBarSizeX = 24;
-    private final int progressBarSizeY = 17;
-    private final int progressBarPosX = (xSize - this.progressBarSizeX) / 2;
-    private final int progressBarPosY = 35;
+    protected int progressBarSizeX = 24;
+    protected int progressBarSizeY = 17;
+    protected int progressBarPosX = (xSize - this.progressBarSizeX) / 2;
+    protected int progressBarPosY = 35;
 
     public GuiClayiumMachine(ContainerClayiumMachine container) {
         super(container);
@@ -74,4 +74,6 @@ public class GuiClayiumMachine extends GuiTemp {
 
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
+
+    protected void calculateProgressBarOffsets() {}
 }

@@ -2,7 +2,7 @@ package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayContainer.ClayDirectionalContainer;
+import mods.clayium.machine.ClayContainer.ClaySidedContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ClayDirectionalNoRecipeMachine extends ClayDirectionalContainer {
+public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int guiId, int tier) {
+    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int guiId, int tier) {
         super(Material.IRON, teClass, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), guiId, tier);
         this.machineKind = kind;
 
@@ -29,7 +29,7 @@ public class ClayDirectionalNoRecipeMachine extends ClayDirectionalContainer {
         setHarvestLevel("pickaxe", 0);
     }
 
-    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int tier) {
+    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int tier) {
         this(teClass, kind, GuiHandler.GuiIdNormalInventory, tier);
     }
 

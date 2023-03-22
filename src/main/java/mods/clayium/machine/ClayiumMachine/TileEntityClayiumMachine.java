@@ -5,6 +5,7 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IHasButton;
 import mods.clayium.machine.crafting.ClayiumRecipe;
+import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
@@ -20,14 +21,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable, IClayEnergyConsumer {
-    enum MachineSlots {
+    protected enum MachineSlots {
         MATERIAL,
         PRODUCT,
         ENERGY
     }
 
-    protected EnumMachineKind kind;
-    protected ClayiumRecipe recipeCards;
+    protected EnumMachineKind kind = EnumMachineKind.EMPTY;
+    protected ClayiumRecipe recipeCards = ClayiumRecipes.EMPTY;
     protected IRecipeElement doingRecipe = RecipeElement.flat();
 
     protected long craftTime;
@@ -72,8 +73,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public void update() {
         super.update();
 
-        if (this.doingRecipe == RecipeElement.flat()) {
-            setNewRecipe();
+        if (!this.isDoingWork) {
+            this.isDoingWork = setNewRecipe();
         } else if (compensateClayEnergy(this.debtEnergy)) {
             proceedCraft();
         }
@@ -82,7 +83,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     private void sendUpdate() {
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-        mods.clayium.machine.ClayiumMachine.ClayiumMachine.updateBlockState(world, pos);
+        ClayiumMachine.updateBlockState(world, pos);
 
         markDirty();
     }
@@ -97,6 +98,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
         this.doingRecipe = this.recipeCards.getRecipe(tagCompound.getInteger("RecipeHash"), RecipeElement.flat());
+        this.isDoingWork = this.doingRecipe != RecipeElement.flat();
 
         super.readFromNBT(tagCompound);
     }
@@ -127,7 +129,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     @Override
     public ButtonProperty canPushButton(int button) {
-        if (this.doingRecipe != RecipeElement.flat()) return ButtonProperty.PERMIT;
+        if (!this.isDoingWork) return ButtonProperty.PERMIT;
         return canProceedCraft() ? ButtonProperty.PERMIT : ButtonProperty.FAILURE;
     }
 
@@ -180,8 +182,6 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         } else if (getStackInSlot(MachineSlots.PRODUCT).isItemEqual(itemstack)) {
             getStackInSlot(MachineSlots.PRODUCT).grow(itemstack.getCount());
         }
-
-        setNewRecipe();
     }
 
     public RecipeElement getRecipe(ItemStack stack) {
@@ -195,6 +195,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     protected boolean canCraft(IRecipeElement recipe) {
+        if (recipe.isFlat()) return false;
+
         ItemStack itemstack = recipe.getResults().get(0);
         if (itemstack.isEmpty()) return false;
         if (getStackInSlot(MachineSlots.PRODUCT).isEmpty()) return true;
