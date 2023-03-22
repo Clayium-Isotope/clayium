@@ -1,0 +1,6 @@
+{
+	"parent": "clayium:block/machine/solar_clay_fabricator",
+	"textures": {
+		"hull": "clayium:blocks/machinehull-6"
+	}
+}
