@@ -1,0 +1,52 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [64, 64],
+	"textures": {
+		"1": "clayium:blocks/machine/laserreflector",
+		"2": "clayium:blocks/machine/laserreflector_",
+		"particle": "clayium:blocks/machine/laserreflector"
+	},
+	"elements": [
+		{
+			"from": [1.375, 7.391, -3.064],
+			"to": [14.625, 7.391, 14.251],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0, 0, 0]},
+			"faces": {
+				"down": {"uv": [16, 1.375, 0, 14.625], "rotation": 270, "texture": "#2"}
+			}
+		},
+		{
+			"from": [1.375, 7.391, 3.064],
+			"to": [14.625, 7.391, 20.379],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [0, 0, 0]},
+			"faces": {
+				"up": {"uv": [16, 1.375, 0, 14.625], "rotation": 90, "texture": "#2"}
+			}
+		},
+		{
+			"from": [7.391, 1.375, -3.064],
+			"to": [7.391, 14.625, 14.251],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"west": {"uv": [0, 1.375, 16, 14.625], "rotation": 180, "texture": "#2"}
+			}
+		},
+		{
+			"from": [7.391, 1.375, 3.064],
+			"to": [7.391, 14.625, 20.379],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"east": {"uv": [16, 1.375, 0, 14.625], "rotation": 180, "texture": "#2"}
+			}
+		},
+		{
+			"from": [1.37, 1.37, 16],
+			"to": [14.63, 14.63, 16],
+			"faces": {
+				"south": {"uv": [1.37, 1.37, 14.63, 14.63], "texture": "#1"}
+			}
+		}
+	],
+	"display": {}
+}
