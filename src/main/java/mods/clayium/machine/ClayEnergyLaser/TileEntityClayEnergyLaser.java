@@ -96,7 +96,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
         super.update();
         if (this.manager != null) {
             this.manager.set(this.world, this.pos, this.world.getBlockState(this.pos).getValue(BlockStateClayDirectionalContainer.FACING));
-            this.manager.update(this.isPowered() && this.compensateClayEnergy(this.machineConsumingEnergy));
+            this.manager.update(this.isPowered() && IClayEnergyConsumer.compensateClayEnergy(this, this.machineConsumingEnergy));
         }
     }
 

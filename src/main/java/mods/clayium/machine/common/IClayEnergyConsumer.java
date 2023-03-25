@@ -6,11 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public interface IClayEnergyConsumer extends IInventory {
-    @Deprecated // I don't know what does it mean.
-    default boolean relyingCheckStrictly() {
-        return this.getEnergySlot() != -1;
-    }
-
     long getContainEnergy();
     void setContainEnergy(long energy);
 
@@ -24,30 +19,34 @@ public interface IClayEnergyConsumer extends IInventory {
         return this.getStackInSlot(this.getEnergySlot());
     }
 
-    default boolean produceClayEnergy() {
-        if (this.getEnergySlot() < 0 || this.getEnergySlot() >= getSizeInventory()) return false;
-        ItemStack itemstack = getStackInSlot(this.getEnergySlot());
+    /**
+     * Change Compressed Clay to Clay Energy
+     */
+    static boolean produceClayEnergy(IClayEnergyConsumer consumer) {
+        if (consumer.getEnergySlot() < 0 || consumer.getEnergySlot() >= consumer.getSizeInventory()) return false;
+        ItemStack itemstack = consumer.getStackInSlot(consumer.getEnergySlot());
         if (itemstack.isEmpty()) return false;
 
         if (!IClayEnergy.hasClayEnergy(itemstack)) return false;
-        setContainEnergy(this.getContainEnergy() + IClayEnergy.getClayEnergy(itemstack));
+        consumer.setContainEnergy(consumer.getContainEnergy() + IClayEnergy.getClayEnergy(itemstack));
         itemstack.shrink(1);
+        consumer.markDirty();
 
         return true;
     }
 
-    default boolean compensateClayEnergy(long debt) {
-        return this.compensateClayEnergy(debt, true);
+    static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt) {
+        return compensateClayEnergy(consumer, debt, true);
     }
 
-    default boolean compensateClayEnergy(long debt, boolean doConsume) {
-        if (debt > this.getContainEnergy()) {
-            if (!this.produceClayEnergy()) return false;
+    static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt, boolean doConsume) {
+        if (debt > consumer.getContainEnergy()) {
+            if (!produceClayEnergy(consumer)) return false;
 
-            return this.compensateClayEnergy(debt, doConsume);
+            return compensateClayEnergy(consumer, debt, doConsume);
         }
 
-        if (doConsume) this.setContainEnergy(this.getContainEnergy() - debt);
+        if (doConsume) consumer.setContainEnergy(consumer.getContainEnergy() - debt);
         return true;
     }
 
@@ -55,6 +54,12 @@ public interface IClayEnergyConsumer extends IInventory {
      * TRUE ensures that the TileEntity inherits {@link IClayEnergyConsumer}
      */
     static boolean hasClayEnergy(TileEntity te) {
-        return te instanceof IClayEnergyConsumer && ((IClayEnergyConsumer) te).getEnergySlot() != -1;
+        return te instanceof IClayEnergyConsumer
+                && ((IClayEnergyConsumer) te).getEnergySlot() != -1
+                && ((IClayEnergyConsumer) te).verifyClayEnergy();
+    }
+
+    default boolean verifyClayEnergy() {
+        return true;
     }
 }

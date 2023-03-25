@@ -81,7 +81,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         if (!this.isDoingWork) {
             this.isDoingWork = setNewRecipe();
-        } else if (compensateClayEnergy(this.debtEnergy)) {
+        } else if (IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
             proceedCraft();
         }
     }
@@ -173,8 +173,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     @Override
-    public boolean relyingCheckStrictly() {
-        return !UtilTier.canManufactureCraft(this.tier) && IClayEnergyConsumer.super.relyingCheckStrictly();
+    public boolean verifyClayEnergy() {
+        return !UtilTier.canManufactureCraft(this.tier);
     }
 
     public void proceedCraft() {
@@ -226,7 +226,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         this.craftTime = 0L;
 
-        if (canCraft(_recipe) && compensateClayEnergy(_recipe.getEnergy())) {
+        if (canCraft(_recipe) && IClayEnergyConsumer.compensateClayEnergy(this, _recipe.getEnergy())) {
             this.doingRecipe = _recipe;
 
             this.debtEnergy = this.doingRecipe.getEnergy();

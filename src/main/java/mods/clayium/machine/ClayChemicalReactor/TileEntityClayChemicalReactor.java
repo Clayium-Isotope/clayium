@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayChemicalReactor;
 
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
@@ -137,7 +138,7 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
 
         if (this.doingRecipe == RecipeElement.flat()) return false;
 
-        if (!compensateClayEnergy(this.doingRecipe.getEnergy())) {
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy())) {
             this.doingRecipe = RecipeElement.flat();
             return false;
         }

@@ -6,7 +6,6 @@ import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.UtilTier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -64,13 +63,6 @@ public class ContainerClayiumMachine extends ContainerTemp {
             }
         });
 
-        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity)) {
-            addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY) {
-                @Override
-                public boolean isEnabled() {
-                    return !UtilTier.canManufactureCraft(tileEntity.getTier()) && super.isEnabled();
-                }
-            });
-        }
+        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
     }
 }

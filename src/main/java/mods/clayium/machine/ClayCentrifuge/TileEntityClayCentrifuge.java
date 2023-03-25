@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayCentrifuge;
 
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilItemStack;
@@ -105,7 +106,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
         this.craftTime = 0L;
 
-        if (canCraft(_recipe) && compensateClayEnergy(_recipe.getEnergy())) {
+        if (canCraft(_recipe) && IClayEnergyConsumer.compensateClayEnergy(this, _recipe.getEnergy())) {
             this.doingRecipe = _recipe;
 
             this.debtEnergy = this.doingRecipe.getEnergy();

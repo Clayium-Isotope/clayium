@@ -34,12 +34,7 @@ public class ContainerChemicalMetalSeparator extends ContainerClayiumMachine {
             }
         }
 
-        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((TileEntityChemicalMetalSeparator) this.tileEntity).getEnergySlot(), machineGuiSizeY) {
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        });
+        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((TileEntityChemicalMetalSeparator) this.tileEntity).getEnergySlot(), machineGuiSizeY));
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

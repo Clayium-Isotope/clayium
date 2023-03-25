@@ -30,4 +30,10 @@ public class SlotEnergy extends Slot {
     public boolean canTakeStack(EntityPlayer playerIn) {
         return true;
     }
+
+    @Override
+    public boolean isEnabled() {
+        assert this.inventory instanceof TileEntityClayContainer;
+        return IClayEnergyConsumer.hasClayEnergy((TileEntityClayContainer) this.inventory);
+    }
 }
