@@ -26,6 +26,10 @@ public class BlockDamaged extends ArrayList<Block> {
         return false;
     }
 
+    public boolean contains(Block block) {
+        return super.contains(block);
+    }
+
     public ItemStack get(int meta, int amount) {
         return new ItemStack(this.get(meta), amount/*TODO, meta*/);
     }

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlockTierTied extends EnumMap<TierPrefix, Block> {
     public BlockTierTied() {
@@ -36,5 +37,17 @@ public class BlockTierTied extends EnumMap<TierPrefix, Block> {
             return super.get(TierPrefix.get(tier));
 
         throw new IllegalAccessException();
+    }
+
+    public boolean contains(Block block) {
+        return this.containsValue(block);
+    }
+
+    public TierPrefix getTier(Block value) {
+        for (Map.Entry<TierPrefix, Block> entry : this.entrySet()) {
+            if (Block.isEqualTo(value, entry.getValue())) return entry.getKey();
+        }
+
+        return TierPrefix.none;
     }
 }
