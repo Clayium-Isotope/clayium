@@ -19,6 +19,7 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
 
     @Override
     public void initParams() {
+        super.initParams();
         this.setImportRoutes(-1, -1, -1, 0, -1, -1);
         this.autoInsert = true;
         this.autoExtract = true;

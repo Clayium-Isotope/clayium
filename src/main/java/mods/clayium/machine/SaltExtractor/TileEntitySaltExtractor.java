@@ -21,7 +21,10 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     private long clayEnergy;
     private static final int energyPerWork = 30;
 
-    public TileEntitySaltExtractor() {
+    @Override
+    public void initParams() {
+        super.initParams();
+
         this.autoInsert = true;
         this.autoExtract = true;
 

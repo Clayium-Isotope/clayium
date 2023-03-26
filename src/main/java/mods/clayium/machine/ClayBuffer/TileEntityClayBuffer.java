@@ -16,12 +16,6 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     protected int inventoryY;
     protected boolean isBuffer = true;
 
-    public TileEntityClayBuffer() {
-        this.containerItemStacks = NonNullList.withSize(54, ItemStack.EMPTY);
-
-        this.setImportRoutes(-1, -1, -1, 0, -1, -1);
-    }
-
     // Alternative for getAccessibleSlotsFromSide(int side)
     @Override
     public int[] getSlotsForFace(EnumFacing side) {
@@ -46,6 +40,13 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     @Override
     public int getInventoryStart() {
         return 0;
+    }
+
+    @Override
+    public void initParams() {
+        this.containerItemStacks = NonNullList.withSize(54, ItemStack.EMPTY);
+
+        this.setImportRoutes(-1, -1, -1, 0, -1, -1);
     }
 
     @Override

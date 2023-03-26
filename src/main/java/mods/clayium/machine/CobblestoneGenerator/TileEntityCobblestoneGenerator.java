@@ -22,7 +22,9 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
     public boolean isDoingWork = false;
     protected boolean isCobblestoneGenerator = true;
 
-    public TileEntityCobblestoneGenerator() {
+    @Override
+    public void initParams() {
+        super.initParams();
         this.setExportRoutes(-1, -1, 0, -1, -1, -1);
         this.autoInsert = true;
         this.autoExtract = false;

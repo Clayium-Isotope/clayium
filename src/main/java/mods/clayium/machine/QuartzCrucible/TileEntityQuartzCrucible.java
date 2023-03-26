@@ -12,9 +12,6 @@ public class TileEntityQuartzCrucible extends TileGeneric implements ITickable {
     public int craftTime;
     public static int timeToCraft = 600;
 
-    public TileEntityQuartzCrucible() {
-    }
-
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);

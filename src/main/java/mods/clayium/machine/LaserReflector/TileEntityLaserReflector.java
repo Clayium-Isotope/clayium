@@ -24,7 +24,9 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
     @SideOnly(Side.CLIENT)
     private AxisAlignedBB boundingBox;
 
-    public TileEntityLaserReflector() {
+    @Override
+    public void initParams() {
+        super.initParams();
         this.autoInsert = false;
         this.autoExtract = false;
         this.containerItemStacks = NonNullList.create();

@@ -32,10 +32,6 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     public static final int consumingEnergyRed = 4000000;
     public static final int consumingEnergyWhite = 40000000;
 
-    public TileEntityClayEnergyLaser() {
-        super();
-    }
-
     public boolean isPowered() {
         return this.powered;
     }

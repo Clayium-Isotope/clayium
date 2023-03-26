@@ -22,8 +22,6 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
     private static final Random random = TileGeneric.random;
     private static final int RESULT_SLOT = 17;
 
-    public TileEntityChemicalMetalSeparator() {}
-
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(19, ItemStack.EMPTY);
         this.setImportRoutes(-1, 0, -1, -2, -1, -1);
