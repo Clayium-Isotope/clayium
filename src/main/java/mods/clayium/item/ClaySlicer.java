@@ -3,6 +3,8 @@ package mods.clayium.item;
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -24,7 +26,8 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
-            int dist = tecc.exportRoutes.get(facing) + 1;
+            EnumSide side = UtilDirection.getSideOfDirection(tecc.getFront(), facing);
+            int dist = tecc.getExportRoute(side) + 1;
 
             if (tecc.listSlotsExport.size() <= dist || tecc.listSlotsExport.get(0).length >= 2 && dist == tecc.listSlotsExport.get(0).length + 1) {
                 dist = -1;
@@ -32,7 +35,7 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
             } else {
                 player.sendMessage(new TextComponentString("Set extract route " + dist));
             }
-            tecc.exportRoutes.replace(facing, dist);
+            tecc.setExportRoute(side, dist);
 
             tecc.updateEntity();
             return EnumActionResult.SUCCESS;

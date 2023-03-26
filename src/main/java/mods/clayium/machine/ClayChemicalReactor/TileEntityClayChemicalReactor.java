@@ -26,6 +26,9 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(ChemicalReactorSlots.values().length, ItemStack.EMPTY);
+
+        this.setImportRoutes(-1, 0, -1, -2, -1, -1);
+        this.setExportRoutes(0, -1, -1, -1, -1, -1);
         this.listSlotsImport.add(new int[]{ ChemicalReactorSlots.MATERIAL_1.ordinal(), ChemicalReactorSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ ChemicalReactorSlots.MATERIAL_1.ordinal() });
         this.listSlotsImport.add(new int[]{ ChemicalReactorSlots.MATERIAL_2.ordinal() });

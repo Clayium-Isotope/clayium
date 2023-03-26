@@ -4,6 +4,8 @@ import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -26,8 +28,9 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
+            EnumSide side = UtilDirection.getSideOfDirection(tecc.getFront(), facing);
 
-            int dist = tecc.importRoutes.get(facing) + 1;
+            int dist = tecc.getImportRoute(side) + 1;
             if (tecc.listSlotsImport.size() <= dist) {
                 if (IClayEnergyConsumer.hasClayEnergy(tecc))
                     dist = -2;
@@ -47,7 +50,7 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
                     break;
             }
 
-            tecc.importRoutes.replace(facing, dist);
+            tecc.setImportRoute(side, dist);
             tecc.updateEntity();
             return EnumActionResult.SUCCESS;
         }

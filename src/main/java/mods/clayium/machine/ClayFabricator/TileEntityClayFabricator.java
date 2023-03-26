@@ -12,6 +12,8 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
     public float exponentOfNumber;
 
     public TileEntityClayFabricator() {
+        this.setImportRoutes(-1, 0, -1, -1, -1, -1);
+        this.setExportRoutes(0, -1, -1, -1, -1, -1);
     }
 
     public void initParams() {

@@ -22,8 +22,9 @@ public enum EnumSide {
     final int index;
     final int offsetX, offsetY, offsetZ;
 //        final Vec3i offset;
+    public static final EnumSide[] VALUES = new EnumSide[] {DOWN, UP, FRONT, BACK, LEFT, RIGHT};
 
-    static EnumSide getFront(int id) {
+    public static EnumSide getFront(int id) {
         return (id >= 0 && id < values().length) ? values()[id] : UNKNOWN;
     }
 
@@ -33,5 +34,9 @@ public enum EnumSide {
 
     public EnumFacing toEnumFacing() {
         return EnumFacing.getFront(this.index);
+    }
+
+    public EnumSide getOpposite() {
+        return UtilDirection.getOpposite(this);
     }
 }

@@ -1,6 +1,8 @@
 package mods.clayium.machine.ClayContainer;
 
 import com.google.common.collect.ImmutableMap;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -217,13 +219,20 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     private static boolean checkPipeConnection(TileEntity myself, TileEntity customer, EnumFacing direction) {
         if (!(myself instanceof TileEntityClayContainer) || !(customer instanceof IInventory)) return false;
 
-        if (((TileEntityClayContainer) myself).importRoutes.get(direction) != -1 || ((TileEntityClayContainer) myself).exportRoutes.get(direction) != -1)
-            return (((TileEntityClayContainer) myself).importRoutes.get(direction) != -1 && ((TileEntityClayContainer) myself).autoExtract)
-                    || (((TileEntityClayContainer) myself).exportRoutes.get(direction) != -1 && ((TileEntityClayContainer) myself).autoInsert);
+        TileEntityClayContainer myselfCC = (TileEntityClayContainer) myself;
+
+        EnumSide side = UtilDirection.getSideOfDirection(myselfCC.getFront(), direction);
+        if (myselfCC.getImportRoute(side) != -1 || (myselfCC.getExportRoute(side) != -1))
+            return ((myselfCC.getImportRoute(side) != -1 && myselfCC.autoExtract)
+                    || (myselfCC.getExportRoute(side) != -1 && myselfCC.autoInsert));
 
         if (!(customer instanceof TileEntityClayContainer)) return false;
 
-        return (((TileEntityClayContainer) customer).importRoutes.get(direction.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoExtract)
-                || (((TileEntityClayContainer) customer).exportRoutes.get(direction.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoInsert);
+        return (((TileEntityClayContainer) customer).getImportRoute(side.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoExtract)
+                || (((TileEntityClayContainer) customer).getExportRoute(side.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoInsert);
+    }
+
+    public EnumFacing getFront() {
+        return EnumFacing.NORTH;
     }
 }

@@ -25,6 +25,8 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         this.autoExtract = true;
         this.containerItemStacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
+        this.setImportRoutes(-1, -1, -1, 0, -1, -1);
+        this.setExportRoutes(-1, -1, 0, -1, -1, -1);
         this.listSlotsImport.clear();
         this.listSlotsExport.clear();
         this.listSlotsImport.add(new int[]{ 0 });

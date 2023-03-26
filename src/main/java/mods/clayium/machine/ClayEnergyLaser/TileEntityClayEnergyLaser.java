@@ -51,6 +51,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
         this.autoExtractInterval = this.autoInsertInterval = 8;
 
         this.containerItemStacks = NonNullList.withSize(1, ItemStack.EMPTY);
+        this.setImportRoutes(-1, -1, -1, -2, -1, -1);
         this.slotsDrop = new int[]{ this.getEnergySlot() };
         this.autoInsert = false;
         this.autoExtract = true;

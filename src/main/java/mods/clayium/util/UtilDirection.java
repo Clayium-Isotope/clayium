@@ -1,8 +1,17 @@
 package mods.clayium.util;
 
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UtilDirection {
     private static final int[] OPPOSITES    = new int[]{1, 0, 3, 2, 5, 4};
@@ -76,5 +85,38 @@ public class UtilDirection {
             case RIGHT: return EnumSide.getFront(RIGHTSIDES[asFront.getIndex()]);
             default:    return EnumSide.UNKNOWN;
         }
+    }
+
+    /**
+     * @return 上下東西南北のうち、entity が pos を見る向こう側の facing
+     */
+    public static EnumFacing getDirectionFromEntity(BlockPos pos, EntityLivingBase entity) {
+        return EnumFacing.getDirectionFromEntityLiving(pos, entity).getOpposite();
+    }
+
+    /**
+     * @return 東西南北のうち、entity が向いている facing
+     */
+    public static EnumFacing getHorizontalFromEntity(EntityLivingBase entity) {
+        return entity.getHorizontalFacing();
+    }
+
+    @Nonnull
+    public static EnumFacing getBetterFront(IBlockState state, BlockPos pos, EntityLivingBase placer) {
+        EnumFacing front;
+        if (state instanceof BlockStateClaySidedContainer) {
+            front = UtilDirection.getHorizontalFromEntity(placer);
+        } else {
+            front = UtilDirection.getDirectionFromEntity(pos, placer);
+
+            ClayiumCore.logger.info(front.getName());
+        }
+        return front.getOpposite();
+    }
+
+    public static List<EnumFacing> getFrontedSides(EnumFacing front) {
+        return Arrays.stream(EnumSide.VALUES)
+                .map(side -> UtilDirection.getSideOfDirection(front, side))
+                .collect(Collectors.toList());
     }
 }

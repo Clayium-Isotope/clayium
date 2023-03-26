@@ -78,8 +78,9 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
         try {
             TileGeneric tecc = teClass.newInstance();
-            if (tecc instanceof TileEntityClayContainer)
+            if (tecc instanceof TileEntityClayContainer) {
                 ((TileEntityClayContainer) tecc).initParamsByTier(this.tier);
+            }
             return tecc;
         } catch (Exception exception) {
             ClayiumCore.logger.catching(exception);
@@ -119,12 +120,13 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
      */
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        if (stack.hasDisplayName()) {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityClayContainer) {
-                ((TileEntityClayContainer)tileentity).setCustomName(stack.getDisplayName());
+        if (tileentity instanceof TileEntityClayContainer) {
+            if (stack.hasDisplayName()) {
+                ((TileEntityClayContainer) tileentity).setCustomName(stack.getDisplayName());
             }
+            ((TileEntityClayContainer) tileentity).setFront(state, pos, placer);
         }
     }
 

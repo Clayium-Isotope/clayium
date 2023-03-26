@@ -18,6 +18,8 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
 
     public TileEntityClayBuffer() {
         this.containerItemStacks = NonNullList.withSize(54, ItemStack.EMPTY);
+
+        this.setImportRoutes(-1, -1, -1, 0, -1, -1);
     }
 
     // Alternative for getAccessibleSlotsFromSide(int side)

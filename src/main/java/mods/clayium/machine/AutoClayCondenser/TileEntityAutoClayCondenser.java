@@ -23,6 +23,8 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(21, ItemStack.EMPTY);
+        this.setImportRoutes(-1, 0, -1, -1, -1, -1);
+        this.setExportRoutes(0, -1, -1, -1, -1, -1);
         this.listSlotsImport.add(IntStream.range(0, 15).toArray());
         this.listSlotsExport.add(IntStream.range(0, 20).toArray());
         this.slotsDrop = IntStream.range(0, 20).toArray();

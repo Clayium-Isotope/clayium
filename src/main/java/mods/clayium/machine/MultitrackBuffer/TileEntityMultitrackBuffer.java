@@ -2,6 +2,7 @@ package mods.clayium.machine.MultitrackBuffer;
 
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,7 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
 
     @Override
     public void initParams() {
+        this.setImportRoutes(-1, -1, -1, 0, -1, -1);
         this.autoInsert = true;
         this.autoExtract = true;
         this.containerItemStacks = NonNullList.withSize(60, ItemStack.EMPTY);
@@ -166,7 +168,7 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
     @Override
     protected void doAutoTakeIn() {
         for (EnumFacing side : EnumFacing.VALUES) {
-            int route = this.importRoutes.get(side);
+            int route = this.getImportRoute(UtilDirection.getSideOfDirection(this.getFront(), side));
 
             for (int k = 0; k < this.tracks.length; ++k) {
                 if (route == 0 || route - 1 == k) {
@@ -180,7 +182,7 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
     @Override
     protected void doAutoTakeOut() {
         for (EnumFacing side : EnumFacing.VALUES) {
-            int route = this.exportRoutes.get(side);
+            int route = this.getExportRoute(UtilDirection.getSideOfDirection(this.getFront(), side));
 
             for (int k = 0; k < this.tracks.length; ++k) {
                 if (route == 0 || route - 1 == k) {

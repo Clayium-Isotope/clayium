@@ -6,7 +6,6 @@ import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -19,16 +18,6 @@ public class SolarClayFabricator extends ClayDirectionalNoRecipeMachine {
         super(TileEntitySolarClayFabricator.class, EnumMachineKind.solarClayFabricator,
                 tier == 5 ? "mk1" : tier == 6 ? "mk2" : tier == 7 ? "mk3" : "",
                 GuiHandler.GuiIdClayMachines, tier);
-    }
-
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        if (worldIn.getTileEntity(pos) instanceof TileEntitySolarClayFabricator) {
-            ((TileEntitySolarClayFabricator) worldIn.getTileEntity(pos)).importRoutes.replace(EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite(), 0);
-            ((TileEntitySolarClayFabricator) worldIn.getTileEntity(pos)).exportRoutes.replace(EnumFacing.getDirectionFromEntityLiving(pos, placer), 0);
-        }
-
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
 
     @Override

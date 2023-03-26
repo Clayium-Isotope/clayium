@@ -3,6 +3,8 @@ package mods.clayium.machine.ClayContainer;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
 import net.minecraft.client.model.PositionTextureVertex;
 import net.minecraft.client.model.TexturedQuad;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -19,7 +21,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
-import java.util.Map;
 
 @SideOnly(Side.CLIENT)
 public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayContainer> {
@@ -73,8 +74,9 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             }
 
             for (EnumFacing facing : EnumFacing.VALUES) {
-                bindImportBlockTexAsCan(te.importRoutes, te.InsertIcons, facing);
-                bindExportBlockTexAsCan(te.exportRoutes, te.ExtractIcons, facing);
+                EnumSide side = UtilDirection.getSideOfDirection(te.getFront(), facing);
+                bindImportBlockTexAsCan(te.getImportRoute(side), te.InsertIcons, facing);
+                bindExportBlockTexAsCan(te.getExportRoute(side), te.ExtractIcons, facing);
 
                 bindFilterBlockTexAsCan(te.filters.get(facing), facing);
             }
@@ -86,8 +88,9 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
                     && ClayiumItems.hasPipingTools((EntityPlayer) rendererDispatcher.entity)) {
                 for (EnumFacing facing : EnumFacing.VALUES) {
                     if (te.getBlockState().isTheFacingActivated(facing)) {
-                        bindImportPipeTexAsCan(modelCC, te.importRoutes, te.InsertPipeIcons, facing);
-                        bindExportPipeTexAsCan(modelCC, te.exportRoutes, te.ExtractPipeIcons, facing);
+                        EnumSide side = UtilDirection.getSideOfDirection(te.getFront(), facing);
+                        bindImportPipeTexAsCan(modelCC, te.getImportRoute(side), te.InsertPipeIcons, facing);
+                        bindExportPipeTexAsCan(modelCC, te.getExportRoute(side), te.ExtractPipeIcons, facing);
                     }
                 }
             }
@@ -103,42 +106,42 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
         }
     }
 
-    private void bindImportBlockTexAsCan(Map<EnumFacing, Integer> routes, List<ResourceLocation> otherwise, EnumFacing facing) {
-        if (routes.get(facing) == -1) return;
+    private void bindImportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+        if (route == -1) return;
 
-        if (routes.get(facing) == -2)
+        if (route == -2)
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy.png"));
-        else if (routes.get(facing) < otherwise.size())
-            this.bindTexture(otherwise.get(routes.get(facing)));
+        else if (route < otherwise.size())
+            this.bindTexture(otherwise.get(route));
 
         pasteBoundTexToBlockFace(facing);
     }
 
-    private void bindExportBlockTexAsCan(Map<EnumFacing, Integer> routes, List<ResourceLocation> otherwise, EnumFacing facing) {
-        if (routes.get(facing) == -1) return;
+    private void bindExportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+        if (route == -1) return;
 
-        if (routes.get(facing) < otherwise.size())
-            this.bindTexture(otherwise.get(routes.get(facing)));
+        if (route < otherwise.size())
+            this.bindTexture(otherwise.get(route));
 
         pasteBoundTexToBlockFace(facing);
     }
 
-    private void bindImportPipeTexAsCan(ModelClayContainer modelCC, Map<EnumFacing, Integer> routes, List<ResourceLocation> otherwise, EnumFacing facing) {
-        if (routes.get(facing) == -1) return;
+    private void bindImportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+        if (route == -1) return;
 
-        if (routes.get(facing) == -2)
+        if (route == -2)
             this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy_p.png"));
-        else if (routes.get(facing) < otherwise.size())
-            this.bindTexture(otherwise.get(routes.get(facing)));
+        else if (route < otherwise.size())
+            this.bindTexture(otherwise.get(route));
 
         pasteBoundTexToPipeFace(modelCC, facing);
     }
 
-    private void bindExportPipeTexAsCan(ModelClayContainer modelCC, Map<EnumFacing, Integer> routes, List<ResourceLocation> otherwise, EnumFacing facing) {
-        if (routes.get(facing) == -1) return;
+    private void bindExportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+        if (route == -1) return;
 
-        if (routes.get(facing) < otherwise.size())
-            this.bindTexture(otherwise.get(routes.get(facing)));
+        if (route < otherwise.size())
+            this.bindTexture(otherwise.get(route));
 
         pasteBoundTexToPipeFace(modelCC, facing);
     }

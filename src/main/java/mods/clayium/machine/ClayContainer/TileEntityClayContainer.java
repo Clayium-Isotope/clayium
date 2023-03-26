@@ -3,9 +3,10 @@ package mods.clayium.machine.ClayContainer;
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.UtilCollect;
-import mods.clayium.util.UtilTier;
-import mods.clayium.util.UtilTransfer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.*;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -36,31 +38,32 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     protected boolean isPipe = false;
 
+    private EnumFacing front = EnumFacing.NORTH;
     /**
      * -2: energy
      * -1: none,
      * 0: white
      */
-    public Map<EnumFacing, Integer> importRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
-        put(EnumFacing.UP,    -1);
-        put(EnumFacing.DOWN,  -1);
-        put(EnumFacing.NORTH, -1);
-        put(EnumFacing.SOUTH, -1);
-        put(EnumFacing.WEST,  -1);
-        put(EnumFacing.EAST,  -1);
+    private final Map<EnumSide, Integer> importRoutes = new EnumMap<EnumSide, Integer>(EnumSide.class) {{
+        put(EnumSide.UP,    -1);
+        put(EnumSide.DOWN,  -1);
+        put(EnumSide.FRONT, -1);
+        put(EnumSide.BACK,  -1);
+        put(EnumSide.LEFT,  -1);
+        put(EnumSide.RIGHT, -1);
     }};
     public List<int[]> listSlotsImport = new ArrayList<>();
     /**
      * -1: none,
      * 0: white
      */
-    public Map<EnumFacing, Integer> exportRoutes = new EnumMap<EnumFacing, Integer>(EnumFacing.class) {{
-        put(EnumFacing.UP,    -1);
-        put(EnumFacing.DOWN,  -1);
-        put(EnumFacing.NORTH, -1);
-        put(EnumFacing.SOUTH, -1);
-        put(EnumFacing.WEST,  -1);
-        put(EnumFacing.EAST,  -1);
+    private final Map<EnumSide, Integer> exportRoutes = new EnumMap<EnumSide, Integer>(EnumSide.class) {{
+        put(EnumSide.UP,    -1);
+        put(EnumSide.DOWN,  -1);
+        put(EnumSide.FRONT, -1);
+        put(EnumSide.BACK,  -1);
+        put(EnumSide.LEFT,  -1);
+        put(EnumSide.RIGHT, -1);
     }};
     public List<int[]> listSlotsExport = new ArrayList<>();
     public EnumMap<EnumFacing, ItemStack> filters = new EnumMap<EnumFacing, ItemStack>(EnumFacing.class) {{
@@ -205,16 +208,16 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
         int[] temp;
         temp = compound.getIntArray("InsertRoutes");
-        if (temp.length >= EnumFacing.VALUES.length) {
-            for (int i = 0; i < EnumFacing.VALUES.length; i++) {
-                this.importRoutes.replace(EnumFacing.VALUES[i], temp[i]);
+        if (temp.length >= EnumSide.VALUES.length) {
+            for (int i = 0; i < EnumSide.VALUES.length; i++) {
+                this.setImportRoute(EnumSide.VALUES[i], temp[i]);
             }
         }
 
         temp = compound.getIntArray("ExtractRoutes");
-        if (temp.length >= EnumFacing.VALUES.length) {
-            for (int i = 0; i < EnumFacing.VALUES.length; i++) {
-                this.exportRoutes.replace(EnumFacing.VALUES[i], temp[i]);
+        if (temp.length >= EnumSide.VALUES.length) {
+            for (int i = 0; i < EnumSide.VALUES.length; i++) {
+                this.setExportRoute(EnumSide.VALUES[i], temp[i]);
             }
         }
 
@@ -351,18 +354,18 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     protected void doAutoTakeIn() {
         int transferred = this.maxAutoExtractDefault;
         int route;
-        for (EnumFacing facing : EnumFacing.VALUES) {
-            route = this.importRoutes.get(facing);
+        for (EnumSide facing : EnumSide.VALUES) {
+            route = this.getImportRoute(facing);
             if (route != -2 && (0 > route || route >= this.listSlotsImport.size())) {
                 if (route != -1)
-                    this.importRoutes.replace(facing, -1);
+                    this.setImportRoute(facing, -1);
                 continue;
             }
 
             if (this instanceof IClayEnergyConsumer && route == -2) {
-                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, facing, clayEnergyStorageSize - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
+                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, UtilDirection.getSideOfDirection(this.getFront(), facing), clayEnergyStorageSize - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
             } else {
-                transferred = UtilTransfer.extract(this, this.listSlotsImport.get(route), facing, transferred);
+                transferred = UtilTransfer.extract(this, this.listSlotsImport.get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
             }
 
             if (transferred == 0) {
@@ -372,12 +375,12 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     protected void doAutoTakeOut() {
-        for (EnumFacing facing : EnumFacing.VALUES) {
-            int route = this.exportRoutes.get(facing);
+        for (EnumSide facing : EnumSide.VALUES) {
+            int route = this.getExportRoute(facing);
             if (0 <= route && route < this.listSlotsExport.size()) {
-                UtilTransfer.insert(this, this.listSlotsExport.get(route), facing, this.maxAutoInsertDefault);
+                UtilTransfer.insert(this, this.listSlotsExport.get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), this.maxAutoInsertDefault);
             } else {
-                this.exportRoutes.replace(facing, -1);
+                this.setExportRoute(facing, -1);
             }
         }
     }
@@ -398,13 +401,35 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     @Override
-    public Map<EnumFacing, Integer> getImportRoutes() {
-        return this.importRoutes;
+    public EnumFacing getFront() {
+        return this.front;
+    }
+
+    public void setFront(IBlockState state, BlockPos pos, EntityLivingBase placer) {
+        if (state instanceof BlockStateClaySidedContainer || state instanceof BlockStateClayDirectionalContainer)
+            this.front = ((BlockStateClayContainer) state).getFront();
+        else
+            this.front = UtilDirection.getBetterFront(state, pos, placer);
     }
 
     @Override
-    public Map<EnumFacing, Integer> getExportRoutes() {
-        return this.exportRoutes;
+    public int getImportRoute(EnumSide side) {
+        return this.importRoutes.get(side);
+    }
+
+    @Override
+    public int getExportRoute(EnumSide side) {
+        return this.exportRoutes.get(side);
+    }
+
+    @Override
+    public void setImportRoute(EnumSide side, int route) {
+        this.importRoutes.replace(side, route);
+    }
+
+    @Override
+    public void setExportRoute(EnumSide side, int route) {
+        this.exportRoutes.replace(side, route);
     }
 
     @Override

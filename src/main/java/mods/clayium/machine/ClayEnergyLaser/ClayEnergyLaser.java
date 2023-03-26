@@ -4,6 +4,7 @@ import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -11,7 +12,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -47,8 +47,7 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayEnergyLaser) {
-            ((TileEntityClayEnergyLaser) worldIn.getTileEntity(pos)).importRoutes.replace(EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite(), -2);
-            ((TileEntityClayEnergyLaser) worldIn.getTileEntity(pos)).setManager(worldIn, pos, EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite());
+            ((TileEntityClayEnergyLaser) worldIn.getTileEntity(pos)).setManager(worldIn, pos, UtilDirection.getDirectionFromEntity(pos, placer));
         }
 
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);

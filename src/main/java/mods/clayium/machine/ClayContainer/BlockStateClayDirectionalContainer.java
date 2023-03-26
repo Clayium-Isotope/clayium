@@ -6,6 +6,7 @@ import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 
@@ -34,5 +35,10 @@ public class BlockStateClayDirectionalContainer extends BlockStateClayContainer 
     @Override
     public IBlockState withMirror(Mirror mirrorIn) {
         return this.withRotation(mirrorIn.toRotation(this.getValue(FACING)));
+    }
+
+    @Override
+    public EnumFacing getFront() {
+        return this.getValue(FACING);
     }
 }

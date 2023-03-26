@@ -24,6 +24,9 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(CentrifugeSlots.values().length, ItemStack.EMPTY);
+
+        this.setImportRoutes(-1, 0, -1, -2, -1, -1);
+        this.setExportRoutes(0, -1, -1, -1, -1, -1);
         this.listSlotsImport.add(new int[]{ CentrifugeSlots.MATERIAL.ordinal() });
         this.listSlotsExport.add(new int[]{ CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_2.ordinal(), CentrifugeSlots.PRODUCT_3.ordinal(), CentrifugeSlots.PRODUCT_4.ordinal() });
         this.maxAutoExtract = new int[]{-1, 1};

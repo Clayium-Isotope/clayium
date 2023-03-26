@@ -3,9 +3,9 @@ package mods.clayium.machine.SaltExtractor;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
-import mods.clayium.machine.ClayContainer.IClayInventory;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -26,6 +26,8 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
         this.autoExtract = true;
 
         this.containerItemStacks = NonNullList.withSize(54 + 1, ItemStack.EMPTY);
+        this.setImportRoutes(-1, -1, -1, -2, -1, -1);
+        this.setExportRoutes(-1, -1, 0, -1, -1, -1);
         this.isCobblestoneGenerator = false;
         this.isBuffer = false;
     }
@@ -34,7 +36,6 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     public void initParamsByTier(int tier) {
         super.initParamsByTier(tier);
         this.listSlotsImport.clear();
-        this.listSlotsImport.add(new int[]{ this.getEnergySlot() });
         this.slotsDrop = Stream.concat(
                 IntStream.range(0, this.slotsDrop.length).boxed(),
                 Stream.of( this.getEnergySlot() ))

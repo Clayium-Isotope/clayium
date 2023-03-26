@@ -47,6 +47,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(MachineSlots.values().length, ItemStack.EMPTY);
 
+        this.setImportRoutes(-1, 0, -1, -2, -1, -1);
+        this.setExportRoutes(0, -1, -1, -1, -1, -1);
         this.listSlotsImport.add(new int[] { MachineSlots.MATERIAL.ordinal() });
         this.listSlotsExport.add(new int[] { MachineSlots.PRODUCT.ordinal() });
 
