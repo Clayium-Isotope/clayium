@@ -5,8 +5,6 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.*;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -15,7 +13,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -402,14 +399,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     @Override
     public EnumFacing getFront() {
-        return this.front;
-    }
-
-    public void setFront(IBlockState state, BlockPos pos, EntityLivingBase placer) {
-        if (state instanceof BlockStateClaySidedContainer || state instanceof BlockStateClayDirectionalContainer)
-            this.front = ((BlockStateClayContainer) state).getFront();
-        else
-            this.front = UtilDirection.getBetterFront(state, pos, placer);
+        return this.world.getBlockState(pos).getValue(BlockStateClayContainer.FACING);
     }
 
     @Override

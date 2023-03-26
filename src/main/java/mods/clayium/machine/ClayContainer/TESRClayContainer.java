@@ -67,10 +67,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             ResourceLocation face = te.getFaceResource();
             if (face != null) {
                 this.bindTexture(face);
-                if (te.getBlockState() instanceof BlockStateClaySidedContainer)
-                    pasteBoundTexToBlockFace(te.getBlockState().getValue(BlockStateClaySidedContainer.FACING));
-                if (te.getBlockState() instanceof BlockStateClayDirectionalContainer)
-                    pasteBoundTexToBlockFace(te.getBlockState().getValue(BlockStateClayDirectionalContainer.FACING));
+                pasteBoundTexToBlockFace(te.getFront());
             }
 
             for (EnumFacing facing : EnumFacing.VALUES) {

@@ -1,6 +1,5 @@
 package mods.clayium.util;
 
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -108,8 +107,6 @@ public class UtilDirection {
             front = UtilDirection.getHorizontalFromEntity(placer);
         } else {
             front = UtilDirection.getDirectionFromEntity(pos, placer);
-
-            ClayiumCore.logger.info(front.getName());
         }
         return front.getOpposite();
     }

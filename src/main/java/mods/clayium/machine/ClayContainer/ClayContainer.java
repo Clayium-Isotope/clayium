@@ -7,6 +7,7 @@ import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IModifyCC;
+import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +62,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
                     .withProperty(BlockStateClayContainer.ARM_WEST, false)
                     .withProperty(BlockStateClayContainer.ARM_EAST, false)
                     .withProperty(BlockStateClayContainer.IS_PIPE, false)
+                    .withProperty(BlockStateClayContainer.FACING, EnumFacing.NORTH)
             );
         }
     }
@@ -126,8 +129,32 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
             if (stack.hasDisplayName()) {
                 ((TileEntityClayContainer) tileentity).setCustomName(stack.getDisplayName());
             }
-            ((TileEntityClayContainer) tileentity).setFront(state, pos, placer);
         }
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+        return state.withProperty(BlockStateClayContainer.FACING, UtilDirection.getBetterFront(state, pos, placer));
+    }
+
+    @Nullable
+    @Override
+    public EnumFacing[] getValidRotations(World world, BlockPos pos) {
+        return new EnumFacing[0];
+    }
+
+    @Override
+    public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+        if (world.isRemote) return false;
+
+        EnumFacing[] axes = getValidRotations(world, pos);
+        if (axes == null || axes.length == 0) return false;
+        EnumFacing candidacy = Arrays.stream(axes).anyMatch(_axis -> axis == _axis) ? axis : axes[0];
+
+        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockStateClayContainer.FACING, candidacy));
+
+        return true;
     }
 
     @Override
@@ -164,18 +191,29 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         return tier;
     }
 
+    /**
+     * PFFF<br>
+     * F: Facing, P: IsPipe
+     */
     @Override
     public int getMetaFromState(IBlockState state) {
-        if (state instanceof BlockStateClayContainer && state.getValue(BlockStateClayContainer.IS_PIPE))
-            return 1;
-        return 0;
+        if (!(state instanceof BlockStateClayContainer)) return 0;
+
+        int meta = 0;
+        meta |= state.getValue(BlockStateClayContainer.IS_PIPE) ? 1 : 0;
+        meta <<= 3;
+        meta |= state.getValue(BlockStateClayContainer.FACING).getIndex();
+
+        return meta;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        if (!(this.getDefaultState() instanceof BlockStateClayContainer)) return getDefaultState();
+        if (this.getDefaultState().getPropertyKeys().isEmpty()) return this.getDefaultState();
 
-        return getDefaultState().withProperty(BlockStateClayContainer.IS_PIPE, meta == 1);
+        return this.getDefaultState()
+                .withProperty(BlockStateClayContainer.IS_PIPE, (meta >> 3) == 1)
+                .withProperty(BlockStateClayContainer.FACING, EnumFacing.getFront(meta & 0b0111));
     }
 
     @Override
@@ -190,10 +228,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     private static class ClayContainerStateContainer extends BlockStateContainer {
         public ClayContainerStateContainer(ClayContainer blockIn) {
-            super(blockIn,
-                    blockIn instanceof ClaySidedContainer ? BlockStateClaySidedContainer.getPropertyList().toArray(new IProperty[0])
-                    : blockIn instanceof ClayDirectionalContainer ? BlockStateClayDirectionalContainer.getPropertyList().toArray(new IProperty[0])
-                    : BlockStateClayContainer.getPropertyList().toArray(new IProperty[0]));
+            super(blockIn, BlockStateClayContainer.getPropertyList().toArray(new IProperty[0]));
         }
 
         @Override

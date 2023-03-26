@@ -1,7 +1,7 @@
 package mods.clayium.machine.SolarClayFabricator;
 
 import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayContainer.BlockStateClayDirectionalContainer;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
 import net.minecraft.block.state.IBlockState;
@@ -20,13 +20,6 @@ public class SolarClayFabricator extends ClayDirectionalNoRecipeMachine {
                 GuiHandler.GuiIdClayMachines, tier);
     }
 
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        if (!worldIn.isRemote) {
-            worldIn.setBlockState(pos, state.withProperty(BlockStateClayDirectionalContainer.FACING, EnumFacing.UP), 2);
-        }
-    }
-
     @Nullable
     @Override
     public EnumFacing[] getValidRotations(World world, BlockPos pos) {
@@ -35,6 +28,6 @@ public class SolarClayFabricator extends ClayDirectionalNoRecipeMachine {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return this.getDefaultState().withProperty(BlockStateClayDirectionalContainer.FACING, EnumFacing.UP);
+        return this.getDefaultState().withProperty(BlockStateClayContainer.FACING, EnumFacing.UP);
     }
 }

@@ -4,8 +4,10 @@ import com.google.common.collect.ImmutableMap;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -13,6 +15,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -28,6 +32,7 @@ import java.util.List;
 
 public class BlockStateClayContainer extends BlockStateContainer.StateImplementation {
     private static final float pipeWidth = 0.1875F;
+    public static final PropertyDirection FACING = BlockDirectional.FACING;
     protected static final PropertyBool IS_PIPE = PropertyBool.create("is_pipe");
 
     /* these Boolean Properties knows their own arm is activated */
@@ -46,7 +51,7 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
 
     public static List<IProperty<?>> getPropertyList() {
         return Arrays.asList(
-                IS_PIPE,
+                FACING, IS_PIPE,
                 ARM_UP, ARM_DOWN, ARM_NORTH, ARM_SOUTH, ARM_WEST, ARM_EAST
         );
     }
@@ -233,6 +238,16 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     }
 
     public EnumFacing getFront() {
-        return EnumFacing.NORTH;
+        return this.getValue(FACING);
+    }
+
+    @Override
+    public IBlockState withRotation(Rotation rot) {
+        return this.withProperty(FACING, rot.rotate(this.getValue(FACING)));
+    }
+
+    @Override
+    public IBlockState withMirror(Mirror mirrorIn) {
+        return this.withRotation(mirrorIn.toRotation(this.getValue(FACING)));
     }
 }
