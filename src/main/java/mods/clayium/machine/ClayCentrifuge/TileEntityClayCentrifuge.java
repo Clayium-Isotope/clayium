@@ -99,8 +99,6 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
                 this.getStackInSlot(i + 1).grow(itemstacks.get(i).getCount());
             }
         }
-
-        this.isDoingWork = setNewRecipe();
     }
 
     @Override

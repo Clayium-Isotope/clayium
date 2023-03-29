@@ -222,13 +222,13 @@ public class UtilTransfer {
         return rest;
     }
 
-    public static boolean canProduceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+    public static boolean canProduceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
         if (!itemstacks.isEmpty()) {
             List<ItemStack> copyItemstacks = getHardCopy(itemstacks);
             List<ItemStack> copyInventory = getHardCopy(inventory);
 
             for (ItemStack copyItemstack : copyItemstacks) {
-                if (!produceItemStack(copyItemstack, copyInventory, i, j, inventoryStackLimit).isEmpty()) {
+                if (!produceItemStack(copyItemstack, copyInventory, startIncl, endExcl, inventoryStackLimit).isEmpty()) {
                     return false;
                 }
             }

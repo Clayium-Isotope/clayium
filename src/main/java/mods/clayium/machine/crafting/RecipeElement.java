@@ -21,7 +21,7 @@ import java.util.Objects;
 // https://forums.minecraftforge.net/topic/69258-1122-custom-irecipe/
 public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe, IRecipeElement {
     private static final RecipeElement FLAT = new RecipeElement(Collections.emptyList(), -1, Collections.emptyList(), -1, -1);
-    public static IRecipeElement flat() {
+    public static RecipeElement flat() {
         return FLAT;
     }
 
