@@ -3,7 +3,6 @@ package mods.clayium.block.itemblock;
 import mods.clayium.block.CompressedClay;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.util.UtilLocale;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -37,6 +36,6 @@ public class ItemBlockCompressedClay extends ItemBlockTiered implements IClayEne
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(getClayEnergy())));
+        tooltip.add(UtilLocale.getLocalizedText("gui.Common.energy", UtilLocale.ClayEnergyNumeral(getClayEnergy())));
     }
 }

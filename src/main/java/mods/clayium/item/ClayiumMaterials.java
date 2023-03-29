@@ -8,14 +8,11 @@ import mods.clayium.item.common.*;
 import mods.clayium.util.ODHelper;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
@@ -38,14 +35,6 @@ public class ClayiumMaterials {
             res.addAll(map.values());
         }
         return res;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static void requestTint(ItemColors event) {
-        for (ItemStack stack : getMaterials()) {
-            if (stack.getItem() instanceof ClayiumShapedMaterial && ((ClayiumShapedMaterial) stack.getItem()).useGeneralIcon())
-                ((ClayiumShapedMaterial) stack.getItem()).registerMaterialColor(event);
-        }
     }
 
     private static final Map<String, ItemStack> ODReserve = new HashMap<>();

@@ -3,7 +3,7 @@ package mods.clayium.item.filter;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.item.common.ItemTiered;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import net.minecraft.client.resources.I18n;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -109,7 +109,7 @@ public abstract class FilterTemp extends ItemTiered implements IFilter, IModifyC
             name = name + ".copy";
         }
 
-        return I18n.format(name + ".name").trim();
+        return UtilLocale.getLocalizedText(name + ".name");
     }
 
     public boolean isCopy(ItemStack filter) {

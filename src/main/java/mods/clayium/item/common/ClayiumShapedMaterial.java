@@ -1,17 +1,8 @@
 package mods.clayium.item.common;
 
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import javax.annotation.Nullable;
-import java.awt.*;
 
-public class ClayiumShapedMaterial extends ItemTiered implements IItemColor {
+public class ClayiumShapedMaterial extends ItemTiered {
     private final ClayiumMaterial material;
     private final ClayiumShape shape;
     private final boolean useGeneralIcon;
@@ -60,22 +51,6 @@ public class ClayiumShapedMaterial extends ItemTiered implements IItemColor {
                 }
         }
         return null;
-    }
-
-    @Override
-    public int colorMultiplier(ItemStack stack, int tintIndex) {
-        int[] tint = material.getColors()[tintIndex];
-        return new Color(tint[0], tint[1], tint[2]).getRGB();
-    }
-
-    @SubscribeEvent
-    public void registerMaterialColor(ColorHandlerEvent.Item event){
-        event.getItemColors().registerItemColorHandler(this, this);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void registerMaterialColor(ItemColors event) {
-        event.registerItemColorHandler(this, this);
     }
 
     public ClayiumMaterial getMaterial() {

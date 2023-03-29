@@ -3,6 +3,7 @@ package mods.clayium.util;
 import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -187,5 +188,10 @@ public class UtilLocale {
         }
 
         return unsafe;
+    }
+
+    @Deprecated // for Server
+    public static String getLocalizedText(String key, Object ...args) {
+        return new TextComponentTranslation(key, args).toString().trim();
     }
 }

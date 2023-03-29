@@ -10,15 +10,12 @@ import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumShapedMaterial;
 import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.LaserReflector.TEISRLaserReflector;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -29,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -109,9 +105,7 @@ public class ClayiumCore {
         ClayiumMachines.registerMachines();
 
         EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "clay_bullet"), EntityClayBall.class, "clay_bullet", ClayiumConfiguration.EntityIdClayBall, ClayiumCore.instance(), 128, 1, true);
-        RenderingRegistry.registerEntityRenderingHandler(EntityClayBall.class, manager -> new RenderSnowball<>(manager, Items.CLAY_BALL, Minecraft.getMinecraft().getRenderItem()));
         EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "teleport_bullet"), EntityTeleportBall.class, "teleport_bullet", ClayiumConfiguration.EntityIdTeleportBall, ClayiumCore.instance(), 128, 1, true);
-        RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBall.class, manager -> new RenderSnowball<>(manager, Items.ENDER_PEARL, Minecraft.getMinecraft().getRenderItem()));
 
         proxy.preInit(event);
     }
@@ -165,8 +159,6 @@ public class ClayiumCore {
 
             // TODO not completed
             Item value = new ItemBlockTiered(block).setRegistryName(block.getRegistryName());
-            if (block == ClayiumMachines.laserReflector)
-                value.setTileEntityItemStackRenderer(new TEISRLaserReflector());
 
             event.getRegistry().register(value);
         }

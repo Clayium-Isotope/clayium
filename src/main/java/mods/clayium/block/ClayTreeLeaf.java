@@ -19,6 +19,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -31,7 +33,8 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
         setRegistryName(ClayiumCore.ModId, "clay_tree_leaves");
         setCreativeTab(ClayiumCore.tabClayium);
 
-        this.leavesFancy = Minecraft.getMinecraft().gameSettings.fancyGraphics;
+        this.leavesFancy = true;
+//        this.updateFancy();
 
         setDefaultState(this.getDefaultState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
     }
@@ -106,19 +109,25 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
-        if (this.leavesFancy != Minecraft.getMinecraft().gameSettings.fancyGraphics) this.leavesFancy = !this.leavesFancy;
+//        this.updateFancy();
         return super.isOpaqueCube(state);
     }
 
     @Override
     public BlockRenderLayer getBlockLayer() {
-        if (this.leavesFancy != Minecraft.getMinecraft().gameSettings.fancyGraphics) this.leavesFancy = !this.leavesFancy;
+//        this.updateFancy();
         return super.getBlockLayer();
     }
 
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        if (this.leavesFancy != Minecraft.getMinecraft().gameSettings.fancyGraphics) this.leavesFancy = !this.leavesFancy;
+//        this.updateFancy();
         return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
+    @SideOnly(Side.CLIENT)
+    protected void updateFancy() {
+        if (this.leavesFancy != Minecraft.getMinecraft().gameSettings.fancyGraphics)
+            this.leavesFancy = !this.leavesFancy;
     }
 }
