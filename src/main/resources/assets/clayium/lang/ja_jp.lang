@@ -287,7 +287,7 @@ item.synchronizer.tooltip.line4=できるようになるだけでなく、イン
 item.synchronizer.tooltip.line5=同期によりアイテムのテレポートが可能になる
 item.synchronizer.tooltip.line6=1. シンクロパーツでインターフェースを右クリック
 item.synchronizer.tooltip.line7=2. シンクロナイザーで右クリックして装置の座標を記録
-item.synchronizer.tooltip.line8=3. 続いてインターフェースを右クリックして同期させる
+item.synchronizer.tooltip.line8=3. 続いてインターフェースをシフト右クリックして同期させる
 
 item.filter_duplicator.copy.name=アイテムフィルター複製機
 item.filter_whitelist.name=ホワイトリストアイテムフィルター
