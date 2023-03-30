@@ -13,6 +13,14 @@ gui.Common.clayLaser=Laser : %1$s
 gui.Common.resonance=Resonance %1$s
 gui.Common.overclockFactor=Overclock x%1$s
 
+info.sync.InvalidSyncTo=Synchronize Target MUST be Interfaces.
+info.sync.HasNoTarget=Configure a Synchronize Source earlier.
+info.sync.TargetNotExist=Ensure the Synchronize Source is at the location. and Retry.
+info.sync.SuccessSync=Synchronization Completed
+info.sync.SourceDisagreed=This block is not a suitable Synchronize Source
+info.sync.SuccessSetSource=Succeed register the Synchronize Source
+info.sync.tooltip.Source=Synchronize Source: [%1$s, %2$s, %3$s] in %4$s
+
 # JEI Part
 
 recipe.clay_tree.description=A Clay Tree is a good source of Lithium, but it isn't generated in the Overworld. A sapling of Clay Tree is obtained by irradiating a vanilla sapling, planted on the ground, with Clay Laser. The energy value of Clay Laser must be higher than 1000.
@@ -277,6 +285,16 @@ item.clay_shooter_2.name=Sniper Clay Shooter
 item.clay_shooter_3.name=Sniper Clay Shooter Pro
 item.instant_teleporter.name=Instant Teleporter
 item.instant_teleporter.tooltip.line1=Teleports you to the point of impact.
+
+item.synchronizer.name=Synchronizer
+item.synchronizer.tooltip.line1=Synchronizes Interfaces with machines or buffers.
+item.synchronizer.tooltip.line2=__DETAIL__
+item.synchronizer.tooltip.line3=It enables you to control machines with
+item.synchronizer.tooltip.line4=redstone signal through Redstone Interfaces
+item.synchronizer.tooltip.line5=or to teleport items via Item Interfaces.
+item.synchronizer.tooltip.line6=1. R-click the interface with Synchronous Parts.
+item.synchronizer.tooltip.line7=2. Record the coord of the machine by R-clicking with this.
+item.synchronizer.tooltip.line8=3. Synchronize the interface by Shift and R-clicking with it.
 
 item.filter_duplicator.copy.name=Item Filter Duplicator
 item.filter_whitelist.name=White List Item Filter

@@ -13,6 +13,14 @@ gui.Common.clayLaser=レーザー %1$s
 gui.Common.resonance=共鳴率 %1$s
 gui.Common.overclockFactor=オーバークロック x%1$s
 
+info.sync.InvalidSyncTo=同期先の設定はインターフェースにおこなってください
+info.sync.HasNoTarget=まず同期元を設定してください
+info.sync.TargetNotExist=同期元のブロックが存在するか再度確認してください
+info.sync.SuccessSync=同期が完了しました
+info.sync.SourceDisagreed=同期元として不適切です
+info.sync.SuccessSetSource=同期元の設定が完了しました
+info.sync.tooltip.Source=同期元: [%1$s, %2$s, %3$s] in %4$s
+
 # JEI Part
 
 recipe.clay_tree.description=粘土樹はリチウムの良い入手源であるが、地上世界には生成されない。粘土樹の苗木は、地面に植えられたバニラの苗木に粘土レーザーを照射することで得られる。レーザーのエネルギー値は 1000 以上でなければならない。
@@ -270,6 +278,16 @@ item.clay_shooter_2.name=スナイパー粘土銃
 item.clay_shooter_3.name=スナイパー粘土銃プロ
 item.instant_teleporter.name=テレポートシューター
 item.instant_teleporter.tooltip.line1=着弾点にテレポートする
+
+item.synchronizer.name=シンクロナイザー
+item.synchronizer.tooltip.line1=インターフェースを装置に同期させる
+item.synchronizer.tooltip.line2=__DETAIL__
+item.synchronizer.tooltip.line3=赤石インターフェースを使用することで赤石制御が
+item.synchronizer.tooltip.line4=できるようになるだけでなく、インターフェースの
+item.synchronizer.tooltip.line5=同期によりアイテムのテレポートが可能になる
+item.synchronizer.tooltip.line6=1. シンクロパーツでインターフェースを右クリック
+item.synchronizer.tooltip.line7=2. シンクロナイザーで右クリックして装置の座標を記録
+item.synchronizer.tooltip.line8=3. 続いてインターフェースを右クリックして同期させる
 
 item.filter_duplicator.copy.name=アイテムフィルター複製機
 item.filter_whitelist.name=ホワイトリストアイテムフィルター

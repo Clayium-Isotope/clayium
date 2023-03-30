@@ -4,6 +4,7 @@ import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.machine.common.IInterfaceCaptive;
 import mods.clayium.util.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
@@ -25,7 +26,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class TileEntityClayContainer extends TileGeneric implements IClayInventory, ITickable {
+public class TileEntityClayContainer extends TileGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
     private boolean isLoaded;
 
     protected NonNullList<ItemStack> containerItemStacks;
@@ -118,7 +119,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     public int getSizeInventory() {
-        return this.containerItemStacks.size();
+        return this.getContainerItemStacks().size();
     }
 
     public void growCEStorageSize(int dist) {
@@ -129,19 +130,19 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     public ItemStack getStackInSlot(int index) {
-        return this.containerItemStacks.get(index);
+        return this.getContainerItemStacks().get(index);
     }
 
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.containerItemStacks, index, count);
+        return ItemStackHelper.getAndSplit(this.getContainerItemStacks(), index, count);
     }
 
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.containerItemStacks, index);
+        return ItemStackHelper.getAndRemove(this.getContainerItemStacks(), index);
     }
 
     public void setInventorySlotContents(int index, ItemStack stack) {
-        this.containerItemStacks.set(index, stack);
+        this.getContainerItemStacks().set(index, stack);
 
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
@@ -151,14 +152,14 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     public boolean isEmpty() {
-        for (ItemStack itemstack : this.containerItemStacks)
+        for (ItemStack itemstack : this.getContainerItemStacks())
             if (!itemstack.isEmpty())
                 return false;
         return true;
     }
 
     public void clear() {
-        this.containerItemStacks.clear();
+        this.getContainerItemStacks().clear();
     }
 
     public String getName() {
@@ -188,7 +189,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     public void addSpecialDrops(NonNullList<ItemStack> drops) {
         // I hope not to cause IndexOutOfBoundsException
         for (int i : this.slotsDrop) {
-            drops.add(this.containerItemStacks.get(i));
+            drops.add(this.getContainerItemStacks().get(i));
         }
     }
 
@@ -197,7 +198,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         super.readFromNBT(compound);
 
         this.containerItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.containerItemStacks);
+        ItemStackHelper.loadAllItems(compound, this.getContainerItemStacks());
 
         if (compound.hasKey("CustomName", 8)) {
             this.customName = compound.getString("CustomName");
@@ -233,7 +234,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        ItemStackHelper.saveAllItems(compound, this.containerItemStacks);
+        ItemStackHelper.saveAllItems(compound, this.getContainerItemStacks());
 
         if (hasCustomName()) {
             compound.setString("CustomName", this.customName);
@@ -275,10 +276,11 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     public boolean isPipe() {
-        return this.isPipe;
+        return ((ClayContainer) this.getBlockType()).canBePipe() && this.isPipe;
     }
 
     public void reverseIsPipe() {
+        if (!((ClayContainer) this.getBlockType()).canBePipe()) return;
         this.isPipe = !this.isPipe;
     }
 

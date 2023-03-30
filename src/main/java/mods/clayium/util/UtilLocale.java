@@ -3,6 +3,8 @@ package mods.clayium.util;
 import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -190,8 +192,28 @@ public class UtilLocale {
         return unsafe;
     }
 
+    public static ITextComponent localizeAndFormatComponent(String key, Object ...args) {
+        String unsafe = I18n.format(key, args);
+
+        if (unsafe.equals(key))
+            return new TextComponentString(key);
+
+        // this line is uncomfortable
+        if (unsafe.startsWith("Format error: ")) {
+            ClayiumCore.logger.error("[Illegal Format Exception] Translation Key: " + key);
+            return new TextComponentString(key);
+        }
+
+        return new TextComponentString(unsafe);
+    }
+
     @Deprecated // for Server
     public static String getLocalizedText(String key, Object ...args) {
-        return new TextComponentTranslation(key, args).toString().trim();
+        return getLocalizedTextComponent(key, args).getFormattedText().trim();
+    }
+
+    @Deprecated // for Server
+    public static TextComponentTranslation getLocalizedTextComponent(String key, Object ...args) {
+        return new TextComponentTranslation(key, args);
     }
 }

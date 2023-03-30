@@ -182,9 +182,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     @Override
     protected BlockStateContainer createBlockState() {
-        if (canBePipe())
-            return new ClayContainerStateContainer(this);
-        return super.createBlockState();
+        return new ClayContainerStateContainer(this);
     }
 
     public int getTier() {
@@ -200,7 +198,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         if (!(state instanceof BlockStateClayContainer)) return 0;
 
         int meta = 0;
-        meta |= state.getValue(BlockStateClayContainer.IS_PIPE) ? 1 : 0;
+        meta |= this.canBePipe() && state.getValue(BlockStateClayContainer.IS_PIPE) ? 1 : 0;
         meta <<= 3;
         meta |= state.getValue(BlockStateClayContainer.FACING).getIndex();
 
@@ -212,7 +210,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         if (this.getDefaultState().getPropertyKeys().isEmpty()) return this.getDefaultState();
 
         return this.getDefaultState()
-                .withProperty(BlockStateClayContainer.IS_PIPE, (meta >> 3) == 1)
+                .withProperty(BlockStateClayContainer.IS_PIPE, this.canBePipe() && (meta >> 3) == 1)
                 .withProperty(BlockStateClayContainer.FACING, EnumFacing.getFront(meta & 0b0111));
     }
 

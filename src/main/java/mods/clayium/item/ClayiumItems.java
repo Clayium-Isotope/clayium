@@ -111,6 +111,8 @@ public class ClayiumItems {
     public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", 6, 3, 30.0f, 0.0f, 100, 8, 40);
 
     public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter", 11, 3, 30.0F, 0.0F, 100, 8, 40);
+
+    public static final Item synchronizer = new Synchronizer();
     /* ...Tools */
 
     /* Filters... */
