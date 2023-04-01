@@ -194,9 +194,20 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public final void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
+        this.readMoreFromNBT(compound);
+    }
+
+    @Override
+    public final NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+
+        return this.writeMoreToNBT(compound);
+    }
+
+    public void readMoreFromNBT(NBTTagCompound compound) {
         this.containerItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.getContainerItemStacks());
 
@@ -231,9 +242,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         }
     }
 
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound compound) {
         ItemStackHelper.saveAllItems(compound, this.getContainerItemStacks());
 
         if (hasCustomName()) {

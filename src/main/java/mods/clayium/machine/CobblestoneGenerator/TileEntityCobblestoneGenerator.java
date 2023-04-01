@@ -69,16 +69,18 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
+        super.readMoreFromNBT(tagCompound);
+
         this.progress = tagCompound.getInteger("Progress");
         this.progressEfficiency = tagCompound.getInteger("ProgressEfficiency");
         this.externalControlState = tagCompound.getInteger("ExternalControlState");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
+        super.writeMoreToNBT(tagCompound);
+
         tagCompound.setInteger("Progress", this.progress);
         tagCompound.setInteger("ProgressEfficiency", this.progressEfficiency);
         tagCompound.setInteger("ExternalControlState", this.externalControlState);

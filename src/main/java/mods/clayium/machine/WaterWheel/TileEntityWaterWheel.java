@@ -30,14 +30,16 @@ public class TileEntityWaterWheel extends TileEntityClayiumMachine {
         this.autoExtract = false;
     }
 
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
+    @Override
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
+        super.readMoreFromNBT(tagCompound);
         this.progress = tagCompound.getInteger("Progress");
         this.progressEfficiency = tagCompound.getInteger("ProgressEfficiency");
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
+    @Override
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
+        super.writeMoreToNBT(tagCompound);
         tagCompound.setInteger("Progress", this.progress);
         tagCompound.setInteger("ProgressEfficiency", this.progressEfficiency);
         return tagCompound;

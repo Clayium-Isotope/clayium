@@ -97,7 +97,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
         this.craftTime = tagCompound.getLong("CraftTime");
         this.timeToCraft = tagCompound.getLong("TimeToCraft");
         this.debtEnergy = tagCompound.getLong("ConsumingEnergy");
@@ -107,14 +107,10 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
         this.doingRecipe = this.recipeCards.getRecipe(tagCompound.getInteger("RecipeHash"), RecipeElement.flat());
         this.isDoingWork = this.doingRecipe != RecipeElement.flat();
-
-        super.readFromNBT(tagCompound);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
-
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
         tagCompound.setLong("CraftTime", this.craftTime);
         tagCompound.setLong("TimeToCraft", this.timeToCraft);
         tagCompound.setLong("ConsumingEnergy", this.debtEnergy);

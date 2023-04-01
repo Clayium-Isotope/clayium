@@ -51,18 +51,14 @@ public class TileEntityClayWorkTable extends TileEntityClayContainer implements 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
-
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
         this.craftTime = tagCompound.getLong("KneadProgress");
 //        this.timeToCraft = tagCompound.getLong("TimeToKnead");
         this.currentRecipe = ClayiumRecipes.clayWorkTable.getRecipe(tagCompound.getInteger("RecipeHash"), KneadingRecipe.flat());
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
-
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
         tagCompound.setLong("KneadProgress", this.craftTime);
 //        tagCompound.setLong("TimeToKnead", this.timeToCraft);
         tagCompound.setInteger("RecipeHash", this.currentRecipe.hashCode());

@@ -87,13 +87,13 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
         this.manager.update(flag);
     }
 
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
+    @Override
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
         this.manager.readFromNBT(tagCompound.getCompoundTag("ClayEnergyManager"));
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
+    @Override
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
         NBTTagCompound tagCompound1 = new NBTTagCompound();
         this.manager.writeToNBT(tagCompound1);
         tagCompound.setTag("ClayEnergyManager", tagCompound1);

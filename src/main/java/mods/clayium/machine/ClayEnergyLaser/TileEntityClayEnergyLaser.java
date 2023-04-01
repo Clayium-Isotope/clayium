@@ -98,21 +98,24 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
+        super.readMoreFromNBT(tagCompound);
+
         this.manager.readFromNBT(tagCompound.getCompoundTag("ClayEnergyManager"));
         this.setPowered(tagCompound.getBoolean("Powered"));
         this.containEnergy = tagCompound.getLong("ContainEnergy");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
+        super.writeMoreToNBT(tagCompound);
+
         NBTTagCompound manager = new NBTTagCompound();
         this.manager.writeToNBT(manager);
         tagCompound.setTag("ClayEnergyManager", manager);
         tagCompound.setBoolean("Powered", this.isPowered());
         tagCompound.setLong("ContainEnergy", this.containEnergy);
+
         return tagCompound;
     }
 
