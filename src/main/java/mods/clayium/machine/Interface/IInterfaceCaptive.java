@@ -8,8 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -38,6 +40,10 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
     NonNullList<ItemStack> getContainerItemStacks();
 
     void setCustomName(String name);
+
+    int getGuiId();
+    World getWorld();
+    BlockPos getPos();
 
     class EmptyCaptive implements IInterfaceCaptive {
         private static final NonNullList<ItemStack> containerItemStacks = NonNullList.from(ItemStack.EMPTY);
@@ -218,6 +224,21 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
         @Override
         public void setCustomName(String customName) {
             this.customName = customName;
+        }
+
+        @Override
+        public int getGuiId() {
+            return -1;
+        }
+
+        @Override
+        public World getWorld() {
+            return null;
+        }
+
+        @Override
+        public BlockPos getPos() {
+            return null;
         }
     }
 }

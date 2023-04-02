@@ -39,6 +39,7 @@ public class UtilBuilder {
     public static String synchronize(TileEntityClayContainer source, TileEntityClayInterface target) {
         if (source == null || target == null) return "Unknown Signature";
 
+        if (!target.isSyncEnabled()) return "Synchronous Parts hasn't applied";
         // TODO 登録処理
         TileEntityClayInterface.setCoreBlock(source, target);
         return "";

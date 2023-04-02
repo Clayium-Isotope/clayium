@@ -80,7 +80,7 @@ public class ClayiumItems {
     public static final Item CEE = new ItemTiered("cee", 3);
     public static final Item laserParts = new ItemTiered("laser_parts", 7);
     public static final Item antimatterSeed = new ItemTiered("antimatter_seed", 9);
-    public static final Item synchronousParts = new ItemTiered("synchronous_parts", 9);
+    public static final Item synchronousParts = new SynchronousParts();
     public static final Item teleportationParts = new ItemTiered("teleportation_parts", 11);
     public static final Item manipulator1 = new ItemTiered("manipulator_1", 6);
     public static final Item manipulator2 = new ItemTiered("manipulator_2", 8);

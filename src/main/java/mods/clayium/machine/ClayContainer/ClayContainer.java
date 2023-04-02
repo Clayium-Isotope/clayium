@@ -40,7 +40,7 @@ import java.util.Optional;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
     private final Class<? extends TileGeneric> teClass;
-    private final int guiId;
+    /*package-private*/ final int guiId;
     protected final int tier;
 
     public ClayContainer(Material material, Class<? extends TileGeneric> teClass, String modelPath, int guiId, int tier) {

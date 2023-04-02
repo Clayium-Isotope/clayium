@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TileEntityClayInterface extends TileEntityClayContainer implements ISynchronizedInterface {
+    protected boolean enableSync = false;
     protected boolean synced = false;
     protected IInterfaceCaptive core = IInterfaceCaptive.NONE;
     protected int[] syncSource = null;
@@ -45,13 +46,28 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     }
 
     public static void setCoreBlock(@Nullable TileEntityClayContainer tile, TileEntityClayInterface _this) {
-        if (IInterfaceCaptive.isSyncable(tile)) {
+        if (_this.enableSync && IInterfaceCaptive.isSyncable(tile)) {
             _this.core = tile;
             _this.synced = true;
         } else {
             _this.core = IInterfaceCaptive.NONE;
             _this.synced = false;
         }
+    }
+
+    public IInterfaceCaptive getCore() {
+        return this.core;
+    }
+
+    public boolean markEnableSync() {
+        if (this.isSyncEnabled()) return false;
+
+        this.enableSync = true;
+        return true;
+    }
+
+    public boolean isSyncEnabled() {
+        return this.enableSync;
     }
 
     @Override
@@ -86,6 +102,8 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
             this.isLoaded = false;
         }
 
+        this.enableSync = compound.getBoolean("SyncEnabled");
+
         initParamsByTier(compound.getInteger("Tier"));
     }
 
@@ -107,6 +125,8 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         if (this.isSynced()) {
             compound.setIntArray("SyncSource", UtilBuilder.getIntArrayFromTile((TileEntity) this.core));
         }
+
+        compound.setBoolean("SyncEnabled", this.enableSync);
 
         return compound;
     }

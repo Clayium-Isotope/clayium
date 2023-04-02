@@ -452,6 +452,10 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         return this.containerItemStacks;
     }
 
+    public int getGuiId() {
+        return ((ClayContainer) this.getBlockType()).guiId;
+    }
+
     /* ========== Texture Part ========== */
 
     @SideOnly(Side.CLIENT)

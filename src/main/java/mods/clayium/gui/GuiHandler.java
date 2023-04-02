@@ -28,6 +28,8 @@ import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.MultitrackBuffer.ContainerMultitrackBuffer;
 import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.common.ContainerNormalInventory;
@@ -80,6 +82,13 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerChemicalMetalSeparator(player.inventory, (TileEntityChemicalMetalSeparator) tile);
             case GuiIdAutoClayCondenser:
                 return new ContainerAutoClayCondenser(player.inventory, (TileEntityAutoClayCondenser) tile);
+            case GuiIdClayInterface:
+                assert tile instanceof TileEntityClayInterface;
+                if (((TileEntityClayInterface) tile).isSynced()) {
+                    IInterfaceCaptive core = ((TileEntityClayInterface) tile).getCore();
+                    return this.getServerGuiElement(core.getGuiId(), player, core.getWorld(), core.getPos().getX(), core.getPos().getY(), core.getPos().getZ());
+                }
+                return null;
         }
 
         return null;
@@ -122,6 +131,13 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiChemicalMetalSeparator(new ContainerChemicalMetalSeparator(player.inventory, (TileEntityChemicalMetalSeparator) tile));
             case GuiIdAutoClayCondenser:
                 return new GuiTemp(new ContainerAutoClayCondenser(player.inventory, (TileEntityAutoClayCondenser) tile));
+            case GuiIdClayInterface:
+                assert tile instanceof TileEntityClayInterface;
+                if (((TileEntityClayInterface) tile).isSynced()) {
+                    IInterfaceCaptive core = ((TileEntityClayInterface) tile).getCore();
+                    return this.getClientGuiElement(core.getGuiId(), player, core.getWorld(), core.getPos().getX(), core.getPos().getY(), core.getPos().getZ());
+                }
+                return null;
         }
 
         return null;
