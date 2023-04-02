@@ -2,7 +2,9 @@ package mods.clayium.item;
 
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -23,7 +25,12 @@ public class ClaySpatula extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
-            tecc.reverseIsPipe();
+
+            IBlockState state = worldIn.getBlockState(pos);
+            if (state instanceof BlockStateClayContainer) {
+                worldIn.setBlockState(pos, ((BlockStateClayContainer) state).reverseIsPipe(), 3);
+            }
+
             tecc.updateEntity();
 
             return EnumActionResult.SUCCESS;

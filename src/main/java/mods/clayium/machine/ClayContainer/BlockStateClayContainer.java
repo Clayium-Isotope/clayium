@@ -33,7 +33,7 @@ import java.util.List;
 public class BlockStateClayContainer extends BlockStateContainer.StateImplementation {
     private static final float pipeWidth = 0.1875F;
     public static final PropertyDirection FACING = BlockDirectional.FACING;
-    protected static final PropertyBool IS_PIPE = PropertyBool.create("is_pipe");
+    public static final PropertyBool IS_PIPE = PropertyBool.create("is_pipe");
 
     /* these Boolean Properties knows their own arm is activated */
     protected static final PropertyBool ARM_UP = PropertyBool.create("arm_up");
@@ -98,7 +98,14 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
                 || !((ClayContainer) tile.getBlockType()).canBePipe()) return false;
 
         return tile instanceof TileEntityClayContainer
-                && ((TileEntityClayContainer) tile).isPipe();
+                && ((TileEntityClayContainer) tile).getBlockState().getValue(IS_PIPE);
+    }
+
+    public IBlockState reverseIsPipe() {
+        if (this.getBlock().canBePipe()) {
+            return this.withProperty(BlockStateClayContainer.IS_PIPE, !this.getValue(BlockStateClayContainer.IS_PIPE));
+        }
+        return this;
     }
 
     @Override

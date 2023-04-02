@@ -35,9 +35,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     protected int clayEnergyStorageSize = 1;
     protected int[] slotsDrop;
 
-    protected boolean isPipe = false;
-
-    private EnumFacing front = EnumFacing.NORTH;
     /**
      * -2: energy
      * -1: none,
@@ -218,8 +215,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
         loadIORoutes(compound);
 
-        this.isPipe = compound.getBoolean("IsPipe");
-
         this.autoInsertCount = compound.getInteger("AutoInsertCount");
         this.autoExtractCount = compound.getInteger("AutoExtractCount");
 
@@ -238,8 +233,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         }
 
         saveIORoutes(compound);
-
-        compound.setBoolean("IsPipe", this.isPipe);
 
         compound.setInteger("AutoInsertCount", this.autoInsertCount);
         compound.setInteger("AutoExtractCount", this.autoExtractCount);
@@ -291,15 +284,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         if (this.getWorld().getBlockState(this.getPos()) instanceof BlockStateClayContainer)
             return (BlockStateClayContainer) this.getWorld().getBlockState(this.getPos());
         return null;
-    }
-
-    public boolean isPipe() {
-        return ((ClayContainer) this.getBlockType()).canBePipe() && this.isPipe;
-    }
-
-    public void reverseIsPipe() {
-        if (!((ClayContainer) this.getBlockType()).canBePipe()) return;
-        this.isPipe = !this.isPipe;
     }
 
     @Override
