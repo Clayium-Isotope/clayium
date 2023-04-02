@@ -72,8 +72,8 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
 
             for (EnumFacing facing : EnumFacing.VALUES) {
                 EnumSide side = UtilDirection.getSideOfDirection(te.getFront(), facing);
-                bindImportBlockTexAsCan(te.getImportRoute(side), te.InsertIcons, facing);
-                bindExportBlockTexAsCan(te.getExportRoute(side), te.ExtractIcons, facing);
+                bindImportBlockTexAsCan(te.getImportRoute(side), te.getInsertIcons(), facing);
+                bindExportBlockTexAsCan(te.getExportRoute(side), te.getExtractIcons(), facing);
 
                 bindFilterBlockTexAsCan(te.filters.get(facing), facing);
             }
@@ -86,8 +86,8 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
                 for (EnumFacing facing : EnumFacing.VALUES) {
                     if (te.getBlockState().isTheFacingActivated(facing)) {
                         EnumSide side = UtilDirection.getSideOfDirection(te.getFront(), facing);
-                        bindImportPipeTexAsCan(modelCC, te.getImportRoute(side), te.InsertPipeIcons, facing);
-                        bindExportPipeTexAsCan(modelCC, te.getExportRoute(side), te.ExtractPipeIcons, facing);
+                        bindImportPipeTexAsCan(modelCC, te.getImportRoute(side), te.getInsertPipeIcons(), facing);
+                        bindExportPipeTexAsCan(modelCC, te.getExportRoute(side), te.getExtractPipeIcons(), facing);
                     }
                 }
             }

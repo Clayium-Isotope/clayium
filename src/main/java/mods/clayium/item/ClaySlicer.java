@@ -29,7 +29,7 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
             EnumSide side = UtilDirection.getSideOfDirection(tecc.getFront(), facing);
             int dist = tecc.getExportRoute(side) + 1;
 
-            if (tecc.listSlotsExport.size() <= dist || tecc.listSlotsExport.get(0).length >= 2 && dist == tecc.listSlotsExport.get(0).length + 1) {
+            if (tecc.getListSlotsExport().size() <= dist || tecc.getListSlotsExport().get(0).length >= 2 && dist == tecc.getListSlotsExport().get(0).length + 1) {
                 dist = -1;
                 player.sendMessage(new TextComponentString("Disabled"));
             } else {

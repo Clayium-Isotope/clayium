@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TileEntityClayContainer extends TileGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
-    private boolean isLoaded;
+    protected boolean isLoaded;
 
     protected NonNullList<ItemStack> containerItemStacks;
     protected String customName;
@@ -50,7 +51,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         put(EnumSide.LEFT,  -1);
         put(EnumSide.RIGHT, -1);
     }};
-    public List<int[]> listSlotsImport = new ArrayList<>();
+    protected final List<int[]> listSlotsImport = new ArrayList<>();
     /**
      * -1: none,
      * 0: white
@@ -63,7 +64,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         put(EnumSide.LEFT,  -1);
         put(EnumSide.RIGHT, -1);
     }};
-    public List<int[]> listSlotsExport = new ArrayList<>();
+    protected final List<int[]> listSlotsExport = new ArrayList<>();
     public EnumMap<EnumFacing, ItemStack> filters = new EnumMap<EnumFacing, ItemStack>(EnumFacing.class) {{
         put(EnumFacing.UP,    ItemStack.EMPTY);
         put(EnumFacing.DOWN,  ItemStack.EMPTY);
@@ -180,8 +181,8 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     public boolean isUsableByPlayer(EntityPlayer player) {
-        if (this.world.getTileEntity(this.pos) == this)
-            return player.getDistanceSq(this.pos.add(0.5D, 0.5D, 0.5D)) <= 64.0D;
+        if (this.getWorld().getTileEntity(this.getPos()) == this)
+            return player.getDistanceSq(this.getPos().add(0.5D, 0.5D, 0.5D)) <= 64.0D;
         return false;
     }
 
@@ -211,10 +212,46 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         this.containerItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.getContainerItemStacks());
 
-        if (compound.hasKey("CustomName", 8)) {
+        if (compound.hasKey("CustomName", Constants.NBT.TAG_STRING)) {
             this.customName = compound.getString("CustomName");
         }
 
+        loadIORoutes(compound);
+
+        this.isPipe = compound.getBoolean("IsPipe");
+
+        this.autoInsertCount = compound.getInteger("AutoInsertCount");
+        this.autoExtractCount = compound.getInteger("AutoExtractCount");
+
+        initParamsByTier(compound.getInteger("Tier"));
+
+        if (compound.hasKey("Filters", Constants.NBT.TAG_LIST)) {
+            UtilCollect.tagList2EnumMap(compound.getTagList("Filters", Constants.NBT.TAG_COMPOUND), this.filters);
+        }
+    }
+
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound compound) {
+        ItemStackHelper.saveAllItems(compound, this.getContainerItemStacks());
+
+        if (hasCustomName()) {
+            compound.setString("CustomName", this.customName);
+        }
+
+        saveIORoutes(compound);
+
+        compound.setBoolean("IsPipe", this.isPipe);
+
+        compound.setInteger("AutoInsertCount", this.autoInsertCount);
+        compound.setInteger("AutoExtractCount", this.autoExtractCount);
+
+        compound.setInteger("Tier", this.tier);
+
+        compound.setTag("Filters", UtilCollect.enumMap2TagList(this.filters));
+
+        return compound;
+    }
+
+    protected void loadIORoutes(NBTTagCompound compound) {
         int[] temp;
         temp = compound.getIntArray("InsertRoutes");
         if (temp.length >= EnumSide.VALUES.length) {
@@ -229,46 +266,18 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
                 this.setExportRoute(EnumSide.VALUES[i], temp[i]);
             }
         }
-
-        this.isPipe = compound.getBoolean("IsPipe");
-
-        this.autoInsertCount = compound.getInteger("AutoInsertCount");
-        this.autoExtractCount = compound.getInteger("AutoExtractCount");
-
-        initParamsByTier(compound.getInteger("Tier"));
-
-        if (compound.hasKey("Filters", 9)) {
-            UtilCollect.tagList2EnumMap(compound.getTagList("Filters", 10), this.filters);
-        }
     }
 
-    public NBTTagCompound writeMoreToNBT(NBTTagCompound compound) {
-        ItemStackHelper.saveAllItems(compound, this.getContainerItemStacks());
-
-        if (hasCustomName()) {
-            compound.setString("CustomName", this.customName);
-        }
-
+    protected void saveIORoutes(NBTTagCompound compound) {
         compound.setIntArray("InsertRoutes", this.importRoutes.values().stream().mapToInt(e -> e).toArray());
         compound.setIntArray("ExtractRoutes", this.exportRoutes.values().stream().mapToInt(e -> e).toArray());
-
-        compound.setBoolean("IsPipe", this.isPipe);
-
-        compound.setInteger("AutoInsertCount", this.autoInsertCount);
-        compound.setInteger("AutoExtractCount", this.autoExtractCount);
-
-        compound.setInteger("Tier", this.tier);
-
-        compound.setTag("Filters", UtilCollect.enumMap2TagList(this.filters));
-
-        return compound;
     }
 
     @Override
     public void onLoad() {
         this.isLoaded = false;
-//        ClayContainer.ClayContainerState.checkSurroundConnection(this.world, this.pos, this);
-//        this.world.addBlockEvent(this.pos, this.getBlockType(), 0, 0);
+//        ClayContainer.ClayContainerState.checkSurroundConnection(this.getWorld(), this.getPos(), this);
+//        this.getWorld().addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
     }
 
     public void openInventory(EntityPlayer player) {}
@@ -279,8 +288,8 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
      * TESR のために、TE と Blockstate / Block の上手い橋渡しについて、模索中。
      */
     public BlockStateClayContainer getBlockState() {
-        if (this.world.getBlockState(this.pos) instanceof BlockStateClayContainer)
-            return (BlockStateClayContainer) this.world.getBlockState(this.pos);
+        if (this.getWorld().getBlockState(this.getPos()) instanceof BlockStateClayContainer)
+            return (BlockStateClayContainer) this.getWorld().getBlockState(this.getPos());
         return null;
     }
 
@@ -325,8 +334,8 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         }
     }
 
-    protected void doTransfer() {
-        if (!this.world.isRemote) {
+    public void doTransfer() {
+        if (!this.getWorld().isRemote) {
             if (this.autoExtract) {
                 this.autoExtractCount++;
                 if (this.autoExtractCount >= this.autoExtractInterval) {
@@ -338,7 +347,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
             }
 
             // 挙動を再現するために、なんとなく書いてます。
-            this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos), 3);
+            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
 
             if (this.autoInsert) {
                 this.autoInsertCount++;
@@ -354,7 +363,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     @Override
     public void updateEntity() {
-        BlockStateClayContainer.checkSurroundConnection(this.world, this.pos, this);
+        BlockStateClayContainer.checkSurroundConnection(this.getWorld(), this.getPos(), this);
 
         super.updateEntity();
     }
@@ -364,16 +373,16 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         int route;
         for (EnumSide facing : EnumSide.VALUES) {
             route = this.getImportRoute(facing);
-            if (route != -2 && (0 > route || route >= this.listSlotsImport.size())) {
-                if (route != -1)
-                    this.setImportRoute(facing, -1);
+            if (route != -2 && (0 > route || route >= this.getListSlotsImport().size())) {
+//                if (route != -1)
+//                    this.setImportRoute(facing, -1);
                 continue;
             }
 
             if (this instanceof IClayEnergyConsumer && route == -2) {
                 transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, UtilDirection.getSideOfDirection(this.getFront(), facing), clayEnergyStorageSize - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
             } else {
-                transferred = UtilTransfer.extract(this, this.listSlotsImport.get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
+                transferred = UtilTransfer.extract(this, this.getListSlotsImport().get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
             }
 
             if (transferred == 0) {
@@ -385,10 +394,10 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     protected void doAutoTakeOut() {
         for (EnumSide facing : EnumSide.VALUES) {
             int route = this.getExportRoute(facing);
-            if (0 <= route && route < this.listSlotsExport.size()) {
-                UtilTransfer.insert(this, this.listSlotsExport.get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), this.maxAutoInsertDefault);
-            } else {
-                this.setExportRoute(facing, -1);
+            if (0 <= route && route < this.getListSlotsExport().size()) {
+                UtilTransfer.insert(this, this.getListSlotsExport().get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), this.maxAutoInsertDefault);
+//            } else {
+//                this.setExportRoute(facing, -1);
             }
         }
     }
@@ -410,7 +419,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     @Override
     public EnumFacing getFront() {
-        return this.world.getBlockState(pos).getValue(BlockStateClayContainer.FACING);
+        return this.getWorld().getBlockState(this.getPos()).getValue(BlockStateClayContainer.FACING);
     }
 
     @Override
@@ -481,11 +490,30 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     public void registerIOIcons() {}
 
     @SideOnly(Side.CLIENT)
-    public final List<ResourceLocation> InsertIcons = new ArrayList<>();
+    private final List<ResourceLocation> InsertIcons = new ArrayList<>();
     @SideOnly(Side.CLIENT)
-    public final List<ResourceLocation> ExtractIcons = new ArrayList<>();
+    public List<ResourceLocation> getInsertIcons() {
+        return InsertIcons;
+    }
+
     @SideOnly(Side.CLIENT)
-    public final List<ResourceLocation> InsertPipeIcons = new ArrayList<>();
+    private final List<ResourceLocation> ExtractIcons = new ArrayList<>();
     @SideOnly(Side.CLIENT)
-    public final List<ResourceLocation> ExtractPipeIcons = new ArrayList<>();
+    public List<ResourceLocation> getExtractIcons() {
+        return ExtractIcons;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private final List<ResourceLocation> InsertPipeIcons = new ArrayList<>();
+    @SideOnly(Side.CLIENT)
+    public List<ResourceLocation> getInsertPipeIcons() {
+        return InsertPipeIcons;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private final List<ResourceLocation> ExtractPipeIcons = new ArrayList<>();
+    @SideOnly(Side.CLIENT)
+    public List<ResourceLocation> getExtractPipeIcons() {
+        return ExtractPipeIcons;
+    }
 }
