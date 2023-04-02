@@ -1,0 +1,6 @@
+{
+  "parent": "clayium:block/machine/interface_temp",
+  "textures": {
+    "hull": "clayium:blocks/machinehull-6"
+  }
+}

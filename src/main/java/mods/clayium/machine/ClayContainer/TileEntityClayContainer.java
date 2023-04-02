@@ -2,9 +2,9 @@ package mods.clayium.machine.ClayContainer;
 
 import mods.clayium.block.tile.TileGeneric;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.machine.common.IInterfaceCaptive;
 import mods.clayium.util.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;

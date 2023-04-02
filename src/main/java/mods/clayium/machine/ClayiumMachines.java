@@ -5,6 +5,7 @@ import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
+import mods.clayium.machine.ClayBlastFurnace.ClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.ClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
 import mods.clayium.machine.ClayChemicalReactor.ClayChemicalReactor;
@@ -16,6 +17,7 @@ import mods.clayium.machine.ClayFabricator.ClayFabricator;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
+import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
 import mods.clayium.machine.LaserReflector.LaserReflector;
 import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.QuartzCrucible;
@@ -96,10 +98,10 @@ public class ClayiumMachines {
         addAssembler(EnumMachineKind.alloySmelter, 6);
         alloySmelter = get(EnumMachineKind.alloySmelter, TierPrefix.precision);
 
-//        add(EnumMachineKind.blastFurnace, 6, new ClayBlastFurnace());
-//        blastFurnace = get(EnumMachineKind.blastFurnace, TierPrefix.precision);
-//
-//        add(EnumMachineKind.clayInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayInterface.class);
+        addContainer(EnumMachineKind.blastFurnace, 6, new ClayBlastFurnace());
+        blastFurnace = get(EnumMachineKind.blastFurnace, TierPrefix.precision);
+
+        addContainers(EnumMachineKind.clayInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayInterface.class);
 //        add(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
 //        add(EnumMachineKind.laserInterface, new int[]{ 7, 8, 9, 10, 11, 12, 13 }, ClayLaserInterface.class);
 //

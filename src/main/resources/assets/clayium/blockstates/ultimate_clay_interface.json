@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "clayium:machine/ultimate_clay_interface"
+      }
+    }
+  ]
+}

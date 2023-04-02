@@ -13,12 +13,13 @@ gui.Common.clayLaser=レーザー %1$s
 gui.Common.resonance=共鳴率 %1$s
 gui.Common.overclockFactor=オーバークロック x%1$s
 
-info.sync.InvalidSyncTo=同期先の設定はインターフェースにおこなってください
-info.sync.HasNoTarget=まず同期元を設定してください
-info.sync.TargetNotExist=同期元のブロックが存在するか再度確認してください
+info.sync.InvalidSyncInterface=同期先の設定はインターフェースにおこなってください
+info.sync.HasNoMachine=まず同期元を設定してください
+info.sync.MachineNotExist=同期元のブロックが存在するか再度確認してください
+info.sync.ProblemRaised=同期中にエラーが発生しました: %1$s
 info.sync.SuccessSync=同期が完了しました
-info.sync.SourceDisagreed=同期元として不適切です
-info.sync.SuccessSetSource=同期元の設定が完了しました
+info.sync.MachineDisagreed=同期元として不適切です
+info.sync.SuccessSetMachine=同期元の設定が完了しました
 info.sync.tooltip.Source=同期元: [%1$s, %2$s, %3$s] in %4$s
 
 # JEI Part

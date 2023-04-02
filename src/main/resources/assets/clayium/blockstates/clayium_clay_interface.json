@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "clayium:machine/clayium_clay_interface"
+      }
+    }
+  ]
+}

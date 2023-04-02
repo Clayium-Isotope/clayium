@@ -18,6 +18,7 @@ import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
+import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.LaserReflector.TEISRLaserReflector;
 import mods.clayium.machine.LaserReflector.TESRLaserReflector;
 import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
@@ -110,6 +111,8 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntitySolarClayFabricator.class, "clayium:solar_clay_fabricator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayFabricator.class, "clayium:clay_fabricator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityChemicalMetalSeparator.class, "clayium:chemical_metal_separator", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayInterface.class, "clayium:interface", new TESRClayContainer());
+//		GameRegistry.registerTileEntity(TileEntityClayInterface.class, new ResourceLocation(ClayiumCore.ModId, "interface"));
 
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 	}

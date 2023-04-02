@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "clayium:machine/pure_antimatter_clay_interface"
+      }
+    }
+  ]
+}

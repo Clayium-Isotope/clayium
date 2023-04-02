@@ -2,11 +2,11 @@ package mods.clayium.item;
 
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
-import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
-import mods.clayium.machine.common.IInterfaceCaptive;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.util.UtilBuilder;
 import mods.clayium.util.UtilLocale;
-import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,10 +21,13 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Synchronizer extends ClayiumItem implements IModifyCC {
     private static final String SourceKey = "SyncSource";
+    public static final Map<TileEntityClayInterface, TileEntityClayContainer> interfaceLinks = new HashMap<>();
 
     public Synchronizer() {
         super("synchronizer");
@@ -37,20 +40,19 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.getHeldItem(hand);
         assert !itemStack.isEmpty();
-        Block block = worldIn.getBlockState(pos).getBlock();
         TileEntity tile = worldIn.getTileEntity(pos);
 
         if (player.isSneaking()) { // インターフェースにShift+右クリックでシンクロ
-            return applySync(player, itemStack, worldIn, pos, block, tile);
+            return applySync(player, itemStack, worldIn, tile);
         } else { // 機械に右クリックで同期元を設定
-            return makeReadyToSync(player, itemStack, worldIn, pos, block, tile);
+            return makeReadyToSync(player, itemStack, worldIn, tile);
         }
     }
 
-    protected static EnumActionResult applySync(EntityPlayer player, ItemStack itemStack, World world, BlockPos pos, Block block, TileEntity tile) {
-        if (!(block instanceof ClayInterface && tile instanceof TileEntityClayInterface)) {
+    protected static EnumActionResult applySync(EntityPlayer player, ItemStack itemStack, World world, TileEntity tile) {
+        if (!(tile instanceof TileEntityClayInterface)) {
             if (world.isRemote) {
-                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.InvalidSyncTo"));
+                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.InvalidSyncInterface"));
             }
             return EnumActionResult.PASS;
         }
@@ -61,22 +63,28 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
                 || (coord = itemStack.getTagCompound().getIntArray(SourceKey)).length != 4
         ) {
             if (world.isRemote) {
-                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.HasNoTarget"));
+                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.HasNoMachine"));
             }
             return EnumActionResult.PASS;
         }
 
-        World coreWorld = DimensionManager.getWorld(coord[0]);
-        BlockPos corePos = new BlockPos(coord[1], coord[2], coord[3]);
+        TileEntity sourceTile = UtilBuilder.getTileFromIntArray(coord);
 
-        if (!IInterfaceCaptive.isSyncable(coreWorld.getTileEntity(corePos))) {
+        if (!(sourceTile instanceof TileEntityClayContainer) || !IInterfaceCaptive.isSyncable(sourceTile)) {
             if (world.isRemote) {
-                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.TargetNotExist"));
+                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.MachineNotExist"));
             }
             return EnumActionResult.PASS;
         }
 
-        // TODO 登録処理
+        String code = UtilBuilder.synchronize((TileEntityClayContainer) sourceTile, (TileEntityClayInterface) tile);
+
+        if (!code.isEmpty()) {
+            if (world.isRemote) {
+                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.ProblemRaised", code));
+            }
+            return EnumActionResult.PASS;
+        }
 
         if (world.isRemote) {
             player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.SuccessSync"));
@@ -86,22 +94,22 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
         return EnumActionResult.SUCCESS;
     }
 
-    protected static EnumActionResult makeReadyToSync(EntityPlayer player, ItemStack itemStack, World world, BlockPos pos, Block block, TileEntity tile) {
+    protected static EnumActionResult makeReadyToSync(EntityPlayer player, ItemStack itemStack, World world, TileEntity tile) {
         if (!IInterfaceCaptive.isSyncable(tile)) {
             if (world.isRemote) {
-                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.SourceDisagreed"));
+                player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.MachineDisagreed"));
             }
             return EnumActionResult.PASS;
         }
 
         if (world.isRemote) {
-            player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.SuccessSetSource"));
+            player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.SuccessSetMachine"));
         }
 
         NBTTagCompound compound = itemStack.hasTagCompound() ? itemStack.getTagCompound() : new NBTTagCompound();
 
         assert compound != null;
-        compound.setIntArray(SourceKey, new int[] {world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ() });
+        compound.setIntArray(SourceKey, UtilBuilder.getIntArrayFromTile(tile));
 
         itemStack.setTagCompound(compound);
 

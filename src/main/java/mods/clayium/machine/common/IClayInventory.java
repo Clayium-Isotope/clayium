@@ -118,14 +118,18 @@ public interface IClayInventory extends ISidedInventory {
             case -1:
                 break;
             default:
-                for (int slot : inv.getListSlotsImport().get(inv.getImportRoute(side))) {
-                    flags[slot] = true;
+                if (!inv.getListSlotsImport().isEmpty()) {
+                    for (int slot : inv.getListSlotsImport().get(inv.getImportRoute(side))) {
+                        flags[slot] = true;
+                    }
                 }
         }
 
         if (inv.getExportRoute(side) != -1) {
-            for (int slot : inv.getListSlotsExport().get(inv.getExportRoute(side))) {
-                flags[slot] = true;
+            if (!inv.getListSlotsExport().isEmpty()) {
+                for (int slot : inv.getListSlotsExport().get(inv.getExportRoute(side))) {
+                    flags[slot] = true;
+                }
             }
         }
 
