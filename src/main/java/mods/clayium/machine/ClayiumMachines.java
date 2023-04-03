@@ -5,7 +5,6 @@ import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
-import mods.clayium.machine.ClayBlastFurnace.ClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.ClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
 import mods.clayium.machine.ClayChemicalReactor.ClayChemicalReactor;
@@ -97,9 +96,6 @@ public class ClayiumMachines {
 
         addAssembler(EnumMachineKind.alloySmelter, 6);
         alloySmelter = get(EnumMachineKind.alloySmelter, TierPrefix.precision);
-
-        addContainer(EnumMachineKind.blastFurnace, 6, new ClayBlastFurnace());
-        blastFurnace = get(EnumMachineKind.blastFurnace, TierPrefix.precision);
 
         addContainers(EnumMachineKind.clayInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayInterface.class);
 //        add(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
