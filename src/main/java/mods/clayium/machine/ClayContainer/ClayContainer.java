@@ -93,10 +93,10 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote) return true;
-
         // the used item which implements IModifyCC calls own Item#onItemUse
         if (playerIn.getHeldItem(hand).getItem() instanceof IModifyCC) return false;
+
+        if (worldIn.isRemote) return true;
 
         worldIn.markBlockRangeForRenderUpdate(pos, pos);
 

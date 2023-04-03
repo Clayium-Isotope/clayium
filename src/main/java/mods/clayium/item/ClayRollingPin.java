@@ -26,6 +26,10 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (worldIn.isRemote) {
+            return EnumActionResult.SUCCESS;
+        }
+
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
             TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
             EnumSide side = UtilDirection.getSideOfDirection(tecc.getFront(), facing);
@@ -54,6 +58,7 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
             tecc.updateEntity();
             return EnumActionResult.SUCCESS;
         }
+
         return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 
