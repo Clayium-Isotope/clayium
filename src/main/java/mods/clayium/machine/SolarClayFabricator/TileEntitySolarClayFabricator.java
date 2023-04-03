@@ -10,8 +10,10 @@ import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumSkyBlock;
+
+import javax.annotation.Nullable;
 
 public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public int acceptableTier;
@@ -21,17 +23,9 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
 
     public void initParams() {
         super.initParams();
-        this.autoInsert = true;
-        this.autoExtract = true;
-        this.containerItemStacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
         this.setImportRoutes(-1, -1, -1, 0, -1, -1);
         this.setExportRoutes(-1, -1, 0, -1, -1, -1);
-        this.listSlotsImport.clear();
-        this.listSlotsExport.clear();
-        this.listSlotsImport.add(new int[]{ 0 });
-        this.listSlotsExport.add(new int[]{ 1 });
-        this.slotsDrop = new int[]{ 0, 1 };
         this.acceptableTier = 4;
         this.maxAutoExtract = new int[]{64};
         this.maxAutoInsert = new int[]{64};
@@ -47,7 +41,8 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     }
 
     public void initParamsByTier(int tier) {
-        super.initParamsByTier(tier);
+        this.tier = tier;
+        this.setDefaultTransportation(tier);
 
         this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(5000.0F) / 20.0F));
         if (tier >= 6) {
@@ -138,5 +133,11 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         }
 
         return UtilItemStack.hasOreName(itemstack, ClayiumMaterials.getOreName(ClayiumMaterial.lithium, ClayiumShape.ingot)) ? 8 : -1;
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getFaceResource() {
+        return null;
     }
 }

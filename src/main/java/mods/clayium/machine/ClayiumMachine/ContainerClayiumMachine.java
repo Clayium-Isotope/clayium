@@ -63,6 +63,8 @@ public class ContainerClayiumMachine extends ContainerTemp {
             }
         });
 
-        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
+        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity)) {
+            addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
+        }
     }
 }

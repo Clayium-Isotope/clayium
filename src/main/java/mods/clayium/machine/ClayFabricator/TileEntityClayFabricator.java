@@ -20,6 +20,9 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
     }
 
     public void initParamsByTier(int tier) {
+        this.tier = tier;
+        this.setDefaultTransportation(tier);
+
         this.initCraftTime = 0.01F;
         if (tier >= 8) {
             this.acceptableTier = 11;
