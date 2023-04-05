@@ -1,6 +1,5 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.UtilDirection;
@@ -16,20 +15,9 @@ import java.util.Map;
 import java.util.stream.Collector;
 
 /**
- * You can use even if the super class modified the method(s).
- *
- * <br><br>Note: example for using default isItemValidForSlot(),
- * <pre>
- * ((IClayInventory) this).isItemValidForSlot(int index, ItemStack stack);
- * </pre>
+ * You can use these static methods even if the parent class modified the method(s).
  */
 public interface IClayInventory extends ISidedInventory {
-    default boolean acceptEnergyClay() {
-        return true;
-    }
-    default int getClayEnergyStorageSize() {
-        return 1;
-    }
     List<int[]> getListSlotsImport();
     List<int[]> getListSlotsExport();
     EnumFacing getFront();
@@ -40,16 +28,9 @@ public interface IClayInventory extends ISidedInventory {
     Map<EnumFacing, ItemStack> getFilters();
     NonNullList<ItemStack> getContainerItemStacks();
 
-    @Override
-    default boolean isItemValidForSlot(int index, ItemStack stack) {
-        return IClayInventory.isItemValidForSlot(this, index, stack);
-    }
-
     static boolean isItemValidForSlot(IClayInventory inv, int index, ItemStack stack) {
-        if (inv instanceof IClayEnergyConsumer && index == ((IClayEnergyConsumer) inv).getEnergySlot()) {
-            return inv.acceptEnergyClay() && IClayEnergy.hasClayEnergy(stack)
-                    && (((IClayEnergyConsumer) inv).getEnergyStack().isEmpty()
-                    || ((IClayEnergyConsumer) inv).getEnergyStack().getCount() < inv.getClayEnergyStorageSize());
+        if (inv instanceof IClayEnergyConsumer) {
+            IClayEnergyConsumer.isItemValidForSlot((IClayEnergyConsumer) inv, index, stack);
         }
 
         for (int[] slots : inv.getListSlotsImport()) {
@@ -57,11 +38,6 @@ public interface IClayInventory extends ISidedInventory {
                 return true;
         }
         return false;
-    }
-
-    @Override
-    default boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return IClayInventory.canInsertItem(this, index, itemStackIn, direction);
     }
 
     static boolean canInsertItem(IClayInventory inv, int index, ItemStack itemStackIn, EnumFacing direction) {
@@ -78,11 +54,6 @@ public interface IClayInventory extends ISidedInventory {
         return false;
     }
 
-    @Override
-    default boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-        return IClayInventory.canExtractItem(this, index, itemStackIn, direction);
-    }
-
     static boolean canExtractItem(IClayInventory inv, int index, ItemStack itemStackIn, EnumFacing direction) {
         if (inv.checkBlocked(itemStackIn, direction)) return false;
         EnumSide side = UtilDirection.getSideOfDirection(inv.getFront(), direction);
@@ -97,11 +68,6 @@ public interface IClayInventory extends ISidedInventory {
 
     default boolean checkBlocked(ItemStack itemStackIn, EnumFacing direction) {
         return IFilter.isFilter(this.getFilters().get(direction)) && !IFilter.match(this.getFilters().get(direction), itemStackIn);
-    }
-
-    @Override
-    default int[] getSlotsForFace(EnumFacing side) {
-        return IClayInventory.getSlotsForFace(this, side);
     }
 
     /**

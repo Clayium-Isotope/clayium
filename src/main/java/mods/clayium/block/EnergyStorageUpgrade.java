@@ -2,6 +2,7 @@ package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +22,9 @@ public class EnergyStorageUpgrade extends BlockTiered implements IClayContainerM
 
     @Override
     public void modifyClayContainer(IBlockAccess world, BlockPos pos, TileEntityClayContainer tile) {
-        tile.growCEStorageSize(this.getAdditionalEnergyStorage());
+        if (tile instanceof IClayEnergyConsumer) {
+            IClayEnergyConsumer.growCEStorageSize((IClayEnergyConsumer) tile, this.getAdditionalEnergyStorage());
+        }
     }
 
     public int getAdditionalEnergyStorage() {

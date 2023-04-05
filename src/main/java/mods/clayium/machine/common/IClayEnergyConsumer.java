@@ -9,14 +9,38 @@ public interface IClayEnergyConsumer extends IInventory {
     long getContainEnergy();
     void setContainEnergy(long energy);
 
-    default int getEnergySlot() {
-        return -1;
+    int getClayEnergyStorageSize();
+    void setClayEnergyStorageSize(int size);
+    static void growCEStorageSize(IClayEnergyConsumer consumer, int dist) {
+        dist += consumer.getClayEnergyStorageSize();
+        if (dist > 64) {
+            dist = 64;
+        }
+        consumer.setClayEnergyStorageSize(dist);
     }
-    int getEnergyStorageSize();
+
+    /**
+     * -1 means the machine doesn't have relationship between IClayEnergyConsumer
+     */
+    int getEnergySlot();
 
     default ItemStack getEnergyStack() {
         if (this.getEnergySlot() == -1) return ItemStack.EMPTY;
         return this.getStackInSlot(this.getEnergySlot());
+    }
+
+    default boolean acceptClayEnergy() {
+        return this.getEnergySlot() != -1;
+    }
+
+    static boolean isItemValidForSlot(IClayEnergyConsumer inv, int index, ItemStack stack) {
+        if (inv != null && index == inv.getEnergySlot()) {
+            return inv.acceptClayEnergy() && IClayEnergy.hasClayEnergy(stack)
+                    && (inv.getEnergyStack().isEmpty()
+                    || inv.getEnergyStack().getCount() < inv.getClayEnergyStorageSize());
+        }
+
+        return false;
     }
 
     /**
@@ -54,12 +78,6 @@ public interface IClayEnergyConsumer extends IInventory {
      * TRUE ensures that the TileEntity inherits {@link IClayEnergyConsumer}
      */
     static boolean hasClayEnergy(TileEntity te) {
-        return te instanceof IClayEnergyConsumer
-                && ((IClayEnergyConsumer) te).getEnergySlot() != -1
-                && ((IClayEnergyConsumer) te).verifyClayEnergy();
-    }
-
-    default boolean verifyClayEnergy() {
-        return true;
+        return te instanceof IClayEnergyConsumer && ((IClayEnergyConsumer) te).acceptClayEnergy();
     }
 }

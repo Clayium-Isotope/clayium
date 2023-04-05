@@ -16,14 +16,14 @@ public class SlotEnergy extends Slot {
     public int getSlotStackLimit() {
         if (!(this.inventory instanceof IClayEnergyConsumer)) return 0;
 
-        return ((IClayEnergyConsumer) this.inventory).getEnergyStorageSize();
+        return ((IClayEnergyConsumer) this.inventory).getClayEnergyStorageSize();
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
         return this.inventory instanceof IClayEnergyConsumer && IClayEnergy.hasClayEnergy(stack)
                 && (((IClayEnergyConsumer) this.inventory).getEnergyStack().isEmpty()
-                    || ((IClayEnergyConsumer) this.inventory).getEnergyStack().getCount() < ((IClayEnergyConsumer) this.inventory).getEnergyStorageSize());
+                    || ((IClayEnergyConsumer) this.inventory).getEnergyStack().getCount() < ((IClayEnergyConsumer) this.inventory).getClayEnergyStorageSize());
     }
 
     @Override

@@ -78,8 +78,8 @@ public class TileEntityWaterWheel extends TileEntityClayContainer {
             TileEntity te = this.world.getTileEntity(this.pos.offset(direction));
             if (te != null && te instanceof TileEntityClayiumMachine
                     && UtilTier.acceptWaterWheel(((TileEntityClayiumMachine) te).getTier())
-                    && (double) ((TileEntityClayiumMachine) te).containEnergy < 5.0D * Math.pow(Math.max(this.tier, 1.0D), 8.0D)) {
-                ((TileEntityClayiumMachine) te).containEnergy += (long) Math.pow(Math.max(this.tier, 1.0D), 8.0D);
+                    && (double) ((TileEntityClayiumMachine) te).getContainEnergy() < 5.0D * Math.pow(Math.max(this.tier, 1.0D), 8.0D)) {
+                ((TileEntityClayiumMachine) te).setContainEnergy(((TileEntityClayiumMachine) te).getContainEnergy() + (long) Math.pow(Math.max(this.tier, 1.0D), 8.0D));
                 te.markDirty();
             }
         }

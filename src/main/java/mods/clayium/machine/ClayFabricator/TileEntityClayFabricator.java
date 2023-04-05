@@ -66,7 +66,7 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
 
     public void proceedCraft() {
         ++this.craftTime;
-        this.containEnergy = (long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2))) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft);
+        this.setContainEnergy((long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2))) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft));
         if (this.craftTime < this.timeToCraft) {
             return;
         }
@@ -75,7 +75,7 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
         this.setInventorySlotContents(2, ItemStack.EMPTY);
 
         this.setDoingWork(false);
-        this.containEnergy = 0L;
+        this.setContainEnergy(0L);
         this.craftTime = 0L;
 //            if (this.externalControlState > 0) {
 //                --this.externalControlState;

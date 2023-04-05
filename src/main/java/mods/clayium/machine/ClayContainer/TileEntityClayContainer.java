@@ -32,7 +32,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     protected NonNullList<ItemStack> containerItemStacks;
     protected String customName;
-    protected int clayEnergyStorageSize = 1;
     protected int[] slotsDrop;
 
     /**
@@ -118,13 +117,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     public int getSizeInventory() {
         return this.getContainerItemStacks().size();
-    }
-
-    public void growCEStorageSize(int dist) {
-        this.clayEnergyStorageSize += dist;
-        if (this.clayEnergyStorageSize > 64) {
-            this.clayEnergyStorageSize = 64;
-        }
     }
 
     public ItemStack getStackInSlot(int index) {
@@ -309,6 +301,8 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
      */
     @Override
     public void update() {
+        if (!this.getWorld().isRemote) return;
+
         // on Tick Loop
         this.doTransfer();
 
@@ -364,7 +358,7 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
             }
 
             if (this instanceof IClayEnergyConsumer && route == -2) {
-                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, UtilDirection.getSideOfDirection(this.getFront(), facing), clayEnergyStorageSize - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
+                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, UtilDirection.getSideOfDirection(this.getFront(), facing), ((IClayEnergyConsumer) this).getClayEnergyStorageSize() - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
             } else {
                 transferred = UtilTransfer.extract(this, this.getListSlotsImport().get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
             }
@@ -384,11 +378,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 //                this.setExportRoute(facing, -1);
             }
         }
-    }
-
-    @Override
-    public int getClayEnergyStorageSize() {
-        return this.clayEnergyStorageSize;
     }
 
     @Override
@@ -438,6 +427,26 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 
     public int getGuiId() {
         return ((ClayContainer) this.getBlockType()).guiId;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        return IClayInventory.isItemValidForSlot(this, index, stack);
+    }
+
+    @Override
+    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return IClayInventory.canInsertItem(this, index, itemStackIn, direction);
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+        return IClayInventory.canExtractItem(this, index, itemStackIn, direction);
+    }
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing side) {
+        return IClayInventory.getSlotsForFace(this, side);
     }
 
     /* ========== Texture Part ========== */

@@ -5,7 +5,6 @@ import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator implements IClayInventory, IClayEnergyConsumer {
+public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator implements IClayEnergyConsumer {
     private long clayEnergy;
     private static final int energyPerWork = 30;
 
@@ -48,7 +47,7 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     @Override
     public void produce() {
         int count = this.countWater();
-        if (this.externalControlState >= 0 && count > 0 && IClayEnergyConsumer.compensateClayEnergy(this, (long) this.progressEfficiency * energyPerWork)) {
+        if (/*this.externalControlState >= 0 &&*/ count > 0 && IClayEnergyConsumer.compensateClayEnergy(this, (long) this.progressEfficiency * energyPerWork)) {
             this.progress += this.progressEfficiency * count;
 
             while(this.progress >= progressMax) {
@@ -56,12 +55,12 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
                 ItemStack salt = ClayiumMaterials.get(ClayiumMaterial.salt, ClayiumShape.dust).copy();
                 this.progress -= progressMax;
                 UtilTransfer.produceItemStack(salt, this.containerItemStacks, 0, this.inventoryX * this.inventoryY, this.getInventoryStackLimit());
-                if (this.externalControlState > 0) {
-                    --this.externalControlState;
-                    if (this.externalControlState == 0) {
-                        this.externalControlState = -1;
-                    }
-                }
+//                if (this.externalControlState > 0) {
+//                    --this.externalControlState;
+//                    if (this.externalControlState == 0) {
+//                        this.externalControlState = -1;
+//                    }
+//                }
             }
         }
 
@@ -102,12 +101,17 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     }
 
     @Override
-    public int getEnergySlot() {
-        return this.inventoryX * this.inventoryY;
+    public int getClayEnergyStorageSize() {
+        return 1;
     }
 
     @Override
-    public int getEnergyStorageSize() {
-        return this.clayEnergyStorageSize;
+    public void setClayEnergyStorageSize(int size) {
+
+    }
+
+    @Override
+    public int getEnergySlot() {
+        return this.inventoryX * this.inventoryY;
     }
 }

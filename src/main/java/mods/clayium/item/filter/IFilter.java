@@ -1,6 +1,5 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

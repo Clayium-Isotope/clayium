@@ -220,16 +220,6 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     }
 
     @Override
-    public boolean acceptEnergyClay() {
-        return this.core.acceptEnergyClay();
-    }
-
-    @Override
-    public int getClayEnergyStorageSize() {
-        return this.core.getClayEnergyStorageSize();
-    }
-
-    @Override
     public List<int[]> getListSlotsImport() {
         return this.core.getListSlotsImport();
     }

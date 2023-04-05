@@ -52,16 +52,6 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
         EmptyCaptive() {}
 
         @Override
-        public boolean acceptEnergyClay() {
-            return false;
-        }
-
-        @Override
-        public int getClayEnergyStorageSize() {
-            return 0;
-        }
-
-        @Override
         public List<int[]> getListSlotsImport() {
             return Collections.emptyList();
         }

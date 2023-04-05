@@ -9,6 +9,7 @@ import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
+import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -53,8 +54,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public float multConsumingEnergy = 1.0F;
     public float initCraftTime = 1.0F;
     public float initConsumingEnergy = 1.0F;
-
-    public long containEnergy;
+    private long containEnergy;
+    private int clayEnergyStorageSize = 1;
 
     @Override
     public void initParams() {
@@ -94,11 +95,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public void update() {
         super.update();
 
-        if (!this.isDoingWork) {
-            this.isDoingWork = setNewRecipe();
-        } else if (IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
-            proceedCraft();
-        }
+        if (!this.getWorld().isRemote)
+            IRecipeProvider.update(this);
     }
 
     private void sendUpdate() {
@@ -115,7 +113,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.timeToCraft = tagCompound.getLong("TimeToCraft");
         this.debtEnergy = tagCompound.getLong("ConsumingEnergy");
 
-        this.containEnergy = tagCompound.getLong("ClayEnergy");
+        this.setContainEnergy(tagCompound.getLong("ClayEnergy"));
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
         this.doingRecipe = this.getRecipe(tagCompound.getInteger("RecipeHash"));
@@ -179,13 +177,18 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     @Override
-    public int getEnergyStorageSize() {
+    public boolean acceptClayEnergy() {
+        return !UtilTier.canManufactureCraft(this.tier);
+    }
+
+    @Override
+    public int getClayEnergyStorageSize() {
         return this.clayEnergyStorageSize;
     }
 
     @Override
-    public boolean verifyClayEnergy() {
-        return !UtilTier.canManufactureCraft(this.tier);
+    public void setClayEnergyStorageSize(int size) {
+        this.clayEnergyStorageSize = size;
     }
 
     @Override
@@ -194,16 +197,18 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     public void proceedCraft() {
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
+
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;
 
-        ItemStack itemstack = this.doingRecipe.getResults().get(0);
+        UtilTransfer.produceItemStack(this.doingRecipe.getResults().get(0), this.getContainerItemStacks(),
+                MachineSlots.PRODUCT.ordinal(), this.getInventoryStackLimit());
 
-        if (getStackInSlot(MachineSlots.PRODUCT).isEmpty()) {
-            setInventorySlotContents(MachineSlots.PRODUCT.ordinal(), itemstack.copy());
-        } else if (getStackInSlot(MachineSlots.PRODUCT).isItemEqual(itemstack)) {
-            getStackInSlot(MachineSlots.PRODUCT).grow(itemstack.getCount());
-        }
+        this.craftTime = 0L;
+        this.timeToCraft = 0L;
+        this.debtEnergy = 0L;
+        this.setDoingWork(false);
     }
 
     @Override
@@ -229,25 +234,22 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
      * @return 何かに使えるかもしれないので、成功でtrue、失敗でfalseを返す。
      */
     public boolean setNewRecipe() {
-        RecipeElement _recipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
+        this.doingRecipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
+        if (this.doingRecipe.isFlat()) return false;
 
         this.craftTime = 0L;
 
-        if (canCraft(_recipe) && IClayEnergyConsumer.compensateClayEnergy(this, _recipe.getEnergy())) {
-            this.doingRecipe = _recipe;
-
-            this.debtEnergy = this.doingRecipe.getEnergy();
-            this.timeToCraft = this.doingRecipe.getTime();
-            getStackInSlot(MachineSlots.MATERIAL).shrink(this.doingRecipe.getStackSizes(getStackInSlot(MachineSlots.MATERIAL))[0]);
-
-            proceedCraft();
-            return true;
+        if (!canCraft(this.doingRecipe)) {
+            this.timeToCraft = 0L;
+            this.debtEnergy = 0L;
+            return false;
         }
 
-        this.timeToCraft = 0L;
-        this.debtEnergy = 0L;
-        this.doingRecipe = RecipeElement.flat();
-        return false;
+        this.debtEnergy = this.doingRecipe.getEnergy();
+        this.timeToCraft = this.doingRecipe.getTime();
+        this.getStackInSlot(MachineSlots.MATERIAL).shrink(this.doingRecipe.getStackSizes(getStackInSlot(MachineSlots.MATERIAL))[0]);
+
+        return true;
     }
 
     @SideOnly(Side.CLIENT)

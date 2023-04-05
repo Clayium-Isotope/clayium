@@ -102,6 +102,8 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public void update() {
+        if (!this.world.isRemote) return;
+
         this.doTransfer();
         if (this.isStable) return;
 
@@ -114,7 +116,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
                 energy += ((IClayEnergy) stack.getItem()).getClayEnergy() * stack.getCount();
             }
         }
-        this.containEnergy = energy;
+        this.setContainEnergy(energy);
     }
 
     @Override

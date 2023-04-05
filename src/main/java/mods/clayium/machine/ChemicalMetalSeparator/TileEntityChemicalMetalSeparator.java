@@ -48,10 +48,12 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
         return !material.isEmpty() && UtilItemStack.areTypeEqual(material, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust));
     }
 
+    @Override
     public boolean canProceedCraft() {
         return this.isDoingWork() || this.canCraft(this.getStackInSlot(0));
     }
 
+    @Override
     public void proceedCraft() {
         if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
 

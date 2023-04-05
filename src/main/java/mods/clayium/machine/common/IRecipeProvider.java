@@ -78,7 +78,7 @@ public interface IRecipeProvider<T extends IRecipeElement> {
     }
 
     static <T extends IRecipeElement> void update(IRecipeProvider<T> provider) {
-        if (provider.isDoingWork() && provider.canProceedCraft()) {
+        if (provider.isDoingWork()) {
             provider.proceedCraft();
         } else {
             provider.setDoingWork(provider.setNewRecipe());

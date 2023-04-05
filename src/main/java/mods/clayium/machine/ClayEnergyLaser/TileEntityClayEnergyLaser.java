@@ -5,7 +5,6 @@ import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
-import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -168,18 +167,23 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     }
 
     @Override
-    public int getEnergySlot() {
-        return 0;
+    public int getClayEnergyStorageSize() {
+        return 1;
     }
 
     @Override
-    public int getEnergyStorageSize() {
-        return this.clayEnergyStorageSize;
+    public void setClayEnergyStorageSize(int size) {
+
+    }
+
+    @Override
+    public int getEnergySlot() {
+        return 0;
     }
 
     @Nullable
     @Override
     public ResourceLocation getFaceResource() {
-        return EnumMachineKind.clayEnergyLaser.getFaceResource();
+        return null;
     }
 }
