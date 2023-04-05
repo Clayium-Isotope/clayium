@@ -15,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import java.util.Random;
 
 public class TileGeneric extends TileEntity {
-    protected static Random random = new Random();
+    protected static final Random random = new Random();
 
     public boolean hasSpecialDrops() {
         return false;

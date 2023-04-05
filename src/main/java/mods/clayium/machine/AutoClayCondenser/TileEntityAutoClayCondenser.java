@@ -3,6 +3,7 @@ package mods.clayium.machine.AutoClayCondenser;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.IRecipeProvider;
 import mods.clayium.util.UtilCollect;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.init.Blocks;
@@ -17,12 +18,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
-    static final int SAMPLE_SLOT = 20;
+    /*package-private*/ static final int SAMPLE_SLOT = 20;
     private int mergeFrom = -1;
     private boolean isStable = false;
 
     public void initParams() {
-        this.containerItemStacks = NonNullList.withSize(21, ItemStack.EMPTY);
+        this.containerItemStacks = NonNullList.withSize(20, ItemStack.EMPTY);
         this.setImportRoutes(-1, 0, -1, -1, -1, -1);
         this.setExportRoutes(0, -1, -1, -1, -1, -1);
         this.listSlotsImport.add(IntStream.range(0, 15).toArray());
@@ -71,7 +72,9 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     }
 
     public List<Integer> getQuantityOfClay() {
-        int[] arr = new int[ClayiumBlocks.compressedClay.size() + 1];  // [0, 0, ..., 0]
+        // [0, 0, ..., 0] cuz primitive init
+        // + 1 for minecraft:clay
+        int[] arr = new int[ClayiumBlocks.compressedClay.size() + 1];
 
         for (ItemStack stack : UtilCollect.slice(this.containerItemStacks, 0, 20)) {
             if (IClayEnergy.getTier(stack) == -1) continue;
@@ -87,7 +90,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     }
 
     @Override
-    protected boolean canCraft(ItemStack material) {
+    public boolean canCraft(ItemStack material) {
         if (material.getItem() == Item.getItemFromBlock(Blocks.CLAY))
             return true;
 
@@ -102,9 +105,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
         this.doTransfer();
         if (this.isStable) return;
 
-        if (/*this.externalControlState >= 0 &&*/ this.canProceedCraft()) {
-            this.proceedCraft();
-        }
+        IRecipeProvider.update(this);
         this.sortInventory();
 
         long energy = 0;
@@ -118,7 +119,8 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public boolean canProceedCraft() {
-        if (!this.isDoingWork) {
+        /*this.externalControlState >= 0 &&*/
+        if (!this.isDoingWork()) {
             return this.getConsumedClay() != -1;
         }
         return this.canCraft(this.mergeFrom + 1);
@@ -144,8 +146,6 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public void proceedCraft() {
-        if (!this.isDoingWork && !(this.isDoingWork = setNewRecipe())) return;
-
         ++this.craftTime;
         if (this.craftTime < this.timeToCraft) {
             return;
@@ -154,7 +154,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
         UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom + 1), this.containerItemStacks, 0, 20, this.getInventoryStackLimit());
         this.craftTime = 0L;
         this.mergeFrom = -1;
-        this.isDoingWork = false;
+        this.setDoingWork(false);
 //                if (this.externalControlState > 0) {
 //                    --this.externalControlState;
 //                    if (this.externalControlState == 0) {
@@ -165,7 +165,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     }
 
     @Override
-    protected boolean setNewRecipe() {
+    public boolean setNewRecipe() {
         this.timeToCraft = (long)(1.0F * this.multCraftTime);
         this.mergeFrom = this.getConsumedClay();
         if (this.mergeFrom == -1) return false;

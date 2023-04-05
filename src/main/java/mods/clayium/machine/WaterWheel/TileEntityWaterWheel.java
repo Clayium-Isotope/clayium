@@ -1,5 +1,7 @@
 package mods.clayium.machine.WaterWheel;
 
+import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.util.UtilTier;
 import net.minecraft.block.BlockDynamicLiquid;
@@ -10,17 +12,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 
-import java.util.Random;
-
-public class TileEntityWaterWheel extends TileEntityClayiumMachine {
+public class TileEntityWaterWheel extends TileEntityClayContainer {
     public int progress = 0;
     public int progressEfficiency = 1000;
     protected static int progressMax = 20000;
-    private static Random random = new Random();
 
     public void initParams() {
-        super.initParams();
         this.progressEfficiency = (int)((double)this.progressEfficiency * Math.pow(Math.max(this.tier, 1.0D), 3.0D));
         this.containerItemStacks = NonNullList.withSize(1, ItemStack.EMPTY);
         this.listSlotsImport.add(new int[]{0});
@@ -45,16 +44,19 @@ public class TileEntityWaterWheel extends TileEntityClayiumMachine {
         return tagCompound;
     }
 
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.world.isRemote && random.nextInt(40) < this.countSurroundingWater()) {
-            this.progress = (int)((double)this.progress + (double)this.progressEfficiency * Math.pow(Math.max(this.tier, 1.0D), 3.0D));
-            if (this.progress >= progressMax) {
-                this.progress -= progressMax;
-                this.progressEfficiency -= random.nextInt(5) == 0 ? 1 : 0;
-                this.emitEnergy();
-            }
+    public void update() {
+        if (this.world.isRemote || TileGeneric.random.nextInt(40) >= this.countSurroundingWater()) {
+            return;
         }
+
+        this.progress = (int)((double)this.progress + (double)this.progressEfficiency * Math.pow(Math.max(this.tier, 1.0D), 3.0D));
+        if (this.progress < progressMax) {
+            return;
+        }
+
+        this.progress -= progressMax;
+        this.progressEfficiency -= TileGeneric.random.nextInt(5) == 0 ? 1 : 0;
+        this.emitEnergy();
     }
 
     public int getProgressIcon() {
@@ -72,14 +74,13 @@ public class TileEntityWaterWheel extends TileEntityClayiumMachine {
     }
 
     public void emitEnergy() {
-        EnumFacing[] var1 = EnumFacing.VALUES;
-
-        for (EnumFacing direction : var1) {
+        for (EnumFacing direction : EnumFacing.VALUES) {
             TileEntity te = this.world.getTileEntity(this.pos.offset(direction));
             if (te != null && te instanceof TileEntityClayiumMachine
                     && UtilTier.acceptWaterWheel(((TileEntityClayiumMachine) te).getTier())
                     && (double) ((TileEntityClayiumMachine) te).containEnergy < 5.0D * Math.pow(Math.max(this.tier, 1.0D), 8.0D)) {
                 ((TileEntityClayiumMachine) te).containEnergy += (long) Math.pow(Math.max(this.tier, 1.0D), 8.0D);
+                te.markDirty();
             }
         }
     }
@@ -87,15 +88,12 @@ public class TileEntityWaterWheel extends TileEntityClayiumMachine {
     public int countSurroundingWater() {
         int count = 0;
 
-        for(int x = -1; x <= 1; ++x) {
-            for(int y = -1; y <= 1; ++y) {
-                for(int z = -1; z <= 1; ++z) {
-                    IBlockState block = this.world.getBlockState(this.pos.add(x, y, z));
-                    // TODO 拡張性
-                    if (block.getMaterial() == Material.WATER && block.getBlock() instanceof BlockDynamicLiquid) {
-                        count++;
-                    }
-                }
+        for (BlockPos pos : BlockPos.getAllInBox(-1, -1, -1, 1, 1, 1)) {
+            IBlockState state = this.getWorld().getBlockState(this.pos.add(pos));
+
+            // TODO 拡張性
+            if (state.getMaterial() == Material.WATER && state.getBlock() instanceof BlockDynamicLiquid) {
+                count++;
             }
         }
 

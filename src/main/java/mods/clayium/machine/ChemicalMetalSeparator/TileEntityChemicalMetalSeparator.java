@@ -5,13 +5,13 @@ import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import mods.clayium.util.crafting.WeightedList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -19,7 +19,6 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
     private static final int baseConsumingEnergy = 5000;
     private static final int baseCraftTime = 40;
     private static final WeightedList<ItemStack> results = new WeightedList<>();
-    private static final Random random = TileGeneric.random;
     private static final int RESULT_SLOT = 17;
 
     public void initParams() {
@@ -45,15 +44,17 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
     }
 
     // TODO quit hard coding
-    protected boolean canCraft(ItemStack material) {
+    public boolean canCraft(ItemStack material) {
         return !material.isEmpty() && UtilItemStack.areTypeEqual(material, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust));
     }
 
     public boolean canProceedCraft() {
-        return this.isDoingWork || this.canCraft(this.getStackInSlot(0));
+        return this.isDoingWork() || this.canCraft(this.getStackInSlot(0));
     }
 
     public void proceedCraft() {
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
+
         ++this.craftTime;
         if (this.craftTime < this.timeToCraft) {
             return;
@@ -61,7 +62,7 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
 
         this.craftTime = 0L;
         this.debtEnergy = 0L;
-        this.isDoingWork = false;
+        this.setDoingWork(false);
         UtilTransfer.produceItemStack(this.getStackInSlot(RESULT_SLOT), this.containerItemStacks, 1, 17, this.getInventoryStackLimit());
         this.setInventorySlotContents(RESULT_SLOT, ItemStack.EMPTY);
 
@@ -75,13 +76,13 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
     }
 
     @Override
-    protected boolean setNewRecipe() {
+    public boolean setNewRecipe() {
         if (!this.canCraft(this.getStackInSlot(0))) return false;
 
         this.debtEnergy = (long)((float)baseConsumingEnergy * this.multConsumingEnergy);
         this.timeToCraft = (long)((float)baseCraftTime * this.multCraftTime);
 
-        ItemStack result = results.get(random);
+        ItemStack result = results.get(TileGeneric.random);
 
         if (result == null
                 || UtilTransfer.canProduceItemStack(result, this.containerItemStacks, 1, 17, this.getInventoryStackLimit()) < result.getCount()) {
@@ -100,7 +101,6 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
         TileEntityChemicalMetalSeparator.results.add(ClayiumMaterials.get(ClayiumMaterial.impureSodium, ClayiumShape.dust), 40);
         TileEntityChemicalMetalSeparator.results.add(ClayiumMaterials.get(ClayiumMaterial.impureLithium, ClayiumShape.dust), 7);
         TileEntityChemicalMetalSeparator.results.add(ClayiumMaterials.get(ClayiumMaterial.zirconium, ClayiumShape.dust), 5);
-
         TileEntityChemicalMetalSeparator.results.add(ClayiumMaterials.get(ClayiumMaterial.impureZinc, ClayiumShape.dust), 10);
         TileEntityChemicalMetalSeparator.results.add(ClayiumMaterials.get(ClayiumMaterial.impureManganese, ClayiumShape.dust), 80);
         TileEntityChemicalMetalSeparator.results.add(ClayiumMaterials.get(ClayiumMaterial.impureCalcium, ClayiumShape.dust), 20);

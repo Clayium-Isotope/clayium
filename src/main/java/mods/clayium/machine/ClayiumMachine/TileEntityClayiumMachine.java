@@ -2,11 +2,11 @@ package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IHasButton;
+import mods.clayium.machine.common.IRecipeProvider;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer implements IHasButton, ITickable, IClayEnergyConsumer {
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, IRecipeProvider<RecipeElement> {
     protected enum MachineSlots {
         MATERIAL,
         PRODUCT,
@@ -28,13 +28,26 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     protected EnumMachineKind kind = EnumMachineKind.EMPTY;
-    protected ClayiumRecipe recipeCards = ClayiumRecipes.EMPTY;
-    protected IRecipeElement doingRecipe = RecipeElement.flat();
+    private ClayiumRecipe recipeCards = ClayiumRecipes.EMPTY;
+    @Override
+    public ClayiumRecipe getRecipeCard() {
+        return this.recipeCards;
+    }
+
+    protected RecipeElement doingRecipe = RecipeElement.flat();
 
     protected long craftTime;
     protected long timeToCraft;
     protected long debtEnergy;
-    protected boolean isDoingWork;
+    private boolean isDoingWork;
+    @Override
+    public boolean isDoingWork() {
+        return this.isDoingWork;
+    }
+    @Override
+    public void setDoingWork(boolean doingWork) {
+        this.isDoingWork = doingWork;
+    }
 
     public float multCraftTime = 1.0F;
     public float multConsumingEnergy = 1.0F;
@@ -105,7 +118,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.containEnergy = tagCompound.getLong("ClayEnergy");
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
-        this.doingRecipe = this.recipeCards.getRecipe(tagCompound.getInteger("RecipeHash"), RecipeElement.flat());
+        this.doingRecipe = this.getRecipe(tagCompound.getInteger("RecipeHash"));
         this.isDoingWork = this.doingRecipe != RecipeElement.flat();
     }
 
@@ -175,6 +188,11 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         return !UtilTier.canManufactureCraft(this.tier);
     }
 
+    @Override
+    public RecipeElement getFlat() {
+        return RecipeElement.flat();
+    }
+
     public void proceedCraft() {
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;
@@ -188,17 +206,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         }
     }
 
-    public RecipeElement getRecipe(ItemStack stack) {
-        return (RecipeElement) recipeCards.getRecipe(e -> e.isCraftable(stack, tier), RecipeElement.flat());
-    }
-
-    protected boolean canCraft(ItemStack material) {
-        if (material.isEmpty()) return false;
-
-        return canCraft(getRecipe(material));
-    }
-
-    protected boolean canCraft(IRecipeElement recipe) {
+    @Override
+    public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
         ItemStack itemstack = recipe.getResults().get(0);
@@ -219,8 +228,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
      * これを呼ぶとき、{@link TileEntityClayiumMachine#doingRecipe}は{@link RecipeElement#FLAT}かそれに準ずる状態にあるべき。
      * @return 何かに使えるかもしれないので、成功でtrue、失敗でfalseを返す。
      */
-    protected boolean setNewRecipe() {
-        IRecipeElement _recipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
+    public boolean setNewRecipe() {
+        RecipeElement _recipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
 
         this.craftTime = 0L;
 

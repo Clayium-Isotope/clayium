@@ -5,18 +5,18 @@ import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
     public float exponentOfNumber;
 
     public void initParams() {
         super.initParams();
+        this.containerItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
+
         this.setImportRoutes(-1, 0, -1, -1, -1, -1);
         this.setExportRoutes(0, -1, -1, -1, -1, -1);
         this.exponentOfNumber = 0.8F;
-        this.slotsDrop = new int[]{0, 1};
     }
 
     public void initParamsByTier(int tier) {
@@ -24,77 +24,82 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
         this.setDefaultTransportation(tier);
 
         this.initCraftTime = 0.01F;
-        if (tier >= 8) {
-            this.acceptableTier = 11;
-            this.baseCraftTime = 5.0F;
-            this.exponentOfNumber = 0.85F;
-            this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow((double)this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(4.5E7F) / 20.0F));
-        }
 
-        if (tier >= 9) {
-            this.acceptableTier = 13;
-            this.baseCraftTime = 2.0F;
-            this.exponentOfNumber = 0.3F;
-            this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow((double)this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E9F) / 20.0F));
+        switch (tier) {
+            case 8:
+                this.acceptableTier = 11;
+                this.baseCraftTime = 5.0F;
+                this.exponentOfNumber = 0.85F;
+                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(4.5E7F) / 20.0F));
+                break;
+            case 9:
+                this.acceptableTier = 13;
+                this.baseCraftTime = 2.0F;
+                this.exponentOfNumber = 0.3F;
+                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E9F) / 20.0F));
+                break;
+            case 13:
+                this.acceptableTier = 13;
+                this.baseCraftTime = 1.3F;
+                this.exponentOfNumber = 0.06F;
+                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E12F) / 20.0F));
+                break;
         }
-
-        if (tier >= 13) {
-            this.acceptableTier = 13;
-            this.baseCraftTime = 1.3F;
-            this.exponentOfNumber = 0.06F;
-            this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow((double)this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E12F) / 20.0F));
-        }
-
     }
 
-    protected boolean canCraft(int tier, int size) {
+    @Override
+    public boolean canCraft(ItemStack material) {
+        if (material.isEmpty()) return false;
+
+        int tier = IClayEnergy.getTier(material);
         if (tier < 0 || tier > this.acceptableTier) return false;
 
-        return UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier, size), this.containerItemStacks, 1, 2, this.getInventoryStackLimit()) >= 1;
+        return UtilTransfer.canProduceItemStack(material, this.getContainerItemStacks(), 1, this.getInventoryStackLimit()) > 0;
     }
 
     public boolean canProceedCraft() {
         if (this.getStackInSlot(2).isEmpty())
-            return !this.getStackInSlot(0).isEmpty() && this.canCraft(IClayEnergy.getTier(this.getStackInSlot(0)), this.getStackInSlot(0).getCount());
+            return this.canCraft(this.getStackInSlot(0));
 
-        return this.canCraft(IClayEnergy.getTier(this.getStackInSlot(2)), this.getStackInSlot(2).getCount());
+        return this.canCraft(this.getStackInSlot(2));
     }
 
     public void proceedCraft() {
-        if (this.getStackInSlot(2).isEmpty()) {
-            this.timeToCraft = (long)(Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0))) * Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double)this.multCraftTime);
-            this.setInventorySlotContents(2, this.getStackInSlot(0).copy());
+        ++this.craftTime;
+        this.containEnergy = (long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2))) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft);
+        if (this.craftTime < this.timeToCraft) {
+            return;
         }
 
-        ++this.craftTime;
-        this.isDoingWork = true;
-        this.containEnergy = (long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2))) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft);
-        if (this.craftTime >= this.timeToCraft) {
-            this.containEnergy = 0L;
-            ItemStack result = IClayEnergy.getCompressedClay(IClayEnergy.getTier(this.getStackInSlot(2)));
-            result.setCount(this.getStackInSlot(2).getCount());
-            this.setInventorySlotContents(2, ItemStack.EMPTY);
-            UtilTransfer.produceItemStack(result, this.containerItemStacks, 1, 2, this.getInventoryStackLimit());
-            this.craftTime = 0L;
+        UtilTransfer.produceItemStack(this.getStackInSlot(2), this.getContainerItemStacks(), 1, this.getInventoryStackLimit());
+        this.setInventorySlotContents(2, ItemStack.EMPTY);
+
+        this.setDoingWork(false);
+        this.containEnergy = 0L;
+        this.craftTime = 0L;
 //            if (this.externalControlState > 0) {
 //                --this.externalControlState;
 //                if (this.externalControlState == 0) {
 //                    this.externalControlState = -1;
 //                }
 //            }
-        }
 
+    }
+
+    @Override
+    public boolean setNewRecipe() {
+        if (this.getStackInSlot(0).isEmpty() || !this.canCraft(this.getStackInSlot(0)))
+            return false;
+
+        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0))) * Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double)this.multCraftTime);
+        this.setInventorySlotContents(2, this.getStackInSlot(0).copy());
+
+        return true;
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        if (slot != 0) return true;
+        if (slot != 0) return false;
 
         return IClayEnergy.getTier(itemstack) >= 0 && IClayEnergy.getTier(itemstack) <= this.acceptableTier;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void registerIOIcons() {
-        this.registerInsertIcons("import");
-        this.registerExtractIcons("export");
     }
 }

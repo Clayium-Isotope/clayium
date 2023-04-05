@@ -2,13 +2,12 @@ package mods.clayium.machine.ClayChemicalReactor;
 
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IRecipeProvider;
 import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.UtilItemStack;
+import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
@@ -17,8 +16,6 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
         MATERIAL_2,
         PRODUCT_1,
         PRODUCT_2,
-        REMINDER_1,
-        REMINDER_2,
         ENERGY
     }
 
@@ -46,115 +43,55 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
         return super.getStackInSlot(slot.ordinal());
     }
 
-    protected boolean canCraft(List<ItemStack> materials) {
-        if (materials.stream().anyMatch(ItemStack::isEmpty) || this.doingRecipe == RecipeElement.flat())
+    @Override
+    public boolean canCraft(List<ItemStack> materials) {
+        if (materials.stream().anyMatch(ItemStack::isEmpty))
             return false;
 
-        List<ItemStack> itemstacks = this.doingRecipe.getResults();
-        if (itemstacks.stream().anyMatch(ItemStack::isEmpty))
-            return false;
-
-        for(int i = 0; i < Math.min(this.resultSlotNum, itemstacks.size()); ++i) {
-            if (!this.getStackInSlot(i + 2).isEmpty() && !itemstacks.get(i).isEmpty()) {
-                if (!UtilItemStack.areTypeEqual(this.getStackInSlot(i + 2), itemstacks.get(i))) {
-                    return false;
-                }
-
-                int result = this.getStackInSlot(i + 2).getCount() + itemstacks.get(i).getCount();
-                if (result > this.getInventoryStackLimit() || result > this.getStackInSlot(i + 2).getMaxStackSize()) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    protected int[] getCraftPermutation() {
-        if (this.canCraft(Arrays.asList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2))))
-            return new int[]{ 0, 1 };
-
-        if (this.canCraft(Arrays.asList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1))))
-            return new int[]{ 1, 0 };
-
-        if (this.canCraft(Collections.singletonList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1))))
-            return new int[]{ 0 };
-
-        if (this.canCraft(Collections.singletonList(this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2))))
-            return new int[]{ 1 };
-
-        return null;
-    }
-
-    public boolean canProceedCraft() {
-        return this.getCraftPermutation() != null;
-    }
-
-    public void proceedCraft() {
-        ++this.craftTime;
-        if (this.craftTime < this.timeToCraft) return;
-
-        int[] perm = this.getCraftPermutation();
-        if (perm == null) throw new RuntimeException("Invalid recipe reference : The permutation variable is null!");
-
-        ItemStack[] itemstacks = new ItemStack[perm.length];
-        for (int i = 0; i < perm.length; i++) {
-            itemstacks[i] = this.getStackInSlot(perm[i]);
-        }
-
-        List<ItemStack> results = this.doingRecipe.getResults();
-        int[] consumedStackSize = this.doingRecipe.getStackSizes(itemstacks);
-
-        int i;
-        for(i = 0; i < Math.min(this.resultSlotNum, results.size()); ++i) {
-            if (this.getStackInSlot(i + 2).isEmpty()) {
-                this.setInventorySlotContents(i + 2, results.get(i).copy());
-            } else if (UtilItemStack.areTypeEqual(this.getStackInSlot(i + 2), results.get(i))) {
-                this.getStackInSlot(i + 2).grow(results.get(i).getCount());
-            }
-        }
-
-        for(i = 0; i < perm.length; ++i) {
-            this.getStackInSlot(i + 4).shrink(consumedStackSize[i]);
-            if (this.getStackInSlot(i + 4).getCount() <= 0) {
-                this.setInventorySlotContents(i + 4, ItemStack.EMPTY);
-            }
-        }
+        return this.canCraft(this.getRecipe(materials));
     }
 
     @Override
-    protected boolean setNewRecipe() {
-        this.craftTime = 0L;
+    public boolean canCraft(RecipeElement recipe) {
+        if (recipe.isFlat()) return false;
 
+        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(),
+                ChemicalReactorSlots.PRODUCT_1.ordinal(), ChemicalReactorSlots.PRODUCT_1.ordinal() + this.resultSlotNum, this.getInventoryStackLimit());
+    }
+
+    @Override
+    public boolean canProceedCraft() {
+        return IRecipeProvider.getCraftPermutation(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2)) != null;
+    }
+
+    @Override
+    public void proceedCraft() {
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
+
+        ++this.craftTime;
+        if (this.craftTime < this.timeToCraft) return;
+
+        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(),
+                ChemicalReactorSlots.PRODUCT_1.ordinal(), ChemicalReactorSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
+                this.getInventoryStackLimit());
+
+        this.setDoingWork(false);
+        this.craftTime = 0L;
         this.debtEnergy = 0L;
         this.timeToCraft = 0L;
+    }
 
-        int[] perm = getCraftPermutation();
-        if (perm == null) return false;
-
-        ItemStack[] mats = new ItemStack[perm.length];
-        for (int i = 0; i < perm.length; i++) {
-            mats[i] = this.getStackInSlot(perm[i]);
-        }
-
-        this.doingRecipe = this.recipeCards.getRecipe(e -> e.match(Arrays.asList(mats), -1, this.tier), RecipeElement.flat());
+    @Override
+    public boolean setNewRecipe() {
+        this.doingRecipe = this.getRecipe(IRecipeProvider.getCraftPermStacks(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2)));
 
         if (this.doingRecipe == RecipeElement.flat()) return false;
-
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy())) {
-            this.doingRecipe = RecipeElement.flat();
-            return false;
-        }
 
         this.debtEnergy = this.doingRecipe.getEnergy();
         this.timeToCraft = this.doingRecipe.getTime();
 
-        int[] stackSizes = this.doingRecipe.getStackSizes(getStackInSlot(perm[0]), getStackInSlot(perm[1]));
-        for (int i = 0; i < perm.length; i++) {
-            this.getStackInSlot(perm[i]).shrink(stackSizes[i]);
-        }
-
-        proceedCraft();
+        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(),
+                ChemicalReactorSlots.MATERIAL_1.ordinal(), ChemicalReactorSlots.MATERIAL_2.ordinal() + 1);
 
         return true;
     }

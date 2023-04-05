@@ -143,31 +143,30 @@ public interface IClayInventory extends ISidedInventory {
         return Arrays.stream(flags).collect(verifiedIndexJoiner);
     }
 
-    default void setImportRoutes(int[] routes) {
-        for (int i = 0; i < EnumSide.VALUES.length; i++) {
-            this.setImportRoute(EnumSide.getFront(i), routes[i]);
-        }
-    }
-
-    default void setExportRoutes(int[] routes) {
-        for (int i = 0; i < EnumSide.VALUES.length; i++) {
-            this.setExportRoute(EnumSide.getFront(i), routes[i]);
-        }
-    }
-
+    /**
+     * 0 more : Item
+     * <br>-1 : none
+     * <br>-2 : Energy Block
+     */
     default void setImportRoutes(int d, int u, int f, int b, int l, int r) {
-        this.setImportRoutes(new int[] {d, u, f, b, l, r});
+        this.setImportRoute(EnumSide.DOWN, d);
+        this.setImportRoute(EnumSide.UP, u);
+        this.setImportRoute(EnumSide.FRONT, f);
+        this.setImportRoute(EnumSide.BACK, b);
+        this.setImportRoute(EnumSide.LEFT, l);
+        this.setImportRoute(EnumSide.RIGHT, r);
     }
 
+    /**
+     * 0 more : Item
+     * <br>-1 : none
+     */
     default void setExportRoutes(int d, int u, int f, int b, int l, int r) {
-        this.setExportRoutes(new int[] {d, u, f, b, l, r});
-    }
-
-    default void clearImportRoutes() {
-        this.setImportRoutes(-1, -1, -1, -1, -1, -1);
-    }
-
-    default void clearExportRoutes() {
-        this.setExportRoutes(-1, -1, -1, -1, -1, -1);
+        this.setExportRoute(EnumSide.DOWN, d);
+        this.setExportRoute(EnumSide.UP, u);
+        this.setExportRoute(EnumSide.FRONT, f);
+        this.setExportRoute(EnumSide.BACK, b);
+        this.setExportRoute(EnumSide.LEFT, l);
+        this.setExportRoute(EnumSide.RIGHT, r);
     }
 }

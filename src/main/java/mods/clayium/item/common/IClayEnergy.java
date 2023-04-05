@@ -21,6 +21,9 @@ public interface IClayEnergy {
         return getClayEnergy(itemstack) > 0L;
     }
 
+    /**
+     * Get tier of the stack as if the item is Clay or Compressed Clay
+     */
     static int getTier(ItemStack stack) {
         if (stack.isEmpty()) return -1;
 

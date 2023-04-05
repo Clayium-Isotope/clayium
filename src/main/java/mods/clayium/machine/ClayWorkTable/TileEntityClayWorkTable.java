@@ -2,7 +2,7 @@ package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IHasButton;
+import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayWorkTable extends TileEntityClayContainer implements IHasButton {
+public class TileEntityClayWorkTable extends TileEntityClayContainer implements IButtonProvider {
     private static final int[] slotsTop = new int[] { ClayWorkTableSlots.TOOL.ordinal() };
     private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
     private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(), ClayWorkTableSlots.CHANGE.ordinal() };

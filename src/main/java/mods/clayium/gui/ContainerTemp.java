@@ -3,7 +3,7 @@ package mods.clayium.gui;
 import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IHasButton;
+import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -197,8 +197,8 @@ public abstract class ContainerTemp extends Container {
     }
 
     public boolean enchantItem(EntityPlayer player, int action) {
-        if (this.tileEntity instanceof IHasButton) {
-            ((IHasButton) this.tileEntity).pushButton(player, action);
+        if (this.tileEntity instanceof IButtonProvider) {
+            ((IButtonProvider) this.tileEntity).pushButton(player, action);
         }
         return true;
     }

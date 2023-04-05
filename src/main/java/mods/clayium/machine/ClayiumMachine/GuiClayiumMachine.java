@@ -5,7 +5,7 @@ import mods.clayium.core.ClayiumIntegration;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
 import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.common.IHasButton;
+import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.plugin.jei.JEICompatibility;
 import mods.clayium.util.UtilTier;
 import net.minecraft.client.gui.GuiButton;
@@ -45,7 +45,7 @@ public class GuiClayiumMachine extends GuiTemp {
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, ((TileEntityClayiumMachine) tile).getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
 
         if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getTier()))
-            buttonList.get(0).enabled = ((TileEntityClayiumMachine) this.tile).canPushButton(0) == IHasButton.ButtonProperty.PERMIT;
+            buttonList.get(0).enabled = ((TileEntityClayiumMachine) this.tile).canPushButton(0) == IButtonProvider.ButtonProperty.PERMIT;
     }
 
     @Override

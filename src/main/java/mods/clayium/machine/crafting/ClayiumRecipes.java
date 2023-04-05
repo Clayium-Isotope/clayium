@@ -20,6 +20,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,7 +32,7 @@ public class ClayiumRecipes {
         }
     }
 
-    public static final ClayiumRecipe EMPTY = new ClayiumRecipe("");
+    public static final ClayiumRecipe EMPTY = new ClayiumRecipe(Collections.emptyList());
     public static final ClayWorkTableRecipe clayWorkTable = new ClayWorkTableRecipe();
 
     public static final SimpleMachineRecipe bendingMachine = new SimpleMachineRecipe("BendingMachine");

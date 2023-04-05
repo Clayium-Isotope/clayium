@@ -3,7 +3,7 @@ package mods.clayium.machine.ClayWorkTable;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
-import mods.clayium.machine.common.IHasButton;
+import mods.clayium.machine.common.IButtonProvider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,7 +21,7 @@ public class GuiClayWorkTable extends GuiTemp {
         drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 112, ((TileEntityClayWorkTable) tile).getCookProgressScaled(80), 16);
 
         for (GuiButton button : this.buttonList) {
-            button.enabled = ((IHasButton) this.tile).isButtonEnable(button.id);
+            button.enabled = ((IButtonProvider) this.tile).isButtonEnable(button.id);
         }
     }
 

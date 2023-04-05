@@ -2,7 +2,7 @@ package mods.clayium.machine.common;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-public interface IHasButton {
+public interface IButtonProvider {
     enum ButtonProperty {
         FAILURE,  // 継続不可
         PERMIT,   // 継続可

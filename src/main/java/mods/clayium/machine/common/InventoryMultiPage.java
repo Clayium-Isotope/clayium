@@ -9,7 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InventoryMultiPage implements INormalInventory, IHasButton {
+public class InventoryMultiPage implements INormalInventory, IButtonProvider {
     public final IInventory inventory;
     protected int offset = 0;
     protected int offsetMin = Integer.MIN_VALUE;
