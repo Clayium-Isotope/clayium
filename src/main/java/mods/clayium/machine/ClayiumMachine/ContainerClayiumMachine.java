@@ -5,7 +5,6 @@ import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
@@ -45,12 +44,6 @@ public class ContainerClayiumMachine extends ContainerTemp {
     }
 
     @Override
-    public boolean enchantItem(EntityPlayer playerIn, int id) {
-        this.tileEntity.pushButton(playerIn, id);
-        return true;
-    }
-
-    @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
         addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, TileEntityClayiumMachine.MachineSlots.MATERIAL.ordinal(), 44, 35, RectangleTexture.LargeSlotTexture) {
             @Override
@@ -66,12 +59,7 @@ public class ContainerClayiumMachine extends ContainerTemp {
             }
         });
 
-        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
-    }
-
-    public void addListener(IContainerListener listener) {
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.tileEntity);
+        addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
     }
 
     @Override
@@ -95,19 +83,5 @@ public class ContainerClayiumMachine extends ContainerTemp {
         this.timeToCraft = this.tileEntity.getField(0);
         this.craftTime = this.tileEntity.getField(1);
         this.containEnergy = this.tileEntity.getField(2);
-    }
-
-    /**
-     * <pre>{@code
-     * Container#detectAndSendChanges()
-     * > IContainerListener#sendWindowProperty(Container, int, int)
-     * > net.minecraft.client.network.NetHandlerPlayClient#handleWindowProperty(SPacketWindowProperty)
-     * > Container#updateProgressBar(int, int)
-     * }</pre>
-     * によって鯖蔵が同期される
-     */
-    @Override
-    public void updateProgressBar(int id, int data) {
-        this.tileEntity.setField(id, data);
     }
 }

@@ -7,6 +7,7 @@ import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -34,7 +35,7 @@ public class ContainerChemicalMetalSeparator extends ContainerClayiumMachine {
             }
         }
 
-        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((TileEntityChemicalMetalSeparator) this.tileEntity).getEnergySlot(), machineGuiSizeY));
+        addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

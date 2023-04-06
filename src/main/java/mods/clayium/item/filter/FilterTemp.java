@@ -2,7 +2,7 @@ package mods.clayium.item.filter;
 
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.item.common.ItemTiered;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,14 +36,14 @@ public abstract class FilterTemp extends ItemTiered implements IFilter, IModifyC
             return EnumActionResult.SUCCESS;
         }
 
-        if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
-            TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
+        if (worldIn.getTileEntity(pos) instanceof IClayInventory) {
+            IClayInventory tecc = (IClayInventory) worldIn.getTileEntity(pos);
 
             ItemStack filter = player.getHeldItem(hand);
             List<String> list = new ArrayList<>();
 
             if (!((IFilter) filter.getItem()).isCopy(filter)) {
-                tecc.filters.put(facing, filter.copy());
+                tecc.getFilters().put(facing, filter.copy());
                 player.sendMessage(new TextComponentString("Applied " + filter.getDisplayName()));
 
                 ((IFilter) filter.getItem()).addFilterInformation(filter, player, list, true);
@@ -52,11 +52,11 @@ public abstract class FilterTemp extends ItemTiered implements IFilter, IModifyC
                     player.sendMessage(new TextComponentString(" " + s));
                 }
 
-                tecc.updateEntity();
+                tecc.markDirty();
             } else {
-                if (!tecc.filters.get(facing).isEmpty()) {
-                    IFilter itemfilterinv = (IFilter) tecc.filters.get(facing).getItem();
-                    filter = tecc.filters.get(facing).copy();
+                if (!tecc.getFilters().get(facing).isEmpty()) {
+                    IFilter itemfilterinv = (IFilter) tecc.getFilters().get(facing).getItem();
+                    filter = tecc.getFilters().get(facing).copy();
 
                     // where's the method EnumHand -> EntityEquipmentSlot ?
                     switch (hand) {

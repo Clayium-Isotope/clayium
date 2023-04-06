@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface IRecipeProvider<T extends IRecipeElement> {
     int getTier();
@@ -18,18 +19,21 @@ public interface IRecipeProvider<T extends IRecipeElement> {
 
     ClayiumRecipe getRecipeCard();
     T getFlat();
+    default T getRecipe(Predicate<T> pred) {
+        return this.getRecipeCard().getRecipe(pred, this.getFlat());
+    }
     default T getRecipe(ItemStack stack) {
         if (stack.isEmpty()) return this.getFlat();
 
-        return this.getRecipeCard().getRecipe(e -> e.isCraftable(stack, this.getTier()), this.getFlat());
+        return this.getRecipe(e -> e.isCraftable(stack, this.getTier()));
     }
     default T getRecipe(List<ItemStack> stacks) {
         if (stacks.isEmpty()) return this.getFlat();
 
-        return this.getRecipeCard().getRecipe(e -> e.match(stacks, -1, this.getTier()), this.getFlat());
+        return this.getRecipe(e -> e.match(stacks, -1, this.getTier()));
     }
     default T getRecipe(int hash) {
-        return this.getRecipeCard().getRecipe(hash, this.getFlat());
+        return this.getRecipe(e -> e.hashCode() == hash);
     }
 
     default boolean canCraft(ItemStack stack) {

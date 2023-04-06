@@ -5,9 +5,14 @@ import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.ClayiumItems;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 
 public class ContainerClayWorkTable extends ContainerTemp {
+    protected int timeToCraft;
+    protected int craftTime;
+    protected int currentMethod;
+
     public ContainerClayWorkTable(InventoryPlayer player, TileEntityClayWorkTable tileEntity) {
         super(player, tileEntity);
     }
@@ -57,5 +62,28 @@ public class ContainerClayWorkTable extends ContainerTemp {
         return this.transferStackToPlayerInventory(itemStack,
                 index == TileEntityClayWorkTable.ClayWorkTableSlots.PRODUCT.ordinal()
                         || index == TileEntityClayWorkTable.ClayWorkTableSlots.CHANGE.ordinal());
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        for (IContainerListener listener : this.listeners) {
+            if (this.timeToCraft != this.tileEntity.getField(0)) {
+                listener.sendWindowProperty(this, 0, this.tileEntity.getField(0));
+            }
+
+            if (this.craftTime != this.tileEntity.getField(1)) {
+                listener.sendWindowProperty(this, 1, this.tileEntity.getField(1));
+            }
+
+            if (this.currentMethod != this.tileEntity.getField(2)) {
+                listener.sendWindowProperty(this, 2, this.tileEntity.getField(2));
+            }
+        }
+
+        this.timeToCraft = this.tileEntity.getField(0);
+        this.craftTime = this.tileEntity.getField(1);
+        this.currentMethod = this.tileEntity.getField(2);
     }
 }

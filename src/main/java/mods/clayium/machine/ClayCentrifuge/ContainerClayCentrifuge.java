@@ -4,6 +4,7 @@ import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.SlotFurnaceOutput;
 
@@ -27,6 +28,6 @@ public class ContainerClayCentrifuge extends ContainerClayiumMachine {
             this.addMachineSlotToContainer(new SlotFurnaceOutput(player.player, this.tileEntity, i + 1, 116, 35 + 18 * i - 9 * (this.resultSlotNum - 1)));
         }
 
-        this.addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayCentrifuge.CentrifugeSlots.ENERGY.ordinal(), machineGuiSizeY));
+        this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
     }
 }

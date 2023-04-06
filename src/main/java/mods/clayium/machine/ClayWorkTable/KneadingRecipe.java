@@ -75,7 +75,7 @@ public class KneadingRecipe extends RecipeElement {
     }
 
     public ItemStack getRemainingTool(ItemStack tool) {
-        if (this.tool != Always) return ForgeHooks.getContainerItem(tool);
+        if (this.tool != Always) return ForgeHooks.getContainerItem(tool).copy();
         return tool;
     }
 

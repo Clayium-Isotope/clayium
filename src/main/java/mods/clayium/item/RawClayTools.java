@@ -2,7 +2,7 @@ package mods.clayium.item;
 
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.filter.IFilter;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -22,10 +22,10 @@ public class RawClayTools extends ClayiumItem {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
-            TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
+        if (worldIn.getTileEntity(pos) instanceof IClayInventory) {
+            IClayInventory tecc = (IClayInventory) worldIn.getTileEntity(pos);
 
-            ItemStack filter = tecc.filters.get(facing);
+            ItemStack filter = tecc.getFilters().get(facing);
             if (!filter.isEmpty()) {
                 player.sendMessage(new TextComponentString("Removed " + filter.getDisplayName()));
                 List<String> list = new ArrayList<>();
@@ -35,7 +35,7 @@ public class RawClayTools extends ClayiumItem {
                     player.sendMessage(new TextComponentString(" " + s));
                 }
 
-                tecc.filters.put(facing, ItemStack.EMPTY);
+                tecc.getFilters().put(facing, ItemStack.EMPTY);
 
                 return EnumActionResult.SUCCESS;
             }

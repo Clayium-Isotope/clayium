@@ -85,7 +85,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     @Override
     public void readMoreFromNBT(NBTTagCompound compound) {
         if (compound.hasKey("CustomName", Constants.NBT.TAG_STRING)) {
-            this.customName = compound.getString("CustomName");
+            this.setCustomName(compound.getString("CustomName"));
         }
 
         loadIORoutes(compound);
@@ -94,7 +94,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         this.autoExtractCount = compound.getInteger("AutoExtractCount");
 
         if (compound.hasKey("Filters", Constants.NBT.TAG_LIST)) {
-            UtilCollect.tagList2EnumMap(compound.getTagList("Filters", Constants.NBT.TAG_COMPOUND), this.filters);
+            UtilCollect.tagList2EnumMap(compound.getTagList("Filters", Constants.NBT.TAG_COMPOUND), this.getFilters());
         }
 
         if (compound.hasKey("SyncSource", Constants.NBT.TAG_INT_ARRAY)) {
@@ -110,7 +110,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     @Override
     public NBTTagCompound writeMoreToNBT(NBTTagCompound compound) {
         if (hasCustomName()) {
-            compound.setString("CustomName", this.customName);
+            compound.setString("CustomName", this.getName());
         }
 
         saveIORoutes(compound);
@@ -120,7 +120,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
 
         compound.setInteger("Tier", this.tier);
 
-        compound.setTag("Filters", UtilCollect.enumMap2TagList(this.filters));
+        compound.setTag("Filters", UtilCollect.enumMap2TagList(this.getFilters()));
 
         if (this.isSynced()) {
             compound.setIntArray("SyncSource", UtilBuilder.getIntArrayFromTile((TileEntity) this.core));

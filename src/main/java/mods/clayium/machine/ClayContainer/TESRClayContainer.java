@@ -75,7 +75,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
                 bindImportBlockTexAsCan(te.getImportRoute(side), te.getInsertIcons(), facing);
                 bindExportBlockTexAsCan(te.getExportRoute(side), te.getExtractIcons(), facing);
 
-                bindFilterBlockTexAsCan(te.filters.get(facing), facing);
+                bindFilterBlockTexAsCan(te.getFilters().get(facing), facing);
             }
 
         } else {

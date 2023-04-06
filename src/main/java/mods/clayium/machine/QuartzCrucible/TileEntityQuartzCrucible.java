@@ -1,6 +1,6 @@
 package mods.clayium.machine.QuartzCrucible;
 
-import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
@@ -8,19 +8,19 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
-public class TileEntityQuartzCrucible extends TileGeneric implements ITickable {
+public class TileEntityQuartzCrucible extends TileEntityGeneric implements ITickable {
     public int craftTime;
     public static int timeToCraft = 600;
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
+        super.readMoreFromNBT(tagCompound);
         this.craftTime = tagCompound.getShort("CraftTime");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
+        super.writeMoreToNBT(tagCompound);
         tagCompound.setShort("CraftTime", (short) this.craftTime);
         return tagCompound;
     }

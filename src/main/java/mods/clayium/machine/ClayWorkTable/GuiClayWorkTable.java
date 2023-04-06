@@ -4,8 +4,11 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
 import mods.clayium.machine.common.IButtonProvider;
+import mods.clayium.machine.common.IRecipeProvider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClayWorkTable extends GuiTemp {
     public GuiClayWorkTable(ContainerClayWorkTable container) {
@@ -18,7 +21,7 @@ public class GuiClayWorkTable extends GuiTemp {
 
         mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png"));
         drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 96, 80, 16);
-        drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 112, ((TileEntityClayWorkTable) tile).getCookProgressScaled(80), 16);
+        drawTexturedModalRect(guiLeft + 48, guiTop + 29, 0, 112, this.getCookProgressScaled(80), 16);
 
         for (GuiButton button : this.buttonList) {
             button.enabled = ((IButtonProvider) this.tile).isButtonEnable(button.id);
@@ -41,5 +44,16 @@ public class GuiClayWorkTable extends GuiTemp {
             mc.playerController.sendEnchantPacket(inventorySlots.windowId, button.id);
 //            this.tileEntity.pushButton(button.id);
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getCookProgressScaled(int pixels) {
+        assert this.tile instanceof IRecipeProvider;
+
+        if (this.tile.getField(0) == 0 || this.tile.getField(0) == this.tile.getField(1)) {
+            return 0;
+        }
+
+        return this.tile.getField(1) * pixels / this.tile.getField(0);
     }
 }

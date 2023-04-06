@@ -65,7 +65,7 @@ public class UtilCollect {
         return tagList;
     }
 
-    public static <K extends Enum<K>> NBTTagList enumMap2TagList(EnumMap<K, ItemStack> map) {
+    public static <K extends Enum<K>> NBTTagList enumMap2TagList(Map<K, ItemStack> map) {
         NBTTagList list = new NBTTagList();
         if (map.isEmpty()) return list;
 
@@ -79,7 +79,7 @@ public class UtilCollect {
         return list;
     }
 
-    public static <K extends Enum<K>> void tagList2EnumMap(NBTTagList list, EnumMap<K, ItemStack> map) {
+    public static <K extends Enum<K>> void tagList2EnumMap(NBTTagList list, Map<K, ItemStack> map) {
         List<ItemStack> stacks = tagList2ItemList(list);
         if (stacks.isEmpty()) return;
 
@@ -105,5 +105,17 @@ public class UtilCollect {
 
     public static List<Integer> makeZeros(int length) {
         return Arrays.stream(new int[length]).boxed().collect(Collectors.toList());
+    }
+
+    public static <K extends Enum<K>, V> EnumMap<K, V> enumMapWithFill(K[] keyEnum, V fill) {
+        assert keyEnum.length > 0;
+
+        EnumMap<K, V> map = new EnumMap<>(keyEnum[0].getDeclaringClass());
+
+        for (K key : keyEnum) {
+            map.put(key, fill);
+        }
+
+        return map;
     }
 }

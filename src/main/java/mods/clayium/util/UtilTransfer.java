@@ -147,8 +147,8 @@ public class UtilTransfer {
         ItemStack res = itemstack.copy();
         if (inventory.get(index).isEmpty()) {
             inventory.set(index, res.splitStack(Math.min(res.getCount(), inventoryStackLimit)));
-        } else if (UtilItemStack.areTypeEqual(inventory.get(index), itemstack)) {
-            int a = Math.min(itemstack.getCount(), inventory.get(index).getMaxStackSize() - inventory.get(index).getCount());
+        } else if (UtilItemStack.areTypeEqual(inventory.get(index), res)) {
+            int a = Math.min(res.getCount(), inventory.get(index).getMaxStackSize() - inventory.get(index).getCount());
             inventory.get(index).grow(a);
             res.shrink(a);
         }
@@ -283,26 +283,32 @@ public class UtilTransfer {
         return res;
     }
 
-    public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j) {
-        int stackSize = itemstack.getCount();
+    public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int index) {
+        ItemStack res = itemstack.copy();
 
-        for(int k = i; k < j; ++k) {
-            if (!inventory.get(k).isEmpty() && UtilItemStack.areTypeEqual(inventory.get(k), itemstack)) {
-                int n = Math.min(stackSize, inventory.get(k).getCount());
-                stackSize -= n;
-                inventory.get(k).shrink(n);
-                if (inventory.get(k).getCount() <= 0) {
-                    inventory.set(k, ItemStack.EMPTY);
-                }
+        if (!inventory.get(index).isEmpty() && UtilItemStack.areTypeEqual(inventory.get(index), res)) {
+            int n = Math.min(res.getCount(), inventory.get(index).getCount());
+            res.shrink(n);
+            inventory.get(index).shrink(n);
+            if (inventory.get(index).getCount() <= 0) {
+                inventory.set(index, ItemStack.EMPTY);
             }
         }
 
-        if (stackSize <= 0) {
+        return res;
+    }
+
+    public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j) {
+        ItemStack stack = itemstack.copy();
+
+        for(int k = i; k < j; ++k) {
+            stack = consumeItemStack(stack, inventory, k);
+        }
+
+        if (stack.getCount() <= 0) {
             return ItemStack.EMPTY;
         } else {
-            ItemStack res = itemstack.copy();
-            res.setCount(stackSize);
-            return res;
+            return stack;
         }
     }
 

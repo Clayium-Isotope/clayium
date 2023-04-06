@@ -1,6 +1,6 @@
 package mods.clayium.machine.ChemicalMetalSeparator;
 
-import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
@@ -84,7 +84,7 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
         this.debtEnergy = (long)((float)baseConsumingEnergy * this.multConsumingEnergy);
         this.timeToCraft = (long)((float)baseCraftTime * this.multCraftTime);
 
-        ItemStack result = results.get(TileGeneric.random);
+        ItemStack result = results.get(TileEntityGeneric.random);
 
         if (result == null
                 || UtilTransfer.canProduceItemStack(result, this.containerItemStacks, 1, 17, this.getInventoryStackLimit()) < result.getCount()) {

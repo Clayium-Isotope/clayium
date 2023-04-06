@@ -25,7 +25,7 @@ public class ContainerNothing extends ContainerTemp {
     public void setMachineInventorySlots(InventoryPlayer player) {
         if (!(this.tileEntity instanceof IClayEnergyConsumer)) return;
 
-        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
+        addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

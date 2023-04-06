@@ -4,6 +4,7 @@ import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -32,6 +33,6 @@ public class ContainerClayChemicalReactor extends ContainerClayiumMachine {
                 return false;
             }
         });
-        this.addMachineSlotToContainer(new SlotEnergy(this.tileEntity, TileEntityClayChemicalReactor.ChemicalReactorSlots.ENERGY.ordinal(), this.machineGuiSizeY));
+        this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, this.machineGuiSizeY));
     }
 }

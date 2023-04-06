@@ -1,14 +1,15 @@
 package mods.clayium.gui;
 
 import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 public abstract class ContainerTemp extends Container {
     protected InventoryPlayer player;
-    protected TileEntityClayContainer tileEntity;
+    protected TileEntityGeneric tileEntity;
     public ArrayList<Slot> machineInventorySlots = new ArrayList<>();
     protected int playerSlotIndex;
     public int machineGuiSizeX = 176;
@@ -29,7 +30,7 @@ public abstract class ContainerTemp extends Container {
     public int playerSlotOffsetX;
     public int playerSlotOffsetY;
 
-    public ContainerTemp(InventoryPlayer player, TileEntityClayContainer tileEntity) {
+    public ContainerTemp(InventoryPlayer player, TileEntityGeneric tileEntity) {
         this.player = player;
         this.tileEntity = tileEntity;
 
@@ -203,20 +204,39 @@ public abstract class ContainerTemp extends Container {
         return true;
     }
 
-    public void detectAndSendChanges() {
-        for (int i = 0; i < this.inventorySlots.size(); i++) {
-            ItemStack itemstack = this.inventorySlots.get(i).getStack();
-            ItemStack itemstack1 = this.inventoryItemStacks.get(i);
+//    public void detectAndSendChanges() {
+//        for (int i = 0; i < this.inventorySlots.size(); i++) {
+//            ItemStack itemstack = this.inventorySlots.get(i).getStack();
+//            ItemStack itemstack1 = this.inventoryItemStacks.get(i);
+//
+//            if (!UtilItemStack.areStackEqual(itemstack1, itemstack)) {
+//                itemstack1 = itemstack.copy();
+//                this.inventoryItemStacks.set(i, itemstack1);
+//
+//                for (net.minecraft.inventory.IContainerListener listener : this.listeners) {
+//                    listener.sendSlotContents(this, i, itemstack1);
+//                }
+//            }
+//        }
+//    }
 
-            if (!UtilItemStack.areStackEqual(itemstack1, itemstack)) {
-                itemstack1 = itemstack.copy();
-                this.inventoryItemStacks.set(i, itemstack1);
+    public void addListener(IContainerListener listener) {
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.tileEntity);
+    }
 
-                for (net.minecraft.inventory.IContainerListener listener : this.listeners) {
-                    listener.sendSlotContents(this, i, itemstack1);
-                }
-            }
-        }
+    /**
+     * <pre>{@code
+     * Container#detectAndSendChanges()
+     * > IContainerListener#sendWindowProperty(Container, int, int)
+     * > net.minecraft.client.network.NetHandlerPlayClient#handleWindowProperty(SPacketWindowProperty)
+     * > Container#updateProgressBar(int, int)
+     * }</pre>
+     * によって鯖蔵が同期される
+     */
+    @Override
+    public void updateProgressBar(int id, int data) {
+        this.tileEntity.setField(id, data);
     }
 
     public void onContainerClosed(EntityPlayer playerIn) {

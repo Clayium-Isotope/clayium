@@ -1,22 +1,17 @@
 package mods.clayium.machine.ClayContainer;
 
-import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.*;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,48 +22,17 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class TileEntityClayContainer extends TileGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
+public class TileEntityClayContainer extends TileEntityGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
     protected boolean isLoaded;
-
-    protected NonNullList<ItemStack> containerItemStacks;
-    protected String customName;
     protected int[] slotsDrop;
 
-    /**
-     * -2: energy
-     * -1: none,
-     * 0: white
-     */
-    private final Map<EnumSide, Integer> importRoutes = new EnumMap<EnumSide, Integer>(EnumSide.class) {{
-        put(EnumSide.UP,    -1);
-        put(EnumSide.DOWN,  -1);
-        put(EnumSide.FRONT, -1);
-        put(EnumSide.BACK,  -1);
-        put(EnumSide.LEFT,  -1);
-        put(EnumSide.RIGHT, -1);
-    }};
+    private final Map<EnumSide, Integer> importRoutes = UtilCollect.enumMapWithFill(EnumSide.VALUES, -1);
     protected final List<int[]> listSlotsImport = new ArrayList<>();
-    /**
-     * -1: none,
-     * 0: white
-     */
-    private final Map<EnumSide, Integer> exportRoutes = new EnumMap<EnumSide, Integer>(EnumSide.class) {{
-        put(EnumSide.UP,    -1);
-        put(EnumSide.DOWN,  -1);
-        put(EnumSide.FRONT, -1);
-        put(EnumSide.BACK,  -1);
-        put(EnumSide.LEFT,  -1);
-        put(EnumSide.RIGHT, -1);
-    }};
+
+    private final Map<EnumSide, Integer> exportRoutes = UtilCollect.enumMapWithFill(EnumSide.VALUES, -1);
     protected final List<int[]> listSlotsExport = new ArrayList<>();
-    public EnumMap<EnumFacing, ItemStack> filters = new EnumMap<EnumFacing, ItemStack>(EnumFacing.class) {{
-        put(EnumFacing.UP,    ItemStack.EMPTY);
-        put(EnumFacing.DOWN,  ItemStack.EMPTY);
-        put(EnumFacing.NORTH, ItemStack.EMPTY);
-        put(EnumFacing.SOUTH, ItemStack.EMPTY);
-        put(EnumFacing.WEST,  ItemStack.EMPTY);
-        put(EnumFacing.EAST,  ItemStack.EMPTY);
-    }};
+
+    public EnumMap<EnumFacing, ItemStack> filters = UtilCollect.enumMapWithFill(EnumFacing.VALUES, ItemStack.EMPTY);
 
     public boolean autoExtract = true;
     public boolean autoInsert = true;
@@ -85,10 +49,12 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     protected int tier = -1;
 
     public TileEntityClayContainer() {
+        super();
         initParams();
         registerIOIcons();
     }
 
+    @Override
     public void initParams() {}
 
     public int getTier() {
@@ -111,70 +77,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         }
     }
 
-    public int getInventoryStackLimit() {
-        return 64;
-    }
-
-    public int getSizeInventory() {
-        return this.getContainerItemStacks().size();
-    }
-
-    public ItemStack getStackInSlot(int index) {
-        return this.getContainerItemStacks().get(index);
-    }
-
-    public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.getContainerItemStacks(), index, count);
-    }
-
-    public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.getContainerItemStacks(), index);
-    }
-
-    public void setInventorySlotContents(int index, ItemStack stack) {
-        this.getContainerItemStacks().set(index, stack);
-
-        if (stack.getCount() > this.getInventoryStackLimit()) {
-            stack.setCount(this.getInventoryStackLimit());
-        }
-
-        this.markDirty();
-    }
-
-    public boolean isEmpty() {
-        for (ItemStack itemstack : this.getContainerItemStacks())
-            if (!itemstack.isEmpty())
-                return false;
-        return true;
-    }
-
-    public void clear() {
-        this.getContainerItemStacks().clear();
-    }
-
-    public String getName() {
-        return hasCustomName() ? this.customName : getBlockType().getLocalizedName();
-    }
-
-    public boolean hasCustomName() {
-        return this.customName != null && !this.customName.isEmpty();
-    }
-
-    public void setCustomName(String customName) {
-        this.customName = customName;
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return hasCustomName() ? new TextComponentString(getName()) : new TextComponentTranslation(getName());
-    }
-
-    public boolean isUsableByPlayer(EntityPlayer player) {
-        if (this.getWorld().getTileEntity(this.getPos()) == this)
-            return player.getDistanceSq(this.getPos().add(0.5D, 0.5D, 0.5D)) <= 64.0D;
-        return false;
-    }
-
     @Override
     public void addSpecialDrops(NonNullList<ItemStack> drops) {
         // I hope not to cause IndexOutOfBoundsException
@@ -184,26 +86,8 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     }
 
     @Override
-    public final void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-
-        this.readMoreFromNBT(compound);
-    }
-
-    @Override
-    public final NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-
-        return this.writeMoreToNBT(compound);
-    }
-
     public void readMoreFromNBT(NBTTagCompound compound) {
-        this.containerItemStacks = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.getContainerItemStacks());
-
-        if (compound.hasKey("CustomName", Constants.NBT.TAG_STRING)) {
-            this.customName = compound.getString("CustomName");
-        }
+        super.readMoreFromNBT(compound);
 
         loadIORoutes(compound);
 
@@ -217,12 +101,9 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
         }
     }
 
+    @Override
     public NBTTagCompound writeMoreToNBT(NBTTagCompound compound) {
-        ItemStackHelper.saveAllItems(compound, this.getContainerItemStacks());
-
-        if (hasCustomName()) {
-            compound.setString("CustomName", this.customName);
-        }
+        super.writeMoreToNBT(compound);
 
         saveIORoutes(compound);
 
@@ -265,10 +146,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
 //        this.getWorld().addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
     }
 
-    public void openInventory(EntityPlayer player) {}
-
-    public void closeInventory(EntityPlayer player) {}
-
     /*
      * TESR のために、TE と Blockstate / Block の上手い橋渡しについて、模索中。
      */
@@ -281,19 +158,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     @Override
     public boolean canRenderBreaking() {
         return true;
-    }
-
-    @Override
-    public int getField(int id) {
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value) {}
-
-    @Override
-    public int getFieldCount() {
-        return 0;
     }
 
     /**
@@ -418,11 +282,6 @@ public class TileEntityClayContainer extends TileGeneric implements IClayInvento
     @Override
     public Map<EnumFacing, ItemStack> getFilters() {
         return this.filters;
-    }
-
-    @Override
-    public NonNullList<ItemStack> getContainerItemStacks() {
-        return this.containerItemStacks;
     }
 
     public int getGuiId() {

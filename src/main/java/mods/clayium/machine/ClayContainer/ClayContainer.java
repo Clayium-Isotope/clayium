@@ -4,7 +4,7 @@ package mods.clayium.machine.ClayContainer;
 
 import com.google.common.collect.ImmutableMap;
 import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.util.UtilDirection;
@@ -36,11 +36,11 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
-    private final Class<? extends TileGeneric> teClass;
+    private final Class<? extends TileEntityGeneric> teClass;
     /*package-private*/ final int guiId;
     protected final int tier;
 
-    public ClayContainer(Material material, Class<? extends TileGeneric> teClass, String modelPath, int guiId, int tier) {
+    public ClayContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId, int tier) {
         super(material);
         this.teClass = teClass;
         this.guiId = guiId;
@@ -73,14 +73,12 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     @Override
-    public TileGeneric createNewTileEntity(World worldIn, int meta) {
+    public TileEntityGeneric createNewTileEntity(World worldIn, int meta) {
         if (this.teClass == null) return null;
 
         try {
-            TileGeneric tecc = teClass.newInstance();
-            if (tecc instanceof TileEntityClayContainer) {
-                ((TileEntityClayContainer) tecc).initParamsByTier(this.tier);
-            }
+            TileEntityGeneric tecc = teClass.newInstance();
+            tecc.initParamsByTier(this.tier);
             return tecc;
         } catch (Exception exception) {
             ClayiumCore.logger.catching(exception);
@@ -110,7 +108,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     protected void openGui(World world, BlockPos pos, EntityPlayer player) {
         Block block = world.getBlockState(pos).getBlock();
-        if (block instanceof ClayContainer && world.getTileEntity(pos) instanceof TileGeneric && ((ClayContainer) block).guiId != -1)
+        if (block instanceof ClayContainer && world.getTileEntity(pos) instanceof TileEntityGeneric && ((ClayContainer) block).guiId != -1)
             openGui(((ClayContainer) block).guiId, world, pos, player);
     }
 
@@ -122,9 +120,9 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if (tileentity instanceof TileEntityClayContainer) {
+        if (tileentity instanceof TileEntityGeneric) {
             if (stack.hasDisplayName()) {
-                ((TileEntityClayContainer) tileentity).setCustomName(stack.getDisplayName());
+                ((TileEntityGeneric) tileentity).setCustomName(stack.getDisplayName());
             }
         }
     }
@@ -156,8 +154,8 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        if (world.getTileEntity(pos) instanceof TileGeneric && ((TileGeneric) world.getTileEntity(pos)).hasSpecialDrops())
-            ((TileGeneric) world.getTileEntity(pos)).getDrops(drops, world, pos, state, fortune);
+        if (world.getTileEntity(pos) instanceof TileEntityGeneric && ((TileEntityGeneric) world.getTileEntity(pos)).hasSpecialDrops())
+            ((TileEntityGeneric) world.getTileEntity(pos)).getDrops(drops, world, pos, state, fortune);
         else
             super.getDrops(drops, world, pos, state, fortune);
     }

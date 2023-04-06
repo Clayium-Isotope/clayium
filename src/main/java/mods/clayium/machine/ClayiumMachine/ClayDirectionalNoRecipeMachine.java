@@ -1,6 +1,6 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayDirectionalContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
@@ -47,8 +47,8 @@ public class ClayDirectionalNoRecipeMachine extends ClayDirectionalContainer {
     }
 
     @Override
-    public TileGeneric createNewTileEntity(World worldIn, int meta) {
-        TileGeneric te = super.createNewTileEntity(worldIn, meta);
+    public TileEntityGeneric createNewTileEntity(World worldIn, int meta) {
+        TileEntityGeneric te = super.createNewTileEntity(worldIn, meta);
         if (te instanceof TileEntityClayiumMachine) {
             ((TileEntityClayiumMachine) te).setKind(this.machineKind);
         }

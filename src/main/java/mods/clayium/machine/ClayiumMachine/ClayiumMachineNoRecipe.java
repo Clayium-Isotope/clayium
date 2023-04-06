@@ -1,6 +1,6 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.tile.TileGeneric;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import net.minecraft.block.SoundType;
@@ -21,8 +21,8 @@ public class ClayiumMachineNoRecipe extends ClayiumMachine {
     }
 
     @Override
-    public TileGeneric createNewTileEntity(World worldIn, int meta) {
-        TileGeneric te = super.createNewTileEntity(worldIn, meta);
+    public TileEntityGeneric createNewTileEntity(World worldIn, int meta) {
+        TileEntityGeneric te = super.createNewTileEntity(worldIn, meta);
         if (te instanceof TileEntityClayContainer)
             ((TileEntityClayContainer) te).setCustomName(this.guititle);
         return te;
