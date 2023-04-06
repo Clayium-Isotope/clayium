@@ -85,7 +85,7 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
     public boolean setNewRecipe() {
         this.doingRecipe = this.getRecipe(IRecipeProvider.getCraftPermStacks(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2)));
 
-        if (this.doingRecipe == RecipeElement.flat()) return false;
+        if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = this.doingRecipe.getEnergy();
         this.timeToCraft = this.doingRecipe.getTime();

@@ -143,17 +143,6 @@ public class ClayiumRecipes {
         return (long) (factor * 100.0D * Math.pow(10.0D, (tier - 4)));
     }
 
-    public static boolean hasResult(ClayiumRecipe recipes, List<ItemStack> stack) {
-        for (IRecipeElement recipe : recipes)
-            if (recipe.match(stack)) return true;
-
-        return false;
-    }
-
-    public static boolean hasResult(ClayiumRecipe recipes, ItemStack... stacks) {
-        return hasResult(recipes, ii(stacks));
-    }
-
     public static void registerClayWorkTableRecipe() {
         clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), 0, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ItemStack.EMPTY, 4L);
         clayWorkTable.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), 1, ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ItemStack.EMPTY, 30);

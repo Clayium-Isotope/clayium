@@ -21,6 +21,7 @@ public class GuiClayiumMachine extends GuiTemp {
 
     public GuiClayiumMachine(ContainerClayiumMachine container) {
         super(container);
+        this.calculateProgressBarOffsets();
     }
 
     @Override
@@ -38,11 +39,10 @@ public class GuiClayiumMachine extends GuiTemp {
     @Override
     protected void supplyDraw() {
         super.supplyDraw();
-        this.calculateProgressBarOffsets();
 
         mc.getTextureManager().bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png"));
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 96, progressBarSizeX, progressBarSizeY);
-        drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, ((TileEntityClayiumMachine) tile).getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
+        drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, this.getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
 
         if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getTier()))
             buttonList.get(0).enabled = ((TileEntityClayiumMachine) this.tile).canPushButton(0) == IButtonProvider.ButtonProperty.PERMIT;
@@ -77,4 +77,11 @@ public class GuiClayiumMachine extends GuiTemp {
     }
 
     protected void calculateProgressBarOffsets() {}
+
+    private int getCraftProgressScaled(int width) {
+        TileEntityClayiumMachine tecm = (TileEntityClayiumMachine) this.tile;
+
+        if (tecm.getField(0) == 0) return 0;
+        return tecm.getField(1) * width / tecm.getField(0);
+    }
 }

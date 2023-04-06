@@ -12,7 +12,7 @@ import java.util.List;
 public interface IRecipeElement extends IRecipeWrapper {
     List<ItemStack> getMaterials();
     int getTier();
-    default int getMethod() { return 0; }
+    default int getMethod() { return -1; }
     List<ItemStack> getResults();
     long getEnergy();
     long getTime();
@@ -23,7 +23,11 @@ public interface IRecipeElement extends IRecipeWrapper {
         }
 
         for (ItemStack stack : getMaterials()) {
-            if (canBeCraftedODs(itemstack, stack, false)) {
+//            if (canBeCraftedODs(itemstack, stack, false)) {
+//                return true;
+//            }
+
+            if (canBeCrafted(itemstack, stack, false)) {
                 return true;
             }
         }
@@ -32,10 +36,7 @@ public interface IRecipeElement extends IRecipeWrapper {
 
     default boolean match(List<ItemStack> itemStacksIn, int methodIn, int tierIn) {
         if (getMethod() != methodIn || getTier() > tierIn || getMaterials().size() > itemStacksIn.size()) return false;
-        return match(itemStacksIn);
-    }
 
-    default boolean match(List<ItemStack> itemStacksIn) {
         for (int i = 0; i < getMaterials().size(); i++)
             if (!inclusion(getMaterials().get(i), itemStacksIn.get(i)))
                 return false;
@@ -43,11 +44,11 @@ public interface IRecipeElement extends IRecipeWrapper {
         return true;
     }
 
-    static boolean inclusion(ItemStack from, ItemStack comes) {
-        if (from.isEmpty()) return true;
-        if (UtilItemStack.areTypeEqual(from, comes) && from.getCount() <= comes.getCount()) return true;
-        if (from.getHasSubtypes() && comes.getHasSubtypes()) return from.isItemEqual(comes);
-        return from.getItemDamage() == OreDictionary.WILDCARD_VALUE;
+    static boolean inclusion(ItemStack self, ItemStack comes) {
+        if (self.isEmpty()) return true;
+        if (UtilItemStack.areTypeEqual(self, comes) && self.getCount() <= comes.getCount()) return true;
+        if (self.getHasSubtypes() && comes.getHasSubtypes()) return self.isItemEqual(comes);
+        return self.getItemDamage() == OreDictionary.WILDCARD_VALUE;
     }
 
     default int[] getStackSizes(ItemStack ...items) {
@@ -79,8 +80,9 @@ public interface IRecipeElement extends IRecipeWrapper {
     }
 
     static boolean canBeCrafted(ItemStack itemstack, ItemStack itemstack2, boolean sizeCheck) {
-        if (itemstack2 == null) return true;
-        if (itemstack == null) return false;
+        if (itemstack2 == ItemStack.EMPTY) return true;
+        if (itemstack == ItemStack.EMPTY) return false;
+
         return ItemStack.areItemsEqual(itemstack2, itemstack)
                 && (itemstack2.getItemDamage() == OreDictionary.WILDCARD_VALUE || itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE
                 || UtilItemStack.areDamageEqual(itemstack2, itemstack))
@@ -93,7 +95,7 @@ public interface IRecipeElement extends IRecipeWrapper {
 
     static boolean canBeCraftedOD(ItemStack itemstack, Object object, boolean sizeCheck) {
         if (object == null) return true;
-        if (itemstack == null) return false;
+        if (itemstack == ItemStack.EMPTY) return false;
         if (object instanceof String) {
             return UtilItemStack.hasOreName(itemstack, (String) object);
         }

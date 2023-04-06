@@ -5,14 +5,17 @@ import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 
 public class ContainerClayiumMachine extends ContainerTemp {
     protected int materialSlotIndex;
     protected int resultSlotIndex;
+    protected int timeToCraft;
+    protected int craftTime;
+    protected int containEnergy;
 
     public ContainerClayiumMachine(InventoryPlayer player, TileEntityClayiumMachine tile) {
         super(player, tile);
@@ -27,7 +30,7 @@ public class ContainerClayiumMachine extends ContainerTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return ((TileEntityClayiumMachine) tileEntity).getRecipe(itemstack1) != RecipeElement.flat();
+        return !((TileEntityClayiumMachine) tileEntity).getRecipe(itemstack1).isFlat();
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
@@ -63,8 +66,48 @@ public class ContainerClayiumMachine extends ContainerTemp {
             }
         });
 
-        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity)) {
-            addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
+        addMachineSlotToContainer(new SlotEnergy(this.tileEntity, ((IClayEnergyConsumer) this.tileEntity).getEnergySlot(), machineGuiSizeY));
+    }
+
+    public void addListener(IContainerListener listener) {
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.tileEntity);
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        for (IContainerListener listener : this.listeners) {
+            if (this.timeToCraft != this.tileEntity.getField(0)) {
+                listener.sendWindowProperty(this, 0, this.tileEntity.getField(0));
+            }
+
+            if (this.craftTime != this.tileEntity.getField(1)) {
+                listener.sendWindowProperty(this, 1, this.tileEntity.getField(1));
+            }
+
+            if (this.containEnergy != this.tileEntity.getField(2)) {
+                listener.sendWindowProperty(this, 2, this.tileEntity.getField(2));
+            }
         }
+
+        this.timeToCraft = this.tileEntity.getField(0);
+        this.craftTime = this.tileEntity.getField(1);
+        this.containEnergy = this.tileEntity.getField(2);
+    }
+
+    /**
+     * <pre>{@code
+     * Container#detectAndSendChanges()
+     * > IContainerListener#sendWindowProperty(Container, int, int)
+     * > net.minecraft.client.network.NetHandlerPlayClient#handleWindowProperty(SPacketWindowProperty)
+     * > Container#updateProgressBar(int, int)
+     * }</pre>
+     * によって鯖蔵が同期される
+     */
+    @Override
+    public void updateProgressBar(int id, int data) {
+        this.tileEntity.setField(id, data);
     }
 }

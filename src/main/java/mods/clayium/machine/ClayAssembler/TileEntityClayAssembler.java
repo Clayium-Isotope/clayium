@@ -75,12 +75,12 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 
         this.doingRecipe = this.getRecipe(permStack);
 
-        if (this.doingRecipe == RecipeElement.flat()) return false;
+        if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = this.doingRecipe.getEnergy();
         this.timeToCraft = this.doingRecipe.getTime();
 
-        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(), 0, AssemblerSlots.MATERIAL_2.ordinal() + 1);
+        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(), AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() + 1);
 
         return true;
     }

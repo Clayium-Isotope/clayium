@@ -19,9 +19,13 @@ public interface IRecipeProvider<T extends IRecipeElement> {
     ClayiumRecipe getRecipeCard();
     T getFlat();
     default T getRecipe(ItemStack stack) {
+        if (stack.isEmpty()) return this.getFlat();
+
         return this.getRecipeCard().getRecipe(e -> e.isCraftable(stack, this.getTier()), this.getFlat());
     }
     default T getRecipe(List<ItemStack> stacks) {
+        if (stacks.isEmpty()) return this.getFlat();
+
         return this.getRecipeCard().getRecipe(e -> e.match(stacks, -1, this.getTier()), this.getFlat());
     }
     default T getRecipe(int hash) {
@@ -119,6 +123,23 @@ public interface IRecipeProvider<T extends IRecipeElement> {
     void proceedCraft();
 
     /**
+     * <ul>
+     *     <li>レシピ検索
+     *          <pre>{@code
+     *          this.doingRecipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
+     *          if (this.doingRecipe.isFlat()) return false;
+     *          }</pre>
+     *     </li>
+     *     <li>実行できるか検証
+     *         <pre>{@code
+     *         if (!canCraft(this.doingRecipe) || !IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy(), false)) {
+     *             this.timeToCraft = 0L;
+     *             this.debtEnergy = 0L;
+     *             return false;
+     *         }
+     *         }</pre>
+     *     </li>
+     * </ul>
      * @return レシピが設定されたならtrue、そうでなければfalse
      */
     boolean setNewRecipe();
