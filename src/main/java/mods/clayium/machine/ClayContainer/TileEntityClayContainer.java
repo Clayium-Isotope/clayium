@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,7 +23,6 @@ import java.util.Map;
 
 public class TileEntityClayContainer extends TileEntityGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
     protected boolean isLoaded;
-    protected int[] slotsDrop;
 
     private final Map<EnumSide, Integer> importRoutes = UtilCollect.enumMapWithFill(EnumSide.VALUES, -1);
     protected final List<int[]> listSlotsImport = new ArrayList<>();
@@ -74,14 +72,6 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
             this.autoExtractInterval = config.autoExtractInterval;
             this.maxAutoInsertDefault = config.maxAutoInsertDefault;
             this.maxAutoExtractDefault = config.maxAutoExtractDefault;
-        }
-    }
-
-    @Override
-    public void addSpecialDrops(NonNullList<ItemStack> drops) {
-        // I hope not to cause IndexOutOfBoundsException
-        for (int i : this.slotsDrop) {
-            drops.add(this.getContainerItemStacks().get(i));
         }
     }
 
@@ -172,7 +162,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
         if (!this.isLoaded) {
             this.isLoaded = true;
-            updateEntity();
+            this.markDirty();
         }
     }
 
@@ -204,10 +194,10 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     }
 
     @Override
-    public void updateEntity() {
+    public void markDirty() {
         BlockStateClayContainer.checkSurroundConnection(this.getWorld(), this.getPos(), this);
 
-        super.updateEntity();
+        super.markDirty();
     }
 
     protected void doAutoTakeIn() {
@@ -282,6 +272,16 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     @Override
     public Map<EnumFacing, ItemStack> getFilters() {
         return this.filters;
+    }
+
+    @Override
+    public boolean getAutoInsert() {
+        return this.autoInsert;
+    }
+
+    @Override
+    public boolean getAutoExtract() {
+        return this.autoExtract;
     }
 
     public int getGuiId() {

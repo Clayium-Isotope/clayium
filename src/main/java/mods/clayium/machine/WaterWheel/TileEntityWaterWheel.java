@@ -1,32 +1,30 @@
 package mods.clayium.machine.WaterWheel;
 
 import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.util.UtilTier;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityWaterWheel extends TileEntityClayContainer {
+public class TileEntityWaterWheel extends TileEntityGeneric {
     public int progress = 0;
     public int progressEfficiency = 1000;
     protected static int progressMax = 20000;
+    private int tier;
 
     public void initParams() {
         this.progressEfficiency = (int)((double)this.progressEfficiency * Math.pow(Math.max(this.tier, 1.0D), 3.0D));
-        this.containerItemStacks = NonNullList.withSize(1, ItemStack.EMPTY);
-        this.listSlotsImport.add(new int[]{0});
-        this.listSlotsExport.add(new int[]{0});
         this.slotsDrop = new int[]{0};
-        this.autoInsert = false;
-        this.autoExtract = false;
+    }
+
+    @Override
+    public void initParamsByTier(int tier) {
+        this.tier = tier;
     }
 
     @Override

@@ -3,7 +3,6 @@ package mods.clayium.machine.common;
 import mods.clayium.item.common.IClayEnergy;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 
 public interface IClayEnergyConsumer extends IInventory {
     long getContainEnergy();
@@ -75,9 +74,10 @@ public interface IClayEnergyConsumer extends IInventory {
     }
 
     /**
-     * TRUE ensures that the TileEntity inherits {@link IClayEnergyConsumer}
+     * TRUE ensures that the Object inherits {@link IClayEnergyConsumer}
+     * <br>TileEntityを保証していると冗長になる場合があるので、Objectとした。
      */
-    static boolean hasClayEnergy(TileEntity te) {
+    static boolean hasClayEnergy(Object te) {
         return te instanceof IClayEnergyConsumer && ((IClayEnergyConsumer) te).acceptClayEnergy();
     }
 }

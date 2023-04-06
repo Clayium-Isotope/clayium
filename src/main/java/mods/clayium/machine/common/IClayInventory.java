@@ -27,6 +27,8 @@ public interface IClayInventory extends ISidedInventory {
     void setExportRoute(EnumSide side, int route);
     Map<EnumFacing, ItemStack> getFilters();
     NonNullList<ItemStack> getContainerItemStacks();
+    boolean getAutoInsert();
+    boolean getAutoExtract();
 
     static boolean isItemValidForSlot(IClayInventory inv, int index, ItemStack stack) {
         if (inv instanceof IClayEnergyConsumer) {

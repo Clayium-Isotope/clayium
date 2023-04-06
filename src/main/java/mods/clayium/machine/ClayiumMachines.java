@@ -1,5 +1,6 @@
 package mods.clayium.machine;
 
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
@@ -9,7 +10,6 @@ import mods.clayium.machine.ClayBuffer.ClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
 import mods.clayium.machine.ClayChemicalReactor.ClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.ClayContainer;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayEnergyLaser.ClayEnergyLaser;
 import mods.clayium.machine.ClayFabricator.ClayFabricator;
@@ -159,10 +159,10 @@ public class ClayiumMachines {
     private static void addMachine(EnumMachineKind kind, int tier, String suffix) {
         addContainer(kind, tier, new ClayiumMachine(kind, suffix, tier));
     }
-    private static void addMachineTE(EnumMachineKind kind, int tier, Class<? extends TileEntityClayContainer> teClass) {
+    private static void addMachineTE(EnumMachineKind kind, int tier, Class<? extends TileEntityGeneric> teClass) {
         addContainer(kind, tier, new ClayiumMachine(kind, tier, teClass));
     }
-    private static void addMachineTE(EnumMachineKind kind, int[] tiers, Class<? extends TileEntityClayContainer> teClass) {
+    private static void addMachineTE(EnumMachineKind kind, int[] tiers, Class<? extends TileEntityGeneric> teClass) {
         for (int tier : tiers)
             addContainer(kind, tier, new ClayiumMachine(kind, tier, teClass));
     }

@@ -2,7 +2,7 @@ package mods.clayium.item;
 
 import mods.clayium.item.common.ClayiumItem;
 import mods.clayium.item.common.IModifyCC;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,8 +28,8 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
             return EnumActionResult.SUCCESS;
         }
 
-        if (worldIn.getTileEntity(pos) instanceof TileEntityClayContainer) {
-            TileEntityClayContainer tecc = (TileEntityClayContainer) worldIn.getTileEntity(pos);
+        if (worldIn.getTileEntity(pos) instanceof IClayInventory) {
+            IClayInventory tecc = (IClayInventory) worldIn.getTileEntity(pos);
             EnumSide side = UtilDirection.getSideOfDirection(tecc.getFront(), facing);
             int dist = tecc.getExportRoute(side) + 1;
 
@@ -41,7 +41,7 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
             }
             tecc.setExportRoute(side, dist);
 
-            tecc.updateEntity();
+            tecc.markDirty();
             return EnumActionResult.SUCCESS;
         }
 

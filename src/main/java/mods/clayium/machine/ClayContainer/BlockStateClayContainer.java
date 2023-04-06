@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayContainer;
 
 import com.google.common.collect.ImmutableMap;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.block.Block;
@@ -229,19 +230,19 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     }
 
     private static boolean checkPipeConnection(TileEntity myself, TileEntity customer, EnumFacing direction) {
-        if (!(myself instanceof TileEntityClayContainer) || !(customer instanceof IInventory)) return false;
+        if (!(myself instanceof IClayInventory) || !(customer instanceof IInventory)) return false;
 
-        TileEntityClayContainer myselfCC = (TileEntityClayContainer) myself;
+        IClayInventory myselfCC = (IClayInventory) myself;
 
         EnumSide side = UtilDirection.getSideOfDirection(myselfCC.getFront(), direction);
         if (myselfCC.getImportRoute(side) != -1 || (myselfCC.getExportRoute(side) != -1))
-            return ((myselfCC.getImportRoute(side) != -1 && myselfCC.autoExtract)
-                    || (myselfCC.getExportRoute(side) != -1 && myselfCC.autoInsert));
+            return ((myselfCC.getImportRoute(side) != -1 && myselfCC.getAutoExtract())
+                    || (myselfCC.getExportRoute(side) != -1 && myselfCC.getAutoInsert()));
 
-        if (!(customer instanceof TileEntityClayContainer)) return false;
+        if (!(customer instanceof IClayInventory)) return false;
 
-        return (((TileEntityClayContainer) customer).getImportRoute(side.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoExtract)
-                || (((TileEntityClayContainer) customer).getExportRoute(side.getOpposite()) != -1 && ((TileEntityClayContainer) customer).autoInsert);
+        return (((IClayInventory) customer).getImportRoute(side.getOpposite()) != -1 && ((IClayInventory) customer).getAutoExtract())
+                || (((IClayInventory) customer).getExportRoute(side.getOpposite()) != -1 && ((IClayInventory) customer).getAutoInsert());
     }
 
     public EnumFacing getFront() {

@@ -1,16 +1,16 @@
 package mods.clayium.gui;
 
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
 public class ContainerNothing extends ContainerTemp {
-    public ContainerNothing(InventoryPlayer player, TileEntityClayContainer tile) {
+    public ContainerNothing(InventoryPlayer player, TileEntityGeneric tile) {
         this(player, tile, 32);
     }
 
-    public ContainerNothing(InventoryPlayer player, TileEntityClayContainer tile, int machineGuiSizeY) {
+    public ContainerNothing(InventoryPlayer player, TileEntityGeneric tile, int machineGuiSizeY) {
         super(player, tile);
 
         this.machineGuiSizeY = machineGuiSizeY;

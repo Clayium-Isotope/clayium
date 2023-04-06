@@ -5,7 +5,6 @@ import mods.clayium.util.EnumSide;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +27,10 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
         return true;
     }
 
-    static boolean isSyncable(@Nullable TileEntity tile) {
+    /**
+     * 引数がTileEntityであることを保証するのは冗長
+     */
+    static boolean isSyncable(@Nullable Object tile) {
         return tile != null && tile instanceof IInterfaceCaptive && ((IInterfaceCaptive) tile).acceptInterfaceSync();
     }
 
@@ -94,6 +96,16 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
         @Override
         public NonNullList<ItemStack> getContainerItemStacks() {
             return containerItemStacks;
+        }
+
+        @Override
+        public boolean getAutoInsert() {
+            return false;
+        }
+
+        @Override
+        public boolean getAutoExtract() {
+            return false;
         }
 
         @Override

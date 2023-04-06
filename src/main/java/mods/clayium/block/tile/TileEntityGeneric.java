@@ -7,8 +7,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +22,7 @@ public class TileEntityGeneric extends TileEntity implements IInventory {
     protected static final Random random = new Random();
     protected NonNullList<ItemStack> containerItemStacks = NonNullList.withSize(0, ItemStack.EMPTY);
     private String customName;
+    protected int[] slotsDrop;
 
     public TileEntityGeneric() {}
 
@@ -46,28 +45,17 @@ public class TileEntityGeneric extends TileEntity implements IInventory {
         return new ItemStack(blockIn.getItemDropped(blockIn.getDefaultState(), random, fortune));
     }
 
-    public void addSpecialDrops(NonNullList<ItemStack> drops) {}
-
-    @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
+    public void addSpecialDrops(NonNullList<ItemStack> drops) {
+        // I hope not to cause IndexOutOfBoundsException
+        for (int i : this.slotsDrop) {
+            drops.add(this.getContainerItemStacks().get(i));
+        }
     }
 
-    @Override
-    public NBTTagCompound getUpdateTag() {
-        return writeToNBT(new NBTTagCompound());
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.getNbtCompound());
-        updateEntity();
-    }
-
-    public void updateEntity() {
-        if (!this.world.isRemote) {
+    public void markDirty() {
+        if (!this.getWorld().isRemote) {
 //            world.markBlockRangeForRenderUpdate(pos, pos);
-            world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
         }
     }
 

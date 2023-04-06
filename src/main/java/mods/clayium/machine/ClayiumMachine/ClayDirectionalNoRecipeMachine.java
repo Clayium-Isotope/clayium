@@ -3,7 +3,6 @@ package mods.clayium.machine.ClayiumMachine;
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayDirectionalContainer;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.JsonHelper;
 import mods.clayium.util.TierPrefix;
@@ -20,7 +19,7 @@ import java.util.List;
 public class ClayDirectionalNoRecipeMachine extends ClayDirectionalContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, String suffix, int guiId, int tier) {
+    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, String suffix, int guiId, int tier) {
         super(Material.IRON, teClass, (suffix.isEmpty() ? (TierPrefix.get(tier).getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
         this.machineKind = kind;
 
@@ -32,11 +31,11 @@ public class ClayDirectionalNoRecipeMachine extends ClayDirectionalContainer {
         JsonHelper.genItemJson(TierPrefix.get(tier), kind, this.getRegistryName().getResourcePath());
     }
 
-    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int tier) {
+    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, int tier) {
         this(teClass, kind, GuiHandler.GuiIdNormalInventory, tier);
     }
 
-    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityClayContainer> teClass, EnumMachineKind kind, int guiId, int tier) {
+    public ClayDirectionalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, int guiId, int tier) {
         this(teClass, kind, "", guiId, tier);
     }
 

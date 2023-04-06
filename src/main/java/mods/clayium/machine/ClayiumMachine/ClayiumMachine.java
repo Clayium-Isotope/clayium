@@ -3,7 +3,6 @@ package mods.clayium.machine.ClayiumMachine;
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.JsonHelper;
 import mods.clayium.util.TierPrefix;
@@ -21,7 +20,7 @@ import java.util.List;
 public class ClayiumMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier, Class<? extends TileEntityClayContainer> teClass, int guiID) {
+    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
         super(Material.IRON, teClass,
                 suffix == null || suffix.equals("")
                         ? TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName()
@@ -40,7 +39,7 @@ public class ClayiumMachine extends ClaySidedContainer {
         this(kind, null, tier);
     }
 
-    public ClayiumMachine(EnumMachineKind kind, int tier, Class<? extends TileEntityClayContainer> teClass) {
+    public ClayiumMachine(EnumMachineKind kind, int tier, Class<? extends TileEntityGeneric> teClass) {
         this(kind, null, tier, teClass, GuiHandler.GuiIdClayMachines);
     }
 
