@@ -7,6 +7,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -52,11 +54,43 @@ public class TileEntityGeneric extends TileEntity implements IInventory {
         }
     }
 
+    /**
+     * Tile Entity Type:
+     * <br>1: Mob Spawner
+     * <br>2: Command Block
+     * <br>3: Beacon
+     * <br>4: Skull
+     * <br>5: Flower Pot
+     * <br>6: Banner
+     * <br>7: Structure Block
+     * <br>8: End Gate Way
+     * <br>9: Sign
+     * <br>10: Shulker Box
+     * <br>11: Bed
+     *
+     * @see net.minecraft.client.network.NetHandlerPlayClient#handleUpdateTileEntity
+     */
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        return this.writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.getNbtCompound());
+    }
+
     public void markDirty() {
         if (!this.getWorld().isRemote) {
 //            world.markBlockRangeForRenderUpdate(pos, pos);
             this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
         }
+
+        super.markDirty();
     }
 
     @Override
