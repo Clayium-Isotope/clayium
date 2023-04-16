@@ -1,6 +1,5 @@
 package mods.clayium.block.tile;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -18,9 +17,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.Constants;
 
+import java.util.List;
 import java.util.Random;
 
-public class TileEntityGeneric extends TileEntity implements IInventory {
+public abstract class TileEntityGeneric extends TileEntity implements IInventory {
     protected static final Random random = new Random();
     protected NonNullList<ItemStack> containerItemStacks = NonNullList.withSize(0, ItemStack.EMPTY);
     private String customName;
@@ -37,17 +37,16 @@ public class TileEntityGeneric extends TileEntity implements IInventory {
         return false;
     }
 
-    public final void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        ItemStack stack = getNormalDrop(world.getBlockState(pos).getBlock(), fortune);
-        drops.add(stack);
+    public final void getDrops(List<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        drops.add(getNormalDrop(state, fortune));
         addSpecialDrops(drops);
     }
 
-    public static ItemStack getNormalDrop(Block blockIn, int fortune) {
-        return new ItemStack(blockIn.getItemDropped(blockIn.getDefaultState(), random, fortune));
+    public static ItemStack getNormalDrop(IBlockState state, int fortune) {
+        return new ItemStack(state.getBlock().getItemDropped(state, random, fortune));
     }
 
-    public void addSpecialDrops(NonNullList<ItemStack> drops) {
+    public void addSpecialDrops(List<ItemStack> drops) {
         // I hope not to cause IndexOutOfBoundsException
         for (int i : this.slotsDrop) {
             drops.add(this.getContainerItemStacks().get(i));
@@ -86,8 +85,8 @@ public class TileEntityGeneric extends TileEntity implements IInventory {
 
     public void markDirty() {
         if (!this.getWorld().isRemote) {
-//            world.markBlockRangeForRenderUpdate(pos, pos);
-            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
+            this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), this.getPos());
+//            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
         }
 
         super.markDirty();

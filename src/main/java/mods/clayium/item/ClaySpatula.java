@@ -5,6 +5,8 @@ import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -25,9 +27,19 @@ public class ClaySpatula extends ClayiumItem implements IModifyCC {
             return EnumActionResult.SUCCESS;
         }
 
+        // from BlockStateClayContainer#checkSurroundConnection
         if (worldIn.getBlockState(pos) instanceof BlockStateClayContainer) {
+            TileEntity here = worldIn.getTileEntity(pos);
+
+            NBTTagCompound tag = here.writeToNBT(new NBTTagCompound());
+
             BlockStateClayContainer state = (BlockStateClayContainer) worldIn.getBlockState(pos);
             worldIn.setBlockState(pos, state.reverseIsPipe(), 3);
+
+            for (EnumFacing side : EnumFacing.VALUES) {
+                BlockStateClayContainer.changeConnectionState(worldIn, pos, here, side);
+            }
+            worldIn.getTileEntity(pos).readFromNBT(tag);
 
             return EnumActionResult.SUCCESS;
         }

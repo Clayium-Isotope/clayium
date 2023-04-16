@@ -18,11 +18,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,6 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -66,8 +69,14 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (worldIn.getTileEntity(pos) instanceof IInventory)
-            InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) worldIn.getTileEntity(pos));
+        if (worldIn.getTileEntity(pos) instanceof TileEntityGeneric && ((TileEntityGeneric) worldIn.getTileEntity(pos)).hasSpecialDrops()) {
+            List<ItemStack> drops = new ArrayList<>();
+            ((TileEntityGeneric) worldIn.getTileEntity(pos)).addSpecialDrops(drops);
+
+            for (ItemStack drop : drops) {
+                InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), drop);
+            }
+        }
 
         super.breakBlock(worldIn, pos, state);
     }
@@ -150,14 +159,6 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockStateClayContainer.FACING, candidacy));
 
         return true;
-    }
-
-    @Override
-    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        if (world.getTileEntity(pos) instanceof TileEntityGeneric && ((TileEntityGeneric) world.getTileEntity(pos)).hasSpecialDrops())
-            ((TileEntityGeneric) world.getTileEntity(pos)).getDrops(drops, world, pos, state, fortune);
-        else
-            super.getDrops(drops, world, pos, state, fortune);
     }
 
     @Override
