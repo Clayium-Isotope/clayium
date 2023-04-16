@@ -40,14 +40,9 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     protected long craftTime;
     protected long timeToCraft;
     protected long debtEnergy;
-    private boolean isDoingWork;
     @Override
     public boolean isDoingWork() {
-        return this.isDoingWork;
-    }
-    @Override
-    public void setDoingWork(boolean doingWork) {
-        this.isDoingWork = doingWork;
+        return !this.doingRecipe.isFlat();
     }
 
     public float multCraftTime = 1.0F;
@@ -104,12 +99,13 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
             IRecipeProvider.update(this);
     }
 
-    private void sendUpdate() {
+    @Override
+    public void markDirty() {
         world.markBlockRangeForRenderUpdate(pos, pos);
-        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-        ClayiumMachine.updateBlockState(world, pos);
+//        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+//        ClayiumMachine.updateBlockState(world, pos);
 
-        markDirty();
+        super.markDirty();
     }
 
     @Override
@@ -124,7 +120,6 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
         this.doingRecipe = this.getRecipe(tagCompound.getInteger("RecipeHash"));
-        this.isDoingWork = !this.doingRecipe.isFlat();
     }
 
     @Override
@@ -146,8 +141,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     @Override
     public ButtonProperty canPushButton(int button) {
-        if (!this.isDoingWork) return ButtonProperty.PERMIT;
-        return canCraft(getStackInSlot(MachineSlots.MATERIAL)) ? ButtonProperty.PERMIT : ButtonProperty.FAILURE;
+        if (!this.isDoingWork()) return ButtonProperty.PERMIT;
+        return !this.canProceedCraft() ? ButtonProperty.PERMIT : ButtonProperty.FAILURE;
     }
 
     @Override
@@ -198,6 +193,10 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         return RecipeElement.flat();
     }
 
+    public boolean canProceedCraft() {
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+    }
+
     public void proceedCraft() {
         if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
 
@@ -210,7 +209,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.craftTime = 0L;
         this.timeToCraft = 0L;
         this.debtEnergy = 0L;
-        this.setDoingWork(false);
+        this.doingRecipe = this.getFlat();
     }
 
     @Override
@@ -220,25 +219,20 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), MachineSlots.PRODUCT.ordinal(), this.getInventoryStackLimit()) > 0;
     }
 
-    public boolean canProceedCraft() {
-        return false;
-    }
-
     public boolean setNewRecipe() {
         this.doingRecipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
         if (this.doingRecipe.isFlat()) return false;
 
-        this.craftTime = 0L;
+        this.debtEnergy = this.doingRecipe.getEnergy();
 
-        if (!canCraft(this.doingRecipe) || !IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy(), false)) {
-            this.timeToCraft = 0L;
-            this.debtEnergy = 0L;
+        if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) {
+            this.doingRecipe = this.getFlat();
             return false;
         }
 
-        this.debtEnergy = this.doingRecipe.getEnergy();
+        this.craftTime = 1L;
         this.timeToCraft = this.doingRecipe.getTime();
-        this.getStackInSlot(MachineSlots.MATERIAL).shrink(this.doingRecipe.getStackSizes(getStackInSlot(MachineSlots.MATERIAL))[0]);
+        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials().get(0), this.getContainerItemStacks(), MachineSlots.MATERIAL.ordinal());
 
         return true;
     }

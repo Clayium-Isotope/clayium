@@ -155,7 +155,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
      */
     @Override
     public void update() {
-        if (!this.getWorld().isRemote) return;
+        if (this.getWorld().isRemote) return;
 
         // on Tick Loop
         this.doTransfer();

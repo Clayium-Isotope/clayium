@@ -123,11 +123,6 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
     }
 
     @Override
-    public void setDoingWork(boolean isDoingWork) {
-
-    }
-
-    @Override
     public ClayiumRecipe getRecipeCard() {
         return ClayiumRecipes.clayWorkTable;
     }

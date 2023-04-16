@@ -9,8 +9,11 @@ import java.util.Random;
 
 public class WeightedList<E> {
     private final List<WeightedList.WeightedResult<E>> internal = new ArrayList<>();
+    private final E flat;
 
-    public WeightedList() {}
+    public WeightedList(E flat) {
+        this.flat = flat;
+    }
 
     public boolean add(E result, int weight) {
         return this.internal.add(new WeightedResult<>(result, weight));
@@ -18,7 +21,11 @@ public class WeightedList<E> {
 
     @Nullable
     public E get(Random random) {
-        return WeightedRandom.getRandomItem(random, this.internal).result;
+        WeightedResult<E> wResult = WeightedRandom.getRandomItem(random, this.internal);
+
+        if (wResult == null) return flat;
+
+        return wResult.result;
     }
 
     public E get(int index) {

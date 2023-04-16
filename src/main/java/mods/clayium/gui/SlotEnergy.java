@@ -5,7 +5,6 @@ import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 
 public class SlotEnergy extends Slot {
     public SlotEnergy(IClayEnergyConsumer inventoryIn, int machineGuiSizeY) {
@@ -35,6 +34,6 @@ public class SlotEnergy extends Slot {
 
     @Override
     public boolean isEnabled() {
-        return this.inventory instanceof TileEntity && IClayEnergyConsumer.hasClayEnergy((TileEntity) this.inventory);
+        return IClayEnergyConsumer.hasClayEnergy(this.inventory);
     }
 }

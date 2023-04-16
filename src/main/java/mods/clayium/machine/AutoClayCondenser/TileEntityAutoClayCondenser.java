@@ -41,6 +41,11 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     }
 
     @Override
+    public boolean isDoingWork() {
+        return this.craftTime > 0;
+    }
+
+    @Override
     public void initParamsByTier(int tier) {
         super.initParamsByTier(tier);
         this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
@@ -121,11 +126,12 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public boolean canProceedCraft() {
+        return true;
         /*this.externalControlState >= 0 &&*/
-        if (!this.isDoingWork()) {
-            return this.getConsumedClay() != -1;
-        }
-        return this.canCraft(this.mergeFrom + 1);
+//        if (!this.isDoingWork()) {
+//            return this.getConsumedClay() != -1;
+//        }
+//        return this.canCraft(this.mergeFrom + 1);
     }
 
     public int getConsumedClay() {
@@ -156,7 +162,6 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
         UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom + 1), this.containerItemStacks, 0, 20, this.getInventoryStackLimit());
         this.craftTime = 0L;
         this.mergeFrom = -1;
-        this.setDoingWork(false);
 //                if (this.externalControlState > 0) {
 //                    --this.externalControlState;
 //                    if (this.externalControlState == 0) {

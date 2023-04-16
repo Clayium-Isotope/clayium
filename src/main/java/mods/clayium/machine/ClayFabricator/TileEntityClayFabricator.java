@@ -58,10 +58,12 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
     }
 
     public boolean canProceedCraft() {
-        if (this.getStackInSlot(2).isEmpty())
-            return this.canCraft(this.getStackInSlot(0));
+        return true;
 
-        return this.canCraft(this.getStackInSlot(2));
+//        if (this.getStackInSlot(2).isEmpty())
+//            return this.canCraft(this.getStackInSlot(0));
+//
+//        return this.canCraft(this.getStackInSlot(2));
     }
 
     public void proceedCraft() {
@@ -71,10 +73,8 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
             return;
         }
 
-        UtilTransfer.produceItemStack(this.getStackInSlot(2), this.getContainerItemStacks(), 1, this.getInventoryStackLimit());
-        this.setInventorySlotContents(2, ItemStack.EMPTY);
+        UtilTransfer.produceItemStack(this.getStackInSlot(2).copy(), this.getContainerItemStacks(), 1, this.getInventoryStackLimit());
 
-        this.setDoingWork(false);
         this.setContainEnergy(0L);
         this.craftTime = 0L;
 //            if (this.externalControlState > 0) {
@@ -88,9 +88,10 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
 
     @Override
     public boolean setNewRecipe() {
-        if (this.getStackInSlot(0).isEmpty() || !this.canCraft(this.getStackInSlot(0)))
+        if (!this.canCraft(this.getStackInSlot(0)))
             return false;
 
+        this.craftTime = 1;
         this.timeToCraft = (long)(Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0))) * Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double)this.multCraftTime);
         this.setInventorySlotContents(2, this.getStackInSlot(0).copy());
 

@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
     private static final int baseConsumingEnergy = 5000;
     private static final int baseCraftTime = 40;
-    private static final WeightedList<ItemStack> results = new WeightedList<>();
+    private static final WeightedList<ItemStack> results = new WeightedList<>(ItemStack.EMPTY);
     private static final int RESULT_SLOT = 17;
 
     public void initParams() {
@@ -39,6 +39,11 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
         return 18;
     }
 
+    @Override
+    public boolean isDoingWork() {
+        return this.timeToCraft > 0;
+    }
+
     public String getNEIOutputId() {
         return "ChemicalMetalSeparator";
     }
@@ -50,7 +55,7 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
 
     @Override
     public boolean canProceedCraft() {
-        return this.isDoingWork() || this.canCraft(this.getStackInSlot(0));
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
     }
 
     @Override
@@ -63,10 +68,9 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
         }
 
         this.craftTime = 0L;
+        this.timeToCraft = 0L;
         this.debtEnergy = 0L;
-        this.setDoingWork(false);
-        UtilTransfer.produceItemStack(this.getStackInSlot(RESULT_SLOT), this.containerItemStacks, 1, 17, this.getInventoryStackLimit());
-        this.setInventorySlotContents(RESULT_SLOT, ItemStack.EMPTY);
+        UtilTransfer.produceItemStack(this.getStackInSlot(RESULT_SLOT).copy(), this.containerItemStacks, 1, 17, this.getInventoryStackLimit());
 
 //                this.syncFlag = true;
 //                if (this.externalControlState > 0) {
@@ -79,17 +83,18 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
 
     @Override
     public boolean setNewRecipe() {
-        if (!this.canCraft(this.getStackInSlot(0))) return false;
-
         this.debtEnergy = (long)((float)baseConsumingEnergy * this.multConsumingEnergy);
-        this.timeToCraft = (long)((float)baseCraftTime * this.multCraftTime);
+        if (!this.canCraft(this.getStackInSlot(0)) || !this.canProceedCraft()) return false;
 
         ItemStack result = results.get(TileEntityGeneric.random);
 
-        if (result == null
-                || UtilTransfer.canProduceItemStack(result, this.containerItemStacks, 1, 17, this.getInventoryStackLimit()) < result.getCount()) {
+        if (result == null || result.isEmpty()
+                || UtilTransfer.canProduceItemStack(result, this.containerItemStacks, 1, 17, this.getInventoryStackLimit()) < result.getCount()
+        ) {
             return false;
         }
+
+        this.timeToCraft = (long)((float)baseCraftTime * this.multCraftTime);
 
         this.getStackInSlot(0).shrink(1);
         this.setInventorySlotContents(RESULT_SLOT, result);

@@ -45,6 +45,16 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         return -1;
     }
 
+    @Override
+    public boolean acceptClayEnergy() {
+        return false;
+    }
+
+    @Override
+    public boolean isDoingWork() {
+        return this.craftTime > 0;
+    }
+
     public void initParamsByTier(int tier) {
         this.tier = tier;
         this.setDefaultTransportation(tier);
@@ -101,7 +111,6 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         this.setContainEnergy(0L);
         UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.raiseFrom + 1), this.containerItemStacks, 1, 2, this.getInventoryStackLimit());
         this.craftTime = 0L;
-        this.setDoingWork(false);
 //            if (this.externalControlState > 0) {
 //                --this.externalControlState;
 //                if (this.externalControlState == 0) {
@@ -117,6 +126,7 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         this.raiseFrom = getTierOfCompressedClay(this.getStackInSlot(MachineSlots.MATERIAL));
         if (this.raiseFrom == -1 || !this.canCraft(this.raiseFrom)) return false;
 
+        this.craftTime = 1;
         this.timeToCraft = (long)(Math.pow(this.baseCraftTime, this.raiseFrom) * (double)this.multCraftTime);
         this.getStackInSlot(MachineSlots.MATERIAL).shrink(1);
 

@@ -15,7 +15,6 @@ public interface IRecipeProvider<T extends IRecipeElement> {
     int getTier();
 
     boolean isDoingWork();
-    void setDoingWork(boolean isDoingWork);
 
     ClayiumRecipe getRecipeCard();
     T getFlat();
@@ -87,9 +86,11 @@ public interface IRecipeProvider<T extends IRecipeElement> {
 
     static <T extends IRecipeElement> void update(IRecipeProvider<T> provider) {
         if (provider.isDoingWork()) {
+            if (!provider.canProceedCraft()) return;
+
             provider.proceedCraft();
         } else {
-            provider.setDoingWork(provider.setNewRecipe());
+            provider.setNewRecipe();
         }
 
         // probably edited its inventory
@@ -98,6 +99,12 @@ public interface IRecipeProvider<T extends IRecipeElement> {
         }
     }
 
+    /**
+     * 内部を変更しないこと。
+     * <pre>{@code
+     * return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+     * }</pre>
+     */
     boolean canProceedCraft();
 
     /**

@@ -51,9 +51,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
     @Override
     public boolean canCraft(RecipeElement recipe) {
-        if (recipe.isFlat() || recipe.getResults().isEmpty()) {
-            return false;
-        }
+        if (recipe.isFlat()) return false;
 
         return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(),
                 CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
@@ -61,7 +59,9 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
     }
 
     public boolean canProceedCraft() {
-        return this.canCraft(this.getStackInSlot(CentrifugeSlots.MATERIAL));
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+
+//        return this.canCraft(this.getStackInSlot(CentrifugeSlots.MATERIAL));
     }
 
     public void proceedCraft() {
@@ -74,10 +74,10 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
                 CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
                 this.getInventoryStackLimit());
 
-        this.setDoingWork(false);
         this.craftTime = 0L;
         this.debtEnergy = 0L;
         this.timeToCraft = 0L;
+        this.doingRecipe = this.getFlat();
     }
 
     @Override

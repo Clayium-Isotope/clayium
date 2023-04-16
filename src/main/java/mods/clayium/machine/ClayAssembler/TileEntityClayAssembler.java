@@ -44,12 +44,16 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 
     @Override
     public boolean canCraft(RecipeElement recipe) {
+        if (recipe.isFlat()) return false;
+
         return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), AssemblerSlots.PRODUCT.ordinal(), this.getInventoryStackLimit()) > 0;
     }
 
     @Override
     public boolean canProceedCraft() {
-        return IRecipeProvider.getCraftPermutation(this, this.getStackInSlot(AssemblerSlots.MATERIAL_1), this.getStackInSlot(AssemblerSlots.MATERIAL_2)) != null;
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+
+//        return IRecipeProvider.getCraftPermutation(this, this.getStackInSlot(AssemblerSlots.MATERIAL_1), this.getStackInSlot(AssemblerSlots.MATERIAL_2)) != null;
     }
 
     @Override
@@ -65,7 +69,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         this.craftTime = 0L;
         this.debtEnergy = 0L;
         this.timeToCraft = 0L;
-        this.setDoingWork(false);
+        this.doingRecipe = this.getFlat();
     }
 
     @Override
@@ -78,6 +82,8 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = this.doingRecipe.getEnergy();
+        if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) return false;
+
         this.timeToCraft = this.doingRecipe.getTime();
 
         UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(), AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() + 1);

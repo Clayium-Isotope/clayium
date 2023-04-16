@@ -61,7 +61,9 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
 
     @Override
     public boolean canProceedCraft() {
-        return IRecipeProvider.getCraftPermutation(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2)) != null;
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+
+//        return IRecipeProvider.getCraftPermutation(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2)) != null;
     }
 
     @Override
@@ -75,10 +77,10 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
                 ChemicalReactorSlots.PRODUCT_1.ordinal(), ChemicalReactorSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
                 this.getInventoryStackLimit());
 
-        this.setDoingWork(false);
         this.craftTime = 0L;
         this.debtEnergy = 0L;
         this.timeToCraft = 0L;
+        this.doingRecipe = this.getFlat();
     }
 
     @Override
