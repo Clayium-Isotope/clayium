@@ -7,6 +7,7 @@ import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
+import mods.clayium.machine.ClayBlastFurnace.TileEntityClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayChemicalReactor.TileEntityClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.TESRClayContainer;
@@ -112,7 +113,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityClayFabricator.class, "clayium:clay_fabricator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityChemicalMetalSeparator.class, "clayium:chemical_metal_separator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayInterface.class, "clayium:interface", new TESRClayContainer());
-//		GameRegistry.registerTileEntity(TileEntityClayInterface.class, new ResourceLocation(ClayiumCore.ModId, "interface"));
+		ClientRegistry.registerTileEntity(TileEntityClayBlastFurnace.class, "clayium:blast_furnace", new TESRClayContainer());
 
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 	}

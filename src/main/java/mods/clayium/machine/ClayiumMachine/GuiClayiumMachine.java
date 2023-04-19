@@ -44,13 +44,13 @@ public class GuiClayiumMachine extends GuiTemp {
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 96, progressBarSizeX, progressBarSizeY);
         drawTexturedModalRect(guiLeft + progressBarPosX, guiTop + progressBarPosY, 80, 112, this.getCraftProgressScaled(progressBarSizeX), progressBarSizeY);
 
-        if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getTier()))
+        if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getHullTier()))
             buttonList.get(0).enabled = ((TileEntityClayiumMachine) this.tile).canPushButton(0) == IButtonProvider.ButtonProperty.PERMIT;
     }
 
     @Override
     protected void addButtons() {
-        if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getTier()))
+        if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getHullTier()))
             buttonList.add(new GuiPictureButton(0, guiLeft + (xSize - 16) / 2, guiTop + 56, 0, 48));
     }
 

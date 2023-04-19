@@ -2,7 +2,7 @@ package mods.clayium.item;
 
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.item.common.ItemTiered;
-import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -22,8 +22,8 @@ public class SynchronousParts extends ItemTiered implements IModifyCC {
             return EnumActionResult.SUCCESS;
         }
 
-        if (worldIn.getTileEntity(pos) instanceof TileEntityClayInterface) {
-            if (((TileEntityClayInterface) worldIn.getTileEntity(pos)).markEnableSync()) {
+        if (worldIn.getTileEntity(pos) instanceof ISynchronizedInterface) {
+            if (((ISynchronizedInterface) worldIn.getTileEntity(pos)).markEnableSync()) {
                 player.getHeldItem(hand).shrink(1);
                 return EnumActionResult.SUCCESS;
             }

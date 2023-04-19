@@ -241,6 +241,16 @@ tile.precision_alloy_smelter.name=Alloy Smelter
 
 tile.precision_chemical_metal_separator.name=Chemical Metal Separator
 
+tile.precision_blast_furnace.name=Clay Blast Furnace
+tile.precision_blast_furnace.tooltip.line1=__DETAIL__
+tile.precision_blast_furnace.tooltip.line2=[Multiblock]
+tile.precision_blast_furnace.tooltip.line3=XXX XXX
+tile.precision_blast_furnace.tooltip.line4=XXX XXX
+tile.precision_blast_furnace.tooltip.line5=XFX XXX
+tile.precision_blast_furnace.tooltip.line6=F: Clay Blast Furnace Block
+tile.precision_blast_furnace.tooltip.line7=X: Machine hulls or Interfaces
+tile.precision_blast_furnace.tooltip.line8=Recipe tier depends on components' tier.
+
 tile.advanced_clay_interface.name=Clay Interface
 tile.precision_clay_interface.name=Precision Interface
 tile.clay_steel_clay_interface.name=Clay Steel Interface

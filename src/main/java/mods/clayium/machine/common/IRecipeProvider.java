@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public interface IRecipeProvider<T extends IRecipeElement> {
-    int getTier();
+    int getRecipeTier();
 
     boolean isDoingWork();
 
@@ -24,12 +24,12 @@ public interface IRecipeProvider<T extends IRecipeElement> {
     default T getRecipe(ItemStack stack) {
         if (stack.isEmpty()) return this.getFlat();
 
-        return this.getRecipe(e -> e.isCraftable(stack, this.getTier()));
+        return this.getRecipe(e -> e.isCraftable(stack, this.getRecipeTier()));
     }
     default T getRecipe(List<ItemStack> stacks) {
         if (stacks.isEmpty()) return this.getFlat();
 
-        return this.getRecipe(e -> e.match(stacks, -1, this.getTier()));
+        return this.getRecipe(e -> e.match(stacks, -1, this.getRecipeTier()));
     }
     default T getRecipe(int hash) {
         return this.getRecipe(e -> e.hashCode() == hash);
@@ -111,7 +111,7 @@ public interface IRecipeProvider<T extends IRecipeElement> {
      * <ul>
      *     <li>粘土エネルギー消費
      *          <pre>{@code
-     *          if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy) {
+     *          if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
      *              return;
      *          }
      *          }</pre>
@@ -143,7 +143,7 @@ public interface IRecipeProvider<T extends IRecipeElement> {
      *     </li>
      *     <li>実行できるか検証
      *         <pre>{@code
-     *         if (!canCraft(this.doingRecipe) || !IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy(), false)) {
+     *         if (!this.canCraft(this.doingRecipe) || !IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy(), false)) {
      *             this.timeToCraft = 0L;
      *             this.debtEnergy = 0L;
      *             return false;

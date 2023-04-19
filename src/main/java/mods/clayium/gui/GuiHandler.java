@@ -12,6 +12,8 @@ import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
+import mods.clayium.machine.ClayBlastFurnace.GuiClayBlastFurnace;
+import mods.clayium.machine.ClayBlastFurnace.TileEntityClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ContainerClayCentrifuge;
 import mods.clayium.machine.ClayCentrifuge.TileEntityClayCentrifuge;
@@ -65,7 +67,8 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdClayCentrifuge:
                 return new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile);
             case GuiIdClayChemicalReactor:
-                return new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile);
+            case GuiIdClayBlastFurnace:
+                return new ContainerClayChemicalReactor(player.inventory, (TileEntityClayBlastFurnace) tile);
             case GuiIdMultitrackBuffer:
                 return new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile);
             case GuiIdItemFilterWhitelist:
@@ -138,6 +141,8 @@ public class GuiHandler implements IGuiHandler {
                     return this.getClientGuiElement(core.getGuiId(), player, core.getWorld(), core.getPos().getX(), core.getPos().getY(), core.getPos().getZ());
                 }
                 return null;
+            case GuiIdClayBlastFurnace:
+                return new GuiClayBlastFurnace(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayBlastFurnace) tile));
         }
 
         return null;

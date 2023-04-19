@@ -4,12 +4,13 @@ import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
 public class ContainerClayChemicalReactor extends ContainerClayiumMachine {
-    public ContainerClayChemicalReactor(InventoryPlayer player, TileEntityClayChemicalReactor tile) {
+    public ContainerClayChemicalReactor(InventoryPlayer player, TileEntityClayiumMachine tile) {
         super(player, tile);
     }
 

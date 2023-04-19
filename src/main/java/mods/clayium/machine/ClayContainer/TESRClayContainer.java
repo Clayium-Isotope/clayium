@@ -53,7 +53,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             GlStateManager.pushMatrix();
             GlStateManager.matrixMode(GL11.GL_MODELVIEW);
         } else {
-            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-" + (te.getTier() - 1) + ".png"));
+            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-" + (te.getHullTier() - 1) + ".png"));
         }
 
         GlStateManager.pushMatrix();

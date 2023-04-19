@@ -1,0 +1,93 @@
+{
+  "used_tool": "https://misode.github.io/",
+  "multipart": [
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": false,
+        "facing": "north"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_off",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": false,
+        "facing": "south"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_off",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": false,
+        "facing": "west"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_off",
+        "y": -90
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": false,
+        "facing": "east"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_off",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": true,
+        "facing": "north"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_on",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": true,
+        "facing": "south"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_on",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": true,
+        "facing": "west"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_on",
+        "y": -90
+      }
+    },
+    {
+      "when": {
+        "is_pipe": false,
+        "is_constructed": true,
+        "facing": "east"
+      },
+      "apply": {
+        "model": "clayium:machine/blast_furnace_on",
+        "y": 90
+      }
+    }
+  ]
+}

@@ -55,7 +55,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     @Override
     public void initParams() {}
 
-    public int getTier() {
+    public int getRecipeTier() {
         return tier;
     }
 
@@ -309,6 +309,10 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     }
 
     /* ========== Texture Part ========== */
+
+    public int getHullTier() {
+        return this.getRecipeTier();
+    }
 
     @SideOnly(Side.CLIENT)
     @Nullable

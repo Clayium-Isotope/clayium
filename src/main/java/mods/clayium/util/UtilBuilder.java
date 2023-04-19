@@ -1,8 +1,8 @@
 package mods.clayium.util;
 
 import mods.clayium.machine.ClayContainer.ClayContainer;
-import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -36,12 +36,12 @@ public class UtilBuilder {
      * <br> Problem Occurred: Error Message
      */
     @Nonnull
-    public static String synchronize(IInterfaceCaptive source, TileEntityClayInterface target) {
+    public static String synchronize(IInterfaceCaptive source, ISynchronizedInterface target) {
         if (source == null || target == null) return "Unknown Signature";
 
         if (!target.isSyncEnabled()) return "Synchronous Parts hasn't applied";
         // TODO 登録処理
-        TileEntityClayInterface.setCoreBlock(source, target);
+        target.setCoreBlock(source);
         return "";
     }
 

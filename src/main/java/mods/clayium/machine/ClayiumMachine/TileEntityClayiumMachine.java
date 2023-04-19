@@ -152,7 +152,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     @Override
     public void pushButton(EntityPlayer playerIn, int button) {
-        if (UtilTier.canManufactureCraft(this.tier) && canPushButton(button) == ButtonProperty.PERMIT) {
+        if (UtilTier.canManufactureCraft(this.getHullTier()) && canPushButton(button) == ButtonProperty.PERMIT) {
             this.containEnergy += 5L;
         }
     }

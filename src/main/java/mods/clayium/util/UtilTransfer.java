@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
@@ -241,13 +242,9 @@ public class UtilTransfer {
             return Collections.emptyList();
         }
 
-        List<ItemStack> res = new ArrayList<>(itemstacks.size());
+        List<ItemStack> res = Arrays.asList(new ItemStack[itemstacks.size()]);
 
-        for(int i = 0; i < itemstacks.size(); ++i) {
-            if (!itemstacks.get(i).isEmpty()) {
-                res.set(i, itemstacks.get(i).copy());
-            }
-        }
+        Collections.copy(res, itemstacks);
 
         return res;
     }

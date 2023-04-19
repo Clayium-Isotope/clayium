@@ -241,6 +241,16 @@ tile.precision_alloy_smelter.name=合金精錬機
 
 tile.precision_chemical_metal_separator.name=金属分離機
 
+tile.precision_blast_furnace.name=粘土高炉
+tile.precision_blast_furnace.tooltip.line1=__DETAIL__
+tile.precision_blast_furnace.tooltip.line2=[マルチブロック]
+tile.precision_blast_furnace.tooltip.line3=XXX XXX
+tile.precision_blast_furnace.tooltip.line4=XXX XXX
+tile.precision_blast_furnace.tooltip.line5=XFX XXX
+tile.precision_blast_furnace.tooltip.line6=F: 粘土高炉ブロック
+tile.precision_blast_furnace.tooltip.line7=X: マシン筐体か各種インターフェース
+tile.precision_blast_furnace.tooltip.line8=構成要素の Tier により参照されるレシピの Tier が決定される
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=生の粘土めん棒

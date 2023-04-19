@@ -28,12 +28,7 @@ public class ClayiumBlocks {
         blocks.add(rawClayMachineHull);
 
         for (int i = 0; i < 13; i++) {
-            machineHulls.add(new BlockTiered(Material.IRON, "machine_hull_", i, i + 1) {{
-                setSoundType(SoundType.METAL);
-                setHarvestLevel("pickaxe", 0);
-                setHardness(2F);
-                setResistance(5F);
-            }});
+            machineHulls.add(new MachineHull(i));
         }
         blocks.addAll(machineHulls);
 

@@ -45,13 +45,13 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         return this.synced && this.core != IInterfaceCaptive.NONE;
     }
 
-    public static void setCoreBlock(@Nullable IInterfaceCaptive tile, TileEntityClayInterface _this) {
-        if (_this.enableSync && IInterfaceCaptive.isSyncable(tile)) {
-            _this.core = tile;
-            _this.synced = true;
+    public void setCoreBlock(@Nullable IInterfaceCaptive tile) {
+        if (this.enableSync && IInterfaceCaptive.isSyncable(tile)) {
+            this.core = tile;
+            this.synced = true;
         } else {
-            _this.core = IInterfaceCaptive.NONE;
-            _this.synced = false;
+            this.core = IInterfaceCaptive.NONE;
+            this.synced = false;
         }
     }
 
@@ -164,7 +164,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     @Override
     public void markDirty() {
         if (this.syncSource != null) {
-            setCoreBlock((TileEntityClayContainer) UtilBuilder.getTileFromIntArray(this.syncSource), this);
+            setCoreBlock((IInterfaceCaptive) UtilBuilder.getTileFromIntArray(this.syncSource));
         }
 
         super.markDirty();

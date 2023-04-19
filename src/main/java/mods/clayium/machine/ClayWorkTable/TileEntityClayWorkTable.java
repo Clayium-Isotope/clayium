@@ -113,7 +113,7 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
     }
 
     @Override
-    public int getTier() {
+    public int getRecipeTier() {
         return 0;
     }
 
