@@ -11,4 +11,6 @@ public interface ISynchronizedInterface {
 
     boolean isSyncEnabled();
     boolean markEnableSync();
+
+    int getHullTier();
 }

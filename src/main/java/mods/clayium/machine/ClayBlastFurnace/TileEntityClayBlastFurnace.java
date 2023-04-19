@@ -4,10 +4,7 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.MachineHull;
 import mods.clayium.block.Overclocker;
 import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.machine.Interface.RedstoneInterface.RedstoneInterface.TileEntityRedstoneInterface;
 import mods.clayium.machine.MultiblockMachine.BlockStateMultiblockMachine;
 import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
@@ -81,7 +78,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
             TileEntity te = this.getTileEntity(relative);
             if (te == null) continue;
 
-            if (te instanceof TileEntityClayInterface || te instanceof TileEntityRedstoneInterface) {
+            if (te instanceof ISynchronizedInterface) {
                 UtilBuilder.synchronize(this, (ISynchronizedInterface) te);
             }
         }
@@ -124,8 +121,8 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         TileEntity te = this.getTileEntity(vector);
         if (te == null) return -1;
 
-        if (te instanceof TileEntityClayInterface || te instanceof TileEntityRedstoneInterface) {
-            return ((TileEntityClayContainer) te).getHullTier();
+        if (te instanceof ISynchronizedInterface) {
+            return ((ISynchronizedInterface) te).getHullTier();
         }
 
         return -1;
