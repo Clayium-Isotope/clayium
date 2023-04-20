@@ -11,60 +11,56 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.crafting.IRecipeContainer;
 
+/**
+ * <table border="1">
+ *   <tr> <td> 1 </td> <td> 2 </td> <td> 3 </td> </tr>
+ *   <tr> <td> 4 </td> <td> 5 </td> <td> 6 -> 0 </td> </tr>
+ *   <tr> <td> 7 </td> <td> 8 </td> <td> 9 </td> </tr>
+ * </table>
+ *
+ * <br>この後、player のインベントリが 10 ~ 45
+ * <br>(あれば、)chest のインベントリが 46 ~ 72
+ */
 public class ContainerClayCraftingTable extends ContainerTemp implements IRecipeContainer {
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public InventoryCraftResult craftResult = new InventoryCraftResult();
     private final AccessibleTile<TileEntityClayCraftingTable> tileTable;
     private AccessibleTile<TileEntityChest> tileChest = null;
-    private final int resultSlot;
-    private final int machineSlot;
+    private static final int SLOT_HEIGHT = 16;
 
     public ContainerClayCraftingTable(InventoryPlayer playerIn, TileEntityClayCraftingTable tile) {
         super(playerIn, tile);
 
         this.tileTable = new AccessibleTile<>((TileEntityClayCraftingTable) this.tileEntity, 0, 3, 3, 30, 17);
+        int guiY = 19 + this.tileTable.getHeight() * SLOT_HEIGHT + 10;
 
+        // find chest
         for (EnumFacing facing : EnumFacing.VALUES) {
             TileEntity rawTile = this.tileTable.getInventory().getWorld().getTileEntity(this.tileTable.getInventory().getPos().offset(facing));
             if (rawTile instanceof TileEntityChest) {
                 this.tileChest = new AccessibleTile<>((TileEntityChest) rawTile, 0, 9, 3, 8, 75);
+                guiY += 5 + this.tileChest.getHeight() * SLOT_HEIGHT;
                 break;
             }
         }
 
-        int guiY = 19 + this.tileTable.getHeight() * this.tileTable.getY();
-
-        if (this.tileChest != null) {
-            guiY += 5 + this.tileTable.getHeight() * this.tileTable.getY();
-        }
-
-        guiY += 5;
-
         this.machineGuiSizeY = Math.max(guiY, 72);
 
-        addMachineSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 0, 124, 35));
+        postConstruct();
 
-        this.resultSlot = this.inventorySlots.size(); // as of now
-
-        for(int y = 0; y < this.tileTable.getHeight(); ++y) {
-            for(int x = 0; x < this.tileTable.getWidth(); ++x) {
-                addSlotToContainer(new SlotWithTexture(this.craftMatrix, this.tileTable.getStart() + x + y * this.tileTable.getWidth(), this.tileTable.getX() + x * 18, this.tileTable.getY() + y * 18, this));
-            }
-        }
-
-        this.machineSlot = this.inventorySlots.size(); // as of now
-
+        // add Chest Slots
         if (this.tileChest != null) {
             for(int y = 0; y < this.tileChest.getHeight(); ++y) {
                 for(int x = 0; x < this.tileChest.getWidth(); ++x) {
-                    addSlotToContainer(new SlotWithTexture(this.tileChest.getInventory(), this.tileChest.getStart() + x + y * this.tileChest.getWidth(), this.tileChest.getX() + x * 18, this.tileChest.getY() + y * 18, this));
+                    addSlotToContainer(new SlotWithTexture(this.tileChest.getInventory(), this.tileChest.getStart() + x + y * this.tileChest.getWidth(), this.tileChest.getX() + x * 18, this.tileChest.getY() + y * 18, this) {
+                        @Override
+                        public ItemStack getStack() {
+                            return this.inventory.getStackInSlot(this.getSlotIndex());
+                        }
+                    });
                 }
             }
         }
-
-        this.playerSlotIndex = this.inventorySlots.size(); // as of now
-
-        setupPlayerSlots(player, this.machineGuiSizeY);
     }
 
     @Override
@@ -89,7 +85,13 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
+        addMachineSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 0, 124, 35));
 
+        for(int y = 0; y < this.tileTable.getHeight(); ++y) {
+            for(int x = 0; x < this.tileTable.getWidth(); ++x) {
+                addMachineSlotToContainer(new SlotWithTexture(this.craftMatrix, this.tileTable.getStart() + x + y * this.tileTable.getWidth(), this.tileTable.getX() + x * 18, this.tileTable.getY() + y * 18, this));
+            }
+        }
     }
 
     @Override
@@ -99,45 +101,82 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
 
     @Override
     public boolean transferStackToMachineInventory(ItemStack itemStack, int index) {
-        return mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, false)
-                || mergeItemStack(itemStack, this.resultSlot, this.machineSlot, false);
+        // player ->
+        if (index >= 10 && index < 46) {
+            // マトリックスもしくはチェストに挿入する
+            return mergeToMatrix(itemStack) || mergeToChest(itemStack, false);
+        }
+
+        assert this.tileChest != null : "Where did you pick up " + itemStack.toString() + " from?";
+
+        // chest ->
+        if (index >= 46 && index < 46 + (this.tileChest.getHeight() * this.tileChest.getWidth())) {
+            // マトリックスもしくはプレイヤーに挿入する
+            return mergeToMatrix(itemStack) || mergeToPlayer(itemStack, false);
+        }
+
+        return false;
     }
 
     @Override
     public boolean transferStackFromMachineInventory(ItemStack itemStack, int index) {
-        if (index == this.resultSlot) {
-            int stackSize = canMergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, true);
-
+        // result ->
+        if (index == 0) {
+            // チェストに挿入できるか確かめる（後ろから）
+            int stackSize = canMergeToChest(itemStack, true);
             if (stackSize == 0) {
-                return mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, true);
-            } else {
-                ItemStack _itemStack = itemStack.copy();
-                _itemStack.setCount(stackSize);
-
-                if (canMergeItemStack(_itemStack, this.playerSlotIndex, this.playerSlotIndex + 36, true) == 0) {
-                    mergeItemStack(itemStack, this.machineSlot, this.playerSlotIndex, true);
-                    mergeItemStack(itemStack, this.playerSlotIndex, this.playerSlotIndex + 36, true);
-                    return true;
-                }
+                return mergeToChest(itemStack, true);
             }
-            return false;
-        } else {
-            if (index >= this.resultSlot && index < this.machineSlot) {
-                if (mergeItemStack(itemStack, 0, this.machineSlot, false)) {
-                    return true;
-                }
-            } else if (index < this.machineSlot
-                    && mergeItemStack(itemStack, this.machineSlot, this.resultSlot, false)) {
+
+            ItemStack _itemStack = itemStack.splitStack(stackSize);
+
+            // プレイヤーに挿入できるか確かめる
+            return canMergeToPlayer(_itemStack, true) == 0 && mergeToPlayer(itemStack, true);
+        }
+
+        // matrix ->
+        if (index >= 1 && index < 10) {
+            // チェストもしくはプレイヤーに挿入する
+            if (mergeToChest(itemStack, false) || mergeToPlayer(itemStack, false)) {
                 return true;
             }
-
-            return transferStackToPlayerInventory(itemStack, false);
         }
+
+        // たぶんここに到達することはないかも
+        return transferStackToPlayerInventory(itemStack, false);
     }
 
     @Override
     public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
+    }
+
+    private boolean mergeToMatrix(ItemStack stack) {
+        return mergeItemStack(stack, 1, 10, false);
+    }
+
+    private int canMergeToMatrix(ItemStack stack) {
+        return canMergeItemStack(stack, 1, 10, false);
+    }
+
+    private boolean mergeToPlayer(ItemStack stack, boolean reversed) {
+        return mergeItemStack(stack, 10, 46, reversed);
+    }
+
+    private int canMergeToPlayer(ItemStack stack, boolean reversed) {
+        return canMergeItemStack(stack, 10, 46, reversed);
+    }
+
+    private boolean mergeToChest(ItemStack stack, boolean reversed) {
+        if (this.tileChest == null) return false;
+
+        return mergeItemStack(stack, 46, 46 + (this.tileChest.getHeight() * this.tileChest.getWidth()), reversed);
+    }
+
+    private int canMergeToChest(ItemStack stack, boolean reversed) {
+        if (this.tileChest == null) return Integer.MAX_VALUE;
+
+        return canMergeItemStack(stack, 46, 36 + (this.tileChest.getHeight() * this.tileChest.getWidth()), reversed);
     }
 
     @Override

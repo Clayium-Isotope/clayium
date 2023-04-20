@@ -23,6 +23,9 @@ public abstract class ContainerTemp extends Container {
     protected InventoryPlayer player;
     protected TileEntityGeneric tileEntity;
     public ArrayList<Slot> machineInventorySlots = new ArrayList<>();
+    /**
+     * これ以降は少なくとも player のスロット計36コがある必要がある
+     */
     protected int playerSlotIndex;
     public int machineGuiSizeX = 176;
     public int machineGuiSizeY = 72;
@@ -151,6 +154,11 @@ public abstract class ContainerTemp extends Container {
         return true;
     }
 
+    /**
+     * @return
+     *      <br>0: すべて挿入できる
+     *      <br>other: n個挿入できる
+     */
     protected int canMergeItemStack(ItemStack itemStackIn, int startIndex, int endIndex, boolean reverseDirection) {
         int stackSize = itemStackIn.getCount();
         int ptr = !reverseDirection ? startIndex : endIndex - 1;
