@@ -81,21 +81,19 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
     }
 
     public boolean canProceedCraft() {
-        return this.getBlockType().isConstructed() && this.canProceedCraftWhenConstructed();
+        return BlockStateMultiblockMachine.isConstructed(this) && this.canProceedCraftWhenConstructed();
     }
 
     protected void verifyConstruction() {
         boolean newConstructed = this.isConstructed();
-        if (newConstructed && !this.getBlockType().isConstructed()) {
+        if (newConstructed && !BlockStateMultiblockMachine.isConstructed(this)) {
             this.onConstruction();
         }
 
-        if (!newConstructed && this.getBlockType().isConstructed()) {
+        if (!newConstructed && BlockStateMultiblockMachine.isConstructed(this)) {
             this.onDestruction();
         }
 
-        this.getWorld().setBlockState(this.getPos(),
-                this.getBlockState().withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, newConstructed),
-                3);
+        BlockStateMultiblockMachine.setConstructed(this, newConstructed);
     }
 }

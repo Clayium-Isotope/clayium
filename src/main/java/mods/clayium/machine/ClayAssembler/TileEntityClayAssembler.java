@@ -10,8 +10,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class TileEntityClayAssembler extends TileEntityClayiumMachine {
     enum AssemblerSlots {
         MATERIAL_1,
@@ -74,10 +72,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 
     @Override
     public boolean setNewRecipe() {
-        List<ItemStack> permStack = IRecipeProvider.getCraftPermStacks(this, this.getStackInSlot(AssemblerSlots.MATERIAL_1), this.getStackInSlot(AssemblerSlots.MATERIAL_2));
-        if (permStack.isEmpty()) return false;
-
-        this.doingRecipe = this.getRecipe(permStack);
+        this.doingRecipe = IRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(AssemblerSlots.MATERIAL_1), this.getStackInSlot(AssemblerSlots.MATERIAL_2));
 
         if (this.doingRecipe.isFlat()) return false;
 

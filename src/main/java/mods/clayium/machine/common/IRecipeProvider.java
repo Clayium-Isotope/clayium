@@ -84,6 +84,28 @@ public interface IRecipeProvider<T extends IRecipeElement> {
         return Collections.emptyList();
     }
 
+    static <T extends IRecipeElement> T getCraftPermRecipe(IRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+        T recipe;
+
+        recipe = provider.getRecipe(Arrays.asList(mat1, mat2));
+        if (provider.canCraft(recipe))
+            return recipe;
+
+        recipe = provider.getRecipe(Arrays.asList(mat2, mat1));
+        if (provider.canCraft(recipe))
+            return recipe;
+
+        recipe = provider.getRecipe(Collections.singletonList(mat1));
+        if (provider.canCraft(recipe))
+            return recipe;
+
+        recipe = provider.getRecipe(Collections.singletonList(mat2));
+        if (provider.canCraft(recipe))
+            return recipe;
+
+        return provider.getFlat();
+    }
+
     static <T extends IRecipeElement> void update(IRecipeProvider<T> provider) {
         if (provider.isDoingWork()) {
             if (!provider.canProceedCraft()) return;
@@ -143,9 +165,10 @@ public interface IRecipeProvider<T extends IRecipeElement> {
      *     </li>
      *     <li>実行できるか検証
      *         <pre>{@code
-     *         if (!this.canCraft(this.doingRecipe) || !IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy(), false)) {
+     *         if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) {
      *             this.timeToCraft = 0L;
      *             this.debtEnergy = 0L;
+     *             this.doingRecipe = this.getFlat();
      *             return false;
      *         }
      *         }</pre>

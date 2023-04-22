@@ -22,4 +22,13 @@ public class BlockStateMultiblockMachine extends BlockStateClaySidedContainer {
     protected BlockStateMultiblockMachine(Block blockIn, ImmutableMap<IProperty<?>, Comparable<?>> propertiesIn) {
         super(blockIn, propertiesIn);
     }
+
+    public static boolean isConstructed(TileEntityMultiblockMachine machine) {
+        return machine.getWorld().getBlockState(machine.getPos()).getValue(IS_CONSTRUCTED);
+    }
+
+    public static void setConstructed(TileEntityMultiblockMachine machine, boolean b) {
+        machine.getWorld().setBlockState(machine.getPos(),
+                machine.getWorld().getBlockState(machine.getPos()).withProperty(IS_CONSTRUCTED, b), 3);
+    }
 }

@@ -22,7 +22,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine implements IClayEnergyConsumer {
     private static final int resultSlotNum = 2;
@@ -63,10 +62,14 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     }
 
     @Override
+    public boolean isDoingWork() {
+        return BlockStateMultiblockMachine.isConstructed(this) && !this.doingRecipe.isFlat();
+    }
+
+    @Override
     public boolean isConstructed() {
         double sum = 0;
         boolean flag = true;
-        final int num = 3 * 2 * 3;
 
         for (BlockPos relative : BlockPos.getAllInBox(-1, 0, 0, 1, 1, 2)) {
             if (relative.getX() == 0 && relative.getY() == 0 && relative.getZ() == 0) continue;
@@ -75,15 +78,9 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
             if (tier <= 4) flag = false;
 
             sum += Math.pow(2, 16 - tier);
-            TileEntity te = this.getTileEntity(relative);
-            if (te == null) continue;
-
-            if (te instanceof ISynchronizedInterface) {
-                UtilBuilder.synchronize(this, (ISynchronizedInterface) te);
-            }
         }
 
-        this.recipeTier = Math.max((int)(16.0D - Math.floor(Math.log(sum / num) / Math.log(2.0D) + 0.5D)), 0);
+        this.recipeTier = Math.max((int)(16.0D - Math.floor(Math.log(sum / 18) / Math.log(2.0D) + 0.5D)), 0);
         return flag;
     }
 
@@ -95,14 +92,38 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     @Override
     protected void onConstruction() {
 //        this.setRenderSyncFlag();
-        this.getWorld().setBlockState(this.getPos(), this.getWorld().getBlockState(this.getPos()).withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, true));
+        BlockStateMultiblockMachine.setConstructed(this, true);
+
+        // sync the interface around the blast furnace.
+        for (BlockPos relative : BlockPos.getAllInBox(-1, 0, 0, 1, 1, 2)) {
+            if (relative.getX() == 0 && relative.getY() == 0 && relative.getZ() == 0) continue;
+
+            TileEntity te = this.getTileEntity(relative);
+            if (te instanceof ISynchronizedInterface) {
+                UtilBuilder.immediateSync(this, (ISynchronizedInterface) te);
+            }
+        }
+
+        this.markDirty();
     }
 
     @Override
     protected void onDestruction() {
 //        this.setRenderSyncFlag();
         this.craftTime = 0L;
-        this.getWorld().setBlockState(this.getPos(), this.getWorld().getBlockState(this.getPos()).withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, false));
+        BlockStateMultiblockMachine.setConstructed(this, false);
+
+        // de-sync the interface around the blast furnace.
+        for (BlockPos relative : BlockPos.getAllInBox(-1, 0, 0, 1, 1, 2)) {
+            if (relative.getX() == 0 && relative.getY() == 0 && relative.getZ() == 0) continue;
+
+            TileEntity te = this.getTileEntity(relative);
+            if (te instanceof ISynchronizedInterface) {
+                UtilBuilder.immediateSync(null, (ISynchronizedInterface) te);
+            }
+        }
+
+        this.markDirty();
     }
 
     protected int getMachineTier(BlockPos vector) {
@@ -132,34 +153,34 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return !UtilTransfer.canProduceItemStacks(recipe.getResults(), this.containerItemStacks, 2, 2 + resultSlotNum, this.getInventoryStackLimit());
+        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
     }
 
     @Override
     public boolean setNewRecipe() {
-        if (!this.isConstructed()) return false;
+        if (!BlockStateMultiblockMachine.isConstructed(this)) return false;
 
-        List<ItemStack> perm = IRecipeProvider.getCraftPermStacks(this, this.getStackInSlot(0), this.getStackInSlot(1));
-        if (perm.isEmpty()) return false;
+        this.doingRecipe = IRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
+        if (this.doingRecipe.isFlat()) return false;
 
-        this.doingRecipe = this.getRecipe(perm);
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);
-        if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) {
+        if (!this.canProceedCraft()) {
             this.timeToCraft = 0L;
             this.debtEnergy = 0L;
+            this.doingRecipe = this.getFlat();
             return false;
         }
 
         this.timeToCraft = (long) (this.doingRecipe.getTime() * this.multCraftTime);
 
-        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.containerItemStacks, 0, 2);
+        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(), 0, 2);
 
         return true;
     }
 
     @Override
     public boolean canProceedCraft() {
-        return this.isConstructed() && IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+        return BlockStateMultiblockMachine.isConstructed(this) && IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
     }
 
     @Override
@@ -169,7 +190,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;
 
-        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.containerItemStacks, 2, 4, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStacks(UtilTransfer.getHardCopy(this.doingRecipe.getResults()), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
         this.craftTime = 0;
         this.timeToCraft = 0;
         this.debtEnergy = 0;

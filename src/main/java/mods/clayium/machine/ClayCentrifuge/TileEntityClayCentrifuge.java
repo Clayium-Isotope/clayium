@@ -70,7 +70,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
         ++this.craftTime;
         if (this.craftTime < this.timeToCraft) return;
 
-        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(),
+        UtilTransfer.produceItemStacks(UtilTransfer.getHardCopy(this.doingRecipe.getResults()), this.getContainerItemStacks(),
                 CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
                 this.getInventoryStackLimit());
 

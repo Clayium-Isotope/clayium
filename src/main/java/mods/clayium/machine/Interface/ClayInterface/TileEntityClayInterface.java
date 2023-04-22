@@ -45,10 +45,14 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         return this.synced && this.core != IInterfaceCaptive.NONE;
     }
 
+    /**
+     * assert <pre>{@code this.enableSync == true}</pre>
+     */
     public void setCoreBlock(@Nullable IInterfaceCaptive tile) {
-        if (this.enableSync && IInterfaceCaptive.isSyncable(tile)) {
+        if (IInterfaceCaptive.isSyncable(tile)) {
             this.core = tile;
             this.synced = true;
+            this.initParamsByTier(this.tier);
         } else {
             this.core = IInterfaceCaptive.NONE;
             this.synced = false;

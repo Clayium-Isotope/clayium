@@ -34,15 +34,30 @@ public class UtilBuilder {
      * @return := "" | Error Message
      * <br> Succeed: Empty but not {@code null}
      * <br> Problem Occurred: Error Message
+     *
+     * @param source the container, which will be the sync source, or null for de-sync.
      */
     @Nonnull
-    public static String synchronize(IInterfaceCaptive source, ISynchronizedInterface target) {
-        if (source == null || target == null) return "Unknown Signature";
+    public static String synchronize(@Nullable IInterfaceCaptive source, ISynchronizedInterface target) {
+        if (target == null) return "Unknown Signature";
+        if (source == null) {
+            target.setCoreBlock(null);
+            return "";
+        }
 
         if (!target.isSyncEnabled()) return "Synchronous Parts hasn't applied";
         // TODO 登録処理
         target.setCoreBlock(source);
         return "";
+    }
+
+    /**
+     * Synchronize even if the interface hasn't applied Synchronous Parts.
+     */
+    public static void immediateSync(@Nullable IInterfaceCaptive source, ISynchronizedInterface target) {
+        if (target == null) return;
+
+        target.setCoreBlock(source);
     }
 
     /**

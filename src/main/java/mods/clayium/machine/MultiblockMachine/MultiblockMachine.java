@@ -62,10 +62,4 @@ public class MultiblockMachine extends ClayiumMachine {
             return new BlockStateMultiblockMachine(block, properties);
         }
     }
-
-    public boolean isConstructed() {
-        assert this.getDefaultState() instanceof BlockStateMultiblockMachine;
-
-        return this.getDefaultState().getValue(BlockStateMultiblockMachine.IS_CONSTRUCTED);
-    }
 }

@@ -140,6 +140,9 @@ public class UtilTransfer {
         return IntStream.range(0, ((IInventory) te).getSizeInventory()).toArray();
     }
 
+    /**
+     * @param itemstack won't be changed.
+     */
     public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
         if (itemstack.isEmpty()) {
             return ItemStack.EMPTY;
@@ -161,6 +164,9 @@ public class UtilTransfer {
         return res;
     }
 
+    /**
+     * @param itemstack won't be changed.
+     */
     public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
         if (itemstack.isEmpty()) {
             return ItemStack.EMPTY;
@@ -170,26 +176,21 @@ public class UtilTransfer {
 
         int k;
         for(k = i; k < j; ++k) {
-            if (!inventory.get(k).isEmpty()) {
-                res = produceItemStack(res, inventory, k, inventoryStackLimit);
-            }
-        }
-
-        for(k = i; k < j; ++k) {
-            if (inventory.get(k).isEmpty()) {
-                res = produceItemStack(res, inventory, k, inventoryStackLimit);
-            }
+            res = produceItemStack(res, inventory, k, inventoryStackLimit);
         }
 
         return res;
     }
 
+    /**
+     * @param itemstacks will be changed.  It is better to be copied.
+     */
     public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
         if (itemstacks.isEmpty()) {
             return Collections.emptyList();
         }
 
-        for(int k = 0; k < itemstacks.size(); ++k) {
+        for (int k = 0; k < itemstacks.size(); ++k) {
             itemstacks.set(k, produceItemStack(itemstacks.get(k), inventory, i, j, inventoryStackLimit));
         }
 
@@ -229,7 +230,7 @@ public class UtilTransfer {
             List<ItemStack> copyInventory = getHardCopy(inventory);
 
             for (ItemStack copyItemstack : copyItemstacks) {
-                if (!produceItemStack(copyItemstack, copyInventory, startIncl, endExcl, inventoryStackLimit).isEmpty()) {
+                if (canProduceItemStack(copyItemstack, copyInventory, startIncl, endExcl, inventoryStackLimit) == 0) {
                     return false;
                 }
             }
@@ -237,6 +238,9 @@ public class UtilTransfer {
         return true;
     }
 
+    /**
+     * Do deep copy
+     */
     public static List<ItemStack> getHardCopy(List<ItemStack> itemstacks) {
         if (itemstacks == null || itemstacks.isEmpty()) {
             return Collections.emptyList();
@@ -245,6 +249,12 @@ public class UtilTransfer {
         List<ItemStack> res = Arrays.asList(new ItemStack[itemstacks.size()]);
 
         Collections.copy(res, itemstacks);
+
+//        List<ItemStack> res = NonNullList.withSize(itemstacks.size(), ItemStack.EMPTY);
+//
+//        for (int i = 0; i < res.size(); ++i) {
+//            res.set(i, itemstacks.get(i).copy());
+//        }
 
         return res;
     }
