@@ -2,8 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"0": "clayium:blocks/machine/blastfurnace",
-		"particle": "#0"
+		"0": "clayium:blocks/machine/blastfurnace"
 	},
 	"elements": [
 		{
