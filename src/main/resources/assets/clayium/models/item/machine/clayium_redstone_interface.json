@@ -1,0 +1,6 @@
+{
+  "parent": "clayium:block/machine/rs_interface_temp",
+  "textures": {
+    "hull": "clayium:blocks/machinehull-7"
+  }
+}

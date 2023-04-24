@@ -1,5 +1,6 @@
 package mods.clayium.machine.Interface.ClayInterface;
 
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.common.IModifyCC;
@@ -23,13 +24,17 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ClayInterface extends ClayContainer {
-    private final EnumMachineKind kind;
+    protected final EnumMachineKind kind;
 
     public ClayInterface(int tier) {
         this(EnumMachineKind.clayInterface, TileEntityClayInterface.class, tier);
+
+        JsonHelper.genBlockJsonParent(TierPrefix.get(tier), kind, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), "interface_temp");
+        JsonHelper.genItemJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
+        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
     }
 
-    public ClayInterface(EnumMachineKind kind, Class<? extends TileEntityClayInterface> teClass, int tier) {
+    public ClayInterface(EnumMachineKind kind, Class<? extends TileEntityGeneric> teClass, int tier) {
         super(Material.IRON, teClass, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
         this.setSoundType(SoundType.METAL);
         this.setHardness(2.0f);
@@ -37,10 +42,6 @@ public class ClayInterface extends ClayContainer {
         this.setHarvestLevel("pickaxe", 0);
 
         this.kind = kind;
-
-        JsonHelper.genBlockJsonParent(TierPrefix.get(tier), kind, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), "interface_temp");
-        JsonHelper.genItemJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
-        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
     }
 
     @Override

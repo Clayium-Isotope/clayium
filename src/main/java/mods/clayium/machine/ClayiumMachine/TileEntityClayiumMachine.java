@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayiumMachine;
 
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.Interface.IExternalControl;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IRecipeProvider;
@@ -21,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, IRecipeProvider<RecipeElement> {
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, IRecipeProvider<RecipeElement>, IExternalControl {
     protected enum MachineSlots {
         MATERIAL,
         PRODUCT,
@@ -51,6 +52,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public float initConsumingEnergy = 1.0F;
     private long containEnergy;
     private int clayEnergyStorageSize = 1;
+
+    protected boolean scheduled = true;
 
     @Override
     public void initParams() {
@@ -96,7 +99,27 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         super.update();
 
         if (!this.getWorld().isRemote)
-            IRecipeProvider.update(this);
+            IExternalControl.update(this);
+    }
+
+    @Override
+    public boolean isScheduled() {
+        return this.scheduled;
+    }
+
+    @Override
+    public void startWork() {
+        this.scheduled = true;
+    }
+
+    @Override
+    public void stopWork() {
+        this.scheduled = false;
+    }
+
+    @Override
+    public void doWorkOnce() {
+        IRecipeProvider.update(this);
     }
 
     @Override

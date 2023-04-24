@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "clayium:machine_hull_12"
+      }
+    },
+    {
+      "apply": {
+        "model": "clayium:machine/rs_interface"
+      }
+    }
+  ]
+}

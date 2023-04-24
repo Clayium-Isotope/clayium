@@ -18,6 +18,7 @@ import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
+import mods.clayium.machine.Interface.RedstoneInterface.RedstoneInterface;
 import mods.clayium.machine.LaserReflector.LaserReflector;
 import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.QuartzCrucible;
@@ -102,7 +103,8 @@ public class ClayiumMachines {
         blastFurnace = get(EnumMachineKind.blastFurnace, TierPrefix.precision);
 
         addContainers(EnumMachineKind.clayInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayInterface.class);
-//        add(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
+        addContainers(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
+
 //        add(EnumMachineKind.laserInterface, new int[]{ 7, 8, 9, 10, 11, 12, 13 }, ClayLaserInterface.class);
 //
 //        addMachine(EnumMachineKind.electrolysisReactor, new int[]{ 6, 7, 8, 9 });
@@ -140,6 +142,8 @@ public class ClayiumMachines {
     }
 
     private static void addContainers(EnumMachineKind kind, int[] tiers, Class<? extends ClayContainer> blockClass) {
+        ClayiumCore.logger.info("Registering: " + blockClass.toString());
+
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
         try {
