@@ -60,18 +60,19 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
 
     @Override
     public void update() {
-        int signal = this.getSignal();
-        int power = this.getProvidingWeakPower();
-
         if (this.syncSource != null) {
-            if (UtilBuilder.getTileFromIntArray(this.syncSource) instanceof IInterfaceCaptive)
-                UtilBuilder.synchronize((IInterfaceCaptive) UtilBuilder.getTileFromIntArray(this.syncSource), this);
+            TileEntity tile = UtilBuilder.getTileFromIntArray(this.syncSource);
+            if (tile instanceof IInterfaceCaptive) {
+                UtilBuilder.synchronize((IInterfaceCaptive) tile, this);
+                this.markDirty();
+            }
             this.syncSource = null;
         }
 
-        if (!this.isSynced()) {
-            return;
-        }
+        if (!this.isSynced()) return;
+
+        int signal = this.getSignal();
+        int power = this.getProvidingWeakPower();
 
         IExternalControl te = IExternalControl.cast(this.core);
         switch (this.getState()) {

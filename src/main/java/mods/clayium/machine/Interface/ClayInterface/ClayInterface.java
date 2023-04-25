@@ -6,7 +6,6 @@ import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.JsonHelper;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
@@ -29,9 +28,9 @@ public class ClayInterface extends ClayContainer {
     public ClayInterface(int tier) {
         this(EnumMachineKind.clayInterface, TileEntityClayInterface.class, tier);
 
-        JsonHelper.genBlockJsonParent(TierPrefix.get(tier), kind, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), "interface_temp");
-        JsonHelper.genItemJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
-        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
+//        JsonHelper.genBlockJsonParent(TierPrefix.get(tier), kind, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), "interface_temp");
+//        JsonHelper.genItemJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
+//        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
     }
 
     public ClayInterface(EnumMachineKind kind, Class<? extends TileEntityGeneric> teClass, int tier) {

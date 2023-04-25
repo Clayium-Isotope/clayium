@@ -4,8 +4,12 @@ import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -72,5 +76,46 @@ public class UtilBuilder {
 
     public static int[] getIntArrayFromTile(@Nonnull TileEntity tile) {
         return new int[] { tile.getWorld().provider.getDimension(), tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ() };
+    }
+
+    public static ItemStack getItemBlock(World theWorld, BlockPos pos) {
+//        ItemStack capsule = getFluidCapsule(theWorld, xx, yy, zz);
+//        if (capsule != null) {
+//            return capsule;
+//        }
+
+        IBlockState state = theWorld.getBlockState(pos);
+        ItemStack silkitem = getRawItemBlock(state);
+        NonNullList<ItemStack> dropitems = NonNullList.create();
+
+        state.getBlock().getDrops(dropitems, theWorld, pos, state, 0);
+
+        for (ItemStack dropitem : dropitems) {
+            if (UtilItemStack.areItemDamageEqual(silkitem, dropitem)) {
+                ItemStack res = dropitem.copy();
+                res.setCount(1);
+                return res;
+            }
+        }
+
+        for (ItemStack dropitem : dropitems) {
+            if (UtilItemStack.areItemEqual(silkitem, dropitem)) {
+                ItemStack res = dropitem.copy();
+                res.setCount(1);
+                return res;
+            }
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    public static ItemStack getRawItemBlock(IBlockState state) {
+        int j = 0;
+        Item item = Item.getItemFromBlock(state.getBlock());
+        if (item.getHasSubtypes()) {
+            j = state.getBlock().damageDropped(state);
+        }
+
+        return new ItemStack(item, 1, j);
     }
 }

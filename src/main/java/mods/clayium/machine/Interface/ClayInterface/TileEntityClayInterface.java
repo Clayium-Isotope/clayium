@@ -123,6 +123,20 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         return compound;
     }
 
+    @Override
+    public void update() {
+        if (this.syncSource != null) {
+            TileEntity tile = UtilBuilder.getTileFromIntArray(this.syncSource);
+            if (tile instanceof IInterfaceCaptive) {
+                UtilBuilder.synchronize((IInterfaceCaptive) tile, this);
+                this.markDirty();
+            }
+            this.syncSource = null;
+        }
+
+        super.update();
+    }
+
     // ===== Below this line, there is probably no information. =====
 
     @Override
@@ -167,10 +181,6 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
 
     @Override
     public void markDirty() {
-        if (this.syncSource != null) {
-            setCoreBlock((IInterfaceCaptive) UtilBuilder.getTileFromIntArray(this.syncSource));
-        }
-
         super.markDirty();
 
         if (this.isSynced()) {

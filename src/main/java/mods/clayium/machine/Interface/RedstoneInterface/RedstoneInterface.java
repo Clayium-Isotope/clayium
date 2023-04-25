@@ -5,8 +5,6 @@ import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
-import mods.clayium.util.JsonHelper;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -29,9 +27,8 @@ public class RedstoneInterface extends ClayInterface implements ITieredBlock {
 
         setDefaultState(this.getDefaultState().withProperty(BlockStateRedstoneInterface.CONTROL_STATE, EnumControlState.None));
 
-        JsonHelper.genBlockJsonParent(TierPrefix.get(tier), this.kind, TierPrefix.get(tier).getPrefix() + "_" + this.kind.getRegisterName(), "rs_interface_temp");
-        JsonHelper.genItemJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + this.kind.getRegisterName());
-        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + this.kind.getRegisterName());
+//        JsonHelper.genItemJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + this.kind.getRegisterName());
+//        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + this.kind.getRegisterName());
     }
 
     @Nullable

@@ -67,6 +67,13 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     }
 
     @Override
+    public void onLoad() {
+        if (this.isConstructed()) {
+            this.onConstruction();
+        }
+    }
+
+    @Override
     public boolean isConstructed() {
         double sum = 0;
         boolean flag = true;
