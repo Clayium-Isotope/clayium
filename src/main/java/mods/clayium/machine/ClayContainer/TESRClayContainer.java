@@ -10,6 +10,8 @@ import net.minecraft.client.model.TexturedQuad;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,36 +26,39 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayContainer> {
-    private final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
-
-    private final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 0.0d), 0f, 0f);
-    private final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 1.0d), 0f, 0f);
-    private final PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 0.0d), 0f, 0f);
-    private final PositionTextureVertex ptv3 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 1.0d), 0f, 0f);
-    private final PositionTextureVertex ptv4 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 0.0d), 0f, 0f);
-    private final PositionTextureVertex ptv5 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 1.0d), 0f, 0f);
-    private final PositionTextureVertex ptv6 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 0.0d), 0f, 0f);
-    private final PositionTextureVertex ptv7 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 1.0d), 0f, 0f);
-    private final PositionTextureVertex[] downPTVs  = new PositionTextureVertex[] { ptv3, ptv7, ptv6, ptv2 };
-    private final PositionTextureVertex[] upPTVs    = new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 };
-    private final PositionTextureVertex[] southPTVs = new PositionTextureVertex[] { ptv4, ptv0, ptv2, ptv6 };
-    private final PositionTextureVertex[] northPTVs = new PositionTextureVertex[] { ptv1, ptv5, ptv7, ptv3 };
-    private final PositionTextureVertex[] westPTVs  = new PositionTextureVertex[] { ptv0, ptv1, ptv3, ptv2 };
-    private final PositionTextureVertex[] eastPTVs  = new PositionTextureVertex[] { ptv5, ptv4, ptv6, ptv7 };
+    private static final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 0.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 1.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 0.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv3 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 1.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv4 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 0.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv5 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 1.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv6 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 0.0d), 0f, 0f);
+    private static final PositionTextureVertex ptv7 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 1.0d), 0f, 0f);
+    private static final PositionTextureVertex[] downPTVs  = new PositionTextureVertex[] { ptv3, ptv7, ptv6, ptv2 };
+    private static final PositionTextureVertex[] upPTVs    = new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 };
+    private static final PositionTextureVertex[] southPTVs = new PositionTextureVertex[] { ptv4, ptv0, ptv2, ptv6 };
+    private static final PositionTextureVertex[] northPTVs = new PositionTextureVertex[] { ptv1, ptv5, ptv7, ptv3 };
+    private static final PositionTextureVertex[] westPTVs  = new PositionTextureVertex[] { ptv0, ptv1, ptv3, ptv2 };
+    private static final PositionTextureVertex[] eastPTVs  = new PositionTextureVertex[] { ptv5, ptv4, ptv6, ptv7 };
 
     @Override
     public void render(TileEntityClayContainer te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+        TESRClayContainer.render(te, x, y, z,  partialTicks, destroyStage, alpha, this.rendererDispatcher);
+    }
+
+    public static void render(TileEntityClayContainer te, double x, double y, double z, float partialTicks, int destroyStage, float alpha, TileEntityRendererDispatcher rendererDispatcher) {
         if (te == null || te.isInvalid()) return;
 
+        BufferBuilder buffer = Tessellator.getInstance().getBuffer();
         ModelClayContainer modelCC = new ModelClayContainer(buffer);
 
         if (destroyStage >= 0) {
-            this.bindTexture(DESTROY_STAGES[destroyStage]);
+            TESRClayContainer.bindTexture(rendererDispatcher, DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(GL11.GL_TEXTURE);
             GlStateManager.pushMatrix();
             GlStateManager.matrixMode(GL11.GL_MODELVIEW);
         } else {
-            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-" + (te.getHullTier() - 1) + ".png"));
+            TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-" + (te.getHullTier() - 1) + ".png"));
         }
 
         GlStateManager.pushMatrix();
@@ -66,16 +71,16 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
 
             ResourceLocation face = te.getFaceResource();
             if (face != null) {
-                this.bindTexture(face);
+                TESRClayContainer.bindTexture(rendererDispatcher, face);
                 pasteBoundTexToBlockFace(te.getFront());
             }
 
             for (EnumFacing facing : EnumFacing.VALUES) {
                 EnumSide side = UtilDirection.getSideOfDirection(te.getFront(), facing);
-                bindImportBlockTexAsCan(te.getImportRoute(side), te.getInsertIcons(), facing);
-                bindExportBlockTexAsCan(te.getExportRoute(side), te.getExtractIcons(), facing);
+                bindImportBlockTexAsCan(te.getImportRoute(side), te.getInsertIcons(), facing, rendererDispatcher);
+                bindExportBlockTexAsCan(te.getExportRoute(side), te.getExtractIcons(), facing, rendererDispatcher);
 
-                bindFilterBlockTexAsCan(te.getFilters().get(facing), facing);
+                bindFilterBlockTexAsCan(te.getFilters().get(facing), facing, rendererDispatcher);
             }
 
         } else {
@@ -86,8 +91,8 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
                 for (EnumFacing facing : EnumFacing.VALUES) {
                     if (te.getBlockState().isTheFacingActivated(facing)) {
                         EnumSide side = UtilDirection.getSideOfDirection(te.getFront(), facing);
-                        bindImportPipeTexAsCan(modelCC, te.getImportRoute(side), te.getInsertPipeIcons(), facing);
-                        bindExportPipeTexAsCan(modelCC, te.getExportRoute(side), te.getExtractPipeIcons(), facing);
+                        bindImportPipeTexAsCan(modelCC, te.getImportRoute(side), te.getInsertPipeIcons(), facing, buffer, rendererDispatcher);
+                        bindExportPipeTexAsCan(modelCC, te.getExportRoute(side), te.getExtractPipeIcons(), facing, buffer, rendererDispatcher);
                     }
                 }
             }
@@ -103,54 +108,56 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
         }
     }
 
-    private void bindImportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+    private static void bindImportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing, TileEntityRendererDispatcher rendererDispatcher) {
         if (route == -1) return;
 
         if (route == -2)
-            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy.png"));
+            TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy.png"));
         else if (route < otherwise.size())
-            this.bindTexture(otherwise.get(route));
+            TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
 
         pasteBoundTexToBlockFace(facing);
     }
 
-    private void bindExportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+    private static void bindExportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing, TileEntityRendererDispatcher rendererDispatcher) {
         if (route == -1) return;
 
         if (route < otherwise.size())
-            this.bindTexture(otherwise.get(route));
+            TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
 
         pasteBoundTexToBlockFace(facing);
     }
 
-    private void bindImportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+    private static void bindImportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing, BufferBuilder buffer, TileEntityRendererDispatcher rendererDispatcher) {
         if (route == -1) return;
 
         if (route == -2)
-            this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy_p.png"));
+            TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy_p.png"));
         else if (route < otherwise.size())
-            this.bindTexture(otherwise.get(route));
+            TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
 
-        pasteBoundTexToPipeFace(modelCC, facing);
+        pasteBoundTexToPipeFace(modelCC, facing, buffer);
     }
 
-    private void bindExportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing) {
+    private static void bindExportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing, BufferBuilder buffer, TileEntityRendererDispatcher rendererDispatcher) {
         if (route == -1) return;
 
         if (route < otherwise.size())
-            this.bindTexture(otherwise.get(route));
+            TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
 
-        pasteBoundTexToPipeFace(modelCC, facing);
+        pasteBoundTexToPipeFace(modelCC, facing, buffer);
     }
 
-    private void bindFilterBlockTexAsCan(ItemStack filter, EnumFacing facing) {
+    private static void bindFilterBlockTexAsCan(ItemStack filter, EnumFacing facing, TileEntityRendererDispatcher rendererDispatcher) {
         if (!(filter.getItem() instanceof IFilter)) return;
 
-        this.bindTexture(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/filter.png"));
+        TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/filter.png"));
         pasteBoundTexToBlockFace(facing);
     }
 
-    protected void pasteBoundTexToBlockFace(EnumFacing facing) {
+    protected static void pasteBoundTexToBlockFace(EnumFacing facing) {
+        BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+
         PositionTextureVertex[] ptvs = new PositionTextureVertex[4];
         switch (facing) {
             case DOWN:
@@ -175,7 +182,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
         new TexturedQuad(ptvs, 0, 0, 16, 16, 16, 16).draw(buffer, 1f);
     }
 
-    protected void pasteBoundTexToPipeFace(ModelClayContainer modelCC, EnumFacing facing) {
+    protected static void pasteBoundTexToPipeFace(ModelClayContainer modelCC, EnumFacing facing, BufferBuilder buffer) {
         switch (facing) {
             case DOWN:
                 modelCC.renderPipeDown(buffer);
@@ -195,6 +202,16 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             case EAST:
                 modelCC.renderPipeEast(buffer);
                 break;
+        }
+    }
+
+    protected static void bindTexture(TileEntityRendererDispatcher rendererDispatcher, ResourceLocation location)
+    {
+        TextureManager texturemanager = rendererDispatcher.renderEngine;
+
+        if (texturemanager != null)
+        {
+            texturemanager.bindTexture(location);
         }
     }
 }

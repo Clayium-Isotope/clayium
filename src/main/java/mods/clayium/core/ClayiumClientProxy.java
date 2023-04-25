@@ -33,6 +33,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -114,8 +115,15 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntitySolarClayFabricator.class, "clayium:solar_clay_fabricator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityClayFabricator.class, "clayium:clay_fabricator", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityChemicalMetalSeparator.class, "clayium:chemical_metal_separator", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityClayInterface.class, "clayium:interface", new TESRClayContainer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityClayInterface.class, new TESRInterface());
+		ClientRegistry.registerTileEntity(TileEntityClayInterface.class, "clayium:clay_interface",
+				new TileEntitySpecialRenderer<TileEntityClayInterface>() {
+					@Override
+					public void render(TileEntityClayInterface te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+						TESRClayContainer.render(te, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
+						TESRInterface.render(te, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
+				}
+		}
+		);
 		ClientRegistry.registerTileEntity(TileEntityClayBlastFurnace.class, "clayium:blast_furnace", new TESRClayContainer());
 		ClientRegistry.registerTileEntity(TileEntityRedstoneInterface.class, "clayium:redstone_interface", new TESRInterface());
 
