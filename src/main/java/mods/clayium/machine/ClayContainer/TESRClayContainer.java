@@ -26,14 +26,15 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayContainer> {
-    private static final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 0.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d, 0.0d, 1.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 0.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv3 = new PositionTextureVertex(new Vec3d(0.0d, 1.0d, 1.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv4 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 0.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv5 = new PositionTextureVertex(new Vec3d(1.0d, 0.0d, 1.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv6 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 0.0d), 0f, 0f);
-    private static final PositionTextureVertex ptv7 = new PositionTextureVertex(new Vec3d(1.0d, 1.0d, 1.0d), 0f, 0f);
+    private static final double offset = 0.02d;
+    private static final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d - offset, 0.0d - offset, 0.0d - offset), 0f, 0f);
+    private static final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d - offset, 0.0d - offset, 1.0d + offset), 0f, 0f);
+    private static final PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d - offset, 1.0d + offset, 0.0d - offset), 0f, 0f);
+    private static final PositionTextureVertex ptv3 = new PositionTextureVertex(new Vec3d(0.0d - offset, 1.0d + offset, 1.0d + offset), 0f, 0f);
+    private static final PositionTextureVertex ptv4 = new PositionTextureVertex(new Vec3d(1.0d + offset, 0.0d - offset, 0.0d - offset), 0f, 0f);
+    private static final PositionTextureVertex ptv5 = new PositionTextureVertex(new Vec3d(1.0d + offset, 0.0d - offset, 1.0d + offset), 0f, 0f);
+    private static final PositionTextureVertex ptv6 = new PositionTextureVertex(new Vec3d(1.0d + offset, 1.0d + offset, 0.0d - offset), 0f, 0f);
+    private static final PositionTextureVertex ptv7 = new PositionTextureVertex(new Vec3d(1.0d + offset, 1.0d + offset, 1.0d + offset), 0f, 0f);
     private static final PositionTextureVertex[] downPTVs  = new PositionTextureVertex[] { ptv3, ptv7, ptv6, ptv2 };
     private static final PositionTextureVertex[] upPTVs    = new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 };
     private static final PositionTextureVertex[] southPTVs = new PositionTextureVertex[] { ptv4, ptv0, ptv2, ptv6 };

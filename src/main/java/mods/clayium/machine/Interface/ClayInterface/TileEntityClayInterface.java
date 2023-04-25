@@ -3,6 +3,7 @@ package mods.clayium.machine.Interface.ClayInterface;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.UtilBuilder;
 import mods.clayium.util.UtilCollect;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class TileEntityClayInterface extends TileEntityClayContainer implements ISynchronizedInterface {
+public class TileEntityClayInterface extends TileEntityClayContainer implements ISynchronizedInterface, IClayEnergyConsumer {
     protected boolean enableSync = false;
     protected boolean synced = false;
     protected IInterfaceCaptive core = IInterfaceCaptive.NONE;
@@ -256,5 +257,49 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     @Override
     public List<ResourceLocation> getExtractPipeIcons() {
         return this.isSynced() ? ((TileEntityClayContainer) this.core).getExtractPipeIcons() : Collections.emptyList();
+    }
+
+    @Override
+    public long getContainEnergy() {
+        if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
+            return ((IClayEnergyConsumer) this.core).getContainEnergy();
+        }
+        return 0;
+    }
+
+    @Override
+    public void setContainEnergy(long energy) {
+        if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
+            ((IClayEnergyConsumer) this.core).setContainEnergy(energy);;
+        }
+    }
+
+    @Override
+    public int getClayEnergyStorageSize() {
+        if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
+            return ((IClayEnergyConsumer) this.core).getClayEnergyStorageSize();
+        }
+        return 0;
+    }
+
+    @Override
+    public void setClayEnergyStorageSize(int size) {
+
+    }
+
+    @Override
+    public int getEnergySlot() {
+        if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
+            return ((IClayEnergyConsumer) this.core).getEnergySlot();
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean acceptClayEnergy() {
+        if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
+            return ((IClayEnergyConsumer) this.core).acceptClayEnergy();
+        }
+        return false;
     }
 }
