@@ -4,7 +4,7 @@ import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.Interface.IExternalControl;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.UtilBuilder;
+import mods.clayium.util.SyncManager;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -61,9 +61,9 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
     @Override
     public void update() {
         if (this.syncSource != null) {
-            TileEntity tile = UtilBuilder.getTileFromIntArray(this.syncSource);
+            TileEntity tile = SyncManager.getTileFromIntArray(this.syncSource);
             if (tile instanceof IInterfaceCaptive) {
-                UtilBuilder.synchronize((IInterfaceCaptive) tile, this);
+                SyncManager.synchronize((IInterfaceCaptive) tile, this);
                 this.markDirty();
             }
             this.syncSource = null;
@@ -198,12 +198,29 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
         compound.setInteger("Tier", this.tier);
 
         if (this.isSynced()) {
-            compound.setIntArray("SyncSource", UtilBuilder.getIntArrayFromTile((TileEntity) this.core));
+            compound.setIntArray("SyncSource", SyncManager.getIntArrayFromTile((TileEntity) this.core));
         }
 
         compound.setInteger("LastSignal", this.lastSignal);
         compound.setInteger("LastPower", this.lastPower);
 
         return compound;
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+
+        if (this.isSynced()) {
+            this.core.markDirty();
+
+            assert this.core instanceof TileEntity;
+            TileEntity te = SyncManager.getTileFromIntArray(SyncManager.getIntArrayFromTile((TileEntity) this.core));
+            if (IInterfaceCaptive.isSyncable(te)) {
+                SyncManager.immediateSync((IInterfaceCaptive) te, this);
+            } else {
+                SyncManager.immediateSync(null, this);
+            }
+        }
     }
 }

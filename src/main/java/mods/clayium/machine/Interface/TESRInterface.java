@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
@@ -42,12 +41,18 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         IInterfaceCaptive core = ((ISynchronizedInterface) tile).getCore();
         if (core == IInterfaceCaptive.NONE) return;
 
+        RayTraceResult mop = rendererDispatcher.cameraHitResult;
+
+        if (mop == null || mop.typeOfHit != RayTraceResult.Type.BLOCK || !mop.getBlockPos().equals(tile.getPos())) {
+            return;
+        }
+
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         GlStateManager.enableBlend();
 
-        drawRemoteCore(x, y, z, core, tile, partialTicks, rendererDispatcher);
+        highlightCore((ISynchronizedInterface) tile, core, new Vec3d(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ), partialTicks);
 
-        highlightCore(tile, core, partialTicks);
+        drawRemoteCore(x, y, z, core, (ISynchronizedInterface) tile, partialTicks, rendererDispatcher, mop);
 
         GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
@@ -80,24 +85,27 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         GL11.glPopMatrix();
     }
 
-    private static void highlightCore(TileEntityGeneric in, IInterfaceCaptive core, float ticktime) {
+    public static void highlightCore(ISynchronizedInterface in, IInterfaceCaptive core, Vec3d viewPos, float ticktime) {
         if (core.getWorld().provider.getDimension() != in.getWorld().provider.getDimension()) {
             return;
         }
 
-        float cr = (float)(Math.sin((double)(ticktime * 0.1F) + 0.0) + 1.0) * 0.5F;
-        float cg = (float)(Math.sin((double)(ticktime * 0.1F) + 2.0943951023931953) + 1.0) * 0.5F;
-        float cb = (float)(Math.sin((double)(ticktime * 0.1F) + 4.1887902047863905) + 1.0) * 0.5F;
-        float cf = (float)(Math.sin((double)(ticktime * 0.12F) + 0.0) + 1.0) * 0.15F + 0.2F;
+        ticktime += in.getWorld().getWorldTime();
+
+        float cr = (float) (Math.sin((double) (ticktime * 0.1F) + 0 * Math.PI / 3) + 1.0) * 0.5F;
+        float cg = (float) (Math.sin((double) (ticktime * 0.1F) + 1 * Math.PI / 3) + 1.0) * 0.5F;
+        float cb = (float) (Math.sin((double) (ticktime * 0.1F) + 2 * Math.PI / 3) + 1.0) * 0.5F;
+        float cf = (float) (Math.sin((double) (ticktime * 0.12F) + 0.0) + 1.0) * 0.15F + 0.2F;
 
         IBlockState cstate = core.getWorld().getBlockState(core.getPos());
         AxisAlignedBB caabb = cstate.getBoundingBox(core.getWorld(), core.getPos());
         Color highlight = new Color(cr, cg, cb, cf);
 
-        // Note: Block Appearance is 2, border is false.
-        UtilRender.renderOffsetAABB(caabb, new Vec3d(core.getPos()), highlight);
+        UtilRender.renderOffsetAABB(caabb, new Vec3d(core.getPos()).subtract(viewPos), highlight);
+//        Render.renderOffsetAABB(caabb, core.getPos().getX() - viewPos.x, core.getPos().getY() - viewPos.y, core.getPos().getZ() - viewPos.z);
+//        RenderGlobal.renderFilledBox(caabb, cr, cg, cb, 1.0f);
 
-        UtilRender.renderLine(new Vec3d(core.getPos()), new Vec3d(in.getPos()), highlight);
+        UtilRender.renderLine(new Vec3d(core.getPos()).subtract(viewPos), new Vec3d(in.getPos()).subtract(viewPos), highlight);
     }
 
     private static void drawRemoteCoreBlock(IInterfaceCaptive core, ItemStack itemstack, float ticktime, TileEntityRendererDispatcher tileRenderer) {
@@ -149,14 +157,7 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         GL11.glPopMatrix();
     }
 
-    private static void drawRemoteCore(double x, double y, double z, IInterfaceCaptive core, TileEntityGeneric in, float partialTicks, TileEntityRendererDispatcher rendererDispatcher) {
-        Entity viewEntity = mc.getRenderViewEntity();
-        RayTraceResult mop = rendererDispatcher.cameraHitResult;
-
-        if (mop == null || mop.typeOfHit != RayTraceResult.Type.BLOCK || !mop.getBlockPos().equals(in.getPos())) {
-            return;
-        }
-
+    public static void drawRemoteCore(double x, double y, double z, IInterfaceCaptive core, ISynchronizedInterface in, float partialTicks, TileEntityRendererDispatcher rendererDispatcher, RayTraceResult mop) {
         float ticktime = (float) in.getWorld().getWorldTime() + partialTicks;
         ItemStack itemstack = UtilBuilder.getItemBlock(core.getWorld(), core.getPos());
 

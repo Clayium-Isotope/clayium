@@ -5,7 +5,7 @@ import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.util.UtilBuilder;
+import mods.clayium.util.SyncManager;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,7 +68,7 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
             return EnumActionResult.PASS;
         }
 
-        TileEntity sourceTile = UtilBuilder.getTileFromIntArray(coord);
+        TileEntity sourceTile = SyncManager.getTileFromIntArray(coord);
 
         if (!(sourceTile instanceof TileEntityClayContainer) || !IInterfaceCaptive.isSyncable(sourceTile)) {
             if (world.isRemote) {
@@ -77,7 +77,7 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
             return EnumActionResult.PASS;
         }
 
-        String code = UtilBuilder.synchronize((TileEntityClayContainer) sourceTile, (TileEntityClayInterface) tile);
+        String code = SyncManager.synchronize((TileEntityClayContainer) sourceTile, (TileEntityClayInterface) tile);
 
         if (!code.isEmpty()) {
             if (world.isRemote) {
@@ -109,7 +109,7 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
         NBTTagCompound compound = itemStack.hasTagCompound() ? itemStack.getTagCompound() : new NBTTagCompound();
 
         assert compound != null;
-        compound.setIntArray(SourceKey, UtilBuilder.getIntArrayFromTile(tile));
+        compound.setIntArray(SourceKey, SyncManager.getIntArrayFromTile(tile));
 
         itemStack.setTagCompound(compound);
 

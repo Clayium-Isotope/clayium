@@ -10,7 +10,7 @@ import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IRecipeProvider;
 import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.UtilBuilder;
+import mods.clayium.util.SyncManager;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -107,7 +107,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
 
             TileEntity te = this.getTileEntity(relative);
             if (te instanceof ISynchronizedInterface) {
-                UtilBuilder.immediateSync(this, (ISynchronizedInterface) te);
+                SyncManager.immediateSync(this, (ISynchronizedInterface) te);
             }
         }
 
@@ -126,7 +126,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
 
             TileEntity te = this.getTileEntity(relative);
             if (te instanceof ISynchronizedInterface) {
-                UtilBuilder.immediateSync(null, (ISynchronizedInterface) te);
+                SyncManager.immediateSync(null, (ISynchronizedInterface) te);
             }
         }
 
