@@ -21,7 +21,7 @@ public class SyncManager {
     public static String synchronize(@Nullable IInterfaceCaptive source, ISynchronizedInterface target) {
         if (target == null) return "Unknown Signature";
         if (source == null) {
-            target.setCoreBlock(null);
+            target.setCoreBlock(IInterfaceCaptive.NONE);
             return "";
         }
 

@@ -152,4 +152,9 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
     public boolean shouldRenderInPass(int pass) {
         return pass == 1;
     }
+
+    @Override
+    public boolean acceptInterfaceSync() {
+        return false;
+    }
 }

@@ -5,6 +5,7 @@ import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
@@ -50,7 +51,7 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
     }
 
     protected static EnumActionResult applySync(EntityPlayer player, ItemStack itemStack, World world, TileEntity tile) {
-        if (!(tile instanceof TileEntityClayInterface)) {
+        if (!(tile instanceof ISynchronizedInterface)) {
             if (world.isRemote) {
                 player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.InvalidSyncInterface"));
             }
@@ -77,7 +78,7 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
             return EnumActionResult.PASS;
         }
 
-        String code = SyncManager.synchronize((TileEntityClayContainer) sourceTile, (TileEntityClayInterface) tile);
+        String code = SyncManager.synchronize((TileEntityClayContainer) sourceTile, (ISynchronizedInterface) tile);
 
         if (!code.isEmpty()) {
             if (world.isRemote) {

@@ -18,6 +18,7 @@ import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
+import mods.clayium.machine.Interface.ClayLaserInterface.ClayLaserInterface;
 import mods.clayium.machine.Interface.RedstoneInterface.RedstoneInterface;
 import mods.clayium.machine.LaserReflector.LaserReflector;
 import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
@@ -104,9 +105,8 @@ public class ClayiumMachines {
 
         addContainers(EnumMachineKind.clayInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayInterface.class);
         addContainers(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
+        addContainers(EnumMachineKind.laserInterface, new int[]{ 7, 8, 9, 10, 11, 12, 13 }, ClayLaserInterface.class);
 
-//        add(EnumMachineKind.laserInterface, new int[]{ 7, 8, 9, 10, 11, 12, 13 }, ClayLaserInterface.class);
-//
 //        addMachine(EnumMachineKind.electrolysisReactor, new int[]{ 6, 7, 8, 9 });
 //
 //        add(EnumMachineKind.distributor, new int[]{ 7, 8, 9 }, ClayDistributor.class);

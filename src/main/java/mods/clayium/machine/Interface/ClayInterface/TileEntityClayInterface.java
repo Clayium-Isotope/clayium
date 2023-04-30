@@ -92,7 +92,6 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
 
         if (compound.hasKey("SyncSource", Constants.NBT.TAG_INT_ARRAY)) {
             this.syncSource = compound.getIntArray("SyncSource");
-            this.isLoaded = false;
         }
 
         this.enableSync = compound.getBoolean("SyncEnabled");

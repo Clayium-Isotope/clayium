@@ -18,9 +18,9 @@ public class SynchronousParts extends ItemTiered implements IModifyCC {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote) {
-            return EnumActionResult.SUCCESS;
-        }
+//        if (worldIn.isRemote) {
+//            return EnumActionResult.SUCCESS;
+//        }
 
         if (worldIn.getTileEntity(pos) instanceof ISynchronizedInterface) {
             if (((ISynchronizedInterface) worldIn.getTileEntity(pos)).markEnableSync()) {

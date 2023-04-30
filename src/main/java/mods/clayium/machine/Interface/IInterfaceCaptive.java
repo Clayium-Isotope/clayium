@@ -31,7 +31,7 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
      * 引数がTileEntityであることを保証するのは冗長
      */
     static boolean isSyncable(@Nullable Object tile) {
-        return tile != null && tile instanceof IInterfaceCaptive && ((IInterfaceCaptive) tile).acceptInterfaceSync();
+        return tile instanceof IInterfaceCaptive && ((IInterfaceCaptive) tile).acceptInterfaceSync();
     }
 
     @Deprecated
@@ -52,6 +52,11 @@ public interface IInterfaceCaptive extends IInventory, IClayInventory {
         private String customName = null;
 
         EmptyCaptive() {}
+
+        @Override
+        public boolean acceptInterfaceSync() {
+            return false;
+        }
 
         @Override
         public List<int[]> getListSlotsImport() {
