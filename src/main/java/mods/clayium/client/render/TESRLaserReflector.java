@@ -1,7 +1,8 @@
-package mods.clayium.machine.LaserReflector;
+package mods.clayium.client.render;
 
-import mods.clayium.machine.ClayEnergyLaser.laser.RenderClayLaser;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.LaserReflector.LaserReflector;
+import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

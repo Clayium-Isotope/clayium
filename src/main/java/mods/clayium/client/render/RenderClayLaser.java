@@ -1,7 +1,9 @@
-package mods.clayium.machine.ClayEnergyLaser.laser;
+package mods.clayium.client.render;
 
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

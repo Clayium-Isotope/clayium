@@ -1,4 +1,4 @@
-package mods.clayium.machine.LaserReflector;
+package mods.clayium.client.render;
 
 import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -12,6 +12,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+@Deprecated
 public class TEISRLaserReflector extends TileEntityItemStackRenderer {
     @Override
     public void renderByItem(ItemStack itemStackIn) {

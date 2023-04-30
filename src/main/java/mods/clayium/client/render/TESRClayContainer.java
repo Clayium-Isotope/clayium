@@ -1,9 +1,10 @@
-package mods.clayium.machine.ClayContainer;
+package mods.clayium.client.render;
 
-import mods.clayium.client.render.CustomHull;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.client.model.PositionTextureVertex;
