@@ -1,5 +1,6 @@
 package mods.clayium.machine.ClayContainer;
 
+import mods.clayium.client.render.CustomHull;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.filter.IFilter;
@@ -26,6 +27,8 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayContainer> {
+    public static final TESRClayContainer instance = new TESRClayContainer();
+
     private static final double offset = 0.02d;
     private static final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d - offset, 0.0d - offset, 0.0d - offset), 0f, 0f);
     private static final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d - offset, 0.0d - offset, 1.0d + offset), 0f, 0f);
@@ -59,7 +62,14 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             GlStateManager.pushMatrix();
             GlStateManager.matrixMode(GL11.GL_MODELVIEW);
         } else {
-            TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/machinehull-" + (te.getHullTier() - 1) + ".png"));
+            String hullPath;
+            if (te.getClass().isAnnotationPresent(CustomHull.class)) {
+                hullPath = te.getClass().getAnnotation(CustomHull.class).value();
+            } else {
+                hullPath = "blocks/machinehull-" + (te.getHullTier() - 1);
+            }
+
+            TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/" + hullPath + ".png"));
         }
 
         GlStateManager.pushMatrix();

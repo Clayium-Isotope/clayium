@@ -26,6 +26,8 @@ import java.awt.*;
  */
 @SideOnly(Side.CLIENT)
 public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> {
+    public static final TESRInterface instance = new TESRInterface();
+
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     @Override

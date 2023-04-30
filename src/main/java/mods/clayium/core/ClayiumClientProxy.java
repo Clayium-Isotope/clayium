@@ -19,6 +19,7 @@ import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
+import mods.clayium.machine.CreativeEnergySource.TileEntityCreativeEnergySource;
 import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.Interface.ClayLaserInterface.TileEntityClayLaserInterface;
 import mods.clayium.machine.Interface.RedstoneInterface.TileEntityRedstoneInterface;
@@ -102,20 +103,20 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		GameRegistry.registerTileEntity(TileEntityClayWorkTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_work_table"));
 		GameRegistry.registerTileEntity(TileEntityClayCraftingTable.class, new ResourceLocation(ClayiumCore.ModId, "clay_crafting_table"));
 
-		ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntitySaltExtractor.class, "clayium:salt_extractor", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayBuffer.class, "clayium:buffer", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityClayiumMachine.class, "clayium:machine", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityCobblestoneGenerator.class, "clayium:cobblestone_generator", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityClayAssembler.class, "clayium:assembler", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityMultitrackBuffer.class, "clayium:multitrack_buffer", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntitySaltExtractor.class, "clayium:salt_extractor", TESRClayContainer.instance);
 		ClientRegistry.registerTileEntity(TileEntityClayEnergyLaser.class, "clayium:laser", new TESRClayEnergyLaser());
 		ClientRegistry.registerTileEntity(TileEntityLaserReflector.class, "clayium:laser_reflector", new TESRLaserReflector());
 		Item.getItemFromBlock(ClayiumMachines.laserReflector).setTileEntityItemStackRenderer(new TEISRLaserReflector());
-		ClientRegistry.registerTileEntity(TileEntityClayChemicalReactor.class, "clayium:chemical_reactor", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityAutoClayCondenser.class, "clayium:auto_clay_condenser", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntitySolarClayFabricator.class, "clayium:solar_clay_fabricator", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityClayFabricator.class, "clayium:clay_fabricator", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityChemicalMetalSeparator.class, "clayium:chemical_metal_separator", new TESRClayContainer());
+		ClientRegistry.registerTileEntity(TileEntityClayChemicalReactor.class, "clayium:chemical_reactor", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityAutoClayCondenser.class, "clayium:auto_clay_condenser", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntitySolarClayFabricator.class, "clayium:solar_clay_fabricator", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityClayFabricator.class, "clayium:clay_fabricator", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityChemicalMetalSeparator.class, "clayium:chemical_metal_separator", TESRClayContainer.instance);
 		ClientRegistry.registerTileEntity(TileEntityClayInterface.class, "clayium:clay_interface",
 				new TileEntitySpecialRenderer<TileEntityClayInterface>() {
 					@Override
@@ -125,10 +126,11 @@ public class ClayiumClientProxy implements IClayiumProxy {
 				}
 		}
 		);
-		ClientRegistry.registerTileEntity(TileEntityClayBlastFurnace.class, "clayium:blast_furnace", new TESRClayContainer());
-		ClientRegistry.registerTileEntity(TileEntityRedstoneInterface.class, "clayium:redstone_interface", new TESRInterface());
-		ClientRegistry.registerTileEntity(TileEntityClayLaserInterface.class, "clayium:laser_interface", new TESRInterface());
+		ClientRegistry.registerTileEntity(TileEntityClayBlastFurnace.class, "clayium:blast_furnace", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityRedstoneInterface.class, "clayium:redstone_interface", TESRInterface.instance);
+		ClientRegistry.registerTileEntity(TileEntityClayLaserInterface.class, "clayium:laser_interface", TESRInterface.instance);
 
+		ClientRegistry.registerTileEntity(TileEntityCreativeEnergySource.class, "clayium:creative_energy", TESRClayContainer.instance);
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 	}
 

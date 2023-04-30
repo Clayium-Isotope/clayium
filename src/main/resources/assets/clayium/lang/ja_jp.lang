@@ -251,6 +251,8 @@ tile.precision_blast_furnace.tooltip.line6=F: 粘土高炉ブロック
 tile.precision_blast_furnace.tooltip.line7=X: マシン筐体か各種インターフェース
 tile.precision_blast_furnace.tooltip.line8=構成要素の Tier により参照されるレシピの Tier が決定される
 
+tile.opa_creative_energy.name=クリエイティブ用粘土エネルギー源
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=生の粘土めん棒

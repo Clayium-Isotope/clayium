@@ -17,6 +17,7 @@ import mods.clayium.machine.ClayFabricator.ClayFabricator;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
+import mods.clayium.machine.CreativeEnergySource.CreativeEnergySource;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
 import mods.clayium.machine.Interface.ClayLaserInterface.ClayLaserInterface;
 import mods.clayium.machine.Interface.RedstoneInterface.RedstoneInterface;
@@ -71,7 +72,7 @@ public class ClayiumMachines {
 
         addContainers(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
         addContainers(EnumMachineKind.multitrackBuffer, new int[]{ 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, MultitrackBuffer.class);
-//        add(EnumMachineKind.creativeCESource, 13, TileEntityCreativeEnergySource.class);
+        addContainer(EnumMachineKind.creativeCESource, 13, new CreativeEnergySource());
 
         addMachines(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 }, ClayChemicalReactor.class);
 
@@ -127,6 +128,7 @@ public class ClayiumMachines {
 
         addContainers(EnumMachineKind.clayEnergyLaser, new int[] { 7, 8, 9, 10 }, ClayEnergyLaser.class);
         addContainer(EnumMachineKind.laserReflector, 7, new LaserReflector());
+        laserReflector = get(EnumMachineKind.laserReflector, 7);
     }
 
     private static void addContainer(EnumMachineKind kind, int tier, Block block) {
@@ -275,11 +277,12 @@ public class ClayiumMachines {
     public static Block alloySmelter = Blocks.AIR;
     public static Block clayReactor = Blocks.AIR;
     public static Block quartzCrucible = Blocks.AIR;
-    public static Block laserReflector = get(EnumMachineKind.laserReflector, 7);
+    public static Block laserReflector = Blocks.AIR;
     public static Block clayFabricatorMK1 = Blocks.AIR;
     public static Block clayFabricatorMK2 = Blocks.AIR;
     public static Block clayFabricatorMK3 = Blocks.AIR;
     public static Block CACollector = Blocks.AIR;
     public static Block clayWaterWheel = Blocks.AIR;
     public static Block denseClayWaterWheel = Blocks.AIR;
+    public static Block CESource = Blocks.AIR;
 }

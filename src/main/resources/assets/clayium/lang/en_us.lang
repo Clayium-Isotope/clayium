@@ -290,6 +290,8 @@ tooltip.laser_interface.line2=__DETAIL__
 tooltip.laser_interface.line3=Synchronizer is used to apply a Laser Interface
 tooltip.laser_interface.line4=to a non-multiblock machine.
 
+tile.opa_creative_energy.name=Creative CE Source
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=Raw Clay Rolling Pin
