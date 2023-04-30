@@ -1,6 +1,7 @@
 
 package mods.clayium.machine.ClayWorkTable;
 
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import net.minecraft.block.SoundType;
@@ -14,6 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@HasOriginalState
 public class ClayWorkTable extends ClayContainer {
 	public ClayWorkTable() {
 		super(Material.ROCK, TileEntityClayWorkTable.class, "clay_work_table", GuiHandler.GuiIdClayWorkTable, 0);

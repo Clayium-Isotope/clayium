@@ -3,6 +3,7 @@ package mods.clayium.core;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.common.IItemBlockHolder;
 import mods.clayium.block.itemblock.ItemBlockTiered;
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.entity.EntityClayBall;
 import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.gui.GuiHandler;
@@ -10,9 +11,6 @@ import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumShapedMaterial;
 import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
-import mods.clayium.machine.Interface.ClayLaserInterface.ClayLaserInterface;
-import mods.clayium.machine.SolarClayFabricator.SolarClayFabricator;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
@@ -185,7 +183,7 @@ public class ClayiumCore {
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
                     new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getResourcePath(), "inventory"));
             // Custom blockstate mapping
-            if (block != ClayiumMachines.clayWorkTable && block != ClayiumMachines.clayCraftingTable && block != ClayiumMachines.quartzCrucible && !(block instanceof SolarClayFabricator) && !(block instanceof ClayInterface) && !(block instanceof ClayLaserInterface) &&block != ClayiumMachines.blastFurnace) {
+            if (!block.getClass().isAnnotationPresent(HasOriginalState.class)) {
                 net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
                     @Override
                     protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

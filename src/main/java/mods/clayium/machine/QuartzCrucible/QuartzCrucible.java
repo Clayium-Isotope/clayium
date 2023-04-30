@@ -1,6 +1,7 @@
 package mods.clayium.machine.QuartzCrucible;
 
 import com.google.common.collect.ImmutableMap;
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
@@ -23,6 +24,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+@HasOriginalState
 public class QuartzCrucible extends ClayContainer {
     public QuartzCrucible() {
         super(Material.GLASS, TileEntityQuartzCrucible.class, "quartz_crucible", -1, 5);

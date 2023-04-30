@@ -1,5 +1,6 @@
 package mods.clayium.machine.Interface.ClayLaserInterface;
 
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayDirectionalContainer;
 import mods.clayium.machine.EnumMachineKind;
@@ -14,6 +15,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@HasOriginalState
 public class ClayLaserInterface extends ClayDirectionalContainer {
     public ClayLaserInterface(int tier) {
         super(Material.IRON, TileEntityClayLaserInterface.class, TierPrefix.get(tier).getPrefix() + "_" + EnumMachineKind.laserInterface.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);

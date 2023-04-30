@@ -1,5 +1,6 @@
 package mods.clayium.machine.ClayCraftingTable;
 
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import net.minecraft.block.SoundType;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+@HasOriginalState
 public class ClayCraftingTable extends ClayContainer {
     public ClayCraftingTable() {
         super(Material.CLAY, TileEntityClayCraftingTable.class, "clay_crafting_table", GuiHandler.GuiIdClayCraftingTable, 0);

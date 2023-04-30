@@ -3,6 +3,7 @@ package mods.clayium.machine.Interface.RedstoneInterface;
 import com.google.common.collect.ImmutableMap;
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
 import net.minecraft.block.Block;
@@ -21,6 +22,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+@HasOriginalState
 public class RedstoneInterface extends ClayInterface implements ITieredBlock {
     public RedstoneInterface(int tier) {
         super(EnumMachineKind.redstoneInterface, TileEntityRedstoneInterface.class, tier);

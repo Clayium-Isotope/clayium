@@ -1,6 +1,7 @@
 package mods.clayium.machine.Interface.ClayInterface;
 
 import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.common.IModifyCC;
@@ -22,6 +23,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@HasOriginalState
 public class ClayInterface extends ClayContainer {
     protected final EnumMachineKind kind;
 
