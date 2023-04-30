@@ -1,5 +1,8 @@
 package mods.clayium.machine.Interface;
 
+import mods.clayium.util.UsedFor;
+
+@UsedFor(UsedFor.Type.TileEntity)
 public interface IExternalControl {
     IExternalControl NONE = new None();
 

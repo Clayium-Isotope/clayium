@@ -1,11 +1,13 @@
 package mods.clayium.item.gadget;
 
+import mods.clayium.util.UsedFor;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 
 import java.util.Comparator;
 
+@UsedFor(UsedFor.Type.Item)
 public interface IGadget extends Comparator<ItemStack> {
     static boolean isGadget(ItemStack stack) {
         return stack.getItem() instanceof IGadget;

@@ -1,5 +1,6 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.util.UsedFor;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -7,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
+@UsedFor(UsedFor.Type.Item)
 public interface IFilter {
     boolean filterMatch(NBTTagCompound filterTag, ItemStack input);
 

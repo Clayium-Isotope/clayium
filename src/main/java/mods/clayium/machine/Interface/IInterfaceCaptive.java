@@ -2,6 +2,7 @@ package mods.clayium.machine.Interface;
 
 import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.EnumSide;
+import mods.clayium.util.UsedFor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * for TileEntity
  */
+@UsedFor(UsedFor.Type.TileEntity)
 public interface IInterfaceCaptive extends IInventory, IClayInventory {
     IInterfaceCaptive NONE = new EmptyCaptive();
 

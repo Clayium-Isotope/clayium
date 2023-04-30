@@ -1,9 +1,11 @@
 package mods.clayium.machine.common;
 
 import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.util.UsedFor;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+@UsedFor(UsedFor.Type.TileEntity)
 public interface IClayEnergyConsumer extends IInventory {
     long getContainEnergy();
     void setContainEnergy(long energy);

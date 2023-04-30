@@ -2,6 +2,7 @@ package mods.clayium.machine.common;
 
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.util.UsedFor;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
@@ -11,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+@UsedFor(UsedFor.Type.TileEntity)
 public interface IRecipeProvider<T extends IRecipeElement> {
     int getRecipeTier();
 
