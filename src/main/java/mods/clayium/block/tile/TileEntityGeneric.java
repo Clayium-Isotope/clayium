@@ -93,14 +93,14 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public final void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         this.readMoreFromNBT(compound);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public final NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
         return this.writeMoreToNBT(compound);

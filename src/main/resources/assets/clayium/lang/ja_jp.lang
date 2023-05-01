@@ -251,6 +251,55 @@ tile.precision_blast_furnace.tooltip.line6=F: 粘土高炉ブロック
 tile.precision_blast_furnace.tooltip.line7=X: マシン筐体か各種インターフェース
 tile.precision_blast_furnace.tooltip.line8=構成要素の Tier により参照されるレシピの Tier が決定される
 
+tile.advanced_clay_interface.name=インターフェース
+tile.precision_clay_interface.name=精密インターフェース
+tile.clay_steel_clay_interface.name=粘土鋼インターフェース
+tile.clayium_clay_interface.name=クレイウムインターフェース
+tile.ultimate_clay_interface.name=究極インターフェース
+tile.antimatter_clay_interface.name=反物質インターフェース
+tile.pure_antimatter_clay_interface.name=純反物質インターフェース
+tile.oec_clay_interface.name=OEC インターフェース
+tile.opa_clay_interface.name=OPA インターフェース
+tooltip.clay_interface.line1=マルチブロック装置の搬入出口に使用
+tooltip.clay_interface.line2=__DETAIL__
+tooltip.clay_interface.line3=アイテムのテレポートにはシンクロパーツが必要
+
+tile.advanced_redstone_interface.name=赤石インターフェース
+tile.precision_redstone_interface.name=精密赤石インターフェース
+tile.clay_steel_redstone_interface.name=粘土鋼赤石インターフェース
+tile.clayium_redstone_interface.name=クレイウム赤石インターフェース
+tile.ultimate_redstone_interface.name=究極赤石インターフェース
+tile.antimatter_redstone_interface.name=反物質赤石インターフェース
+tile.pure_antimatter_redstone_interface.name=純反物質赤石インターフェース
+tile.oec_redstone_interface.name=OEC 赤石インターフェース
+tile.opa_redstone_interface.name=OPA 赤石インターフェース
+tooltip.redstone_interface.line1=マルチブロック装置の赤石入出力に使用
+tooltip.redstone_interface.line2=__DETAIL__
+tooltip.redstone_interface.line3=マルチブロック装置でなくても、これと
+tooltip.redstone_interface.line4=シンクロナイザーを用いれば赤石入出力が利用可能
+
+tile.clay_steel_laser_interface.name=レーザーインターフェース
+tile.clayium_laser_interface.name=クレイウムレーザーインターフェース
+tile.ultimate_laser_interface.name=究極レーザーインターフェース
+tile.antimatter_laser_interface.name=反物質レーザーインターフェース
+tile.pure_antimatter_laser_interface.name=純反物質レーザーインターフェース
+tile.oec_laser_interface.name=OEC レーザーインターフェース
+tile.opa_laser_interface.name=OPA レーザーインターフェース
+tooltip.laser_interface.line1=粘土反応炉に使用
+tooltip.laser_interface.line2=__DETAIL__
+tooltip.laser_interface.line3=マルチブロック装置でなくても、
+tooltip.laser_interface.line4=シンクロナイザーを用いて遠隔レーザー照射が可能
+
+tile.precision_electrolysis_reactor.name=電気精錬機
+tile.clay_steel_electrolysis_reactor.name=粘土鋼電気精錬機
+tile.clayium_electrolysis_reactor.name=クレイウム電気精錬機
+tile.ultimate_electrolysis_reactor.name=究極電気精錬機
+
+tile.clay_steel_distributor.name=分配機
+tile.clayium_distributor.name=クレイウム分配機
+tile.ultimate_distributor.name=究極分配機
+tooltip.distributor.line1=内部のアイテムを出来るだけ均等に分配しようとする
+
 tile.opa_creative_energy.name=クリエイティブ用粘土エネルギー源
 
 # Item Part

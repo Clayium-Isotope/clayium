@@ -12,6 +12,7 @@ import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
 import mods.clayium.machine.ClayChemicalReactor.ClayChemicalReactor;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
+import mods.clayium.machine.ClayDistributor.ClayDistributor;
 import mods.clayium.machine.ClayEnergyLaser.ClayEnergyLaser;
 import mods.clayium.machine.ClayFabricator.ClayFabricator;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
@@ -108,10 +109,10 @@ public class ClayiumMachines {
         addContainers(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
         addContainers(EnumMachineKind.laserInterface, new int[]{ 7, 8, 9, 10, 11, 12, 13 }, ClayLaserInterface.class);
 
-//        addMachine(EnumMachineKind.electrolysisReactor, new int[]{ 6, 7, 8, 9 });
-//
-//        add(EnumMachineKind.distributor, new int[]{ 7, 8, 9 }, ClayDistributor.class);
-//
+        addMachine(EnumMachineKind.electrolysisReactor, new int[]{ 6, 7, 8, 9 });
+
+        addContainers(EnumMachineKind.distributor, new int[]{ 7, 8, 9 }, ClayDistributor.class);
+
 //        add(EnumMachineKind.autoCrafter, new int[]{ 5, 6, 7, 8, 9 }, ClayAutoCrafter.class);
 //
 //        add(EnumMachineKind.clayReactor, 7, new ClayReactor());

@@ -23,6 +23,8 @@ import mods.clayium.machine.ClayContainer.GuiMultiPageContainer;
 import mods.clayium.machine.ClayCraftingTable.ContainerClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.GuiClayCraftingTable;
 import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
+import mods.clayium.machine.ClayDistributor.ContainerClayDistributor;
+import mods.clayium.machine.ClayDistributor.TileEntityClayDistributor;
 import mods.clayium.machine.ClayEnergyLaser.TileEntityClayEnergyLaser;
 import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
@@ -85,6 +87,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerAutoClayCondenser(player.inventory, (TileEntityAutoClayCondenser) tile);
             case GuiIdClayInterface:
                 return null;
+            case GuiIdClayDistributor:
+                return new ContainerClayDistributor(player.inventory, (TileEntityClayDistributor) tile);
         }
 
         return null;
@@ -131,6 +135,8 @@ public class GuiHandler implements IGuiHandler {
                 return null;
             case GuiIdClayBlastFurnace:
                 return new GuiClayBlastFurnace(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayBlastFurnace) tile));
+            case GuiIdClayDistributor:
+                return new GuiTemp(new ContainerClayDistributor(player.inventory, (TileEntityClayDistributor) tile));
         }
 
         return null;

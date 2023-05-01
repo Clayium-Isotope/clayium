@@ -53,20 +53,8 @@ blocksCACondenser = registerTieredMachines("CACondenser", new int[]{9, 10, 11}, 
 blocksCAInjector = registerTieredMachines("CAInjector", new int[]{9, 10, 11, 12, 13}, TileCAInjector.class, ClayAssembler.class, ItemBlockTiered.class);
 blockCACollector = (new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1))
 blockResonator = new BlockResonator(Material.iron);
-((BlockResonator)blockResonator)
-((BlockResonator)blockResonator)
-((BlockResonator)blockResonator)
-((BlockResonator)blockResonator)
 blockOverclocker = new BlockOverclocker(Material.iron);
-((BlockOverclocker)blockOverclocker)
-((BlockOverclocker)blockOverclocker)
-((BlockOverclocker)blockOverclocker)
-((BlockOverclocker)blockOverclocker)
 blockEnergyStorageUpgrade = new BlockEnergyStorageUpgrade(Material.iron);
-((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
-((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
-((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
-((BlockEnergyStorageUpgrade)blockEnergyStorageUpgrade)
 blockCAReactorCoil = new BlockDamaged(Material.iron) {
     public List getTooltip(ItemStack itemStack) {
 List ret = UtilLocale.localizeTooltip("tooltip.CAReactorCoil");

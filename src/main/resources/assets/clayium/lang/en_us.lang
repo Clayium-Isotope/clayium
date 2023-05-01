@@ -290,6 +290,16 @@ tooltip.laser_interface.line2=__DETAIL__
 tooltip.laser_interface.line3=Synchronizer is used to apply a Laser Interface
 tooltip.laser_interface.line4=to a non-multiblock machine.
 
+tile.precision_electrolysis_reactor.name=Electrolysis Reactor
+tile.clay_steel_electrolysis_reactor.name=Clay Steel Electrolysis Reactor
+tile.clayium_electrolysis_reactor.name=Clayium Electrolysis Reactor
+tile.ultimate_electrolysis_reactor.name=Ultimate Electrolysis Reactor
+
+tile.clay_steel_distributor.name=Item Distributor
+tile.clayium_distributor.name=Clayium Distributor
+tile.ultimate_distributor.name=Ultimate Distributor
+tooltip.distributor.line1=Distributes items that pass through itself equally.
+
 tile.opa_creative_energy.name=Creative CE Source
 
 # Item Part
