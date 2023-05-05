@@ -5,17 +5,20 @@ import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-public interface IRecipeElement extends IRecipeWrapper {
+public interface IRecipeElement extends IRecipe, IRecipeWrapper {
     List<ItemStack> getMaterials();
     int getTier();
     default int getMethod() { return -1; }
     List<ItemStack> getResults();
     long getEnergy();
     long getTime();
+
+    boolean isFlat();
 
     default boolean isCraftable(ItemStack itemstack, int tier) {
         if (getTier() > tier) {
@@ -156,6 +159,4 @@ public interface IRecipeElement extends IRecipeWrapper {
         }
         return null;
     }
-
-    boolean isFlat();
 }

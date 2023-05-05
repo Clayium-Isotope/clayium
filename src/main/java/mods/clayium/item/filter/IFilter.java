@@ -7,13 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 @UsedFor(UsedFor.Type.Item)
-public interface IFilter {
-    boolean filterMatch(NBTTagCompound filterTag, ItemStack input);
+public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
+    boolean test(NBTTagCompound filterTag, ItemStack input);
 
     static boolean match(ItemStack filter, ItemStack input) {
-        return isFilter(filter) && ((IFilter) filter.getItem()).filterMatch(filter.getTagCompound(), input);
+        return isFilter(filter) && ((IFilter) filter.getItem()).test(filter.getTagCompound(), input);
     }
 
     static boolean isFilter(ItemStack filter) {
@@ -48,5 +50,17 @@ public interface IFilter {
         }
 
         return UtilItemStack.areItemDamageEqualOrDamageable(filter, itemstack) || UtilItemStack.haveSameOD(filter, itemstack);
+    }
+
+    static Predicate<ItemStack> getFilterPredicate(ItemStack filter) {
+        if (filter.isEmpty()) {
+            return ItemStack::isEmpty;
+        }
+
+        if (IFilter.isFilter(filter)) {
+            return stack -> IFilter.match(filter, stack);
+        }
+
+        return stack -> UtilItemStack.areTypeEqual(filter, stack);
     }
 }

@@ -1,8 +1,8 @@
 package mods.clayium.machine.ClayChemicalReactor;
 
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IRecipeProvider;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
@@ -85,7 +85,7 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
 
     @Override
     public boolean setNewRecipe() {
-        this.doingRecipe = IRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(ChemicalReactorSlots.MATERIAL_1), this.getStackInSlot(ChemicalReactorSlots.MATERIAL_2));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = this.doingRecipe.getEnergy();

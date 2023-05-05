@@ -9,3 +9,5 @@
 /.idea/
 Clayium.srctrldb
 Clayium.srctrlbm
+/run_client/
+/run_server/

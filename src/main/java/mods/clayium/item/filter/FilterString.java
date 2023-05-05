@@ -18,7 +18,7 @@ public abstract class FilterString extends FilterTemp {
     }
 
     @Override
-    public boolean filterMatch(NBTTagCompound filterTag, ItemStack input) {
+    public boolean test(NBTTagCompound filterTag, ItemStack input) {
         return filterTag != null && this.filterStringMatch(filterTag.getString("FilterString"), input);
     }
 

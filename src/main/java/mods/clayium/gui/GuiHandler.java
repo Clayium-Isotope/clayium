@@ -7,6 +7,8 @@ import mods.clayium.item.gadget.ContainerGadgetAutoEat;
 import mods.clayium.item.gadget.ContainerGadgetHolder;
 import mods.clayium.machine.AutoClayCondenser.ContainerAutoClayCondenser;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
+import mods.clayium.machine.AutoCrafter.ContainerAutoCrafter;
+import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
 import mods.clayium.machine.ChemicalMetalSeparator.ContainerChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
@@ -89,6 +91,8 @@ public class GuiHandler implements IGuiHandler {
                 return null;
             case GuiIdClayDistributor:
                 return new ContainerClayDistributor(player.inventory, (TileEntityClayDistributor) tile);
+            case GuiIdAutoCrafter:
+                return new ContainerAutoCrafter(player.inventory, (TileEntityAutoCrafter) tile);
         }
 
         return null;
@@ -137,6 +141,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiClayBlastFurnace(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayBlastFurnace) tile));
             case GuiIdClayDistributor:
                 return new GuiTemp(new ContainerClayDistributor(player.inventory, (TileEntityClayDistributor) tile));
+            case GuiIdAutoCrafter:
+                return new GuiTemp(new ContainerAutoCrafter(player.inventory, (TileEntityAutoCrafter) tile));
         }
 
         return null;

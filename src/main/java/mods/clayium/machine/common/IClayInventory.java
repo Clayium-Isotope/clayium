@@ -34,7 +34,7 @@ public interface IClayInventory extends ISidedInventory {
 
     static boolean isItemValidForSlot(IClayInventory inv, int index, ItemStack stack) {
         if (inv instanceof IClayEnergyConsumer) {
-            IClayEnergyConsumer.isItemValidForSlot((IClayEnergyConsumer) inv, index, stack);
+            return IClayEnergyConsumer.isItemValidForSlot((IClayEnergyConsumer) inv, index, stack);
         }
 
         for (int[] slots : inv.getListSlotsImport()) {

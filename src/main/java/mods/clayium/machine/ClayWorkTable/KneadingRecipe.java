@@ -86,8 +86,8 @@ public class KneadingRecipe extends RecipeElement {
     }
 
     @Override
-    public boolean matches(InventoryCrafting _inv, World worldIn) {
-        return true;
+    public boolean matches(InventoryCrafting inv, World worldIn) {
+        return false;
     }
 
     private final NonNullList<Ingredient> materialIng;

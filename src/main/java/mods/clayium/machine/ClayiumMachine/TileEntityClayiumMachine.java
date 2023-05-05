@@ -3,9 +3,10 @@ package mods.clayium.machine.ClayiumMachine;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.IExternalControl;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IRecipeProvider;
+import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, IRecipeProvider<RecipeElement>, IExternalControl {
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement>, IExternalControl {
     protected enum MachineSlots {
         MATERIAL,
         PRODUCT,
@@ -119,7 +120,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     @Override
     public void doWorkOnce() {
-        IRecipeProvider.update(this);
+        RecipeProvider.update(this);
     }
 
     @Override

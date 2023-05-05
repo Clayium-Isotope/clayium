@@ -2,8 +2,9 @@ package mods.clayium.machine.ClayWorkTable;
 
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IButtonProvider;
-import mods.clayium.machine.common.IRecipeProvider;
+import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.util.UtilItemStack;
@@ -15,7 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider, IRecipeProvider<KneadingRecipe> {
+public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider, ClayiumRecipeProvider<KneadingRecipe> {
     private static final int[] slotsTop = new int[] { ClayWorkTableSlots.TOOL.ordinal() };
     private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
     private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(), ClayWorkTableSlots.CHANGE.ordinal() };
@@ -77,7 +78,7 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
         if (!this.world.isRemote) {
             currentMethod = KneadingMethod.fromId(button);
 
-            IRecipeProvider.update(this);
+            RecipeProvider.update(this);
         }
     }
 

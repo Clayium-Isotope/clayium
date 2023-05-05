@@ -1,5 +1,6 @@
 package mods.clayium.util;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -89,18 +90,91 @@ public class UtilCollect {
         }
     }
 
-    public static <E> List<E> slice(List<E> inv, int start, int end) {
+    public static <E> List<E> sliceList(List<E> inv, int start, int end) {
         if (start < 0 || start >= end) {
             throw new IndexOutOfBoundsException("Invalid range: [" + start + ", " + end + ")");
         }
 
-        end = Math.min(end, inv.size());
+        return new SliceList<>(inv, start, Math.min(end, inv.size()) - start);
+    }
 
-        List<E> result = new ArrayList<>(end - start);
-        for (int i = start; i < end; i++) {
-            result.add(inv.get(i));
+    private static class SliceList<E> extends AbstractList<E> {
+        private final List<E> refer;
+        private final int asZero;
+        private final int size;
+
+        SliceList(List<E> refer, int asZero, int size) {
+            this.refer = refer;
+            this.asZero = asZero;
+            this.size = size;
         }
-        return result;
+
+        @Override
+        public E get(int index) {
+            return refer.get(index + asZero);
+        }
+
+        @Override
+        public E set(int index, E element) {
+            return refer.set(index + asZero, element);
+        }
+
+        @Override
+        public int size() {
+            return size;
+        }
+    }
+
+    @Deprecated // use: TileEntityGeneric#getContainerItemStacks()
+    public static List<ItemStack> sliceInventory(IInventory inv) {
+        return sliceInventory(inv, 0, inv.getSizeInventory());
+    }
+
+    public static List<ItemStack> sliceInventory(IInventory inv, int start, int end) {
+        if (start < 0 || start >= end) {
+            throw new IndexOutOfBoundsException("Invalid range: [" + start + ", " + end + ")");
+        }
+
+        return new SliceInventory(inv, start, Math.min(end, inv.getSizeInventory()) - start);
+    }
+
+    private static class SliceInventory extends AbstractList<ItemStack> {
+        private final IInventory refer;
+        private final int asZero;
+        private final int size;
+
+        SliceInventory(IInventory refer, int asZero, int size) {
+            this.refer = refer;
+            this.asZero = asZero;
+            this.size = size;
+        }
+
+        @Override
+        public ItemStack get(int index) {
+            rangeCheck(index);
+
+            return refer.getStackInSlot(index + asZero);
+        }
+
+        @Override
+        public ItemStack set(int index, ItemStack element) {
+            rangeCheck(index);
+
+            ItemStack old = get(index);
+            refer.setInventorySlotContents(index + asZero, element);
+            return old;
+        }
+
+        @Override
+        public int size() {
+            return size;
+        }
+
+        private void rangeCheck(int index) {
+            if (index < 0 || index >= size || index + asZero >= refer.getSizeInventory()) {
+                throw new IndexOutOfBoundsException("Invalid index: " + index);
+            }
+        }
     }
 
     public static List<Integer> makeZeros(int length) {

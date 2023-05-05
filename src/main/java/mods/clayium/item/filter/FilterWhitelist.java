@@ -27,7 +27,7 @@ public class FilterWhitelist extends FilterTemp {
     }
 
     @Override
-    public boolean filterMatch(NBTTagCompound filterTag, ItemStack input) {
+    public boolean test(NBTTagCompound filterTag, ItemStack input) {
         for (ItemStack stack : UtilItemStack.getItemsFromTag(filterTag)) {
             if (IFilter.isFilter(stack) && IFilter.match(stack, input)
                     || IFilter.matchBetweenItemstacks(stack, input, this.fuzzy))

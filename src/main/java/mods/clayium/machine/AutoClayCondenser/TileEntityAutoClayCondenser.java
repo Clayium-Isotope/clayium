@@ -3,8 +3,7 @@ package mods.clayium.machine.AutoClayCondenser;
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
-import mods.clayium.machine.common.IRecipeProvider;
-import mods.clayium.util.UtilCollect;
+import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -81,7 +80,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
         // + 1 for minecraft:clay
         int[] arr = new int[ClayiumBlocks.compressedClay.size() + 1];
 
-        for (ItemStack stack : UtilCollect.slice(this.containerItemStacks, 0, 20)) {
+        for (ItemStack stack : this.getContainerItemStacks()) {
             if (IClayEnergy.getTier(stack) == -1) continue;
 
             arr[IClayEnergy.getTier(stack)] += stack.getCount();
@@ -112,11 +111,11 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
         this.doTransfer();
         if (this.isStable) return;
 
-        IRecipeProvider.update(this);
+        RecipeProvider.update(this);
         this.sortInventory();
 
         long energy = 0;
-        for (ItemStack stack : UtilCollect.slice(this.containerItemStacks, 0, 20)) {
+        for (ItemStack stack : this.getContainerItemStacks()) {
             if (stack.getItem() instanceof IClayEnergy) {
                 energy += ((IClayEnergy) stack.getItem()).getClayEnergy() * stack.getCount();
             }

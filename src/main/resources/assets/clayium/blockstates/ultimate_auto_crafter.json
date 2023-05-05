@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "clayium:machine_hull_8"
+      }
+    },
+    {
+      "apply": {
+        "model": "clayium:machine/auto_crafter"
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ public class FilterBlacklist extends FilterWhitelist {
     }
 
     @Override
-    public boolean filterMatch(NBTTagCompound filterTag, ItemStack input) {
-        return !super.filterMatch(filterTag, input);
+    public boolean test(NBTTagCompound filterTag, ItemStack input) {
+        return !super.test(filterTag, input);
     }
 }

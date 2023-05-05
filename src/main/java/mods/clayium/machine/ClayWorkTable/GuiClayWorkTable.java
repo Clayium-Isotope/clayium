@@ -3,8 +3,8 @@ package mods.clayium.machine.ClayWorkTable;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IButtonProvider;
-import mods.clayium.machine.common.IRecipeProvider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,7 +48,7 @@ public class GuiClayWorkTable extends GuiTemp {
 
     @SideOnly(Side.CLIENT)
     public int getCookProgressScaled(int pixels) {
-        assert this.tile instanceof IRecipeProvider;
+        assert this.tile instanceof ClayiumRecipeProvider;
 
         if (this.tile.getField(0) == 0 || this.tile.getField(0) == this.tile.getField(1)) {
             return 0;

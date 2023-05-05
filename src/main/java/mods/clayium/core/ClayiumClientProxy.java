@@ -9,6 +9,7 @@ import mods.clayium.client.render.TESRLaserReflector;
 import mods.clayium.entity.EntityClayBall;
 import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
+import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBlastFurnace.TileEntityClayBlastFurnace;
@@ -142,6 +143,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityCreativeEnergySource.class, "clayium:creative_energy", TESRClayContainer.instance);
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 		ClientRegistry.registerTileEntity(TileEntityClayDistributor.class, "clayium:distributor", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityAutoCrafter.class, "clayium:auto_crafter", TESRClayContainer.instance);
 	}
 
 	/**

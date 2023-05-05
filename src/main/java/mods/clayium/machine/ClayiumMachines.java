@@ -3,6 +3,7 @@ package mods.clayium.machine;
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
+import mods.clayium.machine.AutoCrafter.AutoCrafter;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
@@ -113,8 +114,8 @@ public class ClayiumMachines {
 
         addContainers(EnumMachineKind.distributor, new int[]{ 7, 8, 9 }, ClayDistributor.class);
 
-//        add(EnumMachineKind.autoCrafter, new int[]{ 5, 6, 7, 8, 9 }, ClayAutoCrafter.class);
-//
+        addContainers(EnumMachineKind.autoCrafter, new int[]{ 5, 6, 7, 8, 9 }, AutoCrafter.class);
+
 //        add(EnumMachineKind.clayReactor, 7, new ClayReactor());
 //        clayReactor = get(EnumMachineKind.clayReactor, TierPrefix.claySteel);
 //

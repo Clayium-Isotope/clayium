@@ -94,6 +94,9 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
     @Override
     public boolean matches(InventoryCrafting inv, World worldIn) {
+        // TODO: Temporary forcing.
+        if (inv instanceof InventoryCrafting) return false;
+
         return runner(this.materials,
                 ObfuscationReflectionHelper.getPrivateValue(InventoryCrafting.class, inv, "field_70466_a"), // stackList
                 0, new LinkedList<>());

@@ -9,7 +9,7 @@ public class FilterDuplicator extends FilterTemp {
     }
 
     @Override
-    public boolean filterMatch(NBTTagCompound filterTag, ItemStack input) {
+    public boolean test(NBTTagCompound filterTag, ItemStack input) {
         return false;
     }
 

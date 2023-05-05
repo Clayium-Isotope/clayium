@@ -7,8 +7,8 @@ import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.machine.MultiblockMachine.BlockStateMultiblockMachine;
 import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IRecipeProvider;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.UtilTransfer;
@@ -167,7 +167,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     public boolean setNewRecipe() {
         if (!BlockStateMultiblockMachine.isConstructed(this)) return false;
 
-        this.doingRecipe = IRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);

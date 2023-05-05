@@ -182,6 +182,8 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
 
     @Override
     public void readMoreFromNBT(NBTTagCompound tagCompound) {
+        super.readMoreFromNBT(tagCompound);
+
         this.lastReachedSide = tagCompound.getShort("StartSide");
         this.sectorPutInto = tagCompound.getShort("AutoInsertColony");
         this.sectorPopFrom = tagCompound.getShort("AutoExtractColony");
@@ -194,6 +196,8 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
 
     @Override
     public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
+        super.writeMoreToNBT(tagCompound);
+
         tagCompound.setShort("StartSide", (short)this.lastReachedSide);
         tagCompound.setShort("AutoInsertColony", (short)this.sectorPutInto);
         tagCompound.setShort("AutoExtractColony", (short)this.sectorPopFrom);

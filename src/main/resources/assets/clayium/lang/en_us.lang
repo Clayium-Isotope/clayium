@@ -302,6 +302,12 @@ tooltip.distributor.line1=Distributes items that pass through itself equally.
 
 tile.opa_creative_energy.name=Creative CE Source
 
+tile.advanced_auto_crafter.name=Auto Crafter
+tile.precision_auto_crafter.name=Precision Auto Crafter
+tile.clay_steel_auto_crafter.name=Clay Steel Auto Crafter
+tile.clayium_auto_crafter.name=Clayium Auto Crafter
+tile.ultimate_auto_crafter.name=Ultimate Auto Crafter
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=Raw Clay Rolling Pin

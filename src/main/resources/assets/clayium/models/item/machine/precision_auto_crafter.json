@@ -1,0 +1,6 @@
+{
+  "parent": "clayium:block/machine/auto_crafter_temp",
+  "textures": {
+    "hull": "clayium:blocks/machinehull-5"
+  }
+}

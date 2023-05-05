@@ -3,7 +3,6 @@ package mods.clayium.machine.common;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.util.UsedFor;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -13,11 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @UsedFor(UsedFor.Type.TileEntity)
-public interface IRecipeProvider<T extends IRecipeElement> {
-    int getRecipeTier();
-
-    boolean isDoingWork();
-
+public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider<T> {
     ClayiumRecipe getRecipeCard();
     T getFlat();
     default T getRecipe(Predicate<T> pred) {
@@ -50,7 +45,7 @@ public interface IRecipeProvider<T extends IRecipeElement> {
     boolean canCraft(T recipe);
 
     @Nullable
-    static <T extends IRecipeElement> int[] getCraftPermutation(IRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+    static <T extends IRecipeElement> int[] getCraftPermutation(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
         if (provider.canCraft(Arrays.asList(mat1, mat2)))
             return new int[]{ 0, 1 };
 
@@ -66,7 +61,7 @@ public interface IRecipeProvider<T extends IRecipeElement> {
         return null;
     }
 
-    static <T extends IRecipeElement> List<ItemStack> getCraftPermStacks(IRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+    static <T extends IRecipeElement> List<ItemStack> getCraftPermStacks(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
         List<ItemStack> materials;
 
         materials = Arrays.asList(mat1, mat2);
@@ -86,7 +81,7 @@ public interface IRecipeProvider<T extends IRecipeElement> {
         return Collections.emptyList();
     }
 
-    static <T extends IRecipeElement> T getCraftPermRecipe(IRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+    static <T extends IRecipeElement> T getCraftPermRecipe(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
         T recipe;
 
         recipe = provider.getRecipe(Arrays.asList(mat1, mat2));
@@ -107,76 +102,4 @@ public interface IRecipeProvider<T extends IRecipeElement> {
 
         return provider.getFlat();
     }
-
-    static <T extends IRecipeElement> void update(IRecipeProvider<T> provider) {
-        if (provider.isDoingWork()) {
-            if (!provider.canProceedCraft()) return;
-
-            provider.proceedCraft();
-        } else {
-            provider.setNewRecipe();
-        }
-
-        // probably edited its inventory
-        if (provider instanceof IInventory) {
-            ((IInventory) provider).markDirty();
-        }
-    }
-
-    /**
-     * 内部を変更しないこと。
-     * <pre>{@code
-     * return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
-     * }</pre>
-     */
-    boolean canProceedCraft();
-
-    /**
-     * <ul>
-     *     <li>粘土エネルギー消費
-     *          <pre>{@code
-     *          if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
-     *              return;
-     *          }
-     *          }</pre>
-     *     </li>
-     *     <li>作業進行
-     *          <pre>{@code
-     *          ++this.craftTime;
-     *          if (this.craftTime < this.timeToCraft) {
-     *              return;
-     *          }
-     *          }</pre>
-     *     </li>
-     *     <li>レシピ終了時の処理
-     *          <pre>{@code
-     *          this.setDoingWork(false);
-     *          }</pre>
-     *     </li>
-     * </ul>
-     */
-    void proceedCraft();
-
-    /**
-     * <ul>
-     *     <li>レシピ検索
-     *          <pre>{@code
-     *          this.doingRecipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
-     *          if (this.doingRecipe.isFlat()) return false;
-     *          }</pre>
-     *     </li>
-     *     <li>実行できるか検証
-     *         <pre>{@code
-     *         if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) {
-     *             this.timeToCraft = 0L;
-     *             this.debtEnergy = 0L;
-     *             this.doingRecipe = this.getFlat();
-     *             return false;
-     *         }
-     *         }</pre>
-     *     </li>
-     * </ul>
-     * @return レシピが設定されたならtrue、そうでなければfalse
-     */
-    boolean setNewRecipe();
 }

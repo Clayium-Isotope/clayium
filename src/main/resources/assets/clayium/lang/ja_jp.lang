@@ -302,6 +302,12 @@ tooltip.distributor.line1=内部のアイテムを出来るだけ均等に分配
 
 tile.opa_creative_energy.name=クリエイティブ用粘土エネルギー源
 
+tile.advanced_auto_crafter.name=自動クラフト装置
+tile.precision_auto_crafter.name=精密自動クラフト装置
+tile.clay_steel_auto_crafter.name=粘土鋼自動クラフト装置
+tile.clayium_auto_crafter.name=クレイウム自動クラフト装置
+tile.ultimate_auto_crafter.name=究極自動クラフト装置
+
 # Item Part
 
 item.raw_clay_rolling_pin.name=生の粘土めん棒
