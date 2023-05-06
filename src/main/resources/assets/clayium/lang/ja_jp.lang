@@ -295,6 +295,18 @@ tile.clay_steel_electrolysis_reactor.name=粘土鋼電気精錬機
 tile.clayium_electrolysis_reactor.name=クレイウム電気精錬機
 tile.ultimate_electrolysis_reactor.name=究極電気精錬機
 
+tile.clay_steel_reactor.name=粘土反応炉
+tile.clay_steel_reactor.tooltip.line1=__DETAIL__
+tile.clay_steel_reactor.tooltip.line2=[マルチブロック]
+tile.clay_steel_reactor.tooltip.line3=XXX XXX XXX
+tile.clay_steel_reactor.tooltip.line4=XXX XXX XLX
+tile.clay_steel_reactor.tooltip.line5=XXX XRX XXX
+tile.clay_steel_reactor.tooltip.line6=R: 粘土反応炉ブロック
+tile.clay_steel_reactor.tooltip.line7=L: レーザーインターフェース
+tile.clay_steel_reactor.tooltip.line8=X: マシン筐体か各種インターフェース
+tile.clay_steel_reactor.tooltip.line9=構成要素の Tier により参照されるレシピの Tier が決定される
+tile.clay_steel_reactor.tooltip.line10=レーザーのエネルギー値によりクラフト時間が短縮される
+
 tile.clay_steel_distributor.name=分配機
 tile.clayium_distributor.name=クレイウム分配機
 tile.ultimate_distributor.name=究極分配機

@@ -15,7 +15,6 @@ import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSepara
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBlastFurnace.GuiClayBlastFurnace;
-import mods.clayium.machine.ClayBlastFurnace.TileEntityClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ContainerClayCentrifuge;
 import mods.clayium.machine.ClayCentrifuge.TileEntityClayCentrifuge;
@@ -34,6 +33,7 @@ import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.MultitrackBuffer.ContainerMultitrackBuffer;
 import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.common.ContainerNormalInventory;
@@ -70,7 +70,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile);
             case GuiIdClayChemicalReactor:
             case GuiIdClayBlastFurnace:
-                return new ContainerClayChemicalReactor(player.inventory, (TileEntityClayBlastFurnace) tile);
+            case GuiIdClayReactor:
+                return new ContainerClayChemicalReactor(player.inventory, (TileEntityMultiblockMachine) tile);
             case GuiIdMultitrackBuffer:
                 return new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile);
             case GuiIdItemFilterWhitelist:
@@ -138,7 +139,8 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdClayInterface:
                 return null;
             case GuiIdClayBlastFurnace:
-                return new GuiClayBlastFurnace(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayBlastFurnace) tile));
+            case GuiIdClayReactor:
+                return new GuiClayBlastFurnace(new ContainerClayChemicalReactor(player.inventory, (TileEntityMultiblockMachine) tile));
             case GuiIdClayDistributor:
                 return new GuiTemp(new ContainerClayDistributor(player.inventory, (TileEntityClayDistributor) tile));
             case GuiIdAutoCrafter:

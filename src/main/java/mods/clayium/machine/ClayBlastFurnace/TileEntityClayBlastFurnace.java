@@ -4,7 +4,9 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.MachineHull;
 import mods.clayium.block.Overclocker;
 import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.machine.Interface.RedstoneInterface.TileEntityRedstoneInterface;
 import mods.clayium.machine.MultiblockMachine.BlockStateMultiblockMachine;
 import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -16,12 +18,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
 
 public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine implements IClayEnergyConsumer {
     private static final int resultSlotNum = 2;
@@ -87,7 +86,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
             sum += Math.pow(2, 16 - tier);
         }
 
-        this.recipeTier = Math.max((int)(16.0D - Math.floor(Math.log(sum / 18) / Math.log(2.0D) + 0.5D)), 0);
+        this.recipeTier = Math.max((int)(16.0D - Math.floor(Math.log(sum / 17) / Math.log(2.0D) + 0.5D)), 0);
         return flag;
     }
 
@@ -106,27 +105,8 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
             if (relative.getX() == 0 && relative.getY() == 0 && relative.getZ() == 0) continue;
 
             TileEntity te = this.getTileEntity(relative);
-            if (te instanceof ISynchronizedInterface) {
+            if (te instanceof TileEntityClayInterface || te instanceof TileEntityRedstoneInterface) {
                 SyncManager.immediateSync(this, (ISynchronizedInterface) te);
-            }
-        }
-
-        this.markDirty();
-    }
-
-    @Override
-    protected void onDestruction() {
-//        this.setRenderSyncFlag();
-        this.craftTime = 0L;
-        BlockStateMultiblockMachine.setConstructed(this, false);
-
-        // de-sync the interface around the blast furnace.
-        for (BlockPos relative : BlockPos.getAllInBox(-1, 0, 0, 1, 1, 2)) {
-            if (relative.getX() == 0 && relative.getY() == 0 && relative.getZ() == 0) continue;
-
-            TileEntity te = this.getTileEntity(relative);
-            if (te instanceof ISynchronizedInterface) {
-                SyncManager.immediateSync(null, (ISynchronizedInterface) te);
             }
         }
 
@@ -143,13 +123,13 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         }
 
         if (block instanceof Overclocker) {
-            return ClayiumBlocks.overclocker.getTier(this.getBlock(vector)).ordinal();
+            return ClayiumBlocks.overclocker.getTier(block).ordinal();
         }
 
         TileEntity te = this.getTileEntity(vector);
         if (te == null) return -1;
 
-        if (te instanceof ISynchronizedInterface) {
+        if (te instanceof TileEntityClayInterface || te instanceof TileEntityRedstoneInterface) {
             return ((ISynchronizedInterface) te).getHullTier();
         }
 
@@ -219,12 +199,6 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     @Override
     public int getHullTier() {
         return 6;
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getFaceResource() {
-        return null;
     }
 
     @SideOnly(Side.CLIENT)

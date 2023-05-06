@@ -2,13 +2,18 @@ package mods.clayium.machine.MultiblockMachine;
 
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.EnumSide;
+import mods.clayium.util.SyncManager;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nullable;
 
 public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachine {
     private int constructionCounter = 0;
@@ -21,7 +26,23 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
 
     protected abstract void onConstruction();
 
-    protected abstract void onDestruction();
+    protected void onDestruction() {
+//        this.setRenderSyncFlag();
+        this.craftTime = 0L;
+        BlockStateMultiblockMachine.setConstructed(this, false);
+
+        // de-sync the interface around the blast furnace.
+        for (BlockPos relative : BlockPos.getAllInBox(-1, 0, 0, 1, 1, 2)) {
+            if (relative.equals(BlockPos.ORIGIN)) continue;
+
+            TileEntity te = this.getTileEntity(relative);
+            if (te instanceof ISynchronizedInterface) {
+                SyncManager.immediateSync(null, (ISynchronizedInterface) te);
+            }
+        }
+
+        this.markDirty();
+    }
 
     public boolean canProceedCraftWhenConstructed() {
         return super.canProceedCraft();
@@ -95,5 +116,11 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
         }
 
         BlockStateMultiblockMachine.setConstructed(this, newConstructed);
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getFaceResource() {
+        return null;
     }
 }

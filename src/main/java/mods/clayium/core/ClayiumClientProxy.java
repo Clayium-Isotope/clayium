@@ -19,6 +19,7 @@ import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayDistributor.TileEntityClayDistributor;
 import mods.clayium.machine.ClayEnergyLaser.TileEntityClayEnergyLaser;
 import mods.clayium.machine.ClayFabricator.TileEntityClayFabricator;
+import mods.clayium.machine.ClayReactor.TileEntityClayReactor;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
@@ -145,6 +146,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityClayDistributor.class, "clayium:distributor", TESRClayContainer.instance);
 		ClientRegistry.registerTileEntity(TileEntityAutoCrafter.class, "clayium:auto_crafter", TESRClayContainer.instance);
 //		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, new ResourceLocation(ClayiumCore.ModId, "auto_crafter"));
+		ClientRegistry.registerTileEntity(TileEntityClayReactor.class, "clayium:reactor", TESRClayContainer.instance);
 	}
 
 	/**

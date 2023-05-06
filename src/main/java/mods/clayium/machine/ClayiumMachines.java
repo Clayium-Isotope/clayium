@@ -16,6 +16,7 @@ import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayDistributor.ClayDistributor;
 import mods.clayium.machine.ClayEnergyLaser.ClayEnergyLaser;
 import mods.clayium.machine.ClayFabricator.ClayFabricator;
+import mods.clayium.machine.ClayReactor.ClayReactor;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.CobblestoneGenerator.CobblestoneGenerator;
@@ -116,9 +117,9 @@ public class ClayiumMachines {
 
         addContainers(EnumMachineKind.autoCrafter, new int[]{ 5, 6, 7, 8, 9 }, AutoCrafter.class);
 
-//        add(EnumMachineKind.clayReactor, 7, new ClayReactor());
-//        clayReactor = get(EnumMachineKind.clayReactor, TierPrefix.claySteel);
-//
+        addContainer(EnumMachineKind.clayReactor, 7, new ClayReactor());
+        clayReactor = get(EnumMachineKind.clayReactor, TierPrefix.claySteel);
+
 //        addAssembler(EnumMachineKind.transformer, new int[]{ 7, 8, 9, 10, 11, 12 });
 //
 //        addContainer(EnumMachineKind.CACondenser, new int[]{9, 10, 11}, TileCACondenser.class);

@@ -295,6 +295,18 @@ tile.clay_steel_electrolysis_reactor.name=Clay Steel Electrolysis Reactor
 tile.clayium_electrolysis_reactor.name=Clayium Electrolysis Reactor
 tile.ultimate_electrolysis_reactor.name=Ultimate Electrolysis Reactor
 
+tile.clay_steel_reactor.name=Clay Reactor
+tile.clay_steel_reactor.tooltip.line1=__DETAIL__
+tile.clay_steel_reactor.tooltip.line2=[Multiblock]
+tile.clay_steel_reactor.tooltip.line3=XXX XXX XXX
+tile.clay_steel_reactor.tooltip.line4=XXX XXX XLX
+tile.clay_steel_reactor.tooltip.line5=XXX XRX XXX
+tile.clay_steel_reactor.tooltip.line6=R: Clay Reactor Block
+tile.clay_steel_reactor.tooltip.line7=L: Laser Interface
+tile.clay_steel_reactor.tooltip.line8=X: Machine hulls or Interfaces
+tile.clay_steel_reactor.tooltip.line9=Recipe tier depends on components' tier.
+tile.clay_steel_reactor.tooltip.line10=Time to craft depends on Laser's strength.
+
 tile.clay_steel_distributor.name=Item Distributor
 tile.clayium_distributor.name=Clayium Distributor
 tile.ultimate_distributor.name=Ultimate Distributor
