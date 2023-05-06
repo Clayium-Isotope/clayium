@@ -18,6 +18,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -51,7 +53,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
 
     private long containEnergy;
     private int energyStorageSize = 1;
-    private final List<Predicate<ItemStack>> patternCache = NonNullList.withSize(9, stack -> false);
+    private final List<Predicate<ItemStack>> patternCache = NonNullList.withSize(9, ItemStack::isEmpty);
     private IRecipe doingRecipe;
     private ItemStack doingRecipeResult;
     private int tier;
@@ -116,9 +118,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
                 this.autoExtractInterval = this.autoInsertInterval = 8;
         }
 
-        if (tier > 5) {
-            this.listSlotsImport.add(new int[]{this.getEnergySlot()});
-        } else {
+        if (tier <= 5 && this.getImportRoute(EnumSide.BACK) == -2) {
             this.setImportRoute(EnumSide.BACK, -1);
         }
     }
@@ -167,6 +167,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
             return;
         }
 
+        this.spreadMaterials();
         for (int i = 0; i < this.numAutomation; ++i) {
             RecipeProvider.update(this);
 
@@ -245,9 +246,11 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
         }
 
         boolean successCopy = true;
+        this.craftMatrix.clear();
+
         for (int i = 0; i < 9; i++) {
             ItemStack stack = this.getStackInSlot(i);
-            if (!this.isItemValidForSlot(i, stack) && !stack.isEmpty()) {
+            if (!this.isItemValidForSlot(i, stack)) {
                 successCopy = false;
             }
 
@@ -262,7 +265,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
             return false;
         }
 
-        checkRemaining();
+        this.checkRemaining();
 
         this.doingRecipe = irecipe;
         this.doingRecipeResult = irecipe.getCraftingResult(this.craftMatrix);
@@ -289,8 +292,8 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
 
             if (remaining.isEmpty()) continue;
 
-            if (UtilTransfer.produceItemStack(remaining, UtilCollect.sliceInventory(this, 0, 9), i, this.getInventoryStackLimit()).isEmpty())
-                continue;
+            remaining = UtilTransfer.produceItemStack(remaining, UtilCollect.sliceInventory(this, 0, 9), i, this.getInventoryStackLimit());
+            if (remaining.isEmpty()) continue;
 
             this.getWorld().spawnEntity(new EntityItem(this.world, this.pos.getX(), this.pos.getY() + 0.5f, this.pos.getZ(), remaining));
         }
@@ -310,5 +313,12 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
 
             this.setInventorySlotContents(i, stack);
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIOIcons() {
+        this.registerInsertIcons("import");
+        this.registerExtractIcons("export");
     }
 }

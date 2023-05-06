@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * The value is texture path which TESR base.
  * <p>
  *
- * If want to put <pre>"clayium:textures/blocks/machinehull-0"</pre>, then <pre>"blocks/machinehull-0"</pre>
+ * If you want to put <pre>"clayium:textures/blocks/machinehull-0.png"</pre>, then <pre>"blocks/machinehull-0"</pre>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

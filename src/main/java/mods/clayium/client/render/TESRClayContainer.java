@@ -30,7 +30,7 @@ import java.util.List;
 public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayContainer> {
     public static final TESRClayContainer instance = new TESRClayContainer();
 
-    private static final double offset = 0.02d;
+    private static final double offset = 0.02d / 16.0d;
     private static final PositionTextureVertex ptv0 = new PositionTextureVertex(new Vec3d(0.0d - offset, 0.0d - offset, 0.0d - offset), 0f, 0f);
     private static final PositionTextureVertex ptv1 = new PositionTextureVertex(new Vec3d(0.0d - offset, 0.0d - offset, 1.0d + offset), 0f, 0f);
     private static final PositionTextureVertex ptv2 = new PositionTextureVertex(new Vec3d(0.0d - offset, 1.0d + offset, 0.0d - offset), 0f, 0f);
@@ -79,7 +79,9 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
         GlStateManager.scale(1.0d, -1.0d, -1.0d);
 
         if (!BlockStateClayContainer.renderAsPipe(te)) {
-            modelCC.renderBlocked();
+            if (!te.getBlockType().getClass().isAnnotationPresent(HasOriginalState.class)) {
+                modelCC.renderBlocked();
+            }
 
             ResourceLocation face = te.getFaceResource();
             if (face != null) {

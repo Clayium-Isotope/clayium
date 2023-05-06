@@ -144,6 +144,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		GameRegistry.registerTileEntity(TileEntityQuartzCrucible.class, new ResourceLocation(ClayiumCore.ModId, "quartz_crucible"));
 		ClientRegistry.registerTileEntity(TileEntityClayDistributor.class, "clayium:distributor", TESRClayContainer.instance);
 		ClientRegistry.registerTileEntity(TileEntityAutoCrafter.class, "clayium:auto_crafter", TESRClayContainer.instance);
+//		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, new ResourceLocation(ClayiumCore.ModId, "auto_crafter"));
 	}
 
 	/**
