@@ -1,11 +1,17 @@
 {
   "multipart": [
     {
+      "when": {
+        "is_pipe": false
+      },
       "apply": {
         "model": "clayium:machine_hull_8"
       }
     },
     {
+      "when": {
+        "is_pipe": false
+      },
       "apply": {
         "model": "clayium:machine/auto_crafter"
       }

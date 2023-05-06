@@ -15,6 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.List;
@@ -81,6 +82,9 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         this.readFromNBT(pkt.getNbtCompound());
+
+        // A bit later loading.
+        onLoad();
     }
 
     public void markDirty() {
@@ -230,5 +234,10 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     @Override
     public ITextComponent getDisplayName() {
         return hasCustomName() ? new TextComponentString(getName()) : new TextComponentTranslation(getName());
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return false;
     }
 }

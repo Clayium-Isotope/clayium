@@ -3,15 +3,22 @@ package mods.clayium.machine.CreativeEnergySource;
 import mods.clayium.client.render.CustomHull;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
-import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 
 @CustomHull("blocks/machine/creativeenergy")
 public class TileEntityCreativeEnergySource extends TileEntityClayBuffer {
     public static final ItemStack oec = IClayEnergy.getCompressedClay(13, 64);
 
     public TileEntityCreativeEnergySource() {
+    }
+
+    @Override
+    public void initParams() {
+        this.containerItemStacks = NonNullList.withSize(1, getEnergeticClay());
+
+        this.setExportRoutes(-1, -1, -1, 0, -1, -1);
     }
 
     public void initParamsByTier(int tier) {
@@ -32,7 +39,7 @@ public class TileEntityCreativeEnergySource extends TileEntityClayBuffer {
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        return UtilItemStack.areStackEqual(getEnergeticClay(), itemstack);
+        return itemstack.getItem() instanceof IClayEnergy;
     }
 
     @Override
@@ -48,5 +55,10 @@ public class TileEntityCreativeEnergySource extends TileEntityClayBuffer {
 
     public ItemStack getStackInSlot(int slot) {
         return getEnergeticClay().copy();
+    }
+
+    @Override
+    public void registerIOIcons() {
+        this.registerExtractIcons("export");
     }
 }

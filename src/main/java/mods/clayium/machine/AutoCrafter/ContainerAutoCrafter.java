@@ -1,9 +1,7 @@
 package mods.clayium.machine.AutoCrafter;
 
-import mods.clayium.gui.ContainerTemp;
-import mods.clayium.gui.RectangleTexture;
-import mods.clayium.gui.SlotMemory;
-import mods.clayium.gui.SlotWithTexture;
+import mods.clayium.gui.*;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -13,8 +11,6 @@ public class ContainerAutoCrafter extends ContainerTemp {
     }
 
     public void setMachineInventorySlots(InventoryPlayer player) {
-        TileEntityAutoCrafter tile = (TileEntityAutoCrafter) this.tileEntity;
-
         int j;
         int i;
         for(j = 0; j < 3; ++j) {
@@ -27,7 +23,7 @@ public class ContainerAutoCrafter extends ContainerTemp {
 
         for(j = 0; j < 3; ++j) {
             for(i = 0; i < 3; ++i) {
-                this.addMachineSlotToContainer(new SlotMemory(tile, i + j * 3 + 15, i * 18 + 5, j * 18 + 18, RectangleTexture.SmallSlotFilterTexture));
+                this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, i + j * 3 + 15, i * 18 + 5, j * 18 + 18, RectangleTexture.SmallSlotFilterTexture));
             }
         }
 
@@ -37,6 +33,9 @@ public class ContainerAutoCrafter extends ContainerTemp {
             }
         }
 
+        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity)) {
+            this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, this.machineGuiSizeY));
+        }
     }
 
     protected void initParameters(InventoryPlayer player) {

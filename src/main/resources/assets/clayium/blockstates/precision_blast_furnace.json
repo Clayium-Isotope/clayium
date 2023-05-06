@@ -3,6 +3,14 @@
   "multipart": [
     {
       "when": {
+        "is_pipe": false
+      },
+      "apply": {
+        "model": "clayium:machine_hull_5"
+      }
+    },
+    {
+      "when": {
         "is_pipe": false,
         "is_constructed": false,
         "facing": "north"
