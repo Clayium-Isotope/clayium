@@ -20,6 +20,7 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
     protected int constructionTime = 20;
 
     public TileEntityMultiblockMachine() {
+        this.isLoaded = false;
     }
 
     public abstract boolean isConstructed();
@@ -50,6 +51,11 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
 
     @Override
     public void update() {
+        if (!this.isLoaded && this.isConstructed()) {
+            this.onConstruction();
+            this.isLoaded = true;
+        }
+
         ++this.constructionCounter;
         if (this.constructionCounter >= this.constructionTime) {
             this.verifyConstruction();

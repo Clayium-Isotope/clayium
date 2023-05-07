@@ -4,7 +4,6 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.MachineHull;
 import mods.clayium.block.Overclocker;
 import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
 import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
@@ -198,7 +197,6 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
         if (this.world.isRemote) return false;
 
         this.irradiatedLaser = laser;
-        ClayiumCore.logger.info(this.irradiatedLaser.getEnergy());
 //        this.setSyncFlag();
         return true;
     }

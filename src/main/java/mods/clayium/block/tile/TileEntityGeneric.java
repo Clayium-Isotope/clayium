@@ -82,9 +82,6 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
         this.readFromNBT(pkt.getNbtCompound());
-
-        // A bit later loading.
-        onLoad();
     }
 
     public void markDirty() {

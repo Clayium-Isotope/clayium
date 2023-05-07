@@ -1,7 +1,6 @@
 package mods.clayium.machine.Interface.ClayLaserInterface;
 
 import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
@@ -37,8 +36,6 @@ public class TileEntityClayLaserInterface extends TileEntityGeneric implements I
     public void setCoreBlock(@Nullable IInterfaceCaptive tile) {
         if (tile == null) tile = IInterfaceCaptive.NONE;
 
-        ClayiumCore.logger.info("Setting " + tile + " as core");
-
         this.core = tile;
         this.synced = IInterfaceCaptive.isSyncable(tile);
         this.initParamsByTier(this.tier);
@@ -62,18 +59,6 @@ public class TileEntityClayLaserInterface extends TileEntityGeneric implements I
 
     public boolean isSyncEnabled() {
         return this.enableSync;
-    }
-
-    @Override
-    public void onLoad() {
-        if (this.syncSource != null) {
-            TileEntity tile = SyncManager.getTileFromIntArray(this.syncSource);
-            if (tile instanceof IInterfaceCaptive) {
-                SyncManager.synchronize((IInterfaceCaptive) tile, this);
-                this.markDirty();
-            }
-            this.syncSource = null;
-        }
     }
 
     @Override
