@@ -1,5 +1,6 @@
 package mods.clayium.machine.ClayEnergyLaser;
 
+import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
@@ -18,6 +19,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@HasOriginalState
 public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
     public ClayEnergyLaser(int tier) {
         super(TileEntityClayEnergyLaser.class, EnumMachineKind.clayEnergyLaser, GuiHandler.GuiIdClayEnergyLaser, tier);

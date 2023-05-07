@@ -1,3 +1,7 @@
 {
-  "parent": "clayium:block/machine/pure_antimatter_clay_interface"
+  "parent": "clayium:block/cube_overlayed",
+  "textures": {
+    "face": "clayium:blocks/machine/interface",
+    "hull": "clayium:blocks/machinehull-10"
+  }
 }

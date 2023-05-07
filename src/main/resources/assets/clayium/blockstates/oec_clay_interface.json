@@ -2,7 +2,12 @@
   "multipart": [
     {
       "apply": {
-        "model": "clayium:machine/oec_clay_interface"
+        "model": "clayium:machine_hull_11"
+      }
+    },
+    {
+      "apply": {
+        "model": "clayium:machine/clay_interface"
       }
     }
   ]

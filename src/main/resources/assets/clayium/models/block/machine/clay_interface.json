@@ -1,0 +1,6 @@
+{
+    "parent": "clayium:block/cube_overlay",
+    "textures": {
+        "face": "clayium:blocks/machine/interface"
+    }
+}

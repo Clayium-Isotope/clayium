@@ -1,6 +1,7 @@
 {
-  "parent": "clayium:block/machine/rs_interface_temp",
+  "parent": "clayium:block/cube_overlayed",
   "textures": {
+    "face": "clayium:blocks/machine/redstoneinterface",
     "hull": "clayium:blocks/machinehull-10"
   }
 }

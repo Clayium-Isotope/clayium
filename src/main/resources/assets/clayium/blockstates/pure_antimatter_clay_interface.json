@@ -2,7 +2,12 @@
   "multipart": [
     {
       "apply": {
-        "model": "clayium:machine/pure_antimatter_clay_interface"
+        "model": "clayium:machine_hull_10"
+      }
+    },
+    {
+      "apply": {
+        "model": "clayium:machine/clay_interface"
       }
     }
   ]

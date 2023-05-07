@@ -1,6 +1,7 @@
 {
-  "parent": "clayium:block/machine/laser_interface_temp",
+  "parent": "clayium:block/machine_temp",
   "textures": {
+    "face": "clayium:blocks/machine/laserinterface",
     "hull": "clayium:blocks/machinehull-9"
   }
 }

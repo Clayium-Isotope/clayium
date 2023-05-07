@@ -2,7 +2,12 @@
   "multipart": [
     {
       "apply": {
-        "model": "clayium:machine/clay_steel_clay_interface"
+        "model": "clayium:machine_hull_6"
+      }
+    },
+    {
+      "apply": {
+        "model": "clayium:machine/clay_interface"
       }
     }
   ]

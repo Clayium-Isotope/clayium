@@ -1,9 +1,0 @@
-{
-	"credit": "Made with Blockbench",
-	"parent": "clayium:block/machine_temp",
-	"textures": {
-		"face": "clayium:blocks/machine/laserinterface",
-		"hull": "",
-		"particle": "#hull"
-	}
-}

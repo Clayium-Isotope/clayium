@@ -1,0 +1,72 @@
+{
+    "multipart": [
+        {
+            "when": {
+                "is_pipe": false
+            },
+            "apply": {
+                "model": "clayium:machine_hull_9"
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "facing": "down"
+            },
+            "apply": {
+                "model": "clayium:machine/energy_laser",
+                "x": 90
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "facing": "up"
+            },
+            "apply": {
+                "model": "clayium:machine/energy_laser",
+                "x": -90
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "facing": "north"
+            },
+            "apply": {
+                "model": "clayium:machine/energy_laser",
+                "y": 0
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "facing": "south"
+            },
+            "apply": {
+                "model": "clayium:machine/energy_laser",
+                "y": 180
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "facing": "west"
+            },
+            "apply": {
+                "model": "clayium:machine/energy_laser",
+                "y": -90
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "facing": "east"
+            },
+            "apply": {
+                "model": "clayium:machine/energy_laser",
+                "y": 90
+            }
+        }
+    ]
+}
