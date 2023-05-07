@@ -1,6 +1,6 @@
 package mods.clayium.machine.ClayEnergyLaser;
 
-import mods.clayium.machine.ClayContainer.BlockStateClayDirectionalContainer;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
@@ -90,8 +90,8 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
 
     public void update() {
         super.update();
-        if (this.manager != null) {
-            this.manager.set(this.world, this.pos, this.world.getBlockState(this.pos).getValue(BlockStateClayDirectionalContainer.FACING));
+        if (this.manager != null && this.world.getBlockState(this.pos) instanceof BlockStateClayContainer) {
+            this.manager.set(this.world, this.pos, this.world.getBlockState(this.pos).getValue(BlockStateClayContainer.FACING));
             this.manager.update(this.isPowered() && IClayEnergyConsumer.compensateClayEnergy(this, this.machineConsumingEnergy));
         }
     }
