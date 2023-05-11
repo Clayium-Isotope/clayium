@@ -1,0 +1,5 @@
+{
+    "recipes": {
+        "clayium:add_recipe": "mods.clayium.util.crafting.ClayiumRecipeFactory"
+    }
+}

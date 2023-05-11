@@ -90,7 +90,7 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
 
         this.debtEnergy = this.doingRecipe.getEnergy();
         this.timeToCraft = this.doingRecipe.getTime();
-        this.getStackInSlot(CentrifugeSlots.MATERIAL).shrink(this.doingRecipe.getStackSizes(this.getStackInSlot(CentrifugeSlots.MATERIAL))[0]);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(), CentrifugeSlots.MATERIAL.ordinal());
 
         return true;
     }

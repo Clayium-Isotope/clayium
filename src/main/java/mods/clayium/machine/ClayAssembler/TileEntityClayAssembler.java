@@ -81,7 +81,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 
         this.timeToCraft = this.doingRecipe.getTime();
 
-        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(), AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() + 1);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() + 1);
 
         return true;
     }

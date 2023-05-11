@@ -2,21 +2,19 @@ package mods.clayium.machine.crafting;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
-import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 // https://forums.minecraftforge.net/topic/69258-1122-custom-irecipe/
 public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe, IRecipeElement {
@@ -25,7 +23,7 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
         return FLAT;
     }
 
-    private final List<ItemStack> materials;
+    private final NonNullList<Ingredient> ingredients;
     private final int tier;
     private final List<ItemStack> results;
     private final long energy;
@@ -36,7 +34,11 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
     }
 
     public RecipeElement(List<ItemStack> materialIn, int tier, List<ItemStack> resultIn, long energy, long time) {
-        this.materials = materialIn;
+        this(materialIn.stream().map(Ingredient::fromStacks).collect(Collectors.toCollection(NonNullList::create)), tier, resultIn, energy, time);
+    }
+
+    public RecipeElement(NonNullList<Ingredient> materialIn, int tier, List<ItemStack> resultIn, long energy, long time) {
+        this.ingredients = materialIn;
         this.tier = tier;
         this.results = resultIn;
         this.energy = energy;
@@ -46,11 +48,6 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
     @Override
     public int getTier() {
         return tier;
-    }
-
-    @Override
-    public List<ItemStack> getMaterials() {
-        return materials;
     }
 
     public List<ItemStack> getResults() {
@@ -70,19 +67,24 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
         return this.equals(FLAT);
     }
 
-    private static boolean runner(List<ItemStack> materials, NonNullList<ItemStack> invStacks, int ingIdx, LinkedList<Integer> assigned) {
-        if (ingIdx >= materials.size()) {
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return this.ingredients;
+    }
+
+    private static boolean runner(List<Ingredient> ingredients, NonNullList<ItemStack> invStacks, int ingIdx, LinkedList<Integer> assigned) {
+        if (ingIdx >= ingredients.size()) {
             return true;
         }
 
         for (int i = 0; i < invStacks.size(); i++) {
-            if (!assigned.contains(i) && UtilItemStack.areTypeEqual(materials.get(ingIdx), invStacks.get(i))) {
-                if (ingIdx + 1 >= materials.size()) {
+            if (!assigned.contains(i) && ingredients.get(ingIdx).apply(invStacks.get(i))) {
+                if (ingIdx + 1 >= ingredients.size()) {
                     return true;
                 }
 
                 assigned.add(i);
-                if (runner(materials, invStacks, ingIdx + 1, assigned)) {
+                if (runner(ingredients, invStacks, ingIdx + 1, assigned)) {
                     return true;
                 }
                 assigned.removeLast();
@@ -97,7 +99,7 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
         // TODO: Temporary forcing.
         if (inv instanceof InventoryCrafting) return false;
 
-        return runner(this.materials,
+        return runner(this.getIngredients(),
                 ObfuscationReflectionHelper.getPrivateValue(InventoryCrafting.class, inv, "field_70466_a"), // stackList
                 0, new LinkedList<>());
     }
@@ -129,7 +131,10 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
     @Override
     public void getIngredients(IIngredients iIngredients) {
-        iIngredients.setInputs(VanillaTypes.ITEM, this.materials);
+        iIngredients.setInputLists(VanillaTypes.ITEM,
+                this.getIngredients().stream()
+                        .map(ingredient -> Arrays.stream(ingredient.getMatchingStacks()).collect(Collectors.toList()))
+                        .collect(Collectors.toList()));
 
         iIngredients.setOutputs(VanillaTypes.ITEM, this.results);
     }
@@ -160,7 +165,7 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
         return this.tier == other.tier
                 && this.energy == other.energy
                 && this.time == other.time
-                && this.materials.equals(other.materials)
+                && this.getIngredients().equals(other.getIngredients())
                 && this.results.equals(other.results);
     }
 
@@ -168,9 +173,11 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
     public int hashCode() {
         int hash = Objects.hash(this.tier, this.energy, this.time);
 
-        for (ItemStack stack : this.materials) {
-            if (stack.getItem().getRegistryName() != null)
-                hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+        for (Ingredient ingredient : this.getIngredients()) {
+            for (ItemStack stack : ingredient.getMatchingStacks()) {
+                if (stack.getItem().getRegistryName() != null)
+                    hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+            }
         }
 
         for (ItemStack stack : this.results) {

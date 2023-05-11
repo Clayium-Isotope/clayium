@@ -1,10 +1,9 @@
 package mods.clayium.util;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.EnumMachineKind;
+import net.minecraft.util.JsonUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -100,5 +99,38 @@ public class JsonHelper {
         }
 
         ClayiumCore.logger.info("Generated: " + path);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <N extends Number> N readNumeric(JsonObject json, String key, Class<N> primitive) throws JsonSyntaxException {
+        if (json.has(key)) {
+            JsonElement element = json.get(key);
+            if (!element.isJsonPrimitive()) {
+                throw new JsonSyntaxException("Expected " + key + " to be a Primitive, was " + JsonUtils.toString(element));
+            }
+
+            if (primitive == Integer.class) {
+                return (N) (Integer) element.getAsInt();
+            }
+            if (primitive == Long.class) {
+                return (N) (Long) element.getAsLong();
+            }
+            if (primitive == Short.class) {
+                return (N) (Short) element.getAsShort();
+            }
+            if (primitive == Float.class) {
+                return (N) (Float) element.getAsFloat();
+            }
+            if (primitive == Double.class) {
+                return (N) (Double) element.getAsDouble();
+            }
+            if (primitive == Byte.class) {
+                return (N) (Byte) element.getAsByte();
+            }
+
+            throw new JsonSyntaxException("Unsupported primitive type " + primitive.getName());
+        } else {
+            throw new JsonSyntaxException("Missing " + key + ", expected to find a " + primitive.getName());
+        }
     }
 }

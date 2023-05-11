@@ -1,11 +1,13 @@
 package mods.clayium.util;
 
 import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
+import mods.clayium.util.crafting.AmountedIngredient;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -324,6 +326,46 @@ public class UtilTransfer {
 
         for (ItemStack stack : itemstack) {
             res.add(consumeItemStack(stack, inventory, i, j));
+        }
+
+        return res;
+    }
+
+    public static int consumeByIngredient(Ingredient ingredient, int amount, List<ItemStack> inventory, int index) {
+        if (ingredient.apply(inventory.get(index))) {
+            int n = Math.min(amount, inventory.get(index).getCount());
+            amount -= n;
+            inventory.get(index).shrink(n);
+            if (inventory.get(index).getCount() <= 0) {
+                inventory.set(index, ItemStack.EMPTY);
+            }
+        }
+
+        return amount;
+    }
+
+    public static int consumeByIngredient(Ingredient ingredient, List<ItemStack> inventory, int index) {
+        return consumeByIngredient(ingredient, (ingredient instanceof AmountedIngredient) ? ((AmountedIngredient) ingredient).getAmount() : 1, inventory, index);
+    }
+
+    /**
+     * @return 0 or remaining amount
+     */
+    public static int consumeByIngredient(Ingredient ingredient, List<ItemStack> inventory, int startIncl, int endExcl) {
+        int amount = (ingredient instanceof AmountedIngredient) ? ((AmountedIngredient) ingredient).getAmount() : 1;
+
+        for (int i = startIncl; i < endExcl && amount > 0; ++i) {
+            amount = consumeByIngredient(ingredient, amount, inventory, i);
+        }
+
+        return amount;
+    }
+
+    public static List<Integer> consumeByIngredient(List<Ingredient> ingredients, List<ItemStack> inventory, int startIncl, int endExcl) {
+        List<Integer> res = new ArrayList<>(ingredients.size());
+
+        for (Ingredient ingredient : ingredients) {
+            res.add(consumeByIngredient(ingredient, inventory, startIncl, endExcl));
         }
 
         return res;

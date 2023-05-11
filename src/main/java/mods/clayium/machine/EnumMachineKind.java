@@ -127,6 +127,8 @@ public enum EnumMachineKind {
     public final SlotType slotType;
 
     public static EnumMachineKind fromName(String name) {
+        if (name == null || name.isEmpty()) return EMPTY;
+
         for (EnumMachineKind kind : EnumMachineKind.values()) {
             if (Objects.equals(kind.getRegisterName(), name)) return kind;
         }
@@ -142,20 +144,24 @@ public enum EnumMachineKind {
     }
 
     public static class SlotType {
-        public static final SlotType UNKNOWN = new SlotType(0, 0, 0, 36, ContainerTemp.class);
-        public static final SlotType CLAY_WORK_TABLE = new SlotType(0, 2, 4, 36, ContainerClayWorkTable.class);
-        public static final SlotType MACHINE = new SlotType(0, 1, 3, 36, ContainerClayiumMachine.class);
-        public static final SlotType ASSEMBLER = new SlotType(0, 2, 4, 36, ContainerClayAssembler.class);
+        public static final SlotType UNKNOWN = new SlotType(0, 0, 0, 0, 0, 36, ContainerTemp.class);
+        public static final SlotType CLAY_WORK_TABLE = new SlotType(0, 2, 2, 2, 4, 36, ContainerClayWorkTable.class);
+        public static final SlotType MACHINE = new SlotType(0, 1, 1, 2, 3, 36, ContainerClayiumMachine.class);
+        public static final SlotType ASSEMBLER = new SlotType(0, 2, 2, 2, 4, 36, ContainerClayAssembler.class);
 
         public final int inStart;
         public final int inCount;
+        public final int outStart;
+        public final int outCount;
         public final int playerStart;
         public final int playerCount;
         public final Class<? extends ContainerTemp> containerClass;
 
-        SlotType(int inStart, int inCount, int playerStart, int playerCount, Class<? extends ContainerTemp> containerClass) {
+        SlotType(int inStart, int inCount, int outStart, int outCount, int playerStart, int playerCount, Class<? extends ContainerTemp> containerClass) {
             this.inStart = inStart;
             this.inCount = inCount;
+            this.outStart = outStart;
+            this.outCount = outCount;
             this.playerStart = playerStart;
             this.playerCount = playerCount;
             this.containerClass = containerClass;

@@ -6,12 +6,12 @@ import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
 public interface IRecipeElement extends IRecipe, IRecipeWrapper {
-    List<ItemStack> getMaterials();
     int getTier();
     default int getMethod() { return -1; }
     List<ItemStack> getResults();
@@ -25,12 +25,8 @@ public interface IRecipeElement extends IRecipe, IRecipeWrapper {
             return false;
         }
 
-        for (ItemStack stack : getMaterials()) {
-//            if (canBeCraftedODs(itemstack, stack, false)) {
-//                return true;
-//            }
-
-            if (canBeCrafted(itemstack, stack, false)) {
+        for (Ingredient ingredient : this.getIngredients()) {
+            if (ingredient.apply(itemstack)) {
                 return true;
             }
         }
@@ -38,10 +34,10 @@ public interface IRecipeElement extends IRecipe, IRecipeWrapper {
     }
 
     default boolean match(List<ItemStack> itemStacksIn, int methodIn, int tierIn) {
-        if (getMethod() != methodIn || getTier() > tierIn || getMaterials().size() > itemStacksIn.size()) return false;
+        if (this.getMethod() != methodIn || this.getTier() > tierIn || this.getIngredients().size() > itemStacksIn.size()) return false;
 
-        for (int i = 0; i < getMaterials().size(); i++)
-            if (!inclusion(getMaterials().get(i), itemStacksIn.get(i)))
+        for (int i = 0; i < this.getIngredients().size(); i++)
+            if (!this.getIngredients().get(i).apply(itemStacksIn.get(i)))
                 return false;
 
         return true;
@@ -52,34 +48,6 @@ public interface IRecipeElement extends IRecipe, IRecipeWrapper {
         if (UtilItemStack.areTypeEqual(self, comes) && self.getCount() <= comes.getCount()) return true;
         if (self.getHasSubtypes() && comes.getHasSubtypes()) return self.isItemEqual(comes);
         return self.getItemDamage() == OreDictionary.WILDCARD_VALUE;
-    }
-
-    default int[] getStackSizes(ItemStack ...items) {
-        int[] sizes = new int[items.length];
-        for (int i = 0; i < items.length && i < getMaterials().size(); i++) {
-            sizes[i] = getStackSize(getMaterials().get(i), items[i]);
-        }
-        return sizes;
-    }
-
-    static int getStackSize(Object recipe, ItemStack item) {
-        if (recipe instanceof IItemPattern) {
-            if (item == null) {
-                List<ItemStack> items = ((IItemPattern) recipe).toItemStacks();
-                if (items != null && items.size() >= 1)
-                    item = items.get(0);
-            }
-            return ((IItemPattern) recipe).getStackSize(item);
-        }
-        return getStackSize(recipe);
-    }
-
-    static int getStackSize(Object item) {
-        if (item instanceof ItemStack) return ((ItemStack) item).getCount();
-//        if (item instanceof OreDictionaryStack) return ((OreDictionaryStack) item).stackSize;
-        if (item instanceof String) return 1;
-
-        return 0;
     }
 
     static boolean canBeCrafted(ItemStack itemstack, ItemStack itemstack2, boolean sizeCheck) {

@@ -256,7 +256,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         this.craftTime = 1L;
         this.timeToCraft = this.doingRecipe.getTime();
-        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials().get(0), this.getContainerItemStacks(), MachineSlots.MATERIAL.ordinal());
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(), MachineSlots.MATERIAL.ordinal());
 
         return true;
     }

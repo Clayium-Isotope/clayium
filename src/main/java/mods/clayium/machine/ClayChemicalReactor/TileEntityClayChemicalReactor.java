@@ -91,8 +91,7 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine {
         this.debtEnergy = this.doingRecipe.getEnergy();
         this.timeToCraft = this.doingRecipe.getTime();
 
-        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(),
-                ChemicalReactorSlots.MATERIAL_1.ordinal(), ChemicalReactorSlots.MATERIAL_2.ordinal() + 1);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), ChemicalReactorSlots.MATERIAL_1.ordinal(), ChemicalReactorSlots.MATERIAL_2.ordinal() + 1);
 
         return true;
     }

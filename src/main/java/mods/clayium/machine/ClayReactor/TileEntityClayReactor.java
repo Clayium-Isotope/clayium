@@ -187,7 +187,7 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
 
         this.timeToCraft = (long) (this.doingRecipe.getTime() * this.multCraftTime);
 
-        UtilTransfer.consumeItemStack(this.doingRecipe.getMaterials(), this.getContainerItemStacks(), 0, 2);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), 0, 2);
 
         return true;
     }

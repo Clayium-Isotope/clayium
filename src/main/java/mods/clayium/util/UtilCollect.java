@@ -9,6 +9,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class UtilCollect {
@@ -191,5 +192,12 @@ public class UtilCollect {
         }
 
         return map;
+    }
+
+    public static <E> Collector<E, NonNullList<E>, NonNullList<E>> toNonNullList() {
+        return Collector.of(NonNullList::create, NonNullList::add, (left, right) -> {
+            left.addAll(right);
+            return left;
+        });
     }
 }
