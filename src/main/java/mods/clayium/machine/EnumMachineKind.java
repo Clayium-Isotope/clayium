@@ -63,6 +63,8 @@ public enum EnumMachineKind {
     blastFurnace("blast_furnace", ClayiumRecipes.blastFurnace),
     electrolysisReactor("electrolysis_reactor", ClayiumRecipes.electrolysisReactor),
     clayChunkLoader("clay_chunk_loader", null),
+    storageContainer("storage_container", null),
+    vacuumContainer("vacuum_container", null),
 
     // Tier 7 ~
     distributor("distributor", null),
@@ -72,9 +74,14 @@ public enum EnumMachineKind {
     clayEnergyLaser("energy_laser", null),
     laserReflector("laser_reflector", null),
     claySapling("clay_sapling", null),
+    clayMarker("clay_marker", null),
 
     // Tier 8 ~
     clayFabricator("clay_fabricator", null),
+    autoTrader("auto_trader", null),
+    openPitMarker("open_pit_marker", null),
+    groundLevelingMarker("ground_leveling_marker", null),
+    prismMarker("prism_marker", null),
 
     // Tier 9 ~
     CACondenser("ca_condenser", ClayiumRecipes.CACondenser),

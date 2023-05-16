@@ -124,6 +124,34 @@ public class ClayiumMachines {
 //
 //        addContainer(EnumMachineKind.CACondenser, new int[]{9, 10, 11}, TileCACondenser.class);
 
+//        registerTieredMachines("CAInjector", new int[]{9, 10, 11, 12, 13}, TileCAInjector.class, ClayAssembler.class, ItemBlockTiered.class);
+//        new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1);
+//        blockCAReactorHull = new BlockDamaged(Material.iron, 10);
+//        registerTieredMachines("CAReactor", new int[]{10, 11, 12, 13}, TileCAReactor.class, 9, CAReactor.class, ItemBlockTiered.class);
+//        new ClayMachines("ECDecomposer", 13);
+//        energeticClayDecomposer = get(EnumMachineKind.decomposer, TierPrefix.OPA);
+//        new StorageContainer(Material.iron, "clayium:az91dhull");
+//        storageContainer = get(EnumMachineKind.storageContainer, TierPrefix.precision);
+//        new VacuumContainer(Material.iron, "clayium:az91dhull");
+//        vacuumContainer = get(EnumMachineKind.vacuumContainer, TierPrefix.precision);
+//        new AutoTrader(8);
+//        autoTrader = get(EnumMachineKind.autoTrader, TierPrefix.clayium);
+//        new ClayMarker(7, Blocks.clay, TileClayMarker.class);
+//        clayMarker = get(EnumMachineKind.clayMarker, TierPrefix.claySteel);
+//        new ClayMarker(8, blockCompressedClay, TileClayOpenPitMarker.class);
+//        clayOpenPitMarker = get(EnumMachineKind.openPitMarker, TierPrefix.clayium);
+//        new ClayMarker(8, blockCompressedClay, 1, TileClayGroundLevelingMarker.class);
+//        groundLevelingMarker = get(EnumMachineKind.groundLevelingMarker, TierPrefix.clayium);
+//        new ClayMarker(8, blockCompressedClay, 2, TileClayPrismMarker.class);
+//        prismMarker = get(EnumMachineKind.prismMarker, TierPrefix.clayium);
+//        blockMiner = (new AreaMiner(6, "clayium:areaminer"))
+//        blockAreaCollector = (new AreaCollector(7))
+//        blockAreaMiner = (new AreaMiner(8, "clayium:areaminer"))
+//        blockAdvancedAreaMiner = (new AreaMiner(9, "clayium:advareaminer"))
+//        blockAreaReplacer = (new AreaMiner(10, "clayium:areareplacer"))
+//        blockActivator = (new AreaActivator(6))
+//        blockAreaActivator = (new AreaActivator(8))
+
 
         addContainers(EnumMachineKind.waterWheel, new int[] { 1, 2 }, WaterWheel.class);
         clayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.clay);
@@ -132,6 +160,24 @@ public class ClayiumMachines {
         addContainers(EnumMachineKind.clayEnergyLaser, new int[] { 7, 8, 9, 10 }, ClayEnergyLaser.class);
         addContainer(EnumMachineKind.laserReflector, 7, new LaserReflector());
         laserReflector = get(EnumMachineKind.laserReflector, 7);
+
+//        blockClayChunkLoader = (new ClayChunkLoader(6))
+//        blockPANCore = (new PANCore())
+//        blocksPANAdapter = registerTieredContainers("PANAdapter", new int[]{10, 11, 12, 13}, PANAdapter.class);
+//        blocksPANDuplicator = registerTieredContainers("PANDuplicator", new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, PANDuplicator.class);
+//
+//        for(i = 4; i <= 13; ++i) {
+//            ((PANDuplicator)blocksPANDuplicator[i])
+//        }
+//
+//        blockPANCable = (new PANCable())
+//        blockMetalChest = (new MetalChest())
+
+//        if (ClayiumCore.cfgEnableFluidCapsule) {
+//            blocksFluidTranslator = registerTieredContainers("FluidTranslator", new int[]{4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, FluidTranslator.class);
+//            blocksFluidTransferMachine = registerTieredMachines("FluidTransferMachine", new int[]{5}, ClayChemicalReactor.class, ItemBlockTiered.class);
+//        }
+//        blocksRFGenerator = new HashMap();
     }
 
     private static void addContainer(EnumMachineKind kind, int tier, Block block) {
@@ -288,4 +334,11 @@ public class ClayiumMachines {
     public static Block clayWaterWheel = Blocks.AIR;
     public static Block denseClayWaterWheel = Blocks.AIR;
     public static Block CESource = Blocks.AIR;
+    public static Block storageContainer = Blocks.AIR;
+    public static Block vacuumContainer = Blocks.AIR;
+    public static Block autoTrader = Blocks.AIR;
+    public static Block clayMarker = Blocks.AIR;
+    public static Block clayOpenPitMarker = Blocks.AIR;
+    public static Block groundLevelingMarker = Blocks.AIR;
+    public static Block prismMarker = Blocks.AIR;
 }
