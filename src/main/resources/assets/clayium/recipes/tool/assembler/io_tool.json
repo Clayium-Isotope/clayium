@@ -1,0 +1,23 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:clay_rolling_pin"
+        },
+        {
+            "type": "minecraft:item",
+            "item": "clayium:clay_slicer"
+        }
+    ],
+    "tier": 6,
+    "output": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:io_tool"
+        }
+    ],
+    "energy": 10000,
+    "time": 20
+}

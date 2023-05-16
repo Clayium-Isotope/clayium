@@ -70,15 +70,10 @@ public class ClayiumRecipeFactory implements IRecipeFactory {
 
         // https://qastack.jp/programming/23932061/convert-iterable-to-stream-using-java-8-jdk
         NonNullList<Ingredient> inputItems = StreamSupport.stream(input.spliterator(), false)
-                .map(elm -> {
-                        if (!elm.isJsonObject())
-                            throw new JsonSyntaxException("Expected item object but found " + elm);
-
-                        return new Tuple<>(
-                                JsonUtils.getInt((JsonObject) elm, "priority", Integer.MAX_VALUE),
-                                new AmountedIngredient(CraftingHelper.getIngredient(elm, context), JsonUtils.getInt((JsonObject) elm, "count", 1))
-                        );
-                })
+                .map(elm -> new Tuple<>(
+                        JsonHelper.readNumeric(elm, "priority", Integer.MAX_VALUE),
+                        new AmountedIngredient(elm, context))
+                )
                 .sorted(Comparator.comparingInt(Tuple::getFirst)) // The smaller the "priority" value, the more it comes to the front
                 .map(Tuple::getSecond)
                 .collect(UtilCollect.toNonNullList());

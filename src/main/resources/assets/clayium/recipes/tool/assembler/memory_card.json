@@ -1,0 +1,25 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:io_tool"
+        },
+        {
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 6,
+            "count": 2
+        }
+    ],
+    "tier": 6,
+    "output": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:memory_card"
+        }
+    ],
+    "energy": 10000,
+    "time": 20
+}

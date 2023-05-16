@@ -1,0 +1,26 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:shaped_material",
+            "material": "dense_clay",
+            "shape": "spindle"
+        },
+        {
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 6,
+            "count": 2
+        }
+    ],
+    "tier": 6,
+    "output": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:direction_memory"
+        }
+    ],
+    "energy": 10000,
+    "time": 20
+}

@@ -224,7 +224,7 @@ public class ClayiumMachines {
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
             return machineMap.get(kind).get(tier);
-        return null;
+        return Blocks.AIR;
     }
     @Deprecated // iff tier is clear, use TierPrefix version.
     public static Block get(EnumMachineKind kind, int tier) {
@@ -241,7 +241,7 @@ public class ClayiumMachines {
             if (block != null) return block;
         }
 
-        return null;
+        return Blocks.AIR;
 // TODO change to    throw new NoSuchElementException(kind.getRegisterName() + " is not registered!");
     }
     /**

@@ -1,18 +1,28 @@
 package mods.clayium.util.crafting;
 
+import com.google.gson.JsonElement;
+import mods.clayium.util.JsonHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.JsonContext;
 
 import javax.annotation.Nullable;
 
 public class AmountedIngredient extends Ingredient {
-    private Ingredient internal;
-    private int amount;
+    protected final Ingredient internal;
+    protected final int amount;
+
+    protected ItemStack[] matchingStacks = null;
 
     public AmountedIngredient(Ingredient internal, int amount) {
         super(0);
         this.internal = internal;
         this.amount = amount;
+    }
+
+    public AmountedIngredient(JsonElement json, JsonContext context) {
+        this(CraftingHelper.getIngredient(json, context), JsonHelper.readNumeric(json, "amount", 1));
     }
 
     @Override
@@ -24,13 +34,22 @@ public class AmountedIngredient extends Ingredient {
 
     @Override
     public ItemStack[] getMatchingStacks() {
-        return this.internal.getMatchingStacks();
+        if (this.matchingStacks == null) {
+            this.matchingStacks = new ItemStack[this.internal.getMatchingStacks().length];
+            for (int i = 0; i < this.matchingStacks.length; i++) {
+                this.matchingStacks[i] = this.internal.getMatchingStacks()[i].copy();
+                this.matchingStacks[i].setCount(this.amount);
+            }
+        }
+
+        return this.matchingStacks;
     }
 
     @Override
     protected void invalidate() {
-        this.internal = null;
-        this.amount = 0;
+//        this.internal = EMPTY;
+//        this.amount = 0;
+        this.matchingStacks = null;
     }
 
     @Override

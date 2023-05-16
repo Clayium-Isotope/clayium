@@ -6,24 +6,23 @@ import mods.clayium.util.UtilLocale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 // https://forums.minecraftforge.net/topic/69258-1122-custom-irecipe/
-public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe, IRecipeElement {
+// Extend ShapelessRecipes for JEI CraftingRecipeChecker
+public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
     private static final RecipeElement FLAT = new RecipeElement(Collections.emptyList(), -1, Collections.emptyList(), -1, -1);
     public static RecipeElement flat() {
         return FLAT;
     }
 
-    private final NonNullList<Ingredient> ingredients;
     private final int tier;
     private final List<ItemStack> results;
     private final long energy;
@@ -38,7 +37,7 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
     }
 
     public RecipeElement(NonNullList<Ingredient> materialIn, int tier, List<ItemStack> resultIn, long energy, long time) {
-        this.ingredients = materialIn;
+        super("clayium", ItemStack.EMPTY, materialIn);
         this.tier = tier;
         this.results = resultIn;
         this.energy = energy;
@@ -65,11 +64,6 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
     @Override
     public boolean isFlat() {
         return this.equals(FLAT);
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.ingredients;
     }
 
     private static boolean runner(List<Ingredient> ingredients, NonNullList<ItemStack> invStacks, int ingIdx, LinkedList<Integer> assigned) {
@@ -106,7 +100,7 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inv) {
-        return this.results.get(0);
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -116,7 +110,7 @@ public class RecipeElement extends IForgeRegistryEntry.Impl<IRecipe> implements 
 
     @Override
     public ItemStack getRecipeOutput() {
-        return results.get(0);
+        return ItemStack.EMPTY;
     }
 
     @Override

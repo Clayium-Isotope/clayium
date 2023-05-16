@@ -1,0 +1,23 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:clay_spatula"
+        },
+        {
+            "type": "minecraft:item",
+            "item": "clayium:clay_wrench"
+        }
+    ],
+    "tier": 6,
+    "output": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:piping_tool"
+        }
+    ],
+    "energy": 10000,
+    "time": 20
+}

@@ -1,0 +1,26 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:shaped_material",
+            "material": "az91d",
+            "shape": "plate",
+            "count": 3
+        },
+        {
+            "type": "minecraft:item",
+            "item": "clayium:synchronous_parts",
+            "count": 2
+        }
+    ],
+    "tier": 6,
+    "output": [
+        {
+            "type": "minecraft:item",
+            "item": "clayium:synchronizer"
+        }
+    ],
+    "energy": 10000,
+    "time": 20
+}

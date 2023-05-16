@@ -72,11 +72,8 @@ public class ClayiumRecipes {
     private static final List<ClayiumMaterial> cmats = Arrays.asList(ClayiumMaterial.clay, ClayiumMaterial.clay, ClayiumMaterial.denseClay, ClayiumMaterial.denseClay, ClayiumMaterial.denseClay);
     private static final List<ClayiumMaterial> mats = Arrays.stream(TierPrefix.values()).map(TierPrefix::getMaterial).collect(Collectors.toList());
 
-    private static final List<ItemStack> circuits = Stream.of(ClayiumItems.clayCircuit, ClayiumItems.clayCircuit, ClayiumItems.clayCircuit, ClayiumItems.simpleCircuit, ClayiumItems.basicCircuit, ClayiumItems.advancedCircuit, ClayiumItems.precisionCircuit, ClayiumItems.integratedCircuit, ClayiumItems.clayCore, ClayiumItems.clayBrain, ClayiumItems.claySpirit, ClayiumItems.claySoul, ClayiumItems.clayAnima, ClayiumItems.clayPsyche).map(ItemStack::new).collect(Collectors.toList());
-    private static final List<ItemStack> machines = new ArrayList<ItemStack>() {{
-        add(new ItemStack(ClayiumBlocks.rawClayMachineHull));
-        addAll(ClayiumBlocks.machineHulls.stream().map(ItemStack::new).collect(Collectors.toList()));
-    }};
+    public static final List<ItemStack> circuits = Stream.of(ClayiumItems.clayCircuit, ClayiumItems.clayCircuit, ClayiumItems.clayCircuit, ClayiumItems.simpleCircuit, ClayiumItems.basicCircuit, ClayiumItems.advancedCircuit, ClayiumItems.precisionCircuit, ClayiumItems.integratedCircuit, ClayiumItems.clayCore, ClayiumItems.clayBrain, ClayiumItems.claySpirit, ClayiumItems.claySoul, ClayiumItems.clayAnima, ClayiumItems.clayPsyche).map(ItemStack::new).collect(Collectors.toList());
+    public static final List<ItemStack> machines = Stream.concat(Stream.of(ClayiumBlocks.rawClayMachineHull), ClayiumBlocks.machineHulls.stream()).map(ItemStack::new).collect(Collectors.toList());
 
 
     public static void registerRecipes() {
@@ -170,6 +167,7 @@ public class ClayiumRecipes {
         GameRegistry.addSmelting(ClayiumItems.rawSlicer, new ItemStack(ClayiumItems.slicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawSpatula, new ItemStack(ClayiumItems.spatula), 1F);
 
+/* custom recipe
         assembler.addRecipe(oo(i(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE)), 6,
                 ii(ClayiumItems.IOTool), e(6), 20L);
         assembler.addRecipe(oo(i(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.wrench)), 6,
@@ -177,8 +175,9 @@ public class ClayiumRecipes {
         assembler.addRecipe(oo(ClayiumItems.IOTool, s(circuits.get(6), 2)), 6,
                 ii(ClayiumItems.memoryCard), e(6), 20L);
 
-// TODO   assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle), s(circuits.get(6), 2)), 0, 6,
-//                ii(i(CItems.itemDirectionMemory)), e(6), 20L);
+        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle), s(circuits.get(6), 2)), 0, 6,
+                ii(i(CItems.itemDirectionMemory)), e(6), 20L);
+ */
 /* Use assets/recipes
         GameRegistry.addRecipe(i(CItems.itemClayShovel), "#", "|", "|",
                 '#', ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), '|', ClayiumMaterials.get(ClayiumMaterial.clay, CMaterials.STICK));
@@ -195,8 +194,10 @@ public class ClayiumRecipes {
                 i(CItems.itemClaySteelShovel), "#", "|", "|",
                 '#', ClayiumMaterials.getODName(ClayiumMaterial.clay_STEEL, ClayiumShape.ingot), '|', ClayiumMaterials.get(ClayiumMaterial.denseClay, CMaterials.STICK)));
  */
-// TODO    assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 3), i(ClayiumItems.synchronousParts, 2)), 0, 6,
-//                ii(i(CItems.itemSynchronizer)), e(6), 20L);
+/* custom recipe
+         assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 3), i(ClayiumItems.synchronousParts, 2)), 0, 6,
+                ii(i(CItems.itemSynchronizer)), e(6), 20L);
+ */
 
 
         assembler.addRecipe(oo(circuits.get(5), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterWhitelist)), 8L, 20L);
