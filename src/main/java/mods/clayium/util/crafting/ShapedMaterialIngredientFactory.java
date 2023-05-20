@@ -1,6 +1,7 @@
 package mods.clayium.util.crafting;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
@@ -25,12 +26,16 @@ public class ShapedMaterialIngredientFactory implements IIngredientFactory {
     @Nonnull
     @Override
     public Ingredient parse(JsonContext context, JsonObject json) {
-        if (!json.has("material") || !json.has("shape") || !json.has("count")) {
-            throw new IllegalArgumentException("Recipe Ingredient Type \"clayium:shaped_material\" requires 'material' and 'shape' properties");
+        if (!json.has("material") || !json.has("shape")) {
+            throw new JsonSyntaxException("Recipe Ingredient Type \"clayium:shaped_material\" requires 'material' and 'shape' properties");
         }
 
-        ClayiumMaterial material = ClayiumMaterial.valueOf(json.get("material").getAsString());
-        ClayiumShape shape = ClayiumShape.valueOf(json.get("shape").getAsString());
+        ClayiumMaterial material = ClayiumMaterial.fromName(json.get("material").getAsString());
+        ClayiumShape shape = ClayiumShape.fromName(json.get("shape").getAsString());
+
+        if (material == null || shape == null) {
+            throw new JsonSyntaxException("Unknown material or shape");
+        }
 
         String rawOre = ClayiumMaterials.getOreName(material, shape);
         if (OreDictionary.doesOreNameExist(rawOre)) {

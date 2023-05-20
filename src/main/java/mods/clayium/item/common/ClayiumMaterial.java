@@ -385,6 +385,15 @@ public enum ClayiumMaterial {
         return this;
     }
 
+    public static ClayiumMaterial fromName(String name) {
+        for (ClayiumMaterial m : values()) {
+            if (m.getName().equals(name)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
     public static final List<ClayiumMaterial> metals = Arrays.asList(
             magnesium, sodium, lithium, zirconium, zinc, manganese, calcium, potassium, nickel, beryllium, lead, hafnium,
             chrome, titanium, strontium, barium, copper, iron, gold, bronze, brass, electrum, invar, steel

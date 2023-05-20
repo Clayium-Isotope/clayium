@@ -40,6 +40,15 @@ public enum ClayiumShape {
 
     private final String name;
 
+    public static ClayiumShape fromName(String name) {
+        for (ClayiumShape shape : ClayiumShape.values()) {
+            if (shape.getName().equals(name)) {
+                return shape;
+            }
+        }
+        return null;
+    }
+
     public static final List<ClayiumShape> clayPartShapes = Arrays.asList(
             plate, stick, shortStick, ring, smallRing, gear, blade, needle, disc, smallDisc,
             cylinder, pipe, largeBall, largePlate, grindingHead, bearing, spindle, cuttingHead, waterWheel, block,
