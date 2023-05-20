@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @UsedFor(UsedFor.Type.TileEntity)
-public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider<T> {
+public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider {
     ClayiumRecipe getRecipeCard();
     T getFlat();
     default T getRecipe(Predicate<T> pred) {

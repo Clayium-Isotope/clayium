@@ -1,14 +1,13 @@
 package mods.clayium.machine.common;
 
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.crafting.IRecipe;
 
-public interface RecipeProvider<T extends IRecipe> {
+public interface RecipeProvider {
     int getRecipeTier();
 
     boolean isDoingWork();
 
-    static <T extends IRecipe> void update(RecipeProvider<T> provider) {
+    static void update(RecipeProvider provider) {
         if (provider.isDoingWork()) {
             if (!provider.canProceedCraft()) return;
 

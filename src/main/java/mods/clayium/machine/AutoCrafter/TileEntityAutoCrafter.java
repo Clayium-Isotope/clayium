@@ -30,7 +30,7 @@ import java.util.function.Predicate;
  * <br>15 - 23: Pattern: ghost items are recipe reference
  * <br>24: Energy
  */
-public class TileEntityAutoCrafter extends TileEntityClayContainer implements IClayEnergyConsumer, RecipeProvider<IRecipe> {
+public class TileEntityAutoCrafter extends TileEntityClayContainer implements IClayEnergyConsumer, RecipeProvider {
     public int craftTime;
     public int timeToCraft = 20;
     public long debtEnergy = 10L;
