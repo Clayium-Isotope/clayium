@@ -2,10 +2,10 @@ package mods.clayium.machine.Interface.ClayInterface;
 
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
@@ -64,10 +64,12 @@ public class ClayInterface extends ClayContainer {
 
         worldIn.markBlockRangeForRenderUpdate(pos, pos);
         TileEntityClayInterface tile = (TileEntityClayInterface) worldIn.getTileEntity(pos);
-        if (tile == null || !tile.isSynced()) return false;
+        if (tile == null || !tile.isSynced() || !(tile.core instanceof TileEntityClayContainer)) return false;
 
-        tile.core.getWorld().markBlockRangeForRenderUpdate(tile.core.getPos(), tile.core.getPos());
-        playerIn.openGui(ClayiumCore.instance(), tile.core.getGuiId(), tile.core.getWorld(), tile.core.getPos().getX(), tile.core.getPos().getY(), tile.core.getPos().getZ());
+        TileEntityClayContainer coreTile = (TileEntityClayContainer) tile.core;
+
+        coreTile.getWorld().markBlockRangeForRenderUpdate(coreTile.getPos(), coreTile.getPos());
+        openGui(coreTile.getWorld(), coreTile.getPos(), playerIn);
         return true;
     }
 }

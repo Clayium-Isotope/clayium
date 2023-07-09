@@ -4,9 +4,11 @@ import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.UtilCollect;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -137,48 +139,6 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         super.update();
     }
 
-    // ===== Below this line, there is probably no information. =====
-
-    @Override
-    public NonNullList<ItemStack> getContainerItemStacks() {
-        return this.core.getContainerItemStacks();
-    }
-
-    @Override
-    public int getSizeInventory() {
-        return this.core.getSizeInventory();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.core.isEmpty();
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int index) {
-        return this.core.getStackInSlot(index);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int count) {
-        return this.core.decrStackSize(index, count);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index) {
-        return this.core.removeStackFromSlot(index);
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
-        this.core.setInventorySlotContents(index, stack);
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-        return this.core.getInventoryStackLimit();
-    }
-
     @Override
     public void markDirty() {
         super.markDirty();
@@ -196,54 +156,140 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         }
     }
 
+    // ===== Below this line, there is probably no information. =====
+
+    @Override
+    public NonNullList<ItemStack> getContainerItemStacks() {
+        if (this.core instanceof IClayInventory)
+            return ((IClayInventory) this.core).getContainerItemStacks();
+
+        return IClayInventory.EMPTY_INV;
+    }
+
+    @Override
+    public int getSizeInventory() {
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).getSizeInventory();
+
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).isEmpty();
+
+        return true;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int index) {
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).getStackInSlot(index);
+
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public ItemStack decrStackSize(int index, int count) {
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).decrStackSize(index, count);
+
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public ItemStack removeStackFromSlot(int index) {
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).removeStackFromSlot(index);
+
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        if (this.core instanceof IInventory)
+            ((IInventory) this.core).setInventorySlotContents(index, stack);
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).getInventoryStackLimit();
+
+        return 64;
+    }
+
     @Override
     public boolean isUsableByPlayer(EntityPlayer player) {
-        return this.core.isUsableByPlayer(player);
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).isUsableByPlayer(player);
+
+        return false;
     }
 
     @Override
     public void openInventory(EntityPlayer player) {
-        this.core.openInventory(player);
+        if (this.core instanceof IInventory)
+            ((IInventory) this.core).openInventory(player);
     }
 
     @Override
     public void closeInventory(EntityPlayer player) {
-        this.core.closeInventory(player);
+        if (this.core instanceof IInventory)
+            ((IInventory) this.core).closeInventory(player);
     }
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return this.core.isItemValidForSlot(index, stack);
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).isItemValidForSlot(index, stack);
+
+        return false;
     }
 
     @Override
     public int getField(int id) {
-        return this.core.getField(id);
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).getField(id);
+
+        return 0;
     }
 
     @Override
     public void setField(int id, int value) {
-        this.core.setField(id, value);
+        if (this.core instanceof IInventory)
+            ((IInventory) this.core).setField(id, value);
     }
 
     @Override
     public int getFieldCount() {
-        return this.core.getFieldCount();
+        if (this.core instanceof IInventory)
+            return ((IInventory) this.core).getFieldCount();
+
+        return 0;
     }
 
     @Override
     public void clear() {
-        this.core.clear();
+        if (this.core instanceof IInventory)
+            ((IInventory) this.core).clear();
     }
 
     @Override
     public List<int[]> getListSlotsImport() {
-        return this.core.getListSlotsImport();
+        if (this.core instanceof IClayInventory)
+            return ((IClayInventory) this.core).getListSlotsImport();
+
+        return Collections.emptyList();
     }
 
     @Override
     public List<int[]> getListSlotsExport() {
-        return this.core.getListSlotsExport();
+        if (this.core instanceof IClayInventory)
+            return ((IClayInventory) this.core).getListSlotsExport();
+
+        return Collections.emptyList();
     }
 
     @Override

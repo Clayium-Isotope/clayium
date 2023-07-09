@@ -1,7 +1,5 @@
 package mods.clayium.machine.ClayContainer;
 
-//import cofh.redstoneflux.api.IEnergyConnection;
-
 import com.google.common.collect.ImmutableMap;
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.block.tile.TileEntityGeneric;

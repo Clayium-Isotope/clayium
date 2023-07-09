@@ -1,7 +1,5 @@
 package mods.clayium.machine.ClayContainer;
 
-//import cofh.redstoneflux.api.IEnergyConnection;
-
 import mods.clayium.block.tile.TileEntityGeneric;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

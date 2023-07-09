@@ -76,6 +76,11 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     }
 
     @Override
+    public boolean acceptInterfaceSync() {
+        return true;
+    }
+
+    @Override
     public void readMoreFromNBT(NBTTagCompound compound) {
         super.readMoreFromNBT(compound);
 
@@ -282,10 +287,6 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     @Override
     public boolean getAutoExtract() {
         return this.autoExtract;
-    }
-
-    public int getGuiId() {
-        return ((ClayContainer) this.getBlockType()).guiId;
     }
 
     @Override

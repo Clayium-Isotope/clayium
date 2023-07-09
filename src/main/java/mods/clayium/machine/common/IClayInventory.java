@@ -20,6 +20,8 @@ import java.util.stream.Collector;
  */
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayInventory extends ISidedInventory {
+    /* static final */ NonNullList<ItemStack> EMPTY_INV = NonNullList.create();
+
     List<int[]> getListSlotsImport();
     List<int[]> getListSlotsExport();
     EnumFacing getFront();
