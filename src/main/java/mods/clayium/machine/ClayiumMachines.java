@@ -44,81 +44,70 @@ public class ClayiumMachines {
     public static final Map<EnumMachineKind, Map<TierPrefix, Block>> machineMap = new EnumMap<>(EnumMachineKind.class);
 
     public static void registerMachines() {
-        addContainer(EnumMachineKind.workTable, 0, new ClayWorkTable());
-        clayWorkTable = get(EnumMachineKind.workTable, TierPrefix.none);
-        addContainer(EnumMachineKind.craftingTable, 0, new ClayCraftingTable());
-        clayCraftingTable = get(EnumMachineKind.craftingTable, TierPrefix.none);
+        clayWorkTable = addContainer(EnumMachineKind.workTable, TierPrefix.clay, new ClayWorkTable());
+        clayCraftingTable = addContainer(EnumMachineKind.craftingTable, TierPrefix.clay, new ClayCraftingTable());
 
-        addMachine(EnumMachineKind.ECCondenser, 3, "mk1");
-        energeticClayCondenserMK1 = get(EnumMachineKind.ECCondenser, TierPrefix.simple);
-        addMachine(EnumMachineKind.ECCondenser, 4, "mk2");
-        energeticClayCondenserMK2 = get(EnumMachineKind.ECCondenser, TierPrefix.basic);
+        energeticClayCondenserMK1 = addMachine(EnumMachineKind.ECCondenser, TierPrefix.simple, "mk1");
+        energeticClayCondenserMK2 = addMachine(EnumMachineKind.ECCondenser, TierPrefix.basic, "mk2");
 
-        addMachine(EnumMachineKind.bendingMachine, new int[] { 1, 2, 3, 4, 5, 6, 7, 9 });
-        addMachine(EnumMachineKind.wireDrawingMachine, new int[] { 1, 2, 3, 4 });
-        addMachine(EnumMachineKind.pipeDrawingMachine, new int[] { 1, 2, 3, 4 });
-        addMachine(EnumMachineKind.cuttingMachine, new int[] { 1, 2, 3, 4 });
-        addMachine(EnumMachineKind.lathe, new int[] { 1, 2, 3, 4 });
+        addMachine(EnumMachineKind.bendingMachine, TierPrefix.makeList(1, 2, 3, 4, 5, 6, 7, 9));
+        addMachine(EnumMachineKind.wireDrawingMachine, TierPrefix.makeList(1, 2, 3, 4));
+        addMachine(EnumMachineKind.pipeDrawingMachine, TierPrefix.makeList(1, 2, 3, 4));
+        addMachine(EnumMachineKind.cuttingMachine, TierPrefix.makeList(1, 2, 3, 4));
+        addMachine(EnumMachineKind.lathe, TierPrefix.makeList(1, 2, 3, 4));
 
-        addContainers(EnumMachineKind.cobblestoneGenerator, new int[] { 1, 2, 3, 4, 5, 6, 7 }, CobblestoneGenerator.class);
+        addContainers(EnumMachineKind.cobblestoneGenerator, TierPrefix.makeList(1, 2, 3, 4, 5, 6, 7), CobblestoneGenerator.class);
 
-        addMachine(EnumMachineKind.condenser, new int[] { 2, 3, 4, 5, 10 });
-        addMachine(EnumMachineKind.grinder, new int[]{ 2, 3, 4, 5, 6, 10 });
-        addMachine(EnumMachineKind.decomposer, new int[]{ 2, 3, 4 });
-        addMachine(EnumMachineKind.millingMachine, new int[] { 1, 3, 4 });
-        elementalMillingMachine = get(EnumMachineKind.millingMachine, TierPrefix.clay);
+        addMachine(EnumMachineKind.condenser, TierPrefix.makeList(2, 3, 4, 5, 10));
+        addMachine(EnumMachineKind.grinder, TierPrefix.makeList(2, 3, 4, 5, 6, 10));
+        addMachine(EnumMachineKind.decomposer, TierPrefix.makeList(2, 3, 4));
+        addMachine(EnumMachineKind.millingMachine, TierPrefix.makeList(1, 3, 4));
 
-        addAssembler(EnumMachineKind.assembler, new int[] { 3, 4, 6, 10 });
-        addAssembler(EnumMachineKind.inscriber, new int[] { 3, 4 });
-        addMachines(EnumMachineKind.centrifuge, new int[] { 3, 4, 5, 6 }, ClayCentrifuge.class);
-        addMachine(EnumMachineKind.smelter, new int[]{ 4, 5, 6, 7, 8, 9 });
+        addAssembler(EnumMachineKind.assembler, TierPrefix.makeList(3, 4, 6, 10));
+        addAssembler(EnumMachineKind.inscriber, TierPrefix.makeList(3, 4));
+        addMachines(EnumMachineKind.centrifuge, TierPrefix.makeList(3, 4, 5, 6), ClayCentrifuge.class);
+        addMachine(EnumMachineKind.smelter, TierPrefix.makeList(4, 5, 6, 7, 8, 9));
 
-        addContainers(EnumMachineKind.buffer, new int[] { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayBuffer.class);
-        addContainers(EnumMachineKind.multitrackBuffer, new int[]{ 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 }, MultitrackBuffer.class);
-        addContainer(EnumMachineKind.creativeCESource, 13, new CreativeEnergySource());
+        addContainers(EnumMachineKind.buffer, TierPrefix.makeList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13), ClayBuffer.class);
+        addContainers(EnumMachineKind.multitrackBuffer, TierPrefix.makeList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13), MultitrackBuffer.class);
+        addContainer(EnumMachineKind.creativeCESource, TierPrefix.OPA, new CreativeEnergySource());
 
-        addMachines(EnumMachineKind.chemicalReactor, new int[]{ 4, 5, 8 }, ClayChemicalReactor.class);
+        addMachines(EnumMachineKind.chemicalReactor, TierPrefix.makeList(4, 5, 8), ClayChemicalReactor.class);
 
-        addContainers(EnumMachineKind.saltExtractor, new int[] { 4, 5, 6, 7 }, SaltExtractor.class);
+        addContainers(EnumMachineKind.saltExtractor, TierPrefix.makeList(4, 5, 6, 7), SaltExtractor.class);
 
-        addContainers(EnumMachineKind.autoClayCondenser, new int[] { 5, 7 }, AutoClayCondenser.class);
-        autoClayCondenserMK1 = get(EnumMachineKind.autoClayCondenser, TierPrefix.advanced);
-        autoClayCondenserMK2 = get(EnumMachineKind.autoClayCondenser, TierPrefix.claySteel);
+        autoClayCondenserMK1 = addContainer(EnumMachineKind.autoClayCondenser, TierPrefix.advanced, new AutoClayCondenser(TierPrefix.advanced));
+        autoClayCondenserMK2 = addContainer(EnumMachineKind.autoClayCondenser, TierPrefix.claySteel, new AutoClayCondenser(TierPrefix.claySteel));
 
-        addContainer(EnumMachineKind.quartzCrucible, 5, new QuartzCrucible());
-        quartzCrucible = get(EnumMachineKind.quartzCrucible, 5);
+        quartzCrucible = addContainer(EnumMachineKind.quartzCrucible, TierPrefix.advanced, new QuartzCrucible());
 
-        addContainers(EnumMachineKind.solarClayFabricator, new int[] { 5, 6, 7 }, SolarClayFabricator.class);
+        addContainers(EnumMachineKind.solarClayFabricator, TierPrefix.makeList(5, 6, 7), SolarClayFabricator.class);
         solarClayFabricatorMK1 = get(EnumMachineKind.solarClayFabricator, TierPrefix.advanced);
         solarClayFabricatorMK2 = get(EnumMachineKind.solarClayFabricator, TierPrefix.precision);
         lithiumSolarClayFabricator = get(EnumMachineKind.solarClayFabricator, TierPrefix.claySteel);
 
-        addContainers(EnumMachineKind.clayFabricator, new int[] { 8, 9, 13 }, ClayFabricator.class);
+        addContainers(EnumMachineKind.clayFabricator, TierPrefix.makeList(8, 9, 13), ClayFabricator.class);
         clayFabricatorMK1 = get(EnumMachineKind.clayFabricator, TierPrefix.clayium);
         clayFabricatorMK2 = get(EnumMachineKind.clayFabricator, TierPrefix.ultimate);
         clayFabricatorMK3 = get(EnumMachineKind.clayFabricator, TierPrefix.clayium);
 
-        addContainer(EnumMachineKind.chemicalMetalSeparator, 6, new ChemicalMetalSeparator());
-        chemicalMetalSeparator = get(EnumMachineKind.chemicalMetalSeparator, TierPrefix.precision);
+        chemicalMetalSeparator = addContainer(EnumMachineKind.chemicalMetalSeparator, TierPrefix.precision, new ChemicalMetalSeparator());
 
-        addAssembler(EnumMachineKind.alloySmelter, 6);
-        alloySmelter = get(EnumMachineKind.alloySmelter, TierPrefix.precision);
+        alloySmelter = addAssembler(EnumMachineKind.alloySmelter, TierPrefix.precision);
 
-        addContainer(EnumMachineKind.blastFurnace, 6, new ClayBlastFurnace());
-        blastFurnace = get(EnumMachineKind.blastFurnace, TierPrefix.precision);
+        blastFurnace = addContainer(EnumMachineKind.blastFurnace, TierPrefix.precision, new ClayBlastFurnace());
 
-        addContainers(EnumMachineKind.clayInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, ClayInterface.class);
-        addContainers(EnumMachineKind.redstoneInterface, new int[]{ 5, 6, 7, 8, 9, 10, 11, 12, 13 }, RedstoneInterface.class);
-        addContainers(EnumMachineKind.laserInterface, new int[]{ 7, 8, 9, 10, 11, 12, 13 }, ClayLaserInterface.class);
+        addContainers(EnumMachineKind.clayInterface, TierPrefix.makeList(5, 6, 7, 8, 9, 10, 11, 12, 13), ClayInterface.class);
+        addContainers(EnumMachineKind.redstoneInterface, TierPrefix.makeList(5, 6, 7, 8, 9, 10, 11, 12, 13), RedstoneInterface.class);
+        addContainers(EnumMachineKind.laserInterface, TierPrefix.makeList(7, 8, 9, 10, 11, 12, 13), ClayLaserInterface.class);
 
-        addMachine(EnumMachineKind.electrolysisReactor, new int[]{ 6, 7, 8, 9 });
+        addMachine(EnumMachineKind.electrolysisReactor, TierPrefix.makeList(6, 7, 8, 9));
 
-        addContainers(EnumMachineKind.distributor, new int[]{ 7, 8, 9 }, ClayDistributor.class);
+        addContainers(EnumMachineKind.distributor, TierPrefix.makeList(7, 8, 9), ClayDistributor.class);
 
-        addContainers(EnumMachineKind.autoCrafter, new int[]{ 5, 6, 7, 8, 9 }, AutoCrafter.class);
+        addContainers(EnumMachineKind.autoCrafter, TierPrefix.makeList(5, 6, 7, 8, 9), AutoCrafter.class);
 
-        addContainer(EnumMachineKind.clayReactor, 7, new ClayReactor());
-        clayReactor = get(EnumMachineKind.clayReactor, TierPrefix.claySteel);
+        clayReactor = addContainer(EnumMachineKind.clayReactor, TierPrefix.claySteel, new ClayReactor());
 
 //        addAssembler(EnumMachineKind.transformer, new int[]{ 7, 8, 9, 10, 11, 12 });
 //
@@ -153,13 +142,12 @@ public class ClayiumMachines {
 //        blockAreaActivator = (new AreaActivator(8))
 
 
-        addContainers(EnumMachineKind.waterWheel, new int[] { 1, 2 }, WaterWheel.class);
+        addContainers(EnumMachineKind.waterWheel, TierPrefix.makeList(1, 2), WaterWheel.class);
         clayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.clay);
         denseClayWaterWheel = get(EnumMachineKind.waterWheel, TierPrefix.denseClay);
 
-        addContainers(EnumMachineKind.clayEnergyLaser, new int[] { 7, 8, 9, 10 }, ClayEnergyLaser.class);
-        addContainer(EnumMachineKind.laserReflector, 7, new LaserReflector());
-        laserReflector = get(EnumMachineKind.laserReflector, 7);
+        addContainers(EnumMachineKind.clayEnergyLaser, TierPrefix.makeList(7, 8, 9, 10), ClayEnergyLaser.class);
+        laserReflector = addContainer(EnumMachineKind.laserReflector, TierPrefix.claySteel, new LaserReflector());
 
 //        blockClayChunkLoader = (new ClayChunkLoader(6))
 //        blockPANCore = (new PANCore())
@@ -180,90 +168,90 @@ public class ClayiumMachines {
 //        blocksRFGenerator = new HashMap();
     }
 
-    private static void addContainer(EnumMachineKind kind, int tier, Block block) {
-        TierPrefix _tier = TierPrefix.get(tier);
-
+    private static Block addContainer(EnumMachineKind kind, TierPrefix tier, Block block) {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
-        if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(_tier)) {
-            ClayiumCore.logger.error("The machine already exists  [" + kind.getRegisterName() + "] [" + _tier.getPrefix() + "]");
-            return;
+        if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier)) {
+            ClayiumCore.logger.error("The machine already exists  [" + kind.getRegisterName() + "] [" + tier.getPrefix() + "]");
+            return get(kind, tier);
         }
 
-        machineMap.get(kind).put(_tier, block);
+        machineMap.get(kind).put(tier, block);
+        return get(kind, tier);
     }
 
-    private static void addContainers(EnumMachineKind kind, int[] tiers, Class<? extends ClayContainer> blockClass) {
+    private static void addContainers(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends ClayContainer> blockClass) {
         ClayiumCore.logger.info("Registering: " + blockClass.toString());
 
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
         try {
-            Constructor<? extends ClayContainer> constructor = blockClass.getDeclaredConstructor(int.class);
+//            Constructor<? extends ClayContainer> constructor = blockClass.getDeclaredConstructor(int.class);
+            Constructor<? extends ClayContainer> constructor2 = blockClass.getDeclaredConstructor(TierPrefix.class);
 
-            for (int tier : tiers) {
-                addContainer(kind, tier, constructor.newInstance(tier));
+            for (TierPrefix tier : tiers) {
+                addContainer(kind, tier, constructor2.newInstance(tier));
             }
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             ClayiumCore.logger.error(e);
+            assert true : blockClass.getName() + " doesn't have constructor(TierPrefix)";
         }
     }
 
-    private static void addMachine(EnumMachineKind kind, int tier) {
-        addContainer(kind, tier, new ClayiumMachine(kind, tier));
-    }
-    private static void addMachine(EnumMachineKind kind, int[] tiers) {
-        for (int tier : tiers)
+    private static void addMachine(EnumMachineKind kind, List<TierPrefix> tiers) {
+        for (TierPrefix tier : tiers)
             addContainer(kind, tier, new ClayiumMachine(kind, tier));
     }
-    private static void addMachine(EnumMachineKind kind, int tier, String suffix) {
-        addContainer(kind, tier, new ClayiumMachine(kind, suffix, tier));
+    private static Block addMachine(EnumMachineKind kind, TierPrefix tier, String suffix) {
+        return addContainer(kind, tier, new ClayiumMachine(kind, suffix, tier));
     }
-    private static void addMachineTE(EnumMachineKind kind, int tier, Class<? extends TileEntityGeneric> teClass) {
+    private static void addMachineTE(EnumMachineKind kind, TierPrefix tier, Class<? extends TileEntityGeneric> teClass) {
         addContainer(kind, tier, new ClayiumMachine(kind, tier, teClass));
     }
-    private static void addMachineTE(EnumMachineKind kind, int[] tiers, Class<? extends TileEntityGeneric> teClass) {
-        for (int tier : tiers)
+    private static void addMachineTE(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends TileEntityGeneric> teClass) {
+        for (TierPrefix tier : tiers)
             addContainer(kind, tier, new ClayiumMachine(kind, tier, teClass));
     }
-    private static void addMachines(EnumMachineKind kind, int[] tiers, Class<? extends ClayiumMachine> blockClass) {
+    private static void addMachines(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends ClayiumMachine> blockClass) {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
         try {
-            Constructor<? extends ClayContainer> constructor = blockClass.getDeclaredConstructor(int.class);
+//            Constructor<? extends ClayContainer> constructor = blockClass.getDeclaredConstructor(int.class);
+            Constructor<? extends ClayContainer> constructor2 = blockClass.getDeclaredConstructor(TierPrefix.class);
 
-            for (int tier : tiers) {
-                addContainer(kind, tier, constructor.newInstance(tier));
+            for (TierPrefix tier : tiers) {
+                addContainer(kind, tier, constructor2.newInstance(tier));
             }
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             ClayiumCore.logger.error(e);
+            assert true : blockClass.getName() + " doesn't have constructor(TierPrefix)";
         }
     }
-    private static void addAssembler(EnumMachineKind kind, int tier) {
-        addContainer(kind, tier, new ClayAssembler(kind, tier));
+    private static Block addAssembler(EnumMachineKind kind, TierPrefix tier) {
+        return addContainer(kind, tier, new ClayAssembler(kind, tier));
     }
-    private static void addAssembler(EnumMachineKind kind, int[] tiers) {
-        for (int tier : tiers) {
+    private static void addAssembler(EnumMachineKind kind, List<TierPrefix> tiers) {
+        for (TierPrefix tier : tiers)
             addContainer(kind, tier, new ClayAssembler(kind, tier));
-        }
     }
-    private static void addAssembler(EnumMachineKind kind, int tier, Class<? extends TileEntityClayAssembler> teClass) {
+    private static void addAssembler(EnumMachineKind kind, TierPrefix tier, Class<? extends TileEntityClayAssembler> teClass) {
         addContainer(kind, tier, new ClayAssembler(kind, tier, teClass));
     }
-    private static void addAssembler(EnumMachineKind kind, int[] tiers, Class<? extends TileEntityClayAssembler> teClass) {
-        for (int tier : tiers) {
+    private static void addAssembler(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends TileEntityClayAssembler> teClass) {
+        for (TierPrefix tier : tiers)
             addContainer(kind, tier, new ClayAssembler(kind, tier, teClass));
-        }
     }
-    private static void addAssemblerLike(EnumMachineKind kind, int[] tiers, Class<? extends ClayAssembler> blockClass) {
+    private static void addAssemblerLike(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends ClayAssembler> blockClass) {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
         try {
-            Constructor<? extends ClayAssembler> constructor = blockClass.getDeclaredConstructor(EnumMachineKind.class, int.class);
+//            Constructor<? extends ClayAssembler> constructor = blockClass.getDeclaredConstructor(EnumMachineKind.class, int.class);
+            Constructor<? extends ClayAssembler> constructor2 = blockClass.getDeclaredConstructor(EnumMachineKind.class, TierPrefix.class);
 
-            for (int tier : tiers) {
-                addContainer(kind, tier, constructor.newInstance(kind, tier));
+            for (TierPrefix tier : tiers) {
+                addContainer(kind, tier, constructor2.newInstance(kind, tier));
             }
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             ClayiumCore.logger.error(e);
+            assert true : blockClass.getName() + " doesn't have constructor(EnumMachineKind, TierPrefix)";
         }
     }
 
@@ -271,10 +259,6 @@ public class ClayiumMachines {
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
             return machineMap.get(kind).get(tier);
         return Blocks.AIR;
-    }
-    @Deprecated // iff tier is clear, use TierPrefix version.
-    public static Block get(EnumMachineKind kind, int tier) {
-        return get(kind, TierPrefix.get(tier));
     }
     /**
      * @return the least tier machine of the kind

@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 public class GadgetOverclock extends GadgetTemp {
     private final int meta;
 
-    public GadgetOverclock(int meta, int tier) {
-        super("gadget_" + TierPrefix.get(tier).getPrefix() + "_overclock", meta, tier);
+    public GadgetOverclock(int meta, TierPrefix tier) {
+        super("gadget_" + tier.getPrefix() + "_overclock", meta, tier);
         this.meta = meta;
     }
 

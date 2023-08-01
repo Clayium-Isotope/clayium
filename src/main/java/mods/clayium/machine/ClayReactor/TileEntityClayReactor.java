@@ -16,6 +16,7 @@ import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 
 public class TileEntityClayReactor extends TileEntityMultiblockMachine implements IClayLaserMachine {
-    public int recipeTier = 0;
+    public TierPrefix recipeTier = TierPrefix.none;
     public ClayLaser irradiatedLaser = null;
     protected int resultSlotNum = 2;
 
@@ -70,7 +71,7 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
             sum += Math.pow(2.0, 16 - atier);
         }
 
-        this.recipeTier = Math.max((int) (16.0 - Math.floor(Math.log(sum / 26) / Math.log(2.0) + 0.5)), 0);
+        this.recipeTier = TierPrefix.get(Math.max((int) (16.0 - Math.floor(Math.log(sum / 26) / Math.log(2.0) + 0.5)), 0));
         return flag;
     }
 
@@ -104,33 +105,33 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
     protected int getMachineTier(BlockPos pos) {
         Block block = this.getBlock(pos);
         if (block instanceof MachineHull) {
-            return ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(pos));
+            return ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(pos)).meta();
         }
 
         if (block instanceof Overclocker) {
-            return ClayiumBlocks.overclocker.getTier(block).ordinal();
+            return ClayiumBlocks.overclocker.getTier(block).meta();
         }
 
         TileEntity te = this.getTileEntity(pos);
         if (te instanceof ISynchronizedInterface) {
-            return ((ISynchronizedInterface) te).getHullTier();
+            return ((ISynchronizedInterface) te).getHullTier().meta();
         }
 
         return -1;
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
     }
 
     @Override
-    public int getRecipeTier() {
+    public TierPrefix getRecipeTier() {
         return this.recipeTier;
     }
 
     @Override
-    public int getHullTier() {
-        return 7;
+    public TierPrefix getHullTier() {
+        return TierPrefix.claySteel;
     }
 
     @Override

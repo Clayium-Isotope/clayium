@@ -44,7 +44,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     protected int autoInsertCount = 2;
     protected int autoExtractCount = 0;
 
-    protected int tier = -1;
+    protected TierPrefix tier = TierPrefix.none;
 
     public TileEntityClayContainer() {
         super();
@@ -55,17 +55,17 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     @Override
     public void initParams() {}
 
-    public int getRecipeTier() {
-        return tier;
+    public TierPrefix getRecipeTier() {
+        return this.tier;
     }
 
     // TileEntityが作成されるとき、引数無しが適切なので、初期化の関数を分ける
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
         this.setDefaultTransportation(tier);
     }
 
-    protected void setDefaultTransportation(int tier) {
+    protected void setDefaultTransportation(TierPrefix tier) {
         UtilTier.MachineTransport config = UtilTier.MachineTransport.getByTier(tier);
         if (config != null) {
             this.autoInsertInterval = config.autoInsertInterval;
@@ -89,7 +89,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
         this.autoInsertCount = compound.getInteger("AutoInsertCount");
         this.autoExtractCount = compound.getInteger("AutoExtractCount");
 
-        initParamsByTier(compound.getInteger("Tier"));
+        initParamsByTier(TierPrefix.get(compound.getInteger("Tier")));
 
         if (compound.hasKey("Filters", Constants.NBT.TAG_LIST)) {
             UtilCollect.tagList2EnumMap(compound.getTagList("Filters", Constants.NBT.TAG_COMPOUND), this.filters);
@@ -105,7 +105,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
         compound.setInteger("AutoInsertCount", this.autoInsertCount);
         compound.setInteger("AutoExtractCount", this.autoExtractCount);
 
-        compound.setInteger("Tier", this.tier);
+        compound.setInteger("Tier", this.tier.meta());
 
         compound.setTag("Filters", UtilCollect.enumMap2TagList(this.filters));
 
@@ -311,7 +311,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
     /* ========== Texture Part ========== */
 
-    public int getHullTier() {
+    public TierPrefix getHullTier() {
         return this.getRecipeTier();
     }
 

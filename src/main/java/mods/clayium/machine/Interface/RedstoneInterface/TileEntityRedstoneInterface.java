@@ -5,6 +5,7 @@ import mods.clayium.machine.Interface.IExternalControl;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,12 +20,12 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
     protected int[] syncSource = null;
     protected int lastSignal = 0;
     protected int lastPower = 0;
-    private int tier;
+    private TierPrefix tier;
 
     public TileEntityRedstoneInterface() {}
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
     }
 
@@ -54,7 +55,7 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
     }
 
     @Override
-    public int getHullTier() {
+    public TierPrefix getHullTier() {
         return this.tier;
     }
 
@@ -186,7 +187,7 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
         this.lastSignal = compound.getInteger("LastSignal");
         this.lastPower = compound.getInteger("LastPower");
 
-        initParamsByTier(compound.getInteger("Tier"));
+        initParamsByTier(TierPrefix.get(compound.getInteger("Tier")));
     }
 
     @Override
@@ -195,7 +196,7 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
             compound.setString("CustomName", this.getName());
         }
 
-        compound.setInteger("Tier", this.tier);
+        compound.setInteger("Tier", this.tier.meta());
 
         if (this.isSynced()) {
             compound.setIntArray("SyncSource", SyncManager.getIntArrayFromTile((TileEntity) this.core));

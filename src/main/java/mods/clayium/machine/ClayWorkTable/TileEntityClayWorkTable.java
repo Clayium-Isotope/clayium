@@ -7,6 +7,7 @@ import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -114,8 +115,8 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
     }
 
     @Override
-    public int getRecipeTier() {
-        return 0;
+    public TierPrefix getRecipeTier() {
+        return TierPrefix.none;
     }
 
     @Override

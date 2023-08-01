@@ -5,6 +5,7 @@ import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @HasOriginalState
 public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
-    public ClayEnergyLaser(int tier) {
+    public ClayEnergyLaser(TierPrefix tier) {
         super(TileEntityClayEnergyLaser.class, EnumMachineKind.clayEnergyLaser, GuiHandler.GuiIdClayEnergyLaser, tier);
     }
 
@@ -63,16 +64,16 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
         if (UtilLocale.canLocalize("tooltip.ClayEnergyLaser.energyConsumption")) {
             int e = 0;
             switch(this.tier) {
-                case 7:
+                case claySteel:
                     e = TileEntityClayEnergyLaser.consumingEnergyBlue;
                     break;
-                case 8:
+                case clayium:
                     e = TileEntityClayEnergyLaser.consumingEnergyGreen;
                     break;
-                case 9:
+                case ultimate:
                     e = TileEntityClayEnergyLaser.consumingEnergyRed;
                     break;
-                case 10:
+                case antimatter:
                     e = TileEntityClayEnergyLaser.consumingEnergyWhite;
             }
 

@@ -1,10 +1,11 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 
 public class FilterModId extends FilterString {
     public FilterModId() {
-        super("filter_mod", 6);
+        super("filter_mod", TierPrefix.precision);
     }
 
     @Override

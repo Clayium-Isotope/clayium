@@ -5,6 +5,7 @@ import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class MultiblockMachine extends ClayiumMachine {
-    public MultiblockMachine(EnumMachineKind kind, String suffix, int tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
+    public MultiblockMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
         super(kind, suffix, tier, teClass, guiID);
 
         this.setDefaultState(this.getDefaultState().withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, false));

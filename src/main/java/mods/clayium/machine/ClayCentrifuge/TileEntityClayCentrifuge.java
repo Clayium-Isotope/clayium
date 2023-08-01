@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayCentrifuge;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -33,15 +34,16 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
         this.autoExtract = true;
     }
 
-    public void initParamsByTier(int tier) {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
 
         switch (tier) {
-            case 3: this.resultSlotNum = 1; break;
-            case 4: this.resultSlotNum = 2; break;
-            case 5: this.resultSlotNum = 3; break;
-            case 6: this.resultSlotNum = 4; break;
-            default: this.resultSlotNum = 0;
+            case simple:    this.resultSlotNum = 1; break;
+            case basic:     this.resultSlotNum = 2; break;
+            case advanced:  this.resultSlotNum = 3; break;
+            case precision: this.resultSlotNum = 4; break;
+            default:        this.resultSlotNum = 0;
         }
     }
 

@@ -33,7 +33,7 @@ public interface IClayEnergy {
             return 0;
 
         if (stack.getItem() instanceof ItemBlockCompressedClay) {
-            return ((ItemBlockCompressedClay) stack.getItem()).getTier();
+            return ((ItemBlockCompressedClay) stack.getItem()).getTier().meta();
         }
 
         return -1;

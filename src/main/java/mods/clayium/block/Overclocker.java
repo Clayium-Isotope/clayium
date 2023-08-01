@@ -1,6 +1,7 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Overclocker extends BlockTiered implements IOverclocker {
     private final double overclockFactor;
 
-    public Overclocker(int meta, int tier, double overclockFactor) {
+    public Overclocker(int meta, TierPrefix tier, double overclockFactor) {
         super(Material.IRON, "overclocker_", meta, tier);
         setHardness(2.0F);
         setResistance(2.0F);

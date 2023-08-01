@@ -134,8 +134,8 @@ public class UtilLocale {
     }
 
     @SideOnly(Side.CLIENT)
-    public static String tierGui(int tier) {
-        return I18n.format("gui.Common.tier", tier);
+    public static String tierGui(TierPrefix tier) {
+        return I18n.format("gui.Common.tier", tier.meta());
     }
 
     public static String craftTimeNumeral(long craftTime) {

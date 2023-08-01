@@ -3,6 +3,7 @@ package mods.clayium.item.gadget;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +25,7 @@ public class GadgetHolder extends ItemTiered {
     protected static Map<Entity, Map<String, ItemStack>> clientAppliedGadgets = new HashMap<>();
 
     public GadgetHolder() {
-        super("gadget_holder", -1);
+        super("gadget_holder", TierPrefix.unknown);
 
         setMaxStackSize(1);
     }

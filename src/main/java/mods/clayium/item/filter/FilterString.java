@@ -2,6 +2,7 @@ package mods.clayium.item.filter;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public abstract class FilterString extends FilterTemp {
-    protected FilterString(String modelPath, int tier) {
+    protected FilterString(String modelPath, TierPrefix tier) {
         super(modelPath, tier);
     }
 

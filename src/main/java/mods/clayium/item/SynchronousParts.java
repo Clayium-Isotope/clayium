@@ -3,6 +3,7 @@ package mods.clayium.item;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.item.common.ItemTiered;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -13,7 +14,7 @@ import net.minecraft.world.World;
 
 public class SynchronousParts extends ItemTiered implements IModifyCC {
     public SynchronousParts() {
-        super("synchronous_parts", 9);
+        super("synchronous_parts", TierPrefix.ultimate);
     }
 
     @Override

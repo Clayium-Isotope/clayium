@@ -2,6 +2,7 @@ package mods.clayium.block;
 
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.worldgen.WorldGenGenericTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -96,13 +97,13 @@ public class ClayTreeSapling extends BlockBush implements IGrowable, ITieredBloc
     }
 
     @Override
-    public int getTier(ItemStack stackIn) {
-        return 7;
+    public TierPrefix getTier(ItemStack stackIn) {
+        return TierPrefix.claySteel;
     }
 
     @Override
-    public int getTier(IBlockAccess access, BlockPos posIn) {
-        return 7;
+    public TierPrefix getTier(IBlockAccess access, BlockPos posIn) {
+        return TierPrefix.claySteel;
     }
 
     @Override

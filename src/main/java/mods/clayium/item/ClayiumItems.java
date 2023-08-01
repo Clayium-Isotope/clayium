@@ -7,6 +7,7 @@ import mods.clayium.item.common.ItemDamaged;
 import mods.clayium.item.common.ItemTiered;
 import mods.clayium.item.filter.*;
 import mods.clayium.item.gadget.*;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -59,32 +60,32 @@ public class ClayiumItems {
     private static final ClayiumItems instance = new ClayiumItems();
 
     /* Elements... */
-    public static final ItemDamaged clayShards = new ItemDamaged("compressed_clay_shard_", new int[] {1, 2, 3});
+    public static final ItemDamaged clayShards = new ItemDamaged("compressed_clay_shard_", new TierPrefix[] {TierPrefix.clay, TierPrefix.denseClay, TierPrefix.simple});
 
     /* Misc... */
-    public static final Item clayCircuit = new ItemTiered("clay_circuit", 2);
-    public static final Item simpleCircuit = new ItemTiered("simple_circuit", 3);
-    public static final Item basicCircuit = new ItemTiered("basic_circuit", 4);
-    public static final Item advancedCircuit = new ItemTiered("advanced_circuit", 5);
-    public static final Item precisionCircuit = new ItemTiered("precision_circuit", 6);
-    public static final Item integratedCircuit = new ItemTiered("integrated_circuit", 2);
-    public static final Item clayCore = new ItemTiered("clay_core", 8);
-    public static final Item clayBrain = new ItemTiered("clay_brain", 9);
-    public static final Item claySpirit = new ItemTiered("clay_spirit", 10);
-    public static final Item claySoul = new ItemTiered("clay_soul", 11);
-    public static final Item clayAnima = new ItemTiered("clay_anima", 12);
-    public static final Item clayPsyche = new ItemTiered("clay_psyche", 13);
-    public static final Item clayCircuitBoard = new ItemTiered("clay_circuit_board", 2);
-    public static final Item CEEBoard = new ItemTiered("cee_board", 3);
-    public static final Item CEECircuit = new ItemTiered("cee_circuit", 3);
-    public static final Item CEE = new ItemTiered("cee", 3);
-    public static final Item laserParts = new ItemTiered("laser_parts", 7);
-    public static final Item antimatterSeed = new ItemTiered("antimatter_seed", 9);
+    public static final Item clayCircuit = new ItemTiered("clay_circuit", TierPrefix.denseClay);
+    public static final Item simpleCircuit = new ItemTiered("simple_circuit", TierPrefix.simple);
+    public static final Item basicCircuit = new ItemTiered("basic_circuit", TierPrefix.basic);
+    public static final Item advancedCircuit = new ItemTiered("advanced_circuit", TierPrefix.advanced);
+    public static final Item precisionCircuit = new ItemTiered("precision_circuit", TierPrefix.precision);
+    public static final Item integratedCircuit = new ItemTiered("integrated_circuit", TierPrefix.claySteel);
+    public static final Item clayCore = new ItemTiered("clay_core", TierPrefix.clayium);
+    public static final Item clayBrain = new ItemTiered("clay_brain", TierPrefix.ultimate);
+    public static final Item claySpirit = new ItemTiered("clay_spirit", TierPrefix.antimatter);
+    public static final Item claySoul = new ItemTiered("clay_soul", TierPrefix.pureAntimatter);
+    public static final Item clayAnima = new ItemTiered("clay_anima", TierPrefix.OEC);
+    public static final Item clayPsyche = new ItemTiered("clay_psyche", TierPrefix.OPA);
+    public static final Item clayCircuitBoard = new ItemTiered("clay_circuit_board", TierPrefix.denseClay);
+    public static final Item CEEBoard = new ItemTiered("cee_board", TierPrefix.simple);
+    public static final Item CEECircuit = new ItemTiered("cee_circuit", TierPrefix.simple);
+    public static final Item CEE = new ItemTiered("cee", TierPrefix.simple);
+    public static final Item laserParts = new ItemTiered("laser_parts", TierPrefix.claySteel);
+    public static final Item antimatterSeed = new ItemTiered("antimatter_seed", TierPrefix.ultimate);
     public static final Item synchronousParts = new SynchronousParts();
-    public static final Item teleportationParts = new ItemTiered("teleportation_parts", 11);
-    public static final Item manipulator1 = new ItemTiered("manipulator_1", 6);
-    public static final Item manipulator2 = new ItemTiered("manipulator_2", 8);
-    public static final Item manipulator3 = new ItemTiered("manipulator_3", 12);
+    public static final Item teleportationParts = new ItemTiered("teleportation_parts", TierPrefix.pureAntimatter);
+    public static final Item manipulator1 = new ItemTiered("manipulator_1", TierPrefix.precision);
+    public static final Item manipulator2 = new ItemTiered("manipulator_2", TierPrefix.clayium);
+    public static final Item manipulator3 = new ItemTiered("manipulator_3", TierPrefix.OEC);
     /* ...Misc */
 
     /* Tools... */
@@ -105,12 +106,12 @@ public class ClayiumItems {
     public static final Item claySteelPickaxe = new ClaySteelPickaxe();
     public static final Item claySteelShovel = new ClaySteelShovel();
 
-    public static final Item clayShooter0 = new ClayShooter(10000, "clay_shooter_0", 6, 2, 1.2f, 25.0f, 4, 6, 0);
-    public static final Item clayShooter1 = new ClayShooter(1000, "clay_shooter_1", 6, 4, 4.5f, 3.0f, 7, 12, 0);
-    public static final Item clayShooter2 = new ClayShooter(8000, "clay_shooter_2", 6, 2, 15.0f, 0.0f, 25, 8, 20);
-    public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", 6, 3, 30.0f, 0.0f, 100, 8, 40);
+    public static final Item clayShooter0 = new ClayShooter(10000, "clay_shooter_0", TierPrefix.precision, 2, 1.2f, 25.0f, 4, 6, 0);
+    public static final Item clayShooter1 = new ClayShooter(1000, "clay_shooter_1", TierPrefix.precision, 4, 4.5f, 3.0f, 7, 12, 0);
+    public static final Item clayShooter2 = new ClayShooter(8000, "clay_shooter_2", TierPrefix.precision, 2, 15.0f, 0.0f, 25, 8, 20);
+    public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", TierPrefix.precision, 3, 30.0f, 0.0f, 100, 8, 40);
 
-    public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter", 11, 3, 30.0F, 0.0F, 100, 8, 40);
+    public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter", TierPrefix.pureAntimatter, 3, 30.0F, 0.0F, 100, 8, 40);
 
     public static final Item synchronizer = new Synchronizer();
     /* ...Tools */
@@ -119,7 +120,7 @@ public class ClayiumItems {
     public static final Item filterDuplicator = new FilterDuplicator();
     public static final Item filterWhitelist = new FilterWhitelist();
     public static final Item filterBlacklist = new FilterBlacklist();
-    public static final Item filterFuzzy = new FilterWhitelist("filter_fuzzy", 7, true);
+    public static final Item filterFuzzy = new FilterWhitelist("filter_fuzzy", TierPrefix.claySteel, true);
     public static final Item filterOreDict = new FilterOreDict();
     public static final Item filterItemName = new FilterItemName();
     public static final Item filterUnlocalizedName = new FilterUnlocalizedName();
@@ -132,22 +133,22 @@ public class ClayiumItems {
     /* Gadget... */
     public static final Item gadgetHolder = new GadgetHolder();
 
-    public static final Item gadgetAntimatterOverclock = new GadgetOverclock(0, 10);
-    public static final Item gadgetPureAntimatterOverclock = new GadgetOverclock(1, 11);
-    public static final Item gadgetOECOverclock = new GadgetOverclock(2, 12);
-    public static final Item gadgetOPAOverclock = new GadgetOverclock(3, 13);
-    public static final Item gadgetFlight0 = new GadgetFlight(0, 12, 0);
-    public static final Item gadgetFlight1 = new GadgetFlight(1, 13, 1);
-    public static final Item gadgetFlight2 = new GadgetFlight(2, 13, 2);
-    public static final Item gadgetHealth0 = new GadgetHealth(0, 6, 1);
-    public static final Item gadgetHealth1 = new GadgetHealth(1, 10, 4);
-    public static final Item gadgetHealth2 = new GadgetHealth(2, 12, 9);
-    public static final Item gadgetAutoEat0 = new GadgetAutoEat(0, 7);
-    public static final Item gadgetAutoEat1 = new GadgetAutoEat(1, 7);
+    public static final Item gadgetAntimatterOverclock = new GadgetOverclock(0, TierPrefix.antimatter);
+    public static final Item gadgetPureAntimatterOverclock = new GadgetOverclock(1, TierPrefix.pureAntimatter);
+    public static final Item gadgetOECOverclock = new GadgetOverclock(2, TierPrefix.OEC);
+    public static final Item gadgetOPAOverclock = new GadgetOverclock(3, TierPrefix.OPA);
+    public static final Item gadgetFlight0 = new GadgetFlight(0, TierPrefix.OEC, 0);
+    public static final Item gadgetFlight1 = new GadgetFlight(1, TierPrefix.OPA, 1);
+    public static final Item gadgetFlight2 = new GadgetFlight(2, TierPrefix.OPA, 2);
+    public static final Item gadgetHealth0 = new GadgetHealth(0, TierPrefix.precision, 1);
+    public static final Item gadgetHealth1 = new GadgetHealth(1, TierPrefix.antimatter, 4);
+    public static final Item gadgetHealth2 = new GadgetHealth(2, TierPrefix.OEC, 9);
+    public static final Item gadgetAutoEat0 = new GadgetAutoEat(0, TierPrefix.claySteel);
+    public static final Item gadgetAutoEat1 = new GadgetAutoEat(1, TierPrefix.claySteel);
     public static final Item gadgetRepeatedlyAttack = new GadgetRepeatedlyAttack();
-    public static final Item gadgetLongArm0 = new GadgetLongArm(0, 6, 3.0F);
-    public static final Item gadgetLongArm1 = new GadgetLongArm(1, 8, 7.0F);
-    public static final Item gadgetLongArm2 = new GadgetLongArm(2, 12, 20.0F);
+    public static final Item gadgetLongArm0 = new GadgetLongArm(0, TierPrefix.precision, 3.0F);
+    public static final Item gadgetLongArm1 = new GadgetLongArm(1, TierPrefix.clayium, 7.0F);
+    public static final Item gadgetLongArm2 = new GadgetLongArm(2, TierPrefix.OEC, 20.0F);
     /* ...Gadget */
     /* ...Elements */
 

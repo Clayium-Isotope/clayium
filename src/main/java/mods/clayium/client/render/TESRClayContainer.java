@@ -67,7 +67,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             if (te.getClass().isAnnotationPresent(CustomHull.class)) {
                 hullPath = te.getClass().getAnnotation(CustomHull.class).value();
             } else {
-                hullPath = "blocks/machinehull-" + (te.getHullTier() - 1);
+                hullPath = "blocks/machinehull-" + (te.getHullTier().meta() - 1);
             }
 
             TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/" + hullPath + ".png"));

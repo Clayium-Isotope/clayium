@@ -1,11 +1,12 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class FilterDuplicator extends FilterTemp {
     public FilterDuplicator() {
-        super("filter_duplicator", 7);
+        super("filter_duplicator", TierPrefix.claySteel);
     }
 
     @Override

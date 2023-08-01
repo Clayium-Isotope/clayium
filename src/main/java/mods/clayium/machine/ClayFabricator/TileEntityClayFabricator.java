@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayFabricator;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -19,26 +20,26 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
         this.exponentOfNumber = 0.8F;
     }
 
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
         this.setDefaultTransportation(tier);
 
         this.initCraftTime = 0.01F;
 
         switch (tier) {
-            case 8:
+            case clayium:
                 this.acceptableTier = 11;
                 this.baseCraftTime = 5.0F;
                 this.exponentOfNumber = 0.85F;
                 this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(4.5E7F) / 20.0F));
                 break;
-            case 9:
+            case ultimate:
                 this.acceptableTier = 13;
                 this.baseCraftTime = 2.0F;
                 this.exponentOfNumber = 0.3F;
                 this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E9F) / 20.0F));
                 break;
-            case 13:
+            case OPA:
                 this.acceptableTier = 13;
                 this.baseCraftTime = 1.3F;
                 this.exponentOfNumber = 0.06F;

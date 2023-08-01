@@ -4,6 +4,7 @@ import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.RecipeProvider;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -45,7 +46,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
         this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
     }

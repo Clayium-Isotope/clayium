@@ -61,7 +61,7 @@ public class ClayiumMaterials {
         materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.ball, new ItemStack(Items.CLAY_BALL));
         materialShapeMap.get(ClayiumMaterial.clay).put(ClayiumShape.block, new ItemStack(Blocks.CLAY));
         for (ClayiumShape shape : ClayiumShape.clayPartShapes) {
-            add(ClayiumMaterial.clay, shape, 1, true);
+            add(ClayiumMaterial.clay, shape, TierPrefix.clay, true);
         }
         clayParts = materialShapeMap.get(ClayiumMaterial.clay);
 
@@ -69,99 +69,99 @@ public class ClayiumMaterials {
         materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.largeBall, ItemStack.EMPTY);
         materialShapeMap.get(ClayiumMaterial.denseClay).put(ClayiumShape.block, ItemStack.EMPTY);
         for (ClayiumShape shape : ClayiumShape.clayPartShapes) {
-            add(ClayiumMaterial.denseClay, shape, 2, true);
+            add(ClayiumMaterial.denseClay, shape, TierPrefix.denseClay, true);
         }
         denseClayParts = materialShapeMap.get(ClayiumMaterial.denseClay);
 
-        add(ClayiumMaterial.indClay, ClayiumShape.plate, 3, true);
-        add(ClayiumMaterial.indClay, ClayiumShape.largePlate, 3, true);
+        add(ClayiumMaterial.indClay, ClayiumShape.plate, TierPrefix.simple, true);
+        add(ClayiumMaterial.indClay, ClayiumShape.largePlate, TierPrefix.simple, true);
 
-        add(ClayiumMaterial.advClay, ClayiumShape.plate, 4, true);
-        add(ClayiumMaterial.advClay, ClayiumShape.largePlate, 4, true);
+        add(ClayiumMaterial.advClay, ClayiumShape.plate, TierPrefix.basic, true);
+        add(ClayiumMaterial.advClay, ClayiumShape.largePlate, TierPrefix.basic, true);
 
 //        add(ClayiumMaterial.clay, ClayiumShape.dust, 1, true);
 //        add(ClayiumMaterial.denseClay, ClayiumShape.dust, 2, true);
-        addOD(ClayiumMaterial.indClay, ClayiumShape.dust, 3, true);
-        addOD(ClayiumMaterial.advClay, ClayiumShape.dust, 4, true);
-        addOD(ClayiumMaterial.engClay, ClayiumShape.dust, 3, true);
-        addOD(ClayiumMaterial.excClay, ClayiumShape.dust, 7, true);
+        addOD(ClayiumMaterial.indClay, ClayiumShape.dust, TierPrefix.simple, true);
+        addOD(ClayiumMaterial.advClay, ClayiumShape.dust, TierPrefix.basic, true);
+        addOD(ClayiumMaterial.engClay, ClayiumShape.dust, TierPrefix.simple, true);
+        addOD(ClayiumMaterial.excClay, ClayiumShape.dust, TierPrefix.claySteel, true);
 
-        addOD(ClayiumMaterial.salt, ClayiumShape.dust, 4, true);
-        add(ClayiumMaterial.calClay, ClayiumShape.dust, 4, true);
-        add(ClayiumMaterial.calciumChloride, ClayiumShape.dust, 4, true);
-        add(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust, 4, true);
-        addOD(ClayiumMaterial.quartz, ClayiumShape.dust, 4, true);
+        addOD(ClayiumMaterial.salt, ClayiumShape.dust, TierPrefix.basic, true);
+        add(ClayiumMaterial.calClay, ClayiumShape.dust, TierPrefix.basic, true);
+        add(ClayiumMaterial.calciumChloride, ClayiumShape.dust, TierPrefix.basic, true);
+        add(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust, TierPrefix.basic, true);
+        addOD(ClayiumMaterial.quartz, ClayiumShape.dust, TierPrefix.basic, true);
 
-        addOD(ClayiumMaterial.impureSilicon, ClayiumShape.dust, 5, false);
-        addOD(ClayiumMaterial.impureSilicon, ClayiumShape.ingot, 5, true);
-        addOD(ClayiumMaterial.impureSilicon, ClayiumShape.plate, 5, true);
-        add(ClayiumMaterial.impureSilicon, ClayiumShape.largePlate, 5, true);
+        addOD(ClayiumMaterial.impureSilicon, ClayiumShape.dust, TierPrefix.advanced, false);
+        addOD(ClayiumMaterial.impureSilicon, ClayiumShape.ingot, TierPrefix.advanced, true);
+        addOD(ClayiumMaterial.impureSilicon, ClayiumShape.plate, TierPrefix.advanced, true);
+        add(ClayiumMaterial.impureSilicon, ClayiumShape.largePlate, TierPrefix.advanced, true);
 
-        addOD(ClayiumMaterial.silicone, ClayiumShape.dust, 5, false);
-        addOD(ClayiumMaterial.silicone, ClayiumShape.ingot, 5, false);
-        addOD(ClayiumMaterial.silicone, ClayiumShape.plate, 5, false);
-        add(ClayiumMaterial.silicone, ClayiumShape.largePlate, 5, false);
+        addOD(ClayiumMaterial.silicone, ClayiumShape.dust, TierPrefix.advanced, false);
+        addOD(ClayiumMaterial.silicone, ClayiumShape.ingot, TierPrefix.advanced, false);
+        addOD(ClayiumMaterial.silicone, ClayiumShape.plate, TierPrefix.advanced, false);
+        add(ClayiumMaterial.silicone, ClayiumShape.largePlate, TierPrefix.advanced, false);
 
-        addOD(ClayiumMaterial.silicon, ClayiumShape.dust, 5, false);
-        addOD(ClayiumMaterial.silicon, ClayiumShape.ingot, 5, false);
-        addOD(ClayiumMaterial.silicon, ClayiumShape.plate, 5, false);
-        add(ClayiumMaterial.silicon, ClayiumShape.largePlate, 5, false);
+        addOD(ClayiumMaterial.silicon, ClayiumShape.dust, TierPrefix.advanced, false);
+        addOD(ClayiumMaterial.silicon, ClayiumShape.ingot, TierPrefix.advanced, false);
+        addOD(ClayiumMaterial.silicon, ClayiumShape.plate, TierPrefix.advanced, false);
+        add(ClayiumMaterial.silicon, ClayiumShape.largePlate, TierPrefix.advanced, false);
 
-        addOD(ClayiumMaterial.aluminium, ClayiumShape.dust, 6, false);
-        addOD(ClayiumMaterial.aluminium, ClayiumShape.ingot, 6, false);
-        addOD(ClayiumMaterial.aluminium, ClayiumShape.plate, 6, false);
-        add(ClayiumMaterial.aluminium, ClayiumShape.largePlate, 6, false);
+        addOD(ClayiumMaterial.aluminium, ClayiumShape.dust, TierPrefix.precision, false);
+        addOD(ClayiumMaterial.aluminium, ClayiumShape.ingot, TierPrefix.precision, false);
+        addOD(ClayiumMaterial.aluminium, ClayiumShape.plate, TierPrefix.precision, false);
+        add(ClayiumMaterial.aluminium, ClayiumShape.largePlate, TierPrefix.precision, false);
 
         if (ClayiumConfiguration.cfgHardcoreAluminium) {
-            add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, 6, false);
-            add(ClayiumMaterial.impureAluminium, ClayiumShape.ingot, 6, false);
-            add(ClayiumMaterial.impureAluminium, ClayiumShape.plate, 6, false);
-            add(ClayiumMaterial.impureAluminium, ClayiumShape.largePlate, 6, false);
+            add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, TierPrefix.precision, false);
+            add(ClayiumMaterial.impureAluminium, ClayiumShape.ingot, TierPrefix.precision, false);
+            add(ClayiumMaterial.impureAluminium, ClayiumShape.plate, TierPrefix.precision, false);
+            add(ClayiumMaterial.impureAluminium, ClayiumShape.largePlate, TierPrefix.precision, false);
         } else {
-            add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, -1, false);
+            add(ClayiumMaterial.impureAluminium, ClayiumShape.dust, TierPrefix.unknown, false);
         }
 
-        addOD(ClayiumMaterial.claySteel, ClayiumShape.dust, 7, false);
-        addOD(ClayiumMaterial.claySteel, ClayiumShape.ingot, 7, false);
-        addOD(ClayiumMaterial.claySteel, ClayiumShape.plate, 7, false);
-        add(ClayiumMaterial.claySteel, ClayiumShape.largePlate, 7, false);
+        addOD(ClayiumMaterial.claySteel, ClayiumShape.dust, TierPrefix.claySteel, false);
+        addOD(ClayiumMaterial.claySteel, ClayiumShape.ingot, TierPrefix.claySteel, false);
+        addOD(ClayiumMaterial.claySteel, ClayiumShape.plate, TierPrefix.claySteel, false);
+        add(ClayiumMaterial.claySteel, ClayiumShape.largePlate, TierPrefix.claySteel, false);
 
-        addOD(ClayiumMaterial.clayium, ClayiumShape.dust, 8, false);
-        addOD(ClayiumMaterial.clayium, ClayiumShape.ingot, 8, false);
-        addOD(ClayiumMaterial.clayium, ClayiumShape.plate, 8, false);
-        add(ClayiumMaterial.clayium, ClayiumShape.largePlate, 8, false);
+        addOD(ClayiumMaterial.clayium, ClayiumShape.dust, TierPrefix.clayium, false);
+        addOD(ClayiumMaterial.clayium, ClayiumShape.ingot, TierPrefix.clayium, false);
+        addOD(ClayiumMaterial.clayium, ClayiumShape.plate, TierPrefix.clayium, false);
+        add(ClayiumMaterial.clayium, ClayiumShape.largePlate, TierPrefix.clayium, false);
 
-        addOD(ClayiumMaterial.ultimateAlloy, ClayiumShape.dust, 9, false);
-        addOD(ClayiumMaterial.ultimateAlloy, ClayiumShape.ingot, 9, false);
-        addOD(ClayiumMaterial.ultimateAlloy, ClayiumShape.plate, 9, false);
-        add(ClayiumMaterial.ultimateAlloy, ClayiumShape.largePlate, 9, false);
+        addOD(ClayiumMaterial.ultimateAlloy, ClayiumShape.dust, TierPrefix.ultimate, false);
+        addOD(ClayiumMaterial.ultimateAlloy, ClayiumShape.ingot, TierPrefix.ultimate, false);
+        addOD(ClayiumMaterial.ultimateAlloy, ClayiumShape.plate, TierPrefix.ultimate, false);
+        add(ClayiumMaterial.ultimateAlloy, ClayiumShape.largePlate, TierPrefix.ultimate, false);
 
-        addOD(ClayiumMaterial.antimatter, ClayiumShape.dust, 10, false);
-        addOD(ClayiumMaterial.antimatter, ClayiumShape.gem, 10, false);
-        addOD(ClayiumMaterial.antimatter, ClayiumShape.plate, 10, false);
-        add(ClayiumMaterial.antimatter, ClayiumShape.largePlate, 10, false);
+        addOD(ClayiumMaterial.antimatter, ClayiumShape.dust, TierPrefix.antimatter, false);
+        addOD(ClayiumMaterial.antimatter, ClayiumShape.gem, TierPrefix.antimatter, false);
+        addOD(ClayiumMaterial.antimatter, ClayiumShape.plate, TierPrefix.antimatter, false);
+        add(ClayiumMaterial.antimatter, ClayiumShape.largePlate, TierPrefix.antimatter, false);
 
-        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.dust, 11, false);
-        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, 11, false);
-        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.plate, 11, false);
-        add(ClayiumMaterial.pureAntimatter, ClayiumShape.largePlate, 11, false);
+        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.dust, TierPrefix.pureAntimatter, false);
+        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.gem, TierPrefix.pureAntimatter, false);
+        addOD(ClayiumMaterial.pureAntimatter, ClayiumShape.plate, TierPrefix.pureAntimatter, false);
+        add(ClayiumMaterial.pureAntimatter, ClayiumShape.largePlate, TierPrefix.pureAntimatter, false);
 
-        addOD(ClayiumMaterial.compressedPureAntimatter_1, ClayiumShape.gem, 11, false);
-        addOD(ClayiumMaterial.compressedPureAntimatter_2, ClayiumShape.gem, 11, false);
-        addOD(ClayiumMaterial.compressedPureAntimatter_3, ClayiumShape.gem, 11, false);
-        addOD(ClayiumMaterial.compressedPureAntimatter_4, ClayiumShape.gem, 12, false);
-        addOD(ClayiumMaterial.compressedPureAntimatter_5, ClayiumShape.gem, 12, false);
-        addOD(ClayiumMaterial.compressedPureAntimatter_6, ClayiumShape.gem, 12, false);
-        addOD(ClayiumMaterial.compressedPureAntimatter_7, ClayiumShape.gem, 12, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_1, ClayiumShape.gem, TierPrefix.pureAntimatter, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_2, ClayiumShape.gem, TierPrefix.pureAntimatter, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_3, ClayiumShape.gem, TierPrefix.pureAntimatter, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_4, ClayiumShape.gem, TierPrefix.OEC, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_5, ClayiumShape.gem, TierPrefix.OEC, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_6, ClayiumShape.gem, TierPrefix.OEC, false);
+        addOD(ClayiumMaterial.compressedPureAntimatter_7, ClayiumShape.gem, TierPrefix.OEC, false);
 
-        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.dust, 12, false);
-        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.plate, 12, false);
-        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.largePlate, 12, false);
+        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.dust, TierPrefix.OEC, false);
+        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.plate, TierPrefix.OEC, false);
+        add(ClayiumMaterial.octupleEnergeticClay, ClayiumShape.largePlate, TierPrefix.OEC, false);
 
-        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.dust, 13, false);
-        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.gem, 13, false);
-        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.plate, 13, false);
-        add(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.largePlate, 13, false);
+        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.dust, TierPrefix.OPA, false);
+        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.gem, TierPrefix.OPA, false);
+        addOD(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.plate, TierPrefix.OPA, false);
+        add(ClayiumMaterial.octuplePureAntimatter, ClayiumShape.largePlate, TierPrefix.OPA, false);
 
         for (Block block : ClayiumBlocks.materialBlock) {
             if (block instanceof MaterialBlock) {
@@ -178,10 +178,10 @@ public class ClayiumMaterials {
 
         addOD(ClayiumMaterial.orgClay, ClayiumShape.dust, false);
 
-        add(ClayiumMaterial.impureRedstone, ClayiumShape.dust, -1, false);
-        add(ClayiumMaterial.impureGlowstone, ClayiumShape.dust, -1, false);
+        add(ClayiumMaterial.impureRedstone, ClayiumShape.dust, TierPrefix.unknown, false);
+        add(ClayiumMaterial.impureGlowstone, ClayiumShape.dust, TierPrefix.unknown, false);
 
-        add(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot, 8, false);
+        add(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot, TierPrefix.clayium, false);
 
         for (ClayiumMaterial metal: ClayiumMaterial.metals) {
             addOD(metal, ClayiumShape.dust, false);
@@ -189,19 +189,19 @@ public class ClayiumMaterials {
         }
 
         for (ClayiumMaterial metal : ClayiumMaterial.impureMetals) {
-            add(metal, ClayiumShape.dust, -1, false);
+            add(metal, ClayiumShape.dust, TierPrefix.unknown, false);
         }
 
         for (ClayiumMaterial metal : Arrays.asList(ClayiumMaterial.zincalminiumAlloy, ClayiumMaterial.zinconiumAlloy)) {
-            addOD(metal, ClayiumShape.dust, 6, false);
-            addOD(metal, ClayiumShape.ingot, 6, false);
+            addOD(metal, ClayiumShape.dust, TierPrefix.precision, false);
+            addOD(metal, ClayiumShape.ingot, TierPrefix.precision, false);
         }
 
         for (ClayiumMaterial metal : Arrays.asList(ClayiumMaterial.AZ91DAlloy, ClayiumMaterial.ZK60AAlloy)) {
-            addOD(metal, ClayiumShape.dust, 6, false);
-            addOD(metal, ClayiumShape.ingot, 6, false);
-            addOD(metal, ClayiumShape.plate, 6, false);
-            add(metal, ClayiumShape.largePlate, 6, false);
+            addOD(metal, ClayiumShape.dust, TierPrefix.precision, false);
+            addOD(metal, ClayiumShape.ingot, TierPrefix.precision, false);
+            addOD(metal, ClayiumShape.plate, TierPrefix.precision, false);
+            add(metal, ClayiumShape.largePlate, TierPrefix.precision, false);
         }
 
         addOD(ClayiumMaterial.carbon, ClayiumShape.dust, false);
@@ -262,11 +262,11 @@ public class ClayiumMaterials {
         putMap(material, shape);
     }
 
-    private static void add(ClayiumMaterial material, ClayiumShape shape, int tier) {
+    private static void add(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier) {
         add(material, shape, tier, false);
     }
 
-    private static void add(ClayiumMaterial material, ClayiumShape shape, int tier, boolean hasUniqueIcon) {
+    private static void add(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier, boolean hasUniqueIcon) {
         if (materialShapeMap.containsKey(material) && materialShapeMap.get(material).containsKey(shape) && !materialShapeMap.get(material).get(shape).isEmpty()) {
             ClayiumCore.logger.error("The item already exists  [" + material.getName() + "] [" + shape.getName() + "]");
             return;
@@ -281,14 +281,14 @@ public class ClayiumMaterials {
     }
 
     private static void addOD(ClayiumMaterial material, ClayiumShape shape, boolean hasUniqueIcon) {
-        addOD(material, shape, -1, hasUniqueIcon);
+        addOD(material, shape, TierPrefix.unknown, hasUniqueIcon);
     }
 
-    private static void addOD(ClayiumMaterial material, ClayiumShape shape, int tier) {
+    private static void addOD(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier) {
         addOD(material, shape, tier, false);
     }
 
-    private static void addOD(ClayiumMaterial material, ClayiumShape shape, int tier, boolean hasUniqueIcon) {
+    private static void addOD(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier, boolean hasUniqueIcon) {
         List<ItemStack> list = OreDictionary.getOres(shape.getName() + material.getODName());
         if (list.isEmpty()) {
             add(material, shape, tier, hasUniqueIcon);
@@ -297,7 +297,7 @@ public class ClayiumMaterials {
         }
 
         ItemStack stack = list.get(0).copy();
-        if (stack.getItem() instanceof ItemTiered && tier >= 0)
+        if (stack.getItem() instanceof ItemTiered)
             ((ItemTiered) stack.getItem()).setTier(tier);
         materialShapeMap.get(material).putIfAbsent(shape, stack);
     }
@@ -314,16 +314,12 @@ public class ClayiumMaterials {
         return stack;
     }
 
-    public static ItemStack get(TierPrefix material, ClayiumShape shape) {
-        return get(material.getMaterial(), shape);
+    public static ItemStack get(TierPrefix tier, ClayiumShape shape) {
+        return get(tier.getMaterial(), shape);
     }
 
-    public static ItemStack get(int tier, ClayiumShape shape) {
-        return get(TierPrefix.get(tier), shape);
-    }
-
-    public static ItemStack get(int tier, ClayiumShape shape, int amount) {
-        return get(TierPrefix.get(tier).getMaterial(), shape, amount);
+    public static ItemStack get(TierPrefix tier, ClayiumShape shape, int amount) {
+        return get(tier.getMaterial(), shape, amount);
     }
 
     public static ItemStack getOD(ClayiumMaterial material, ClayiumShape shape) {

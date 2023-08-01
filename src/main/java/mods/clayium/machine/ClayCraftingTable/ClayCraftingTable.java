@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayCraftingTable;
 import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -19,7 +20,7 @@ import net.minecraft.world.World;
 @HasOriginalState
 public class ClayCraftingTable extends ClayContainer {
     public ClayCraftingTable() {
-        super(Material.CLAY, TileEntityClayCraftingTable.class, "clay_crafting_table", GuiHandler.GuiIdClayCraftingTable, 0);
+        super(Material.CLAY, TileEntityClayCraftingTable.class, "clay_crafting_table", GuiHandler.GuiIdClayCraftingTable, TierPrefix.none);
         setSoundType(SoundType.GROUND);
         setHarvestLevel("shovel", 0);
         setHardness(1F);

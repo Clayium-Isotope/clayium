@@ -1,6 +1,7 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class CAReactorCoil extends BlockTiered {
-    public CAReactorCoil(int meta, int tier) {
+    public CAReactorCoil(int meta, TierPrefix tier) {
         super(Material.IRON, "ca_reactor_coil_", meta, tier);
         setHardness(8.0F);
         setResistance(5.0F);

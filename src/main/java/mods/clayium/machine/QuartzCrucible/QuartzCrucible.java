@@ -6,6 +6,7 @@ import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -27,7 +28,7 @@ import java.util.Optional;
 @HasOriginalState
 public class QuartzCrucible extends ClayContainer {
     public QuartzCrucible() {
-        super(Material.GLASS, TileEntityQuartzCrucible.class, "quartz_crucible", -1, 5);
+        super(Material.GLASS, TileEntityQuartzCrucible.class, "quartz_crucible", -1, TierPrefix.advanced);
         this.setSoundType(SoundType.GLASS);
         this.setHardness(0.2f);
         this.setResistance(0.2f);

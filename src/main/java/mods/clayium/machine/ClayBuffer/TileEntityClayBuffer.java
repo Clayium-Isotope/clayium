@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayBuffer;
 
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.INormalInventory;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -50,31 +51,31 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         if (this.tier == tier) return;
         this.tier = tier;
 
         switch (this.tier) {
-            case 4:
+            case basic:
                 this.inventoryX = 1 + (this.inventoryY = 1);
                 break;
-            case 5:
+            case advanced:
                 this.inventoryX = 1 + (this.inventoryY = 2);
                 break;
-            case 6:
+            case precision:
                 this.inventoryX = 1 + (this.inventoryY = 3);
                 break;
-            case 7:
+            case claySteel:
                 this.inventoryX = 1 + (this.inventoryY = 4);
                 break;
-            case 8:
+            case clayium:
                 this.inventoryX = 5 + (this.inventoryY = 4);
                 break;
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
+            case ultimate:
+            case antimatter:
+            case pureAntimatter:
+            case OEC:
+            case OPA:
                 this.inventoryX = 3 + (this.inventoryY = 6);
                 break;
             default:
@@ -100,7 +101,7 @@ public class TileEntityClayBuffer extends TileEntityClayContainer implements INo
     }
 
     @Override
-    protected void setDefaultTransportation(int tier) {
+    protected void setDefaultTransportation(TierPrefix tier) {
         UtilTier.BufferTransport config = UtilTier.BufferTransport.getByTier(tier);
         if (config != null) {
             this.autoInsertInterval = config.autoInsertInterval;

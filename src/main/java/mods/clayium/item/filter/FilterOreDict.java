@@ -1,11 +1,12 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 
 public class FilterOreDict extends FilterString {
     public FilterOreDict() {
-        super("filter_od", 6);
+        super("filter_od", TierPrefix.precision);
     }
 
     @Override

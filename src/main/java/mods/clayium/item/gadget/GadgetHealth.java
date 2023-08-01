@@ -1,5 +1,6 @@
 package mods.clayium.item.gadget;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -13,7 +14,7 @@ public class GadgetHealth extends GadgetTemp {
     private final int line;
     private static final UUID uuid = UUID.fromString("066bfee5-6cd5-4166-93d7-dfcc32c337a8");
 
-    public GadgetHealth(int meta, int tier, int line) {
+    public GadgetHealth(int meta, TierPrefix tier, int line) {
         super("gadget_health_" + meta, meta, tier);
         this.line = line;
     }

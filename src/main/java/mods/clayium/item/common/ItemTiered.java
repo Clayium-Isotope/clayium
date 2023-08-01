@@ -1,5 +1,6 @@
 package mods.clayium.item.common;
 
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
@@ -14,14 +15,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemTiered extends ClayiumItem implements ITieredItem {
-    private int tier;
+    private TierPrefix tier;
 
-    public ItemTiered(String modelPath, int tier) {
-        super(modelPath + (modelPath.endsWith("_") ? tier : ""));
+    public ItemTiered(String modelPath, TierPrefix tier) {
+        super(modelPath + (modelPath.endsWith("_") ? tier.meta() : ""));
         this.tier = tier;
     }
 
-    public ItemTiered(ClayiumMaterial material, ClayiumShape shape, int tier) {
+    public ItemTiered(String modelPath, TierPrefix tier, int meta) {
+        super(modelPath + (modelPath.endsWith("_") ? meta : ""));
+        this.tier = tier;
+    }
+
+    public ItemTiered(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier) {
         super(material, shape);
         this.tier = tier;
     }
@@ -29,34 +35,48 @@ public class ItemTiered extends ClayiumItem implements ITieredItem {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        if (tier >= 0) {
-            tooltip.add(getTieredToolTip(tier));
-        }
+        tooltip.add(getTieredToolTip(this.tier));
 
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
-    public static String getTieredToolTip(int tier) {
+    public static String getTieredToolTip(TierPrefix tier) {
         return TextFormatting.WHITE + UtilLocale.tierGui(tier) + TextFormatting.RESET;
     }
 
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
-        if (0 <= tier && tier <= 3) return EnumRarity.COMMON;
-        if (4 <= tier && tier <= 7) return EnumRarity.UNCOMMON;
-        if (8 <= tier && tier <= 11) return EnumRarity.RARE;
-        if (12 <= tier && tier <= 15) return EnumRarity.EPIC;
-
-        return EnumRarity.COMMON;
+        switch (this.tier) {
+            case none:
+            case clay:
+            case denseClay:
+            case simple:
+            default:
+                return EnumRarity.COMMON;
+            case basic:
+            case advanced:
+            case precision:
+            case claySteel:
+                return EnumRarity.UNCOMMON;
+            case clayium:
+            case ultimate:
+            case antimatter:
+            case pureAntimatter:
+                return EnumRarity.RARE;
+            case OEC:
+            case OPA:
+                return EnumRarity.EPIC;
+        }
     }
 
     @Override
-    public int getTier() {
+    public TierPrefix getTier() {
         return tier;
     }
 
-    public ItemTiered setTier(int tier) {
-        this.tier = tier;
+    public ItemTiered setTier(TierPrefix tier) {
+        if (tier != TierPrefix.unknown)
+            this.tier = tier;
         return this;
     }
 }

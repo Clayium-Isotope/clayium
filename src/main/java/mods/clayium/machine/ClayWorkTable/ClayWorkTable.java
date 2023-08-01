@@ -4,6 +4,7 @@ package mods.clayium.machine.ClayWorkTable;
 import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -18,7 +19,7 @@ import net.minecraft.world.World;
 @HasOriginalState
 public class ClayWorkTable extends ClayContainer {
 	public ClayWorkTable() {
-		super(Material.ROCK, TileEntityClayWorkTable.class, "clay_work_table", GuiHandler.GuiIdClayWorkTable, 0);
+		super(Material.ROCK, TileEntityClayWorkTable.class, "clay_work_table", GuiHandler.GuiIdClayWorkTable, TierPrefix.clay);
 		setSoundType(SoundType.GROUND);
 		setHarvestLevel("shovel", 0);
 		setHardness(1F);

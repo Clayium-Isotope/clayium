@@ -1,6 +1,7 @@
 package mods.clayium.item.gadget;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -16,7 +17,7 @@ public class GadgetRepeatedlyAttack extends GadgetTemp {
     private static final Map<Entity, Boolean> appliers = new HashMap<>();
 
     public GadgetRepeatedlyAttack() {
-        super("gadget_repeatedly_attack", 0, 10);
+        super("gadget_repeatedly_attack", 0, TierPrefix.antimatter);
     }
 
     @Override

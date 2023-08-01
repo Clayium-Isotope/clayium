@@ -6,6 +6,7 @@ import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.init.Blocks;
@@ -55,20 +56,20 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         return this.craftTime > 0;
     }
 
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
         this.setDefaultTransportation(tier);
 
         this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(5000.0F) / 20.0F));
 
         switch (tier) {
-            case 6:
+            case precision:
                 this.acceptableTier = 6;
                 this.baseCraftTime = 3.0F;
                 this.initCraftTime = 0.01F;
                 this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(50000.0F) / 20.0F));
                 break;
-            case 7:
+            case claySteel:
                 this.acceptableTier = 9;
                 this.baseCraftTime = 2.0F;
                 this.initCraftTime = 0.07F;

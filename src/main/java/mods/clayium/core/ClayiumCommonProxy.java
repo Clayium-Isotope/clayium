@@ -2,6 +2,7 @@ package mods.clayium.core;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -21,7 +22,7 @@ public class ClayiumCommonProxy implements IClayiumProxy {
 	public void serverLoad(FMLServerStartingEvent event) {}
 
 	public EnumFacing getHittingSide(EntityPlayer player) {
-		return player.rayTrace(9999.0D, 0.0F).sideHit;
+		return ForgeHooks.rayTraceEyes(player, 9999.0d).sideHit;
 	}
 
 	public EntityPlayer getClientPlayer() {

@@ -3,6 +3,7 @@ package mods.clayium.machine.CreativeEnergySource;
 import mods.clayium.client.render.CustomHull;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -21,7 +22,7 @@ public class TileEntityCreativeEnergySource extends TileEntityClayBuffer {
         this.setExportRoutes(-1, -1, -1, 0, -1, -1);
     }
 
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         this.setDefaultTransportation(tier);
 
         this.inventoryX = this.inventoryY = 1;

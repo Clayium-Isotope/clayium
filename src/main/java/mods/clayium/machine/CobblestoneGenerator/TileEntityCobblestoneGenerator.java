@@ -3,6 +3,7 @@ package mods.clayium.machine.CobblestoneGenerator;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -31,29 +32,30 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
         this.isBuffer = false;
     }
 
-    public void initParamsByTier(int tier) {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
         this.listSlotsImport.clear();
         switch(tier) {
-            case 1:
+            case clay:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(2);
                 break;
-            case 2:
+            case denseClay:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(5);
                 break;
-            case 3:
+            case simple:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(15);
                 break;
-            case 4:
+            case basic:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(50);
                 break;
-            case 5:
+            case advanced:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(200);
                 break;
-            case 6:
+            case precision:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(1000);
                 break;
-            case 7:
+            case claySteel:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(8000);
         }
     }

@@ -1,5 +1,6 @@
 package mods.clayium.block.tile;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -32,7 +33,7 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     protected void initParams() {}
 
     // TileEntityが作成されるとき、引数無しが適切なので、初期化の関数を分ける
-    public void initParamsByTier(int tier) {}
+    public void initParamsByTier(TierPrefix tier) {}
 
     public boolean hasSpecialDrops() {
         return false;

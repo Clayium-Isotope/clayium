@@ -13,6 +13,7 @@ import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine implements IClayEnergyConsumer {
     private static final int resultSlotNum = 2;
-    private int recipeTier = -1;
+    private TierPrefix recipeTier = TierPrefix.none;
 
     @Override
     public void initParams() {
@@ -49,7 +50,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
 
         this.autoExtractInterval = this.autoInsertInterval = 1;
@@ -86,7 +87,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
             sum += Math.pow(2, 16 - tier);
         }
 
-        this.recipeTier = Math.max((int)(16.0D - Math.floor(Math.log(sum / 17) / Math.log(2.0D) + 0.5D)), 0);
+        this.recipeTier = TierPrefix.get(Math.max((int)(16.0D - Math.floor(Math.log(sum / 17) / Math.log(2.0D) + 0.5D)), 0));
         return flag;
     }
 
@@ -119,18 +120,18 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
 
         if (block instanceof MachineHull) {
 //            return this.getBlockMetadata(vector);
-            return ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(vector));
+            return ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(vector)).meta();
         }
 
         if (block instanceof Overclocker) {
-            return ClayiumBlocks.overclocker.getTier(block).ordinal();
+            return ClayiumBlocks.overclocker.getTier(block).meta();
         }
 
         TileEntity te = this.getTileEntity(vector);
         if (te == null) return -1;
 
         if (te instanceof TileEntityClayInterface || te instanceof TileEntityRedstoneInterface) {
-            return ((ISynchronizedInterface) te).getHullTier();
+            return ((ISynchronizedInterface) te).getHullTier().meta();
         }
 
         return -1;
@@ -192,13 +193,13 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     }
 
     @Override
-    public int getRecipeTier() {
+    public TierPrefix getRecipeTier() {
         return this.recipeTier;
     }
 
     @Override
-    public int getHullTier() {
-        return 6;
+    public TierPrefix getHullTier() {
+        return TierPrefix.precision;
     }
 
     @SideOnly(Side.CLIENT)

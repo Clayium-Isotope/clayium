@@ -5,6 +5,7 @@ import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -35,7 +36,7 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
         this.listSlotsImport.clear();
         this.slotsDrop = Stream.concat(

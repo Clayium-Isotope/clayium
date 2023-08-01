@@ -1,9 +1,14 @@
 package mods.clayium.util;
 
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.ClayiumMaterial;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum TierPrefix {
+    unknown("", ClayiumMaterial.clayium),
     none("", ClayiumMaterial.clay),
     clay("clay", ClayiumMaterial.clay),
     denseClay("dense_clay", ClayiumMaterial.denseClay),
@@ -32,42 +37,42 @@ public enum TierPrefix {
         return material;
     }
 
-    public static TierPrefix get(int tier) {
-        switch (tier) {
-            case 0:
-                return none;
-            case 1:
-                return clay;
-            case 2:
-                return denseClay;
-            case 3:
-                return simple;
-            case 4:
-                return basic;
-            case 5:
-                return advanced;
-            case 6:
-                return precision;
-            case 7:
-                return claySteel;
-            case 8:
-                return clayium;
-            case 9:
-                return ultimate;
-            case 10:
-                return antimatter;
-            case 11:
-                return pureAntimatter;
-            case 12:
-                return OEC;
-            case 13:
-                return OPA;
-        }
-
-        ClayiumCore.logger.error(new IllegalAccessException());
-        return none;
+    public int meta() {
+        return this.ordinal() - 1;
     }
 
     private final String prefix;
     private final ClayiumMaterial material;
+
+    public static final Comparator<TierPrefix> comparator = Comparator.comparingInt(TierPrefix::meta);
+
+    public TierPrefix offset(int dTier) {
+        return TierPrefix.get(this.meta() + dTier);
+    }
+
+    public static TierPrefix get(int rawTier) {
+        switch (rawTier) {
+            case 0:     return none;
+            case 1:     return clay;
+            case 2:     return denseClay;
+            case 3:     return simple;
+            case 4:     return basic;
+            case 5:     return advanced;
+            case 6:     return precision;
+            case 7:     return claySteel;
+            case 8:     return clayium;
+            case 9:     return ultimate;
+            case 10:    return antimatter;
+            case 11:    return pureAntimatter;
+            case 12:    return OEC;
+            case 13:    return OPA;
+            default:    return unknown;
+        }
+    }
+
+    public static List<TierPrefix> makeList(int ...tiers) {
+        return Arrays.stream(tiers)
+                .mapToObj(TierPrefix::get)
+                .collect(Collectors.toList());
+    }
 }

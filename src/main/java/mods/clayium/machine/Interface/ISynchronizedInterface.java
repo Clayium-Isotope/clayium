@@ -1,5 +1,6 @@
 package mods.clayium.machine.Interface;
 
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UsedFor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,5 +21,5 @@ public interface ISynchronizedInterface {
     boolean isSyncEnabled();
     boolean markEnableSync();
 
-    int getHullTier();
+    TierPrefix getHullTier();
 }

@@ -1,6 +1,7 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Resonator extends BlockTiered implements ICAResonator {
     private final double resonance;
 
-    public Resonator(int meta, int tier, double resonance) {
+    public Resonator(int meta, TierPrefix tier, double resonance) {
         super(Material.IRON, "resonator_", meta, tier);
         setHardness(2.0F);
         setResistance(2.0F);

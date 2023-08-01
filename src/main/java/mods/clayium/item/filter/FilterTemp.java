@@ -3,6 +3,7 @@ package mods.clayium.item.filter;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.item.common.ItemTiered;
 import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FilterTemp extends ItemTiered implements IFilter, IModifyCC {
-    public FilterTemp(String modelPath, int tier) {
+    public FilterTemp(String modelPath, TierPrefix tier) {
         super(modelPath, tier);
 
         this.setMaxStackSize(1);

@@ -5,6 +5,7 @@ import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -91,9 +92,9 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
         return this.world == null ? 0 : this.getBlock(relative).getMetaFromState(this.getBlockState(relative));
     }
 
-    protected int getBlockTier(BlockPos relative) {
+    protected TierPrefix getBlockTier(BlockPos relative) {
         Block block = this.getBlock(relative);
-        return block instanceof ITieredBlock ? ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(relative)) : -1;
+        return block instanceof ITieredBlock ? ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(relative)) : TierPrefix.none;
     }
 
     public void forceVerification() {

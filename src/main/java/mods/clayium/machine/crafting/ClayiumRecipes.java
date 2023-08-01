@@ -703,41 +703,42 @@ public class ClayiumRecipes {
         }
 */
         for (int i = 1; i <= 13; i++) {
+            TierPrefix tier = TierPrefix.get(i);
             if (i == 1) {
                 assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4,
-                        ii(i(ClayiumMachines.elementalMillingMachine)), e(i), 120L);
+                        ii(i(ClayiumMachines.get(EnumMachineKind.millingMachine, tier))), e(i), 120L);
             }
             if (i >= 1) {
                 if (i <= 3) {
                     assembler.addRecipe(ii(ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate), circuits.get(3)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.cobblestoneGenerator, i))), e(i), 40L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.cobblestoneGenerator, tier))), e(i), 40L);
                 }
                 if (i <= 4) {
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 3)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, tier))), e(i), 120L);
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.wireDrawingMachine, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.wireDrawingMachine, tier))), e(i), 120L);
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder, 2)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.pipeDrawingMachine, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.pipeDrawingMachine, tier))), e(i), 120L);
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.cuttingMachine, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.cuttingMachine, tier))), e(i), 120L);
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.lathe, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.lathe, tier))), e(i), 120L);
                 }
             }
 
             if (i >= 2) {
                 if (i <= 3) {
                     assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.condenser, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.condenser, tier))), e(i), 120L);
                 }
                 if (i <= 4) {
                     assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear, 4)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.decomposer, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.decomposer, tier))), e(i), 120L);
                 }
                 if (i <= 6) {
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead, 1)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.grinder, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.grinder, tier))), e(i), 120L);
                 }
             }
             if (i == 3) {
@@ -747,15 +748,15 @@ public class ClayiumRecipes {
             if (i >= 3) {
                 if (i <= 4) {
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.millingMachine, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.millingMachine, tier))), e(i), 120L);
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i))), e(i), 40L);
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i)), circuits.get(4)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.inscriber, i))), e(i), 40L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.assembler, tier))), e(i), 40L);
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, tier)), circuits.get(4)), 4,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.inscriber, tier))), e(i), 40L);
                 }
                 if (i <= 6) {
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle, Math.max(i - 4, 1))), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.centrifuge, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.centrifuge, tier))), e(i), 120L);
                 }
             }
             if (i == 4) {
@@ -764,131 +765,131 @@ public class ClayiumRecipes {
             }
             if (i >= 4) {
                 assembler.addRecipe(ii(ClayiumMaterials.get(mats.get(i), ClayiumShape.plate), circuits.get(i)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i), 16)), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i), 6), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.multitrackBuffer, i))), e(i), 40L);
-                if (ClayiumConfiguration.cfgEnableFluidCapsule)
+                        ii(i(ClayiumMachines.get(EnumMachineKind.buffer, tier), 16)), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, tier), 6), ClayiumMaterials.get(mats.get(i), ClayiumShape.largePlate)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.multitrackBuffer, tier))), e(i), 40L);
+//                if (ClayiumConfiguration.cfgEnableFluidCapsule)
 // TODO                   assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), i(CItems.itemsCapsule[0], 4)), 0, 4,
 //                            ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, i))), e(i), 40L);
                 if (i <= 7) {
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(3)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.cobblestoneGenerator, i))), e(i), 40L);
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(4)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.saltExtractor, i))), e(i), 40L);
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), circuits.get(3)), 4,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.cobblestoneGenerator, tier))), e(i), 40L);
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), circuits.get(4)), 4,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.saltExtractor, tier))), e(i), 40L);
                     assembler.addRecipe(ii(machines.get(i), s(circuits.get(3), i - 3)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.smelter, tier))), e(i), 120L);
                 }
                 if (i <= 5) {
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, i))), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.condenser, i))), e(i), 120L);
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, tier))), 4,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.condenser, tier))), e(i), 120L);
                     assembler.addRecipe(ii(machines.get(i), s(circuits.get(4), i - 3)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, tier))), e(i), 120L);
                 }
             }
             if (i >= 5) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, 6))), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, i))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, i)), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 16)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.redstoneInterface, i))), e(i), 40L);
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.buffer, TierPrefix.precision))), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, tier))), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.clayInterface, tier)), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 16)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.redstoneInterface, tier))), e(i), 40L);
                 if (i <= 7) {
                     assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, (i - 4) * 3)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, i))), e(i), 120L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, tier))), e(i), 120L);
                 }
             }
             if (i == 5) {
                 assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 8)), 4,
                         ii(i(ClayiumMachines.solarClayFabricatorMK1)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(5)), 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), circuits.get(5)), 4,
                         ii(i(ClayiumMachines.autoClayCondenserMK1)), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 4)), machines.get(i)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i))), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, TierPrefix.basic)), machines.get(i)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, tier))), e(i), 40L);
                 if (ClayiumConfiguration.cfgEnableFluidCapsule)
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, i), 2), machines.get(i)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.fluidTransferMachine, i))), e(i), 40L);
+                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, tier), 2), machines.get(i)), 4,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.fluidTransferMachine, tier))), e(i), 40L);
             }
             if (i >= 6 && i <= 9) {
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5)), circuits.get(i)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, i))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i - 1)), machines.get(i)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, i))), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, TierPrefix.advanced)), circuits.get(i)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, tier))), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, tier.offset(-1))), machines.get(i)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, tier))), e(i), 40L);
             }
             if (i == 6) {
                 assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4,
                         ii(i(ClayiumMachines.solarClayFabricatorMK2)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i)), i(ClayiumMachines.get(EnumMachineKind.clayInterface, i))), 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, tier)), i(ClayiumMachines.get(EnumMachineKind.clayInterface, tier))), 4,
                         ii(i(ClayiumMachines.blastFurnace)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5)), i(ClayiumMachines.get(EnumMachineKind.smelter, i))), 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, TierPrefix.advanced)), i(ClayiumMachines.get(EnumMachineKind.smelter, tier))), 4,
                         ii(i(ClayiumMachines.chemicalMetalSeparator)), e(i), 40L);
                 assembler.addRecipe(ii(machines.get(i), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear, 4)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 4)), circuits.get(i)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.assembler, 6))), e(i), 40L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i)), circuits.get(i)), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.alloySmelter, i))), e(i), 40L);
+                        ii(i(ClayiumMachines.get(EnumMachineKind.assembler, tier))), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, TierPrefix.basic)), circuits.get(i)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.assembler, TierPrefix.precision))), e(i), 40L);
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.smelter, tier)), circuits.get(i)), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.alloySmelter, tier))), e(i), 40L);
             }
             if (i == 7) {
                 assembler.addRecipe(oo(machines.get(i), ClayiumMaterials.getOD(ClayiumMaterial.silicon, ClayiumShape.plate, 16)), 4,
                         ii(i(ClayiumMachines.lithiumSolarClayFabricator)), e(i), 120L);
-                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(5)), 4,
+                assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), circuits.get(5)), 4,
                         ii(i(ClayiumMachines.autoClayCondenserMK2)), e(i), 40L);
-                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.laserInterface, i))), 6,
+                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.laserInterface, tier))), 6,
                         ii(i(ClayiumMachines.clayReactor)), e(i), 1200L);
             }
             if (i >= 7) {
-                assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), i(ClayiumItems.laserParts, 1)), 6,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.laserInterface, i))), e(i), 120L);
+                assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), i(ClayiumItems.laserParts, 1)), 6,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.laserInterface, tier))), e(i), 120L);
                 if (i <= 9) {
-                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), machines.get(i)), 6,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.distributor, i))), e(i), 120L);
-                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, i)), circuits.get(7)), 6,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.distributor, i))), e(i), 120L);
-                    assembler.addRecipe(oo(i(ClayiumMachines.clayReactor), i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, i))), 6,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.transformer, i))), e(i), 120L);
+                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), machines.get(i)), 6,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.distributor, tier))), e(i), 120L);
+                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.buffer, tier)), circuits.get(7)), 6,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.distributor, tier))), e(i), 120L);
+                    assembler.addRecipe(oo(i(ClayiumMachines.clayReactor), i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, tier))), 6,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.transformer, tier))), e(i), 120L);
                 }
                 if (i <= 10) {
                     assembler.addRecipe(oo(machines.get(i), i(ClayiumItems.laserParts, 4)), 6,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.clayEnergyLaser, i))), e(i), 480L);
+                            ii(i(ClayiumMachines.get(EnumMachineKind.clayEnergyLaser, tier))), e(i), 480L);
                 }
             }
             if (i == 8) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, 5))), 4,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, i))), e(i), 480L);
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, TierPrefix.advanced))), 4,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, tier))), e(i), 480L);
             }
             if (i >= 8 &&
                     i <= 9) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.smelter, i - 1), 16)), 6,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.smelter, i))), e(i), 2000L);
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.smelter, tier.offset(-1)), 16)), 6,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.smelter, tier))), e(i), 2000L);
             }
 
             if (i == 9) {
-                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.bendingMachine, 7), 4)), 6,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, i))), e(i), 480L);
+                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.bendingMachine, TierPrefix.claySteel), 4)), 6,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.bendingMachine, tier))), e(i), 480L);
             }
             if (i >= 9) {
                 if (i == 9) {
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 6,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, i))), e(i), 480L);
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.clayReactor, i), 16)), 6,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i))), e(i), 480L);
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, tier), 16)), 6,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, tier))), e(i), 480L);
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.clayReactor, tier), 16)), 6,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier))), e(i), 480L);
                 } else {
                     if (i <= 11) {
-                        assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, i), 16)), 10,
-                                ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, i))), e(i), 480L);
+                        assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, tier), 16)), 10,
+                                ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, tier))), e(i), 480L);
                     }
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.CAInjector, i - 1), 2)), 10,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i))), e(i), 480L);
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier.offset(-1)), 2)), 10,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier))), e(i), 480L);
                 }
             }
             if (i == 10) {
-                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.assembler, 6))), 6,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.assembler, i))), e(i), 40L);
+                assembler.addRecipe(ii(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.assembler, TierPrefix.precision))), 6,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.assembler, tier))), e(i), 40L);
             }
             if (i >= 10) {
                 assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 10,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, i))), e(i), 120L);
+                        ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, tier))), e(i), 120L);
                 if (i <= 12) {
-                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.CAInjector, i)), i(ClayiumMachines.clayReactor)), 10,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.transformer, i))), e(i), 120L);
+                    assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier)), i(ClayiumMachines.clayReactor)), 10,
+                            ii(i(ClayiumMachines.get(EnumMachineKind.transformer, tier))), e(i), 120L);
                 }
             }
             if (i == 13) {

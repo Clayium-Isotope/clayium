@@ -6,6 +6,7 @@ import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.util.EnumSide;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilCollect;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.item.EntityItem;
@@ -56,7 +57,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     private final List<Predicate<ItemStack>> patternCache = NonNullList.withSize(9, ItemStack::isEmpty);
     private IRecipe doingRecipe;
     private ItemStack doingRecipeResult;
-    private int tier;
+    private TierPrefix tier;
 
     public TileEntityAutoCrafter() {}
 
@@ -79,34 +80,35 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
         return 24;
     }
 
-    public void initParamsByTier(int tier) {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
         switch (tier) {
-            case 5:
+            case advanced:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 4;
                 this.autoExtractInterval = this.autoInsertInterval = 4;
                 this.multConsumingEnergy = 0.0F;
                 break;
-            case 6:
+            case precision:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 16;
                 this.autoExtractInterval = this.autoInsertInterval = 2;
                 this.multCraftTime = 0.05F;
                 break;
-            case 7:
+            case claySteel:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 1;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
                 this.multCraftTime = 0.05F;
                 this.multConsumingEnergy = 4.0F;
                 this.numAutomation = 16;
                 break;
-            case 8:
+            case clayium:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 16;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
                 this.multCraftTime = 0.05F;
                 this.multConsumingEnergy = 16.0F;
                 this.numAutomation = 64;
                 break;
-            case 9:
+            case ultimate:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 576;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
                 this.multCraftTime = 0.05F;
@@ -118,7 +120,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
                 this.autoExtractInterval = this.autoInsertInterval = 8;
         }
 
-        if (tier <= 5 && this.getImportRoute(EnumSide.BACK) == -2) {
+        if (TierPrefix.comparator.compare(tier, TierPrefix.advanced) <= 0 && this.getImportRoute(EnumSide.BACK) == -2) {
             this.setImportRoute(EnumSide.BACK, -1);
         }
     }
@@ -187,7 +189,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
         this.multCraftTime = tagCompound.getFloat("CraftTimeMultiplier");
         this.multConsumingEnergy = tagCompound.getFloat("ConsumingEnergyMultiplier");
         this.numAutomation = tagCompound.getInteger("NumAutomation");
-        this.initParamsByTier(tagCompound.getInteger("Tier"));
+        this.initParamsByTier(TierPrefix.get(tagCompound.getInteger("Tier")));
     }
 
     @Override
@@ -199,7 +201,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
         tagCompound.setFloat("CraftTimeMultiplier", this.multCraftTime);
         tagCompound.setFloat("ConsumingEnergyMultiplier", this.multConsumingEnergy);
         tagCompound.setInteger("NumAutomation", this.numAutomation);
-        tagCompound.setInteger("Tier", this.tier);
+        tagCompound.setInteger("Tier", this.tier.meta());
 
         return tagCompound;
     }
@@ -274,7 +276,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     }
 
     @Override
-    public int getHullTier() {
+    public TierPrefix getHullTier() {
         return this.tier;
     }
 

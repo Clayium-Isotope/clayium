@@ -3,6 +3,7 @@ package mods.clayium.machine.LaserReflector;
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
@@ -42,18 +43,18 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         TileEntityLaserReflector telr = new TileEntityLaserReflector();
-        telr.initParamsByTier(7);
+        telr.initParamsByTier(TierPrefix.claySteel);
         return telr;
     }
 
     @Override
-    public int getTier(ItemStack stackIn) {
-        return 7;
+    public TierPrefix getTier(ItemStack stackIn) {
+        return TierPrefix.claySteel;
     }
 
     @Override
-    public int getTier(IBlockAccess access, BlockPos posIn) {
-        return 7;
+    public TierPrefix getTier(IBlockAccess access, BlockPos posIn) {
+        return TierPrefix.claySteel;
     }
 
     @Override

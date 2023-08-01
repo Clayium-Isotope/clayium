@@ -4,12 +4,13 @@ import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayiumMachine.ClayHorizontalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 
 @HasOriginalState
 public class SolarClayFabricator extends ClayHorizontalNoRecipeMachine {
-    public SolarClayFabricator(int tier) {
+    public SolarClayFabricator(TierPrefix tier) {
         super(TileEntitySolarClayFabricator.class, EnumMachineKind.solarClayFabricator,
-                tier == 5 ? "mk1" : tier == 6 ? "mk2" : tier == 7 ? "mk3" : "",
+                tier == TierPrefix.advanced ? "mk1" : tier == TierPrefix.precision ? "mk2" : tier == TierPrefix.claySteel? "mk3" : "",
                 GuiHandler.GuiIdClayMachines, tier);
     }
 }

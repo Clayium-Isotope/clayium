@@ -1,6 +1,7 @@
 package mods.clayium.item.gadget;
 
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -8,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class GadgetFlight extends GadgetTemp {
     private final int mode;
 
-    public GadgetFlight(int meta, int tier, int mode) {
+    public GadgetFlight(int meta, TierPrefix tier, int mode) {
         super("gadget_flight_" + meta, meta, tier);
         this.mode = mode;
     }

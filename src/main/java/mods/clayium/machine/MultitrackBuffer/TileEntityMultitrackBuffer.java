@@ -2,6 +2,7 @@ package mods.clayium.machine.MultitrackBuffer;
 
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
@@ -26,38 +27,39 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
         this.containerItemStacks = NonNullList.withSize(60, ItemStack.EMPTY);
     }
 
-    public void initParamsByTier(int tier) {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
         if (this.tier == tier) return;
         super.initParamsByTier(tier);
 
         int trackNum;
         int trackSize;
         switch(tier) {
-            case 4:
+            case basic:
                 trackNum = 2;
                 trackSize = 1;
                 break;
-            case 5:
+            case advanced:
                 trackNum = 3;
                 trackSize = 2;
                 break;
-            case 6:
+            case precision:
                 trackNum = 4;
                 trackSize = 4;
                 break;
-            case 7:
+            case claySteel:
                 trackNum = 5;
                 trackSize = 4;
                 break;
-            case 8:
+            case clayium:
                 trackNum = 6;
                 trackSize = 6;
                 break;
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
+            case ultimate:
+            case antimatter:
+            case pureAntimatter:
+            case OEC:
+            case OPA:
                 trackNum = 6;
                 trackSize = 9;
                 break;

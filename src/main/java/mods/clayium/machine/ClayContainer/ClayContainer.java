@@ -5,6 +5,7 @@ import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IModifyCC;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
@@ -39,9 +40,9 @@ import java.util.Optional;
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
     private final Class<? extends TileEntityGeneric> teClass;
     /*package-private*/ final int guiId;
-    protected final int tier;
+    protected final TierPrefix tier;
 
-    public ClayContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId, int tier) {
+    public ClayContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId, TierPrefix tier) {
         super(material);
         this.teClass = teClass;
         this.guiId = guiId;
@@ -185,10 +186,6 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         return new ClayContainerStateContainer(this);
     }
 
-    public int getTier() {
-        return tier;
-    }
-
     /**
      * PFFF<br>
      * F: Facing, P: IsPipe
@@ -215,12 +212,12 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     @Override
-    public int getTier(ItemStack stackIn) {
+    public TierPrefix getTier(ItemStack stackIn) {
         return this.tier;
     }
 
     @Override
-    public int getTier(IBlockAccess access, BlockPos posIn) {
+    public TierPrefix getTier(IBlockAccess access, BlockPos posIn) {
         return this.tier;
     }
 

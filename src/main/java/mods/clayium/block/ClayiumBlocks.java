@@ -36,33 +36,33 @@ public class ClayiumBlocks {
         blocks.add(ZK60AHull);
 
 
-        resonator.put(TierPrefix.antimatter, new Resonator(0, 10, 1.08D));
-        resonator.put(TierPrefix.pureAntimatter, new Resonator(1, 11, 1.1D));
-        resonator.put(TierPrefix.OEC, new Resonator(2, 12, 2.0D));
-        resonator.put(TierPrefix.OPA, new Resonator(3, 13, 20.0D));
+        resonator.put(TierPrefix.antimatter, new Resonator(0, TierPrefix.antimatter, 1.08D));
+        resonator.put(TierPrefix.pureAntimatter, new Resonator(1, TierPrefix.pureAntimatter, 1.1D));
+        resonator.put(TierPrefix.OEC, new Resonator(2, TierPrefix.OEC, 2.0D));
+        resonator.put(TierPrefix.OPA, new Resonator(3, TierPrefix.OPA, 20.0D));
         blocks.addAll(resonator.entryList());
 
-        overclocker.put(TierPrefix.antimatter, new Overclocker(0, 10, 1.5D));
-        overclocker.put(TierPrefix.pureAntimatter, new Overclocker(1, 11, 2.3D));
-        overclocker.put(TierPrefix.OEC, new Overclocker(2, 12, 3.5D));
-        overclocker.put(TierPrefix.OPA, new Overclocker(3, 13, 5.5D));
+        overclocker.put(TierPrefix.antimatter, new Overclocker(0, TierPrefix.antimatter, 1.5D));
+        overclocker.put(TierPrefix.pureAntimatter, new Overclocker(1, TierPrefix.pureAntimatter, 2.3D));
+        overclocker.put(TierPrefix.OEC, new Overclocker(2, TierPrefix.OEC, 3.5D));
+        overclocker.put(TierPrefix.OPA, new Overclocker(3, TierPrefix.OPA, 5.5D));
         blocks.addAll(overclocker.entryList());
 
-        energyStorageUpgrade.put(TierPrefix.antimatter, new EnergyStorageUpgrade(0, 10, 1));
-        energyStorageUpgrade.put(TierPrefix.pureAntimatter, new EnergyStorageUpgrade(1, 11, 3));
-        energyStorageUpgrade.put(TierPrefix.OEC, new EnergyStorageUpgrade(2, 12, 7));
-        energyStorageUpgrade.put(TierPrefix.OPA, new EnergyStorageUpgrade(3, 13, 63));
+        energyStorageUpgrade.put(TierPrefix.antimatter, new EnergyStorageUpgrade(0, TierPrefix.antimatter, 1));
+        energyStorageUpgrade.put(TierPrefix.pureAntimatter, new EnergyStorageUpgrade(1, TierPrefix.pureAntimatter, 3));
+        energyStorageUpgrade.put(TierPrefix.OEC, new EnergyStorageUpgrade(2, TierPrefix.OEC, 7));
+        energyStorageUpgrade.put(TierPrefix.OPA, new EnergyStorageUpgrade(3, TierPrefix.OPA, 63));
         blocks.addAll(energyStorageUpgrade.entryList());
 
-        CAReactorCoil.put(TierPrefix.antimatter, new CAReactorCoil(0, 10));
-        CAReactorCoil.put(TierPrefix.pureAntimatter, new CAReactorCoil(1, 11));
-        CAReactorCoil.put(TierPrefix.OEC, new CAReactorCoil(2, 12));
-        CAReactorCoil.put(TierPrefix.OPA, new CAReactorCoil(3, 13));
+        CAReactorCoil.put(TierPrefix.antimatter, new CAReactorCoil(0, TierPrefix.antimatter));
+        CAReactorCoil.put(TierPrefix.pureAntimatter, new CAReactorCoil(1, TierPrefix.pureAntimatter));
+        CAReactorCoil.put(TierPrefix.OEC, new CAReactorCoil(2, TierPrefix.OEC));
+        CAReactorCoil.put(TierPrefix.OPA, new CAReactorCoil(3, TierPrefix.OPA));
         blocks.addAll(CAReactorCoil.entryList());
 
         int[] tiers = { 10, 11, 11, 11, 11, 12, 12, 12, 12, 13 };
         for (int i = 0; i < 10; i++) {
-            CAReactorHull.add(new BlockTiered(Material.IRON, "ca_reactor_hull_", i, tiers[i]) {{
+            CAReactorHull.add(new BlockTiered(Material.IRON, "ca_reactor_hull_", i, TierPrefix.get(tiers[i])) {{
                 setSoundType(SoundType.METAL);
                 setHarvestLevel("pickaxe", 0);
                 setHardness(4.0F);
@@ -71,17 +71,17 @@ public class ClayiumBlocks {
         }
         blocks.addAll(CAReactorHull);
 
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.impureSilicon, 0, 5));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.silicone, 1, 5));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.silicon, 2, 5));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.aluminium, 3, 6));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.claySteel, 4, 7));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.clayium, 5, 8));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.ultimateAlloy, 6, 9));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.antimatter, 7, 10));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.pureAntimatter, 8, 11));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.octupleEnergeticClay, 9, 12));
-        materialBlock.add(new MaterialBlock(ClayiumMaterial.octuplePureAntimatter, 10, 13));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.impureSilicon, 0, TierPrefix.advanced));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.silicone, 1, TierPrefix.advanced));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.silicon, 2, TierPrefix.advanced));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.aluminium, 3, TierPrefix.precision));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.claySteel, 4, TierPrefix.claySteel));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.clayium, 5, TierPrefix.clayium));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.ultimateAlloy, 6, TierPrefix.ultimate));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.antimatter, 7, TierPrefix.antimatter));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.pureAntimatter, 8, TierPrefix.pureAntimatter));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.octupleEnergeticClay, 9, TierPrefix.OEC));
+        materialBlock.add(new MaterialBlock(ClayiumMaterial.octuplePureAntimatter, 10, TierPrefix.OPA));
         blocks.addAll(materialBlock);
 
         for (EnumDyeColor color : EnumDyeColor.values()) {

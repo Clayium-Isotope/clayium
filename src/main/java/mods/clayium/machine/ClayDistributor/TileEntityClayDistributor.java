@@ -2,6 +2,7 @@ package mods.clayium.machine.ClayDistributor;
 
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.util.EnumSide;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
@@ -33,23 +34,24 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
         this.containerItemStacks = NonNullList.withSize(48, ItemStack.EMPTY);
     }
 
-    public void initParamsByTier(int tier) {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
 
         switch (tier) {
-            case 7:
+            case claySteel:
                 this.inventoryX = this.inventoryY = 2;
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
                 this.invSectorX = this.invSectorY = 2;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
                 break;
-            case 8:
+            case clayium:
                 this.inventoryX = this.inventoryY = 2;
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 128;
                 this.invSectorX = (this.invSectorY = 2) + 1;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
                 break;
-            case 9:
+            case ultimate:
                 this.inventoryX = this.inventoryY = 2;
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 512;
                 this.invSectorX = (this.invSectorY = 3) + 1;

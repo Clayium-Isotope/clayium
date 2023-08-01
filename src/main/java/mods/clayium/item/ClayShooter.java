@@ -2,6 +2,7 @@ package mods.clayium.item;
 
 import mods.clayium.entity.EntityClayBall;
 import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -25,11 +26,11 @@ public class ClayShooter extends ItemTiered {
 
     protected float cooldown = 0;
 
-    public ClayShooter(int maxDamage, String modelPath, int tier, int bAliveTime, float bInitialVelocity, float bDiffusion, int bDamage, int bShootFrame, int chargeTime) {
+    public ClayShooter(int maxDamage, String modelPath, TierPrefix tier, int bAliveTime, float bInitialVelocity, float bDiffusion, int bDamage, int bShootFrame, int chargeTime) {
         this(maxDamage, modelPath, tier, bAliveTime, bInitialVelocity, bDiffusion, bDamage, 3.0f / bShootFrame, bShootFrame / 3, chargeTime);
     }
 
-    public ClayShooter(int maxDamage, String modelPath, int tier, int bAliveTime, float bInitialVelocity, float bDiffusion, int bDamage, float bShootRate, int bCooldownTime, int chargeTime) {
+    public ClayShooter(int maxDamage, String modelPath, TierPrefix tier, int bAliveTime, float bInitialVelocity, float bDiffusion, int bDamage, float bShootRate, int bCooldownTime, int chargeTime) {
         super(modelPath, tier);
 
         setMaxStackSize(1);

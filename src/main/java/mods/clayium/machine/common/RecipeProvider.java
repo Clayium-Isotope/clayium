@@ -1,9 +1,13 @@
 package mods.clayium.machine.common;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.inventory.IInventory;
 
 public interface RecipeProvider {
-    int getRecipeTier();
+    /**
+     * レシピの Tier と比較するための、機械側の Tier
+     */
+    TierPrefix getRecipeTier();
 
     boolean isDoingWork();
 

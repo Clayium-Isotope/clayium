@@ -1,12 +1,13 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 
 // TODO Checking Block and its Blockstate
 @Deprecated // not yet
 public class FilterBlockMetadata extends FilterString {
     public FilterBlockMetadata() {
-        super("filter_block_metadata", 6);
+        super("filter_block_metadata", TierPrefix.precision);
     }
 
     @Override

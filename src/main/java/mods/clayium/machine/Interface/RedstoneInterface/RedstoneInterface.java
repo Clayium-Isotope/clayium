@@ -6,6 +6,7 @@ import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 @HasOriginalState
 public class RedstoneInterface extends ClayInterface implements ITieredBlock {
-    public RedstoneInterface(int tier) {
+    public RedstoneInterface(TierPrefix tier) {
         super(EnumMachineKind.redstoneInterface, TileEntityRedstoneInterface.class, tier);
 
         setDefaultState(this.getDefaultState().withProperty(BlockStateRedstoneInterface.CONTROL_STATE, EnumControlState.None));

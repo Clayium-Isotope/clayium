@@ -3,6 +3,7 @@ package mods.clayium.block.itemblock;
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.item.common.ITieredItem;
 import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
@@ -17,11 +18,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBlockTiered extends ItemBlock implements ITieredItem {
-    private final int tier;
+    private final TierPrefix tier;
 
     public ItemBlockTiered(Block block) {
         super(block);
-        tier = block instanceof ITieredBlock ? ((ITieredBlock) block).getTier(ItemStack.EMPTY) : -1;
+        if (!(block instanceof ITieredBlock)) throw new IllegalArgumentException("Expect ITieredBlock but " + block.getClass().getName());
+        tier = ((ITieredBlock) block).getTier(ItemStack.EMPTY);
     }
 
     @Override
@@ -29,23 +31,36 @@ public class ItemBlockTiered extends ItemBlock implements ITieredItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         this.block.addInformation(stack, worldIn, tooltip, flagIn);
 
-        if (tier >= 0) {
-            tooltip.add(ItemTiered.getTieredToolTip(tier));
-        }
+        tooltip.add(ItemTiered.getTieredToolTip(tier));
     }
 
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
-        if (0 <= tier && tier <= 3) return EnumRarity.COMMON;
-        if (4 <= tier && tier <= 7) return EnumRarity.UNCOMMON;
-        if (8 <= tier && tier <= 11) return EnumRarity.RARE;
-        if (12 <= tier && tier <= 15) return EnumRarity.EPIC;
-
-        return EnumRarity.COMMON;
+        switch (this.tier) {
+            case none:
+            case clay:
+            case denseClay:
+            case simple:
+            default:
+                return EnumRarity.COMMON;
+            case basic:
+            case advanced:
+            case precision:
+            case claySteel:
+                return EnumRarity.UNCOMMON;
+            case clayium:
+            case ultimate:
+            case antimatter:
+            case pureAntimatter:
+                return EnumRarity.RARE;
+            case OEC:
+            case OPA:
+                return EnumRarity.EPIC;
+        }
     }
 
     @Override
-    public int getTier() {
+    public TierPrefix getTier() {
         return tier;
     }
 }

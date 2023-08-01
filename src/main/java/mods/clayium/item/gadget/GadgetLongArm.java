@@ -1,5 +1,6 @@
 package mods.clayium.item.gadget;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -14,7 +15,7 @@ public class GadgetLongArm extends GadgetTemp {
     private final float length;
     private static final UUID uuid = UUID.fromString("8d995722-38da-4f79-80cf-d45f86c93a3e"); // it means nothing
 
-    public GadgetLongArm(int meta, int tier, float length) {
+    public GadgetLongArm(int meta, TierPrefix tier, float length) {
         super("gadget_long_arm_" + meta, meta, tier);
         this.length = length;
     }

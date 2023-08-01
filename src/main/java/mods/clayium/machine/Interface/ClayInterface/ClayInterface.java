@@ -27,7 +27,7 @@ import java.util.List;
 public class ClayInterface extends ClayContainer {
     protected final EnumMachineKind kind;
 
-    public ClayInterface(int tier) {
+    public ClayInterface(TierPrefix tier) {
         this(EnumMachineKind.clayInterface, TileEntityClayInterface.class, tier);
 
 //        JsonHelper.genBlockJsonParent(TierPrefix.get(tier), kind, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), "interface_temp");
@@ -35,8 +35,8 @@ public class ClayInterface extends ClayContainer {
 //        JsonHelper.genStateJsonSimple(TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName());
     }
 
-    public ClayInterface(EnumMachineKind kind, Class<? extends TileEntityGeneric> teClass, int tier) {
-        super(Material.IRON, teClass, TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
+    public ClayInterface(EnumMachineKind kind, Class<? extends TileEntityGeneric> teClass, TierPrefix tier) {
+        super(Material.IRON, teClass, tier.getPrefix() + "_" + kind.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
         this.setSoundType(SoundType.METAL);
         this.setHardness(2.0f);
         this.setResistance(5.0f);

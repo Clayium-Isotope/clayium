@@ -10,6 +10,7 @@ import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -75,7 +76,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
     }
 

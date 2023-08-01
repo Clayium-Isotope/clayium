@@ -6,6 +6,7 @@ import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilCollect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -32,7 +33,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     }
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
 
         if (this.isSynced()) {
@@ -98,7 +99,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
 
         this.enableSync = compound.getBoolean("SyncEnabled");
 
-        initParamsByTier(compound.getInteger("Tier"));
+        initParamsByTier(TierPrefix.get(compound.getInteger("Tier")));
     }
 
     @Override
@@ -112,7 +113,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
         compound.setInteger("AutoInsertCount", this.autoInsertCount);
         compound.setInteger("AutoExtractCount", this.autoExtractCount);
 
-        compound.setInteger("Tier", this.tier);
+        compound.setInteger("Tier", this.tier.meta());
 
         compound.setTag("Filters", UtilCollect.enumMap2TagList(this.getFilters()));
 

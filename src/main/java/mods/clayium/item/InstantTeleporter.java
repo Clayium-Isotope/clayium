@@ -1,16 +1,17 @@
 package mods.clayium.item;
 
 import mods.clayium.entity.EntityTeleportBall;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class InstantTeleporter extends ClayShooter {
-    public InstantTeleporter(int maxDamage, String unlocalizedName, int tier, int bulletLifespan, float bulletInitialVelocity, float bulletDiffusion, int bulletDamage, float bulletShootingRate, int bulletCooldownTime, int chargeTime) {
+    public InstantTeleporter(int maxDamage, String unlocalizedName, TierPrefix tier, int bulletLifespan, float bulletInitialVelocity, float bulletDiffusion, int bulletDamage, float bulletShootingRate, int bulletCooldownTime, int chargeTime) {
         super(maxDamage, unlocalizedName, tier, bulletLifespan, bulletInitialVelocity, bulletDiffusion, bulletDamage, bulletShootingRate, bulletCooldownTime, chargeTime);
     }
 
-    public InstantTeleporter(int maxDamage, String unlocalizedName, int tier, int bulletLifespan, float bulletInitialVelocity, float bulletDiffusion, int bulletDamage, int bulletShootingFrame, int chargeTime) {
+    public InstantTeleporter(int maxDamage, String unlocalizedName, TierPrefix tier, int bulletLifespan, float bulletInitialVelocity, float bulletDiffusion, int bulletDamage, int bulletShootingFrame, int chargeTime) {
         super(maxDamage, unlocalizedName, tier, bulletLifespan, bulletInitialVelocity, bulletDiffusion, bulletDamage, bulletShootingFrame, chargeTime);
     }
 

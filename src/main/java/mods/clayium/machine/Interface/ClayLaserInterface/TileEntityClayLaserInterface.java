@@ -6,6 +6,7 @@ import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -18,10 +19,10 @@ public class TileEntityClayLaserInterface extends TileEntityGeneric implements I
     protected boolean synced = false;
     protected IInterfaceCaptive core = IInterfaceCaptive.NONE;
     protected int[] syncSource = null;
-    private int tier;
+    private TierPrefix tier;
 
     @Override
-    public void initParamsByTier(int tier) {
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
     }
 
@@ -53,7 +54,7 @@ public class TileEntityClayLaserInterface extends TileEntityGeneric implements I
     }
 
     @Override
-    public int getHullTier() {
+    public TierPrefix getHullTier() {
         return this.tier;
     }
 
@@ -73,7 +74,7 @@ public class TileEntityClayLaserInterface extends TileEntityGeneric implements I
 
         this.enableSync = compound.getBoolean("SyncEnabled");
 
-        initParamsByTier(compound.getInteger("Tier"));
+        initParamsByTier(TierPrefix.get(compound.getInteger("Tier")));
     }
 
     @Override
@@ -82,7 +83,7 @@ public class TileEntityClayLaserInterface extends TileEntityGeneric implements I
             compound.setString("CustomName", this.getName());
         }
 
-        compound.setInteger("Tier", this.tier);
+        compound.setInteger("Tier", this.tier.meta());
 
         if (this.isSynced()) {
             compound.setIntArray("SyncSource", SyncManager.getIntArrayFromTile((TileEntity) this.core));

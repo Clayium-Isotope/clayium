@@ -1,7 +1,5 @@
 package mods.clayium.util;
 
-import javax.annotation.Nullable;
-
 public class UtilTier {
     public enum BufferTransport {
         _0(8, 8, 1, 1),
@@ -31,25 +29,25 @@ public class UtilTier {
             this.maxAutoExtractDefault = maxExtract;
         }
 
-        @Nullable
-        public static BufferTransport getByTier(int tier) {
-            switch(tier) {
-                case 0:     return _0;
-                case 1:     return _1;
-                case 2:     return _2;
-                case 3:     return _3;
-                case 4:     return _4;
-                case 5:     return _5;
-                case 6:     return _6;
-                case 7:     return _7;
-                case 8:     return _8;
-                case 9:     return _9;
-                case 10:    return _10;
-                case 11:    return _11;
-                case 12:    return _12;
-                case 13:    return _13;
-                default:    return null;
+        public static BufferTransport getByTier(TierPrefix tier) {
+            switch (tier) {
+                case none:              return _0;
+                case clay:              return _1;
+                case denseClay:         return _2;
+                case simple:            return _3;
+                case basic:             return _4;
+                case advanced:          return _5;
+                case precision:         return _6;
+                case claySteel:         return _7;
+                case clayium:           return _8;
+                case ultimate:          return _9;
+                case antimatter:        return _10;
+                case pureAntimatter:    return _11;
+                case OEC:               return _12;
+                case OPA:               return _13;
             }
+
+            throw new IllegalTierException();
         }
     }
 
@@ -81,45 +79,52 @@ public class UtilTier {
             this.maxAutoExtractDefault = maxExtract;
         }
 
-        @Nullable
-        public static MachineTransport getByTier(int tier) {
-            switch(tier) {
-                case 0:     return _0;
-                case 1:     return _1;
-                case 2:     return _2;
-                case 3:     return _3;
-                case 4:     return _4;
-                case 5:     return _5;
-                case 6:     return _6;
-                case 7:     return _7;
-                case 8:     return _8;
-                case 9:     return _9;
-                case 10:    return _10;
-                case 11:    return _11;
-                case 12:    return _12;
-                case 13:    return _13;
-                default:    return null;
+        public static MachineTransport getByTier(TierPrefix tier) {
+            switch (tier) {
+                case unknown:
+                case none:              return _0;
+                case clay:              return _1;
+                case denseClay:         return _2;
+                case simple:            return _3;
+                case basic:             return _4;
+                case advanced:          return _5;
+                case precision:         return _6;
+                case claySteel:         return _7;
+                case clayium:           return _8;
+                case ultimate:          return _9;
+                case antimatter:        return _10;
+                case pureAntimatter:    return _11;
+                case OEC:               return _12;
+                case OPA:               return _13;
             }
+
+            throw new IllegalTierException();
         }
     }
 
-    public static boolean canAutoTransfer(int tier) {
-        return tier >= 3;
+    public static boolean canAutoTransfer(TierPrefix tier) {
+        return TierPrefix.comparator.compare(tier, TierPrefix.denseClay) > 0;
     }
 
     /**
      * @return true: Pushing the button is the only way to produce CE<p>
      * false: kinds of Clay Energy Block are the only way to produce CE
      */
-    public static boolean canManufactureCraft(int tier) {
-        return tier <= 2;
+    public static boolean canManufactureCraft(TierPrefix tier) {
+        return TierPrefix.comparator.compare(tier, TierPrefix.simple) < 0;
     }
 
-    public static boolean acceptWaterWheel(int tier) {
-        return tier == 2 || tier == 3;
+    public static boolean acceptWaterWheel(TierPrefix tier) {
+        switch (tier) {
+            case clay:
+            case denseClay:
+                return true;
+            default:
+                return false;
+        }
     }
 
-    public static boolean acceptEnergyClay(int tier) {
-        return tier >= 4;
+    public static boolean acceptEnergyClay(TierPrefix tier) {
+        return TierPrefix.comparator.compare(tier, TierPrefix.simple) > 0;
     }
 }

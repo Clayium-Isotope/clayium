@@ -20,26 +20,26 @@ import java.util.List;
 public class ClayiumMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
+    public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
         super(Material.IRON, teClass,
                 suffix == null || suffix.equals("")
-                        ? TierPrefix.get(tier).getPrefix() + "_" + kind.getRegisterName()
+                        ? tier.getPrefix() + "_" + kind.getRegisterName()
                         : kind.getRegisterName() + "_" + suffix,
                 guiID, tier);
         this.machineKind = kind;
 
-        JsonHelper.genItemJson(TierPrefix.get(tier), kind, this.getRegistryName().getResourcePath());
+        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
     }
 
-    public ClayiumMachine(EnumMachineKind kind, String suffix, int tier) {
+    public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier) {
         this(kind, suffix, tier, TileEntityClayiumMachine.class, GuiHandler.GuiIdClayMachines);
     }
 
-    public ClayiumMachine(EnumMachineKind kind, int tier) {
+    public ClayiumMachine(EnumMachineKind kind, TierPrefix tier) {
         this(kind, null, tier);
     }
 
-    public ClayiumMachine(EnumMachineKind kind, int tier, Class<? extends TileEntityGeneric> teClass) {
+    public ClayiumMachine(EnumMachineKind kind, TierPrefix tier, Class<? extends TileEntityGeneric> teClass) {
         this(kind, null, tier, teClass, GuiHandler.GuiIdClayMachines);
     }
 

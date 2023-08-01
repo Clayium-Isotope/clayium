@@ -3,6 +3,7 @@ package mods.clayium.item.gadget;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilCollect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +21,7 @@ import java.util.List;
 public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
     private final boolean isEconomical;
 
-    public GadgetAutoEat(int meta, int tier) {
+    public GadgetAutoEat(int meta, TierPrefix tier) {
         super("gadget_auto_eat_" + meta, meta, tier);
         this.isEconomical = meta == 0;
     }

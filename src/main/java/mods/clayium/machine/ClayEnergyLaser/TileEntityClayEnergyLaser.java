@@ -6,6 +6,7 @@ import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -64,23 +65,24 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
 //        this.setSyncFlag();
     }
 
-    public void initParamsByTier(int tier) {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
 
         switch(tier) {
-            case 7:
+            case claySteel:
                 this.machineConsumingEnergy = consumingEnergyBlue;
                 this.machineClayLaser = new ClayLaser(0, 1, 0, 0);
                 break;
-            case 8:
+            case clayium:
                 this.machineConsumingEnergy = consumingEnergyGreen;
                 this.machineClayLaser = new ClayLaser(0, 0, 1, 0);
                 break;
-            case 9:
+            case ultimate:
                 this.machineConsumingEnergy = consumingEnergyRed;
                 this.machineClayLaser = new ClayLaser(0, 0, 0, 1);
                 break;
-            case 10:
+            case antimatter:
                 this.machineConsumingEnergy = consumingEnergyWhite;
                 this.machineClayLaser = new ClayLaser(0, 3, 3, 3);
         }

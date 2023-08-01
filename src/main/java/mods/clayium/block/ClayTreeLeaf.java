@@ -5,6 +5,7 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.MapColor;
@@ -67,13 +68,13 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
     }
 
     @Override
-    public int getTier(ItemStack stackIn) {
-        return 7;
+    public TierPrefix getTier(ItemStack stackIn) {
+        return TierPrefix.claySteel;
     }
 
     @Override
-    public int getTier(IBlockAccess access, BlockPos posIn) {
-        return 7;
+    public TierPrefix getTier(IBlockAccess access, BlockPos posIn) {
+        return TierPrefix.claySteel;
     }
 
     @Nonnull

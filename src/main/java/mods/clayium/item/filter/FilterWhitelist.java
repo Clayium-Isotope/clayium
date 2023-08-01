@@ -2,6 +2,7 @@ package mods.clayium.item.filter;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiHandler;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,14 +15,14 @@ public class FilterWhitelist extends FilterTemp {
     protected final boolean fuzzy;
 
     public FilterWhitelist() {
-        this("filter_whitelist", 5, false);
+        this("filter_whitelist", TierPrefix.advanced, false);
     }
 
-    public FilterWhitelist(String modelPath, int tier) {
+    public FilterWhitelist(String modelPath, TierPrefix tier) {
         this(modelPath, tier, false);
     }
 
-    public FilterWhitelist(String modelPath, int tier, boolean fuzzy) {
+    public FilterWhitelist(String modelPath, TierPrefix tier, boolean fuzzy) {
         super(modelPath, tier);
         this.fuzzy = fuzzy;
     }

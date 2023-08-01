@@ -2,6 +2,7 @@ package mods.clayium.block.itemblock;
 
 import mods.clayium.block.CompressedClay;
 import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -13,23 +14,23 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBlockCompressedClay extends ItemBlockTiered implements IClayEnergy {
-    private final int meta;
+    private final TierPrefix tier;
 
     public ItemBlockCompressedClay(CompressedClay block) {
         super(block);
 
-        meta = block.getTier(ItemStack.EMPTY);
+        this.tier = block.getTier(ItemStack.EMPTY);
     }
 
     @Override
     public long getClayEnergy() {
-        if (meta < 4) return 0L;
-        return (long) Math.pow(10.0D, this.getTier());
+        if (TierPrefix.comparator.compare(this.tier, TierPrefix.basic) < 0) return 0L;
+        return (long) Math.pow(10.0D, this.getTier().meta());
     }
 
     @Override
-    public int getTier() {
-        return meta;
+    public TierPrefix getTier() {
+        return this.tier;
     }
 
     @Override
