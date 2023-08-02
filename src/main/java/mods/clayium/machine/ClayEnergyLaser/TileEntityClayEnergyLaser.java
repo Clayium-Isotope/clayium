@@ -6,6 +6,7 @@ import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 public class TileEntityClayEnergyLaser extends TileEntityClayContainer implements IClayEnergyConsumer, IClayLaserManager {
-    protected long containEnergy;
+    protected final ContainClayEnergy containEnergy = new ContainClayEnergy();
     protected int machineConsumingEnergy;
     protected ClayLaser machineClayLaser;
     protected ClayLaserManager manager;
@@ -104,7 +105,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
 
         this.manager.readFromNBT(tagCompound.getCompoundTag("ClayEnergyManager"));
         this.setPowered(tagCompound.getBoolean("Powered"));
-        this.containEnergy = tagCompound.getLong("ContainEnergy");
+        this.containEnergy().set(tagCompound.getLong("ContainEnergy"));
     }
 
     @Override
@@ -115,7 +116,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
         this.manager.writeToNBT(manager);
         tagCompound.setTag("ClayEnergyManager", manager);
         tagCompound.setBoolean("Powered", this.isPowered());
-        tagCompound.setLong("ContainEnergy", this.containEnergy);
+        tagCompound.setLong("ContainEnergy", this.containEnergy().get());
 
         return tagCompound;
     }
@@ -159,13 +160,8 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     }
 
     @Override
-    public long getContainEnergy() {
+    public ContainClayEnergy containEnergy() {
         return containEnergy;
-    }
-
-    @Override
-    public void setContainEnergy(long energy) {
-        this.containEnergy = energy;
     }
 
     @Override

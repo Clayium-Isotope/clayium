@@ -5,6 +5,7 @@ import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;
@@ -18,7 +19,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator implements IClayEnergyConsumer {
-    private long clayEnergy;
+    private final ContainClayEnergy clayEnergy = new ContainClayEnergy();
     private static final int energyPerWork = 30;
 
     @Override
@@ -92,13 +93,8 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     }
 
     @Override
-    public long getContainEnergy() {
+    public ContainClayEnergy containEnergy() {
         return this.clayEnergy;
-    }
-
-    @Override
-    public void setContainEnergy(long energy) {
-        this.clayEnergy = energy;
     }
 
     @Override

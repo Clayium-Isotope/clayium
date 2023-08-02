@@ -10,6 +10,7 @@ import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
@@ -52,7 +53,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public float multConsumingEnergy = 1.0F;
     public float initCraftTime = 1.0F;
     public float initConsumingEnergy = 1.0F;
-    private long containEnergy;
+    private final ContainClayEnergy containEnergy = new ContainClayEnergy();
     private int clayEnergyStorageSize = 1;
 
     protected boolean scheduled = true;
@@ -141,7 +142,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.timeToCraft = tagCompound.getLong("TimeToCraft");
         this.debtEnergy = tagCompound.getLong("ConsumingEnergy");
 
-        this.setContainEnergy(tagCompound.getLong("ClayEnergy"));
+        this.containEnergy().set(tagCompound.getLong("ClayEnergy"));
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
         this.doingRecipe = this.getRecipe(tagCompound.getInteger("RecipeHash"));
@@ -155,7 +156,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         tagCompound.setLong("TimeToCraft", this.timeToCraft);
         tagCompound.setLong("ConsumingEnergy", this.debtEnergy);
 
-        tagCompound.setLong("ClayEnergy", this.containEnergy);
+        tagCompound.setLong("ClayEnergy", this.containEnergy.get());
 
         tagCompound.setInteger("RecipeHash", this.doingRecipe.hashCode());
 
@@ -178,18 +179,13 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     @Override
     public void pushButton(EntityPlayer playerIn, int button) {
         if (UtilTier.canManufactureCraft(this.getHullTier()) && canPushButton(button) == ButtonProperty.PERMIT) {
-            this.containEnergy += 5L;
+            this.containEnergy.increase(5L);
         }
     }
 
     @Override
-    public long getContainEnergy() {
+    public ContainClayEnergy containEnergy() {
         return this.containEnergy;
-    }
-
-    @Override
-    public void setContainEnergy(long energy) {
-        this.containEnergy = energy;
     }
 
     @Override
@@ -270,7 +266,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
             case 1:
                 return (int) this.craftTime;
             case 2:
-                return (int) this.containEnergy;
+                return (int) this.containEnergy().get();
             default:
                 return 0;
         }
@@ -286,7 +282,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
                 this.craftTime = value;
                 return;
             case 2:
-                this.containEnergy = value;
+                this.containEnergy().set(value);
                 return;
             default:
                 return;

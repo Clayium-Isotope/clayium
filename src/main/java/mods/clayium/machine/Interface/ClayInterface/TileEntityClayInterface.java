@@ -5,6 +5,7 @@ import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilCollect;
@@ -314,18 +315,11 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     }
 
     @Override
-    public long getContainEnergy() {
+    public ContainClayEnergy containEnergy() {
         if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
-            return ((IClayEnergyConsumer) this.core).getContainEnergy();
+            return ((IClayEnergyConsumer) this.core).containEnergy();
         }
-        return 0;
-    }
-
-    @Override
-    public void setContainEnergy(long energy) {
-        if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
-            ((IClayEnergyConsumer) this.core).setContainEnergy(energy);;
-        }
+        return ContainClayEnergy.NIL;
     }
 
     @Override

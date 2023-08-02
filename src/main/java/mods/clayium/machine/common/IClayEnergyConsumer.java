@@ -1,14 +1,14 @@
 package mods.clayium.machine.common;
 
 import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.UsedFor;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayEnergyConsumer extends IInventory {
-    long getContainEnergy();
-    void setContainEnergy(long energy);
+    ContainClayEnergy containEnergy();
 
     int getClayEnergyStorageSize();
     void setClayEnergyStorageSize(int size);
@@ -53,7 +53,7 @@ public interface IClayEnergyConsumer extends IInventory {
         if (itemstack.isEmpty()) return false;
 
         if (!IClayEnergy.hasClayEnergy(itemstack)) return false;
-        consumer.setContainEnergy(consumer.getContainEnergy() + IClayEnergy.getClayEnergy(itemstack));
+        consumer.containEnergy().increase(IClayEnergy.getClayEnergy(itemstack));
         itemstack.shrink(1);
         consumer.markDirty();
 
@@ -65,13 +65,13 @@ public interface IClayEnergyConsumer extends IInventory {
     }
 
     static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt, boolean doConsume) {
-        if (debt > consumer.getContainEnergy()) {
+        if (debt > consumer.containEnergy().get()) {
             if (!produceClayEnergy(consumer)) return false;
 
             return compensateClayEnergy(consumer, debt, doConsume);
         }
 
-        if (doConsume) consumer.setContainEnergy(consumer.getContainEnergy() - debt);
+        if (doConsume) consumer.containEnergy().decrease(debt);
         return true;
     }
 

@@ -5,10 +5,7 @@ import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.RecipeProvider;
-import mods.clayium.util.EnumSide;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilCollect;
-import mods.clayium.util.UtilTransfer;
+import mods.clayium.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCraftResult;
@@ -52,7 +49,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
      */
     private final InventoryCrafting craftMatrix = new InventoryCrafting(new ContainerDummy(), 3, 3);
 
-    private long containEnergy;
+    private final ContainClayEnergy containEnergy = new ContainClayEnergy();
     private int energyStorageSize = 1;
     private final List<Predicate<ItemStack>> patternCache = NonNullList.withSize(9, ItemStack::isEmpty);
     private IRecipe doingRecipe;
@@ -126,13 +123,8 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     }
 
     @Override
-    public long getContainEnergy() {
+    public ContainClayEnergy containEnergy() {
         return containEnergy;
-    }
-
-    @Override
-    public void setContainEnergy(long containEnergy) {
-        this.containEnergy = containEnergy;
     }
 
     @Override

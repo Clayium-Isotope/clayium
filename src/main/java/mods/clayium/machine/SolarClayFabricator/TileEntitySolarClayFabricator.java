@@ -104,12 +104,12 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
 
     public void proceedCraft() {
         ++this.craftTime;
-        this.setContainEnergy((long)(Math.pow(10.0D, this.raiseFrom + 1) * (double)this.craftTime / (double)this.timeToCraft));
+        this.containEnergy().set((long)(Math.pow(10.0D, this.raiseFrom + 1) * (double)this.craftTime / (double)this.timeToCraft));
         if (this.craftTime < this.timeToCraft) {
             return;
         }
 
-        this.setContainEnergy(0L);
+        this.containEnergy().set(0L);
         UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.raiseFrom + 1), this.containerItemStacks, 1, 2, this.getInventoryStackLimit());
         this.craftTime = 0L;
 //            if (this.externalControlState > 0) {

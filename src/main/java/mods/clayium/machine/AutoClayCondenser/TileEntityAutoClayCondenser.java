@@ -121,7 +121,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
                 energy += ((IClayEnergy) stack.getItem()).getClayEnergy() * stack.getCount();
             }
         }
-        this.setContainEnergy(energy);
+        this.containEnergy().set(energy);
     }
 
     @Override

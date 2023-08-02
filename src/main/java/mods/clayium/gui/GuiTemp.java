@@ -46,7 +46,7 @@ public class GuiTemp extends GuiContainer {
         fontRenderer.drawString(I18n.format("container.inventory"), 8, machineHeight, 4210752);
 
         if (this.tile instanceof IClayEnergyConsumer)
-            this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((IClayEnergyConsumer) this.tile).getContainEnergy(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
+            this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((IClayEnergyConsumer) this.tile).containEnergy().get(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
     }
 
     @Override
