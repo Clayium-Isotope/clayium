@@ -20,7 +20,9 @@ import java.util.stream.Collector;
  */
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayInventory extends ISidedInventory {
-    /* static final */ NonNullList<ItemStack> EMPTY_INV = NonNullList.create();
+    NonNullList<ItemStack> EMPTY_INV = NonNullList.withSize(0, ItemStack.EMPTY);
+    int ENERGY_ROUTE = -2;
+    int NONE_ROUTE = -1;
 
     List<int[]> getListSlotsImport();
     List<int[]> getListSlotsExport();
@@ -51,7 +53,7 @@ public interface IClayInventory extends ISidedInventory {
         EnumSide side = UtilDirection.getSideOfDirection(inv.getFront(), direction);
 
         int route = inv.getImportRoute(side);
-        if (inv instanceof IClayEnergyConsumer && route == -2 && index == ((IClayEnergyConsumer) inv).getEnergySlot()) return inv.isItemValidForSlot(index, itemStackIn);
+        if (inv instanceof IClayEnergyConsumer && route == ENERGY_ROUTE && index == ((IClayEnergyConsumer) inv).getEnergySlot()) return inv.isItemValidForSlot(index, itemStackIn);
 
         if (route >= 0 && route < inv.getListSlotsImport().size()) {
             return Arrays.stream(inv.getListSlotsImport().get(route)).anyMatch(e -> e == index);
@@ -83,11 +85,11 @@ public interface IClayInventory extends ISidedInventory {
         EnumSide side = UtilDirection.getSideOfDirection(inv.getFront(), facing);
         Boolean[] flags = new Boolean[inv.getContainerItemStacks().size()];
         switch (inv.getImportRoute(side)) {
-            case -2:
+            case ENERGY_ROUTE:
                 if (inv instanceof IClayEnergyConsumer)
                     flags[((IClayEnergyConsumer) inv).getEnergySlot()] = true;
                 break;
-            case -1:
+            case NONE_ROUTE:
                 break;
             default:
                 if (!inv.getListSlotsImport().isEmpty()) {
@@ -97,7 +99,7 @@ public interface IClayInventory extends ISidedInventory {
                 }
         }
 
-        if (inv.getExportRoute(side) != -1) {
+        if (inv.getExportRoute(side) != NONE_ROUTE) {
             if (!inv.getListSlotsExport().isEmpty()) {
                 for (int slot : inv.getListSlotsExport().get(inv.getExportRoute(side))) {
                     flags[slot] = true;
@@ -109,7 +111,7 @@ public interface IClayInventory extends ISidedInventory {
                 ArrayList::new,
                 (list, flag) -> list.add(flag != null && flag ? list.size() : -1),
                 (list, list1) -> { list.addAll(list1); return list; },
-                list -> list.stream().mapToInt(e -> e).filter(e -> e != -1).toArray()
+                list -> list.stream().mapToInt(e -> e).filter(e -> e != NONE_ROUTE).toArray()
         );
 
         return Arrays.stream(flags).collect(verifiedIndexJoiner);

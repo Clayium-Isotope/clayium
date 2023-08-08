@@ -34,7 +34,7 @@ public class ClaySlicer extends ClayiumItem implements IModifyCC {
             int dist = tecc.getExportRoute(side) + 1;
 
             if (tecc.getListSlotsExport().size() <= dist || tecc.getListSlotsExport().get(0).length >= 2 && dist == tecc.getListSlotsExport().get(0).length + 1) {
-                dist = -1;
+                dist = IClayInventory.NONE_ROUTE;
                 player.sendMessage(new TextComponentString("Disabled"));
             } else {
                 player.sendMessage(new TextComponentString("Set extract route " + dist));

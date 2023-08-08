@@ -29,9 +29,9 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
         this.autoInsert = true;
         this.autoExtract = true;
 
-        this.containerItemStacks = NonNullList.withSize(54 + 1, ItemStack.EMPTY);
-        this.setImportRoutes(-1, -1, -1, -2, -1, -1);
-        this.setExportRoutes(-1, -1, 0, -1, -1, -1);
+        this.containerItemStacks = NonNullList.withSize(55, ItemStack.EMPTY);
+        this.setImportRoutes(NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
+        this.setExportRoutes(NONE_ROUTE, NONE_ROUTE, 0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.isCobblestoneGenerator = false;
         this.isBuffer = false;
     }

@@ -2,6 +2,7 @@ package mods.clayium.item.common;
 
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.itemblock.ItemBlockCompressedClay;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UsedFor;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -26,21 +27,21 @@ public interface IClayEnergy {
     /**
      * Get tier of the stack as if the item is Clay or Compressed Clay
      */
-    static int getTier(ItemStack stack) {
-        if (stack.isEmpty()) return -1;
+    static TierPrefix getTier(ItemStack stack) {
+        if (stack.isEmpty()) return TierPrefix.unknown;
 
         if (stack.getItem().equals(Item.getItemFromBlock(Blocks.CLAY)))
-            return 0;
+            return TierPrefix.none;
 
         if (stack.getItem() instanceof ItemBlockCompressedClay) {
-            return ((ItemBlockCompressedClay) stack.getItem()).getTier().meta();
+            return ((ItemBlockCompressedClay) stack.getItem()).getTier();
         }
 
-        return -1;
+        return TierPrefix.unknown;
     }
 
     /**
-     * @return ItemStack::new で返しているので、たぶん {@code ItemStack.copy()} は不要
+     * @return {@code new ItemStack} で返しているので、呼び出し先で {@code ItemStack.copy()} は不要(たぶん)
      */
     static ItemStack getCompressedClay(int tier, int size) {
         return tier <= 0 ? new ItemStack(Blocks.CLAY, size) : ClayiumBlocks.compressedClay.get(tier - 1, size);
@@ -48,5 +49,13 @@ public interface IClayEnergy {
 
     static ItemStack getCompressedClay(int tier) {
         return getCompressedClay(tier, 1);
+    }
+
+    static ItemStack getCompressedClay(TierPrefix tier) {
+        return getCompressedClay(tier.meta(), 1);
+    }
+
+    static ItemStack getCompressedClay(TierPrefix tier, int size) {
+        return getCompressedClay(tier.meta(), size);
     }
 }

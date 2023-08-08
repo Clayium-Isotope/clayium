@@ -31,8 +31,8 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(5, ItemStack.EMPTY);
 
-        this.setImportRoutes(-1, 2, -1, -2, -1, -1);
-        this.setExportRoutes(2, -1, -1, -1, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, 2, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
+        this.setExportRoutes(2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.listSlotsImport.clear();
         this.listSlotsExport.clear();
         this.listSlotsImport.add(new int[]{0});

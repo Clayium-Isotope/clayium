@@ -75,7 +75,7 @@ public class ItemTiered extends ClayiumItem implements ITieredItem {
     }
 
     public ItemTiered setTier(TierPrefix tier) {
-        if (tier != TierPrefix.unknown)
+        if (tier.isValid())
             this.tier = tier;
         return this;
     }

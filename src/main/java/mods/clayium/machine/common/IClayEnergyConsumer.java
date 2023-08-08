@@ -2,12 +2,15 @@ package mods.clayium.machine.common;
 
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.util.ContainClayEnergy;
+import mods.clayium.util.RangeCheck;
 import mods.clayium.util.UsedFor;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayEnergyConsumer extends IInventory {
+    int NIL_ENERGY_SLOT = -1;
+
     ContainClayEnergy containEnergy();
 
     int getClayEnergyStorageSize();
@@ -26,12 +29,12 @@ public interface IClayEnergyConsumer extends IInventory {
     int getEnergySlot();
 
     default ItemStack getEnergyStack() {
-        if (this.getEnergySlot() == -1) return ItemStack.EMPTY;
+        if (this.getEnergySlot() == NIL_ENERGY_SLOT) return ItemStack.EMPTY;
         return this.getStackInSlot(this.getEnergySlot());
     }
 
     default boolean acceptClayEnergy() {
-        return this.getEnergySlot() != -1;
+        return this.getEnergySlot() != NIL_ENERGY_SLOT;
     }
 
     static boolean isItemValidForSlot(IClayEnergyConsumer inv, int index, ItemStack stack) {
@@ -48,7 +51,8 @@ public interface IClayEnergyConsumer extends IInventory {
      * Change Compressed Clay to Clay Energy
      */
     static boolean produceClayEnergy(IClayEnergyConsumer consumer) {
-        if (consumer.getEnergySlot() < 0 || consumer.getEnergySlot() >= consumer.getSizeInventory()) return false;
+        if (RangeCheck.isInOutOfInclusive(consumer.getEnergySlot(), 0, consumer.getSizeInventory())) return false;
+
         ItemStack itemstack = consumer.getStackInSlot(consumer.getEnergySlot());
         if (itemstack.isEmpty()) return false;
 

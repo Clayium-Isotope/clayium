@@ -42,9 +42,9 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
         this.listSlotsExport.add(new int[]{2});
         this.listSlotsExport.add(new int[]{3});
         this.listSlotsExport.add(new int[]{2, 3});
-        this.setImportRoutes(-1, 2, -1, -2, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, 2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.maxAutoExtract = new int[]{64, 64, 64, 1};
-        this.setExportRoutes(2, -1, -1, -1, -1, -1);
+        this.setExportRoutes(2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.maxAutoInsert = new int[]{64, 64, 64};
         this.autoExtractInterval = this.autoInsertInterval = 1;
         this.slotsDrop = new int[]{0, 1, 2, 3, this.getEnergySlot()};

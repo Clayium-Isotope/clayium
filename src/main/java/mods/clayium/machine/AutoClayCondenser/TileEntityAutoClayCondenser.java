@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 
 public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     /*package-private*/ static final int SAMPLE_SLOT = 20;
-    private int mergeFrom = -1;
+    private TierPrefix mergeFrom = TierPrefix.unknown;
     private boolean isStable = false;
 
     public void initParams() {
@@ -82,15 +82,15 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
         int[] arr = new int[ClayiumBlocks.compressedClay.size() + 1];
 
         for (ItemStack stack : this.getContainerItemStacks()) {
-            if (IClayEnergy.getTier(stack) == -1) continue;
+            if (!IClayEnergy.getTier(stack).isValid()) continue;
 
-            arr[IClayEnergy.getTier(stack)] += stack.getCount();
+            arr[IClayEnergy.getTier(stack).meta()] += stack.getCount();
         }
 
         return Arrays.stream(arr).boxed().collect(Collectors.toList());
     }
 
-    protected boolean canCraft(int tier) {
+    protected boolean canCraft(TierPrefix tier) {
         return UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier), this.containerItemStacks, 0, 20, this.getInventoryStackLimit()) >= 1;
     }
 
@@ -100,7 +100,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
             return true;
 
         if (material.getItem() instanceof IClayEnergy)
-            return this.canCraft(IClayEnergy.getTier(material) + 1);
+            return this.canCraft(IClayEnergy.getTier(material).offset(1));
 
         return false;
     }
@@ -134,22 +134,22 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 //        return this.canCraft(this.mergeFrom + 1);
     }
 
-    public int getConsumedClay() {
+    public TierPrefix getConsumedClay() {
         List<Integer> num = this.getQuantityOfClay();
-        int max = ClayiumBlocks.compressedClay.size();
+        TierPrefix max = TierPrefix.MAX_TIER;
 
-        if (!this.getStackInSlot(SAMPLE_SLOT).isEmpty() && IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT)) != -1) {
+        if (!this.getStackInSlot(SAMPLE_SLOT).isEmpty() && IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT)).isValid()) {
             max = IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT));
         }
 
-        for (int j = max - 1; j >= 0; --j) {
-            if (num.get(j) >= 9 && this.canCraft(j + 1)) {
-                return j;
+        for (TierPrefix tier : TierPrefix.makeIterable(max, -1)) {
+            if (num.get(tier.offset(1).meta()) >= 9 && this.canCraft(tier)) {
+                return tier;
             }
         }
 
         this.isStable = true;
-        return -1;
+        return TierPrefix.unknown;
     }
 
     @Override
@@ -159,9 +159,9 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
             return;
         }
 
-        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom + 1), this.containerItemStacks, 0, 20, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom.offset(1)), this.containerItemStacks, 0, 20, this.getInventoryStackLimit());
         this.craftTime = 0L;
-        this.mergeFrom = -1;
+        this.mergeFrom = TierPrefix.unknown;
 //                if (this.externalControlState > 0) {
 //                    --this.externalControlState;
 //                    if (this.externalControlState == 0) {
@@ -175,7 +175,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     public boolean setNewRecipe() {
         this.timeToCraft = (long)(1.0F * this.multCraftTime);
         this.mergeFrom = this.getConsumedClay();
-        if (this.mergeFrom == -1) return false;
+        if (!this.mergeFrom.isValid()) return false;
 
         UtilTransfer.consumeItemStack(IClayEnergy.getCompressedClay(this.mergeFrom, 9), this.containerItemStacks, 0, 20);
         return true;
@@ -183,12 +183,12 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
-        return super.canExtractItem(slot, itemstack, side) && IClayEnergy.getTier(itemstack) >= IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT));
+        return super.canExtractItem(slot, itemstack, side) && TierPrefix.comparator.compare(IClayEnergy.getTier(itemstack), IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT))) >= 0;
     }
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        return IClayEnergy.getTier(itemstack) != -1;
+        return IClayEnergy.getTier(itemstack).isValid();
     }
 
     @Override

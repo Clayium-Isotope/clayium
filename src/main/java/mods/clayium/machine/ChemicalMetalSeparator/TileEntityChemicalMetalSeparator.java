@@ -23,8 +23,8 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(19, ItemStack.EMPTY);
-        this.setImportRoutes(-1, 0, -1, -2, -1, -1);
-        this.setExportRoutes(0, -1, -1, -1, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
+        this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.listSlotsImport.add(new int[]{0});
         this.listSlotsExport.add(IntStream.range(1, 17).toArray());
         this.maxAutoExtract = new int[]{-1, 1};

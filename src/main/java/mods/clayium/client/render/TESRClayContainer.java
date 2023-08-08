@@ -5,6 +5,7 @@ import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.UtilDirection;
 import net.minecraft.client.model.PositionTextureVertex;
@@ -123,9 +124,9 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
     }
 
     private static void bindImportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing, TileEntityRendererDispatcher rendererDispatcher) {
-        if (route == -1) return;
+        if (route == IClayInventory.NONE_ROUTE) return;
 
-        if (route == -2)
+        if (route == IClayInventory.ENERGY_ROUTE)
             TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy.png"));
         else if (route < otherwise.size())
             TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
@@ -134,7 +135,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
     }
 
     private static void bindExportBlockTexAsCan(int route, List<ResourceLocation> otherwise, EnumFacing facing, TileEntityRendererDispatcher rendererDispatcher) {
-        if (route == -1) return;
+        if (route == IClayInventory.NONE_ROUTE) return;
 
         if (route < otherwise.size())
             TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
@@ -143,9 +144,9 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
     }
 
     private static void bindImportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing, BufferBuilder buffer, TileEntityRendererDispatcher rendererDispatcher) {
-        if (route == -1) return;
+        if (route == IClayInventory.NONE_ROUTE) return;
 
-        if (route == -2)
+        if (route == IClayInventory.ENERGY_ROUTE)
             TESRClayContainer.bindTexture(rendererDispatcher, new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/import_energy_p.png"));
         else if (route < otherwise.size())
             TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));
@@ -154,7 +155,7 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
     }
 
     private static void bindExportPipeTexAsCan(ModelClayContainer modelCC, int route, List<ResourceLocation> otherwise, EnumFacing facing, BufferBuilder buffer, TileEntityRendererDispatcher rendererDispatcher) {
-        if (route == -1) return;
+        if (route == IClayInventory.NONE_ROUTE) return;
 
         if (route < otherwise.size())
             TESRClayContainer.bindTexture(rendererDispatcher, otherwise.get(route));

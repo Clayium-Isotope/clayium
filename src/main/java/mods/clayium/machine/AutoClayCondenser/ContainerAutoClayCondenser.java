@@ -26,7 +26,7 @@ public class ContainerAutoClayCondenser extends ContainerTemp {
             for (int i = 0; i < inventoryX; ++i) {
                 this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, i + j * inventoryX, i * 18 + (this.machineGuiSizeX - 18 * inventoryX) / 2, j * 18 + 18) {
                     public boolean isItemValid(ItemStack itemstack) {
-                        return IClayEnergy.getTier(itemstack) != -1;
+                        return IClayEnergy.getTier(itemstack).isValid();
                     }
                 });
             }
@@ -36,7 +36,7 @@ public class ContainerAutoClayCondenser extends ContainerTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return IClayEnergy.getTier(itemstack1) != -1;
+        return IClayEnergy.getTier(itemstack1).isValid();
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {

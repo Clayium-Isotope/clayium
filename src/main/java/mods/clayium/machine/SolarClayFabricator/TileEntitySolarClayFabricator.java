@@ -6,6 +6,7 @@ import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
@@ -18,25 +19,22 @@ import net.minecraft.world.EnumSkyBlock;
 import javax.annotation.Nullable;
 
 public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
-    public int acceptableTier;
+    public TierPrefix acceptableTier;
     public float baseCraftTime;
 
-    private int raiseFrom;
+    private TierPrefix raiseFrom;
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
-        this.setImportRoutes(-1, -1, -1, 0, -1, -1);
-        this.setExportRoutes(-1, -1, 0, -1, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, 0, NONE_ROUTE, NONE_ROUTE);
+        this.setExportRoutes(NONE_ROUTE, NONE_ROUTE, 0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.listSlotsImport.add(new int[] { 0 });
         this.listSlotsExport.add(new int[] { 1 });
         this.slotsDrop = new int[] { 0, 1 };
 
-        this.acceptableTier = 4;
         this.maxAutoExtract = new int[]{64};
         this.maxAutoInsert = new int[]{64};
-        this.initCraftTime = 0.3F;
-        this.baseCraftTime = 4.0F;
 
         this.debtEnergy = 0;
     }
@@ -59,34 +57,34 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
         this.setDefaultTransportation(tier);
-
-        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(5000.0F) / 20.0F));
+        float craftTimeDivisor;
 
         switch (tier) {
+            case advanced:
+                this.acceptableTier = TierPrefix.basic;
+                this.baseCraftTime = 4.0F;
+                craftTimeDivisor = 5000.0f;
+                break;
             case precision:
-                this.acceptableTier = 6;
+                this.acceptableTier = TierPrefix.precision;
                 this.baseCraftTime = 3.0F;
-                this.initCraftTime = 0.01F;
-                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(50000.0F) / 20.0F));
+                craftTimeDivisor = 50000.0f;
                 break;
             case claySteel:
-                this.acceptableTier = 9;
+                this.acceptableTier = TierPrefix.ultimate;
                 this.baseCraftTime = 2.0F;
-                this.initCraftTime = 0.07F;
-                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(3000000.0F) / 20.0F));
+                craftTimeDivisor = 3000000.0F;
                 break;
+            default:
+                throw new IllegalTierException();
         }
 
+        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier.meta() + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
         this.autoExtractInterval = this.autoInsertInterval = 4;
     }
 
-    protected boolean canCraft(int tier) {
-        if (tier < 0 || tier > this.acceptableTier) return false;
-
-//        return this.getStackInSlot(MachineSlots.PRODUCT).isEmpty()
-//                || (IClayEnergy.getClayEnergy(this.getStackInSlot(MachineSlots.PRODUCT)) == tier + 1
-//                    && this.getStackInSlot(MachineSlots.PRODUCT).getCount() < this.getInventoryStackLimit());
-        return UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier + 1), this.containerItemStacks, 1, 2, this.getInventoryStackLimit()) >= 1;
+    protected boolean canCraft(TierPrefix tier) {
+        return isTierValid(tier) && UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier.offset(1)), this.containerItemStacks, 1, 2, this.getInventoryStackLimit()) >= 1;
     }
 
     @Override
@@ -97,20 +95,18 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public boolean canProceedCraft() {
         if (this.world.getLightFor(EnumSkyBlock.SKY, this.getPos().up()) < 15 || this.world.getSkylightSubtracted() > 0) return false;
 
-        // PRODUCTスロットが不適切な状態のとき、raiseFrom == -1
-        return this.raiseFrom != -1 || this.canCraft(this.getStackInSlot(MachineSlots.MATERIAL));
-//        return this.getStackInSlot(WORKING_SLOT).isEmpty() ? this.canCraft(getTierOfCompressedClay(this.containerItemStacks.get(0))) : this.canCraft(getTierOfCompressedClay(this.getStackInSlot(WORKING_SLOT)));
+        return this.canCraft(this.getStackInSlot(0));
     }
 
     public void proceedCraft() {
         ++this.craftTime;
-        this.containEnergy().set((long)(Math.pow(10.0D, this.raiseFrom + 1) * (double)this.craftTime / (double)this.timeToCraft));
+        this.containEnergy().set((long)(Math.pow(10.0D, this.raiseFrom.meta() + 1) * (double)this.craftTime / (double)this.timeToCraft));
         if (this.craftTime < this.timeToCraft) {
             return;
         }
 
         this.containEnergy().set(0L);
-        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.raiseFrom + 1), this.containerItemStacks, 1, 2, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.raiseFrom.offset(1)), this.containerItemStacks, 1, this.getInventoryStackLimit());
         this.craftTime = 0L;
 //            if (this.externalControlState > 0) {
 //                --this.externalControlState;
@@ -124,34 +120,38 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public boolean setNewRecipe() {
 //        if (this.world.isRemote) return false;
 
-        this.raiseFrom = getTierOfCompressedClay(this.getStackInSlot(MachineSlots.MATERIAL));
-        if (this.raiseFrom == -1 || !this.canCraft(this.raiseFrom)) return false;
+        this.raiseFrom = getTierOfCompressedClay(this.getStackInSlot(0));
+        if (!this.canCraft(this.raiseFrom)) return false;
 
         this.craftTime = 1;
-        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, this.raiseFrom) * (double)this.multCraftTime);
-        this.getStackInSlot(MachineSlots.MATERIAL).shrink(1);
+        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, this.raiseFrom.meta()) * (double)this.multCraftTime);
+        this.getStackInSlot(0).shrink(1);
 
         return true;
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        return slot == 0 && getTierOfCompressedClay(itemstack) >= 0 && getTierOfCompressedClay(itemstack) <= this.acceptableTier;
+        return slot == 0 && isTierValid(getTierOfCompressedClay(itemstack));
     }
 
-    private static int getTierOfCompressedClay(ItemStack itemstack) {
-        int asCC = IClayEnergy.getTier(itemstack);
-        if (asCC != -1) return asCC;
+    private static TierPrefix getTierOfCompressedClay(ItemStack itemstack) {
+        TierPrefix asCC = IClayEnergy.getTier(itemstack);
+        if (asCC.isValid()) return asCC;
 
         if (UtilItemStack.areItemDamageEqual(new ItemStack(Blocks.SAND), itemstack)) {
-            return 2;
+            return TierPrefix.denseClay;
         }
 
-        return UtilItemStack.hasOreName(itemstack, ClayiumMaterials.getOreName(ClayiumMaterial.lithium, ClayiumShape.ingot)) ? 8 : -1;
+        return UtilItemStack.hasOreName(itemstack, ClayiumMaterials.getOreName(ClayiumMaterial.lithium, ClayiumShape.ingot)) ? TierPrefix.clayium : TierPrefix.unknown;
     }
 
     @Nullable
     @Override
     public ResourceLocation getFaceResource() {
         return null;
+    }
+
+    protected boolean isTierValid(TierPrefix tier) {
+        return tier.isValid() && TierPrefix.comparator.compare(tier, this.acceptableTier) <= 0;
     }
 }

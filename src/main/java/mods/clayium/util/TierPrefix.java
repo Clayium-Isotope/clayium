@@ -4,6 +4,7 @@ import mods.clayium.item.common.ClayiumMaterial;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,8 +47,12 @@ public enum TierPrefix {
 
     public static final Comparator<TierPrefix> comparator = Comparator.comparingInt(TierPrefix::meta);
 
-    public TierPrefix offset(int dTier) {
-        return TierPrefix.get(this.meta() + dTier);
+    public TierPrefix offset(int delta) {
+        return TierPrefix.get(this.meta() + delta);
+    }
+
+    public boolean isValid() {
+        return this != unknown;
     }
 
     public static TierPrefix get(int rawTier) {
@@ -74,5 +79,24 @@ public enum TierPrefix {
         return Arrays.stream(tiers)
                 .mapToObj(TierPrefix::get)
                 .collect(Collectors.toList());
+    }
+
+    public static final TierPrefix MAX_TIER = OPA;
+
+    public static Iterable<TierPrefix> makeIterable(TierPrefix begin, int offset) {
+        return () -> new Iterator<TierPrefix>() {
+            private TierPrefix current = begin;
+
+            @Override
+            public boolean hasNext() {
+                return this.current.isValid();
+            }
+
+            @Override
+            public TierPrefix next() {
+                this.current = current.offset(offset);
+                return this.current;
+            }
+        };
     }
 }

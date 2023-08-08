@@ -1,6 +1,5 @@
 package mods.clayium.gui;
 
-import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -22,9 +21,7 @@ public class SlotEnergy extends Slot {
     public boolean isItemValid(ItemStack stack) {
         assert this.inventory instanceof IClayEnergyConsumer;
 
-        return IClayEnergy.hasClayEnergy(stack)
-                && (((IClayEnergyConsumer) this.inventory).getEnergyStack().isEmpty()
-                    || ((IClayEnergyConsumer) this.inventory).getEnergyStack().getCount() < ((IClayEnergyConsumer) this.inventory).getClayEnergyStorageSize());
+        return IClayEnergyConsumer.isItemValidForSlot((IClayEnergyConsumer) this.inventory, this.slotNumber, stack);
     }
 
     @Override

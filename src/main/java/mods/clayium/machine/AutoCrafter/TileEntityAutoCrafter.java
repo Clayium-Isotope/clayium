@@ -63,9 +63,9 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
         this.containerItemStacks = NonNullList.withSize(25, ItemStack.EMPTY);
         this.listSlotsImport.add(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8});
         this.listSlotsExport.add(new int[]{9, 10, 11, 12, 13, 14});
-        this.setImportRoutes(-1, 0, -1, -2, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.maxAutoExtract = new int[]{-1, 1};
-        this.setExportRoutes(0, -1, -1, -1, -1, -1);
+        this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.maxAutoInsert = new int[]{-1};
         this.slotsDrop = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, this.getEnergySlot()};
         this.autoInsert = true;
@@ -117,7 +117,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
                 this.autoExtractInterval = this.autoInsertInterval = 8;
         }
 
-        if (TierPrefix.comparator.compare(tier, TierPrefix.advanced) <= 0 && this.getImportRoute(EnumSide.BACK) == -2) {
+        if (TierPrefix.comparator.compare(tier, TierPrefix.advanced) <= 0 && this.getImportRoute(EnumSide.BACK) == ENERGY_ROUTE) {
             this.setImportRoute(EnumSide.BACK, -1);
         }
     }

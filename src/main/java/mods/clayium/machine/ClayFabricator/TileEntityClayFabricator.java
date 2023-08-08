@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayFabricator;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
+import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
@@ -15,8 +16,8 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
         super.initParams();
         this.containerItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
 
-        this.setImportRoutes(-1, 0, -1, -1, -1, -1);
-        this.setExportRoutes(0, -1, -1, -1, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
+        this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.exponentOfNumber = 0.8F;
     }
 
@@ -26,36 +27,39 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
 
         this.initCraftTime = 0.01F;
 
+        float craftTimeDivisor;
+
         switch (tier) {
             case clayium:
-                this.acceptableTier = 11;
+                this.acceptableTier = TierPrefix.pureAntimatter;
                 this.baseCraftTime = 5.0F;
                 this.exponentOfNumber = 0.85F;
-                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(4.5E7F) / 20.0F));
+                craftTimeDivisor = 4.5E7F;
                 break;
             case ultimate:
-                this.acceptableTier = 13;
+                this.acceptableTier = TierPrefix.OPA;
                 this.baseCraftTime = 2.0F;
                 this.exponentOfNumber = 0.3F;
-                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E9F) / 20.0F));
+                craftTimeDivisor = 1.0E9F;
                 break;
             case OPA:
-                this.acceptableTier = 13;
+                this.acceptableTier = TierPrefix.OPA;
                 this.baseCraftTime = 1.3F;
                 this.exponentOfNumber = 0.06F;
-                this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(1.0E12F) / 20.0F));
+                craftTimeDivisor = 1.0E12F;
                 break;
+            default:
+                throw new IllegalTierException();
         }
+
+        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier.meta()) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
     }
 
     @Override
     public boolean canCraft(ItemStack material) {
         if (material.isEmpty()) return false;
 
-        int tier = IClayEnergy.getTier(material);
-        if (tier < 0 || tier > this.acceptableTier) return false;
-
-        return UtilTransfer.canProduceItemStack(material, this.getContainerItemStacks(), 1, this.getInventoryStackLimit()) > 0;
+        return isTierValid(IClayEnergy.getTier(material)) && UtilTransfer.canProduceItemStack(material, this.getContainerItemStacks(), 1, this.getInventoryStackLimit()) > 0;
     }
 
     public boolean canProceedCraft() {
@@ -69,7 +73,7 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
 
     public void proceedCraft() {
         ++this.craftTime;
-        this.containEnergy().set((long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2))) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft));
+        this.containEnergy().set((long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2)).meta()) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft));
         if (this.craftTime < this.timeToCraft) {
             return;
         }
@@ -93,15 +97,13 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
             return false;
 
         this.craftTime = 1;
-        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0))) * Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double)this.multCraftTime);
+        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0)).meta()) * Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double)this.multCraftTime);
         this.setInventorySlotContents(2, this.getStackInSlot(0).copy());
 
         return true;
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        if (slot != 0) return false;
-
-        return IClayEnergy.getTier(itemstack) >= 0 && IClayEnergy.getTier(itemstack) <= this.acceptableTier;
+        return slot == 0 && isTierValid(IClayEnergy.getTier(itemstack));
     }
 }

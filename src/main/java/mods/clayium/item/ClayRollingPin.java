@@ -37,16 +37,16 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
             int dist = tecc.getImportRoute(side) + 1;
             if (tecc.getListSlotsImport().size() <= dist) {
                 if (IClayEnergyConsumer.hasClayEnergy(tecc))
-                    dist = -2;
+                    dist = IClayInventory.ENERGY_ROUTE;
                 else
-                    dist = -1;
+                    dist = IClayInventory.NONE_ROUTE;
             }
 
             switch (dist) {
-                case -2:
+                case IClayInventory.ENERGY_ROUTE:
                     player.sendMessage(new TextComponentString("Set insert route energy"));
                     break;
-                case -1:
+                case IClayInventory.NONE_ROUTE:
                     player.sendMessage(new TextComponentString("Disabled"));
                     break;
                 default:

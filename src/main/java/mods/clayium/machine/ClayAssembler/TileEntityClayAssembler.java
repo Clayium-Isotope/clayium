@@ -22,8 +22,8 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(AssemblerSlots.values().length, ItemStack.EMPTY);
 
-        this.setImportRoutes(-1, 0, -1, -2, -1, -1);
-        this.setExportRoutes(0, -1, -1, -1, -1, -1);
+        this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
+        this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal() });
         this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_2.ordinal() });

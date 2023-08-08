@@ -210,14 +210,16 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
         int route;
         for (EnumSide facing : EnumSide.VALUES) {
             route = this.getImportRoute(facing);
-            if (route != -2 && (0 > route || route >= this.getListSlotsImport().size())) {
+            if (route != ENERGY_ROUTE && (0 > route || route >= this.getListSlotsImport().size())) {
 //                if (route != -1)
 //                    this.setImportRoute(facing, -1);
                 continue;
             }
 
-            if (this instanceof IClayEnergyConsumer && route == -2) {
-                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() }, UtilDirection.getSideOfDirection(this.getFront(), facing), ((IClayEnergyConsumer) this).getClayEnergyStorageSize() - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
+            if (this instanceof IClayEnergyConsumer && route == ENERGY_ROUTE) {
+                transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() },
+                        UtilDirection.getSideOfDirection(this.getFront(), facing),
+                        ((IClayEnergyConsumer) this).getClayEnergyStorageSize() - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
             } else {
                 transferred = UtilTransfer.extract(this, this.getListSlotsImport().get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
             }
