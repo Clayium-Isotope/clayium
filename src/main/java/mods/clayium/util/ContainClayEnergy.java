@@ -19,6 +19,15 @@ public class ContainClayEnergy {
         this.increase(-amount);
     }
 
+    public boolean hasEnough(long amount) {
+        return this.containEnergy >= amount;
+    }
+
+    @Override
+    public String toString() {
+        return UtilLocale.ClayEnergyNumeral(this.containEnergy);
+    }
+
     public static final ContainClayEnergy NIL = new HasNoEnergy();
     private static class HasNoEnergy extends ContainClayEnergy {
         @Override

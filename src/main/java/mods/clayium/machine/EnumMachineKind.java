@@ -84,9 +84,9 @@ public enum EnumMachineKind {
     prismMarker("prism_marker", null),
 
     // Tier 9 ~
-    CACondenser("ca_condenser", ClayiumRecipes.CACondenser),
+    CACondenser("ca_condenser", null),
     CAInjector("ca_injector", ClayiumRecipes.CAInjector),
-    CACollector("ca_collector", null),
+    CAResonatingCollector("ca_collector", null),
 
     // Tier 10 ~
     CAReactorCore("ca_reactor", ClayiumRecipes.CAReactor),

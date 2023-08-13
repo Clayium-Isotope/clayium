@@ -37,7 +37,7 @@ public interface IClayInventory extends ISidedInventory {
     boolean getAutoExtract();
 
     static boolean isItemValidForSlot(IClayInventory inv, int index, ItemStack stack) {
-        if (inv instanceof IClayEnergyConsumer) {
+        if (inv instanceof IClayEnergyConsumer && index == ((IClayEnergyConsumer) inv).getEnergySlot()) {
             return IClayEnergyConsumer.isItemValidForSlot((IClayEnergyConsumer) inv, index, stack);
         }
 

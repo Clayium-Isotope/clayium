@@ -1,42 +1,36 @@
-package mods.clayium.machine.ClayiumMachine;
+package mods.clayium.machine.common;
 
+import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.gui.ContainerTemp;
-import mods.clayium.gui.RectangleTexture;
-import mods.clayium.gui.SlotEnergy;
-import mods.clayium.gui.SlotWithTexture;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.Machine1To1;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 
-public class ContainerClayiumMachine extends ContainerTemp {
+public abstract class ContainerIMachine extends ContainerTemp {
     /**
      * The first index of material
      */
-    protected int materialSlotIndex;
+    protected final int materialSlotIndex;
     /**
      * The first index of result
      */
-    protected int resultSlotIndex;
+    protected final int resultSlotIndex;
     protected int timeToCraft;
     protected int craftTime;
     protected int containEnergy;
 
-    public ContainerClayiumMachine(InventoryPlayer player, TileEntityClayiumMachine tile) {
-        super(player, tile);
-    }
+    /**
+     * @param tile MUST BE IMPLEMENTING {@link TileEntityGeneric}
+     */
+    public ContainerIMachine(InventoryPlayer player, IMachine tile, int materialSlotStart, int resultSlotStart) {
+        super(player, (TileEntityGeneric) tile);
 
-    @Override
-    protected void initParameters(InventoryPlayer player) {
-        super.initParameters(player);
-
-        this.materialSlotIndex = Machine1To1.MATERIAL;
-        this.resultSlotIndex = Machine1To1.PRODUCT;
+        this.materialSlotIndex = materialSlotStart;
+        this.resultSlotIndex = resultSlotStart;
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return !((TileEntityClayiumMachine) tileEntity).getRecipe(itemstack1).isFlat();
+        return !((ClayiumRecipeProvider<?>) tileEntity).getRecipe(itemstack1).isFlat();
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {
@@ -48,26 +42,6 @@ public class ContainerClayiumMachine extends ContainerTemp {
             return transferStackToPlayerInventory(itemstack1, true);
         }
         return transferStackToPlayerInventory(itemstack1, false);
-    }
-
-    @Override
-    public void setMachineInventorySlots(InventoryPlayer player) {
-        addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, Machine1To1.MATERIAL, 44, 35, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack itemstack) {
-                return tileEntity.isItemValidForSlot(Machine1To1.MATERIAL, itemstack);
-            }
-        });
-
-        addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, Machine1To1.PRODUCT, 116, 35, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack itemstack) {
-                return false;
-            }
-        });
-
-        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity))
-            addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
     }
 
     @Override

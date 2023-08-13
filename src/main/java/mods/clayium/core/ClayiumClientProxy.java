@@ -10,6 +10,8 @@ import mods.clayium.entity.EntityClayBall;
 import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
+import mods.clayium.machine.CACondenser.TileEntityCACondenser;
+import mods.clayium.machine.CAInjector.TileEntityCAInjector;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBlastFurnace.TileEntityClayBlastFurnace;
@@ -147,6 +149,9 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityAutoCrafter.class, "clayium:auto_crafter", TESRClayContainer.instance);
 //		GameRegistry.registerTileEntity(TileEntityAutoCrafter.class, new ResourceLocation(ClayiumCore.ModId, "auto_crafter"));
 		ClientRegistry.registerTileEntity(TileEntityClayReactor.class, "clayium:reactor", TESRClayContainer.instance);
+
+		ClientRegistry.registerTileEntity(TileEntityCACondenser.class, "clayium:ca_condenser", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityCAInjector.class, "clayium:ca_injector", TESRClayContainer.instance);
 	}
 
 	/**

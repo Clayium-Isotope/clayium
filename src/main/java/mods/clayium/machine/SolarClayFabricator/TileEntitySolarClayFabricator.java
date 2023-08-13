@@ -22,7 +22,7 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public TierPrefix acceptableTier;
     public float baseCraftTime;
 
-    private TierPrefix raiseFrom;
+    private TierPrefix raiseFrom = TierPrefix.unknown;
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(2, ItemStack.EMPTY);

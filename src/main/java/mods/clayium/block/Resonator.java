@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Resonator extends BlockTiered implements ICAResonator {
+public class Resonator extends BlockTiered implements CAResonator {
     private final double resonance;
 
     public Resonator(int meta, TierPrefix tier, double resonance) {

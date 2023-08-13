@@ -51,7 +51,7 @@ public interface IClayEnergyConsumer extends IInventory {
      * Change Compressed Clay to Clay Energy
      */
     static boolean produceClayEnergy(IClayEnergyConsumer consumer) {
-        if (RangeCheck.isInOutOfInclusive(consumer.getEnergySlot(), 0, consumer.getSizeInventory())) return false;
+        if (RangeCheck.isInOutOfInclusive(consumer.getEnergySlot(), 0, consumer.getSizeInventory() - 1)) return false;
 
         ItemStack itemstack = consumer.getStackInSlot(consumer.getEnergySlot());
         if (itemstack.isEmpty()) return false;
@@ -69,7 +69,7 @@ public interface IClayEnergyConsumer extends IInventory {
     }
 
     static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt, boolean doConsume) {
-        if (debt > consumer.containEnergy().get()) {
+        if (!consumer.containEnergy().hasEnough(debt)) {
             if (!produceClayEnergy(consumer)) return false;
 
             return compensateClayEnergy(consumer, debt, doConsume);

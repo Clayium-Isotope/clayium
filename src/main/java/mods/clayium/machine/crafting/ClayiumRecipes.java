@@ -60,7 +60,6 @@ public class ClayiumRecipes {
     public static final ClayiumRecipe clayReactor = new ClayiumRecipe("ClayReactor");
     public static final SimpleMachineRecipe transformer = new SimpleMachineRecipe("MatterTransformer");
 
-    public static final SimpleMachineRecipe CACondenser = new SimpleMachineRecipe("CACondenser");
     public static final ClayiumRecipe CAInjector = new SimpleMachineRecipe("CAInjector");
     public static final SimpleMachineRecipe CAReactor = new SimpleMachineRecipe("CAReactor");
 
@@ -136,7 +135,7 @@ public class ClayiumRecipes {
     private static long e(int tier) {
         return e(1.0D, tier);
     }
-    private static long e(double factor, int tier) {
+    public static long e(double factor, int tier) {
         return (long) (factor * 100.0D * Math.pow(10.0D, (tier - 4)));
     }
 
@@ -519,7 +518,6 @@ public class ClayiumRecipes {
 
 
         clayReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumCore.divideByProgressionRate(200000000000000L));
-        CACondenser.addRecipe(i(ClayiumItems.antimatterSeed), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9), ClayiumCore.divideByProgressionRate(2000L));
 
 
         CAInjector.addRecipe(ii(machines.get(10), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 10, ii(i(ClayiumMachines.CACollector)), e(2.0D, 10), 4000L);

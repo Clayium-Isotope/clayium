@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayAssembler;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.Machine2To1;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
@@ -10,41 +11,30 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityClayAssembler extends TileEntityClayiumMachine {
-    enum AssemblerSlots {
-        MATERIAL_1,
-        MATERIAL_2,
-        PRODUCT,
-        ENERGY
-    }
-
+public class TileEntityClayAssembler extends TileEntityClayiumMachine implements Machine2To1 {
     @Override
     public void initParams() {
-        this.containerItemStacks = NonNullList.withSize(AssemblerSlots.values().length, ItemStack.EMPTY);
+        this.containerItemStacks = NonNullList.withSize(4, ItemStack.EMPTY);
 
         this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() });
-        this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_1.ordinal() });
-        this.listSlotsImport.add(new int[]{ AssemblerSlots.MATERIAL_2.ordinal() });
-        this.listSlotsExport.add(new int[]{ AssemblerSlots.PRODUCT.ordinal() });
+        this.listSlotsImport.add(new int[]{ Machine2To1.MATERIAL_1, Machine2To1.MATERIAL_2 });
+        this.listSlotsImport.add(new int[]{ Machine2To1.MATERIAL_1 });
+        this.listSlotsImport.add(new int[]{ Machine2To1.MATERIAL_2 });
+        this.listSlotsExport.add(new int[]{ Machine2To1.PRODUCT });
         this.maxAutoExtract = new int[] {-1, -1, -1, 1};
         this.maxAutoInsert = new int[] {-1};
 
-        this.slotsDrop = new int[]{ AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal(), AssemblerSlots.PRODUCT.ordinal(), AssemblerSlots.ENERGY.ordinal() };
+        this.slotsDrop = new int[]{ Machine2To1.MATERIAL_1, Machine2To1.MATERIAL_2, Machine2To1.PRODUCT, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
-    }
-
-    public ItemStack getStackInSlot(AssemblerSlots index) {
-        return this.containerItemStacks.get(index.ordinal());
     }
 
     @Override
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), AssemblerSlots.PRODUCT.ordinal(), this.getInventoryStackLimit()) > 0;
+        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), Machine2To1.PRODUCT, this.getInventoryStackLimit()) > 0;
     }
 
     @Override
@@ -62,7 +52,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
         if (this.craftTime < this.timeToCraft) return;
 
         UtilTransfer.produceItemStack(this.doingRecipe.getResults().get(0),
-                this.getContainerItemStacks(), AssemblerSlots.PRODUCT.ordinal(), this.getInventoryStackLimit());
+                this.getContainerItemStacks(), Machine2To1.PRODUCT, this.getInventoryStackLimit());
 
         this.craftTime = 0L;
         this.debtEnergy = 0L;
@@ -72,7 +62,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 
     @Override
     public boolean setNewRecipe() {
-        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(AssemblerSlots.MATERIAL_1), this.getStackInSlot(AssemblerSlots.MATERIAL_2));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(Machine2To1.MATERIAL_1), this.getStackInSlot(Machine2To1.MATERIAL_2));
 
         if (this.doingRecipe.isFlat()) return false;
 
@@ -81,14 +71,14 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine {
 
         this.timeToCraft = this.doingRecipe.getTime();
 
-        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), AssemblerSlots.MATERIAL_1.ordinal(), AssemblerSlots.MATERIAL_2.ordinal() + 1);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), Machine2To1.MATERIAL_1, Machine2To1.MATERIAL_2 + 1);
 
         return true;
     }
 
     @Override
     public int getEnergySlot() {
-        return AssemblerSlots.ENERGY.ordinal();
+        return 3;
     }
 
     @SideOnly(Side.CLIENT)

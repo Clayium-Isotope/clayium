@@ -3,10 +3,7 @@ package mods.clayium.machine.ClayiumMachine;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.IExternalControl;
-import mods.clayium.machine.common.ClayiumRecipeProvider;
-import mods.clayium.machine.common.IButtonProvider;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.RecipeProvider;
+import mods.clayium.machine.common.*;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
@@ -25,14 +22,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement>, IExternalControl {
-    protected enum MachineSlots {
-        MATERIAL,
-        PRODUCT,
-        ENERGY
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement>, IExternalControl, Machine1To1 {
+    protected EnumMachineKind kind = EnumMachineKind.EMPTY;
+    @Override
+    public EnumMachineKind getKind() {
+        return this.kind;
     }
 
-    protected EnumMachineKind kind = EnumMachineKind.EMPTY;
     private ClayiumRecipe recipeCards = ClayiumRecipes.EMPTY;
     @Override
     public ClayiumRecipe getRecipeCard() {
@@ -53,19 +49,19 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public float multConsumingEnergy = 1.0F;
     public float initCraftTime = 1.0F;
     public float initConsumingEnergy = 1.0F;
-    private final ContainClayEnergy containEnergy = new ContainClayEnergy();
+    protected final ContainClayEnergy containEnergy = new ContainClayEnergy();
     private int clayEnergyStorageSize = 1;
 
     protected boolean scheduled = true;
 
     @Override
     public void initParams() {
-        this.containerItemStacks = NonNullList.withSize(MachineSlots.values().length, ItemStack.EMPTY);
+        this.containerItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
 
         this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.listSlotsImport.add(new int[] { MachineSlots.MATERIAL.ordinal() });
-        this.listSlotsExport.add(new int[] { MachineSlots.PRODUCT.ordinal() });
+        this.listSlotsImport.add(new int[] { Machine1To1.MATERIAL });
+        this.listSlotsExport.add(new int[] { Machine1To1.PRODUCT });
 
         this.maxAutoExtract = new int[] { -1, 1 };
         this.maxAutoInsert = new int[] { -1 };
@@ -73,7 +69,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         this.autoInsert = true;
         this.autoExtract = true;
 
-        this.slotsDrop = new int[] { MachineSlots.MATERIAL.ordinal(), MachineSlots.PRODUCT.ordinal(), MachineSlots.ENERGY.ordinal() };
+        this.slotsDrop = new int[] { Machine1To1.MATERIAL, Machine1To1.PRODUCT, this.getEnergySlot() };
     }
 
     @Override
@@ -86,10 +82,6 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         if (kind != null) {
             this.recipeCards = kind.getRecipe();
         }
-    }
-
-    public ItemStack getStackInSlot(MachineSlots index) {
-        return super.getStackInSlot(index.ordinal());
     }
 
     @Override
@@ -191,7 +183,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     @Override
     public int getEnergySlot() {
 //        if (UtilTier.canManufactureCraft(this.tier)) return -1;
-        return MachineSlots.ENERGY.ordinal();
+        return 2;
     }
 
     @Override
@@ -225,7 +217,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
         if (this.craftTime < this.timeToCraft) return;
 
         UtilTransfer.produceItemStack(this.doingRecipe.getResults().get(0), this.getContainerItemStacks(),
-                MachineSlots.PRODUCT.ordinal(), this.getInventoryStackLimit());
+                Machine1To1.PRODUCT, this.getInventoryStackLimit());
 
         this.craftTime = 0L;
         this.timeToCraft = 0L;
@@ -237,11 +229,11 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), MachineSlots.PRODUCT.ordinal(), this.getInventoryStackLimit()) > 0;
+        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), Machine1To1.PRODUCT, this.getInventoryStackLimit()) > 0;
     }
 
     public boolean setNewRecipe() {
-        this.doingRecipe = getRecipe(getStackInSlot(MachineSlots.MATERIAL));
+        this.doingRecipe = getRecipe(getStackInSlot(Machine1To1.MATERIAL));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = this.doingRecipe.getEnergy();
@@ -253,7 +245,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         this.craftTime = 1L;
         this.timeToCraft = this.doingRecipe.getTime();
-        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(), MachineSlots.MATERIAL.ordinal());
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(), Machine1To1.MATERIAL);
 
         return true;
     }

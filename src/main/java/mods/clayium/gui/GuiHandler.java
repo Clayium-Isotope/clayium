@@ -13,7 +13,6 @@ import mods.clayium.machine.ChemicalMetalSeparator.ContainerChemicalMetalSeparat
 import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
-import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBlastFurnace.GuiClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ContainerClayCentrifuge;
@@ -37,6 +36,8 @@ import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.MultitrackBuffer.ContainerMultitrackBuffer;
 import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.common.ContainerNormalInventory;
+import mods.clayium.machine.common.GuiIMachine;
+import mods.clayium.machine.common.Machine2To1;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -65,7 +66,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdNormalInventory:
                 return new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile);
             case GuiIdClayAssembler:
-                return new ContainerClayAssembler(player.inventory, (TileEntityClayAssembler) tile);
+                return new ContainerClayAssembler(player.inventory, (Machine2To1) tile);
             case GuiIdClayCentrifuge:
                 return new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile);
             case GuiIdClayChemicalReactor:
@@ -115,7 +116,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdNormalInventory:
                 return new GuiMultiPageContainer(new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile));
             case GuiIdClayAssembler:
-                return new GuiClayiumMachine(new ContainerClayAssembler(player.inventory, (TileEntityClayAssembler) tile));
+                return new GuiIMachine(new ContainerClayAssembler(player.inventory, (Machine2To1) tile));
             case GuiIdClayCentrifuge:
                 return new GuiClayiumMachine(new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile));
             case GuiIdClayChemicalReactor:

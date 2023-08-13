@@ -4,9 +4,10 @@ import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.AutoCrafter;
+import mods.clayium.machine.CACondenser.CACondenser;
+import mods.clayium.machine.CAInjector.TileEntityCAInjector;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ClayAssembler;
-import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBlastFurnace.ClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.ClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ClayCentrifuge;
@@ -109,11 +110,11 @@ public class ClayiumMachines {
 
         clayReactor = addContainer(EnumMachineKind.clayReactor, TierPrefix.claySteel, new ClayReactor());
 
-//        addAssembler(EnumMachineKind.transformer, new int[]{ 7, 8, 9, 10, 11, 12 });
-//
-//        addContainer(EnumMachineKind.CACondenser, new int[]{9, 10, 11}, TileCACondenser.class);
+        addAssembler(EnumMachineKind.transformer, TierPrefix.makeList(7, 8, 9, 10, 11, 12));
 
-//        registerTieredMachines("CAInjector", new int[]{9, 10, 11, 12, 13}, TileCAInjector.class, ClayAssembler.class, ItemBlockTiered.class);
+        addContainers(EnumMachineKind.CACondenser, TierPrefix.makeList(9, 10, 11), CACondenser.class);
+
+        addAssembler(EnumMachineKind.CAInjector, TierPrefix.makeList(9, 10, 11, 12, 13), TileEntityCAInjector.class);
 //        new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1);
 //        blockCAReactorHull = new BlockDamaged(Material.iron, 10);
 //        registerTieredMachines("CAReactor", new int[]{10, 11, 12, 13}, TileCAReactor.class, 9, CAReactor.class, ItemBlockTiered.class);
@@ -233,10 +234,10 @@ public class ClayiumMachines {
         for (TierPrefix tier : tiers)
             addContainer(kind, tier, new ClayAssembler(kind, tier));
     }
-    private static void addAssembler(EnumMachineKind kind, TierPrefix tier, Class<? extends TileEntityClayAssembler> teClass) {
+    private static void addAssembler(EnumMachineKind kind, TierPrefix tier, Class<? extends TileEntityGeneric> teClass) {
         addContainer(kind, tier, new ClayAssembler(kind, tier, teClass));
     }
-    private static void addAssembler(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends TileEntityClayAssembler> teClass) {
+    private static void addAssembler(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends TileEntityGeneric> teClass) {
         for (TierPrefix tier : tiers)
             addContainer(kind, tier, new ClayAssembler(kind, tier, teClass));
     }

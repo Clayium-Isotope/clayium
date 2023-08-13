@@ -5,6 +5,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 @UsedFor(UsedFor.Type.Block)
-public interface ICAResonator {
+public interface CAResonator {
     double getResonance(IBlockAccess world, BlockPos pos);
 }
