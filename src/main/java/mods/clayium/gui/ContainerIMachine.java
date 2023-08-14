@@ -1,7 +1,8 @@
-package mods.clayium.machine.common;
+package mods.clayium.gui;
 
 import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.gui.ContainerTemp;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
+import mods.clayium.machine.common.IMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;

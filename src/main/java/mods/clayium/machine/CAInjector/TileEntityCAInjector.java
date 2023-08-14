@@ -1,7 +1,6 @@
 package mods.clayium.machine.CAInjector;
 
 import mods.clayium.block.ICAMachine;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.CAMachine.TileEntityCAMachine;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -120,7 +119,7 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMach
     @Override
     public boolean setNewRecipe() {
         this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
-        ClayiumCore.logger.info("[CA Injector] Set recipe to [" + this.getStackInSlot(0) + ", " + this.getStackInSlot(1) + "] -> " + this.doingRecipe.getResults());
+//        ClayiumCore.logger.info("[CA Injector] Set recipe to [" + this.getStackInSlot(0) + ", " + this.getStackInSlot(1) + "] -> " + this.doingRecipe.getResults());
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);

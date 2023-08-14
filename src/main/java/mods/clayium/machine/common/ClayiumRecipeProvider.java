@@ -15,6 +15,11 @@ import java.util.function.Predicate;
 public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider {
     ClayiumRecipe getRecipeCard();
     T getFlat();
+
+    static <T extends IRecipeElement> T getRecipe(ClayiumRecipe recipeCard, Predicate<T> pred, T flat) {
+        return recipeCard.getRecipe(pred, flat);
+    }
+
     default T getRecipe(Predicate<T> pred) {
         return this.getRecipeCard().getRecipe(pred, this.getFlat());
     }

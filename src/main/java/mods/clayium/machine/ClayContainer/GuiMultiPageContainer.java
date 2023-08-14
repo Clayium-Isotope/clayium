@@ -1,7 +1,7 @@
 package mods.clayium.machine.ClayContainer;
 
+import mods.clayium.gui.ContainerNormalInventory;
 import mods.clayium.gui.GuiTemp;
-import mods.clayium.machine.common.ContainerNormalInventory;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class GuiMultiPageContainer extends GuiTemp {

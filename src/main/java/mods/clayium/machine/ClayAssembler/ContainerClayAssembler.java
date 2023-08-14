@@ -1,9 +1,9 @@
 package mods.clayium.machine.ClayAssembler;
 
+import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
-import mods.clayium.machine.common.ContainerIMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To1;
 import net.minecraft.entity.player.InventoryPlayer;

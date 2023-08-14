@@ -36,7 +36,7 @@ public class ContainerClayiumMachine extends ContainerTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return !((TileEntityClayiumMachine) tileEntity).getRecipe(itemstack1).isFlat();
+        return true;
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {

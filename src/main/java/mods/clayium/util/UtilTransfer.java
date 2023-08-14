@@ -14,10 +14,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class UtilTransfer {
@@ -176,8 +176,7 @@ public class UtilTransfer {
 
         ItemStack res = itemstack.copy();
 
-        int k;
-        for(k = i; k < j; ++k) {
+        for(int k = i; k < j; ++k) {
             res = produceItemStack(res, inventory, k, inventoryStackLimit);
         }
 
@@ -185,28 +184,27 @@ public class UtilTransfer {
     }
 
     /**
-     * @param itemstacks will be changed.  It is better to be copied.
+     * <B>inventory</B> の {@code [startIncl, endExcl)} の範囲に、できるだけ <B>itemstacks</B> を詰める。<br>
+     * <B>itemstacks</B> は内部でコピーがおこなわれて変更されない。変更後の値は、返り値を参照のこと
      */
-    public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+    public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
         if (itemstacks.isEmpty()) {
             return Collections.emptyList();
         }
 
-        for (int k = 0; k < itemstacks.size(); ++k) {
-            itemstacks.set(k, produceItemStack(itemstacks.get(k), inventory, i, j, inventoryStackLimit));
-        }
+        List<ItemStack> copiedItemstacks = getHardCopy(itemstacks);
+        copiedItemstacks.replaceAll(itemstack -> produceItemStack(itemstack, inventory, startIncl, endExcl, inventoryStackLimit));
 
-        return itemstacks;
+        return copiedItemstacks;
     }
 
+    /**
+     * 変更点: <B>itemstack</B> が {@link ItemStack#EMPTY} のとき、返り値を 0 でなく <B>inventoryStackLimit</B> に。
+     *
+     * @return <B>inventory</B> が <B>index</B> 番目に <B>itemstack</B> のうち、いくつを挿入できるか
+     */
     public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
-        if (itemstack.isEmpty()) {
-            return 0;
-        }
-
-        ItemStack res = itemstack.copy();
-        int stackSize = itemstack.getCount();
-        if (inventory.get(index).isEmpty()) {
+        if (itemstack.isEmpty() || inventory.get(index).isEmpty()) {
             return inventoryStackLimit;
         }
 
@@ -214,7 +212,7 @@ public class UtilTransfer {
     }
 
     /**
-     * @return How many space <B>inventory</B> has in {@code [startIncl, endExcl)} to insert <B>itemstack</B>
+     * @return <B>inventory</B> が {@code [startIncl, endExcl)} の範囲に <B>itemstack</B> のうち、いくつを挿入できるか
      */
     public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
         int rest = 0;
@@ -226,39 +224,24 @@ public class UtilTransfer {
         return rest;
     }
 
+    /**
+     * <B>inventory</B> の {@code [startIncl, endExcl)} の範囲に <B>itemstacks</B> をすべて入れることができるか調べる。<br>
+     * 実際に詰めてみる実装なので、遅い可能性あり
+     */
     public static boolean canProduceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
-        if (!itemstacks.isEmpty()) {
-            List<ItemStack> copyItemstacks = getHardCopy(itemstacks);
-            List<ItemStack> copyInventory = getHardCopy(inventory);
-
-            for (ItemStack copyItemstack : copyItemstacks) {
-                if (canProduceItemStack(copyItemstack, copyInventory, startIncl, endExcl, inventoryStackLimit) == 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return produceItemStacks(itemstacks, getHardCopy(inventory), startIncl, endExcl, inventoryStackLimit).stream().allMatch(ItemStack::isEmpty);
     }
 
     /**
      * Do deep copy
+     * @see <a href="https://stackoverflow.com/a/33507565">Deep Copy Method at Stack Overflow</a>
      */
     public static List<ItemStack> getHardCopy(List<ItemStack> itemstacks) {
         if (itemstacks == null || itemstacks.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<ItemStack> res = Arrays.asList(new ItemStack[itemstacks.size()]);
-
-        Collections.copy(res, itemstacks);
-
-//        List<ItemStack> res = NonNullList.withSize(itemstacks.size(), ItemStack.EMPTY);
-//
-//        for (int i = 0; i < res.size(); ++i) {
-//            res.set(i, itemstacks.get(i).copy());
-//        }
-
-        return res;
+        return itemstacks.stream().map(ItemStack::copy).collect(Collectors.toList());
     }
 
     /**

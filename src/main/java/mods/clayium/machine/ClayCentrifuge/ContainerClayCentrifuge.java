@@ -1,22 +1,22 @@
 package mods.clayium.machine.ClayCentrifuge;
 
+import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
-import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.Machine1ToSome;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.SlotFurnaceOutput;
 
-public class ContainerClayCentrifuge extends ContainerClayiumMachine {
-    protected int resultSlotNum = 1;
+public class ContainerClayCentrifuge extends ContainerIMachine {
+    protected int resultSlotNum;
 
-    public ContainerClayCentrifuge(InventoryPlayer player, TileEntityClayCentrifuge tile) {
-        super(player, tile);
+    public ContainerClayCentrifuge(InventoryPlayer player, Machine1ToSome tile) {
+        super(player, tile, 0, 1);
     }
 
     protected void initParameters(InventoryPlayer player) {
-        this.resultSlotNum = ((TileEntityClayCentrifuge)this.tileEntity).resultSlotNum;
+        this.resultSlotNum = ((Machine1ToSome) this.tileEntity).getResultSlotCount();
         this.machineGuiSizeY = (this.resultSlotNum + 1) * 9 + 46;
         super.initParameters(player);
     }
@@ -25,9 +25,10 @@ public class ContainerClayCentrifuge extends ContainerClayiumMachine {
         this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, 0, 44, 35, RectangleTexture.LargeSlotTexture));
 
         for(int i = 0; i < this.resultSlotNum; ++i) {
-            this.addMachineSlotToContainer(new SlotFurnaceOutput(player.player, this.tileEntity, i + 1, 116, 35 + 18 * i - 9 * (this.resultSlotNum - 1)));
+            this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, i + 1, 116, 35 + 18 * i - 9 * (this.resultSlotNum - 1)));
         }
 
-        this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
+        if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity))
+            this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
     }
 }

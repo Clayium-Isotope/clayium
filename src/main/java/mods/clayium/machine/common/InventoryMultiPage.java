@@ -1,5 +1,6 @@
 package mods.clayium.machine.common;
 
+import mods.clayium.gui.ContainerNormalInventory;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

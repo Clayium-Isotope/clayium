@@ -1,9 +1,9 @@
-package mods.clayium.machine.common;
+package mods.clayium.gui;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.core.ClayiumIntegration;
-import mods.clayium.gui.GuiTemp;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.IMachine;
 import mods.clayium.plugin.jei.JEICompatibility;
 import net.minecraft.util.ResourceLocation;
 

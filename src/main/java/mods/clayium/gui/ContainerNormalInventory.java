@@ -1,8 +1,8 @@
-package mods.clayium.machine.common;
+package mods.clayium.gui;
 
-import mods.clayium.gui.ContainerTemp;
-import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.common.INormalInventory;
+import mods.clayium.machine.common.InventoryMultiPage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;

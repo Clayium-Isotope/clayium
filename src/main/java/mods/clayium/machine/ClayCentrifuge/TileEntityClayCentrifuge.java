@@ -1,35 +1,32 @@
 package mods.clayium.machine.ClayCentrifuge;
 
-import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.machine.common.Machine1ToSome;
+import mods.clayium.util.ContainClayEnergy;
+import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTransfer;
+import mods.clayium.util.crafting.Kitchen;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
-    enum CentrifugeSlots {
-        MATERIAL,
-        PRODUCT_1,
-        PRODUCT_2,
-        PRODUCT_3,
-        PRODUCT_4,
-        ENERGY,
-    }
-
-    public int resultSlotNum = 4;
+public class TileEntityClayCentrifuge extends TileEntityClayContainer implements IClayEnergyConsumer, Machine1ToSome {
+    /* package-private */ int resultSlotNum = 4;
+    Kitchen kitchen;
+    final ContainClayEnergy ce = new ContainClayEnergy();
 
     public void initParams() {
-        this.containerItemStacks = NonNullList.withSize(CentrifugeSlots.values().length, ItemStack.EMPTY);
+        this.containerItemStacks = NonNullList.withSize(6, ItemStack.EMPTY);
 
         this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.listSlotsImport.add(new int[]{ CentrifugeSlots.MATERIAL.ordinal() });
-        this.listSlotsExport.add(new int[]{ CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_2.ordinal(), CentrifugeSlots.PRODUCT_3.ordinal(), CentrifugeSlots.PRODUCT_4.ordinal() });
+        this.listSlotsImport.add(new int[]{ Machine1ToSome.MATERIAL });
+        this.listSlotsExport.add(new int[]{ Machine1ToSome.PRODUCT_1, Machine1ToSome.PRODUCT_2, Machine1ToSome.PRODUCT_3, Machine1ToSome.PRODUCT_4 });
         this.maxAutoExtract = new int[]{-1, 1};
         this.maxAutoInsert = new int[]{-1};
-        this.slotsDrop = new int[]{ CentrifugeSlots.MATERIAL.ordinal(), CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_2.ordinal(), CentrifugeSlots.PRODUCT_3.ordinal(), CentrifugeSlots.PRODUCT_4.ordinal(), CentrifugeSlots.ENERGY.ordinal() };
+        this.slotsDrop = new int[]{ Machine1ToSome.MATERIAL, Machine1ToSome.PRODUCT_1, Machine1ToSome.PRODUCT_2, Machine1ToSome.PRODUCT_3, Machine1ToSome.PRODUCT_4, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
     }
@@ -43,62 +40,79 @@ public class TileEntityClayCentrifuge extends TileEntityClayiumMachine {
             case basic:     this.resultSlotNum = 2; break;
             case advanced:  this.resultSlotNum = 3; break;
             case precision: this.resultSlotNum = 4; break;
-            default:        this.resultSlotNum = 0;
+            default:        throw new IllegalTierException();
         }
-    }
 
-    public ItemStack getStackInSlot(CentrifugeSlots slot) {
-        return super.getStackInSlot(slot.ordinal());
+        this.kitchen = new KitchenCentrifuge(this, this.tier);
     }
 
     @Override
-    public boolean canCraft(RecipeElement recipe) {
-        if (recipe.isFlat()) return false;
-
-        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(),
-                CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
-                this.getInventoryStackLimit());
-    }
-
-    public boolean canProceedCraft() {
-        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
-
-//        return this.canCraft(this.getStackInSlot(CentrifugeSlots.MATERIAL));
-    }
-
-    public void proceedCraft() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
-
-        ++this.craftTime;
-        if (this.craftTime < this.timeToCraft) return;
-
-        UtilTransfer.produceItemStacks(UtilTransfer.getHardCopy(this.doingRecipe.getResults()), this.getContainerItemStacks(),
-                CentrifugeSlots.PRODUCT_1.ordinal(), CentrifugeSlots.PRODUCT_1.ordinal() + this.resultSlotNum,
-                this.getInventoryStackLimit());
-
-        this.craftTime = 0L;
-        this.debtEnergy = 0L;
-        this.timeToCraft = 0L;
-        this.doingRecipe = this.getFlat();
+    public void update() {
+        super.update();
+        if (!this.getWorld().isRemote)
+            this.kitchen.work();
     }
 
     @Override
-    public boolean setNewRecipe() {
-        this.doingRecipe = this.getRecipe(this.getStackInSlot(CentrifugeSlots.MATERIAL));
+    public ContainClayEnergy containEnergy() {
+        return this.ce;
+    }
 
-        if (!canCraft(this.doingRecipe)) {
-            return false;
-        }
+    @Override
+    public int getClayEnergyStorageSize() {
+        return 1;
+    }
 
-        this.debtEnergy = this.doingRecipe.getEnergy();
-        this.timeToCraft = this.doingRecipe.getTime();
-        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(), CentrifugeSlots.MATERIAL.ordinal());
+    @Override
+    public void setClayEnergyStorageSize(int size) {
 
-        return true;
     }
 
     @Override
     public int getEnergySlot() {
-        return CentrifugeSlots.ENERGY.ordinal();
+        return 5;
+    }
+
+    @Override
+    public EnumMachineKind getKind() {
+        return EnumMachineKind.centrifuge;
+    }
+
+    @Override
+    public int getField(int id) {
+        switch (id) {
+            case 0:     return (int) this.kitchen.getTimeToCraft();
+            case 1:     return (int) this.kitchen.getCraftTime();
+            case 2:     return (int) this.containEnergy().get();
+            default:    return 0;
+        }
+    }
+
+    @Override
+    public void setField(int id, int value) {
+        switch (id) {
+            case 0: this.kitchen.setTimeToCraft(value); return;
+            case 1: this.kitchen.setCraftTime(value);   return;
+            case 2: this.containEnergy().set(value);    return;
+        }
+    }
+
+    @Override
+    public void readMoreFromNBT(NBTTagCompound tagCompound) {
+        super.readMoreFromNBT(tagCompound);
+
+        this.kitchen.readFromNBT(tagCompound);
+    }
+
+    @Override
+    public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
+        this.kitchen.writeToNBT(tagCompound);
+
+        return super.writeMoreToNBT(tagCompound);
+    }
+
+    @Override
+    public final int getResultSlotCount() {
+        return this.resultSlotNum;
     }
 }

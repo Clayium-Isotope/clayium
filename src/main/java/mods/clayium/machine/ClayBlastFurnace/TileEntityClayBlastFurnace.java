@@ -178,7 +178,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;
 
-        UtilTransfer.produceItemStacks(UtilTransfer.getHardCopy(this.doingRecipe.getResults()), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
         this.craftTime = 0;
         this.timeToCraft = 0;
         this.debtEnergy = 0;
