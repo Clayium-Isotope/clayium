@@ -1,13 +1,10 @@
 package mods.clayium.machine.ChemicalMetalSeparator;
 
-import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
+import mods.clayium.gui.GuiIMachine;
 
-public class GuiChemicalMetalSeparator extends GuiClayiumMachine {
+public class GuiChemicalMetalSeparator extends GuiIMachine {
     public GuiChemicalMetalSeparator(ContainerChemicalMetalSeparator container) {
         super(container);
-    }
-
-    protected void calculateProgressBarOffsets() {
         this.progressBarSizeX = 24;
         this.progressBarSizeY = 17;
         this.progressBarPosX = 55;

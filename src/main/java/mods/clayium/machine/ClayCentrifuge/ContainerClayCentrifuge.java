@@ -12,7 +12,7 @@ public class ContainerClayCentrifuge extends ContainerIMachine {
     protected int resultSlotNum;
 
     public ContainerClayCentrifuge(InventoryPlayer player, Machine1ToSome tile) {
-        super(player, tile, 0, 1);
+        super(player, tile, Machine1ToSome.MATERIAL, Machine1ToSome.PRODUCT_1);
     }
 
     protected void initParameters(InventoryPlayer player) {

@@ -1,13 +1,13 @@
 package mods.clayium.machine.ClayBlastFurnace;
 
+import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.ContainerTemp;
-import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
-import mods.clayium.machine.ClayiumMachine.GuiClayiumMachine;
+import mods.clayium.gui.GuiIMachine;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.util.UtilLocale;
 
-public class GuiClayBlastFurnace extends GuiClayiumMachine {
-    public GuiClayBlastFurnace(ContainerClayiumMachine container) {
+public class GuiClayBlastFurnace extends GuiIMachine {
+    public GuiClayBlastFurnace(ContainerIMachine container) {
         super(container);
     }
 

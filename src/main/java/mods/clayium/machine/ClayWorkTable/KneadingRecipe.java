@@ -22,14 +22,14 @@ import java.util.Collections;
 
 public class KneadingRecipe extends RecipeElement {
     protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
-    private static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, TileEntityClayWorkTable.KneadingMethod.UNKNOWN, -1, ItemStack.EMPTY, ItemStack.EMPTY);
+    private static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, KneadingMethod.UNKNOWN, -1, ItemStack.EMPTY, ItemStack.EMPTY);
     public static KneadingRecipe flat() {
         return FLAT;
     }
 
     /*private*/ final ItemStack material;
     /*private*/ final Ingredient tool;
-    /*private*/ final TileEntityClayWorkTable.KneadingMethod method;
+    /*private*/ final KneadingMethod method;
     /*private*/ final short time;
     /*private*/ final ItemStack product;
     /*private*/ final ItemStack change;
@@ -43,7 +43,7 @@ public class KneadingRecipe extends RecipeElement {
     private static final Ingredient SL_SP   = Ingredient.fromStacks(slicer, spatula);
     private static final Ingredient SP      = Ingredient.fromStacks(spatula);
 
-    public KneadingRecipe(ItemStack material, TileEntityClayWorkTable.KneadingMethod method, int time, ItemStack product, ItemStack change) {
+    public KneadingRecipe(ItemStack material, KneadingMethod method, int time, ItemStack product, ItemStack change) {
         super(material, 0, product, 0, time);
         this.material = material;
         this.materialIng = NonNullList.from(Ingredient.EMPTY, Ingredient.fromStacks(material));

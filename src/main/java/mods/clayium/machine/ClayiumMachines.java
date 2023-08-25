@@ -259,7 +259,7 @@ public class ClayiumMachines {
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
             return machineMap.get(kind).get(tier);
-        return Blocks.AIR;
+        throw new NoSuchElementException(tier.getPrefix() + " of " + kind.getRegisterName() + " is not registered!");
     }
     /**
      * @return the least tier machine of the kind
@@ -272,8 +272,7 @@ public class ClayiumMachines {
             if (block != null) return block;
         }
 
-        return Blocks.AIR;
-// TODO change to    throw new NoSuchElementException(kind.getRegisterName() + " is not registered!");
+        throw new NoSuchElementException(kind.getRegisterName() + " is not registered!");
     }
     /**
      * @return all of registered machines which the kind has

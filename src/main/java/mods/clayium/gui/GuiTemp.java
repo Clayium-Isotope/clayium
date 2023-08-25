@@ -1,7 +1,7 @@
 package mods.clayium.gui;
 
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.ClayEnergyHolder;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -45,8 +45,8 @@ public class GuiTemp extends GuiContainer {
         fontRenderer.drawString(this.container.getInventoryName(), 6, 6, 4210752);
         fontRenderer.drawString(I18n.format("container.inventory"), 8, machineHeight, 4210752);
 
-        if (this.tile instanceof IClayEnergyConsumer)
-            this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((IClayEnergyConsumer) this.tile).containEnergy().get(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
+        if (this.tile instanceof ClayEnergyHolder)
+            this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((ClayEnergyHolder) this.tile).containEnergy().get(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
     }
 
     @Override

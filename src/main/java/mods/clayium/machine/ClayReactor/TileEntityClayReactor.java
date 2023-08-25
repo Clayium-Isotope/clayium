@@ -14,6 +14,7 @@ import mods.clayium.machine.MultiblockMachine.BlockStateMultiblockMachine;
 import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.Machine2To2;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
@@ -36,15 +37,16 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
     @Override
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(5, ItemStack.EMPTY);
-        this.listSlotsImport.add(new int[]{0});
-        this.listSlotsImport.add(new int[]{1});
-        this.listSlotsImport.add(new int[]{0, 1});
-        this.listSlotsExport.add(new int[]{2});
-        this.listSlotsExport.add(new int[]{3});
-        this.listSlotsExport.add(new int[]{2, 3});
-        this.setImportRoutes(NONE_ROUTE, 2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.maxAutoExtract = new int[]{64, 64, 64, 1};
+        this.listSlotsImport.add(new int[] { Machine2To2.MATERIAL_1 });
+        this.listSlotsImport.add(new int[] { Machine2To2.MATERIAL_2 });
+        this.listSlotsImport.add(new int[] { Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2 });
+        this.listSlotsExport.add(new int[] { Machine2To2.PRODUCT_1 });
+        this.listSlotsExport.add(new int[] { Machine2To2.PRODUCT_2 });
+        this.listSlotsExport.add(new int[] { Machine2To2.PRODUCT_1, Machine2To2.PRODUCT_2 });
+
+        this.setImportRoutes(NONE_ROUTE, 2, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.setExportRoutes(2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
+        this.maxAutoExtract = new int[]{64, 64, 64, 1};
         this.maxAutoInsert = new int[]{64, 64, 64};
         this.autoExtractInterval = this.autoInsertInterval = 1;
         this.slotsDrop = new int[]{0, 1, 2, 3, this.getEnergySlot()};
@@ -200,5 +202,10 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
         this.irradiatedLaser = laser;
 //        this.setSyncFlag();
         return true;
+    }
+
+    @Override
+    public int getResultSlotCount() {
+        return 2;
     }
 }

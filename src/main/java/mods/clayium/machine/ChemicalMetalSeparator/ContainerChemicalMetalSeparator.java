@@ -1,19 +1,20 @@
 package mods.clayium.machine.ChemicalMetalSeparator;
 
+import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
-import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.Machine1ToSome;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ContainerChemicalMetalSeparator extends ContainerClayiumMachine {
+public class ContainerChemicalMetalSeparator extends ContainerIMachine {
     public ContainerChemicalMetalSeparator(InventoryPlayer player, TileEntityChemicalMetalSeparator tile) {
-        super(player, tile);
+        super(player, tile, Machine1ToSome.MATERIAL, Machine1ToSome.PRODUCT_1);
     }
 
     protected void initParameters(InventoryPlayer player) {

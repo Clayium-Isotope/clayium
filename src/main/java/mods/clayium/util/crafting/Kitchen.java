@@ -4,8 +4,6 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.SaveAcrossNBT;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +32,7 @@ public abstract class Kitchen implements SaveAcrossNBT {
     /**
      * {@link net.minecraft.world.World#isRemote} などで場合分け
      */
-    @SideOnly(Side.SERVER) // 蔵でおこなう必要は無さそうなので。
+// TODO    @SideOnly(Side.SERVER) // 蔵でおこなう必要は無さそうなので。
     public final void work() {
         if (this.isDoingWork() || this.setNewRecipe()) {
             if (this.canProceedCraft()) {

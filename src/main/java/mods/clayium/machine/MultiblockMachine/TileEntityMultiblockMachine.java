@@ -3,6 +3,7 @@ package mods.clayium.machine.MultiblockMachine;
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.machine.common.MachineSomeToSome;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
@@ -16,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
-public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachine {
+public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachine implements MachineSomeToSome {
     private int constructionCounter = 0;
     protected int constructionTime = 20;
 

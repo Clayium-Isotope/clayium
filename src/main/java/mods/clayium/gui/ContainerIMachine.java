@@ -1,7 +1,6 @@
 package mods.clayium.gui;
 
 import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -31,7 +30,7 @@ public abstract class ContainerIMachine extends ContainerTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return !((ClayiumRecipeProvider<?>) tileEntity).getRecipe(itemstack1).isFlat();
+        return true;
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int index) {

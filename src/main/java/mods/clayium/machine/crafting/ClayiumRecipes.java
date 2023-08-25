@@ -801,9 +801,9 @@ public class ClayiumRecipes {
                         ii(i(ClayiumMachines.autoClayCondenserMK1)), e(i), 40L);
                 assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.assembler, TierPrefix.basic)), machines.get(i)), 4,
                         ii(i(ClayiumMachines.get(EnumMachineKind.autoCrafter, tier))), e(i), 40L);
-                if (ClayiumConfiguration.cfgEnableFluidCapsule)
-                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, tier), 2), machines.get(i)), 4,
-                            ii(i(ClayiumMachines.get(EnumMachineKind.fluidTransferMachine, tier))), e(i), 40L);
+// TODO                if (ClayiumConfiguration.cfgEnableFluidCapsule)
+//                    assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.fluidTranslator, tier), 2), machines.get(i)), 4,
+//                            ii(i(ClayiumMachines.get(EnumMachineKind.fluidTransferMachine, tier))), e(i), 40L);
             }
             if (i >= 6 && i <= 9) {
                 assembler.addRecipe(ii(i(ClayiumMachines.get(EnumMachineKind.chemicalReactor, TierPrefix.advanced)), circuits.get(i)), 4,
@@ -867,7 +867,7 @@ public class ClayiumRecipes {
                 if (i == 9) {
                     assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.transformer, tier), 16)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CACondenser, tier))), e(i), 480L);
-                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.clayReactor, tier), 16)), 6,
+                    assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.get(EnumMachineKind.electrolysisReactor, tier), 16)), 6,
                             ii(i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier))), e(i), 480L);
                 } else {
                     if (i <= 11) {
@@ -883,8 +883,8 @@ public class ClayiumRecipes {
                         ii(i(ClayiumMachines.get(EnumMachineKind.assembler, tier))), e(i), 40L);
             }
             if (i >= 10) {
-                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 10,
-                        ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, tier))), e(i), 120L);
+// TODO               assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 10,
+//                        ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, tier))), e(i), 120L);
                 if (i <= 12) {
                     assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier)), i(ClayiumMachines.clayReactor)), 10,
                             ii(i(ClayiumMachines.get(EnumMachineKind.transformer, tier))), e(i), 120L);

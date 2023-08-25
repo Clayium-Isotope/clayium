@@ -202,6 +202,11 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         return TierPrefix.precision;
     }
 
+    @Override
+    public int getResultSlotCount() {
+        return 2;
+    }
+
     @SideOnly(Side.CLIENT)
     public void registerIOIcons() {
         this.registerInsertIcons("import_1", "import_2", "import");

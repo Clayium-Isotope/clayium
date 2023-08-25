@@ -6,6 +6,7 @@ import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.Machine1ToSome;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import mods.clayium.util.crafting.WeightedList;
@@ -15,7 +16,7 @@ import net.minecraft.util.NonNullList;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
+public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine implements Machine1ToSome {
     private static final int baseConsumingEnergy = 5000;
     private static final int baseCraftTime = 40;
     private static final WeightedList<ItemStack> results = new WeightedList<>(ItemStack.EMPTY);
@@ -100,6 +101,11 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine {
         this.setInventorySlotContents(RESULT_SLOT, result);
 
         return true;
+    }
+
+    @Override
+    public int getResultSlotCount() {
+        return 16;
     }
 
     static {

@@ -118,7 +118,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdClayCentrifuge:
                 return new GuiIMachine(new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile));
             case GuiIdClayChemicalReactor:
-                return new GuiClayiumMachine(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile));
+                return new GuiIMachine(new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile));
             case GuiIdMultitrackBuffer:
                 return new GuiTemp(new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile));
             case GuiIdItemFilterWhitelist:
