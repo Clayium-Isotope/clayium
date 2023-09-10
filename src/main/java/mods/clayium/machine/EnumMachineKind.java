@@ -89,7 +89,7 @@ public enum EnumMachineKind {
     CAResonatingCollector("ca_collector", null),
 
     // Tier 10 ~
-    CAReactorCore("ca_reactor", ClayiumRecipes.CAReactor),
+    CAReactorCore("ca_reactor", ClayiumRecipes.CAReactor, SlotType.MACHINE, "careactorcore"),
 
     // Tier 11 ~
     PANCore("pan_core", null),

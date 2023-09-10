@@ -1,15 +1,16 @@
 package mods.clayium.plugin.jei;
 
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.*;
+import mezz.jei.api.gui.IDrawable;
+import mezz.jei.api.gui.IDrawableAnimated;
+import mezz.jei.api.gui.IGuiItemStackGroup;
+import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.RecipeElement;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -19,8 +20,8 @@ public class ClayiumMachineCategory implements IRecipeCategory<RecipeElement> {
     protected static final ResourceLocation button = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
 
     protected final IDrawable background;
-    protected final IDrawableStatic progressBG;
-    protected final IDrawableAnimated progressFG;
+    protected final IDrawable progressBG;
+    protected final IDrawable progressFG;
 
     protected final IDrawable icon;
 
@@ -34,7 +35,7 @@ public class ClayiumMachineCategory implements IRecipeCategory<RecipeElement> {
         progressBG = guiHelper.createDrawable(button, 80, 96, 22, 16);
         progressFG = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(button, 80, 112, 22, 16), 40, IDrawableAnimated.StartDirection.LEFT, false);
 
-        icon = guiHelper.createDrawableIngredient(new ItemStack(ClayiumMachines.get(kind)));
+        icon = guiHelper.drawableBuilder(kind.getFaceResource(), 0, 0, 16, 16).setTextureSize(16, 16).build();
     }
 
     @Override

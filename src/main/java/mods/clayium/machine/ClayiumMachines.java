@@ -186,7 +186,6 @@ public class ClayiumMachines {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
         try {
-//            Constructor<? extends ClayContainer> constructor = blockClass.getDeclaredConstructor(int.class);
             Constructor<? extends ClayContainer> constructor2 = blockClass.getDeclaredConstructor(TierPrefix.class);
 
             for (TierPrefix tier : tiers) {
@@ -216,7 +215,6 @@ public class ClayiumMachines {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
         try {
-//            Constructor<? extends ClayContainer> constructor = blockClass.getDeclaredConstructor(int.class);
             Constructor<? extends ClayContainer> constructor2 = blockClass.getDeclaredConstructor(TierPrefix.class);
 
             for (TierPrefix tier : tiers) {
@@ -244,7 +242,6 @@ public class ClayiumMachines {
     private static void addAssemblerLike(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends ClayAssembler> blockClass) {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
         try {
-//            Constructor<? extends ClayAssembler> constructor = blockClass.getDeclaredConstructor(EnumMachineKind.class, int.class);
             Constructor<? extends ClayAssembler> constructor2 = blockClass.getDeclaredConstructor(EnumMachineKind.class, TierPrefix.class);
 
             for (TierPrefix tier : tiers) {
@@ -257,19 +254,19 @@ public class ClayiumMachines {
     }
 
     public static Block get(EnumMachineKind kind, TierPrefix tier) {
+        if (kind == EnumMachineKind.EMPTY || !tier.isValid()) return Blocks.AIR;
+
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
-            return machineMap.get(kind).get(tier);
+            return machineMap.getOrDefault(kind, Collections.emptyMap()).getOrDefault(tier, Blocks.AIR);
         throw new NoSuchElementException(tier.getPrefix() + " of " + kind.getRegisterName() + " is not registered!");
     }
     /**
      * @return the least tier machine of the kind
      */
     public static Block get(EnumMachineKind kind) {
-        Block block;
-
         for (TierPrefix tier : TierPrefix.values()) {
-            block = get(kind, tier);
-            if (block != null) return block;
+            Block block = get(kind, tier);
+            if (block != null && block != Blocks.AIR) return block;
         }
 
         throw new NoSuchElementException(kind.getRegisterName() + " is not registered!");
