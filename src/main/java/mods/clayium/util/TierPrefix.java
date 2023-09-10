@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * tier = ordinal - 1
+ */
 public enum TierPrefix {
     unknown("", ClayiumMaterial.clayium),
     none("", ClayiumMaterial.clay),

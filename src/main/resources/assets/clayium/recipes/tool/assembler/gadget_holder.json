@@ -4,22 +4,25 @@
     "input": [
         {
             "type": "minecraft:item",
-            "item": "clayium:clay_rolling_pin"
+            "item": "minecraft:leather",
+            "amount": 4
         },
         {
-            "type": "minecraft:item",
-            "item": "clayium:clay_slicer"
+            "type": "clayium:shaped_material",
+            "material": "az91d",
+            "shape": "plate",
+            "amount": 8
         }
     ],
-    "tier": 6,
+    "tier": 4,
     "output": [
         {
             "type": "minecraft:item",
-            "item": "clayium:io_tool"
+            "item": "clayium:gadget_holder"
         }
     ],
     "energy": {
         "tier": 6
     },
-    "time": 20
+    "time": 120
 }

@@ -5,24 +5,24 @@
         {
             "type": "clayium:shaped_material",
             "material": "az91d",
-            "shape": "plate",
-            "count": 3
+            "shape": "ingot",
+            "amount": 16
         },
         {
-            "type": "minecraft:item",
-            "item": "clayium:synchronous_parts",
-            "count": 2
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 6
         }
     ],
-    "tier": 6,
+    "tier": 4,
     "output": [
         {
             "type": "minecraft:item",
-            "item": "clayium:synchronizer"
+            "item": "clayium:manipulator_1"
         }
     ],
     "energy": {
-        "tier": 6
+        "tier": 4
     },
     "time": 20
 }

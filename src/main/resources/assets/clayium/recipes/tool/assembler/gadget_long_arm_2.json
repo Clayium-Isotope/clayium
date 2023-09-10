@@ -1,0 +1,27 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "long_arm_1"
+        },
+        {
+            "type": "minecraft:item",
+            "item": "clayium:manipulator_3"
+        }
+    ],
+    "tier": 10,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "long_arm_2"
+        }
+    ],
+    "energy": {
+        "tier": 12
+    },
+    "time": 120
+}

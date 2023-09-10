@@ -6,23 +6,23 @@
             "type": "clayium:shaped_material",
             "material": "az91d",
             "shape": "plate",
-            "count": 3
+            "amount": 4
         },
         {
-            "type": "minecraft:item",
-            "item": "clayium:synchronous_parts",
-            "count": 2
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 4
         }
     ],
-    "tier": 6,
+    "tier": 4,
     "output": [
         {
             "type": "minecraft:item",
-            "item": "clayium:synchronizer"
+            "item": "clayium:clay_shooter_0"
         }
     ],
     "energy": {
-        "tier": 6
+        "tier": 4
     },
-    "time": 20
+    "time": 40
 }

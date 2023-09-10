@@ -335,9 +335,9 @@ item.clay_slicer.tooltip.line1=搬出口設定ツール
 item.clay_spatula.name=粘土へら
 item.clay_spatula.tooltip.line1=装置の見た目をパイプ化する
 
-item.compressed_clay_shard_1.name=圧縮粘土片
-item.compressed_clay_shard_2.name=工業用粘土片
-item.compressed_clay_shard_3.name=発展工業用粘土片
+item.compressed_clay_shard_0.name=圧縮粘土片
+item.compressed_clay_shard_1.name=工業用粘土片
+item.compressed_clay_shard_2.name=発展工業用粘土片
 
 item.clay_shovel.name=粘土シャベル
 item.clay_shovel.tooltip.line1=粘土鉱石が採掘でき、そのドロップ数を上昇させる

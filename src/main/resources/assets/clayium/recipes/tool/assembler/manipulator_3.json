@@ -4,22 +4,25 @@
     "input": [
         {
             "type": "minecraft:item",
-            "item": "clayium:clay_rolling_pin"
+            "item": "clayium:manipulator_2",
+            "amount": 64
         },
         {
-            "type": "minecraft:item",
-            "item": "clayium:clay_slicer"
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 12,
+            "amount": 6
         }
     ],
-    "tier": 6,
+    "tier": 10,
     "output": [
         {
             "type": "minecraft:item",
-            "item": "clayium:io_tool"
+            "item": "clayium:manipulator_3"
         }
     ],
     "energy": {
-        "tier": 6
+        "tier": 12
     },
     "time": 20
 }

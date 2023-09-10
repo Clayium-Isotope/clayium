@@ -1,0 +1,16 @@
+{
+    "type": "clayium:shapeless_crafting",
+    "group": "clayium",
+    "ingredients": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "auto_eat_1"
+        }
+    ],
+    "result": {
+        "type": "clayium:species",
+        "root": "gadget",
+        "branch": "auto_eat_0"
+    }
+}

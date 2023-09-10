@@ -1,0 +1,28 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "blank"
+        },
+        {
+            "type": "clayium:tiered",
+            "keyword": "overclocker",
+            "tier": 10
+        }
+    ],
+    "tier": 10,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "antimatter_overclock"
+        }
+    ],
+    "energy": {
+        "tier": 10
+    },
+    "time": 120
+}

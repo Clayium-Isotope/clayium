@@ -3,25 +3,27 @@
     "machine": "assembler",
     "input": [
         {
-            "type": "minecraft:item",
-            "item": "clayium:io_tool"
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "blank"
         },
         {
             "type": "clayium:tiered",
             "keyword": "circuit",
             "tier": 6,
-            "count": 2
+            "amount": 4
         }
     ],
-    "tier": 6,
+    "tier": 4,
     "output": [
         {
-            "type": "minecraft:item",
-            "item": "clayium:memory_card"
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "health_0"
         }
     ],
     "energy": {
         "tier": 6
     },
-    "time": 20
+    "time": 120
 }

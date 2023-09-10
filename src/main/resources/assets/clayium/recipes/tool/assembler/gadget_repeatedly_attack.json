@@ -1,0 +1,29 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "antimatter_overclock"
+        },
+        {
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 10,
+            "amount": 4
+        }
+    ],
+    "tier": 10,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "repeatedly_attack"
+        }
+    ],
+    "energy": {
+        "tier": 10
+    },
+    "time": 120
+}

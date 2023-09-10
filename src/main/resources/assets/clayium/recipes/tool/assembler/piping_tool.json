@@ -18,6 +18,8 @@
             "item": "clayium:piping_tool"
         }
     ],
-    "energy": 10000,
+    "energy": {
+        "tier": 6
+    },
     "time": 20
 }

@@ -335,9 +335,9 @@ item.clay_slicer.tooltip.line1=Machine Output Configurator
 item.clay_spatula.name=Clay Spatula
 item.clay_spatula.tooltip.line1=Changes a machine's appearance to Pipe.
 
-item.compressed_clay_shard_1.name=Compressed Clay Shard
-item.compressed_clay_shard_2.name=Industrial Clay Shard
-item.compressed_clay_shard_3.name=Advanced Industrial Clay Shard
+item.compressed_clay_shard_0.name=Compressed Clay Shard
+item.compressed_clay_shard_1.name=Industrial Clay Shard
+item.compressed_clay_shard_2.name=Advanced Industrial Clay Shard
 
 item.clay_shovel.name=Clay Shovel
 item.clay_shovel.tooltip.line1=Can dig Clay Ores and increase drops.

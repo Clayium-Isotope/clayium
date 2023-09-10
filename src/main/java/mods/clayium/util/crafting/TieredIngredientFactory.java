@@ -2,6 +2,7 @@ package mods.clayium.util.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.ClayiumRecipes;
@@ -22,7 +23,7 @@ import javax.annotation.Nullable;
  * <pre>{@code
  * {
  *     "type": "clayium:tiered",
- *     "keyword": "circuit" | "hull" | "machine",
+ *     "keyword": "circuit" | "hull" | "machine" | "overclocker",
  *     "machine": "assembler",  // when "keyword" is "machine"
  *     "tier": 1
  * }
@@ -85,6 +86,8 @@ public class TieredIngredientFactory implements IIngredientFactory {
                     }
 
                     return new TieredIngredient(TieredIngredientKeyword.MACHINE, kind, tier, new ItemStack(machine));
+                case OVERCLOCKER:
+                    return new TieredIngredient(TieredIngredientKeyword.OVERCLOCKER, EnumMachineKind.EMPTY, tier, ClayiumBlocks.overclocker.get(TierPrefix.get(tier)));
             }
 
             throw new JsonSyntaxException("Could not process keyword: " + keyword);
@@ -92,7 +95,10 @@ public class TieredIngredientFactory implements IIngredientFactory {
     }
 
     /*package-private*/ enum TieredIngredientKeyword {
-        CIRCUIT("circuit"), HULL("hull"), MACHINE("machine");
+        CIRCUIT("circuit"),
+        HULL("hull"),
+        MACHINE("machine"),
+        OVERCLOCKER("overclocker");
 
         TieredIngredientKeyword(String value) {
             this.value = value;

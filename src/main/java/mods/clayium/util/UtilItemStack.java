@@ -1,9 +1,14 @@
 package mods.clayium.util;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import mods.clayium.util.crafting.IItemPattern;
 import mods.clayium.util.crafting.OreDictionaryStack;
+import mods.clayium.util.crafting.SpeciesIngredientFactory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -214,5 +219,13 @@ public class UtilItemStack {
     public static void setItemsToTag(NBTTagCompound tag, List<ItemStack> items) {
         if (tag == null) tag = new NBTTagCompound();
         tag.setTag("Items", UtilCollect.items2TagList(items));
+    }
+
+    public static ItemStack getItemStack(final JsonObject json, final JsonContext context)
+    {
+        final String type = context.appendModId(json.get("type").getAsString());
+        if ("minecraft:item".equals(type)) return CraftingHelper.getItemStack(json, context);
+        if ("clayium:species".equals(type)) return SpeciesIngredientFactory.getStack(json);
+        throw new JsonSyntaxException("[UtilItemStack] Couldn't interpret the output type: " + type);
     }
 }

@@ -5,9 +5,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.JsonHelper;
 import mods.clayium.util.UtilCollect;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -89,11 +91,19 @@ public class ClayiumRecipeFactory implements IRecipeFactory {
                 throw new JsonSyntaxException("Expected item object but found " + ele);
             }
 
-            outputItems.add(CraftingHelper.getItemStack((JsonObject) ele, context));
+            outputItems.add(UtilItemStack.getItemStack((JsonObject) ele, context));
         }
 
+        long energy;
+        if (json.get("energy").isJsonObject()) {
+            JsonObject energyObj = json.getAsJsonObject("energy");
+            if (!json.has("tier")) throw new JsonSyntaxException("\"energy\" should be a long number or be an object { \"tier\": int, \"factor\"?: double }");
+            energy = ClayiumRecipes.e(JsonHelper.readNumeric(energyObj, "factor", 1.0d), JsonHelper.readNumeric(energyObj, "tier", Integer.class));
+        } else {
+            energy = JsonHelper.readNumeric(json, "energy", Long.class);
+        }
 
-        RecipeElement recipe = new RecipeElement(inputItems, JsonHelper.readNumeric(json, "tier", Integer.class), outputItems, JsonHelper.readNumeric(json, "energy", Long.class), JsonHelper.readNumeric(json, "time", Long.class));
+        RecipeElement recipe = new RecipeElement(inputItems, JsonHelper.readNumeric(json, "tier", Integer.class), outputItems, energy, JsonHelper.readNumeric(json, "time", Long.class));
         kind.getRecipe().add(recipe);
         return recipe;
     }

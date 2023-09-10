@@ -1,0 +1,29 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "blank"
+        },
+        {
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 12,
+            "amount": 16
+        }
+    ],
+    "tier": 10,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "flight_0"
+        }
+    ],
+    "energy": {
+        "tier": 12
+    },
+    "time": 120
+}

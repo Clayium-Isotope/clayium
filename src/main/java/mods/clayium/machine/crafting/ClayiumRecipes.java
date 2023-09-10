@@ -166,57 +166,6 @@ public class ClayiumRecipes {
         GameRegistry.addSmelting(ClayiumItems.rawSlicer, new ItemStack(ClayiumItems.slicer), 1F);
         GameRegistry.addSmelting(ClayiumItems.rawSpatula, new ItemStack(ClayiumItems.spatula), 1F);
 
-/* custom recipe
-        assembler.addRecipe(oo(i(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE)), 6,
-                ii(ClayiumItems.IOTool), e(6), 20L);
-        assembler.addRecipe(oo(i(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE), i(ClayiumItems.wrench)), 6,
-                ii(ClayiumItems.pipingTool), e(6), 20L);
-        assembler.addRecipe(oo(ClayiumItems.IOTool, s(circuits.get(6), 2)), 6,
-                ii(ClayiumItems.memoryCard), e(6), 20L);
-
-        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle), s(circuits.get(6), 2)), 0, 6,
-                ii(i(CItems.itemDirectionMemory)), e(6), 20L);
- */
-/* Use assets/recipes
-        GameRegistry.addRecipe(i(CItems.itemClayShovel), "#", "|", "|",
-                '#', ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), '|', ClayiumMaterials.get(ClayiumMaterial.clay, CMaterials.STICK));
-        GameRegistry.addRecipe(i(CItems.itemClayPickaxe), "###", " | ", " | ",
-                '#', ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate), '|', ClayiumMaterials.get(ClayiumMaterial.denseClay, CMaterials.STICK));
-        GameRegistry.addRecipe(i(CItems.itemClayWrench), "# #", " o ", " | ",
-                '#', ClayiumMaterials.get(ClayiumMaterial.denseClay, CMaterials.BLADE), '|', ClayiumMaterials.get(ClayiumMaterial.denseClay, CMaterials.STICK), 'o', ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle));
-
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(
-                i(CItems.itemClaySteelPickaxe), "###", " | ", " | ",
-                '#', ClayiumMaterials.getODName(ClayiumMaterial.clay_STEEL, ClayiumShape.ingot), '|', ClayiumMaterials.get(ClayiumMaterial.denseClay, CMaterials.STICK)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(
-                i(CItems.itemClaySteelShovel), "#", "|", "|",
-                '#', ClayiumMaterials.getODName(ClayiumMaterial.clay_STEEL, ClayiumShape.ingot), '|', ClayiumMaterials.get(ClayiumMaterial.denseClay, CMaterials.STICK)));
- */
-/* custom recipe
-         assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 3), i(ClayiumItems.synchronousParts, 2)), 0, 6,
-                ii(i(CItems.itemSynchronizer)), e(6), 20L);
- */
-
-
-        assembler.addRecipe(oo(circuits.get(5), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterWhitelist)), 8L, 20L);
-        assembler.addRecipe(oo(circuits.get(6), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterItemName)), 8L, 20L);
-        assembler.addRecipe(oo(circuits.get(7), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 3)), 4, ii(i(ClayiumItems.filterFuzzy)), 8L, 20L);
-/* Use assets/recipes
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterWhitelist), i(CItems.itemFilterBlacklist));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterBlacklist), i(CItems.itemFilterWhitelist));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterUnlocalizedName), i(CItems.itemFilterItemName));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterOreDict), i(CItems.itemFilterUnlocalizedName));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterUniqueId), i(CItems.itemFilterOreDict));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterModId), i(CItems.itemFilterUniqueId));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterItemDamage), i(CItems.itemFilterModId));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterItemName), i(CItems.itemFilterItemDamage));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterFuzzy), i(CItems.itemFilterFuzzy));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterDuplicator),
-                i(CItems.itemFilterWhitelist), i(CItems.itemFilterItemName), i(CItems.itemFilterFuzzy));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterBlockMetadata), i(CItems.itemFilterItemDamage), i(Blocks.clay));
-        GameRegistry.addShapelessRecipe(i(CItems.itemFilterItemDamage), i(CItems.itemFilterBlockMetadata), i(Blocks.clay));
- */
         if (ClayiumConfiguration.cfgEnableFluidCapsule) {
 /* TODO
             ItemCapsule.registerCompressionRecipe(new ItemCapsule[] {CItems.itemsCapsule[4], CItems.itemsCapsule[3], CItems.itemsCapsule[2], CItems.itemsCapsule[1], CItems.itemsCapsule[0]}, new int[] {5, 5, 5, 8});
@@ -225,72 +174,6 @@ public class ClayiumRecipes {
                     '#', i(ClayiumBlocks.compressedClay.get(0), 1, 0));
  */
         }
-
-/* TODO
-        assembler.addRecipe(oo(i(Items.leather, 4), ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 8)), 0, 4,
-                ii(i(CItems.itemGadgetHolder)), e(6), 120L);
-
-        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 8), ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 4)), 0, 4,
-                ii(CItems.itemGadget.get("Blank")), e(6), 120L);
-
-        assembler.addRecipe(oo(CItems.itemGadget.get("Blank"), ClayiumBlocks.overclocker.get(TierPrefix.antimatter)), 0, 10,
-                ii(CItems.itemGadget.get("AntimatterOverclock")), e(10), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("AntimatterOverclock"), ClayiumBlocks.overclocker.get(TierPrefix.pureAntimatter)), 0, 10,
-                ii(CItems.itemGadget.get("PureAntimatterOverclock")), e(11), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("PureAntimatterOverclock"), ClayiumBlocks.overclocker.get(TierPrefix.OEC)), 0, 10,
-                ii(CItems.itemGadget.get("OECOverclock")), e(12), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("OECOverclock"), ClayiumBlocks.overclocker.get(TierPrefix.OPA)), 0, 10,
-                ii(CItems.itemGadget.get("OPAOverclock")), e(13), 120L);
-
-        assembler.addRecipe(oo(CItems.itemGadget.get("Blank"), s(circuits[12], 16)), 0, 10,
-                ii(CItems.itemGadget.get("Flight0")), e(12), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("Flight0"), s(circuits[13], 16)), 0, 10,
-                ii(CItems.itemGadget.get("Flight1")), e(13), 1200L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("Flight1"), ClayiumBlocks.overclocker.get(TierPrefix.OPA, 16)), 0, 10,
-                ii(CItems.itemGadget.get("Flight2")), e(14), 12000L);
-
-        assembler.addRecipe(oo(CItems.itemGadget.get("Blank"), s(circuits[6], 4)), 0, 4,
-                ii(CItems.itemGadget.get("Health0")), e(6), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("Health0"), s(circuits[10], 4)), 0, 4,
-                ii(CItems.itemGadget.get("Health1")), e(10), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("Health1"), s(circuits[12], 4)), 0, 10,
-                ii(CItems.itemGadget.get("Health2")), e(12), 120L);
-
-        assembler.addRecipe(oo(CItems.itemGadget.get("Blank"), s(circuits[7], 2)), 0, 4,
-                ii(CItems.itemGadget.get("AutoEat0")), e(7), 120L);
-
-
-        GameRegistry.addRecipe(new ShapelesssWithNBT(CItems.itemGadget.get("AutoEat0"), CItems.itemGadget.get("AutoEat1")));
-        GameRegistry.addRecipe(new ShapelesssWithNBT(CItems.itemGadget.get("AutoEat1"), CItems.itemGadget.get("AutoEat0")));
-
-        assembler.addRecipe(oo(CItems.itemGadget.get("AntimatterOverclock"), s(circuits[10], 4)), 0, 10,
-                ii(CItems.itemGadget.get("RepeatedlyAttack")), e(10), 120L);
- */
-        assembler.addRecipe(oo(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.ingot, 16), circuits.get(6)), 4,
-                ii(ClayiumItems.manipulator1), e(4), 20L);
-        assembler.addRecipe(oo(ClayiumItems.manipulator1, s(circuits.get(8), 6)), 4,
-                ii(ClayiumItems.manipulator2), e(8), 20L);
-        assembler.addRecipe(oo(i(ClayiumItems.manipulator2, 64), s(circuits.get(12), 6)), 10,
-                ii(ClayiumItems.manipulator3), e(12), 20L);
-
-/* TODO
-        assembler.addRecipe(oo(CItems.itemGadget.get("Blank"), CItems.itemMisc.get("Manipulator1")), 0, 4,
-                ii(CItems.itemGadget.get("LongArm0")), e(4), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("LongArm0"), CItems.itemMisc.get("Manipulator2")), 0, 4,
-                ii(CItems.itemGadget.get("LongArm1")), e(8), 120L);
-        assembler.addRecipe(oo(CItems.itemGadget.get("LongArm1"), CItems.itemMisc.get("Manipulator3")), 0, 10,
-                ii(CItems.itemGadget.get("LongArm2")), e(12), 120L);
- */
-/* TODO
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 4), circuits.get(4)), 0, 4,
-                ii(i(CItems.itemsClayShooter[0])), e(4), 40L);
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 4), circuits.get(5)), 0, 4,
-                ii(i(CItems.itemsClayShooter[1])), e(5), 40L);
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 4), circuits.get(6)), 0, 4,
-                ii(i(CItems.itemsClayShooter[2])), e(6), 40L);
-        assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.AZ91DAlloy, ClayiumShape.plate, 4), circuits.get(7)), 0, 4,
-                ii(i(CItems.itemsClayShooter[3])), e(7), 40L);
- */
     }
 
     public static void registerMainMaterials() {

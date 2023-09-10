@@ -1,0 +1,27 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 6
+        },
+        {
+            "type": "clayium:shaped_material",
+            "material": "ind_clay",
+            "shape": "plate",
+            "amount": 3
+        }
+    ],
+    "tier": 4,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "filter",
+            "branch": "name"
+        }
+    ],
+    "energy": 8,
+    "time": 20
+}

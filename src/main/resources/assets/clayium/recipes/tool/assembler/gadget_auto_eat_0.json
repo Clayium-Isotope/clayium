@@ -1,0 +1,29 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "blank"
+        },
+        {
+            "type": "clayium:tiered",
+            "keyword": "circuit",
+            "tier": 7,
+            "amount": 2
+        }
+    ],
+    "tier": 4,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "auto_eat_0"
+        }
+    ],
+    "energy": {
+        "tier": 7
+    },
+    "time": 120
+}

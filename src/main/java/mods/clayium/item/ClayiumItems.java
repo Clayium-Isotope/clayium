@@ -149,6 +149,7 @@ public class ClayiumItems {
     public static final Item gadgetLongArm0 = new GadgetLongArm(0, TierPrefix.precision, 3.0F);
     public static final Item gadgetLongArm1 = new GadgetLongArm(1, TierPrefix.clayium, 7.0F);
     public static final Item gadgetLongArm2 = new GadgetLongArm(2, TierPrefix.OEC, 20.0F);
+    public static final Item gadgetBlank = new ItemTiered("gadget_blank", TierPrefix.precision);
     /* ...Gadget */
     /* ...Elements */
 

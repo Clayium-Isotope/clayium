@@ -1,0 +1,30 @@
+{
+    "type": "clayium:add_recipe",
+    "machine": "assembler",
+    "input": [
+        {
+            "type": "clayium:shaped_material",
+            "material": "ind_clay",
+            "shape": "plate",
+            "amount": 8
+        },
+        {
+            "type": "clayium:shaped_material",
+            "material": "az91d",
+            "shape": "plate",
+            "amount": 4
+        }
+    ],
+    "tier": 4,
+    "output": [
+        {
+            "type": "clayium:species",
+            "root": "gadget",
+            "branch": "blank"
+        }
+    ],
+    "energy": {
+        "tier": 6
+    },
+    "time": 120
+}

@@ -1,9 +1,11 @@
 {
     "recipes": {
-        "add_recipe": "mods.clayium.util.crafting.ClayiumRecipeFactory"
+        "add_recipe": "mods.clayium.util.crafting.ClayiumRecipeFactory",
+        "shapeless_crafting": "mods.clayium.util.crafting.ShapelessRecipeFactoryWrapper"
     },
     "ingredients": {
         "shaped_material": "mods.clayium.util.crafting.ShapedMaterialIngredientFactory",
-        "tiered": "mods.clayium.util.crafting.TieredIngredientFactory"
+        "tiered": "mods.clayium.util.crafting.TieredIngredientFactory",
+        "species": "mods.clayium.util.crafting.SpeciesIngredientFactory"
     }
 }
