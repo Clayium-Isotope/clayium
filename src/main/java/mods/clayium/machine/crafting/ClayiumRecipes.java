@@ -222,7 +222,7 @@ public class ClayiumRecipes {
         energeticClayDecomposer.addRecipe(ClayiumBlocks.compressedClay.get(0, 1), 13, i(Blocks.CLAY, 9), 1L, 0L);
         int i;
         for (i = 0; i < 12; i++) {
-            energeticClayDecomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(i + 1), 1, i + 1), 13, i(ClayiumBlocks.compressedClay.get(i), 9, i), 1L, 0L);
+            energeticClayDecomposer.addRecipe(i(ClayiumBlocks.compressedClay.get(i + 1), 1), 13, i(ClayiumBlocks.compressedClay.get(i), 9), 1L, 0L);
         }
 
 /* Used assets/recipes

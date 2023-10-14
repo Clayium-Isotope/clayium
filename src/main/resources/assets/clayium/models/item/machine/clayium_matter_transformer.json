@@ -2,6 +2,6 @@
   "parent": "clayium:block/machine_temp",
   "textures": {
     "hull": "clayium:blocks/machinehull-7",
-    "face": "clayium:blocks/machine/mattertransformer"
+    "face": "clayium:blocks/machine/transformer"
   }
 }

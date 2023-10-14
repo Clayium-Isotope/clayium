@@ -24,14 +24,12 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
 
     void addTooltip(NBTTagCompound filterTag, List<String> list, int indent);
 
-    default boolean isCopy(ItemStack filter) {
-        return filter.getItemDamage() == 1;
-    }
+    /**
+     * Check {@code filter} is a instance which copied by {@code this}
+     */
+    boolean isCopy(ItemStack filter);
 
-    default ItemStack setCopyFlag(ItemStack filter) {
-        filter.setItemDamage(1);
-        return filter;
-    }
+    ItemStack setCopyFlag(ItemStack filter);
 
     default void addFilterInformation(ItemStack itemstack, EntityPlayer player, List<String> tooltip, boolean flag) {
         addTooltip(itemstack.getTagCompound(), tooltip, 0);

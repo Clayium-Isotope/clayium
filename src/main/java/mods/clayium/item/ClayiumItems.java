@@ -114,6 +114,7 @@ public class ClayiumItems {
     public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter", TierPrefix.pureAntimatter, 3, 30.0F, 0.0F, 100, 8, 40);
 
     public static final Item synchronizer = new Synchronizer();
+    public static final Item directionMemory = new DirectionMemory();
     /* ...Tools */
 
     /* Filters... */
