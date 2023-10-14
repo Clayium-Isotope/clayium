@@ -63,14 +63,14 @@ public enum EnumMachineKind {
     blastFurnace("blast_furnace", ClayiumRecipes.blastFurnace),
     electrolysisReactor("electrolysis_reactor", ClayiumRecipes.electrolysisReactor),
     clayChunkLoader("clay_chunk_loader", null),
-    storageContainer("storage_container", null),
+    storageContainer("storage_container", null, SlotType.UNKNOWN, "storagecontainer"),
     vacuumContainer("vacuum_container", null),
 
     // Tier 7 ~
     distributor("distributor", null),
     laserInterface("laser_interface", null),
     clayReactor("reactor", ClayiumRecipes.clayReactor),
-    transformer("matter_transformer", ClayiumRecipes.transformer),
+    transformer("matter_transformer", ClayiumRecipes.transformer, SlotType.MACHINE, "transformer"),
     clayEnergyLaser("energy_laser", null),
     laserReflector("laser_reflector", null),
     claySapling("clay_sapling", null),

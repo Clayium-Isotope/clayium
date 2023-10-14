@@ -30,6 +30,7 @@ import mods.clayium.machine.MultitrackBuffer.MultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.QuartzCrucible;
 import mods.clayium.machine.SaltExtractor.SaltExtractor;
 import mods.clayium.machine.SolarClayFabricator.SolarClayFabricator;
+import mods.clayium.machine.StorageContainer.StorageContainer;
 import mods.clayium.machine.WaterWheel.WaterWheel;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
@@ -118,8 +119,10 @@ public class ClayiumMachines {
 //        new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1);
 //        blockCAReactorHull = new BlockDamaged(Material.iron, 10);
 //        registerTieredMachines("CAReactor", new int[]{10, 11, 12, 13}, TileCAReactor.class, 9, CAReactor.class, ItemBlockTiered.class);
-//        new ClayMachines("ECDecomposer", 13);
-//        energeticClayDecomposer = get(EnumMachineKind.decomposer, TierPrefix.OPA);
+
+        addMachine(EnumMachineKind.ECDecomposer, TierPrefix.makeList(13));
+        energeticClayDecomposer = get(EnumMachineKind.ECDecomposer, TierPrefix.OPA);
+        storageContainer = addContainer(EnumMachineKind.storageContainer, TierPrefix.precision, new StorageContainer());
 //        new StorageContainer(Material.iron, "clayium:az91dhull");
 //        storageContainer = get(EnumMachineKind.storageContainer, TierPrefix.precision);
 //        new VacuumContainer(Material.iron, "clayium:az91dhull");

@@ -1,0 +1,21 @@
+{
+    "multipart": [
+        {
+            "when": {
+                "is_pipe": false
+            },
+            "apply": {
+                "model": "clayium:machine/storage_container"
+            }
+        },
+        {
+            "when": {
+                "is_pipe": false,
+                "storage_size": "clay_core"
+            },
+            "apply": {
+                "model": "clayium:machine/storage_container_ex"
+            }
+        }
+    ]
+}

@@ -20,37 +20,25 @@ public class SlotMemory extends SlotWithTexture {
 
     @Override
     public boolean canTakeStack(EntityPlayer player) {
-        boolean flag = false;
-        ItemStack playerstack = player.inventory.getItemStack();
-        ItemStack slotstack = this.getStack();
+        ItemStack playerStack = player.inventory.getItemStack();
+        ItemStack slotStack = this.getStack();
 
-        if (!playerstack.isEmpty() && playerstack.getItem() instanceof IFilter
-                && !slotstack.isEmpty() && slotstack.getItem() instanceof IFilter) {
-            IFilter playerfilter = (IFilter) playerstack.getItem();
+        if (!IFilter.isFilter(playerStack) || !IFilter.isFilter(slotStack) || !((IFilter) playerStack.getItem()).isCopy(playerStack)) {
+            this.putStack(ItemStack.EMPTY);
+            return false;
+        }
 
-            if (playerfilter.isCopy(playerstack)) {
-                playerstack = slotstack.copy();
-                playerfilter = (IFilter) playerstack.getItem();
-                playerstack = playerfilter.setCopyFlag(playerstack);
+        if (!player.world.isRemote) {
+            player.sendMessage(new TextComponentString("Copied " + slotStack.getDisplayName()));
+            List<String> list = new ArrayList<>();
+            ((IFilter) slotStack.getItem()).addFilterInformation(slotStack, player, list, true);
 
-                if (!player.world.isRemote) {
-                    player.sendMessage(new TextComponentString("Copied " + slotstack.getDisplayName()));
-                    List<String> list = new ArrayList<>();
-                    ((IFilter) slotstack.getItem()).addFilterInformation(slotstack, player, list, true);
-
-                    for (String s : list) {
-                        player.sendMessage(new TextComponentString(" " + s));
-                    }
-                }
-
-                player.inventory.setItemStack(playerstack);
-                flag = true;
+            for (String s : list) {
+                player.sendMessage(new TextComponentString(" " + s));
             }
         }
 
-        if (!flag) {
-            this.putStack(ItemStack.EMPTY);
-        }
+        player.inventory.setItemStack(((IFilter) slotStack.getItem()).setCopyFlag(slotStack.copy()));
 
         return false;
     }

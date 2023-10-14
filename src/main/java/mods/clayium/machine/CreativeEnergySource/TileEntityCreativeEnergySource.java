@@ -12,22 +12,18 @@ import net.minecraft.util.NonNullList;
 public class TileEntityCreativeEnergySource extends TileEntityClayBuffer {
     public static final ItemStack oec = IClayEnergy.getCompressedClay(13, 64);
 
-    public TileEntityCreativeEnergySource() {
-    }
-
     @Override
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(1, getEnergeticClay());
 
+        this.inventoryX = this.inventoryY = 1;
+        this.listSlotsExport.add(new int[] { 0 });
+        this.slotsDrop = new int[0];
         this.setExportRoutes(-1, -1, -1, 0, -1, -1);
     }
 
     public void initParamsByTier(TierPrefix tier) {
         this.setDefaultTransportation(tier);
-
-        this.inventoryX = this.inventoryY = 1;
-        this.listSlotsExport.add(new int[] { 0 });
-        this.slotsDrop = new int[0];
     }
 
     public static ItemStack getEnergeticClay() {

@@ -17,5 +17,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @UsedFor(UsedFor.Type.TileEntity)
 public @interface CustomHull {
+    String AZ91D = "blocks/az91dhull";
+    String ZK60A = "blocks/zk60ahull";
+
     String value();
 }

@@ -35,6 +35,7 @@ import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.QuartzCrucible.TileEntityQuartzCrucible;
 import mods.clayium.machine.SaltExtractor.TileEntitySaltExtractor;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
+import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -155,6 +156,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityCAInjector.class, "clayium:ca_injector", TESRClayContainer.instance);
 
 		ClientRegistry.registerTileEntity(TileEntityClayCentrifuge.class, "clayium:centrifuge", TESRClayContainer.instance);
+		ClientRegistry.registerTileEntity(TileEntityStorageContainer.class, "clayium:storage_container", TESRClayContainer.instance);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
+import mods.clayium.block.tile.FlexibleStackLimit;
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IButtonProvider;
@@ -112,8 +112,8 @@ public abstract class ContainerTemp extends Container {
         if (slot == null || !slot.getHasStack())
             return ItemStack.EMPTY;
 
-        ItemStack itemstack1 = slot.getStack();
-        ItemStack itemstack = itemstack1.copy();
+        ItemStack itemstack1 = slot.decrStackSize(slot.getStack().getMaxStackSize());
+        final ItemStack itemstack = itemstack1.copy();
 
         if (par2 < this.playerSlotIndex) {
             if (!transferStackFromMachineInventory(itemstack1, par2))
@@ -135,7 +135,7 @@ public abstract class ContainerTemp extends Container {
         }
 
         slot.onTake(player, itemstack1);
-        return itemstack;
+        return itemstack1;
     }
 
     public boolean transferStackToPlayerInventory(ItemStack itemstack1, boolean flag) {
@@ -269,8 +269,31 @@ public abstract class ContainerTemp extends Container {
 
     public abstract boolean transferStackFromMachineInventory(ItemStack itemStack, int index);
 
+    /**
+     * inventoryplayer.getItemStack() is the holding ItemStack。
+     *
+     * @param dragType <ul>
+     *                   <li>0: Left Click</li>
+     *                   <li>1: Right Click</li>
+     *                 </ul>
+     * @param clickTypeIn <ul>
+     *                      <li>PICKUP:       Single Click<br>
+     *                        dragType: 0: Left Click, 1: Right Click<br>
+     *                      </li>
+     *                      <li>QUICK_MOVE:   Shift + Left Click<br>
+     *                        dragType: 0: Left Click, 1: Right Click<br>
+     *                      </li>
+     *                      <li>SWAP:         NumKey(1~9)<br>dragType: Hotbar</li>
+     *                      <li>CLONE:        Middle Click</li>
+     *                      <li>THROW:        Left Click at out of Gui<br>Same as PICKUP w/ slotId -999</li>
+     *                      <li>QUICK_CRAFT:  ?</li>
+     *                      <li>PICKUP_ALL:   Left Click x2 ?</li>
+     *                    </ul>
+     * @return Old ItemStack of {@code slotId} ?
+     */
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+        ClayiumCore.logger.info("ClickType: " + clickTypeIn.name());
         Field dragEvent = ObfuscationReflectionHelper.findField(Container.class, "field_94536_g");
         Field dragMode = ObfuscationReflectionHelper.findField(Container.class, "field_94535_f");
         Set<Slot> dragSlots = ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "field_94537_h"); // I wish it is a pointer, not a copy
@@ -314,7 +337,7 @@ public abstract class ContainerTemp extends Container {
                                 ItemStack itemstack14 = itemstack9.copy();
                                 int j3 = slot8.getHasStack() ? slot8.getStack().getCount() : 0;
                                 computeStackSize(dragSlots, dragMode.getInt(this), itemstack14, j3);
-                                int k3 = Math.min(itemstack14.getMaxStackSize(), slot8.getItemStackLimit(itemstack14));
+                                int k3 = this.getUpperLimit(slot8, itemstack14);
 
                                 if (itemstack14.getCount() > k3) {
                                     itemstack14.setCount(k3);
@@ -360,7 +383,7 @@ public abstract class ContainerTemp extends Container {
                         return ItemStack.EMPTY;
                     }
 
-                    for (ItemStack itemstack7 = this.transferStackInSlot(player, slotId); !itemstack7.isEmpty() && ItemStack.areItemsEqual(slot5.getStack(), itemstack7); itemstack7 = this.transferStackInSlot(player, slotId)) {
+                    for (ItemStack itemstack7 = this.transferStackInSlot(player, slotId); !itemstack7.isEmpty() && UtilItemStack.areTypeEqual(slot5.getStack(), itemstack7); itemstack7 = this.transferStackInSlot(player, slotId)) {
                         itemstack = itemstack7.copy();
                     }
                 } else {
@@ -371,64 +394,63 @@ public abstract class ContainerTemp extends Container {
                     Slot slot6 = this.inventorySlots.get(slotId);
 
                     if (slot6 != null) {
-                        ItemStack itemstack8 = slot6.getStack();
-                        ItemStack itemstack11 = inventoryplayer.getItemStack();
+                        ItemStack slotStack = slot6.getStack();
+                        ItemStack holdStack = inventoryplayer.getItemStack();
 
-                        if (slot6 instanceof SlotMemory && !itemstack8.isEmpty()) {
-                            itemstack = itemstack8.copy();
+                        if (slot6 instanceof SlotMemory) {
+                            itemstack = slotStack.copy();
                         }
 
-                        if (itemstack8.isEmpty()) {
-                            if (!itemstack11.isEmpty() && slot6.isItemValid(itemstack11)) {
-                                int i3 = dragType == 0 ? itemstack11.getCount() : 1;
+                        if (slotStack.isEmpty()) {
+                            if (!holdStack.isEmpty() && slot6.isItemValid(holdStack)) {
+                                int i3 = dragType == 0 ? holdStack.getCount() : 1;
 
-                                if (i3 > slot6.getItemStackLimit(itemstack11)) {
-                                    i3 = slot6.getItemStackLimit(itemstack11);
+                                if (slot6 instanceof SlotMemory) {
+                                    slot6.putStack(holdStack);
+                                } else {
+                                    slot6.putStack(holdStack.splitStack(Math.min(i3, slot6.getItemStackLimit(holdStack))));
                                 }
-
-                                slot6.putStack(!(slot6 instanceof SlotMemory) ? itemstack11.splitStack(i3) : itemstack11);
                             }
                         } else if (slot6.canTakeStack(player)) {
-                            if (itemstack11.isEmpty()) {
-                                if (itemstack8.isEmpty()) {
+                            if (holdStack.isEmpty()) {
+                                if (slotStack.isEmpty()) {
                                     slot6.putStack(ItemStack.EMPTY);
                                     inventoryplayer.setItemStack(ItemStack.EMPTY);
                                 } else {
-                                    int l2 = dragType == 0 ? itemstack8.getCount() : (itemstack8.getCount() + 1) / 2;
+                                    int l2 = dragType == 0 ? slotStack.getCount() : (slotStack.getCount() + 1) / 2;
                                     inventoryplayer.setItemStack(slot6.decrStackSize(l2));
 
-                                    if (itemstack8.isEmpty()) {
+                                    if (slotStack.isEmpty()) {
                                         slot6.putStack(ItemStack.EMPTY);
                                     }
 
                                     slot6.onTake(player, inventoryplayer.getItemStack());
                                 }
-                            } else if (slot6.isItemValid(itemstack11)) {
-                                if (itemstack8.getItem() == itemstack11.getItem() && itemstack8.getMetadata() == itemstack11.getMetadata() && ItemStack.areItemStackTagsEqual(itemstack8, itemstack11)) {
-                                    int k2 = dragType == 0 ? itemstack11.getCount() : 1;
+                            } else if (slot6.isItemValid(holdStack)) {
+                                if (UtilItemStack.areTypeEqual(slotStack, holdStack)) {
+                                    // holdStackとslotStackが同じときに、holdReduce個をslotStackに転送
+                                    int holdReduce = dragType == 0 ? holdStack.getCount() : 1;
 
-                                    if (k2 > slot6.getItemStackLimit(itemstack11) - itemstack8.getCount()) {
-                                        k2 = slot6.getItemStackLimit(itemstack11) - itemstack8.getCount();
+                                    holdReduce = Math.min(holdReduce, this.getUpperLimit(slot6, holdStack) - slotStack.getCount());
+
+                                    if (slot6 instanceof SlotStorageContainer) {
+                                        slot6.putStack(holdStack.splitStack(holdReduce));
+                                    } else {
+                                        holdStack.shrink(holdReduce);
+                                        slotStack.grow(holdReduce);
                                     }
-
-                                    if (k2 > itemstack11.getMaxStackSize() - itemstack8.getCount()) {
-                                        k2 = itemstack11.getMaxStackSize() - itemstack8.getCount();
-                                    }
-
-                                    itemstack11.shrink(k2);
-                                    itemstack8.grow(k2);
-                                } else if (itemstack11.getCount() <= slot6.getItemStackLimit(itemstack11)) {
-                                    slot6.putStack(itemstack11);
-                                    inventoryplayer.setItemStack(itemstack8);
+                                } else if (holdStack.getCount() <= slot6.getItemStackLimit(holdStack)) {
+                                    slot6.putStack(holdStack);
+                                    inventoryplayer.setItemStack(slotStack);
                                 }
-                            } else if (itemstack8.getItem() == itemstack11.getItem() && itemstack11.getMaxStackSize() > 1 && (!itemstack8.getHasSubtypes() || itemstack8.getMetadata() == itemstack11.getMetadata()) && ItemStack.areItemStackTagsEqual(itemstack8, itemstack11) && !itemstack8.isEmpty()) {
-                                int j2 = itemstack8.getCount();
+                            } else if (UtilItemStack.areTypeEqual(slotStack, holdStack) && holdStack.getMaxStackSize() > 1 && !slotStack.isEmpty()) {
+                                int j2 = slotStack.getCount();
 
-                                if (j2 + itemstack11.getCount() <= itemstack11.getMaxStackSize()) {
-                                    itemstack11.grow(j2);
-                                    itemstack8 = slot6.decrStackSize(j2);
+                                if (j2 + holdStack.getCount() <= holdStack.getMaxStackSize()) {
+                                    holdStack.grow(j2);
+                                    slotStack = slot6.decrStackSize(j2);
 
-                                    if (itemstack8.isEmpty()) {
+                                    if (slotStack.isEmpty()) {
                                         slot6.putStack(ItemStack.EMPTY);
                                     }
 
@@ -449,12 +471,11 @@ public abstract class ContainerTemp extends Container {
                     if (itemstack6.isEmpty()) {
                         if (slot4.canTakeStack(player)) {
                             inventoryplayer.setInventorySlotContents(dragType, itemstack10);
-                            try {
+                            try { // slot4.onSwapCraft(itemstack10.getCount());
                                 ObfuscationReflectionHelper.findMethod(Container.class, "func_190900_b", void.class, int.class).invoke(slot4, itemstack10.getCount());
                             } catch (InvocationTargetException e) {
                                 ClayiumCore.logger.warn(e);
                             }
-//                            slot4.onSwapCraft(itemstack10.getCount());
                             slot4.putStack(ItemStack.EMPTY);
                             slot4.onTake(player, itemstack10);
                         }
@@ -542,14 +563,18 @@ public abstract class ContainerTemp extends Container {
         return itemstack;
     }
 
+    protected int getUpperLimit(Slot slot, ItemStack holdStack) {
+        return Math.min(holdStack.getMaxStackSize(), slot.getItemStackLimit(holdStack));
+    }
+
     // Returns true when did put even if didn't complete
     protected boolean tryMergeStack(ItemStack stack, int index) {
         Slot slot = this.inventorySlots.get(index);
         ItemStack stack1 = slot.getStack();
 
         int maxSize = slot.getSlotStackLimit();
-        if (this.tileEntity instanceof IInventoryFlexibleStackLimit) {
-            maxSize = ((IInventoryFlexibleStackLimit) this.tileEntity).getInventoryStackLimit(index);
+        if (this.tileEntity instanceof FlexibleStackLimit) {
+            maxSize = ((FlexibleStackLimit) this.tileEntity).getInventoryStackLimit(index, stack);
         }
         maxSize = Math.min(maxSize, stack.getMaxStackSize());
 

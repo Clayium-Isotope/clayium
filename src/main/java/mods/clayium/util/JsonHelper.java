@@ -24,7 +24,7 @@ public class JsonHelper {
         root.addProperty("parent", "clayium:block/machine_temp");
 
         JsonObject textures = new JsonObject();
-        textures.addProperty("hull", "clayium:blocks/machinehull-" + (tier.ordinal() - 1));
+        textures.addProperty("hull", "clayium:blocks/machinehull-" + (tier.meta() - 1));
         textures.addProperty("face", "clayium:blocks/machine/" + kind.facePath);
 
         root.add("textures", textures);
@@ -47,7 +47,7 @@ public class JsonHelper {
         root.addProperty("parent", "clayium:block/" + parent);
 
         JsonObject textures = new JsonObject();
-        textures.addProperty("hull", "clayium:blocks/machinehull-" + (tier.ordinal() - 1));
+        textures.addProperty("hull", "clayium:blocks/machinehull-" + (tier.meta() - 1));
 
         root.add("textures", textures);
 
