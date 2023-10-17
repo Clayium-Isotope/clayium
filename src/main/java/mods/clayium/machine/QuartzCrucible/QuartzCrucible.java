@@ -44,14 +44,14 @@ public class QuartzCrucible extends ClayContainer {
             TileEntityQuartzCrucible tile = (TileEntityQuartzCrucible) worldIn.getTileEntity(pos);
             assert tile != null;
             if (entity.posY - (double) pos.getY() < 0.20000000298023224D) {
-                if (UtilItemStack.areTypeEqual(itemStack, ingot) && tile.putIngot()) {
+                if (UtilItemStack.areItemDamageTagEqual(itemStack, ingot) && tile.putIngot()) {
                     itemStack.shrink(1);
                     if (itemStack.getCount() <= 0) {
                         entity.setDead();
                     }
                 }
 
-                if (UtilItemStack.areTypeEqual(itemStack, string) && tile.consumeString()) {
+                if (UtilItemStack.areItemDamageTagEqual(itemStack, string) && tile.consumeString()) {
                     itemStack.shrink(1);
                     if (itemStack.getCount() <= 0) {
                         entity.setDead();

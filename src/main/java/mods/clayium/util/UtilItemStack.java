@@ -12,18 +12,37 @@ import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UtilItemStack {
+    @Deprecated // Use ItemStack.areItemsEqual
+    public static boolean areItemEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        return ItemStack.areItemsEqual(itemstack1, itemstack2);
+    }
+
+    public static boolean areDamageEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        if (itemstack1.isEmpty() || itemstack2.isEmpty()) return false;
+        return itemstack1.getMetadata() == itemstack2.getMetadata();
+    }
+
+    public static boolean areSizeEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        if (itemstack1.isEmpty() || itemstack2.isEmpty()) return false;
+        return itemstack1.getCount() == itemstack2.getCount();
+    }
+
+    @Deprecated
+    public static boolean areTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        return ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
+    }
+
     /**
      * Returns true if the same item, damage btw the ones.
      * In other words, compare them without NBT and size
      *
-     * If one/both of args be EMPTY, returns false owing to ItemStack.areItemsEqual
+     * If one/both of args be EMPTY, return false by ItemStack.areItemsEqual
      */
     public static boolean areItemDamageEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemsEqual(itemstack1, itemstack2) && areDamageEqual(itemstack1, itemstack2);
@@ -36,11 +55,9 @@ public class UtilItemStack {
     /**
      * Returns true if the same item, damage and NBT btw the ones.
      * In other words, compare them without size
-     *
-     * TODO: rename to areItemDamageTagEqual
      */
-    public static boolean areTypeEqual(@Nullable ItemStack itemstack1, @Nullable ItemStack itemstack2) {
-        if (itemstack1 == null || itemstack2 == null) return false;
+    public static boolean areItemDamageTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
+        if (itemstack1.isEmpty() || itemstack2.isEmpty()) return false;
         return areItemDamageEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
@@ -48,46 +65,14 @@ public class UtilItemStack {
      * Returns true if the same item, damage, NBT and size btw the ones.
      */
     public static boolean areStackEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        return areTypeEqual(itemstack1, itemstack2) && areSizeEqual(itemstack1, itemstack2);
-    }
-
-    @Deprecated // Use ItemStack.areItemsEqual
-    public static boolean areItemEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        if (itemstack1 != ItemStack.EMPTY && itemstack2 != ItemStack.EMPTY) {
-            return itemstack1.isItemEqual(itemstack2);
-        }
-
-        return itemstack1 == ItemStack.EMPTY && itemstack2 == ItemStack.EMPTY;
-    }
-
-    public static boolean areDamageEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        if (itemstack1 != ItemStack.EMPTY && itemstack2 != ItemStack.EMPTY) {
-            return itemstack1.getMetadata() == itemstack2.getMetadata();
-        } else {
-            return itemstack1 == ItemStack.EMPTY && itemstack2 == ItemStack.EMPTY;
-        }
-    }
-
-    public static boolean areSizeEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        if (itemstack1 != ItemStack.EMPTY && itemstack2 != ItemStack.EMPTY) {
-            return itemstack1.getCount() == itemstack2.getCount();
-        } else {
-            return itemstack1 == ItemStack.EMPTY && itemstack2 == ItemStack.EMPTY;
-        }
-    }
-
-    @Deprecated // Use ItemStack.areItemStackTagsEqual
-    public static boolean areTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        return ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
+        return areItemDamageTagEqual(itemstack1, itemstack2) && areSizeEqual(itemstack1, itemstack2);
     }
 
     /**
      * @return true when stacks' contain item and tag are equal.
      * Several params are ignored: damage and size.
-     *
-     * TODO: rename to areItemTagEqual
      */
-    public static boolean areKindEqual(ItemStack itemstack1, ItemStack itemstack2) {
+    public static boolean areItemTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemsEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
@@ -135,15 +120,6 @@ public class UtilItemStack {
         return res;
     }
 
-    /*
-     * public static GameRegistry.UniqueIdentifier findUniqueIdentifierFor(Item item) {
-     *     if (item == null) return null;
-     *     if (item instanceof ItemBlock)
-     *         return GameRegistry.findUniqueIdentifierFor(((ItemBlock) item).field_150939_a);
-     *     return GameRegistry.findUniqueIdentifierFor(item);
-     * }
-     */
-
     public static int getItemStackHashCode(ItemStack item) {
         if (item.isEmpty()) return 0;
 
@@ -160,7 +136,7 @@ public class UtilItemStack {
 
         int result = 1;
         for (ItemStack item : items) {
-            result = 31 * result + (!item.isEmpty() ? getItemStackHashCode(item) : item.hashCode());
+            result = 31 * result + (item.isEmpty() ? ItemStack.EMPTY.hashCode() : getItemStackHashCode(item));
         }
 
         return result;
@@ -181,7 +157,7 @@ public class UtilItemStack {
 
     public static List<ItemStack> object2ItemStacks(Object object) {
         if (object instanceof ItemStack) {
-            return Arrays.asList((ItemStack) object);
+            return Collections.singletonList((ItemStack) object);
         }
         if (object instanceof List) {
             return ((List<?>) object).stream()
@@ -205,7 +181,7 @@ public class UtilItemStack {
         if (object instanceof String) {
             return object2ItemStacks(new OreDictionaryStack((String) object, 1));
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     public static List<ItemStack> getItemsFromTag(ItemStack item) {

@@ -67,7 +67,7 @@ public class GadgetHolder extends ItemTiered {
         for (Map.Entry<String, ItemStack> entry : newMap.entrySet()) {
             if (removes.contains(entry.getKey())) {
                 removes.remove(entry.getKey());
-                if (!UtilItemStack.areTypeEqual(latestMap.get(entry.getKey()), newMap.get(entry.getKey()))) {
+                if (!UtilItemStack.areItemDamageTagEqual(latestMap.get(entry.getKey()), newMap.get(entry.getKey()))) {
                     reforms.add(entry.getKey());
                 }
             } else {

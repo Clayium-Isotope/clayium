@@ -383,7 +383,7 @@ public abstract class ContainerTemp extends Container {
                         return ItemStack.EMPTY;
                     }
 
-                    for (ItemStack itemstack7 = this.transferStackInSlot(player, slotId); !itemstack7.isEmpty() && UtilItemStack.areTypeEqual(slot5.getStack(), itemstack7); itemstack7 = this.transferStackInSlot(player, slotId)) {
+                    for (ItemStack itemstack7 = this.transferStackInSlot(player, slotId); !itemstack7.isEmpty() && UtilItemStack.areItemDamageTagEqual(slot5.getStack(), itemstack7); itemstack7 = this.transferStackInSlot(player, slotId)) {
                         itemstack = itemstack7.copy();
                     }
                 } else {
@@ -427,7 +427,7 @@ public abstract class ContainerTemp extends Container {
                                     slot6.onTake(player, inventoryplayer.getItemStack());
                                 }
                             } else if (slot6.isItemValid(holdStack)) {
-                                if (UtilItemStack.areTypeEqual(slotStack, holdStack)) {
+                                if (UtilItemStack.areItemDamageTagEqual(slotStack, holdStack)) {
                                     // holdStackとslotStackが同じときに、holdReduce個をslotStackに転送
                                     int holdReduce = dragType == 0 ? holdStack.getCount() : 1;
 
@@ -443,7 +443,7 @@ public abstract class ContainerTemp extends Container {
                                     slot6.putStack(holdStack);
                                     inventoryplayer.setItemStack(slotStack);
                                 }
-                            } else if (UtilItemStack.areTypeEqual(slotStack, holdStack) && holdStack.getMaxStackSize() > 1 && !slotStack.isEmpty()) {
+                            } else if (UtilItemStack.areItemDamageTagEqual(slotStack, holdStack) && holdStack.getMaxStackSize() > 1 && !slotStack.isEmpty()) {
                                 int j2 = slotStack.getCount();
 
                                 if (j2 + holdStack.getCount() <= holdStack.getMaxStackSize()) {
@@ -587,7 +587,7 @@ public abstract class ContainerTemp extends Container {
             return true;
         }
 
-        if (stack1.isStackable() && UtilItemStack.areTypeEqual(stack, stack1)) {
+        if (stack1.isStackable() && UtilItemStack.areItemDamageTagEqual(stack, stack1)) {
             int newAmount = stack.getCount() + stack1.getCount();
 
             if (newAmount > maxSize) {

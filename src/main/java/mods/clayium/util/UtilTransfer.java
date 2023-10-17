@@ -1,6 +1,7 @@
 package mods.clayium.util;
 
-import mods.clayium.block.tile.IInventoryFlexibleStackLimit;
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.crafting.AmountedIngredient;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -12,10 +13,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -27,83 +35,17 @@ public class UtilTransfer {
      * Transfer item(s) from a tile to another tile.
      *
      * @param from wants to carry out
-     * @param facing FROM is looking at TO
      * @param to wants to carry in
      * @param maxTransfer the operation stops when transferred-items' count became greater than this.
      */
-    public static int transfer(IInventory from, int[] outSlots, EnumFacing facing, IInventory to, int[] inSlots, int maxTransfer) {
-        ISidedInventory sidedFrom = from instanceof ISidedInventory ? (ISidedInventory) from : null;
-        ISidedInventory sidedTo = to instanceof ISidedInventory ? (ISidedInventory) to : null;
+    public static int transfer(final IItemHandler from, final IItemHandler to, final int maxTransfer) {
         int transferred = maxTransfer;
-        // reassigned many times
-        ItemStack luggage;
-        ItemStack receiver;
 
-        for (int outSlot : outSlots) {
-            luggage = from.getStackInSlot(outSlot);
-
-            if (luggage.isEmpty()) continue;
-            if (sidedFrom != null && !sidedFrom.canExtractItem(outSlot, luggage, facing)) continue;
-
-            // some items exist on the slot wanna put
-            if (luggage.isStackable()) {
-                for (int inSlot : inSlots) {
-                    receiver = to.getStackInSlot(inSlot);
-
-                    if (receiver.isEmpty()) continue;
-                    if (sidedTo != null && !sidedTo.canInsertItem(inSlot, luggage, facing.getOpposite())) continue;
-                    if (!ItemStack.areItemsEqual(luggage, receiver)) continue;
-
-                    int stackLimit = to instanceof IInventoryFlexibleStackLimit ? ((IInventoryFlexibleStackLimit) to).getInventoryStackLimit(inSlot) : to.getInventoryStackLimit();
-                    int maxSize = Math.min(receiver.getMaxStackSize(), stackLimit);
-                    int moves = Math.max(Math.min(maxSize - receiver.getCount(), Math.min(transferred, luggage.getCount())), 0);
-
-                    receiver.grow(moves);
-                    transferred -= moves;
-                    luggage.shrink(moves);
-
-                    if (luggage.isEmpty()) from.setInventorySlotContents(outSlot, ItemStack.EMPTY);
-                    if (transferred <= 0) {
-                        to.markDirty();
-                        from.markDirty();
-                        return 0;
-                    }
-                    if (luggage.isEmpty()) break;
-                }
-            }
-
-            // case: the slot wanna put is empty
-            if (!luggage.isEmpty()) {
-                for (int inSlot : inSlots) {
-                    receiver = to.getStackInSlot(inSlot);
-
-                    if (!receiver.isEmpty() || !to.isItemValidForSlot(inSlot, luggage)) continue;
-                    if (to instanceof ISidedInventory && !((ISidedInventory) to).canInsertItem(inSlot, luggage, facing.getOpposite())) continue;
-
-                    receiver = luggage.copy();
-
-                    int stackLimit = to instanceof IInventoryFlexibleStackLimit ? ((IInventoryFlexibleStackLimit) to).getInventoryStackLimit(inSlot) : to.getInventoryStackLimit();
-                    int stackSize = Math.min(Math.min(transferred, luggage.getCount()), stackLimit);
-                    receiver.setCount(stackSize);
-                    to.setInventorySlotContents(inSlot, receiver);
-                    transferred -= stackSize;
-                    luggage.shrink(stackSize);
-
-                    if (luggage.isEmpty()) from.setInventorySlotContents(outSlot, ItemStack.EMPTY);
-                    if (transferred <= 0) {
-                        to.markDirty();
-                        from.markDirty();
-                        return 0;
-                    }
-                    if (luggage.isEmpty()) break;
-                }
-            }
-        }
-
-        if (transferred != maxTransfer)
-        {
-            to.markDirty();
-            from.markDirty();
+        final int fromSize = from.getSlots();
+        for (int outIndex = 0; outIndex < fromSize && 0 < transferred; outIndex++) {
+            final ItemStack luggage = from.extractItem(outIndex, transferred, false);
+            final ItemStack rest = ItemHandlerHelper.insertItemStacked(to, luggage, false);
+            transferred = transferred - luggage.getCount() + rest.getCount();
         }
 
         return transferred;
@@ -113,7 +55,7 @@ public class UtilTransfer {
         TileEntity to = from.getWorld().getTileEntity(from.getPos().offset(direction));
         if (!(from instanceof IInventory) || !(to instanceof IInventory)) return maxTransfer;
 
-        return transfer((IInventory) from, fromSlots, direction, (IInventory) to, getSlots(to, direction.getOpposite()), maxTransfer);
+        return transfer(UtilTransfer.getItemHandler(from, direction, fromSlots), UtilTransfer.getItemHandler(to, direction.getOpposite(), null), maxTransfer);
     }
 
     public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer) {
@@ -124,7 +66,7 @@ public class UtilTransfer {
         TileEntity from = to.getWorld().getTileEntity(to.getPos().offset(direction));
         if (!(to instanceof IInventory) || !(from instanceof IInventory)) return maxTransfer;
 
-        return transfer((IInventory) from, getSlots(from, direction.getOpposite()), direction.getOpposite(), (IInventory) to, toSlots, maxTransfer);
+        return transfer(UtilTransfer.getItemHandler(from, direction, null), UtilTransfer.getItemHandler(to, direction.getOpposite(), toSlots), maxTransfer);
     }
 
     public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer) {
@@ -153,7 +95,7 @@ public class UtilTransfer {
         ItemStack res = itemstack.copy();
         if (inventory.get(index).isEmpty()) {
             inventory.set(index, res.splitStack(Math.min(res.getCount(), inventoryStackLimit)));
-        } else if (UtilItemStack.areTypeEqual(inventory.get(index), res)) {
+        } else if (UtilItemStack.areItemDamageTagEqual(inventory.get(index), res)) {
             int a = Math.min(res.getCount(), inventory.get(index).getMaxStackSize() - inventory.get(index).getCount());
             inventory.get(index).grow(a);
             res.shrink(a);
@@ -208,7 +150,7 @@ public class UtilTransfer {
             return inventoryStackLimit;
         }
 
-        return UtilItemStack.areTypeEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
+        return UtilItemStack.areItemDamageTagEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
     }
 
     /**
@@ -253,7 +195,7 @@ public class UtilTransfer {
         int res = 0;
 
         for (int k = start; k < end; ++k) {
-            if (!inventory.get(k).isEmpty() && UtilItemStack.areTypeEqual(inventory.get(k), itemstack)) {
+            if (!inventory.get(k).isEmpty() && UtilItemStack.areItemDamageTagEqual(inventory.get(k), itemstack)) {
                 res += inventory.get(k).getCount();
             }
         }
@@ -278,7 +220,7 @@ public class UtilTransfer {
     public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int index) {
         ItemStack res = itemstack.copy();
 
-        if (!inventory.get(index).isEmpty() && UtilItemStack.areTypeEqual(inventory.get(index), res)) {
+        if (!inventory.get(index).isEmpty() && UtilItemStack.areItemDamageTagEqual(inventory.get(index), res)) {
             int n = Math.min(res.getCount(), inventory.get(index).getCount());
             res.shrink(n);
             inventory.get(index).shrink(n);
@@ -468,5 +410,105 @@ public class UtilTransfer {
         boolean selectInventoryToExtractFrom(TileEntity var1, EnumFacing var2);
 
         int[] getSlotToExtractFrom(EnumFacing var1);
+    }
+
+    /**
+     * @param ioSlots when null, filled by using {@link UtilTransfer#getSlots}
+     */
+    public static IItemHandler getItemHandler(final TileEntity te, final EnumFacing facing, @Nullable int[] ioSlots) {
+        if (Objects.isNull(ioSlots)) ioSlots = UtilTransfer.getSlots(te, facing);
+
+        if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
+            return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
+        }
+
+        if (te instanceof IClayInventory) {
+            return new TransferAspect((IClayInventory) te, ioSlots, facing);
+        } else if (te instanceof IInventory) {
+            return new TransferAspect((IInventory) te, ioSlots, facing);
+        }
+
+        throw new IllegalArgumentException("The tile entity doesn't implement IInventory");
+    }
+
+    static class TransferAspect extends ItemStackHandler {
+        protected final IInventory inv;
+        protected final int[] ioSlots;
+        protected final EnumFacing facing;
+        protected final boolean isFlexibleStackLimit;
+        protected final boolean isSidedInventory;
+
+        TransferAspect(IClayInventory inv, int[] ioSlots, EnumFacing facing) {
+            super(inv.getContainerItemStacks());
+            this.inv = inv;
+            this.ioSlots = ioSlots;
+            this.facing = facing;
+            this.isFlexibleStackLimit = this.inv instanceof FlexibleStackLimit;
+            this.isSidedInventory = true;
+        }
+
+        TransferAspect(IInventory inv, int[] ioSlots, EnumFacing facing) {
+            super(inv.getSizeInventory());
+            this.inv = inv;
+            this.ioSlots = ioSlots;
+            this.facing = facing;
+            this.isFlexibleStackLimit = this.inv instanceof FlexibleStackLimit;
+            this.isSidedInventory = this.inv instanceof ISidedInventory;
+
+            for (int slot : ioSlots) {
+                this.setStackInSlot(slot, inv.getStackInSlot(slot));
+            }
+        }
+
+        @Override
+        public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+            super.setStackInSlot(this.toAbsoluteSlot(slot), stack);
+        }
+
+        @Override
+        public int getSlots() {
+            return this.ioSlots.length;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return super.getStackInSlot(this.toAbsoluteSlot(slot));
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (this.isSidedInventory
+                    && !((ISidedInventory) this.inv).canInsertItem(this.toAbsoluteSlot(slot), stack, this.facing))
+                return stack;
+            return super.insertItem(this.toAbsoluteSlot(slot), stack, simulate);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (this.isSidedInventory
+                    && !((ISidedInventory) this.inv).canExtractItem(this.toAbsoluteSlot(slot), this.getStackInSlot(slot), this.facing))
+                return ItemStack.EMPTY;
+            return super.extractItem(this.toAbsoluteSlot(slot), amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return this.inv.getInventoryStackLimit();
+        }
+
+        @Override
+        protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+            if (this.isFlexibleStackLimit) {
+                return ((FlexibleStackLimit) this.inv).getInventoryStackLimit(slot, stack);
+            }
+            return super.getStackLimit(slot, stack);
+        }
+
+        protected int toAbsoluteSlot(int slot) {
+            return this.ioSlots[slot];
+        }
     }
 }

@@ -101,12 +101,12 @@ public class TileEntityClayCentrifuge extends TileEntityClayContainer implements
     public void readMoreFromNBT(NBTTagCompound tagCompound) {
         super.readMoreFromNBT(tagCompound);
 
-        this.kitchen.readFromNBT(tagCompound);
+        this.kitchen.deserializeNBT(tagCompound);
     }
 
     @Override
     public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
-        this.kitchen.writeToNBT(tagCompound);
+        tagCompound.setTag("kitchen", this.kitchen.serializeNBT());
 
         return super.writeMoreToNBT(tagCompound);
     }

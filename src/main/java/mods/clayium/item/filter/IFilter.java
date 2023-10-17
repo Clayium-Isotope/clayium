@@ -40,7 +40,7 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
             return itemstack.isEmpty();
         }
         if (!fuzzy) {
-            return !itemstack.isEmpty() && UtilItemStack.areTypeEqual(filter, itemstack);
+            return !itemstack.isEmpty() && UtilItemStack.areItemDamageTagEqual(filter, itemstack);
         }
 
         if (itemstack.isEmpty()) {
@@ -59,6 +59,6 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
             return stack -> IFilter.match(filter, stack);
         }
 
-        return stack -> UtilItemStack.areTypeEqual(filter, stack);
+        return stack -> UtilItemStack.areItemDamageTagEqual(filter, stack);
     }
 }

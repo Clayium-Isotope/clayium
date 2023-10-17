@@ -140,7 +140,7 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
             return false;
         }
 
-        if (!UtilItemStack.areTypeEqual(recipe.material, this.getStackInSlot(ClayWorkTableSlots.MATERIAL))
+        if (!UtilItemStack.areItemDamageTagEqual(recipe.material, this.getStackInSlot(ClayWorkTableSlots.MATERIAL))
                 || recipe.material.getCount() > this.getStackInSlot(ClayWorkTableSlots.MATERIAL).getCount()) {
             return false;
         }

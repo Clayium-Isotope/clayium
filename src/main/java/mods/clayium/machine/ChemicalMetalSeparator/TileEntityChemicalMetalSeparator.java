@@ -51,7 +51,7 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine i
 
     // TODO quit hard coding
     public boolean canCraft(ItemStack material) {
-        return !material.isEmpty() && UtilItemStack.areTypeEqual(material, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust));
+        return !material.isEmpty() && UtilItemStack.areItemDamageTagEqual(material, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust));
     }
 
     @Override

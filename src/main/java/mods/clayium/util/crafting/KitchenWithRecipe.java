@@ -80,16 +80,18 @@ public abstract class KitchenWithRecipe<RecipeType extends IRecipeElement> exten
     protected void produceResult() {}
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
+    public void deserializeNBT(NBTTagCompound compound) {
+        super.deserializeNBT(compound);
 
         this.currentRecipe = this.recipes.getRecipe(compound.getInteger("RecipeHash"), this.flat);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound serializeNBT() {
+        NBTTagCompound compound = super.serializeNBT();
+
         compound.setInteger("RecipeHash", this.currentRecipe.hashCode());
 
-        return super.writeToNBT(compound);
+        return compound;
     }
 }

@@ -41,7 +41,7 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
     }
 
     public boolean isValidItemstack(final ItemStack stack) {
-        return this.isEmpty() || UtilItemStack.areTypeEqual(this.getPrototype(), stack);
+        return this.isEmpty() || UtilItemStack.areItemDamageTagEqual(this.getPrototype(), stack);
     }
 
     public boolean putItemStack(int index, ItemStack stack) {

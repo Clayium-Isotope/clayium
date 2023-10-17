@@ -23,7 +23,7 @@ public interface IGadget extends Comparator<ItemStack> {
     int getMeta();
     @Override
     default int compare(ItemStack o1, ItemStack o2) {
-        if (!UtilItemStack.areTypeEqual(o1, o2)) return 0;
+        if (!UtilItemStack.areItemDamageTagEqual(o1, o2)) return 0;
         if (!(o1.getItem() instanceof IGadget) || !(o2.getItem() instanceof IGadget)) return 0;
 
         return Integer.compare(((IGadget) o1.getItem()).getMeta(), ((IGadget) o2.getItem()).getMeta());

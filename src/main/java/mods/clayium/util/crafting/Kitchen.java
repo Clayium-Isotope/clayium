@@ -2,15 +2,15 @@ package mods.clayium.util.crafting;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.SaveAcrossNBT;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
 
 /**
  * 機械のレシピ処理を担うクラス
  */
-public abstract class Kitchen implements SaveAcrossNBT {
+public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
     protected long debtEnergy = 0L;
     protected long craftTime = 0L;
     protected long timeToCraft = 0L;
@@ -85,7 +85,7 @@ public abstract class Kitchen implements SaveAcrossNBT {
     abstract protected boolean setNewRecipe();
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void deserializeNBT(NBTTagCompound compound) {
         this.craftTime = compound.getLong("CraftTime");
         this.timeToCraft = compound.getLong("TimeToCraft");
         this.debtEnergy = compound.getLong("ConsumingEnergy");
@@ -96,7 +96,9 @@ public abstract class Kitchen implements SaveAcrossNBT {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound serializeNBT() {
+        NBTTagCompound compound = new NBTTagCompound();
+
         compound.setLong("CraftTime", this.craftTime);
         compound.setLong("TimeToCraft", this.timeToCraft);
         compound.setLong("ConsumingEnergy", this.debtEnergy);
