@@ -19,7 +19,7 @@ public abstract class ContainerInItemStack extends ContainerTemp {
     protected final boolean onHotbar;
 
     public ContainerInItemStack(EntityPlayer player, int inventoryX, int inventoryY, Predicate<ItemStack> predicate) {
-        super(player.inventory, null);
+        super(player.inventory, ContainerInItemStack.getInv(player.inventory, inventoryX, inventoryY, predicate));
 
         this.inventoryX = inventoryX;
         this.inventoryY = inventoryY;
@@ -48,6 +48,21 @@ public abstract class ContainerInItemStack extends ContainerTemp {
         this.theStackPos = index;
 
         postConstruct();
+    }
+
+    protected static InventoryInItemStack getInv(InventoryPlayer player, int inventoryX, int inventoryY, Predicate<ItemStack> predicate) {
+        ItemStack activeStack = player.player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+
+        if (activeStack.isEmpty() || !predicate.test(activeStack)) {
+            activeStack = player.player.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+            if (activeStack.isEmpty() || !predicate.test(activeStack)) {
+                activeStack = ItemStack.EMPTY;
+            }
+        }
+
+        if (activeStack.isEmpty()) ClayiumCore.logger.warn("unknown item");
+
+        return new InventoryInItemStack(activeStack, inventoryX * inventoryY);
     }
 
     @Override

@@ -8,13 +8,21 @@ import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 @CustomHull(CustomHull.AZ91D)
-public class TileEntityStorageContainer extends TileEntityClayContainer implements FlexibleStackLimit {
-    protected StorageContainerSize maxStorageSize = StorageContainerSize.NORMAL;
+public class TileEntityStorageContainer extends TileEntityClayContainer implements FlexibleStackLimit, ICapabilityProvider {
     protected int currentStackSize = 0;
 
     @Override
@@ -26,7 +34,6 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
         this.containerItemStacks = NonNullList.withSize(1, ItemStack.EMPTY);
         this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
         this.autoExtractInterval = this.autoInsertInterval = 1;
-        this.maxStorageSize = StorageContainerSize.NORMAL;
         this.listSlotsImport.clear();
         this.listSlotsExport.clear();
 
@@ -63,7 +70,8 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
 
     @Override
     public int getInventoryStackLimit() {
-        return this.maxStorageSize.maxSize;
+        // TODO getValueはO(1)としても、getBlockStateのコストがわからないので、キャッシュしたよさげ？
+        return this.getWorld().getBlockState(this.getPos()).getValue(StorageContainerSize.STORAGE_SIZE).maxSize;
     }
 
     @Override
@@ -104,18 +112,16 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
 
     @Override
     public int getField(int id) {
-        switch (id) {
-            case 0: return this.maxStorageSize.ordinal();
-            case 1: return this.getCurrentStackSize();
+        if (id == 0) {
+            return this.getCurrentStackSize();
         }
         return 0;
     }
 
     @Override
     public void setField(int id, int value) {
-        switch (id) {
-            case 0: this.maxStorageSize = StorageContainerSize.getByID(value);
-            case 1: this.currentStackSize = value;
+        if (id == 0) {
+            this.currentStackSize = value;
         }
     }
 
@@ -128,7 +134,6 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
     public NBTTagCompound writeMoreToNBT(NBTTagCompound compound) {
         super.writeMoreToNBT(compound);
 
-        compound.setInteger("MaxStorageSizeMeta", this.maxStorageSize.ordinal());
         compound.setInteger("ItemStackSize", this.getCurrentStackSize());
 
         return compound;
@@ -138,7 +143,6 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
     public void readMoreFromNBT(NBTTagCompound compound) {
         super.readMoreFromNBT(compound);
 
-        this.maxStorageSize = StorageContainerSize.getByID(compound.getInteger("MaxStorageSizeMeta"));
         this.currentStackSize = compound.getInteger("ItemStackSize");
     }
 
@@ -153,7 +157,7 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
 
     @Override
     public int getInventoryStackLimit(int slot, ItemStack stack) {
-        if (this.isItemValidForSlot(slot, stack)) return this.maxStorageSize.maxSize;
+        if (this.isItemValidForSlot(slot, stack)) return this.getInventoryStackLimit();
         return 0;
     }
 
@@ -164,6 +168,77 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
 
     @Override
     public void addSpecialDrops(List<ItemStack> drops) {
-        drops.add(new ItemStack(Item.getItemFromBlock(ClayiumMachines.storageContainer), 1, 0, this.writeToNBT(new NBTTagCompound())));
+        if (this.isEmpty()) return;
+
+        NBTTagCompound stackTag = new NBTTagCompound();
+        NBTTagCompound tileTag = this.writeToNBT(new NBTTagCompound());
+        stackTag.setTag("TileEntityNBTTag", tileTag);
+
+        drops.add(new ItemStack(Item.getItemFromBlock(ClayiumMachines.storageContainer), 1, 1, stackTag));
+    }
+
+    @Override
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+    }
+
+    protected final IItemHandler handler = new StorageContainerItemHandler(this);
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    @Override
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return (T) this.handler;
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    protected static class StorageContainerItemHandler implements IItemHandler {
+        private final TileEntityStorageContainer inv;
+
+        StorageContainerItemHandler(TileEntityStorageContainer tesc) {
+            this.inv = tesc;
+        }
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.inv.getStackInSlot(slot);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            this.inv.putItemStack(slot, stack);
+            return stack;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return this.inv.decrStackSize(slot, amount);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return this.inv.getInventoryStackLimit();
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+            return this.inv.isItemValidForSlot(slot, stack);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIOIcons() {
+        this.registerInsertIcons("import");
+        this.registerExtractIcons("export");
     }
 }

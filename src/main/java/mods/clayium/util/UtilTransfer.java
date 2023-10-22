@@ -17,6 +17,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,6 +47,7 @@ public class UtilTransfer {
         for (int outIndex = 0; outIndex < fromSize && 0 < transferred; outIndex++) {
             final ItemStack luggage = from.extractItem(outIndex, transferred, false);
             final ItemStack rest = ItemHandlerHelper.insertItemStacked(to, luggage, false);
+            from.insertItem(outIndex, rest, false);
             transferred = transferred - luggage.getCount() + rest.getCount();
         }
 
@@ -415,83 +418,30 @@ public class UtilTransfer {
     /**
      * @param ioSlots when null, filled by using {@link UtilTransfer#getSlots}
      */
-    public static IItemHandler getItemHandler(final TileEntity te, final EnumFacing facing, @Nullable int[] ioSlots) {
-        if (Objects.isNull(ioSlots)) ioSlots = UtilTransfer.getSlots(te, facing);
-
+    public static IItemHandler getItemHandler(final TileEntity te, final EnumFacing facing, @Nullable final int[] ioSlots) {
         if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
             return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
         }
 
         if (te instanceof IClayInventory) {
-            return new TransferAspect((IClayInventory) te, ioSlots, facing);
+            return new OffsettedHandler(new ClayInvWrapper((IClayInventory) te), Objects.nonNull(ioSlots) ? ioSlots : UtilTransfer.getSlots(te, facing));
+        } else if (te instanceof ISidedInventory) {
+            return new SidedInvWrapper((ISidedInventory) te, facing);
         } else if (te instanceof IInventory) {
-            return new TransferAspect((IInventory) te, ioSlots, facing);
+            return new InvWrapper((IInventory) te);
         }
 
         throw new IllegalArgumentException("The tile entity doesn't implement IInventory");
     }
 
-    static class TransferAspect extends ItemStackHandler {
+    static class ClayInvWrapper extends ItemStackHandler {
         protected final IInventory inv;
-        protected final int[] ioSlots;
-        protected final EnumFacing facing;
         protected final boolean isFlexibleStackLimit;
-        protected final boolean isSidedInventory;
 
-        TransferAspect(IClayInventory inv, int[] ioSlots, EnumFacing facing) {
+        ClayInvWrapper(IClayInventory inv) {
             super(inv.getContainerItemStacks());
             this.inv = inv;
-            this.ioSlots = ioSlots;
-            this.facing = facing;
             this.isFlexibleStackLimit = this.inv instanceof FlexibleStackLimit;
-            this.isSidedInventory = true;
-        }
-
-        TransferAspect(IInventory inv, int[] ioSlots, EnumFacing facing) {
-            super(inv.getSizeInventory());
-            this.inv = inv;
-            this.ioSlots = ioSlots;
-            this.facing = facing;
-            this.isFlexibleStackLimit = this.inv instanceof FlexibleStackLimit;
-            this.isSidedInventory = this.inv instanceof ISidedInventory;
-
-            for (int slot : ioSlots) {
-                this.setStackInSlot(slot, inv.getStackInSlot(slot));
-            }
-        }
-
-        @Override
-        public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-            super.setStackInSlot(this.toAbsoluteSlot(slot), stack);
-        }
-
-        @Override
-        public int getSlots() {
-            return this.ioSlots.length;
-        }
-
-        @Nonnull
-        @Override
-        public ItemStack getStackInSlot(int slot) {
-            return super.getStackInSlot(this.toAbsoluteSlot(slot));
-        }
-
-        @Nonnull
-        @Override
-        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-            if (this.isSidedInventory
-                    && !((ISidedInventory) this.inv).canInsertItem(this.toAbsoluteSlot(slot), stack, this.facing))
-                return stack;
-            return super.insertItem(this.toAbsoluteSlot(slot), stack, simulate);
-        }
-
-        @Nonnull
-        @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (this.isSidedInventory
-                    && !((ISidedInventory) this.inv).canExtractItem(this.toAbsoluteSlot(slot), this.getStackInSlot(slot), this.facing))
-                return ItemStack.EMPTY;
-            return super.extractItem(this.toAbsoluteSlot(slot), amount, simulate);
         }
 
         @Override
@@ -505,6 +455,48 @@ public class UtilTransfer {
                 return ((FlexibleStackLimit) this.inv).getInventoryStackLimit(slot, stack);
             }
             return super.getStackLimit(slot, stack);
+        }
+    }
+
+    static class OffsettedHandler implements IItemHandler {
+        protected final IItemHandler handler;
+        protected final int[] ioSlots;
+
+        OffsettedHandler(InvWrapper handler) {
+            this(handler, IntStream.range(0, handler.getSlots()).toArray());
+        }
+
+        OffsettedHandler(IItemHandler handler, int[] ioSlots) {
+            this.handler = handler;
+            this.ioSlots = ioSlots;
+        }
+
+        @Override
+        public int getSlots() {
+            return this.ioSlots.length;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return this.handler.getStackInSlot(this.toAbsoluteSlot(slot));
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            return this.handler.insertItem(this.toAbsoluteSlot(slot), stack, simulate);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return this.handler.extractItem(this.toAbsoluteSlot(slot), amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return this.handler.getSlotLimit(this.toAbsoluteSlot(slot));
         }
 
         protected int toAbsoluteSlot(int slot) {

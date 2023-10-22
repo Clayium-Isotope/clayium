@@ -32,7 +32,7 @@ public class ContainerAutoClayCondenser extends ContainerTemp {
             }
         }
 
-        this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, TileEntityAutoClayCondenser.SAMPLE_SLOT, 108 + (this.machineGuiSizeX - 18 * inventoryX) / 2, 18, RectangleTexture.SmallSlotEClayTexture));
+        this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, TileEntityAutoClayCondenser.SAMPLE_SLOT, 108 + (this.machineGuiSizeX - 18 * inventoryX) / 2, 18, RectangleTexture.SmallSlotEClayTexture, true));
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

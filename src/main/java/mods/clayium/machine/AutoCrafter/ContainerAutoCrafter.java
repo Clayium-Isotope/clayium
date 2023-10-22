@@ -23,7 +23,7 @@ public class ContainerAutoCrafter extends ContainerTemp {
 
         for(j = 0; j < 3; ++j) {
             for(i = 0; i < 3; ++i) {
-                this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, i + j * 3 + 15, i * 18 + 5, j * 18 + 18, RectangleTexture.SmallSlotFilterTexture));
+                this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, i + j * 3 + 15, i * 18 + 5, j * 18 + 18, RectangleTexture.SmallSlotFilterTexture, true));
             }
         }
 

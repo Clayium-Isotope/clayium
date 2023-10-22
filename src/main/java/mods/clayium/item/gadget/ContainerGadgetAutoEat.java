@@ -16,7 +16,7 @@ public class ContainerGadgetAutoEat extends ContainerInItemStack {
 
     @Override
     protected Slot specialMachineSlot(IInventory inventoryIn, int indexIn, int xPos, int yPos) {
-        return new SlotMemory(inventoryIn, indexIn, xPos, yPos) {
+        return new SlotMemory(inventoryIn, indexIn, xPos, yPos, false) {
             @Override
             public boolean isItemValid(ItemStack itemstack) {
                 return itemstack.getItem() instanceof ItemFood || IFilter.isFilter(itemstack);

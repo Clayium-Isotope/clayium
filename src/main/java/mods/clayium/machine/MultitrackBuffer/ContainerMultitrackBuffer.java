@@ -39,7 +39,7 @@ public class ContainerMultitrackBuffer extends ContainerTemp {
 
         for(id = 0; id < tile.tracks.length; ++id) {
             if (id + 54 < tile.getSizeInventory()) {
-                this.addMachineSlotToContainer(new SlotMemory(tile, id + 54, x * 18 + 4 + offsetX, id * 18 + offsetY, RectangleTexture.SmallSlotMultitrackFilterTextures[id]));
+                this.addMachineSlotToContainer(new SlotMemory(tile, id + 54, x * 18 + 4 + offsetX, id * 18 + offsetY, RectangleTexture.SmallSlotMultitrackFilterTextures[id], true));
             }
         }
     }

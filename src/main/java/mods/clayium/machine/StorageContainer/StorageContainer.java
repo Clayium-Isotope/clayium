@@ -13,6 +13,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -64,12 +65,39 @@ public class StorageContainer extends ClayHorizontalNoRecipeMachine {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (worldIn.isRemote) return true;
+
         if (ClayiumItems.clayCore.equals(playerIn.getHeldItem(hand).getItem()) && state.getValue(StorageContainerSize.STORAGE_SIZE) == StorageContainerSize.NORMAL) {
             worldIn.setBlockState(pos, state.withProperty(StorageContainerSize.STORAGE_SIZE, StorageContainerSize.CLAY_CORE));
             playerIn.getHeldItem(hand).shrink(1);
+            return true;
         }
 
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    }
+
+    /**
+     * SPFFF<br>
+     * P: is_pipe, F: facing, S: storage_size
+     */
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        int meta = state.getValue(StorageContainerSize.STORAGE_SIZE).ordinal();
+        meta <<= 1;
+        meta |= super.getMetaFromState(state);
+        return meta;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        IBlockState state = super.getStateFromMeta(meta);
+        state.withProperty(StorageContainerSize.STORAGE_SIZE, StorageContainerSize.getByID(meta >> 4));
+        return state;
+    }
+
+    @Override
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        return super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
     }
 
     @Override

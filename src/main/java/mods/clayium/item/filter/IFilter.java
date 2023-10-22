@@ -1,10 +1,12 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.UsedFor;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -60,5 +62,25 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
         }
 
         return stack -> UtilItemStack.areItemDamageTagEqual(filter, stack);
+    }
+
+    static ItemStack getMockWhitelist(final ItemStack sample) {
+        if (sample.isEmpty()) return ItemStack.EMPTY;
+
+        NBTTagCompound tag = new NBTTagCompound();
+        NBTTagList items = new NBTTagList();
+
+        NBTTagCompound item = new NBTTagCompound();
+        item.setByte("Slot", (byte) 0);
+        sample.writeToNBT(item);
+
+        items.appendTag(item);
+        tag.setTag("Items", items);
+
+        tag.setBoolean("is_mock", true);
+
+        ItemStack stack = new ItemStack(ClayiumItems.filterWhitelist);
+        stack.setTagCompound(tag);
+        return stack;
     }
 }

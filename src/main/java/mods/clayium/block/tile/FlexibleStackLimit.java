@@ -9,4 +9,8 @@ import net.minecraft.item.ItemStack;
 @UsedFor(UsedFor.Type.TileEntity)
 public interface FlexibleStackLimit {
     int getInventoryStackLimit(int slot, ItemStack stack);
+
+    default int getInventoryStackLimit() {
+        return this.getInventoryStackLimit(0, ItemStack.EMPTY);
+    }
 }

@@ -5,9 +5,10 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
-public class NBTInventoryWrapper extends InventoryBasic {
+public class NBTInventoryWrapper extends InventoryBasic implements INBTSerializable<NBTTagCompound> {
     protected NBTTagCompound reference;
 
     protected NBTInventoryWrapper(NBTTagCompound tagCompound, String title, int sizeInventory) {
@@ -16,12 +17,15 @@ public class NBTInventoryWrapper extends InventoryBasic {
         this.reference = tagCompound;
     }
 
-    public void loadFromTag() {
+    @Override
+    public void deserializeNBT(NBTTagCompound nbt) {
+        this.reference = nbt;
         ItemStackHelper.loadAllItems(this.reference, this.getContains());
     }
 
-    public void writeToTag() {
-        ItemStackHelper.saveAllItems(this.reference, this.getContains());
+    @Override
+    public NBTTagCompound serializeNBT() {
+        return ItemStackHelper.saveAllItems(this.reference, this.getContains());
     }
 
     public NonNullList<ItemStack> getContains() {
@@ -29,11 +33,11 @@ public class NBTInventoryWrapper extends InventoryBasic {
     }
 
     public ItemStack getStackInSlot(int slot) {
-        this.loadFromTag();
+        this.deserializeNBT(this.reference);
         return super.getStackInSlot(slot);
     }
 
     public void markDirty() {
-        this.writeToTag();
+        this.reference = this.serializeNBT();
     }
 }

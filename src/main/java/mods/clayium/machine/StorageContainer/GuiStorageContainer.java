@@ -13,7 +13,7 @@ public class GuiStorageContainer extends GuiTemp {
 
         int size = ((TileEntityStorageContainer) this.tile).getCurrentStackSize();
         this.fontRenderer.drawString(size + " / " + this.tile.getInventoryStackLimit(),
-                this.container.machineGuiSizeX / 2 - 9 - Math.max(0, (int) Math.log10(size)), // sizX / 2 - 8 - (log10(size) + 1)
+                this.container.machineGuiSizeX / 2 - 9 - (int) Math.log10(size + 1), // sizX / 2 - 8 - (log10(size) + 1) and avoid log 0
                 this.container.machineGuiSizeY - 12, 4210752);
     }
 }

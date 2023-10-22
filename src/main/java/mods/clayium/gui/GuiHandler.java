@@ -38,6 +38,8 @@ import mods.clayium.machine.MultitrackBuffer.TileEntityMultitrackBuffer;
 import mods.clayium.machine.StorageContainer.ContainerStorageContainer;
 import mods.clayium.machine.StorageContainer.GuiStorageContainer;
 import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
+import mods.clayium.machine.VacuumContainer.ContainerVacuumContainer;
+import mods.clayium.machine.VacuumContainer.TileEntityVacuumContainer;
 import mods.clayium.machine.common.Machine2To1;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -98,6 +100,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerAutoCrafter(player.inventory, (TileEntityAutoCrafter) tile);
             case GuiIdStorageContainer:
                 return new ContainerStorageContainer(player.inventory, (TileEntityStorageContainer) tile);
+            case GuiIdVacuumContainer:
+                return new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile);
         }
 
         return null;
@@ -151,6 +155,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiTemp(new ContainerAutoCrafter(player.inventory, (TileEntityAutoCrafter) tile));
             case GuiIdStorageContainer:
                 return new GuiStorageContainer(new ContainerStorageContainer(player.inventory, (TileEntityStorageContainer) tile));
+            case GuiIdVacuumContainer:
+                return new GuiTemp(new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile));
         }
 
         return null;

@@ -55,11 +55,11 @@ public class SlotWithTexture extends Slot {
     }
 
     @Override
-    public ItemStack decrStackSize(int p_75209_1_) {
+    public ItemStack decrStackSize(int amount) {
         if (this.listener != null) {
             this.listener.onCraftMatrixChanged(this.inventory);
         }
 
-        return super.decrStackSize(p_75209_1_);
+        return super.decrStackSize(amount);
     }
 }

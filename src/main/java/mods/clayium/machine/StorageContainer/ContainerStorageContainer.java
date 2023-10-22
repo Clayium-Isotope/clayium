@@ -9,7 +9,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerStorageContainer extends ContainerTemp {
-    protected int maxStorageSize;
     protected int currentStackSize;
 
     public ContainerStorageContainer(InventoryPlayer player, TileEntityStorageContainer tile) {
@@ -19,7 +18,7 @@ public class ContainerStorageContainer extends ContainerTemp {
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
         TileEntityStorageContainer tile = (TileEntityStorageContainer)this.tileEntity;
-        this.addMachineSlotToContainer(new SlotStorageContainer(tile, 0, 44, 35, RectangleTexture.LargeSlotTexture));
+        this.addMachineSlotToContainer(new SlotStorageContainer(tile, 0, (this.machineGuiSizeX - 20) / 2, 18, RectangleTexture.LargeSlotTexture));
     }
 
     @Override
@@ -42,16 +41,11 @@ public class ContainerStorageContainer extends ContainerTemp {
         super.detectAndSendChanges();
 
         for (IContainerListener listener : this.listeners) {
-            if (this.maxStorageSize != this.tileEntity.getField(0)) {
-                listener.sendWindowProperty(this, 0, this.tileEntity.getField(0));
-            }
-
-            if (this.currentStackSize != this.tileEntity.getField(1)) {
-                listener.sendWindowProperty(this, 1, this.tileEntity.getField(1));
+            if (this.currentStackSize != this.tileEntity.getField(0)) {
+                listener.sendWindowProperty(this, 0, this.tileEntity.getField(1));
             }
         }
 
-        this.maxStorageSize = this.tileEntity.getField(0);
         this.currentStackSize = this.tileEntity.getField(1);
     }
 

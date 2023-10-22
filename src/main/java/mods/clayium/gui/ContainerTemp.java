@@ -1,18 +1,15 @@
 package mods.clayium.gui;
 
 import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +18,7 @@ import java.util.Set;
 
 public abstract class ContainerTemp extends Container {
     protected InventoryPlayer player;
-    protected TileEntityGeneric tileEntity;
+    protected IInventory tileEntity;
     public ArrayList<Slot> machineInventorySlots = new ArrayList<>();
     /**
      * これ以降は少なくとも player のスロット計36コがある必要がある
@@ -33,7 +30,7 @@ public abstract class ContainerTemp extends Container {
     public int playerSlotOffsetX;
     public int playerSlotOffsetY;
 
-    public ContainerTemp(InventoryPlayer player, TileEntityGeneric tileEntity) {
+    public ContainerTemp(InventoryPlayer player, IInventory tileEntity) {
         this.player = player;
         this.tileEntity = tileEntity;
 
@@ -420,7 +417,7 @@ public abstract class ContainerTemp extends Container {
                                     int l2 = dragType == 0 ? slotStack.getCount() : (slotStack.getCount() + 1) / 2;
                                     inventoryplayer.setItemStack(slot6.decrStackSize(l2));
 
-                                    if (slotStack.isEmpty()) {
+                                    if (slot6.getStack().isEmpty()) {
                                         slot6.putStack(ItemStack.EMPTY);
                                     }
 
@@ -443,7 +440,7 @@ public abstract class ContainerTemp extends Container {
                                     slot6.putStack(holdStack);
                                     inventoryplayer.setItemStack(slotStack);
                                 }
-                            } else if (UtilItemStack.areItemDamageTagEqual(slotStack, holdStack) && holdStack.getMaxStackSize() > 1 && !slotStack.isEmpty()) {
+                            } else if (ItemHandlerHelper.canItemStacksStackRelaxed(slotStack, holdStack)) {
                                 int j2 = slotStack.getCount();
 
                                 if (j2 + holdStack.getCount() <= holdStack.getMaxStackSize()) {

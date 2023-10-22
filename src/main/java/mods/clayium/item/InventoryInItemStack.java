@@ -18,7 +18,7 @@ public class InventoryInItemStack extends NBTInventoryWrapper {
     protected static NBTTagCompound getSufficientTagCompound(ItemStack from) {
         NBTTagCompound res;
 
-        if (from.getTagCompound() != null) {
+        if (from.hasTagCompound()) {
             res = from.getTagCompound();
         } else {
             res = new NBTTagCompound();
