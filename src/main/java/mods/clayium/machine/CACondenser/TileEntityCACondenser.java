@@ -1,7 +1,7 @@
 package mods.clayium.machine.CACondenser;
 
 import mods.clayium.block.ICAMachine;
-import mods.clayium.core.ClayiumCore;
+import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
@@ -21,7 +21,7 @@ import static mods.clayium.machine.crafting.ClayiumRecipes.e;
 
 public class TileEntityCACondenser extends TileEntityCAMachine implements Machine1To1 {
     protected static final RecipeElement RECIPE = new RecipeElement(new ItemStack(ClayiumItems.antimatterSeed), 9,
-            ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9), ClayiumCore.divideByProgressionRate(2000L));
+            ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9), ClayiumConfiguration.divideByProgressionRate(2000L));
 
     @Override
     public void initParams() {

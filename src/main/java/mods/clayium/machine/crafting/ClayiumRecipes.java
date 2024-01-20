@@ -2,7 +2,6 @@ package mods.clayium.machine.crafting;
 
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
@@ -254,79 +253,79 @@ public class ClayiumRecipes {
         }
 */
 
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), ClayiumCore.divideByProgressionRate(3));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumCore.divideByProgressionRate(2));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), i(ClayiumItems.rawSlicer), ClayiumCore.divideByProgressionRate(1));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.block), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumCore.divideByProgressionRate(1));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 4), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumCore.divideByProgressionRate(4));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade, 2), ClayiumCore.divideByProgressionRate(4));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), ClayiumConfiguration.divideByProgressionRate(3));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumConfiguration.divideByProgressionRate(2));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), i(ClayiumItems.rawSlicer), ClayiumConfiguration.divideByProgressionRate(1));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.block), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumConfiguration.divideByProgressionRate(1));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 4), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumConfiguration.divideByProgressionRate(4));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.blade, 2), ClayiumConfiguration.divideByProgressionRate(4));
 
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate), ClayiumCore.divideByProgressionRate(4));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 4), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumCore.divideByProgressionRate(8));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.blade, 2), ClayiumCore.divideByProgressionRate(8));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate), ClayiumConfiguration.divideByProgressionRate(4));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 4), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumConfiguration.divideByProgressionRate(8));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.blade, 2), ClayiumConfiguration.divideByProgressionRate(8));
 
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.block), 2, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate), 2L, ClayiumCore.divideByProgressionRate(4));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 4), 2, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.largePlate), 2L, ClayiumCore.divideByProgressionRate(8));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.block), 2, ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.plate), 4L, ClayiumCore.divideByProgressionRate(4));
-        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.plate, 4), 2, ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.largePlate), 4L, ClayiumCore.divideByProgressionRate(8));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.block), 2, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate), 2L, ClayiumConfiguration.divideByProgressionRate(4));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.plate, 4), 2, ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.largePlate), 2L, ClayiumConfiguration.divideByProgressionRate(8));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.block), 2, ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.plate), 4L, ClayiumConfiguration.divideByProgressionRate(4));
+        bendingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.plate, 4), 2, ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.largePlate), 4L, ClayiumConfiguration.divideByProgressionRate(8));
 
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ClayiumCore.divideByProgressionRate(1));
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 8), ClayiumCore.divideByProgressionRate(3));
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.pipe), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ClayiumCore.divideByProgressionRate(2));
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ClayiumCore.divideByProgressionRate(1));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ClayiumConfiguration.divideByProgressionRate(1));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 8), ClayiumConfiguration.divideByProgressionRate(3));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.pipe), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 4), ClayiumConfiguration.divideByProgressionRate(2));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ClayiumConfiguration.divideByProgressionRate(1));
 
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 8), ClayiumCore.divideByProgressionRate(6));
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 4), ClayiumCore.divideByProgressionRate(4));
-        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick), ClayiumCore.divideByProgressionRate(2));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 8), ClayiumConfiguration.divideByProgressionRate(6));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 4), ClayiumConfiguration.divideByProgressionRate(4));
+        wireDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick), ClayiumConfiguration.divideByProgressionRate(2));
 
-        pipeDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.pipe, 2), ClayiumCore.divideByProgressionRate(3));
-        pipeDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2), ClayiumCore.divideByProgressionRate(6));
+        pipeDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.pipe, 2), ClayiumConfiguration.divideByProgressionRate(3));
+        pipeDrawingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.pipe, 2), ClayiumConfiguration.divideByProgressionRate(6));
 
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumCore.divideByProgressionRate(2));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ClayiumCore.divideByProgressionRate(2));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc, 2), ClayiumCore.divideByProgressionRate(3));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 4), ClayiumCore.divideByProgressionRate(3));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick, 2), ClayiumCore.divideByProgressionRate(1));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumConfiguration.divideByProgressionRate(2));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 8), ClayiumConfiguration.divideByProgressionRate(2));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc, 2), ClayiumConfiguration.divideByProgressionRate(3));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc, 4), ClayiumConfiguration.divideByProgressionRate(3));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick, 2), ClayiumConfiguration.divideByProgressionRate(1));
 
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc, 8), ClayiumCore.divideByProgressionRate(4));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.disc, 2), ClayiumCore.divideByProgressionRate(6));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc, 4), ClayiumCore.divideByProgressionRate(6));
-        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.shortStick, 2), ClayiumCore.divideByProgressionRate(2));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc, 8), ClayiumConfiguration.divideByProgressionRate(4));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.disc, 2), ClayiumConfiguration.divideByProgressionRate(6));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc, 4), ClayiumConfiguration.divideByProgressionRate(6));
+        cuttingMachine.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.shortStick, 2), ClayiumConfiguration.divideByProgressionRate(2));
 
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick), ClayiumCore.divideByProgressionRate(1));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumCore.divideByProgressionRate(4));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ClayiumCore.divideByProgressionRate(3));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 6), ClayiumCore.divideByProgressionRate(3));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumCore.divideByProgressionRate(2));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumCore.divideByProgressionRate(1));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick), ClayiumConfiguration.divideByProgressionRate(1));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largeBall), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumConfiguration.divideByProgressionRate(4));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ClayiumConfiguration.divideByProgressionRate(3));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.needle), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 6), ClayiumConfiguration.divideByProgressionRate(3));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ring), ClayiumConfiguration.divideByProgressionRate(2));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.smallRing), ClayiumConfiguration.divideByProgressionRate(1));
 
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block, 2), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumCore.divideByProgressionRate(4));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.needle), ClayiumCore.divideByProgressionRate(6));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.needle), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 6), ClayiumCore.divideByProgressionRate(6));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.ring), ClayiumCore.divideByProgressionRate(4));
-        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallRing), ClayiumCore.divideByProgressionRate(2));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block, 2), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumConfiguration.divideByProgressionRate(4));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cylinder), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.needle), ClayiumConfiguration.divideByProgressionRate(6));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.needle), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 6), ClayiumConfiguration.divideByProgressionRate(6));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.disc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.ring), ClayiumConfiguration.divideByProgressionRate(4));
+        lathe.addRecipe(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallDisc), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.smallRing), ClayiumConfiguration.divideByProgressionRate(2));
 
 
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.stick, 5)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.shortStick, 9)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.gear)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 8)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.spindle)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.block, 8)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.grindingHead)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.grindingHead)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.plate, 8)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.cuttingHead)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.stick, 5)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.shortStick, 9)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear)), 10L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.gear)), 10L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.ball, 8)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle)), 100L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.spindle)), 100L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.block, 8)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead)), 100L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.grindingHead)), 100L, ClayiumConfiguration.divideByProgressionRate(20));
         assembler.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.largePlate), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.plate, 8)), 3,
-                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 100L, ClayiumCore.divideByProgressionRate(20));
+                ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.cuttingHead)), 100L, ClayiumConfiguration.divideByProgressionRate(20));
 
 /*
         GameRegistry.addShapelessRecipe(ClayiumMaterials.get(ClayiumMaterial.clay, CMaterials.BALL, 3), ClayiumMaterials.get(ClayiumMaterial.clay, CMaterials.RING));
@@ -356,13 +355,13 @@ public class ClayiumRecipes {
         }
 
 
-        decomposer.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 3), 1L, ClayiumCore.divideByProgressionRate(60));
-        decomposer.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), 4, ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 28), 1000L, ClayiumCore.divideByProgressionRate(60));
+        decomposer.addRecipe(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 3), 1L, ClayiumConfiguration.divideByProgressionRate(60));
+        decomposer.addRecipe(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust), 4, ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 28), 1000L, ClayiumConfiguration.divideByProgressionRate(60));
 
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 4L, ClayiumCore.divideByProgressionRate(20));
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 2)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust, 1)), 4L, ClayiumCore.divideByProgressionRate(20));
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 2)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 12), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 4L, ClayiumCore.divideByProgressionRate(20));
-        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 2)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 12)), 10000L, ClayiumCore.divideByProgressionRate(12));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust)), 4L, ClayiumConfiguration.divideByProgressionRate(20));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 2)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 9), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust, 1)), 4L, ClayiumConfiguration.divideByProgressionRate(20));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 2)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 12), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 8), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust)), 4L, ClayiumConfiguration.divideByProgressionRate(20));
+        centrifuge.addRecipe(ii(ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust, 2)), 4, ii(ClayiumMaterials.get(ClayiumMaterial.engClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.clay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.denseClay, ClayiumShape.dust, 64), ClayiumMaterials.get(ClayiumMaterial.indClay, ClayiumShape.dust, 12)), 10000L, ClayiumConfiguration.divideByProgressionRate(12));
 
 
         chemicalReactor.addRecipe(oo(ClayiumMaterials.getOD(ClayiumMaterial.salt, ClayiumShape.dust, 2), ClayiumMaterials.get(ClayiumMaterial.calClay, ClayiumShape.dust)), 0, ii(ClayiumMaterials.get(ClayiumMaterial.calciumChloride, ClayiumShape.dust), ClayiumMaterials.get(ClayiumMaterial.sodiumCarbonate, ClayiumShape.dust)), e(5), 120L);
@@ -400,11 +399,11 @@ public class ClayiumRecipes {
         clayReactor.addRecipe(ii(i(ClayiumItems.claySoul), ClayiumMaterials.get(ClayiumMaterial.advClay, ClayiumShape.dust)), 11, ii(ClayiumMaterials.get(ClayiumMaterial.orgClay, ClayiumShape.dust, 2)), e(11), 100000000000000L);
 
 
-        clayReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumCore.divideByProgressionRate(200000000000000L));
+        clayReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.clayium, ClayiumShape.ingot), 9, i(ClayiumItems.antimatterSeed), e(9), ClayiumConfiguration.divideByProgressionRate(200000000000000L));
 
 
         CAInjector.addRecipe(ii(machines.get(10), ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem, 8)), 10, ii(i(ClayiumMachines.CACollector)), e(2.0D, 10), 4000L);
-        CAReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), 10, ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem), e(0.1D, 10), ClayiumCore.divideByProgressionRate(300));
+        CAReactor.addRecipe(ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), 10, ClayiumMaterials.get(ClayiumMaterial.pureAntimatter, ClayiumShape.gem), e(0.1D, 10), ClayiumConfiguration.divideByProgressionRate(300));
         for (i = 0; i < 8; i++) {
             condenser.addRecipe(ClayiumMaterials.get(ClayiumMaterial.compressedPureAntimatter.get(i), ClayiumShape.gem, 9), 10, ClayiumMaterials.get(ClayiumMaterial.compressedPureAntimatter.get(i + 1), ClayiumShape.gem), e(9), 6L);
 //            GameRegistry.addShapelessRecipe(ClayiumMaterials.get(CMaterials.COMPRESSED_PURE_ANTIMATTER[i], ClayiumShape.gem, 9), ClayiumMaterials.get(CMaterials.COMPRESSED_PURE_ANTIMATTER[i + 1], ClayiumShape.gem));

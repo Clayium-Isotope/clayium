@@ -1,6 +1,6 @@
 package mods.clayium.machine.ClayFabricator;
 
-import mods.clayium.core.ClayiumCore;
+import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
 import mods.clayium.util.IllegalTierException;
@@ -52,7 +52,7 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
                 throw new IllegalTierException();
         }
 
-        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier.meta()) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
+        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier.meta()) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumConfiguration.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
     }
 
     @Override

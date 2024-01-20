@@ -1,6 +1,6 @@
 package mods.clayium.machine.CobblestoneGenerator;
 
-import mods.clayium.core.ClayiumCore;
+import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
@@ -38,25 +38,25 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
         this.listSlotsImport.clear();
         switch(tier) {
             case clay:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(2);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(2);
                 break;
             case denseClay:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(5);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(5);
                 break;
             case simple:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(15);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(15);
                 break;
             case basic:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(50);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(50);
                 break;
             case advanced:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(200);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(200);
                 break;
             case precision:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(1000);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(1000);
                 break;
             case claySteel:
-                this.progressEfficiency = ClayiumCore.multiplyProgressionRate(8000);
+                this.progressEfficiency = ClayiumConfiguration.multiplyProgressionRate(8000);
         }
     }
 
