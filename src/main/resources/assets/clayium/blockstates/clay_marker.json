@@ -1,0 +1,7 @@
+{
+    "multipart": [
+        {
+            "apply": { "model": "clayium:machine/clay_marker" }
+        }
+    ]
+}

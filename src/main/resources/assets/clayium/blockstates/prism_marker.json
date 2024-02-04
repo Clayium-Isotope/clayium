@@ -1,0 +1,7 @@
+{
+    "multipart": [
+        {
+            "apply": { "model": "clayium:machine/prism_marker" }
+        }
+    ]
+}

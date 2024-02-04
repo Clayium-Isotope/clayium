@@ -17,6 +17,9 @@ import mods.clayium.machine.ClayCraftingTable.ClayCraftingTable;
 import mods.clayium.machine.ClayDistributor.ClayDistributor;
 import mods.clayium.machine.ClayEnergyLaser.ClayEnergyLaser;
 import mods.clayium.machine.ClayFabricator.ClayFabricator;
+import mods.clayium.machine.ClayMarker.ClayMarker;
+import mods.clayium.machine.ClayMarker.MarkerExtent;
+import mods.clayium.machine.ClayMarker.TileEntityClayMarker;
 import mods.clayium.machine.ClayReactor.ClayReactor;
 import mods.clayium.machine.ClayWorkTable.ClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
@@ -127,14 +130,11 @@ public class ClayiumMachines {
         vacuumContainer = addContainer(EnumMachineKind.vacuumContainer, TierPrefix.precision, new VacuumContainer());
 //        new AutoTrader(8);
 //        autoTrader = get(EnumMachineKind.autoTrader, TierPrefix.clayium);
-//        new ClayMarker(7, Blocks.clay, TileClayMarker.class);
-//        clayMarker = get(EnumMachineKind.clayMarker, TierPrefix.claySteel);
-//        new ClayMarker(8, blockCompressedClay, TileClayOpenPitMarker.class);
-//        clayOpenPitMarker = get(EnumMachineKind.openPitMarker, TierPrefix.clayium);
-//        new ClayMarker(8, blockCompressedClay, 1, TileClayGroundLevelingMarker.class);
-//        groundLevelingMarker = get(EnumMachineKind.groundLevelingMarker, TierPrefix.clayium);
-//        new ClayMarker(8, blockCompressedClay, 2, TileClayPrismMarker.class);
-//        prismMarker = get(EnumMachineKind.prismMarker, TierPrefix.clayium);
+
+        clayMarker              = addContainer(EnumMachineKind.clayMarker, TierPrefix.claySteel, new ClayMarker("clay_marker", TierPrefix.claySteel, TileEntityClayMarker::new, MarkerExtent.None));
+        clayOpenPitMarker       = addContainer(EnumMachineKind.openPitMarker, TierPrefix.clayium, new ClayMarker("open_pit_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.OpenPit));
+        groundLevelingMarker    = addContainer(EnumMachineKind.groundLevelingMarker, TierPrefix.clayium, new ClayMarker("ground_leveling_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.GroundLeveling));
+        prismMarker             = addContainer(EnumMachineKind.prismMarker, TierPrefix.clayium, new ClayMarker("prism_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.Prism));
 //        blockMiner = (new AreaMiner(6, "clayium:areaminer"))
 //        blockAreaCollector = (new AreaCollector(7))
 //        blockAreaMiner = (new AreaMiner(8, "clayium:areaminer"))
@@ -182,7 +182,7 @@ public class ClayiumMachines {
     }
 
     private static void addContainers(EnumMachineKind kind, List<TierPrefix> tiers, Class<? extends ClayContainer> blockClass) {
-        ClayiumCore.logger.info("Registering: " + blockClass.toString());
+        ClayiumCore.logger.info("[ClayiumMachines] Add Container: " + blockClass.toString());
 
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
 
@@ -282,13 +282,7 @@ public class ClayiumMachines {
     }
 
     public static List<Block> getBlocks() {
-        List<Block> res = new ArrayList<>();
-
-        for (Map<TierPrefix, Block> kind : machineMap.values()) {
-            res.addAll(kind.values());
-        }
-
-        return res;
+        return machineMap.values().stream().map(Map::values).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     // aliases

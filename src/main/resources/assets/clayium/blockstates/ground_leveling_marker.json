@@ -1,0 +1,7 @@
+{
+    "multipart": [
+        {
+            "apply": { "model": "clayium:machine/ground_leveling_marker"}
+        }
+    ]
+}

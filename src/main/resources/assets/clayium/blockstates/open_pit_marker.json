@@ -1,0 +1,7 @@
+{
+    "multipart": [
+        {
+            "apply": { "model": "clayium:machine/open_pit_marker" }
+        }
+    ]
+}

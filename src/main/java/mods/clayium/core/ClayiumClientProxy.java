@@ -2,10 +2,7 @@ package mods.clayium.core;
 
 import mods.clayium.client.color.ShapedMaterial;
 import mods.clayium.client.color.SiliconeColor;
-import mods.clayium.client.render.RenderClayLaser;
-import mods.clayium.client.render.TESRClayContainer;
-import mods.clayium.client.render.TESRInterface;
-import mods.clayium.client.render.TESRLaserReflector;
+import mods.clayium.client.render.*;
 import mods.clayium.entity.EntityClayBall;
 import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
@@ -22,6 +19,7 @@ import mods.clayium.machine.ClayCraftingTable.TileEntityClayCraftingTable;
 import mods.clayium.machine.ClayDistributor.TileEntityClayDistributor;
 import mods.clayium.machine.ClayEnergyLaser.TileEntityClayEnergyLaser;
 import mods.clayium.machine.ClayFabricator.TileEntityClayFabricator;
+import mods.clayium.machine.ClayMarker.TileEntityClayMarker;
 import mods.clayium.machine.ClayReactor.TileEntityClayReactor;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
@@ -159,6 +157,9 @@ public class ClayiumClientProxy implements IClayiumProxy {
 		ClientRegistry.registerTileEntity(TileEntityClayCentrifuge.class, "clayium:centrifuge", TESRClayContainer.instance);
 		ClientRegistry.registerTileEntity(TileEntityStorageContainer.class, "clayium:storage_container", TESRClayContainer.instance);
 		ClientRegistry.registerTileEntity(TileEntityVacuumContainer.class, "clayium:vacuum_container", TESRClayContainer.instance);
+
+		ClientRegistry.registerTileEntity(TileEntityClayMarker.class, "clayium:clay_marker", TESRClayMarker.instance);
+//		GameRegistry.registerTileEntity(TileEntityClayMarker.class, new ResourceLocation(ClayiumCore.ModId, "clay_marker"));
 	}
 
 	/**

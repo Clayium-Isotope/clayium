@@ -1,0 +1,6 @@
+{
+	"parent": "clayium:block/machine/clay_marker_temp",
+	"textures": {
+		"0": "clayium:blocks/compressedclay-2"
+	}
+}
