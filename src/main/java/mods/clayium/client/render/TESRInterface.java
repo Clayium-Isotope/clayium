@@ -54,7 +54,10 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         GlStateManager.enableBlend();
 
-        highlightCore((ISynchronizedInterface) tile, core, new Vec3d(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ), partialTicks);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+        highlightCore((ISynchronizedInterface) tile, core, new Vec3d(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ), partialTicks, builder);
+        tessellator.draw();
 
         drawRemoteCore(x, y, z, core, (ISynchronizedInterface) tile, partialTicks, rendererDispatcher, mop);
 
@@ -89,7 +92,7 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         GL11.glPopMatrix();
     }
 
-    public static void highlightCore(ISynchronizedInterface in, IInterfaceCaptive core, Vec3d viewPos, float ticktime) {
+    public static void highlightCore(ISynchronizedInterface in, IInterfaceCaptive core, Vec3d viewPos, float ticktime, BufferBuilder builder) {
         if (core.getWorld().provider.getDimension() != in.getWorld().provider.getDimension()) {
             return;
         }
@@ -105,7 +108,7 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         AxisAlignedBB caabb = cstate.getBoundingBox(core.getWorld(), core.getPos());
         Color highlight = new Color(cr, cg, cb, cf);
 
-        UtilRender.renderOffsetAABB(caabb, new Vec3d(core.getPos()).subtract(viewPos), highlight);
+        UtilRender.renderOffsetAABB(caabb, new Vec3d(core.getPos()).subtract(viewPos), highlight, builder);
 //        Render.renderOffsetAABB(caabb, core.getPos().getX() - viewPos.x, core.getPos().getY() - viewPos.y, core.getPos().getZ() - viewPos.z);
 //        RenderGlobal.renderFilledBox(caabb, cr, cg, cb, 1.0f);
 

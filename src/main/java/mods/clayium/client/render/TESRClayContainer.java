@@ -58,6 +58,8 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
         ModelClayContainer modelCC = new ModelClayContainer(buffer);
 
+        // 破壊テクスチャは RenderGlobal#drawBlockDamageTexture で描画されるはずでは...？
+        // -> モデルが歪なので自前で実装した
         if (destroyStage >= 0) {
             TESRClayContainer.bindTexture(rendererDispatcher, DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(GL11.GL_TEXTURE);

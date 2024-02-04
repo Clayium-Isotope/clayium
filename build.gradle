@@ -64,6 +64,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}:api")
     // at runtime, use the full JEI jar
     runtimeOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
+
+    implementation ("net.minecraftforge:mergetool:0.2.3.3") { force = true }
 }
 
 tasks.withType(Jar) {
@@ -88,4 +90,9 @@ jar {
     manifest {
         attributes 'FMLAT': 'clayium_at.cfg'
     }
+}
+
+// https://stackoverflow.com/questions/68377027/minecraft-forge-mod-loader-fml-loading-and-crashing-mc
+configurations.configureEach {
+    exclude group: "net.minecraftforge", module: "mergetool"
 }
