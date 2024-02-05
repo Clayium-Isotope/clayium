@@ -12,97 +12,91 @@ import net.minecraft.util.ResourceLocation;
 import java.util.Objects;
 
 public enum EnumMachineKind {
-    // Tier 0 ~
     EMPTY("", null),
+
+    // 加工機械
     workTable("work_table", ClayiumRecipes.clayWorkTable, SlotType.CLAY_WORK_TABLE),
     craftingTable("crafting_table", null),
-
-    // Tier 1 ~
     bendingMachine("bending_machine", ClayiumRecipes.bendingMachine, SlotType.MACHINE),
     wireDrawingMachine("wire_drawing_machine", ClayiumRecipes.wireDrawingMachine, SlotType.MACHINE),
     pipeDrawingMachine("pipe_drawing_machine", ClayiumRecipes.pipeDrawingMachine, SlotType.MACHINE),
     cuttingMachine("cutting_machine", ClayiumRecipes.cuttingMachine, SlotType.MACHINE),
     lathe("lathe", ClayiumRecipes.lathe, SlotType.MACHINE),
     millingMachine("milling_machine", ClayiumRecipes.millingMachine, SlotType.MACHINE),
-    cobblestoneGenerator("cobblestone_generator", null),
-    waterWheel("water_wheel", null),
-
-    // Tier 2 ~
     condenser("condenser", ClayiumRecipes.condenser, SlotType.MACHINE),
     grinder("grinder", ClayiumRecipes.grinder, SlotType.MACHINE),
     decomposer("decomposer", ClayiumRecipes.decomposer, SlotType.MACHINE),
-
-    // Tier 3 ~
     assembler("assembler", ClayiumRecipes.assembler, SlotType.ASSEMBLER),
     inscriber("inscriber", ClayiumRecipes.inscriber, SlotType.ASSEMBLER),
     centrifuge("centrifuge", ClayiumRecipes.centrifuge),
-    ECCondenser("energetic_clay_condenser", ClayiumRecipes.energeticClayCondenser, SlotType.MACHINE, "eccondenser"),
-
-    // Tier 4 ~
     smelter("smelter", ClayiumRecipes.smelter),
-    buffer("buffer", null),
-    multitrackBuffer("multitrack_buffer", null),
-    fluidBuffer("fluid_buffer", null),
     chemicalReactor("chemical_reactor", ClayiumRecipes.chemicalReactor),
-    saltExtractor("salt_extractor", null),
-    fluidTranslator("fluid_translator", null),
-    CE_RFConverter("ce_rf_converter", null),
-
-    // Tier 5 ~
+    autoCrafter("auto_crafter", null),
     autoClayCondenser("auto_clay_condenser", null),
     quartzCrucible("quartz_crucible", null),
-    solarClayFabricator("solar_clay_fabricator", null, SlotType.MACHINE, "solar"),
-    clayInterface("clay_interface", null),
-    redstoneInterface("redstone_interface", null),
-    autoCrafter("auto_crafter", null),
-    fluidTransferMachine("fluid_transfer_machine", ClayiumRecipes.fluidTransferMachine),
-
-    // Tier 6 ~
+    blastFurnace("blast_furnace", ClayiumRecipes.blastFurnace),
     alloySmelter("alloy_smelter", ClayiumRecipes.alloySmelter),
     chemicalMetalSeparator("chemical_metal_separator", null),
-    blastFurnace("blast_furnace", ClayiumRecipes.blastFurnace),
     electrolysisReactor("electrolysis_reactor", ClayiumRecipes.electrolysisReactor),
-    clayChunkLoader("clay_chunk_loader", null),
-    storageContainer("storage_container", null, SlotType.UNKNOWN, "storagecontainer"),
-    vacuumContainer("vacuum_container", null),
-
-    // Tier 7 ~
-    distributor("distributor", null),
-    laserInterface("laser_interface", null),
     clayReactor("reactor", ClayiumRecipes.clayReactor),
     transformer("matter_transformer", ClayiumRecipes.transformer, SlotType.MACHINE, "transformer"),
-    clayEnergyLaser("energy_laser", null),
-    laserReflector("laser_reflector", null),
-    claySapling("clay_sapling", null),
-    clayMarker("clay_marker", null),
-
-    // Tier 8 ~
-    clayFabricator("clay_fabricator", null),
-    autoTrader("auto_trader", null),
-    openPitMarker("open_pit_marker", null),
-    groundLevelingMarker("ground_leveling_marker", null),
-    prismMarker("prism_marker", null),
-
-    // Tier 9 ~
     CACondenser("ca_condenser", null),
     CAInjector("ca_injector", ClayiumRecipes.CAInjector),
-    CAResonatingCollector("ca_collector", null),
+    ECCondenser("energetic_clay_condenser", ClayiumRecipes.energeticClayCondenser, SlotType.MACHINE, "eccondenser"),
+    ECDecomposer("ec_decomposer", ClayiumRecipes.energeticClayDecomposer),
 
-    // Tier 10 ~
+    // 反物質反応炉関連
     CAReactorCore("ca_reactor", ClayiumRecipes.CAReactor, SlotType.MACHINE, "careactorcore"),
 
-    // Tier 11 ~
+    // PAN関連
+    PANCable("pan_cable", null),
     PANCore("pan_core", null),
     PANAdapter("pan_adapter", null),
     PANDuplicator("pan_duplicator", null),
-    PANCable("pan_cable", null),
 
-    // Tier 13 ~
-    ECDecomposer("ec_decomposer", ClayiumRecipes.energeticClayDecomposer),
+    // 配管・ストレージ
+    buffer("buffer", null),
+    multitrackBuffer("multitrack_buffer", null),
+    fluidBuffer("fluid_buffer", null),
+    storageContainer("storage_container", null, SlotType.UNKNOWN, "storagecontainer"),
+    vacuumContainer("vacuum_container", null),
+    metalChest("metal_chest", null),
+    clayInterface("clay_interface", null),
+    redstoneInterface("redstone_interface", null),
+    laserInterface("laser_interface", null),
+    distributor("distributor", null),
+
+    // 生産・エネルギー
+    cobblestoneGenerator("cobblestone_generator", null),
+    waterWheel("water_wheel", null),
+    saltExtractor("salt_extractor", null),
+    solarClayFabricator("solar_clay_fabricator", null, SlotType.MACHINE, "solar"),
+    clayEnergyLaser("energy_laser", null),
+    laserReflector("laser_reflector", null),
+    clayFabricator("clay_fabricator", null),
+    CAResonatingCollector("ca_collector", null),
     creativeCESource("creative_energy", null),
+    fluidTranslator("fluid_translator", null),
+    fluidTransferMachine("fluid_transfer_machine", ClayiumRecipes.fluidTransferMachine),
 
-    // Metal Chest
-    metalChest("metal_chest", null);
+    // ビルダー系
+    clayMarker("clay_marker", null),
+    openPitMarker("open_pit_marker", null),
+    groundLevelingMarker("ground_leveling_marker", null),
+    prismMarker("prism_marker", null),
+    blockBreaker("block_breaker", null),
+    areaMiner("area_miner", null),
+    advancedAreaMinder("advanced_area_miner", null),
+    areaReplacer("area_replacer", null),
+    activator("activator", null),
+    areaActivator("area_activator", null),
+    areaCollector("area_collector", null),
+
+    // その他
+    clayChunkLoader("clay_chunk_loader", null),
+    autoTrader("auto_trader", null),
+    CE_RFConverter("ce_rf_converter", null),
+    ;
 
     EnumMachineKind(String kind, ClayiumRecipe recipe) {
         this(kind, recipe, SlotType.UNKNOWN);
