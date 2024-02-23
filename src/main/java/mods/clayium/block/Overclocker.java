@@ -1,11 +1,13 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
+import mods.clayium.block.itemblock.ItemBlockTierNamed;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -37,10 +39,15 @@ public class Overclocker extends BlockTiered implements IOverclocker {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, "tooltip.Overclocker");
+        UtilLocale.localizeTooltip(tooltip, "tooltip.overclocker");
         super.addInformation(stack, player, tooltip, advanced);
-        if (UtilLocale.canLocalize("tooltip.Overclocker.overclockFactor")) {
-            tooltip.add(UtilLocale.localizeAndFormat("tooltip.Overclocker.overclockFactor", getOverclockFactor()));
+        if (UtilLocale.canLocalize("tooltip.overclocker.overclockFactor")) {
+            tooltip.add(UtilLocale.localizeAndFormat("tooltip.overclocker.overclockFactor", getOverclockFactor()));
         }
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockTierNamed(this, "util.block.overclocker", UtilLocale.localizeAndFormat(TierPrefix.getLocalizeKey(this.tier)));
     }
 }

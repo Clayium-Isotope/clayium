@@ -394,6 +394,10 @@ public enum ClayiumMaterial {
         return null;
     }
 
+    public static String getLocalizeKey(ClayiumMaterial material) {
+        return "util.material." + material.getName();
+    }
+
     public static final List<ClayiumMaterial> metals = Arrays.asList(
             magnesium, sodium, lithium, zirconium, zinc, manganese, calcium, potassium, nickel, beryllium, lead, hafnium,
             chrome, titanium, strontium, barium, copper, iron, gold, bronze, brass, electrum, invar, steel

@@ -2,13 +2,10 @@ package mods.clayium.block;
 
 import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.BlockTierTied;
-import mods.clayium.block.common.BlockTiered;
 import mods.clayium.block.common.MaterialBlock;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.EnumDyeColor;
 
 import java.util.ArrayList;
@@ -62,12 +59,7 @@ public class ClayiumBlocks {
 
         int[] tiers = { 10, 11, 11, 11, 11, 12, 12, 12, 12, 13 };
         for (int i = 0; i < 10; i++) {
-            CAReactorHull.add(new BlockTiered(Material.IRON, "ca_reactor_hull_", i, TierPrefix.get(tiers[i])) {{
-                setSoundType(SoundType.METAL);
-                setHarvestLevel("pickaxe", 0);
-                setHardness(4.0F);
-                setResistance(25.0F);
-            }});
+            CAReactorHull.add(new CAReactorHull(i, TierPrefix.get(tiers[i])));
         }
         blocks.addAll(CAReactorHull);
 

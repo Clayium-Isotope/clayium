@@ -5,7 +5,6 @@ import mods.clayium.item.common.ClayiumMaterial;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -78,7 +77,7 @@ public enum TierPrefix {
         }
     }
 
-    public static List<TierPrefix> makeList(int ...tiers) {
+    public static Iterable<TierPrefix> makeList(int ...tiers) {
         return Arrays.stream(tiers)
                 .mapToObj(TierPrefix::get)
                 .collect(Collectors.toList());
@@ -101,5 +100,9 @@ public enum TierPrefix {
                 return this.current;
             }
         };
+    }
+
+    public static String getLocalizeKey(TierPrefix tier) {
+        return "util.tier." + tier.getPrefix();
     }
 }

@@ -15,10 +15,11 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class MultiblockMachine extends ClayiumMachine {
-    public MultiblockMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
-        super(kind, suffix, tier, teClass, guiID);
+    public MultiblockMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Supplier<? extends TileEntityGeneric> teSupplier, int guiID) {
+        super(kind, suffix, tier, teSupplier, guiID);
 
         this.setDefaultState(this.getDefaultState().withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, false));
     }

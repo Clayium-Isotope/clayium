@@ -36,15 +36,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
-    private final Class<? extends TileEntityGeneric> teClass;
+    private final Supplier<? extends TileEntityGeneric> teSupplier;
     /*package-private*/ final int guiId;
     protected final TierPrefix tier;
 
-    public ClayContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId, TierPrefix tier) {
+    public ClayContainer(Material material, Supplier<? extends TileEntityGeneric> teSupplier, String modelPath, int guiId, TierPrefix tier) {
         super(material);
-        this.teClass = teClass;
+        this.teSupplier = teSupplier;
         this.guiId = guiId;
         this.tier = tier;
 
@@ -82,16 +83,9 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     @Override
     public TileEntityGeneric createNewTileEntity(World worldIn, int meta) {
-        if (this.teClass == null) return null;
-
-        try {
-            TileEntityGeneric tecc = teClass.newInstance();
-            tecc.initParamsByTier(this.tier);
-            return tecc;
-        } catch (Exception exception) {
-            ClayiumCore.logger.catching(exception);
-            return null;
-        }
+        TileEntityGeneric tecc = this.teSupplier.get();
+        tecc.initParamsByTier(this.tier);
+        return tecc;
     }
 
     @Override

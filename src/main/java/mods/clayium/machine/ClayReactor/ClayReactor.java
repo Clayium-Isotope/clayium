@@ -9,6 +9,6 @@ import mods.clayium.util.TierPrefix;
 @HasOriginalState
 public class ClayReactor extends MultiblockMachine {
     public ClayReactor() {
-        super(EnumMachineKind.clayReactor, "", TierPrefix.claySteel, TileEntityClayReactor.class, GuiHandler.GuiIdClayReactor);
+        super(EnumMachineKind.clayReactor, "", TierPrefix.claySteel, TileEntityClayReactor::new, GuiHandler.GuiIdClayReactor);
     }
 }

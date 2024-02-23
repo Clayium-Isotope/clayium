@@ -9,6 +9,6 @@ import mods.clayium.util.TierPrefix;
 @HasOriginalState
 public class VacuumContainer extends ClayHorizontalNoRecipeMachine {
     public VacuumContainer() {
-        super(TileEntityVacuumContainer.class, EnumMachineKind.vacuumContainer, GuiHandler.GuiIdVacuumContainer, TierPrefix.precision);
+        super(TileEntityVacuumContainer::new, EnumMachineKind.vacuumContainer, GuiHandler.GuiIdVacuumContainer, TierPrefix.precision);
     }
 }

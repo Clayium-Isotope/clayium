@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 @HasOriginalState
 public class ClayCraftingTable extends ClayContainer {
     public ClayCraftingTable() {
-        super(Material.CLAY, TileEntityClayCraftingTable.class, "clay_crafting_table", GuiHandler.GuiIdClayCraftingTable, TierPrefix.none);
+        super(Material.CLAY, TileEntityClayCraftingTable::new, "clay_crafting_table", GuiHandler.GuiIdClayCraftingTable, TierPrefix.none);
         setSoundType(SoundType.GROUND);
         setHarvestLevel("shovel", 0);
         setHardness(1F);

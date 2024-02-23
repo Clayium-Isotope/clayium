@@ -22,6 +22,54 @@ info.sync.MachineDisagreed=This block is not a suitable Synchronize Source
 info.sync.SuccessSetMachine=Succeed register the Synchronize Source
 info.sync.tooltip.Source=Synchronize Source: [%1$s, %2$s, %3$s] in %4$s
 
+util.display.tiered_machine=%1$s %2$s
+
+util.tier.=UNDEFINED TIER
+util.tier.clay=Clay
+util.tier.dense_clay=Dense Clay
+util.tier.simple=Simple
+util.tier.basic=Basic
+util.tier.advanced=Advanced
+util.tier.precision=Precision
+util.tier.clay_steel=Clay Steel
+util.tier.clayium=Clayium
+util.tier.ultimate=Ultimate
+util.tier.antimatter=Antimatter
+util.tier.pure_antimatter=Pure Antimatter
+util.tier.oec=OEC
+util.tier.opa=OPA
+
+util.shape.plate=%1$s Plate
+util.shape.stick=%1$s Stick
+util.shape.short_stick=Short %1$s Stick
+util.shape.ring=%1$s Ring
+util.shape.small_ring=Small %1$s Ring
+util.shape.gear=%1$s Gear
+util.shape.blade=%1$s Blade
+util.shape.needle=%1$s Needle
+util.shape.disc=%1$s Disc
+util.shape.small_disc=Small %1$s Disc
+util.shape.cylinder=%1$s Cylinder
+util.shape.pipe=%1$s Pipe
+util.shape.large_ball=Large %1$s Ball
+util.shape.large_plate=Large %1$s Plate
+util.shape.grinding_head=%1$s Grinding Head
+util.shape.bearing=%1$s Bearing
+util.shape.spindle=%1$s Spindle
+util.shape.cutting_head=%1$s Cutting Head
+util.shape.water_wheel_vane=%1$s Water Wheel Vane
+util.shape.block=%1$s Block
+util.shape.ball=%1$s Ball
+util.shape.dust=%1$s Dust
+util.shape.ingot=%1$s Ingot
+util.shape.gem=%1$s Gem
+util.shape.crystal=%1$s Crystal
+
+util.material.clay=Clay
+util.material.dense_clay=Dense Clay
+util.material.ind_clay=Industrial Clay
+util.material.adv_ind_clay=Advanced Industrial Clay
+
 # JEI Part
 
 recipe.clay_tree.description=A Clay Tree is a good source of Lithium, but it isn't generated in the Overworld. A sapling of Clay Tree is obtained by irradiating a vanilla sapling, planted on the ground, with Clay Laser. The energy value of Clay Laser must be higher than 1000.
@@ -34,6 +82,10 @@ recipe.quartz_crucible.description=Quartz Crucible is a device to get the first 
 tile.clay_ore.name=Clay Ore
 tile.dense_clay_ore.name=Dense Clay Ore
 tile.large_dense_clay_ore.name=Large Dense Clay Ore
+
+tile.clay_tree_sapling.name=Clay Tree Sapling
+tile.clay_tree_log.name=Clay Tree Log
+tile.clay_tree_leaves.name=Clay Tree Leaf
 
 tile.compressed_clay_0.name=Dense Clay
 tile.compressed_clay_1.name=Compressed Clay
@@ -64,8 +116,8 @@ tile.machine_hull_10.name=Pure Antimatter Machine Hull
 tile.machine_hull_11.name=OEC Machine Hull
 tile.machine_hull_12.name=OPA Machine Hull
 
-tile.az91d_alloy_hull.name=AZ91D Alloy Hull
-tile.zk60a_alloy_hull.name=ZK60A Alloy Hull
+tile.az91d_hull.name=AZ91D Alloy Hull
+tile.zk60a_hull.name=ZK60A Alloy Hull
 
 tile.clay_work_table.name=Clay Work Table
 tile.clay_work_table.tooltip.line1=The first step to Clay Industry.
@@ -74,124 +126,48 @@ tile.clay_crafting_table.tooltip.line1=A convenient version of vanilla Crafting 
 tile.clay_crafting_table.tooltip.line2=__DETAIL__
 tile.clay_crafting_table.tooltip.line3=You can access the content of a nearby chest while using it.
 
+tile.clay_milling_machine.name=Elemental Milling Machine
+tile.clay_milling_machine.tooltip.line1=To obtain the first circuit.
 tile.energetic_clay_condenser_mk1.name=Energetic Clay Condenser Mk I
 tile.energetic_clay_condenser_mk1.tooltip.line1=To obtain the first Energetic Clay.
 tile.energetic_clay_condenser_mk2.name=Energetic Clay Condenser Mk II
 
-tile.clay_bending_machine.name=Clay Bending Machine
+util.machine.bending_machine=Bending Machine
 tile.clay_bending_machine.tooltip.line1=The first machine.
-tile.dense_clay_bending_machine.name=Dense Clay Bending Machine
-tile.simple_bending_machine.name=Simple Bending Machine
-tile.basic_bending_machine.name=Basic Bending Machine
-tile.advanced_bending_machine.name=Advanced Bending Machine
-tile.precision_bending_machine.name=Precision Bending Machine
-tile.clay_steel_bending_machine.name=Clay Steel Bending Machine
-tile.ultimate_bending_machine.name=Ultimate Bending Machine
+util.machine.wire_drawing_machine=Wire Drawing Machine
+util.machine.pipe_drawing_machine=Pipe Drawing Machine
+util.machine.cutting_machine=Cutting Machine
+util.machine.lathe=Lathe
 
-tile.clay_wire_drawing_machine.name=Clay Wire Drawing Machine
-tile.dense_clay_wire_drawing_machine.name=Dense Clay Wire Drawing Machine
-tile.simple_wire_drawing_machine.name=Simple Wire Drawing Machine
-tile.basic_wire_drawing_machine.name=Basic Wire Drawing Machine
-
-tile.clay_pipe_drawing_machine.name=Clay Pipe Drawing Machine
-tile.dense_clay_pipe_drawing_machine.name=Dense Clay Pipe Drawing Machine
-tile.simple_pipe_drawing_machine.name=Simple Pipe Drawing Machine
-tile.basic_pipe_drawing_machine.name=Basic Pipe Drawing Machine
-
-tile.clay_cutting_machine.name=Clay Cutting Machine
-tile.dense_clay_cutting_machine.name=Dense Clay Cutting Machine
-tile.simple_cutting_machine.name=Simple Cutting Machine
-tile.basic_cutting_machine.name=Basic Cutting Machine
-
-tile.clay_lathe.name=Clay Lathe
-tile.dense_clay_lathe.name=Dense Clay Lathe
-tile.simple_lathe.name=Simple Lathe
-tile.basic_lathe.name=Basic Lathe
-
-tile.clay_cobblestone_generator.name=Clay Cobblestone Generator
-tile.dense_clay_cobblestone_generator.name=Dense Clay Cobblestone Generator
-tile.simple_cobblestone_generator.name=Simple Cobblestone Generator
-tile.basic_cobblestone_generator.name=Basic Cobblestone Generator
-tile.advanced_cobblestone_generator.name=Advanced Cobblestone Generator
-tile.precision_cobblestone_generator.name=Precision Cobblestone Generator
-tile.clay_steel_cobblestone_generator.name=Clay Steel Cobblestone Generator
-
-tile.dense_clay_condenser.name=Dense Clay Condenser
-tile.simple_condenser.name=Simple Condenser
-tile.basic_condenser.name=Basic Condenser
-tile.advanced_condenser.name=Advanced Condenser
-tile.antimatter_condenser.name=Antimatter Condenser
-
-tile.dense_clay_grinder.name=Dense Clay Grinder
+util.machine.cobblestone_generator=Cobblestone Generator
+util.machine.condenser=Condenser
+util.machine.grinder=Grinder
 tile.dense_clay_grinder.tooltip.line1=Grinds Dense Clay Ores.
-tile.simple_grinder.name=Simple Grinder
-tile.basic_grinder.name=Basic Grinder
-tile.advanced_grinder.name=Advanced Grinder
-tile.precision_grinder.name=Precision Grinder
-tile.antimatter_grinder.name=Antimatter Grinder
+util.machine.decomposer=Decomposer
+util.machine.milling_machine=Milling Machine
 
-tile.dense_clay_decomposer.name=Dense Clay Decomposer
-tile.simple_decomposer.name=Simple Decomposer
-tile.basic_decomposer.name=Basic Decomposer
-
-tile.clay_milling_machine.name=Elemental Milling Machine
-tile.clay_milling_machine.tooltip.line1=To obtain the first circuit.
-tile.simple_milling_machine.name=Simple Milling Machine
-tile.basic_milling_machine.name=Basic Milling Machine
-
-# tile.blockSimpleAssembler.name=Simple Assembler
-# tile.blockBasicAssembler.name=Basic Assembler
-# tile.blockPrecisionAssembler.name=Precision Assembler
-# tile.blockAntimatterAssembler.name=Antimatter Assembler
-# tooltip.Assembler.line1=Say goodbye to complicated craft.
-
-tile.basic_smelter.name=Basic Smelter
-tile.advanced_smelter.name=Advanced Smelter
-tile.precision_smelter.name=Precision Smelter
-tile.clay_steel_smelter.name=Clay Steel Smelter
-tile.clayium_smelter.name=Clayium Smelter
-tile.ultimate_smelter.name=Ultimate Smelter
+util.machine.assembler=Assembler
+tooltip.assembler.line1=Say goodbye to complicated craft.
+util.machine.inscriber=Inscriber
+util.machine.centrifuge=Centrifuge
+tooltip.centrifuge.line1=The most important component of the first clay factory.
+util.machine.smelter=Smelter
 tooltip.smelter.line1=Furnace powered by CE.
 
-tile.basic_buffer.name=Basic Buffer
-tile.advanced_buffer.name=Advanced Buffer
-tile.precision_buffer.name=Precision Buffer
-tile.clay_steel_buffer.name=Clay Steel Buffer
-tile.clayium_buffer.name=Clayium Buffer
-tile.ultimate_buffer.name=Ultimate Buffer
-tile.antimatter_buffer.name=Antimatter Buffer
-tile.pure_antimatter_buffer.name=Pure Antimatter Buffer
-tile.oec_buffer.name=OEC Buffer
-tile.opa_buffer.name=OPA Buffer
+util.machine.buffer=Buffer
 tooltip.buffer.line1=Transfers items. Acts as an item pipe.
-
-tile.basic_multitrack_buffer.name=Basic Multitrack  Buffer
-tile.advanced_multitrack_buffer.name=Advanced Multitrack Buffer
-tile.precision_multitrack_buffer.name=Precision Multitrack Buffer
-tile.clay_steel_multitrack_buffer.name=Clay Steel Multitrack Buffer
-tile.clayium_multitrack_buffer.name=Clayium Multitrack Buffer
-tile.ultimate_multitrack_buffer.name=Ultimate Multitrack Buffer
-tile.antimatter_multitrack_buffer.name=Antimatter Multitrack Buffer
-tile.pure_antimatter_multitrack_buffer.name=Pure Antimatter Multitrack Buffer
-tile.oec_multitrack_buffer.name=OEC Multitrack Buffer
-tile.opa_multitrack_buffer.name=OPA Multitrack Buffer
+util.machine.multitrack_buffer=Multitrack Buffer
 tooltip.multitrack_buffer.line1=__DETAIL__
 tooltip.multitrack_buffer.line2=This buffer's slots are separated into some color groups.
 tooltip.multitrack_buffer.line3=Transfer of items between two Multitrack Buffers
 tooltip.multitrack_buffer.line4=will be performed independently within each color group.
 tooltip.multitrack_buffer.line5=Moreover, this buffer has one filter slot per group.
 
-tile.basic_salt_extractor.name=Basic Salt Extractor
-tile.advanced_salt_extractor.name=Advanced Salt Extractor
-tile.precision_salt_extractor.name=Precision Salt Extractor
-tile.clay_steel_salt_extractor.name=Clay Steel Salt Extractor
+util.machine.chemical_reactor=Chemical Reactor
+util.machine.salt_extractor=Salt Extractor
 tooltip.salt_extractor.line1=Extracts salt from water.
 tooltip.salt_extractor.line2=__DETAIL__
 tooltip.salt_extractor.line3=Requires CE and water source next to it.
-
-tile.clay_tree_sapling.name=Clay Tree Sapling
-tile.clay_tree_log.name=Clay Tree Log
-tile.clay_tree_leaf.name=Clay Tree Leaf
 
 tile.auto_clay_condenser_mk1.name=Automatic Clay Condenser Mk I
 tile.auto_clay_condenser_mk1.tooltip.line1=Condenses clay automatically.
@@ -215,13 +191,13 @@ tile.solar_clay_fabricator_mk2.tooltip.line1=Increases the number of compression
 tile.solar_clay_fabricator_mk2.tooltip.line2=by 1 with solar energy.
 tile.solar_clay_fabricator_mk2.tooltip.line3=__DETAIL__
 tile.solar_clay_fabricator_mk2.tooltip.line4=Can accept up to Compressed Energetic Clay.
-tile.solar_clay_fabricator_mk3.name=Lithium-Solar Clay Fabricator
-tile.solar_clay_fabricator_mk3.tooltip.line1=Increases the number of compression of clay
-tile.solar_clay_fabricator_mk3.tooltip.line2=by 1 with solar energy.
-tile.solar_clay_fabricator_mk3.tooltip.line3=__DETAIL__
-tile.solar_clay_fabricator_mk3.tooltip.line4=Can accept up to Quadruple Compressed Energetic Clay.
-tile.solar_clay_fabricator_mk3.tooltip.line5=You can use a lithium ingot instead of
-tile.solar_clay_fabricator_mk3.tooltip.line6=a Triple Compressed Energetic Clay Block.
+tile.lithium_solar_clay_fabricator.name=Lithium-Solar Clay Fabricator
+tile.lithium_solar_clay_fabricator.tooltip.line1=Increases the number of compression of clay
+tile.lithium_solar_clay_fabricator.tooltip.line2=by 1 with solar energy.
+tile.lithium_solar_clay_fabricator.tooltip.line3=__DETAIL__
+tile.lithium_solar_clay_fabricator.tooltip.line4=Can accept up to Quadruple Compressed Energetic Clay.
+tile.lithium_solar_clay_fabricator.tooltip.line5=You can use a lithium ingot instead of
+tile.lithium_solar_clay_fabricator.tooltip.line6=a Triple Compressed Energetic Clay Block.
 tile.clay_fabricator_mk1.name=Clay Fabricator Mk I
 tile.clay_fabricator_mk1.tooltip.line1=Duplicates clay.
 tile.clay_fabricator_mk1.tooltip.line2=__DETAIL__
@@ -238,9 +214,7 @@ tile.clay_fabricator_mk3.name=Clay Fabricator Mk III
 tile.clay_fabricator_mk3.tooltip.line1=Duplicates clay instantly.
 
 tile.precision_alloy_smelter.name=Alloy Smelter
-
 tile.precision_chemical_metal_separator.name=Chemical Metal Separator
-
 tile.precision_blast_furnace.name=Clay Blast Furnace
 tile.precision_blast_furnace.tooltip.line1=__DETAIL__
 tile.precision_blast_furnace.tooltip.line2=[Multiblock]
@@ -251,49 +225,32 @@ tile.precision_blast_furnace.tooltip.line6=F: Clay Blast Furnace Block
 tile.precision_blast_furnace.tooltip.line7=X: Machine hulls or Interfaces
 tile.precision_blast_furnace.tooltip.line8=Recipe tier depends on components' tier.
 
+util.machine.clay_interface=Interface
 tile.advanced_clay_interface.name=Clay Interface
-tile.precision_clay_interface.name=Precision Interface
-tile.clay_steel_clay_interface.name=Clay Steel Interface
-tile.clayium_clay_interface.name=Clayium Interface
-tile.ultimate_clay_interface.name=Ultimate Interface
-tile.antimatter_clay_interface.name=Antimatter Interface
-tile.pure_antimatter_clay_interface.name=Pure Antimatter Interface
-tile.oec_clay_interface.name=OEC Interface
-tile.opa_clay_interface.name=OPA Interface
 tooltip.clay_interface.line1=Used for Multiblock I/O.
 tooltip.clay_interface.line2=__DETAIL__
 tooltip.clay_interface.line3=Requires Synchronous parts to teleport items.
 
+util.machine.redstone_interface=Redstone Interface
 tile.advanced_redstone_interface.name=Redstone Interface
-tile.precision_redstone_interface.name=Precision Redstone Interface
-tile.clay_steel_redstone_interface.name=Clay Steel Redstone Interface
-tile.clayium_redstone_interface.name=Clayium Redstone Interface
-tile.ultimate_redstone_interface.name=Ultimate Redstone Interface
-tile.antimatter_redstone_interface.name=Antimatter Redstone Interface
-tile.pure_antimatter_redstone_interface.name=Pure Antimatter Redstone Interface
-tile.oec_redstone_interface.name=OEC Redstone Interface
-tile.opa_redstone_interface.name=OPA Redstone Interface
 tooltip.redstone_interface.line1=Used for Multiblock RS I/O.
 tooltip.redstone_interface.line2=__DETAIL__
 tooltip.redstone_interface.line3=Synchronizer is used to apply an RSInterface
 tooltip.redstone_interface.line4=to a non-multiblock machine.
 
+util.machine.laser_interface=Laser Interface
 tile.clay_steel_laser_interface.name=Laser Interface
-tile.clayium_laser_interface.name=Clayium Laser Interface
-tile.ultimate_laser_interface.name=Ultimate Laser Interface
-tile.antimatter_laser_interface.name=Antimatter Laser Interface
-tile.pure_antimatter_laser_interface.name=Pure Antimatter Laser Interface
-tile.oec_laser_interface.name=OEC Laser Interface
-tile.opa_laser_interface.name=OPA Laser Interface
 tooltip.laser_interface.line1=Used for Clay Reactor.
 tooltip.laser_interface.line2=__DETAIL__
 tooltip.laser_interface.line3=Synchronizer is used to apply a Laser Interface
 tooltip.laser_interface.line4=to a non-multiblock machine.
 
+util.machine.electrolysis_reactor=Electrolysis Reactor
 tile.precision_electrolysis_reactor.name=Electrolysis Reactor
-tile.clay_steel_electrolysis_reactor.name=Clay Steel Electrolysis Reactor
-tile.clayium_electrolysis_reactor.name=Clayium Electrolysis Reactor
-tile.ultimate_electrolysis_reactor.name=Ultimate Electrolysis Reactor
+
+util.machine.distributor=Distributor
+tile.clay_steel_distributor.name=Item Distributor
+tooltip.distributor.line1=Distributes items that pass through itself equally.
 
 tile.clay_steel_reactor.name=Clay Reactor
 tile.clay_steel_reactor.tooltip.line1=__DETAIL__
@@ -307,18 +264,199 @@ tile.clay_steel_reactor.tooltip.line8=X: Machine hulls or Interfaces
 tile.clay_steel_reactor.tooltip.line9=Recipe tier depends on components' tier.
 tile.clay_steel_reactor.tooltip.line10=Time to craft depends on Laser's strength.
 
-tile.clay_steel_distributor.name=Item Distributor
-tile.clayium_distributor.name=Clayium Distributor
-tile.ultimate_distributor.name=Ultimate Distributor
-tooltip.distributor.line1=Distributes items that pass through itself equally.
+util.machine.transformer=Matter Transformer
+tile.clay_steel_transformer.name=Matter Transformer
+tooltip.transformer.line1=Transforms things to others.
+
+util.machine.ca_condenser=CA Condenser
+tile.ultimate_ca_condenser.name=CA Condenser
+tooltip.ca_condenser.line1=Condenses antimatter seeds.
+
+util.machine.ca_injector=CA Injector
+tile.ultimate_ca_injector.name=CA Injector
+tooltip.ca_injector.line1=Injects antimatter into things.
+
+util.machine.ca_collector=CA Resonating Collector
+tile.ca_collector.tooltip.line1=Collects antimatter with resonance.
+tile.ca_collector.tooltip.line2=Requires Resonators.
+
+util.block.resonator=%1$s Resonator
+tooltip.resonator.line1=Increases the efficiency of CA machines
+tooltip.resonator.line2=in the area of 5x5x5.
+tooltip.resonator.resonance=Resonance : x%1$4.3g
+
+util.block.overclocker=%1$s Overclocker
+tooltip.overclocker.line1=Accelerates the adjacent machine.
+tooltip.overclocker.overclockFactor=OC Factor : x%1$4.3g
+
+util.block.energy_storage_upgrade=%1$s Energy Storage Upgrade
+tile.energy_storage_upgrade_antimatter.tooltip.line1=Adds 1 to the number of Energetic Clay
+tile.energy_storage_upgrade_antimatter.tooltip.line2=that an adjacent machine can hold.
+tile.energy_storage_upgrade_pure_antimatter.tooltip.line1=Adds 3 to the number of Energetic Clay
+tile.energy_storage_upgrade_pure_antimatter.tooltip.line2=that an adjacent machine can hold.
+tile.energy_storage_upgrade_oec.tooltip.line1=Adds 7 to the number of Energetic Clay
+tile.energy_storage_upgrade_oec.tooltip.line2=that an adjacent machine can hold.
+tile.energy_storage_upgrade_opa.tooltip.line1=Allows an adjacent machine to hold
+tile.energy_storage_upgrade_opa.tooltip.line2=a full stack of Energetic Clay.
+
+tile.antimatter_ca_reactor_core.name=CA Reactor Core Mk I
+tile.pure_antimatter_ca_reactor_core.name=CA Reactor Core Mk II
+tile.oec_ca_reactor_core.name=CA Reactor Core Mk III
+tile.opa_ca_reactor_core.name=CA Reactor Core Mk IV
+tooltip.ca_reactor.line1=Transforms Antimatter into Pure Antimatter.
+tooltip.ca_reactor.line2=__DETAIL__
+tooltip.ca_reactor.line3=The Reactor's rank(the mean of the ranks of its components)
+tooltip.ca_reactor.line4=determines how much compressed Pure Antimatter it produces.
+tooltip.ca_reactor.line5=[Multiblock]
+tooltip.ca_reactor.line6=Place CA Reactor Coils in the shape of a ring,
+tooltip.ca_reactor.line7=cover them with CA Reactor Hulls (or Interfaces),
+tooltip.ca_reactor.line8=and replace one of the hulls with a CA Reactor Core.
+tooltip.ca_reactor.line9=- The number of CA Reactor Hulls >= 50.
+tooltip.ca_reactor.line10=- The tiers of Reactor coils (and Interfaces) >= the Reactor Core's.
+gui.CAReactor.invalid=Invalid
+gui.CAReactor.constructed=Constructed
+gui.CAReactor.rankSize=Rank %1$2.2g  Size %2$2d
+gui.CAReactor.efficiency=Efficiency %g
+message.CAReactor.invalidCoil=Coil [%1$d,%2$d,%3$d] is invalid.
+message.CAReactor.tooManyCoils=The number of coils must not be higher than %1$d.
+message.CAReactor.insufficientTierCoil=Coil [%1$d,%2$d,%3$d]'s tier is insufficient.
+message.CAReactor.invalidHull=Hull [%1$d,%2$d,%3$d] is invalid.
+message.CAReactor.tooHighTierHull=Hull [%1$d,%2$d,%3$d]'s tier is too high.
+message.CAReactor.insufficientTierInterface=Interface [%1$d,%2$d,%3$d]'s tier is insufficient.
+message.CAReactor.invalidReactorSize=Reactor size(%1$d) is less than minimum size(%2$d).
+
+util.block.ca_reactor_coil=CA Reactor Coil %1$s
+tooltip.ca_reactor_coil.line1=__DETAIL__
+tooltip.ca_reactor_coil.line2=- Its six surfaces must be covered by other blocks.
+tooltip.ca_reactor_coil.line3=- The number of adjacent coil must be 2.
+tooltip.ca_reactor_coil.line4=NG :
+tooltip.ca_reactor_coil.line5=CCCCC
+tooltip.ca_reactor_coil.line6=C___C <- has 4 adjacent coils!
+tooltip.ca_reactor_coil.line7=CCCCC
+tooltip.ca_reactor_coil.line8=OK :
+tooltip.ca_reactor_coil.line9=_CCC_
+tooltip.ca_reactor_coil.line10=C___C
+tooltip.ca_reactor_coil.line11=_CCC_
+
+util.block.ca_reactor_hull=CA Reactor Hull Rank %1$d
+tooltip.ca_reactor_hull.line1=Requires %1$s or higher Core and Coils.
+
+tile.opa_ec_decomposer.name=Energetic Clay Decomposer
+
+util.machine.water_wheel.name=Water Wheel
+tooltip.water_wheel.line1=Supplies energy to adjacent tier 2, 3 machines.
+tooltip.water_wheel.line2=__DETAIL__
+tooltip.water_wheel.line3=The number of water flow in the area of 3x3x3
+tooltip.water_wheel.line4=determines the strength of energy.
+gui.WaterWheel.progress=Progress: %1$d
+gui.WaterWheel.durability=Durability: %1$d
+gui.WaterWheel.surroundingWater=Water: %1$d
+
+tile.clay_steel_energy_laser.name=Blue Clay Laser
+tile.clayium_energy_laser.name=Green Clay Laser
+tile.ultimate_energy_laser.name=Red Clay Laser
+tile.antimatter_energy_laser.name=White Clay Laser
+tile.antimatter_energy_laser.tooltip.line1=Equal to 3xBlue + 3xGreen + 3xRed.
+tooltip.energy_laser.line1=__DETAIL__
+tooltip.energy_laser.line2=Laser is used to run Clay Reactor
+tooltip.energy_laser.line3=or to accelerate Area Miner.
+tooltip.energy_laser.line4=Laser seems to have some effect on ores and saplings.
+tooltip.energy_laser.line5=Laser irradiation will stop when a redstone signal is applied.
+tooltip.energy_laser.energyConsumption=Power %1$s CE/t
+
+tile.laser_reflector.name=Laser Reflector
+tile.laser_reflector.tooltip.line1=Changes the direction of Laser.
+
+tile.clay_chunk_loader.name=3x3 Chunk Loader
+tile.storage_container.name=Storage Container
+tile.vacuum_container.name=Void Container
+tile.vacuum_container.tooltip.line1=Deletes any item entering it.
+tile.auto_trader.name=Auto Trader
+
+tile.clay_marker.name=Clay Marker
+tile.clay_marker.tooltip.line1=Used for area machines.
+tile.open_pit_marker.name=Clay Marker [Open-pit]
+tile.open_pit_marker.tooltip.line1=Used for area machines.
+tile.open_pit_marker.tooltip.line2=__DETAIL__
+tile.open_pit_marker.tooltip.line3=Its designated area will be
+tile.open_pit_marker.tooltip.line4=automatically expanded to Y = 1.
+tile.ground_leveling_marker.name=Clay Marker [Ground-Leveling]
+tile.ground_leveling_marker.tooltip.line1=Used for area machines.
+tile.ground_leveling_marker.tooltip.line2=__DETAIL__
+tile.ground_leveling_marker.tooltip.line3=Its designated area will be
+tile.ground_leveling_marker.tooltip.line4=automatically expanded to Y = 255.
+tile.prism_marker.name=Clay Marker [Prism]
+tile.prism_marker.tooltip.line1=Used for area machines.
+tile.prism_marker.tooltip.line2=__DETAIL__
+tile.prism_marker.tooltip.line3=Its designated area will be
+tile.prism_marker.tooltip.line4=automatically expanded to Y = 1~255.
+
+tile.miner.name=Block Breaker
+tile.area_collector.name=Area Item Collector
+tile.area_miner.name=Area Miner
+tile.advanced_area_miner.name=Advanced Area Miner
+tile.area_replacer.name=Area Replacer
+gui.AreaMiner.harvest=Harvest
+gui.AreaMiner.fortune=Fortune
+gui.AreaMiner.silktouch=Silktouch
+
+tile.activator.name=Activator
+tile.activator.tooltip.line1=Automatic right-clicker.
+tile.area_activator.name=Area Activator
+tile.area_activator.tooltip.line1=Automatic right-clicker.
+
+util.machine.auto_crafter=Auto Crafter
+tile.advanced_auto_crafter.name=Auto Crafter
+
+tile.pan_cable.name=PAN Cable
+tile.pan_core.name=PAN Core
+tile.antimatter_pan_adapter.name=PAN Adapter Mk I
+tile.pure_antimatter_pan_adapter.name=PAN Adapter Mk II
+tile.oec_pan_adapter.name=PAN Adapter Mk III
+tile.opa_pan_adapter.name=PAN Adapter Mk IV
+
+tile.basic_pan_duplicator.name=PAN Duplicator Rank 1
+tile.advanced_pan_duplicator.name=PAN Duplicator Rank 2
+tile.precision_pan_duplicator.name=PAN Duplicator Rank 3
+tile.clay_steel_pan_duplicator.name=PAN Duplicator Rank 4
+tile.clayium_pan_duplicator.name=PAN Duplicator Rank 5
+tile.ultimate_pan_duplicator.name=PAN Duplicator Rank 6
+tile.antimatter_pan_duplicator.name=PAN Duplicator Rank 7
+tile.pure_antimatter_pan_duplicator.name=PAN Duplicator Rank 8
+tile.oec_pan_duplicator.name=PAN Duplicator Rank 9
+tile.opa_pan_duplicator.name=PAN Duplicator Rank 10
+
+util.machine.fluid_translator=Fluid Buffer
+tooltip.fluid_translator.line1=Interconverts between fluid and
+tooltip.fluid_translator.line2=stacks of Clay Fluid Capsule.
+
+tile.advanced_fluid_transfer_machine.name=Fluid Transfer Machine
+tile.advanced_fluid_transfer_machine.tooltip.line1=Fills or empties liquid containers.
 
 tile.opa_creative_energy.name=Creative CE Source
 
-tile.advanced_auto_crafter.name=Auto Crafter
-tile.precision_auto_crafter.name=Precision Auto Crafter
-tile.clay_steel_auto_crafter.name=Clay Steel Auto Crafter
-tile.clayium_auto_crafter.name=Clayium Auto Crafter
-tile.ultimate_auto_crafter.name=Ultimate Auto Crafter
+util.machine.rf_generator=CE-RF Converter
+gui.rf_generator.storage=%1$sRF/%2$sRF
+gui.rf_generator.convertRate=%1$sCE/t -> %2$sRF/t
+gui.rf_generator.output=Output: %1$sRF/t
+gui.rf_generator.overclock=Overclock: x%1$s
+gui.rf_generator.overclockExponent=OC: %1$s ^ %2$s = %3$s
+tooltip.rf_generator.line1=Converts CE to RF.
+tooltip.rf_generator.line2=__DETAIL__
+tooltip.rf_generator.line3=Power emission will stop when a redstone signal is applied.
+tooltip.rf_generator.line4=Overclocker increases output RF/t.
+tooltip.rf_generator.line5=Edit clayium.cfg to enable recipes for Converters.
+tooltip.rf_generator.convertRate=%1$sCE/t -> %2$sRF/t
+tooltip.rf_generator.output=Output: %1$sRF/t
+
+util.machine.=UNDEFINED MACHINE
+
+util.block.metal_chest.name=%1$s Chest
+
+tooltip.metal_chest.capacity1=Capacity: %1$d x %2$d = %3$d Slots
+tooltip.metal_chest.capacity2=Capacity: %1$d x %2$d x %3$d = %4$d Slots
+
+util.block.silicone_block.name=%1$s Silicone Block
 
 # Item Part
 
@@ -334,6 +472,20 @@ item.clay_slicer.name=Clay Slicer
 item.clay_slicer.tooltip.line1=Machine Output Configurator
 item.clay_spatula.name=Clay Spatula
 item.clay_spatula.tooltip.line1=Changes a machine's appearance to Pipe.
+item.clay_wrench.name=Clay Wrench
+item.clay_wrench.tooltip.line1=Rotates machines.
+item.io_tool.name=Clay IO Configurator
+item.io_tool.tooltip.line1=Input / Output(sneak)
+item.piping_tool.name=Clay Piping Configurator
+item.piping_tool.tooltip.line1=Piping / Rotation(sneak)
+item.memory_card.name=Memory Card
+item.memory_card.tooltip.line1=Stores machine IO settings.
+item.memory_card.tooltip.line2=Right Click : Load from memory
+item.memory_card.tooltip.line3=Shift + Right Click : Save to memory
+
+item.direction_memory.name=Direction Memory Card
+item.direction_memory.tooltip.line1=Used to configure in what direction
+item.direction_memory.tooltip.line2=an Area Activator aims while using items.
 
 item.compressed_clay_shard_0.name=Compressed Clay Shard
 item.compressed_clay_shard_1.name=Industrial Clay Shard
@@ -429,48 +581,36 @@ item.gadget_long_arm_0.name=Clay Gadget [Long Arm]
 item.gadget_long_arm_1.name=Clay Gadget [Longer Arm]
 item.gadget_long_arm_2.name=Clay Gadget [Longest Arm]
 
-item.clay_plate.name=Clay Plate
-item.clay_stick.name=Clay Stick
-item.clay_short_stick.name=Short Clay Stick
-item.clay_ring.name=Clay Ring
-item.clay_small_ring.name=Small Clay Ring
-item.clay_gear.name=Clay Gear
-item.clay_blade.name=Clay Blade
-item.clay_needle.name=Clay Needle
-item.clay_disc.name=Clay Disc
-item.clay_small_disc.name=Small Clay Disc
-item.clay_cylinder.name=Clay Cylinder
-item.clay_pipe.name=Clay Pipe
-item.clay_large_ball.name=Large Clay Ball
-item.clay_large_plate.name=Large Clay Plate
-item.clay_grinding_head.name=Clay Grinding Head
-item.clay_bearing.name=Clay Bearing
-item.clay_spindle.name=Clay Spindle
-item.clay_cutting_head.name=Clay Cutting Head
-item.clay_water_wheel_vane.name=Clay Wheel Vane
+item.capsule.name=Clay Fluid Capsule
+util.capsule.filled=Clay Fluid Capsule (%1$dmB)
 
-item.dense_clay_plate.name=Dense Clay Plate
-item.dense_clay_stick.name=Dense Clay Stick
-item.dense_clay_short_stick.name=Short Dense Clay Stick
-item.dense_clay_ring.name=Dense Clay Ring
-item.dense_clay_small_ring.name=Small Dense Clay Ring
-item.dense_clay_gear.name=Dense Clay Gear
-item.dense_clay_blade.name=Dense Clay Blade
-item.dense_clay_needle.name=Dense Clay Needle
-item.dense_clay_disc.name=Dense Clay Disc
-item.dense_clay_small_disc.name=Small Dense Clay Disc
-item.dense_clay_cylinder.name=Dense Clay Cylinder
-item.dense_clay_pipe.name=Dense Clay Pipe
-item.dense_clay_large_plate.name=Large Dense Clay Plate
-item.dense_clay_grinding_head.name=Dense Clay Grinding Head
-item.dense_clay_bearing.name=Dense Clay Bearing
-item.dense_clay_spindle.name=Dense Clay Spindle
+item.clay_circuit.name=Clay Circuit
+item.clay_circuit_board.name=Clay Circuit Board
+item.simple_circuit.name=Simple Circuit
+item.basic_circuit.name=Basic Circuit
+item.advanced_circuit.name=Advanced Circuit
+item.precision_circuit.name=Precision Circuit
+item.integrated_circuit.name=Integrated Circuit
+item.clay_core.name=Clay Core
+item.clay_core.tooltip.line1=Expands the capacity of a Storage Container
+item.clay_core.tooltip.line2=into the same as DSU.
+item.clay_brain.name=Clay Brain
+item.clay_spirit.name=Clay Spirit
+item.clay_soul.name=Clay Soul
+item.clay_anima.name=Clay Anima
+item.clay_psyche.name=Clay Psyche
+item.synchronous_parts.name=Synchronous Parts
+item.synchronous_parts.tooltip.line1=Insert this into Interfaces
+item.synchronous_parts.tooltip.line2=to enable synchronous.
+item.teleportation_parts.name=Teleportation Parts
+item.manipulator_1.name=Manipulator Mk I
+item.manipulator_2.name=Manipulator Mk II
+item.manipulator_3.name=Manipulator Mk III
+
+item.cee_board.name=CEE Board
+item.cee_circuit.name=CEE Circuit
+item.cee.name=Clay Energy Excitor
+item.laser_parts.name=Laser Parts
+item.antimatter_seed.name=Antimatter Seed
+
 item.dense_clay_spindle.tooltip.line1=Time consumer
-item.dense_clay_cutting_head.name=Dense Clay Cutting Head
-item.dense_clay_water_wheel_vane.name=Dense Clay Wheel Vane
-
-item.ind_clay_plate.name=Industrial Clay Plate
-item.ind_clay_large_plate.name=Large Industrial Clay Plate
-
-item.adv_ind_clay_plate.name=Advanced Industrial Clay Plate
-item.adv_ind_clay_large_plate.name=Large Advanced Industrial Clay Plate

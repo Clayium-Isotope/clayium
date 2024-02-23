@@ -22,6 +22,54 @@ info.sync.MachineDisagreed=同期元として不適切です
 info.sync.SuccessSetMachine=同期元の設定が完了しました
 info.sync.tooltip.Source=同期元: [%1$s, %2$s, %3$s] in %4$s
 
+util.display.tiered_machine=%1$s%2$s
+
+util.tier.=未定義の
+util.tier.clay=粘土
+util.tier.dense_clay=高密度粘土
+util.tier.simple=簡易
+util.tier.basic=
+util.tier.advanced=発展
+util.tier.precision=精密
+util.tier.clay_steel=粘土鋼
+util.tier.clayium=クレイウム
+util.tier.ultimate=究極
+util.tier.antimatter=反物質
+util.tier.pure_antimatter=純反物質
+util.tier.oec=OEC
+util.tier.opa=OPA
+
+util.shape.plate=%1$sプレート
+util.shape.stick=%1$s棒
+util.shape.short_stick=%1$s小棒
+util.shape.ring=%1$sリング
+util.shape.small_ring=%1$s小リング
+util.shape.gear=%1$s歯車
+util.shape.blade=%1$sブレード
+util.shape.needle=%1$sニードル
+util.shape.disc=%1$s円盤
+util.shape.small_disc=%1$s小円盤
+util.shape.cylinder=%1$s円柱
+util.shape.pipe=%1$sパイプ
+util.shape.large_plate=%1$s大プレート
+util.shape.grinding_head=%1$s粉砕機ヘッド
+util.shape.bearing=%1$s軸受
+util.shape.spindle=%1$s主軸
+util.shape.cutting_head=%1$s切断機ヘッド
+util.shape.water_wheel_vane=%1$s水車パーツ
+util.shape.large_ball=大%1$s玉
+util.shape.block=%1$sブロック
+util.shape.ball=%1$s玉
+util.shape.dust=%1$sの粉
+util.shape.ingot=%1$sインゴット
+util.shape.gem=%1$s
+util.shape.crystal=%1$s結晶
+
+util.material.clay=粘土
+util.material.dense_clay=高密度粘土
+util.material.ind_clay=工業用粘土
+util.material.adv_ind_clay=発展工業用粘土
+
 # JEI Part
 
 recipe.clay_tree.description=粘土樹はリチウムの良い入手源であるが、地上世界には生成されない。粘土樹の苗木は、地面に植えられたバニラの苗木に粘土レーザーを照射することで得られる。レーザーのエネルギー値は 1000 以上でなければならない。
@@ -34,6 +82,10 @@ recipe.QuartzCrucible.description=クォーツるつぼは最初のシリコン�
 tile.clay_ore.name=粘土鉱石
 tile.dense_clay_ore.name=高密度粘土鉱石
 tile.large_dense_clay_ore.name=高密度粘土鉱石大
+
+tile.clay_tree_sapling.name=粘土樹の苗木
+tile.clay_tree_log.name=粘土樹の原木
+tile.clay_tree_leaves.name=粘土樹の葉
 
 tile.compressed_clay_0.name=高密度粘土
 tile.compressed_clay_1.name=圧縮粘土
@@ -64,8 +116,8 @@ tile.machine_hull_10.name=純反物質マシン筐体
 tile.machine_hull_11.name=OEC マシン筐体
 tile.machine_hull_12.name=OPA マシン筐体
 
-tile.az91d_alloy_hull.name=AZ91D 合金マシン筐体
-tile.zk60a_alloy_hull.name=ZK60A 合金マシン筐体
+tile.az91d_hull.name=AZ91D 合金マシン筐体
+tile.zk60a_hull.name=ZK60A 合金マシン筐体
 
 tile.clay_work_table.name=粘土作業台
 tile.clay_work_table.tooltip.line1=工業化への第一歩
@@ -74,124 +126,48 @@ tile.clay_crafting_table.tooltip.line1=ちょっと便利な作業台
 tile.clay_crafting_table.tooltip.line2=__DETAIL__
 tile.clay_crafting_table.tooltip.line3=クラフト時隣接チェストにアクセス可能
 
+tile.clay_milling_machine.name=初期型フライス盤
+tile.clay_milling_machine.tooltip.line1=初めての回路
 tile.energetic_clay_condenser_mk1.name=エネルギー粘土凝縮機 Mk I
 tile.energetic_clay_condenser_mk1.tooltip.line1=初めてのエネルギー粘土
 tile.energetic_clay_condenser_mk2.name=エネルギー粘土凝縮機 Mk II
 
-tile.clay_bending_machine.name=粘土プレート作成機
+util.machine.bending_machine=プレート作成機
 tile.clay_bending_machine.tooltip.line1=初めての機械
-tile.dense_clay_bending_machine.name=高密度粘土プレート作成機
-tile.simple_bending_machine.name=簡易プレート作成機
-tile.basic_bending_machine.name=プレート作成機
-tile.advanced_bending_machine.name=発展プレート作成機
-tile.precision_bending_machine.name=精密プレート作成機
-tile.clay_steel_bending_machine.name=粘土鋼プレート作成機
-tile.ultimate_bending_machine.name=究極プレート作成機
+util.machine.wire_drawing_machine=ワイヤー圧延機
+util.machine.pipe_drawing_machine=パイプ圧延機
+util.machine.cutting_machine=切断機
+util.machine.lathe=旋盤
 
-tile.clay_wire_drawing_machine.name=粘土ワイヤー圧延機
-tile.dense_clay_wire_drawing_machine.name=高密度粘土ワイヤー圧延機
-tile.simple_wire_drawing_machine.name=簡易ワイヤー圧延機
-tile.basic_wire_drawing_machine.name=ワイヤー圧延機
-
-tile.clay_pipe_drawing_machine.name=粘土パイプ圧延機
-tile.dense_clay_pipe_drawing_machine.name=高密度粘土パイプ圧延機
-tile.simple_pipe_drawing_machine.name=簡易パイプ圧延機
-tile.basic_pipe_drawing_machine.name=パイプ圧延機
-
-tile.clay_cutting_machine.name=粘土切断機
-tile.dense_clay_cutting_machine.name=高密度粘土切断機
-tile.simple_cutting_machine.name=簡易切断機
-tile.basic_cutting_machine.name=切断機
-
-tile.clay_lathe.name=粘土旋盤
-tile.dense_clay_lathe.name=高密度粘土旋盤
-tile.simple_lathe.name=簡易旋盤
-tile.basic_lathe.name=旋盤
-
-tile.clay_cobblestone_generator.name=粘土丸石製造機
-tile.dense_clay_cobblestone_generator.name=高密度粘土丸石製造機
-tile.simple_cobblestone_generator.name=簡易丸石製造機
-tile.basic_cobblestone_generator.name=丸石製造機
-tile.advanced_cobblestone_generator.name=発展丸石製造機
-tile.precision_cobblestone_generator.name=精密丸石製造機
-tile.clay_steel_cobblestone_generator.name=粘土鋼丸石製造機
-
-tile.dense_clay_condenser.name=高密度粘土コンデンサー
-tile.simple_condenser.name=簡易コンデンサー
-tile.basic_condenser.name=コンデンサー
-tile.advanced_condenser.name=発展コンデンサー
-tile.antimatter_condenser.name=反物質コンデンサー
-
-tile.dense_clay_grinder.name=高密度粘土粉砕機
+util.machine.cobblestone_generator=丸石製造機
+util.machine.condenser=コンデンサー
+util.machine.grinder=粉砕機
 tile.dense_clay_grinder.tooltip.line1=高密度粘土鉱石を粉砕しよう
-tile.simple_grinder.name=簡易粉砕機
-tile.basic_grinder.name=粉砕機
-tile.advanced_grinder.name=発展粉砕機
-tile.precision_grinder.name=精密粉砕機
-tile.antimatter_grinder.name=反物質粉砕機
+util.machine.decomposer=分解機
+util.machine.milling_machine=フライス盤
 
-tile.dense_clay_decomposer.name=高密度粘土分解機
-tile.simple_decomposer.name=簡易分解機
-tile.basic_decomposer.name=分解機
-
-tile.clay_milling_machine.name=初期型フライス盤
-tile.clay_milling_machine.tooltip.line1=初めての回路
-tile.simple_milling_machine.name=簡易フライス盤
-tile.basic_milling_machine.name=フライス盤
-
-# tile.blockSimpleAssembler.name=簡易組立機
-# tile.blockBasicAssembler.name=組立機
-# tile.blockPrecisionAssembler.name=精密組立機
-# tile.blockAntimatterAssembler.name=反物質組立機
-# tooltip.Assembler.line1=複雑なレシピにウンザリしたあなたへ
-
-tile.basic_smelter.name=精錬機
-tile.advanced_smelter.name=発展精錬機
-tile.precision_smelter.name=精密精錬機
-tile.clay_steel_smelter.name=粘土鋼精錬機
-tile.clayium_smelter.name=クレイウム精錬機
-tile.ultimate_smelter.name=究極精錬機
+util.machine.assembler=組立機
+tooltip.assembler.line1=複雑なレシピにウンザリしたあなたへ
+util.machine.inscriber=印刷機
+util.machine.centrifuge=遠心分離機
+tooltip.centrifuge.line1=全自動粘土工場を作ろう
+util.machine.smelter=精錬機
 tooltip.smelter.line1=粘土エネルギーで動くかまど
 
-tile.basic_buffer.name=バッファー
-tile.advanced_buffer.name=発展バッファー
-tile.precision_buffer.name=精密バッファー
-tile.clay_steel_buffer.name=粘土鋼バッファー
-tile.clayium_buffer.name=クレイウムバッファー
-tile.ultimate_buffer.name=究極バッファー
-tile.antimatter_buffer.name=反物質バッファー
-tile.pure_antimatter_buffer.name=純反物質バッファー
-tile.oec_buffer.name=OEC バッファー
-tile.opa_buffer.name=OPA バッファー
+util.machine.buffer=バッファー
 tooltip.buffer.line1=いわゆるアイテムパイプ
-
-tile.basic_multitrack_buffer.name=複線バッファー
-tile.advanced_multitrack_buffer.name=発展複線バッファー
-tile.precision_multitrack_buffer.name=精密複線バッファー
-tile.clay_steel_multitrack_buffer.name=粘土鋼複線バッファー
-tile.clayium_multitrack_buffer.name=クレイウム複線バッファー
-tile.ultimate_multitrack_buffer.name=究極複線バッファー
-tile.antimatter_multitrack_buffer.name=反物質複線バッファー
-tile.pure_antimatter_multitrack_buffer.name=純反物質複線バッファー
-tile.oec_multitrack_buffer.name=OEC 複線バッファー
-tile.opa_multitrack_buffer.name=OPA 複線バッファー
+util.machine.multitrack_buffer=複線バッファー
 tooltip.multitrack_buffer.line1=__DETAIL__
 tooltip.multitrack_buffer.line2=スロットが幾つかに色分けされており、
 tooltip.multitrack_buffer.line3=複線バッファー同士のアイテム輸送は
 tooltip.multitrack_buffer.line4=各色グループごとに独立して行われる。
 tooltip.multitrack_buffer.line5=さらに、グループごとにフィルタースロットを持つ。
 
-tile.basic_salt_extractor.name=塩析出装置
-tile.advanced_salt_extractor.name=発展塩析出装置
-tile.precision_salt_extractor.name=精密塩析出装置
-tile.clay_steel_salt_extractor.name=粘土鋼塩析出装置
+util.machine.chemical_reactor=化学反応機
+util.machine.salt_extractor=塩析出装置
 tooltip.salt_extractor.line1=水から塩分を抽出する
 tooltip.salt_extractor.line2=__DETAIL__
 tooltip.salt_extractor.line3=隣に水源を置き、粘土エネルギーを与えること。
-
-tile.clay_tree_sapling.name=粘土樹の苗木
-tile.clay_tree_log.name=粘土樹の原木
-tile.clay_tree_leaf.name=粘土樹の葉
 
 tile.auto_clay_condenser_mk1.name=全自動粘土圧縮機 Mk I
 tile.auto_clay_condenser_mk1.tooltip.line1=全自動粘土工場の効率化に
@@ -215,13 +191,13 @@ tile.solar_clay_fabricator_mk2.tooltip.line1=太陽光エネルギーにより
 tile.solar_clay_fabricator_mk2.tooltip.line2=粘土の圧縮段階を 1 上げる
 tile.solar_clay_fabricator_mk2.tooltip.line3=__DETAIL__
 tile.solar_clay_fabricator_mk2.tooltip.line4=圧縮エネルギー粘土まで対応
-tile.solar_clay_fabricator_mk3.name=リチウムソーラー粘土製造機
-tile.solar_clay_fabricator_mk3.tooltip.line1=太陽光エネルギーにより
-tile.solar_clay_fabricator_mk3.tooltip.line2=粘土の圧縮段階を 1 上げる
-tile.solar_clay_fabricator_mk3.tooltip.line3=__DETAIL__
-tile.solar_clay_fabricator_mk3.tooltip.line4=4 重圧縮エネルギー粘土まで対応
-tile.solar_clay_fabricator_mk3.tooltip.line5=さらに、3 重圧縮エネルギー粘土の
-tile.solar_clay_fabricator_mk3.tooltip.line6=代わりにリチウムインゴットを投入可能
+tile.lithium_solar_clay_fabricator.name=リチウムソーラー粘土製造機
+tile.lithium_solar_clay_fabricator.tooltip.line1=太陽光エネルギーにより
+tile.lithium_solar_clay_fabricator.tooltip.line2=粘土の圧縮段階を 1 上げる
+tile.lithium_solar_clay_fabricator.tooltip.line3=__DETAIL__
+tile.lithium_solar_clay_fabricator.tooltip.line4=4 重圧縮エネルギー粘土まで対応
+tile.lithium_solar_clay_fabricator.tooltip.line5=さらに、3 重圧縮エネルギー粘土の
+tile.lithium_solar_clay_fabricator.tooltip.line6=代わりにリチウムインゴットを投入可能
 tile.clay_fabricator_mk1.name=粘土製造機 Mk I
 tile.clay_fabricator_mk1.tooltip.line1=粘土を複製
 tile.clay_fabricator_mk1.tooltip.line2=__DETAIL__
@@ -238,9 +214,7 @@ tile.clay_fabricator_mk3.name=粘土製造機 Mk III
 tile.clay_fabricator_mk3.tooltip.line1=あらゆる粘土を瞬時に複製
 
 tile.precision_alloy_smelter.name=合金精錬機
-
 tile.precision_chemical_metal_separator.name=金属分離機
-
 tile.precision_blast_furnace.name=粘土高炉
 tile.precision_blast_furnace.tooltip.line1=__DETAIL__
 tile.precision_blast_furnace.tooltip.line2=[マルチブロック]
@@ -251,49 +225,32 @@ tile.precision_blast_furnace.tooltip.line6=F: 粘土高炉ブロック
 tile.precision_blast_furnace.tooltip.line7=X: マシン筐体か各種インターフェース
 tile.precision_blast_furnace.tooltip.line8=構成要素の Tier により参照されるレシピの Tier が決定される
 
+util.machine.clay_interface=インターフェース
 tile.advanced_clay_interface.name=インターフェース
-tile.precision_clay_interface.name=精密インターフェース
-tile.clay_steel_clay_interface.name=粘土鋼インターフェース
-tile.clayium_clay_interface.name=クレイウムインターフェース
-tile.ultimate_clay_interface.name=究極インターフェース
-tile.antimatter_clay_interface.name=反物質インターフェース
-tile.pure_antimatter_clay_interface.name=純反物質インターフェース
-tile.oec_clay_interface.name=OEC インターフェース
-tile.opa_clay_interface.name=OPA インターフェース
 tooltip.clay_interface.line1=マルチブロック装置の搬入出口に使用
 tooltip.clay_interface.line2=__DETAIL__
 tooltip.clay_interface.line3=アイテムのテレポートにはシンクロパーツが必要
 
+util.machine.redstone_interface=赤石インターフェース
 tile.advanced_redstone_interface.name=赤石インターフェース
-tile.precision_redstone_interface.name=精密赤石インターフェース
-tile.clay_steel_redstone_interface.name=粘土鋼赤石インターフェース
-tile.clayium_redstone_interface.name=クレイウム赤石インターフェース
-tile.ultimate_redstone_interface.name=究極赤石インターフェース
-tile.antimatter_redstone_interface.name=反物質赤石インターフェース
-tile.pure_antimatter_redstone_interface.name=純反物質赤石インターフェース
-tile.oec_redstone_interface.name=OEC 赤石インターフェース
-tile.opa_redstone_interface.name=OPA 赤石インターフェース
 tooltip.redstone_interface.line1=マルチブロック装置の赤石入出力に使用
 tooltip.redstone_interface.line2=__DETAIL__
 tooltip.redstone_interface.line3=マルチブロック装置でなくても、これと
 tooltip.redstone_interface.line4=シンクロナイザーを用いれば赤石入出力が利用可能
 
+util.machine.laser_interface=レーザーインターフェース
 tile.clay_steel_laser_interface.name=レーザーインターフェース
-tile.clayium_laser_interface.name=クレイウムレーザーインターフェース
-tile.ultimate_laser_interface.name=究極レーザーインターフェース
-tile.antimatter_laser_interface.name=反物質レーザーインターフェース
-tile.pure_antimatter_laser_interface.name=純反物質レーザーインターフェース
-tile.oec_laser_interface.name=OEC レーザーインターフェース
-tile.opa_laser_interface.name=OPA レーザーインターフェース
 tooltip.laser_interface.line1=粘土反応炉に使用
 tooltip.laser_interface.line2=__DETAIL__
 tooltip.laser_interface.line3=マルチブロック装置でなくても、
 tooltip.laser_interface.line4=シンクロナイザーを用いて遠隔レーザー照射が可能
 
+util.machine.electrolysis_reactor=電気精錬機
 tile.precision_electrolysis_reactor.name=電気精錬機
-tile.clay_steel_electrolysis_reactor.name=粘土鋼電気精錬機
-tile.clayium_electrolysis_reactor.name=クレイウム電気精錬機
-tile.ultimate_electrolysis_reactor.name=究極電気精錬機
+
+util.machine.distributor=分配機
+tile.clay_steel_distributor.name=分配機
+tooltip.distributor.line1=内部のアイテムを出来るだけ均等に分配しようとする
 
 tile.clay_steel_reactor.name=粘土反応炉
 tile.clay_steel_reactor.tooltip.line1=__DETAIL__
@@ -307,18 +264,199 @@ tile.clay_steel_reactor.tooltip.line8=X: マシン筐体か各種インターフ
 tile.clay_steel_reactor.tooltip.line9=構成要素の Tier により参照されるレシピの Tier が決定される
 tile.clay_steel_reactor.tooltip.line10=レーザーのエネルギー値によりクラフト時間が短縮される
 
-tile.clay_steel_distributor.name=分配機
-tile.clayium_distributor.name=クレイウム分配機
-tile.ultimate_distributor.name=究極分配機
-tooltip.distributor.line1=内部のアイテムを出来るだけ均等に分配しようとする
+util.machine.transformer=物質変換装置
+tile.clay_steel_transformer.name=物質変換装置
+tooltip.transformer.line1=莫大なエネルギーにより、全く別の物質に変化させる
+
+util.machine.ca_condenser=CA 凝縮機
+tile.ultimate_ca_condenser.name=CA 凝縮機
+tooltip.ca_condenser.line1=反物質の種から反物質を精製する
+
+util.machine.ca_injector=CA 注入機
+tile.ultimate_ca_injector.name=CA 注入機
+tooltip.ca_injector.line1=反物質を注入することで、物質に変化を与える
+
+util.machine.ca_collector=共鳴型反物質収集機
+tile.ca_collector.tooltip.line1=共鳴により反物質を収集す
+tile.ca_collector.tooltip.line2=稼動には共鳴装置が必要
+
+util.block.resonator=%1$s反物質共鳴装置
+tooltip.resonator.line1=5x5x5の範囲内にある各種 CA 装置の
+tooltip.resonator.line2=共鳴率を上昇させる
+tooltip.resonator.resonance=共鳴率 : x%1$4.3g
+
+util.block.overclocker=%1$sオーバークロッカー
+tooltip.overclocker.line1=隣接する装置を加速する
+tooltip.overclocker.overclockFactor=加速度 : x%1$4.3g
+
+util.block.energy_storage_upgrade=%1$sエネルギーストレージアップグレード
+tile.energy_storage_upgrade_antimatter.tooltip.line1=隣接する機械が保持できる
+tile.energy_storage_upgrade_antimatter.tooltip.line2=エネルギー粘土の数を 1 上昇させる
+tile.energy_storage_upgrade_pure_antimatter.tooltip.line1=隣接する機械が保持できる
+tile.energy_storage_upgrade_pure_antimatter.tooltip.line2=エネルギー粘土の数を 3 上昇させる
+tile.energy_storage_upgrade_oec.tooltip.line1=隣接する機械が保持できる
+tile.energy_storage_upgrade_oec.tooltip.line2=エネルギー粘土の数を 7 上昇させる
+tile.energy_storage_upgrade_opa.tooltip.line1=隣接する機械が保持できる
+tile.energy_storage_upgrade_opa.tooltip.line2=エネルギー粘土の数を 63 上昇させる
+
+tile.antimatter_ca_reactor_core.name=反物質反応炉コア Mk I
+tile.pure_antimatter_ca_reactor_core.name=反物質反応炉コア Mk II
+tile.oec_ca_reactor_core.name=反物質反応炉コア Mk III
+tile.opa_ca_reactor_core.name=反物質反応炉コア Mk IV
+tooltip.ca_reactor.line1=反物質から純反物質を精製する
+tooltip.ca_reactor.line2=__DETAIL__
+tooltip.ca_reactor.line3=反応炉のランク (構成要素のランクの平均) により
+tooltip.ca_reactor.line4=精製される純反物質の圧縮回数が変化する
+tooltip.ca_reactor.line5=[マルチブロック]
+tooltip.ca_reactor.line6=リング状に CA 反応炉コイルを設置し、
+tooltip.ca_reactor.line7=CA 反応炉筐体かインターフェースで囲う
+tooltip.ca_reactor.line8=その囲いの内 1 つを反応炉コアブロックに置換する
+tooltip.ca_reactor.line9=- CA 反応炉筐体の数は 50 個以上
+tooltip.ca_reactor.line10=- コイルやインターフェースの Tier >= コアの Tier
+gui.CAReactor.invalid=無効
+gui.CAReactor.constructed=構築済
+gui.CAReactor.rankSize=ランク %1$2.2g  サイズ %2$2d
+gui.CAReactor.efficiency=効率 %g
+message.CAReactor.invalidCoil=コイル [%1$d,%2$d,%3$d] が無効です。
+message.CAReactor.tooManyCoils=コイルの数が基準値(%1$d)を超えています。
+message.CAReactor.insufficientTierCoil=コイル [%1$d,%2$d,%3$d] の Tier が無効です。
+message.CAReactor.invalidHull=筐体 [%1$d,%2$d,%3$d] が無効です。
+message.CAReactor.tooHighTierHull=筐体 [%1$d,%2$d,%3$d] の Tier が高すぎます。
+message.CAReactor.insufficientTierInterface=インターフェース [%1$d,%2$d,%3$d] の Tier が無効です。
+message.CAReactor.invalidReactorSize=反応炉のサイズ(%1$d) が基準値(%2$d)を下回っています。
+
+util.block.ca_reactor_coil=反物質反応炉コイル %1$s
+tooltip.ca_reactor_coil.line1=__DETAIL__
+tooltip.ca_reactor_coil.line2=- 周囲六方向は別のブロックで覆われなければならない
+tooltip.ca_reactor_coil.line3=- 隣接するコイルの数は 2 個でなければならない
+tooltip.ca_reactor_coil.line4=NG :
+tooltip.ca_reactor_coil.line5=CCCCC
+tooltip.ca_reactor_coil.line6=C___C <- 隣接コイルが 4 つ
+tooltip.ca_reactor_coil.line7=CCCCC
+tooltip.ca_reactor_coil.line8=OK :
+tooltip.ca_reactor_coil.line9=_CCC_
+tooltip.ca_reactor_coil.line10=C___C
+tooltip.ca_reactor_coil.line11=_CCC_
+
+util.block.ca_reactor_hull=反物質反応炉筐体 ランク %1$d
+tooltip.ca_reactor_hull.line1=コアとコイルは %1$s 以上でなければならない
+
+tile.opa_ec_decomposer.name=エネルギー粘土分解機
+
+util.machine.water_wheel.name=水車
+tooltip.water_wheel.line1=隣接する Tier 2, 3 機械にエネルギーを送る
+tooltip.water_wheel.line2=__DETAIL__
+tooltip.water_wheel.line3=周囲 3x3x3 にある水流の数により
+tooltip.water_wheel.line4=発生するエネルギーの強度が決まる
+gui.WaterWheel.progress=進捗: %1$d
+gui.WaterWheel.durability=耐久度: %1$d
+gui.WaterWheel.surroundingWater=水流: %1$d
+
+tile.clay_steel_energy_laser.name=青粘土レーザー
+tile.clayium_energy_laser.name=緑粘土レーザー
+tile.ultimate_energy_laser.name=赤粘土レーザー
+tile.antimatter_energy_laser.name=白粘土レーザー
+tile.antimatter_energy_laser.tooltip.line1=3x青 + 3x緑 + 3x赤 と等しい
+tooltip.energy_laser.line1=__DETAIL__
+tooltip.energy_laser.line2=レーザーは粘土反応炉の稼動や、
+tooltip.energy_laser.line3=範囲採掘機などの機械の加速に使用される
+tooltip.energy_laser.line4=鉱石や苗木には何らかの影響を与えるようだ
+tooltip.energy_laser.line5=赤石信号によりレーザー照射を止められる
+tooltip.energy_laser.energyConsumption=消費: %1$s CE/t
+
+tile.laser_reflector.name=レーザーリフレクター
+tile.laser_reflector.tooltip.line1=レーザーの向きを変える
+
+tile.clay_chunk_loader.name=3x3 チャンクローダー
+tile.storage_container.name=ストレージコンテナ
+tile.vacuum_container.name=虚空コンテナ
+tile.vacuum_container.tooltip.line1=搬入されたアイテムを消去する
+tile.auto_trader.name=自動取引装置
+
+tile.clay_marker.name=粘土マーカー
+tile.clay_marker.tooltip.line1=範囲機械の使用に必要
+tile.open_pit_marker.name=粘土マーカー [露天堀]
+tile.open_pit_marker.tooltip.line1=範囲機械の使用に必要
+tile.open_pit_marker.tooltip.line2=__DETAIL__
+tile.open_pit_marker.tooltip.line3=指定領域の下面が自動的に
+tile.open_pit_marker.tooltip.line4=Y = 1 まで拡張される。
+tile.ground_leveling_marker.name=粘土マーカー [整地]
+tile.ground_leveling_marker.tooltip.line1=Used for area machines.
+tile.ground_leveling_marker.tooltip.line2=__DETAIL__
+tile.ground_leveling_marker.tooltip.line3=指定領域の上面が自動的に
+tile.ground_leveling_marker.tooltip.line4=Y = 255 まで拡張される。
+tile.prism_marker.name=粘土マーカー [角柱]
+tile.prism_marker.tooltip.line1=Used for area machines.
+tile.prism_marker.tooltip.line2=__DETAIL__
+tile.prism_marker.tooltip.line3=指定領域の上下面が自動的に
+tile.prism_marker.tooltip.line4=Y = 1 ～ 255 まで拡張される。
+
+tile.miner.name=採掘機
+tile.area_collector.name=範囲収集機
+tile.area_miner.name=範囲採掘機
+tile.advanced_area_miner.name=発展型範囲採掘機
+tile.area_replacer.name=範囲置換機
+gui.AreaMiner.harvest=採掘
+gui.AreaMiner.fortune=幸運
+gui.AreaMiner.silktouch=シルクタッチ
+
+tile.activator.name=代行機
+tile.activator.tooltip.line1=右クリックを代行
+tile.area_activator.name=範囲代行機
+tile.area_activator.tooltip.line1=右クリックを代行
+
+util.machine.auto_crafter=自動クラフト装置
+tile.advanced_auto_crafter.name=自動クラフト装置
+
+tile.pan_cable.name=PAN ケーブル
+tile.pan_core.name=PAN コア
+tile.antimatter_pan_adapter.name=PAN アダプター Mk I
+tile.pure_antimatter_pan_adapter.name=PAN アダプター Mk II
+tile.oec_pan_adapter.name=PAN アダプター Mk III
+tile.opa_pan_adapter.name=PAN アダプター Mk IV
+
+tile.basic_pan_duplicator.name=PAN 複製機 ランク 1
+tile.advanced_pan_duplicator.name=PAN 複製機 ランク 2
+tile.precision_pan_duplicator.name=PAN 複製機 ランク 3
+tile.clay_steel_pan_duplicator.name=PAN 複製機 ランク 4
+tile.clayium_pan_duplicator.name=PAN 複製機 ランク 5
+tile.ultimate_pan_duplicator.name=PAN 複製機 ランク 6
+tile.antimatter_pan_duplicator.name=PAN 複製機 ランク 7
+tile.pure_antimatter_pan_duplicator.name=PAN 複製機 ランク 8
+tile.oec_pan_duplicator.name=PAN 複製機 ランク 9
+tile.opa_pan_duplicator.name=PAN 複製機 ランク 10
+
+util.machine.fluid_translator=液体バッファー
+tooltip.fluid_translator.line1=液体と粘土液体カプセルを
+tooltip.fluid_translator.line2=相互に変換する
+
+tile.advanced_fluid_transfer_machine.name=液体転移装置
+tile.advanced_fluid_transfer_machine.tooltip.line1=液体容器から液体を出し入れする
 
 tile.opa_creative_energy.name=クリエイティブ用粘土エネルギー源
 
-tile.advanced_auto_crafter.name=自動クラフト装置
-tile.precision_auto_crafter.name=精密自動クラフト装置
-tile.clay_steel_auto_crafter.name=粘土鋼自動クラフト装置
-tile.clayium_auto_crafter.name=クレイウム自動クラフト装置
-tile.ultimate_auto_crafter.name=究極自動クラフト装置
+util.machine.rf_generator=CE-RF コンバーター
+gui.rf_generator.storage=%1$sRF/%2$sRF
+gui.rf_generator.convertRate=%1$sCE/t -> %2$sRF/t
+gui.rf_generator.output=出力: %1$sRF/t
+gui.rf_generator.overclock=オーバークロック: x%1$s
+gui.rf_generator.overclockExponent=OC: %1$s ^ %2$s = %3$s
+tooltip.rf_generator.line1=CE を RF に変換する
+tooltip.rf_generator.line2=__DETAIL__
+tooltip.rf_generator.line3=赤石信号によりエネルギー出力を止められる
+tooltip.rf_generator.line4=オーバークロッカーにより出力 RF/t を増大できる
+tooltip.rf_generator.line5=コンフィグでこれを作成するレシピが有効化できる
+tooltip.rf_generator.convertRate=%1$sCE/t -> %2$sRF/t
+tooltip.rf_generator.output=出力: %1$sRF/t
+
+util.machine.=UNDEFINED MACHINE
+
+util.block.metal_chest.name=%1$sチェスト
+
+tooltip.metal_chest.capacity1=容量: %1$d x %2$d = %3$d スロット
+tooltip.metal_chest.capacity2=容量: %1$d x %2$d x %3$d = %4$d スロット
+
+util.block.silicone_block.name=%1$sのシリコーンブロック
 
 # Item Part
 
@@ -334,6 +472,20 @@ item.clay_slicer.name=粘土スライサー
 item.clay_slicer.tooltip.line1=搬出口設定ツール
 item.clay_spatula.name=粘土へら
 item.clay_spatula.tooltip.line1=装置の見た目をパイプ化する
+item.clay_wrench.name=粘土レンチ
+item.clay_wrench.tooltip.line1=装置を回転させる
+item.io_tool.name=粘土配管ツール (搬入出口)
+item.io_tool.tooltip.line1=搬入 / 搬出(スニーク)
+item.piping_tool.name=粘土配管ツール (パイプ化/回転)
+item.piping_tool.tooltip.line1=パイプ化 / 回転(スニーク)
+item.memory_card.name=配管メモリー
+item.memory_card.tooltip.line1=搬入出口などの設定を保存する
+item.memory_card.tooltip.line2=右クリック: メモリーから読み込み
+item.memory_card.tooltip.line3=Shift + 右クリック: メモリーに保存
+
+item.direction_memory.name=方向メモリー
+item.direction_memory.tooltip.line1=クリック方向・位置を保存し、
+item.direction_memory.tooltip.line2=範囲代行機に設定を適用する
 
 item.compressed_clay_shard_0.name=圧縮粘土片
 item.compressed_clay_shard_1.name=工業用粘土片
@@ -397,7 +549,7 @@ item.filter_duplicator.tooltip.line3=__DETAIL__
 item.filter_duplicator.tooltip.line4=コピーしたフィルターを他の機械に適用したい場合は
 item.filter_duplicator.tooltip.line5=Shift + 右クリックによりコピーフラグを解除する
 
-item.gadget_holder.name粘土ガジェットホルダー
+item.gadget_holder.name=粘土ガジェットホルダー
 item.gadget_holder.tooltip.line1=粘土ガジェットはこのホルダーに
 item.gadget_holder.tooltip.line2=入れて使用すること
 item.gadget_blank.name=粘土ガジェットテンプレート
@@ -422,48 +574,36 @@ item.gadget_long_arm_0.name=粘土ガジェット [ロングアーム]
 item.gadget_long_arm_1.name=粘土ガジェット [超ロングアーム]
 item.gadget_long_arm_2.name=粘土ガジェット [超超ロングアーム]
 
-item.clay_plate.name=粘土プレート
-item.clay_stick.name=粘土棒
-item.clay_short_stick.name=粘土小棒
-item.clay_ring.name=粘土リング
-item.clay_small_ring.name=粘土小リング
-item.clay_gear.name=粘土歯車
-item.clay_blade.name=粘土ブレード
-item.clay_needle.name=粘土ニードル
-item.clay_disc.name=粘土円盤
-item.clay_small_disc.name=粘土小円盤
-item.clay_cylinder.name=粘土円柱
-item.clay_pipe.name=粘土パイプ
-item.clay_large_ball.name=大粘土玉
-item.clay_large_plate.name=粘土大プレート
-item.clay_grinding_head.name=粘土粉砕機ヘッド
-item.clay_bearing.name=粘土軸受
-item.clay_spindle.name=粘土主軸
-item.clay_cutting_head.name=粘土切断機ヘッド
-item.clay_water_wheel_vane.name=粘土水車パーツ
+item.capsule.name=粘土液体カプセル
+util.capsule.filled=粘土液体カプセル (%1$dmB)
 
-item.dense_clay_plate.name=高密度粘土プレート
-item.dense_clay_stick.name=高密度粘土棒
-item.dense_clay_short_stick.name=高密度粘土小棒
-item.dense_clay_ring.name=高密度粘土リング
-item.dense_clay_small_ring.name=高密度粘土小リング
-item.dense_clay_gear.name=高密度粘土歯車
-item.dense_clay_blade.name=高密度粘土ブレード
-item.dense_clay_needle.name=高密度粘土ニードル
-item.dense_clay_disc.name=高密度粘土円盤
-item.dense_clay_small_disc.name=高密度粘土小円盤
-item.dense_clay_cylinder.name=高密度粘土円柱
-item.dense_clay_pipe.name=高密度粘土パイプ
-item.dense_clay_large_plate.name=高密度粘土大プレート
-item.dense_clay_grinding_head.name=高密度粘土粉砕機ヘッド
-item.dense_clay_bearing.name=高密度粘土軸受
-item.dense_clay_spindle.name=高密度粘土主軸
+item.clay_circuit.name=粘土回路
+item.clay_circuit_board.name=粘土回路板
+item.simple_circuit.name=簡易回路
+item.basic_circuit.name=基本回路
+item.advanced_circuit.name=発展回路
+item.precision_circuit.name=精密回路
+item.integrated_circuit.name=集積回路
+item.clay_core.name=粘土コア
+item.clay_core.tooltip.line1=ストレージコンテナに右クリックすると
+item.clay_core.tooltip.line2=その容量を 21 億個にまで拡張する
+item.clay_brain.name=粘土脳
+item.clay_spirit.name=粘土スピリット
+item.clay_soul.name=粘土ソウル
+item.clay_anima.name=粘土アニマ
+item.clay_psyche.name=粘土プシュケー
+item.synchronous_parts.name=シンクロパーツ
+item.synchronous_parts.tooltip.line1=同期させるためには、インターフェースに
+item.synchronous_parts.tooltip.line2=これを予め挿入しておくこと
+item.teleportation_parts.name=空間転移パーツ
+item.manipulator_1.name=マジック・ハンド Mk I
+item.manipulator_2.name=マジック・ハンド Mk II
+item.manipulator_3.name=マジック・ハンド Mk III
+
+item.cee_board.name=CEE 回路板
+item.cee_circuit.name=CEE 回路
+item.cee.name=粘土エネルギー励起装置
+item.laser_parts.name=レーザーパーツ
+item.antimatter_seed.name=反物質の種
+
 item.dense_clay_spindle.tooltip.line1=タイムコンシューマー
-item.dense_clay_cutting_head.name=高密度粘土切断機ヘッド
-item.dense_clay_water_wheel_vane.name=高密度粘土水車パーツ
-
-item.ind_clay_plate.name=工業用粘土プレート
-item.ind_clay_large_plate.name=工業用粘土大プレート
-
-item.adv_ind_clay_plate.name=発展工業用粘土プレート
-item.adv_ind_clay_large_plate.name=発展工業用粘土大プレート

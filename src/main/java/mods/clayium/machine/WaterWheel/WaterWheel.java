@@ -7,6 +7,6 @@ import mods.clayium.util.TierPrefix;
 
 public class WaterWheel extends ClayDirectionalNoRecipeMachine {
     public WaterWheel(TierPrefix tier) {
-        super(TileEntityWaterWheel.class, EnumMachineKind.waterWheel, GuiHandler.GuiIdClayWaterWheel, tier);
+        super(TileEntityWaterWheel::new, EnumMachineKind.waterWheel, GuiHandler.GuiIdClayWaterWheel, tier);
     }
 }

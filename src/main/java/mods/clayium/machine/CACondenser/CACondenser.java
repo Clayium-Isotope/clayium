@@ -7,6 +7,6 @@ import mods.clayium.util.TierPrefix;
 
 public class CACondenser extends CAMachine {
     public CACondenser(TierPrefix tier) {
-        super(EnumMachineKind.CACondenser, "", tier, TileEntityCACondenser.class, GuiHandler.GuiIdClayMachines);
+        super(EnumMachineKind.CACondenser, "", tier, TileEntityCACondenser::new, GuiHandler.GuiIdClayMachines);
     }
 }

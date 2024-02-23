@@ -16,12 +16,13 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class ClayiumMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
-        super(Material.IRON, teClass,
+    public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Supplier<? extends TileEntityGeneric> teSupplier, int guiID) {
+        super(Material.IRON, teSupplier,
                 suffix == null || suffix.equals("")
                         ? tier.getPrefix() + "_" + kind.getRegisterName()
                         : kind.getRegisterName() + "_" + suffix,
@@ -32,15 +33,15 @@ public class ClayiumMachine extends ClaySidedContainer {
     }
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier) {
-        this(kind, suffix, tier, TileEntityClayiumMachine.class, GuiHandler.GuiIdClayMachines);
+        this(kind, suffix, tier, TileEntityClayiumMachine::new, GuiHandler.GuiIdClayMachines);
     }
 
     public ClayiumMachine(EnumMachineKind kind, TierPrefix tier) {
         this(kind, null, tier);
     }
 
-    public ClayiumMachine(EnumMachineKind kind, TierPrefix tier, Class<? extends TileEntityGeneric> teClass) {
-        this(kind, null, tier, teClass, GuiHandler.GuiIdClayMachines);
+    public ClayiumMachine(EnumMachineKind kind, TierPrefix tier, Supplier<? extends TileEntityGeneric> teSupplier) {
+        this(kind, null, tier, teSupplier, GuiHandler.GuiIdClayMachines);
     }
 
     @Override

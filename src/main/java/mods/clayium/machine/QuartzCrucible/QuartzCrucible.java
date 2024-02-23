@@ -28,7 +28,7 @@ import java.util.Optional;
 @HasOriginalState
 public class QuartzCrucible extends ClayContainer {
     public QuartzCrucible() {
-        super(Material.GLASS, TileEntityQuartzCrucible.class, "quartz_crucible", -1, TierPrefix.advanced);
+        super(Material.GLASS, TileEntityQuartzCrucible::new, "quartz_crucible", -1, TierPrefix.advanced);
         this.setSoundType(SoundType.GLASS);
         this.setHardness(0.2f);
         this.setResistance(0.2f);

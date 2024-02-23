@@ -9,10 +9,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public abstract class ClaySidedContainer extends ClayContainer {
-    public ClaySidedContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId, TierPrefix tier) {
-        super(material, teClass, modelPath, guiId, tier);
+    public ClaySidedContainer(Material material, Supplier<? extends TileEntityGeneric> teSupplier, String modelPath, int guiId, TierPrefix tier) {
+        super(material, teSupplier, modelPath, guiId, tier);
     }
 
     @Nullable

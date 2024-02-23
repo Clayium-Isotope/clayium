@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBlockTiered extends ItemBlock implements ITieredItem {
-    private final TierPrefix tier;
+    protected final TierPrefix tier;
 
     public ItemBlockTiered(Block block) {
         super(block);

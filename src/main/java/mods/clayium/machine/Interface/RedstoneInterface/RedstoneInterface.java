@@ -26,7 +26,7 @@ import java.util.Optional;
 @HasOriginalState
 public class RedstoneInterface extends ClayInterface implements ITieredBlock {
     public RedstoneInterface(TierPrefix tier) {
-        super(EnumMachineKind.redstoneInterface, TileEntityRedstoneInterface.class, tier);
+        super(EnumMachineKind.redstoneInterface, TileEntityRedstoneInterface::new, tier);
 
         setDefaultState(this.getDefaultState().withProperty(BlockStateRedstoneInterface.CONTROL_STATE, EnumControlState.None));
 

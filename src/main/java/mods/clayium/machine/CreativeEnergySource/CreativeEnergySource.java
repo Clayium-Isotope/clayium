@@ -6,6 +6,6 @@ import mods.clayium.util.TierPrefix;
 
 public class CreativeEnergySource extends ClayDirectionalNoRecipeMachine {
     public CreativeEnergySource() {
-        super(TileEntityCreativeEnergySource.class, EnumMachineKind.creativeCESource, TierPrefix.OPA);
+        super(TileEntityCreativeEnergySource::new, EnumMachineKind.creativeCESource, TierPrefix.OPA);
     }
 }

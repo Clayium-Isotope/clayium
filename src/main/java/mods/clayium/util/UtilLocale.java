@@ -181,7 +181,7 @@ public class UtilLocale {
         String unsafe = I18n.format(key, args);
 
         if (unsafe.equals(key))
-            return "";
+            return key;
 
         // this line is uncomfortable
         if (unsafe.startsWith("Format error: ")) {

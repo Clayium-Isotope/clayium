@@ -15,12 +15,13 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {
-        super(Material.IRON, teClass, (suffix.isEmpty() ? (tier.getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
+    public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {
+        super(Material.IRON, teSupplier, (suffix.isEmpty() ? (tier.getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
         this.machineKind = kind;
 
         setSoundType(SoundType.METAL);
@@ -31,12 +32,12 @@ public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
         JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
     }
 
-    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, TierPrefix tier) {
-        this(teClass, kind, GuiHandler.GuiIdNormalInventory, tier);
+    public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, TierPrefix tier) {
+        this(teSupplier, kind, GuiHandler.GuiIdNormalInventory, tier);
     }
 
-    public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, int guiId, TierPrefix tier) {
-        this(teClass, kind, "", guiId, tier);
+    public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, int guiId, TierPrefix tier) {
+        this(teSupplier, kind, "", guiId, tier);
     }
 
     @Override

@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockTiered extends ClayiumBlock implements ITieredBlock {
-    private final TierPrefix tier;
+    protected final TierPrefix tier;
 
     public BlockTiered(Material material, String modelPath, TierPrefix tier) {
         this(material, modelPath, tier.meta(), tier);

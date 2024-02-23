@@ -23,7 +23,7 @@ import java.util.List;
 @HasOriginalState
 public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
     public ClayEnergyLaser(TierPrefix tier) {
-        super(TileEntityClayEnergyLaser.class, EnumMachineKind.clayEnergyLaser, GuiHandler.GuiIdClayEnergyLaser, tier);
+        super(TileEntityClayEnergyLaser::new, EnumMachineKind.clayEnergyLaser, GuiHandler.GuiIdClayEnergyLaser, tier);
     }
 
     public void updatePower(World worldIn, BlockPos pos) {
@@ -58,10 +58,10 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, "tooltip.clay_energy_laser");
+        UtilLocale.localizeTooltip(tooltip, "tooltip.energy_laser");
         super.addInformation(stack, player, tooltip, advanced);
 
-        if (UtilLocale.canLocalize("tooltip.ClayEnergyLaser.energyConsumption")) {
+        if (UtilLocale.canLocalize("tooltip.energy_laser.energyConsumption")) {
             int e = 0;
             switch(this.tier) {
                 case claySteel:
@@ -77,7 +77,7 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
                     e = TileEntityClayEnergyLaser.consumingEnergyWhite;
             }
 
-            tooltip.add(UtilLocale.localizeAndFormat("tooltip.ClayEnergyLaser.energyConsumption", UtilLocale.ClayEnergyNumeral(e)));
+            tooltip.add(UtilLocale.localizeAndFormat("tooltip.energy_laser.energyConsumption", UtilLocale.ClayEnergyNumeral(e)));
         }
     }
 }

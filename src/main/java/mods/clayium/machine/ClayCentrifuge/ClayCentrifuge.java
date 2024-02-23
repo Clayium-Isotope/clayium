@@ -7,6 +7,6 @@ import mods.clayium.util.TierPrefix;
 
 public class ClayCentrifuge extends ClayiumMachine {
     public ClayCentrifuge(TierPrefix tier) {
-        super(EnumMachineKind.centrifuge, "", tier, TileEntityClayCentrifuge.class, GuiHandler.GuiIdClayCentrifuge);
+        super(EnumMachineKind.centrifuge, "", tier, TileEntityClayCentrifuge::new, GuiHandler.GuiIdClayCentrifuge);
     }
 }

@@ -7,7 +7,7 @@ import mods.clayium.util.TierPrefix;
 
 public class ClayFabricator extends ClayHorizontalNoRecipeMachine {
     public ClayFabricator(TierPrefix tier) {
-        super(TileEntityClayFabricator.class, EnumMachineKind.clayFabricator,
+        super(TileEntityClayFabricator::new, EnumMachineKind.clayFabricator,
                 tier == TierPrefix.clayium ? "mk1" : tier == TierPrefix.ultimate ? "mk2" : tier == TierPrefix.OPA ? "mk3" : "",
                 GuiHandler.GuiIdClayMachines, tier);
     }

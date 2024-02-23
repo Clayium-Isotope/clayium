@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ClayDistributor extends ClayDirectionalNoRecipeMachine {
     public ClayDistributor(TierPrefix tier) {
-        super(TileEntityClayDistributor.class, EnumMachineKind.distributor, GuiHandler.GuiIdClayDistributor, tier);
+        super(TileEntityClayDistributor::new, EnumMachineKind.distributor, GuiHandler.GuiIdClayDistributor, tier);
     }
 
     @Override

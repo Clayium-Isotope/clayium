@@ -1,11 +1,14 @@
 package mods.clayium.block;
 
 import mods.clayium.block.common.BlockTiered;
+import mods.clayium.block.common.IItemBlockHolder;
+import mods.clayium.block.itemblock.ItemBlockTierNamed;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -14,7 +17,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Resonator extends BlockTiered implements CAResonator {
+public class Resonator extends BlockTiered implements CAResonator, IItemBlockHolder {
     private final double resonance;
 
     public Resonator(int meta, TierPrefix tier, double resonance) {
@@ -37,10 +40,15 @@ public class Resonator extends BlockTiered implements CAResonator {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, "tooltip.Resonator");
+        UtilLocale.localizeTooltip(tooltip, "tooltip.resonator");
         super.addInformation(stack, player, tooltip, advanced);
         if (UtilLocale.canLocalize("tooltip.Resonator.resonance")) {
             tooltip.add(UtilLocale.localizeAndFormat("tooltip.Resonator.resonance", this.getResonance()));
         }
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockTierNamed(this, "util.block.resonator", UtilLocale.localizeAndFormat(TierPrefix.getLocalizeKey(this.tier)));
     }
 }

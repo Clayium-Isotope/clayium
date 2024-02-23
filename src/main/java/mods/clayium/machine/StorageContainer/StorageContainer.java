@@ -34,7 +34,7 @@ import java.util.Optional;
 @HasOriginalState
 public class StorageContainer extends ClayHorizontalNoRecipeMachine {
     public StorageContainer() {
-        super(TileEntityStorageContainer.class, EnumMachineKind.storageContainer, GuiHandler.GuiIdStorageContainer, TierPrefix.precision);
+        super(TileEntityStorageContainer::new, EnumMachineKind.storageContainer, GuiHandler.GuiIdStorageContainer, TierPrefix.precision);
     }
 
     @Override

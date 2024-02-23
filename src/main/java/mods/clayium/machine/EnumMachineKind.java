@@ -39,7 +39,7 @@ public enum EnumMachineKind {
     chemicalMetalSeparator("chemical_metal_separator", null),
     electrolysisReactor("electrolysis_reactor", ClayiumRecipes.electrolysisReactor),
     clayReactor("reactor", ClayiumRecipes.clayReactor),
-    transformer("matter_transformer", ClayiumRecipes.transformer, SlotType.MACHINE, "transformer"),
+    transformer("transformer", ClayiumRecipes.transformer, SlotType.MACHINE, "transformer"),
     CACondenser("ca_condenser", null),
     CAInjector("ca_injector", ClayiumRecipes.CAInjector),
     ECCondenser("energetic_clay_condenser", ClayiumRecipes.energeticClayCondenser, SlotType.MACHINE, "eccondenser"),
@@ -57,7 +57,7 @@ public enum EnumMachineKind {
     // 配管・ストレージ
     buffer("buffer", null),
     multitrackBuffer("multitrack_buffer", null),
-    fluidBuffer("fluid_buffer", null),
+    fluidBuffer("fluid_translator", null), // Fluid Translatorでもあった
     storageContainer("storage_container", null, SlotType.UNKNOWN, "storagecontainer"),
     vacuumContainer("vacuum_container", null),
     metalChest("metal_chest", null),
@@ -76,7 +76,6 @@ public enum EnumMachineKind {
     clayFabricator("clay_fabricator", null),
     CAResonatingCollector("ca_collector", null),
     creativeCESource("creative_energy", null),
-    fluidTranslator("fluid_translator", null),
     fluidTransferMachine("fluid_transfer_machine", ClayiumRecipes.fluidTransferMachine),
 
     // ビルダー系
@@ -95,7 +94,7 @@ public enum EnumMachineKind {
     // その他
     clayChunkLoader("clay_chunk_loader", null),
     autoTrader("auto_trader", null),
-    CE_RFConverter("ce_rf_converter", null),
+    CE_RFConverter("rf_generator", null),
     ;
 
     EnumMachineKind(String kind, ClayiumRecipe recipe) {
@@ -167,5 +166,9 @@ public enum EnumMachineKind {
             this.playerCount = playerCount;
             this.containerClass = containerClass;
         }
+    }
+
+    public static String getLocalizeKey(EnumMachineKind kind) {
+        return "util.machine." + kind.kind;
     }
 }

@@ -6,6 +6,6 @@ import mods.clayium.util.TierPrefix;
 
 public class CobblestoneGenerator extends ClayDirectionalNoRecipeMachine {
     public CobblestoneGenerator(TierPrefix tier) {
-        super(TileEntityCobblestoneGenerator.class, EnumMachineKind.cobblestoneGenerator, tier);
+        super(TileEntityCobblestoneGenerator::new, EnumMachineKind.cobblestoneGenerator, tier);
     }
 }

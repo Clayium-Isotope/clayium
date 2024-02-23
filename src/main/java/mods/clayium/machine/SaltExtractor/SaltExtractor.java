@@ -6,6 +6,6 @@ import mods.clayium.util.TierPrefix;
 
 public class SaltExtractor extends ClayDirectionalNoRecipeMachine {
     public SaltExtractor(TierPrefix tier) {
-        super(TileEntitySaltExtractor.class, EnumMachineKind.saltExtractor, tier);
+        super(TileEntitySaltExtractor::new, EnumMachineKind.saltExtractor, tier);
     }
 }

@@ -49,6 +49,10 @@ public enum ClayiumShape {
         return null;
     }
 
+    public static String getLocalizeKey(ClayiumShape shape) {
+        return "util.shape." + shape.name;
+    }
+
     public static final List<ClayiumShape> clayPartShapes = Arrays.asList(
             plate, stick, shortStick, ring, smallRing, gear, blade, needle, disc, smallDisc,
             cylinder, pipe, largeBall, largePlate, grindingHead, bearing, spindle, cuttingHead, waterWheel, block,
