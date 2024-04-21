@@ -3,6 +3,7 @@ package mods.clayium.gui;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.ClayEnergyHolder;
 import mods.clayium.util.UtilLocale;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
@@ -68,6 +69,13 @@ public class GuiTemp extends GuiContainer {
         for(int i = 0; i < container.inventorySlots.size(); ++i) {
             if (container.inventorySlots.get(i) instanceof SlotWithTexture)
                 ((SlotWithTexture) container.inventorySlots.get(i)).draw(this, guiLeft, guiTop);
+        }
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        if (button.enabled) {
+            mc.playerController.sendEnchantPacket(inventorySlots.windowId, button.id);
         }
     }
 }

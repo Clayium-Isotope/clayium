@@ -2,6 +2,7 @@ package mods.clayium.machine;
 
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.AreaMiner.AreaMiner;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.AutoCrafter;
 import mods.clayium.machine.CACondenser.CACondenser;
@@ -135,11 +136,12 @@ public class ClayiumMachines {
         clayOpenPitMarker       = addContainer(EnumMachineKind.openPitMarker, TierPrefix.clayium, new ClayMarker("open_pit_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.OpenPit));
         groundLevelingMarker    = addContainer(EnumMachineKind.groundLevelingMarker, TierPrefix.clayium, new ClayMarker("ground_leveling_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.GroundLeveling));
         prismMarker             = addContainer(EnumMachineKind.prismMarker, TierPrefix.clayium, new ClayMarker("prism_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.Prism));
-//        blockMiner = (new AreaMiner(6, "clayium:areaminer"))
+
+        addContainer(EnumMachineKind.areaMiner, TierPrefix.precision, new AreaMiner(TierPrefix.precision, "breaker"));
 //        blockAreaCollector = (new AreaCollector(7))
-//        blockAreaMiner = (new AreaMiner(8, "clayium:areaminer"))
-//        blockAdvancedAreaMiner = (new AreaMiner(9, "clayium:advareaminer"))
-//        blockAreaReplacer = (new AreaMiner(10, "clayium:areareplacer"))
+        addContainer(EnumMachineKind.areaMiner, TierPrefix.clayium, new AreaMiner(TierPrefix.clayium, "area_miner"));
+        addContainer(EnumMachineKind.advancedAreaMiner, TierPrefix.ultimate, new AreaMiner(TierPrefix.ultimate, "adv_area_miner"));
+        addContainer(EnumMachineKind.areaReplacer, TierPrefix.antimatter, new AreaMiner(TierPrefix.antimatter, "area_replacer"));
 //        blockActivator = (new AreaActivator(6))
 //        blockAreaActivator = (new AreaActivator(8))
 

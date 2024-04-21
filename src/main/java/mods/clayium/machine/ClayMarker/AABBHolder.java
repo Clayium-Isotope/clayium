@@ -1,10 +1,12 @@
 package mods.clayium.machine.ClayMarker;
 
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public interface AABBHolder {
     AxisAlignedBB NULL_AABB = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+    PropertyEnum<Appearance> APPEARANCE = PropertyEnum.create("appearance", Appearance.class);
 
     AxisAlignedBB getAxisAlignedBB();
 
@@ -51,7 +53,7 @@ public interface AABBHolder {
             return this.ordinal();
         }
 
-        public static Appearance fromMeta(byte meta) {
+        public static Appearance fromMeta(int meta) {
             switch (meta) {
                 case 0: return _0;
                 case 1: return _1;

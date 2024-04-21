@@ -1,13 +1,14 @@
 package mods.clayium.client.render;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.ClayMarker.BlockStateClayMarker;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.ClayMarker.AABBHolder;
 import mods.clayium.machine.ClayMarker.TileEntityClayMarker;
 import mods.clayium.util.UtilRender;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
@@ -18,13 +19,18 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 @SideOnly(Side.CLIENT)
-public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityClayMarker> {
+public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityGeneric> {
     public static final TESRClayMarker instance = new TESRClayMarker();
     private static final double[] ds1 = new double[]{0.1875, -0.1875};
     private static final double[] ds2 = new double[]{0.125, -0.125};
 
     @Override
-    public void render(TileEntityClayMarker te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(TileEntityGeneric te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+        if (te instanceof AABBHolder)
+            render((TileEntityGeneric & AABBHolder) te, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
+    }
+
+    public static <TileEntity extends TileEntityGeneric & AABBHolder> void render(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha, TileEntityRendererDispatcher dispatcher){
 //        UtilRender.setLightValue(15, 15);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
@@ -40,7 +46,7 @@ public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityClayMark
 //                GlStateManager.disableCull();
         GlStateManager.disableTexture2D();
 
-        switch (state.getValue(BlockStateClayMarker.APPEARANCE)) {
+        switch (state.getValue(AABBHolder.APPEARANCE)) {
             case _1:
                 GlStateManager.glLineWidth(3.0f);
 
@@ -79,7 +85,7 @@ public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityClayMark
             case _3:
             case _4:
                 if (te.hasAxisAlignedBB()) {
-                    ClayiumCore.logger.info(te.getAxisAlignedBB());
+//                    ClayiumCore.logger.info(te.getAxisAlignedBB());
                     UtilRender.renderBoldAABB(te.getAxisAlignedBB().offset(BlockPos.ORIGIN.subtract(te.getPos())).offset(x, y, z), new Color(0.1f, 0.1f, 0.7f, 1.0f), true);
                 }
                 UtilRender.renderBoldAABB(state.getBoundingBox(te.getWorld(), te.getPos()).offset(x, y, z), new Color(1.0f, 0.0f, 0.0f, 1.0f), true);

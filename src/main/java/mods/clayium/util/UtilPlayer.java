@@ -7,34 +7,37 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class UtilPlayer {
-    private static EntityPlayer defaultPlayer = null;
+    private static final GameProfile defaultProfile = new GameProfile(UUID.nameUUIDFromBytes("[Clayium]".getBytes(Charsets.UTF_8)), "[Clayium]");
+    private static final EntityPlayer defaultPlayer = FakePlayerFactory.get(DimensionManager.getWorld(0), defaultProfile);
 
-    public static EntityPlayer getFakePlayer(String id) {
-        EntityPlayerMP ret = null;
-        if (id != null || defaultPlayer == null) {
-            ret = FakePlayerFactory.get(DimensionManager.getWorld(0), getGameProfile(id));
-            ret.eyeHeight = 0.0F;
+    @Nonnull
+    public static EntityPlayer getFakePlayer(@Nullable String id) {
+        if (id == null) {
+            return defaultPlayer;
         }
 
-        if (id != null) {
-            return ret;
-        }
+        EntityPlayerMP ret = FakePlayerFactory.get(DimensionManager.getWorld(0), getGameProfile(id));
+        ret.eyeHeight = 0.0F;
 
-        if (ret != null) {
-            defaultPlayer = ret;
-        }
-
-        return defaultPlayer;
+        return ret;
     }
 
-    public static GameProfile getGameProfile(String id) {
+    @Nonnull
+    public static GameProfile getGameProfile(@Nullable String id) {
         if (id == null) {
-            id = "[Clayium]";
+            return defaultProfile;
         }
 
         return new GameProfile(UUID.nameUUIDFromBytes(id.getBytes(Charsets.UTF_8)), id);
+    }
+
+    @Nonnull
+    public static EntityPlayer getDefaultFake() {
+        return defaultPlayer;
     }
 }

@@ -85,7 +85,7 @@ public enum EnumMachineKind {
     prismMarker("prism_marker", null),
     blockBreaker("block_breaker", null),
     areaMiner("area_miner", null),
-    advancedAreaMinder("advanced_area_miner", null),
+    advancedAreaMiner("advanced_area_miner", null),
     areaReplacer("area_replacer", null),
     activator("activator", null),
     areaActivator("area_activator", null),

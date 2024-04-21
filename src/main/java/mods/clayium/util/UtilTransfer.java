@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -141,6 +142,17 @@ public class UtilTransfer {
         copiedItemstacks.replaceAll(itemstack -> produceItemStack(itemstack, inventory, startIncl, endExcl, inventoryStackLimit));
 
         return copiedItemstacks;
+    }
+
+    public static List<ItemStack> tryProduceItemStacks(IItemHandler inventory, List<ItemStack> stacks) {
+        return stacks.stream()
+                .map(stack -> ItemHandlerHelper.insertItemStacked(inventory, stack, false))
+                .filter(stack -> !stack.isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    public static UnaryOperator<ItemStack> tryInsertItemStack(IItemHandler inventory) {
+        return stack -> ItemHandlerHelper.insertItemStacked(inventory, stack, false);
     }
 
     /**
@@ -458,12 +470,15 @@ public class UtilTransfer {
         }
     }
 
-    static class OffsettedHandler implements IItemHandler {
+    public static class OffsettedHandler implements IItemHandler {
         protected final IItemHandler handler;
         protected final int[] ioSlots;
 
         OffsettedHandler(InvWrapper handler) {
             this(handler, IntStream.range(0, handler.getSlots()).toArray());
+        }
+        OffsettedHandler(InvWrapper handler, int startIncl, int endExcl) {
+            this(handler, IntStream.range(startIncl, endExcl).toArray());
         }
 
         OffsettedHandler(IItemHandler handler, int[] ioSlots) {

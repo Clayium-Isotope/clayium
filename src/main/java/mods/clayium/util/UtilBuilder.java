@@ -7,15 +7,15 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.Arrays;
@@ -119,7 +119,7 @@ public class UtilBuilder {
             }
         }
 
-        if (canSilkHarvest && state.getBlock().canSilkHarvest(world, pos, state, UtilPlayer.getFakePlayer(null))) {
+        if (canSilkHarvest && state.getBlock().canSilkHarvest(world, pos, state, UtilPlayer.getDefaultFake())) {
             ItemStack itemstack = getItemBlock(world, pos);
             if (!itemstack.isEmpty()) {
                 return Collections.singletonList(itemstack);
@@ -133,7 +133,7 @@ public class UtilBuilder {
 
         NonNullList<ItemStack> items = NonNullList.create();
         state.getBlock().getDrops(items, world, pos, state, fortune);
-        final float g = ForgeEventFactory.fireBlockHarvesting(items, world, pos, state, fortune, 1.0f, false, null);
+        final float g = ForgeEventFactory.fireBlockHarvesting(items, world, pos, state, fortune, 1.0f, canSilkHarvest, UtilPlayer.getDefaultFake());
 
         return items.stream().filter(stack -> world.rand.nextFloat() <= g).collect(Collectors.toList());
     }
@@ -192,5 +192,17 @@ public class UtilBuilder {
                 new Vec3d(aabb.maxX, aabb.minY, aabb.minZ), new Vec3d(aabb.maxX, aabb.minY, aabb.maxZ),
                 new Vec3d(aabb.maxX, aabb.maxY, aabb.minZ), new Vec3d(aabb.maxX, aabb.maxY, aabb.maxZ)
                 );
+    }
+
+    public static boolean placeBlockByItemBlock(ItemStack itemStack, World world, BlockPos pos) {
+        return placeBlockByItemBlock(itemStack, world, pos, EnumFacing.UP, 0.5f, 0.5f, 0.5f) == EnumActionResult.SUCCESS;
+    }
+
+    public static EnumActionResult placeBlockByItemBlock(ItemStack itemstack, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (itemstack.isEmpty() || !(itemstack.getItem() instanceof ItemBlock)) {
+            return EnumActionResult.FAIL;
+        }
+
+        return ForgeHooks.onPlaceItemIntoWorld(itemstack, UtilPlayer.getDefaultFake(), world, pos, side, hitX, hitY, hitZ, EnumHand.MAIN_HAND);
     }
 }

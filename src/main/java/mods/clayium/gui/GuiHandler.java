@@ -5,6 +5,9 @@ import mods.clayium.item.filter.ContainerFilterWhitelist;
 import mods.clayium.item.filter.GuiFilterString;
 import mods.clayium.item.gadget.ContainerGadgetAutoEat;
 import mods.clayium.item.gadget.ContainerGadgetHolder;
+import mods.clayium.machine.AreaMiner.ContainerAreaMiner;
+import mods.clayium.machine.AreaMiner.GuiAreaMiner;
+import mods.clayium.machine.AreaMiner.TileEntityAreaMiner;
 import mods.clayium.machine.AutoClayCondenser.ContainerAutoClayCondenser;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.ContainerAutoCrafter;
@@ -102,6 +105,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerStorageContainer(player.inventory, (TileEntityStorageContainer) tile);
             case GuiIdVacuumContainer:
                 return new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile);
+            case GuiIdAreaMiner:
+                return new ContainerAreaMiner(player.inventory, (TileEntityAreaMiner) tile);
         }
 
         return null;
@@ -157,6 +162,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiStorageContainer(new ContainerStorageContainer(player.inventory, (TileEntityStorageContainer) tile));
             case GuiIdVacuumContainer:
                 return new GuiTemp(new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile));
+            case GuiIdAreaMiner:
+                return new GuiAreaMiner(new ContainerAreaMiner(player.inventory, (TileEntityAreaMiner) tile));
         }
 
         return null;

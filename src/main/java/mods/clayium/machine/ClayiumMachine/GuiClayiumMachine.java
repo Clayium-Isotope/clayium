@@ -8,7 +8,6 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.plugin.jei.JEICompatibility;
 import mods.clayium.util.UtilTier;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 
 import java.io.IOException;
@@ -52,13 +51,6 @@ public class GuiClayiumMachine extends GuiTemp {
     protected void addButtons() {
         if (UtilTier.canManufactureCraft(((TileEntityClayiumMachine) this.tile).getHullTier()))
             buttonList.add(new GuiPictureButton(0, guiLeft + (xSize - 16) / 2, guiTop + 56, 0, 48));
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button) {
-        if (button.enabled) {
-            mc.playerController.sendEnchantPacket(inventorySlots.windowId, button.id);
-        }
     }
 
     @Override

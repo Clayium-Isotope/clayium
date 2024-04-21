@@ -20,7 +20,7 @@ public enum EnumSide {
     }
 
     final int index;
-    final int offsetX, offsetY, offsetZ;
+    public final int offsetX, offsetY, offsetZ;
 //        final Vec3i offset;
     public static final EnumSide[] VALUES = new EnumSide[] {DOWN, UP, FRONT, BACK, LEFT, RIGHT};
 

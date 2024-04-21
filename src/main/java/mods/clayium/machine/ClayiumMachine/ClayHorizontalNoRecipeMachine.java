@@ -20,8 +20,8 @@ import java.util.function.Supplier;
 public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
     private final EnumMachineKind machineKind;
 
-    public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {
-        super(Material.IRON, teSupplier, (suffix.isEmpty() ? (tier.getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
+    public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, TierPrefix tier, String modelPath, int guiId) {
+        super(Material.IRON, teSupplier, modelPath, guiId, tier);
         this.machineKind = kind;
 
         setSoundType(SoundType.METAL);
@@ -30,6 +30,10 @@ public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
         setHarvestLevel("pickaxe", 0);
 
         JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
+    }
+
+    public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {
+        this(teSupplier, kind, tier, (suffix.isEmpty() ? (tier.getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId);
     }
 
     public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, TierPrefix tier) {

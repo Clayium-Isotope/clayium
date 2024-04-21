@@ -47,7 +47,7 @@ public class ClayMarker extends BlockContainer implements ITieredBlock {
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
 
-        this.setDefaultState(this.getDefaultState().withProperty(BlockStateClayMarker.APPEARANCE, AABBHolder.Appearance._0));
+        this.setDefaultState(this.getDefaultState().withProperty(AABBHolder.APPEARANCE, AABBHolder.Appearance._0));
 
         this.tier = tier;
         this.teSupplier = teSupplier;
@@ -103,17 +103,17 @@ public class ClayMarker extends BlockContainer implements ITieredBlock {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(BlockStateClayMarker.APPEARANCE, AABBHolder.Appearance.fromMeta((byte) meta));
+        return this.getDefaultState().withProperty(AABBHolder.APPEARANCE, AABBHolder.Appearance.fromMeta((byte) meta));
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(BlockStateClayMarker.APPEARANCE).toMeta();
+        return state.getValue(AABBHolder.APPEARANCE).toMeta();
     }
 
     private static class BlockStateContainerClayMarker extends BlockStateContainer {
         public BlockStateContainerClayMarker(Block blockIn) {
-            super(blockIn, BlockStateClayMarker.APPEARANCE);
+            super(blockIn, AABBHolder.APPEARANCE);
         }
 
         @Override

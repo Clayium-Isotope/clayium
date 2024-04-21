@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class TileEntityClayMarker extends TileEntityGeneric implements AABBHolder {
+public class TileEntityClayMarker extends TileEntityGeneric implements IAABBProvider {
     @Nonnull
     protected AxisAlignedBB aabb = NULL_AABB;
     public Appearance state = Appearance._0;
@@ -67,7 +67,7 @@ public class TileEntityClayMarker extends TileEntityGeneric implements AABBHolde
             }
         }
 
-        this.state = state.getValue(BlockStateClayMarker.APPEARANCE);
+        this.state = state.getValue(AABBHolder.APPEARANCE);
         if (this.xx == 0 && this.yy == 0 && this.zz == 0 && !Appearance._1.equals(this.state)) {
             this.aabb = NULL_AABB;
             this.state = Appearance._0.equals(this.state) ? Appearance._1 : Appearance._0;
@@ -77,7 +77,7 @@ public class TileEntityClayMarker extends TileEntityGeneric implements AABBHolde
             );
             this.state = Appearance._1.compareTo(this.state) >= 0 ? Appearance._3 : Appearance.increment(this.state, Appearance._2);
         }
-        world.setBlockState(pos, state.withProperty(BlockStateClayMarker.APPEARANCE, this.state));
+        world.setBlockState(pos, state.withProperty(AABBHolder.APPEARANCE, this.state));
     }
 
     @Override
@@ -119,6 +119,7 @@ public class TileEntityClayMarker extends TileEntityGeneric implements AABBHolde
         return Appearance.back2(this.state);
     }
 
+    @Override
     public void setAxisAlignedBBToMachine() {
         this.markDirty();
         this.breakMarker(this.xx, 0, 0);

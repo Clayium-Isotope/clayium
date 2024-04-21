@@ -6,6 +6,9 @@ import mods.clayium.util.UsedFor;
 public interface IExternalControl {
     IExternalControl NONE = new None();
 
+    /**
+     * Works one step
+     */
     void doWorkOnce();
 
     /**

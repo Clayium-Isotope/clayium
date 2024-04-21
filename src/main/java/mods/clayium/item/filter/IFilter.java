@@ -3,6 +3,7 @@ package mods.clayium.item.filter;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.UsedFor;
 import mods.clayium.util.UtilItemStack;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +19,10 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
 
     static boolean match(ItemStack filter, ItemStack input) {
         return isFilter(filter) && ((IFilter) filter.getItem()).test(filter.getTagCompound(), input);
+    }
+
+    static boolean match(ItemStack filter, IBlockState input) {
+        return false;
     }
 
     static boolean isFilter(ItemStack filter) {

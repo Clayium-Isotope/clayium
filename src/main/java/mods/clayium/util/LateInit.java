@@ -6,23 +6,23 @@ public class LateInit<T> {
     private T value = null;
 
     public T get() {
-        if (!this.isPresent()) {
+        if (!this.isInitialized()) {
             throw new NoSuchElementException("a LateInit value was absent");
         }
         return this.value;
     }
 
     public T or(T other) {
-        return this.isPresent() ? this.value : other;
+        return this.isInitialized() ? this.value : other;
     }
 
     public void set(T value) {
-        if (!this.isPresent()) {
+        if (!this.isInitialized()) {
             this.value = value;
         }
     }
 
-    public boolean isPresent() {
-        return this.value == null;
+    public boolean isInitialized() {
+        return this.value != null;
     }
 }
