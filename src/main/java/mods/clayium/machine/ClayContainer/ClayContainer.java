@@ -132,7 +132,9 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
+        // [TODO] プレイヤー依存で向きを決めるか、設置面依存で向きを決めるか…
         return state.withProperty(BlockStateClayContainer.FACING, UtilDirection.getBetterFront(state, pos, placer));
+        // return state.withProperty(BlockStateClayContainer.FACING, SOME_PROCESS(facing.getOpposite()));
     }
 
     @Nullable

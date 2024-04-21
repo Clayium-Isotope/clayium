@@ -88,8 +88,7 @@ public class GuiClayCraftingTable extends GuiTemp implements IRecipeShownListene
         return this.recipeBookGui.hasClickedOutside(p_193983_1_, p_193983_2_, this.guiLeft, this.guiTop, this.xSize, this.ySize) && flag;
     }
 
-    protected void actionPerformed(GuiButton button) throws IOException
-    {
+    protected void actionPerformed(GuiButton button) {
         if (button.id == 10) {
             this.recipeBookGui.initVisuals(this.widthTooNarrow, ((ContainerClayCraftingTable) this.inventorySlots).craftMatrix);
             this.recipeBookGui.toggleVisibility();

@@ -18,6 +18,9 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * [TODO] [GUI]専用のGUI, 流量調節機能, [Container]エネルギー粘土を無に帰す
+ */
 @CustomHull("blocks/machine/creativeenergy")
 public class TileEntityCreativeEnergySource extends TileEntityClayContainer implements ICapabilityProvider {
     protected static final ItemStack oec = IClayEnergy.getCompressedClay(13, 64);
@@ -65,7 +68,9 @@ public class TileEntityCreativeEnergySource extends TileEntityClayContainer impl
 
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+        return (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+                && this.getExportRoute(UtilDirection.getSideOfDirection(this.getFront(), facing)) != IClayInventory.NONE_ROUTE)
+                || super.hasCapability(capability, facing);
     }
 
     protected final IItemHandler handler = new CESourceHandler();
