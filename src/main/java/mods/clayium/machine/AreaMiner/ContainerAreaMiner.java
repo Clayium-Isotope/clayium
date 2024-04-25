@@ -25,7 +25,7 @@ public class ContainerAreaMiner extends ContainerTemp {
         TileEntityAreaMiner tile = (TileEntityAreaMiner)this.tileEntity;
         int j;
         int i;
-        if (tile.replaceMode) {
+        if (tile.replaceMode.get()) {
             for(j = 0; j < this.inventoryY; ++j) {
                 for(i = 0; i < this.inventoryX; ++i) {
                     this.addMachineSlotToContainer(new SlotWithTexture(tile, i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, j * 18 + 18));
@@ -78,13 +78,13 @@ public class ContainerAreaMiner extends ContainerTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return ((TileEntityAreaMiner)this.tileEntity).replaceMode;
+        return ((TileEntityAreaMiner)this.tileEntity).replaceMode.get();
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int slot) {
         return IClayEnergyConsumer.isItemValidForSlot((IClayEnergyConsumer) this.tileEntity, slot, itemstack1)
             || (
-                ((TileEntityAreaMiner)this.tileEntity).replaceMode
+                ((TileEntityAreaMiner)this.tileEntity).replaceMode.get()
                 && this.mergeItemStack(itemstack1, this.inventoryX * this.inventoryY, this.inventoryX * this.inventoryY * 2, false)
             );
     }

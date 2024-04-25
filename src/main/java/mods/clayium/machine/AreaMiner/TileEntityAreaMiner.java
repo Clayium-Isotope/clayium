@@ -44,15 +44,15 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     public static final int filterSilktouchSlot = 39;
     public long laserEnergy = 0L;
     protected final WrapMutableBlockPos miningPos = new WrapMutableBlockPos();
-    public int state = -1;
+    public EnumAreaMinerState state = EnumAreaMinerState.BEFORE_INIT;
     public long progress = 0L;
     public static final long energyPerTick = 1000L;
     public static final int progressPerTick = 100;
     public static final int progressPerJob = 400;
     public static final int maxJobCount = 1000;
     public static final int maxJobCountInLoop = 10;
-    public boolean replaceMode = false;
-    public boolean areaMode = false;
+    public final LateInit<Boolean> replaceMode = new LateInit<>();
+    public final LateInit<Boolean> areaMode = new LateInit<>();
     public boolean placeFlag = false;
     protected final ContainClayEnergy ce = new ContainClayEnergy();
 
@@ -101,20 +101,22 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
             case precision:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 16;
                 this.autoExtractInterval = this.autoInsertInterval = 2;
-                this.areaMode = false;
+                this.areaMode.set(false);
+                this.replaceMode.set(false);
                 break;
             case claySteel:
             case clayium:
             case ultimate:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
-                this.areaMode = true;
+                this.areaMode.set(true);
+                this.replaceMode.set(false);
                 break;
             case antimatter:
                 this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
                 this.autoExtractInterval = this.autoInsertInterval = 1;
-                this.areaMode = true;
-                this.replaceMode = true;
+                this.areaMode.set(true);
+                this.replaceMode.set(true);
         }
 
         this.slotsDrop = IntStream.concat(IntStream.range(0, slotNum), IntStream.of(this.getEnergySlot())).toArray();
@@ -122,7 +124,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
         this.listSlotsImport.add(new int[]{this.getEnergySlot()});
         this.listSlotsExport.add(IntStream.range(0, slotNum).toArray());
 
-        if (!this.areaMode) {
+        if (!this.areaMode.get()) {
             this.listSlotsImport.remove(0);
 
             for (EnumSide side : EnumSide.VALUES) {
@@ -132,7 +134,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
             }
         }
 
-        if (this.replaceMode) {
+        if (this.replaceMode.get()) {
             this.listSlotsImport.add(IntStream.range(slotNum, slotNum * 2).toArray());
             this.slotsDrop = IntStream.concat(IntStream.range(0, slotNum * 2), IntStream.of(this.getEnergySlot())).toArray();
         } else {
@@ -147,7 +149,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     @Override
     public void update() {
         super.update();
-        if (this.getState() == -1) {
+        if (this.getState() == EnumAreaMinerState.BEFORE_INIT) {
             this.initState();
         }
 
@@ -162,16 +164,16 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     }
 
     public void initState() {
-        if (this.areaMode) {
-            this.setState(0);
+        if (this.areaMode.get()) {
+            this.setState(EnumAreaMinerState.OnceMode_Ready);
         } else {
-            this.setState(3);
+            this.setState(EnumAreaMinerState.LoopMode_Ready);
         }
 
     }
 
     public void searchAABBProvider() {
-        if (!this.areaMode) {
+        if (!this.areaMode.get()) {
             EnumFacing back = this.getFront().getOpposite();
             this.setAxisAlignedBB(new AxisAlignedBB(BlockPos.ORIGIN).offset(this.pos).offset(new Vec3d(back.getDirectionVec())));
         } else {
@@ -193,14 +195,16 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     public void doWork() {
         AxisAlignedBB aabb = this.getAxisAlignedBB();
         switch (this.getState()) {
-            case 0:
-            case 3:
+            case OnceMode_Ready:
                 this.miningPos.setPos((int)Math.floor(aabb.minX + 0.5), (int)Math.floor(aabb.maxY - 0.5), (int)Math.floor(aabb.minZ + 0.5));
-                this.setState(this.getState() + 1);
+                this.setState(EnumAreaMinerState.OnceMode_Doing);
+            case LoopMode_Ready:
+                this.miningPos.setPos((int)Math.floor(aabb.minX + 0.5), (int)Math.floor(aabb.maxY - 0.5), (int)Math.floor(aabb.minZ + 0.5));
+                this.setState(EnumAreaMinerState.LoopMode_Ready);
                 break;
-            case 1:
-            case 4:
-                long c = this.areaMode ? (long)((double) energyPerTick * (1.0 + 4.0 * Math.log10((double)(this.laserEnergy / 1000L + 1L)))) : 0L;
+            case OnceMode_Doing:
+            case LoopMode_Doing:
+                long c = this.areaMode.get() ? (long)((double) energyPerTick * (1.0 + 4.0 * Math.log10((double)(this.laserEnergy / 1000L + 1L)))) : 0L;
                 if (this.miningPos.getX() > (int)Math.floor(aabb.maxX - 0.5)) {
                     this.miningPos.setX((int)Math.floor(aabb.minX + 0.5));
                     this.miningPos.incrZ();
@@ -212,8 +216,8 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
                 }
 
                 if (this.miningPos.getY() < (int)Math.floor(aabb.minY + 0.5)) {
-                    if (this.getState() == 1) {
-                        this.setState(2);
+                    if (this.getState() == EnumAreaMinerState.OnceMode_Doing) {
+                        this.setState(EnumAreaMinerState.Idle);
                         return;
                     }
 
@@ -231,7 +235,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
                     boolean filterFflag = IFilter.isFilter(filterF);
                     boolean filterSflag = IFilter.isFilter(filterS);
                     int slotNum = this.inventoryX.get() * this.inventoryY.get();
-                    int max = this.getState() == 1 ? maxJobCount : maxJobCountInLoop;
+                    int max = this.getState() == EnumAreaMinerState.OnceMode_Doing ? maxJobCount : maxJobCountInLoop;
 
                     for(int count = 0; count < max; ++count) {
                         IBlockState blockstate = this.world.getBlockState(this.miningPos);
@@ -242,7 +246,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
                             i = 0L;
                         }
 
-                        i += this.replaceMode ? 1 : 0;
+                        i += this.replaceMode.get() ? 1 : 0;
                         boolean flag = true;
                         if (filterFlag) {
                             flag = IFilter.match(filter, blockstate);
@@ -276,12 +280,12 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
 
                             UtilBuilder.destroyBlock(this.world, this.miningPos, !silkTouch, silkTouch, fortune);
                             UtilTransfer.produceItemStacks(items, this.containerItemStacks, 0, slotNum, this.getInventoryStackLimit());
-                            if (this.replaceMode) {
+                            if (this.replaceMode.get()) {
                                 this.placeFlag = true;
                             }
                         }
 
-                        if (this.replaceMode && this.placeFlag) {
+                        if (this.replaceMode.get() && this.placeFlag) {
                             boolean flag2 = false;
                             if (Blocks.AIR.equals(this.world.getBlockState(this.miningPos).getBlock())) {
                                 for (int j = slotNum; j < slotNum * 2; ++j) {
@@ -319,8 +323,8 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
                         }
 
                         if (this.miningPos.getY() < (int)Math.floor(aabb.minY + 0.5)) {
-                            if (this.getState() == 1) {
-                                this.setState(2);
+                            if (this.getState() == EnumAreaMinerState.OnceMode_Doing) {
+                                this.setState(EnumAreaMinerState.Idle);
                                 break;
                             }
 
@@ -332,7 +336,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
                         }
                     }
                 }
-            case 2:
+            case Idle:
         }
 
     }
@@ -351,13 +355,13 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
         ClayiumCore.logger.info("[TEAreaMiner] pushed: " + action);
         switch (action) {
             case 0:
-                this.setState(0);
+                this.setState(EnumAreaMinerState.OnceMode_Ready);
                 break;
             case 1:
-                this.setState(2);
+                this.setState(EnumAreaMinerState.Idle);
                 break;
             case 2:
-                this.setState(3);
+                this.setState(EnumAreaMinerState.LoopMode_Ready);
                 break;
             case 3:
 //                this.setSyncFlag();
@@ -366,15 +370,19 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
                     case _1: this.boxState = Appearance._2; break;
                     case _2: this.boxState = Appearance._0; break;
                 }
-                world.setBlockState(this.pos, world.getBlockState(this.pos).withProperty(AABBHolder.APPEARANCE, this.boxState));
+                this.syncBoxState();
         }
     }
 
-    public int getState() {
+    public void syncBoxState() {
+        this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).withProperty(AABBHolder.APPEARANCE, this.boxState));
+    }
+
+    public EnumAreaMinerState getState() {
         return this.state;
     }
 
-    public void setState(int state) {
+    public void setState(EnumAreaMinerState state) {
 //        this.setSyncFlag();
         this.state = state;
     }
@@ -389,11 +397,12 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     public void readMoreFromNBT(NBTTagCompound tagCompound) {
         super.readMoreFromNBT(tagCompound);
         this.boxState = Appearance.fromMeta(tagCompound.getByte("BoxState"));
+        this.syncBoxState();
         TileEntityClayMarker.readAxisAlignedBBFromNBT(tagCompound, this);
 
         this.laserEnergy = tagCompound.getLong("LaserEnergy");
         this.miningPos.setPos(NBTUtil.getPosFromTag(tagCompound.getCompoundTag("MiningPos")));
-        this.state = tagCompound.getByte("State");
+        this.state = EnumAreaMinerState.getByMeta(tagCompound.getByte("State"));
         this.progress = tagCompound.getLong("Progress");
         this.placeFlag = tagCompound.getBoolean("PlaceFlag");
     }
@@ -406,7 +415,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
 
         tagCompound.setLong("LaserEnergy", this.laserEnergy);
         tagCompound.setTag("MiningPos", NBTUtil.createPosTag(this.miningPos));
-        tagCompound.setByte("State", (byte)this.state);
+        tagCompound.setByte("State", (byte)this.state.meta());
         tagCompound.setLong("Progress", this.progress);
         tagCompound.setBoolean("PlaceFlag", this.placeFlag);
 
@@ -426,7 +435,6 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     }
 
     public Appearance getBoxAppearance() {
-        ClayiumCore.logger.info("[TEAreaMiner] box appearance: " + this.boxState);
         return this.boxState;
     }
 
@@ -451,15 +459,15 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     }
 
     public void doWorkOnce() {
-        this.setState(0);
+        this.setState(EnumAreaMinerState.OnceMode_Ready);
     }
 
     public void startWork() {
-        this.setState(4);
+        this.setState(EnumAreaMinerState.LoopMode_Doing);
     }
 
     public void stopWork() {
-        this.setState(2);
+        this.setState(EnumAreaMinerState.Idle);
     }
 
     public boolean isScheduled() {
@@ -467,7 +475,7 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     }
 
     public boolean isDoingWork() {
-        return this.getState() == 1 || this.getState() == 4;
+        return this.getState() == EnumAreaMinerState.OnceMode_Doing || this.getState() == EnumAreaMinerState.LoopMode_Doing;
     }
 
     @Override
@@ -478,5 +486,12 @@ public class TileEntityAreaMiner extends TileEntityClayContainer implements ICla
     @Override
     public boolean acceptClayEnergy() {
         return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIOIcons() {
+        this.registerInsertIcons("import_energy", "import");
+        this.registerExtractIcons("export");
     }
 }

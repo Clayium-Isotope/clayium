@@ -15,6 +15,8 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+// [TODO]   どうやらオリジナルでは作業中か否かで見た目が変わるみたい。
+//          作業中判定のためだけに、同期+TEアクセス はしたくないので、BSを用意できればよいが。
 public class AreaMiner extends ClayHorizontalNoRecipeMachine {
     public AreaMiner(TierPrefix tier, String modelPath) {
         super(TileEntityAreaMiner::new, EnumMachineKind.areaMiner, tier, modelPath, GuiHandler.GuiIdAreaMiner);
