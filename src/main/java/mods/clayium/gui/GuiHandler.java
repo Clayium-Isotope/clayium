@@ -12,6 +12,9 @@ import mods.clayium.machine.AutoClayCondenser.ContainerAutoClayCondenser;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.ContainerAutoCrafter;
 import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
+import mods.clayium.machine.AutoTrader.ContainerAutoTrader;
+import mods.clayium.machine.AutoTrader.GuiAutoTrader;
+import mods.clayium.machine.AutoTrader.TileEntityAutoTrader;
 import mods.clayium.machine.ChemicalMetalSeparator.ContainerChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
@@ -107,6 +110,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile);
             case GuiIdAreaMiner:
                 return new ContainerAreaMiner(player.inventory, (TileEntityAreaMiner) tile);
+            case GuiIdAutoTrader:
+                return new ContainerAutoTrader(player.inventory, (TileEntityAutoTrader) tile);
         }
 
         return null;
@@ -164,6 +169,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiTemp(new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile));
             case GuiIdAreaMiner:
                 return new GuiAreaMiner(new ContainerAreaMiner(player.inventory, (TileEntityAreaMiner) tile));
+            case GuiIdAutoTrader:
+                return new GuiAutoTrader(new ContainerAutoTrader(player.inventory, (TileEntityAutoTrader) tile));
         }
 
         return null;

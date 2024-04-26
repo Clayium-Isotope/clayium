@@ -5,6 +5,7 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.AreaMiner.AreaMiner;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.AutoCrafter;
+import mods.clayium.machine.AutoTrader.AutoTrader;
 import mods.clayium.machine.CACondenser.CACondenser;
 import mods.clayium.machine.CAInjector.TileEntityCAInjector;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
@@ -129,8 +130,7 @@ public class ClayiumMachines {
         energeticClayDecomposer = addMachine(EnumMachineKind.ECDecomposer, TierPrefix.OPA, null);
         storageContainer = addContainer(EnumMachineKind.storageContainer, TierPrefix.precision, new StorageContainer());
         vacuumContainer = addContainer(EnumMachineKind.vacuumContainer, TierPrefix.precision, new VacuumContainer());
-//        new AutoTrader(8);
-//        autoTrader = get(EnumMachineKind.autoTrader, TierPrefix.clayium);
+        autoTrader = addContainer(EnumMachineKind.autoTrader, TierPrefix.clayium, new AutoTrader());
 
         clayMarker              = addContainer(EnumMachineKind.clayMarker, TierPrefix.claySteel, new ClayMarker("clay_marker", TierPrefix.claySteel, TileEntityClayMarker::new, MarkerExtent.None));
         clayOpenPitMarker       = addContainer(EnumMachineKind.openPitMarker, TierPrefix.clayium, new ClayMarker("open_pit_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.OpenPit));
