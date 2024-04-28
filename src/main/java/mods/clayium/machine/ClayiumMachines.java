@@ -6,6 +6,7 @@ import mods.clayium.machine.AreaMiner.AreaMiner;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.AutoCrafter;
 import mods.clayium.machine.AutoTrader.AutoTrader;
+import mods.clayium.machine.CACollector.CACollector;
 import mods.clayium.machine.CACondenser.CACondenser;
 import mods.clayium.machine.CAInjector.TileEntityCAInjector;
 import mods.clayium.machine.ChemicalMetalSeparator.ChemicalMetalSeparator;
@@ -123,6 +124,7 @@ public class ClayiumMachines {
         addContainers(EnumMachineKind.CACondenser, TierPrefix.makeList(9, 10, 11), CACondenser::new);
 
         addAssembler(EnumMachineKind.CAInjector, TierPrefix.makeList(9, 10, 11, 12, 13), TileEntityCAInjector::new);
+        addContainer(EnumMachineKind.CACollector, TierPrefix.antimatter, new CACollector());
 //        new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1);
 //        blockCAReactorHull = new BlockDamaged(Material.iron, 10);
 //        registerTieredMachines("CAReactor", new int[]{10, 11, 12, 13}, TileCAReactor.class, 9, CAReactor.class, ItemBlockTiered.class);

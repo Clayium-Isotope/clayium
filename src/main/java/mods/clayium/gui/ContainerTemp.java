@@ -42,6 +42,7 @@ public abstract class ContainerTemp extends Container {
     }
 
     protected final void postConstruct() {
+        doSomethingJustBeforeConstruct();
         initParameters(this.player);
         setMachineInventorySlots(this.player);
         addMachineInventorySlots(this.player);
@@ -51,6 +52,8 @@ public abstract class ContainerTemp extends Container {
     protected boolean earlierConstruct() {
         return true;
     }
+
+    protected void doSomethingJustBeforeConstruct() {}
 
     protected void initParameters(InventoryPlayer player) {
         this.machineGuiSizeX = Math.max(this.machineGuiSizeX, 176);

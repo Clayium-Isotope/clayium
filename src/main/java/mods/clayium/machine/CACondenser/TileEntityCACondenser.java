@@ -1,6 +1,5 @@
 package mods.clayium.machine.CACondenser;
 
-import mods.clayium.block.ICAMachine;
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
@@ -16,6 +15,8 @@ import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+
+import javax.annotation.Nonnull;
 
 import static mods.clayium.machine.crafting.ClayiumRecipes.e;
 
@@ -51,6 +52,7 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
         return this.craftTime > 0;
     }
 
+    @Nonnull
     @Override
     public RecipeElement getFlat() {
         return RecipeElement.flat();
@@ -64,7 +66,7 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
         }
 
         ItemStack itemstack = RECIPE.getResults().get(0).copy();
-        itemstack.setCount((int) (itemstack.getCount() * Math.log(ICAMachine.getResonance(this.getWorld(), this.getPos())) + 1.0d));
+        itemstack.setCount((int) (itemstack.getCount() * Math.log(this.resonanceHandler.getResonance()) + 1.0d));
         this.craftTime = 0L;
         this.timeToCraft = 0L;
         this.debtEnergy = 0L;
@@ -97,6 +99,7 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
         return true;
     }
 
+    @Nonnull
     @Override
     public ClayiumRecipe getRecipeCard() {
         return ClayiumRecipes.EMPTY;

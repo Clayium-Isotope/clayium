@@ -6,6 +6,7 @@ import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.machine.CAMachine.ResonanceHandler;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.worldgen.ClayOreGenerator;
@@ -17,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -83,6 +86,9 @@ public class ClayiumCore {
             }
         }
     };
+
+    @CapabilityInject(ResonanceHandler.class)
+    public static Capability<ResonanceHandler> RESONANCE_CAPABILITY = null;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {

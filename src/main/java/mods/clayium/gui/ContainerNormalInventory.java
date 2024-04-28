@@ -1,6 +1,5 @@
 package mods.clayium.gui;
 
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.common.INormalInventory;
 import mods.clayium.machine.common.InventoryMultiPage;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,12 +11,10 @@ public class ContainerNormalInventory extends ContainerTemp {
     public static final int buttonIdNext = 7;
     private final InventoryMultiPage impl;
 
-    public ContainerNormalInventory(InventoryPlayer player, TileEntityClayBuffer inventory) {
+    public ContainerNormalInventory(InventoryPlayer player, INormalInventory inventory) {
         super(player, inventory);
 
         this.impl = new InventoryMultiPage(this.tileEntity);
-
-        if (!(this.tileEntity instanceof INormalInventory)) return;
 
         this.machineGuiSizeY = this.impl.getInventoryY() * 18 + 18;
         if (this.impl.getInventoryY() > 6)

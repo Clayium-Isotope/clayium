@@ -1,6 +1,5 @@
 package mods.clayium.machine.CAInjector;
 
-import mods.clayium.block.ICAMachine;
 import mods.clayium.machine.CAMachine.TileEntityCAMachine;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -15,7 +14,9 @@ import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMachine, Machine2To1 {
+import javax.annotation.Nonnull;
+
+public class TileEntityCAInjector extends TileEntityCAMachine implements Machine2To1 {
     protected double caFactorExponent = 1.0;
 
     public void initParams() {
@@ -57,11 +58,13 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMach
         }
     }
 
+    @Nonnull
     @Override
     public ClayiumRecipe getRecipeCard() {
         return ClayiumRecipes.CAInjector;
     }
 
+    @Nonnull
     @Override
     public RecipeElement getFlat() {
         return RecipeElement.flat();
@@ -75,7 +78,7 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMach
     }
 
     public double getCraftTimeMultiplier() {
-        return Math.pow(ICAMachine.getResonance(this.getWorld(), this.getPos()), -this.caFactorExponent);
+        return Math.pow(this.resonanceHandler.getResonance(), -this.caFactorExponent);
     }
 
     @Override

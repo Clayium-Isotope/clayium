@@ -90,6 +90,7 @@ public class UtilTransfer {
 
     /**
      * @param itemstack won't be changed.
+     * @return the rest of itemstack
      */
     public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
         if (itemstack.isEmpty()) {

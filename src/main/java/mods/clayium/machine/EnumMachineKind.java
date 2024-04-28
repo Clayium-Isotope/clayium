@@ -74,7 +74,7 @@ public enum EnumMachineKind {
     clayEnergyLaser("energy_laser", null),
     laserReflector("laser_reflector", null),
     clayFabricator("clay_fabricator", null),
-    CAResonatingCollector("ca_collector", null),
+    CACollector("ca_collector", null),
     creativeCESource("creative_energy", null),
     fluidTransferMachine("fluid_transfer_machine", ClayiumRecipes.fluidTransferMachine),
 

@@ -9,6 +9,7 @@ import mods.clayium.machine.AreaMiner.TileEntityAreaMiner;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
 import mods.clayium.machine.AutoTrader.TileEntityAutoTrader;
+import mods.clayium.machine.CACollector.TileEntityCACollector;
 import mods.clayium.machine.CACondenser.TileEntityCACondenser;
 import mods.clayium.machine.CAInjector.TileEntityCAInjector;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
@@ -171,6 +172,8 @@ public class ClayiumClientProxy implements IClayiumProxy {
 					}
 				});
 		ClientRegistry.registerTileEntity(TileEntityAutoTrader.class, "clayium:auto_trader", TESRClayContainer.instance);
+
+		ClientRegistry.registerTileEntity(TileEntityCACollector.class, "clayium_ca_collector", TESRClayContainer.instance);
 	}
 
 	/**

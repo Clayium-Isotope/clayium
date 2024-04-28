@@ -2,11 +2,13 @@ package mods.clayium.gui;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.ClayEnergyHolder;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiTemp extends GuiContainer {
@@ -46,7 +48,15 @@ public class GuiTemp extends GuiContainer {
         fontRenderer.drawString(this.container.getInventoryName(), 6, 6, 4210752);
         fontRenderer.drawString(I18n.format("container.inventory"), 8, machineHeight, 4210752);
 
-        if (this.tile instanceof ClayEnergyHolder)
+        if (this.tile instanceof TileEntity
+                && ((TileEntity) this.tile).hasCapability(ClayiumCore.RESONANCE_CAPABILITY, null)) {
+            ContainerTemp container = (ContainerTemp)this.inventorySlots;
+            double resonance = ((TileEntity) this.tile).getCapability(ClayiumCore.RESONANCE_CAPABILITY, null).getResonance();
+//            this.fontRenderer.drawString(I18n.format("gui.Common.resonance", UtilLocale.CAResonanceNumeral(((TileEntityCAMachine)this.tile).getResonance())), 80, container.machineGuiSizeY - 12, 4210752);
+            this.fontRenderer.drawString(I18n.format("gui.Common.resonance", UtilLocale.CAResonanceNumeral(resonance)), 80, container.machineGuiSizeY - 12, 4210752);
+        }
+
+        if (this.tile instanceof ClayEnergyHolder && (!(this.tile instanceof IClayEnergyConsumer) || ((IClayEnergyConsumer) this.tile).acceptClayEnergy()))
             this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((ClayEnergyHolder) this.tile).containEnergy().get(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
     }
 
