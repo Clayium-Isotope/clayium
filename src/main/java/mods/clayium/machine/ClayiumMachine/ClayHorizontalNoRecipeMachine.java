@@ -28,7 +28,7 @@ public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
 
-        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
+        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getPath());
     }
 
     public ClayHorizontalNoRecipeMachine(Class<? extends TileEntityGeneric> teClass, EnumMachineKind kind, TierPrefix tier) {

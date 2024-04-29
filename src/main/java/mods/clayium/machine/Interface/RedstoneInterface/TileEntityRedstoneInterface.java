@@ -151,7 +151,7 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
     }
 
     public int getSignal() {
-        return this.world.isBlockIndirectlyGettingPowered(this.pos);
+        return this.world.getRedstonePowerFromNeighbors(this.pos);
     }
 
     public EnumControlState changeState() {

@@ -170,13 +170,13 @@ public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
         for (Ingredient ingredient : this.getIngredients()) {
             for (ItemStack stack : ingredient.getMatchingStacks()) {
                 if (stack.getItem().getRegistryName() != null)
-                    hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+                    hash = 31 * hash + stack.getItem().getRegistryName().getPath().hashCode();
             }
         }
 
         for (ItemStack stack : this.results) {
             if (stack.getItem().getRegistryName() != null)
-                hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+                hash = 31 * hash + stack.getItem().getRegistryName().getPath().hashCode();
         }
 
         return hash;

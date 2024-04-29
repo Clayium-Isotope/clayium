@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ClayiumItem extends Item {
     public ClayiumItem(String modelPath) {
-        setUnlocalizedName(modelPath);
+        setTranslationKey(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
     }
@@ -26,6 +26,6 @@ public class ClayiumItem extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, getTranslationKey());
     }
 }

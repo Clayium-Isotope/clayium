@@ -48,7 +48,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         this.guiId = guiId;
         this.tier = tier;
 
-        setUnlocalizedName(modelPath);
+        setTranslationKey(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -167,7 +167,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     // https://forums.minecraftforge.net/topic/39057-solved194-transparent-texture-not-rendering-correctly/
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
@@ -178,7 +178,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, this.getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, this.getTranslationKey());
     }
 
     @Override
@@ -208,7 +208,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
         return this.getDefaultState()
                 .withProperty(BlockStateClayContainer.IS_PIPE, this.canBePipe() && (meta >> 3) == 1)
-                .withProperty(BlockStateClayContainer.FACING, EnumFacing.getFront(meta & 0b0111));
+                .withProperty(BlockStateClayContainer.FACING, EnumFacing.byIndex(meta & 0b0111));
     }
 
     @Override

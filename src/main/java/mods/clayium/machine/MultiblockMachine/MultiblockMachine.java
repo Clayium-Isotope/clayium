@@ -45,7 +45,7 @@ public class MultiblockMachine extends ClayiumMachine {
         return this.getDefaultState()
                 .withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, (meta >> 3) == 1)
                 .withProperty(BlockStateClayContainer.IS_PIPE, (meta >> 2) == 1)
-                .withProperty(BlockStateClayContainer.FACING, EnumFacing.getHorizontal(meta & 0b0011));
+                .withProperty(BlockStateClayContainer.FACING, EnumFacing.byHorizontalIndex(meta & 0b0011));
     }
 
     @Override

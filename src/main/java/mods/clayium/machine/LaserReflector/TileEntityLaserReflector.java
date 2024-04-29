@@ -139,12 +139,12 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
 
         int l = this.getLaserLength();
         this.boundingBox = new AxisAlignedBB(
-                Math.min(this.pos.getX(), this.pos.getX() + direction.getFrontOffsetX() * l),
-                Math.min(this.pos.getY(), this.pos.getY() + direction.getFrontOffsetY() * l),
-                Math.min(this.pos.getZ(), this.pos.getZ() + direction.getFrontOffsetZ() * l),
-                Math.max(this.pos.getX(), this.pos.getX() + direction.getFrontOffsetX() * l) + 1.0D,
-                Math.max(this.pos.getY(), this.pos.getY() + direction.getFrontOffsetY() * l) + 1.0D,
-                Math.max(this.pos.getZ(), this.pos.getZ() + direction.getFrontOffsetZ() * l) + 1.0D
+                Math.min(this.pos.getX(), this.pos.getX() + direction.getXOffset() * l),
+                Math.min(this.pos.getY(), this.pos.getY() + direction.getYOffset() * l),
+                Math.min(this.pos.getZ(), this.pos.getZ() + direction.getZOffset() * l),
+                Math.max(this.pos.getX(), this.pos.getX() + direction.getXOffset() * l) + 1.0D,
+                Math.max(this.pos.getY(), this.pos.getY() + direction.getYOffset() * l) + 1.0D,
+                Math.max(this.pos.getZ(), this.pos.getZ() + direction.getZOffset() * l) + 1.0D
         );
         return this.boundingBox;
     }

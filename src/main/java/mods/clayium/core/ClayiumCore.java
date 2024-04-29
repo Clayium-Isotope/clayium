@@ -69,7 +69,7 @@ public class ClayiumCore {
 
     public static final CreativeTabs tabClayium = new CreativeTabs("clayium") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(Items.CLAY_BALL);
         }
 
@@ -181,7 +181,7 @@ public class ClayiumCore {
         for (Block block : ClayiumMachines.getBlocks()) {
             assert block.getRegistryName() != null;
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
-                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getResourcePath(), "inventory"));
+                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getPath(), "inventory"));
             // Custom blockstate mapping
             if (!block.getClass().isAnnotationPresent(HasOriginalState.class)) {
                 net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
@@ -208,7 +208,7 @@ public class ClayiumCore {
                             new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":material/" + ((ClayiumShapedMaterial) stack.getItem()).getTempFile(), "inventory"));
                 else
                     net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":material/" + stack.getItem().getRegistryName().getResourcePath(), "inventory"));
+                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":material/" + stack.getItem().getRegistryName().getPath(), "inventory"));
             }
         }
 
@@ -216,14 +216,14 @@ public class ClayiumCore {
             assert stack.getItem().getRegistryName() != null;
             if (stack.getItem() instanceof ClayiumShapedMaterial)
                 net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getResourcePath(), "inventory"));
+                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(), "inventory"));
         }
 
         for (ItemStack stack : ClayiumMaterials.denseClayParts.values()) {
             assert stack.getItem().getRegistryName() != null;
             if (stack.getItem() instanceof ClayiumShapedMaterial)
                 net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getResourcePath(), "inventory"));
+                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(), "inventory"));
         }
     }
 

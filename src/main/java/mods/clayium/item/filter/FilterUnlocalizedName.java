@@ -12,6 +12,6 @@ public class FilterUnlocalizedName extends FilterString {
     protected boolean filterStringMatch(String filterString, ItemStack itemstack) {
         if (itemstack.isEmpty()) return false;
 
-        return checkMatch(filterString, itemstack.getUnlocalizedName());
+        return checkMatch(filterString, itemstack.getTranslationKey());
     }
 }

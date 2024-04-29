@@ -13,7 +13,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class ClayTreeLog extends BlockLog implements ITieredBlock {
     public ClayTreeLog() {
-        setUnlocalizedName("clay_tree_log");
+        setTranslationKey("clay_tree_log");
         setRegistryName(ClayiumCore.ModId, "clay_tree_log");
         setCreativeTab(ClayiumCore.tabClayium);
         setHardness(1.5f);

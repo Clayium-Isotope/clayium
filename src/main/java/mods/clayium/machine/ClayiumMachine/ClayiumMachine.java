@@ -28,7 +28,7 @@ public class ClayiumMachine extends ClaySidedContainer {
                 guiID, tier);
         this.machineKind = kind;
 
-        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
+        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getPath());
     }
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier) {

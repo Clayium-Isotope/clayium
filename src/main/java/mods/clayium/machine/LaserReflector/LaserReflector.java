@@ -30,7 +30,7 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
     public LaserReflector() {
         super(Material.IRON);
 
-        setUnlocalizedName("laser_reflector");
+        setTranslationKey("laser_reflector");
         setRegistryName(ClayiumCore.ModId, "laser_reflector");
         setCreativeTab(ClayiumCore.tabClayium);
         setSoundType(SoundType.GLASS);
@@ -63,7 +63,7 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
     }
 
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
@@ -108,7 +108,7 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
     }
 
     @Override

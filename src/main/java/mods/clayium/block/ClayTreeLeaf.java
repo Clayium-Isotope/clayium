@@ -30,7 +30,7 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
     public ClayTreeLeaf() {
         super();
 
-        setUnlocalizedName("clay_tree_leaves");
+        setTranslationKey("clay_tree_leaves");
         setRegistryName(ClayiumCore.ModId, "clay_tree_leaves");
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -115,9 +115,9 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
     }
 
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
 //        this.updateFancy();
-        return super.getBlockLayer();
+        return super.getRenderLayer();
     }
 
     @Override

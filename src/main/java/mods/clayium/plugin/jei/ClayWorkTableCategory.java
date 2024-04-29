@@ -44,7 +44,7 @@ public class ClayWorkTableCategory implements IRecipeCategory<KneadingRecipe> {
 
     @Override
     public String getTitle() {
-        return ClayiumMachines.clayWorkTable.getUnlocalizedName();
+        return ClayiumMachines.clayWorkTable.getTranslationKey();
     }
 
     @Override

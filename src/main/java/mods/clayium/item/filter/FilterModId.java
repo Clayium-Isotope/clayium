@@ -12,6 +12,6 @@ public class FilterModId extends FilterString {
     protected boolean filterStringMatch(String filterString, ItemStack itemstack) {
         if (itemstack.isEmpty() || itemstack.getItem().getRegistryName() == null) return false;
 
-        return checkMatch(filterString, itemstack.getItem().getRegistryName().getResourceDomain());
+        return checkMatch(filterString, itemstack.getItem().getRegistryName().getNamespace());
     }
 }

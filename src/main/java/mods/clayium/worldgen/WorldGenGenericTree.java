@@ -179,7 +179,7 @@ public class WorldGenGenericTree extends WorldGenAbstractTree {
                             for(EnumFacing i3 : EnumFacing.HORIZONTALS) {
                                 if (rand.nextInt(4 - k1) == 0) {
                                     this.setBlockAndNotifyAdequately(worldIn,
-                                            new BlockPos(position.getX() + i3.getFrontOffsetX(), position.getY() + i - 5 + k1, position.getZ() + i3.getFrontOffsetZ()),
+                                            new BlockPos(position.getX() + i3.getXOffset(), position.getY() + i - 5 + k1, position.getZ() + i3.getZOffset()),
                                             Blocks.COCOA.getDefaultState().withProperty(BlockCocoa.FACING, i3.getOpposite()).withProperty(BlockCocoa.AGE, rand.nextInt(3) << 2 | i3.getIndex())
                                     );
                                 }

@@ -27,7 +27,7 @@ public class ClayTreeSapling extends BlockBush implements IGrowable, ITieredBloc
 
     public ClayTreeSapling() {
         super();
-        setUnlocalizedName("clay_tree_sapling");
+        setTranslationKey("clay_tree_sapling");
         setRegistryName(ClayiumCore.ModId, "clay_tree_sapling");
         setCreativeTab(ClayiumCore.tabClayium);
 

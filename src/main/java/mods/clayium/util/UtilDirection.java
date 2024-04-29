@@ -52,11 +52,11 @@ public class UtilDirection {
 
     public static EnumSide getSideOfDirection(EnumFacing asFront, EnumFacing side) {
         if (side == asFront)                                                return EnumSide.FRONT;
-        if (side == EnumFacing.getFront(DOWNSIDES[asFront.getIndex()]))     return EnumSide.DOWN;
-        if (side == EnumFacing.getFront(UPSIDES[asFront.getIndex()]))       return EnumSide.UP;
-        if (side == EnumFacing.getFront(LEFTSIDES[asFront.getIndex()]))     return EnumSide.LEFT;
-        if (side == EnumFacing.getFront(RIGHTSIDES[asFront.getIndex()]))    return EnumSide.RIGHT;
-        if (side == EnumFacing.getFront(OPPOSITES[asFront.getIndex()]))     return EnumSide.BACK;
+        if (side == EnumFacing.byIndex(DOWNSIDES[asFront.getIndex()]))     return EnumSide.DOWN;
+        if (side == EnumFacing.byIndex(UPSIDES[asFront.getIndex()]))       return EnumSide.UP;
+        if (side == EnumFacing.byIndex(LEFTSIDES[asFront.getIndex()]))     return EnumSide.LEFT;
+        if (side == EnumFacing.byIndex(RIGHTSIDES[asFront.getIndex()]))    return EnumSide.RIGHT;
+        if (side == EnumFacing.byIndex(OPPOSITES[asFront.getIndex()]))     return EnumSide.BACK;
 
         return EnumSide.UNKNOWN;
     }
@@ -64,12 +64,12 @@ public class UtilDirection {
     @Nullable
     public static EnumFacing getSideOfDirection(EnumFacing asFront, EnumSide side) {
         switch (side) {
-            case DOWN:  return EnumFacing.getFront(DOWNSIDES[asFront.getIndex()]);
-            case UP:    return EnumFacing.getFront(UPSIDES[asFront.getIndex()]);
-            case FRONT: return EnumFacing.getFront(asFront.getIndex());
-            case BACK:  return EnumFacing.getFront(OPPOSITES[asFront.getIndex()]);
-            case LEFT:  return EnumFacing.getFront(LEFTSIDES[asFront.getIndex()]);
-            case RIGHT: return EnumFacing.getFront(RIGHTSIDES[asFront.getIndex()]);
+            case DOWN:  return EnumFacing.byIndex(DOWNSIDES[asFront.getIndex()]);
+            case UP:    return EnumFacing.byIndex(UPSIDES[asFront.getIndex()]);
+            case FRONT: return EnumFacing.byIndex(asFront.getIndex());
+            case BACK:  return EnumFacing.byIndex(OPPOSITES[asFront.getIndex()]);
+            case LEFT:  return EnumFacing.byIndex(LEFTSIDES[asFront.getIndex()]);
+            case RIGHT: return EnumFacing.byIndex(RIGHTSIDES[asFront.getIndex()]);
             default:    return null;
         }
     }

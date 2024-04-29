@@ -20,7 +20,7 @@ public class ClayPickaxe extends ItemPickaxe {
 		super(ToolMaterial.STONE);
 		this.attackSpeed = -3f;
 		setMaxDamage(500);
-		setUnlocalizedName("clay_pickaxe");
+		setTranslationKey("clay_pickaxe");
 		setRegistryName(ClayiumCore.ModId, "clay_pickaxe");
 		setCreativeTab(ClayiumCore.tabClayium);
 		setHarvestLevel("pickaxe", 1);
@@ -36,7 +36,7 @@ public class ClayPickaxe extends ItemPickaxe {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-		UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
+		UtilLocale.localizeTooltip(tooltip, getTranslationKey());
 	}
 
 	private float efficiencyOnClayOre = 32F;

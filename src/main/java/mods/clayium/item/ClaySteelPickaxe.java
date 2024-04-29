@@ -28,7 +28,7 @@ public class ClaySteelPickaxe extends ItemPickaxe implements IAdvancedTool {
         super(ToolMaterial.DIAMOND);
         setMaxDamage(10000);
 
-        setUnlocalizedName("clay_steel_pickaxe");
+        setTranslationKey("clay_steel_pickaxe");
         setRegistryName(ClayiumCore.ModId, "clay_steel_pickaxe");
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -58,6 +58,6 @@ public class ClaySteelPickaxe extends ItemPickaxe implements IAdvancedTool {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, getTranslationKey());
     }
 }

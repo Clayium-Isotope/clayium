@@ -28,7 +28,7 @@ public class ClayiumBlock extends Block implements IItemBlockHolder {
 
     public ClayiumBlock(Material material, String modelPath, MapColor mapColor) {
         super(material, mapColor);
-        setUnlocalizedName(modelPath);
+        setTranslationKey(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
     }
@@ -36,7 +36,7 @@ public class ClayiumBlock extends Block implements IItemBlockHolder {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, this.getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, this.getTranslationKey());
     }
 
     @Override

@@ -33,7 +33,7 @@ public enum EnumSide {
     }
 
     public EnumFacing toEnumFacing() {
-        return EnumFacing.getFront(this.index);
+        return EnumFacing.byIndex(this.index);
     }
 
     public EnumSide getOpposite() {

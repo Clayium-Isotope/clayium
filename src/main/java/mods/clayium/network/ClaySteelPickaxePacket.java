@@ -26,7 +26,7 @@ public class ClaySteelPickaxePacket implements IMessage {
 
     public void fromBytes(ByteBuf buf) {
         int _side = buf.readInt();
-        this.side = _side == -1 ? null : EnumFacing.getFront(_side);
+        this.side = _side == -1 ? null : EnumFacing.byIndex(_side);
         this.dimid = buf.readInt();
         this.pos = new Vec3i(buf.readInt(), buf.readInt(), buf.readInt());
     }

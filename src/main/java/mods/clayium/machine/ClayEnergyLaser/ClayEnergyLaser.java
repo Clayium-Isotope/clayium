@@ -30,7 +30,7 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
         if (!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TileEntityClayEnergyLaser) {
-                ((TileEntityClayEnergyLaser) tile).setPowered(ClayiumConfiguration.cfgInverseClayLaserRSCondition == (worldIn.isBlockIndirectlyGettingPowered(pos) != 0));
+                ((TileEntityClayEnergyLaser) tile).setPowered(ClayiumConfiguration.cfgInverseClayLaserRSCondition == (worldIn.getRedstonePowerFromNeighbors(pos) != 0));
             }
         }
     }

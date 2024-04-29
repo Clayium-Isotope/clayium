@@ -21,7 +21,7 @@ public class ClayShovel extends ItemSpade {
 		super(ToolMaterial.WOOD);
 		this.attackSpeed = -3f;
 		setMaxDamage(500);
-		setUnlocalizedName("clay_shovel");
+		setTranslationKey("clay_shovel");
 		setRegistryName(ClayiumCore.ModId, "clay_shovel");
 		setCreativeTab(ClayiumCore.tabClayium);
 		setHarvestLevel("spade", 1);
@@ -41,7 +41,7 @@ public class ClayShovel extends ItemSpade {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-		UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
+		UtilLocale.localizeTooltip(tooltip, getTranslationKey());
 	}
 
 	protected float efficiencyOnClayBlocks = 32F;

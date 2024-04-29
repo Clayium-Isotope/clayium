@@ -67,7 +67,7 @@ public class KneadingRecipe extends RecipeElement {
         this.product = product;
         this.change = change;
 
-        setRegistryName(ClayiumCore.ModId, this.material.getUnlocalizedName() + "_to_" + this.product.getUnlocalizedName() + this.method.toBeSuffix());
+        setRegistryName(ClayiumCore.ModId, this.material.getTranslationKey() + "_to_" + this.product.getTranslationKey() + this.method.toBeSuffix());
     }
 
     public boolean hasChange() {

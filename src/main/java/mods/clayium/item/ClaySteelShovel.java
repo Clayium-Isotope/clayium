@@ -28,7 +28,7 @@ public class ClaySteelShovel extends ItemSpade implements IAdvancedTool {
         super(ToolMaterial.DIAMOND);
         setMaxDamage(10000);
 
-        setUnlocalizedName("clay_steel_shovel");
+        setTranslationKey("clay_steel_shovel");
         setRegistryName(ClayiumCore.ModId, "clay_steel_shovel");
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -58,6 +58,6 @@ public class ClaySteelShovel extends ItemSpade implements IAdvancedTool {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, getTranslationKey());
     }
 }

@@ -36,7 +36,7 @@ public class QuartzCrucible extends ClayContainer {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
         if (entity instanceof EntityItem) {
             ItemStack itemStack = ((EntityItem) entity).getItem();
             ItemStack ingot = ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot);

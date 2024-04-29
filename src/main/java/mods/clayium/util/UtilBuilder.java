@@ -15,7 +15,7 @@ public class UtilBuilder {
         Block block = world.getBlockState(pos).getBlock();
         if (block instanceof ClayContainer) return false;
 
-        EnumFacing direction = EnumFacing.getFront(side.ordinal());
+        EnumFacing direction = EnumFacing.byIndex(side.ordinal());
         EnumFacing[] axes = block.getValidRotations(world, pos);
         if (axes == null || axes.length == 0) return false;
 
