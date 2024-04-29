@@ -1,17 +1,21 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.item.common.IClayEnergy;
-import mods.clayium.util.RangeCheck;
-import mods.clayium.util.UsedFor;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.util.RangeCheck;
+import mods.clayium.util.UsedFor;
+
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
+
     int NIL_ENERGY_SLOT = -1;
 
     int getClayEnergyStorageSize();
+
     void setClayEnergyStorageSize(int size);
+
     static void growCEStorageSize(IClayEnergyConsumer consumer, int dist) {
         dist += consumer.getClayEnergyStorageSize();
         if (dist > 64) {
@@ -36,9 +40,8 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
 
     static boolean isItemValidForSlot(IClayEnergyConsumer inv, int index, ItemStack stack) {
         if (inv != null && index == inv.getEnergySlot()) {
-            return inv.acceptClayEnergy() && IClayEnergy.hasClayEnergy(stack)
-                    && (inv.getEnergyStack().isEmpty()
-                    || inv.getEnergyStack().getCount() < inv.getClayEnergyStorageSize());
+            return inv.acceptClayEnergy() && IClayEnergy.hasClayEnergy(stack) && (inv.getEnergyStack().isEmpty() ||
+                    inv.getEnergyStack().getCount() < inv.getClayEnergyStorageSize());
         }
 
         return false;
@@ -78,7 +81,8 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
 
     /**
      * TRUE ensures that the Object inherits {@link IClayEnergyConsumer}
-     * <br>TileEntityを保証していると冗長になる場合があるので、Objectとした。
+     * <br>
+     * TileEntityを保証していると冗長になる場合があるので、Objectとした。
      */
     static boolean hasClayEnergy(Object te) {
         return te instanceof IClayEnergyConsumer && ((IClayEnergyConsumer) te).acceptClayEnergy();

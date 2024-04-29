@@ -5,6 +5,7 @@ import mods.clayium.util.UsedFor;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IMachine {
+
     EnumMachineKind getKind();
 
     /**

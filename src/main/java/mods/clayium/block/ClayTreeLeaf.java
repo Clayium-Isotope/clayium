@@ -1,11 +1,9 @@
 package mods.clayium.block;
 
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.item.common.ClayiumShape;
-import mods.clayium.util.TierPrefix;
+import java.util.Random;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.MapColor;
@@ -23,10 +21,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import java.util.Random;
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.util.TierPrefix;
 
 public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
+
     public ClayTreeLeaf() {
         super();
 
@@ -35,7 +38,7 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
         setCreativeTab(ClayiumCore.tabClayium);
 
         this.leavesFancy = true;
-//        this.updateFancy();
+        // this.updateFancy();
 
         setDefaultState(this.getDefaultState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
     }
@@ -105,24 +108,26 @@ public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(DECAYABLE, (meta & 1) == 0).withProperty(CHECK_DECAY, (meta & 2) > 0);
+        return this.getDefaultState().withProperty(DECAYABLE, (meta & 1) == 0).withProperty(CHECK_DECAY,
+                (meta & 2) > 0);
     }
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
-//        this.updateFancy();
+        // this.updateFancy();
         return super.isOpaqueCube(state);
     }
 
     @Override
     public BlockRenderLayer getRenderLayer() {
-//        this.updateFancy();
+        // this.updateFancy();
         return super.getRenderLayer();
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-//        this.updateFancy();
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
+                                        EnumFacing side) {
+        // this.updateFancy();
         return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 

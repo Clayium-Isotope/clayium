@@ -1,11 +1,13 @@
 package mods.clayium.item.gadget;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
+
 public class GadgetOverclock extends GadgetTemp {
+
     private final int meta;
 
     public GadgetOverclock(int meta, TierPrefix tier) {

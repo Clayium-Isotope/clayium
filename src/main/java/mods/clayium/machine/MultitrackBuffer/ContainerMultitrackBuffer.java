@@ -1,13 +1,15 @@
 package mods.clayium.machine.MultitrackBuffer;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotMemory;
 import mods.clayium.gui.SlotWithTexture;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 
 public class ContainerMultitrackBuffer extends ContainerTemp {
+
     public ContainerMultitrackBuffer(InventoryPlayer player, TileEntityMultitrackBuffer tile) {
         super(player, tile);
     }
@@ -18,7 +20,7 @@ public class ContainerMultitrackBuffer extends ContainerTemp {
         int x = 0;
         int offsetX;
 
-        for(int[] track : tile.tracks) {
+        for (int[] track : tile.tracks) {
             x = Math.max(x, track.length);
         }
 
@@ -27,19 +29,21 @@ public class ContainerMultitrackBuffer extends ContainerTemp {
         int[] trackl = new int[tile.tracks.length];
 
         int id;
-        for(id = 0; id < tile.slot2track.length; ++id) {
+        for (id = 0; id < tile.slot2track.length; ++id) {
             int track = tile.slot2track[id];
             if (track >= 0 && track < trackl.length) {
-                SlotWithTexture slot = new SlotWithTexture(tile, id, trackl[track] * 18 + offsetX, track * 18 + offsetY, RectangleTexture.SmallSlotMultitrackTextures[track]);
+                SlotWithTexture slot = new SlotWithTexture(tile, id, trackl[track] * 18 + offsetX, track * 18 + offsetY,
+                        RectangleTexture.SmallSlotMultitrackTextures[track]);
                 slot.setRestricted();
                 this.addMachineSlotToContainer(slot);
                 trackl[track]++;
             }
         }
 
-        for(id = 0; id < tile.tracks.length; ++id) {
+        for (id = 0; id < tile.tracks.length; ++id) {
             if (id + 54 < tile.getSizeInventory()) {
-                this.addMachineSlotToContainer(new SlotMemory(tile, id + 54, x * 18 + 4 + offsetX, id * 18 + offsetY, RectangleTexture.SmallSlotMultitrackFilterTextures[id], true));
+                this.addMachineSlotToContainer(new SlotMemory(tile, id + 54, x * 18 + 4 + offsetX, id * 18 + offsetY,
+                        RectangleTexture.SmallSlotMultitrackFilterTextures[id], true));
             }
         }
     }
@@ -77,7 +81,7 @@ public class ContainerMultitrackBuffer extends ContainerTemp {
         int num = 0;
         TileEntityMultitrackBuffer tile = (TileEntityMultitrackBuffer) this.tileEntity;
 
-        for(int j = 0; j < tile.slot2track.length; ++j) {
+        for (int j = 0; j < tile.slot2track.length; ++j) {
             int t = tile.slot2track[j];
             if (t >= 0 && t < tile.tracks.length) {
                 ++num;

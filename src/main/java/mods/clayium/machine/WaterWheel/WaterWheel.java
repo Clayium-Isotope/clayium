@@ -6,6 +6,7 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 
 public class WaterWheel extends ClayDirectionalNoRecipeMachine {
+
     public WaterWheel(TierPrefix tier) {
         super(TileEntityWaterWheel.class, EnumMachineKind.waterWheel, GuiHandler.GuiIdClayWaterWheel, tier);
     }

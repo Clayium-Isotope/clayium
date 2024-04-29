@@ -1,16 +1,18 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.gui.ContainerNormalInventory;
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 
-import java.util.HashMap;
-import java.util.Map;
+import mods.clayium.gui.ContainerNormalInventory;
+import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 
 public class InventoryMultiPage implements INormalInventory, IButtonProvider {
+
     public final IInventory inventory;
     protected int offset = 0;
     protected int offsetMin = Integer.MIN_VALUE;
@@ -34,7 +36,8 @@ public class InventoryMultiPage implements INormalInventory, IButtonProvider {
     }
 
     public InventoryMultiPage(TileEntityClayBuffer normalInventory) {
-        this(normalInventory, normalInventory.getInventoryStart(), normalInventory.getInventoryX() * normalInventory.getInventoryY(), normalInventory.getInventoryP());
+        this(normalInventory, normalInventory.getInventoryStart(),
+                normalInventory.getInventoryX() * normalInventory.getInventoryY(), normalInventory.getInventoryP());
     }
 
     public InventoryMultiPage(IInventory inventory) {

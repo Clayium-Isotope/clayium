@@ -1,16 +1,18 @@
 package mods.clayium.machine.ClayiumMachine;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
+
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine1To1;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.item.ItemStack;
 
 public class ContainerClayiumMachine extends ContainerTemp {
+
     /**
      * The first index of material
      */
@@ -52,19 +54,23 @@ public class ContainerClayiumMachine extends ContainerTemp {
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
-        addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, Machine1To1.MATERIAL, 44, 35, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack itemstack) {
-                return tileEntity.isItemValidForSlot(Machine1To1.MATERIAL, itemstack);
-            }
-        });
+        addMachineSlotToContainer(
+                new SlotWithTexture(this.tileEntity, Machine1To1.MATERIAL, 44, 35, RectangleTexture.LargeSlotTexture) {
 
-        addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, Machine1To1.PRODUCT, 116, 35, RectangleTexture.LargeSlotTexture) {
-            @Override
-            public boolean isItemValid(ItemStack itemstack) {
-                return false;
-            }
-        });
+                    @Override
+                    public boolean isItemValid(ItemStack itemstack) {
+                        return tileEntity.isItemValidForSlot(Machine1To1.MATERIAL, itemstack);
+                    }
+                });
+
+        addMachineSlotToContainer(
+                new SlotWithTexture(this.tileEntity, Machine1To1.PRODUCT, 116, 35, RectangleTexture.LargeSlotTexture) {
+
+                    @Override
+                    public boolean isItemValid(ItemStack itemstack) {
+                        return false;
+                    }
+                });
 
         if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity))
             addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));

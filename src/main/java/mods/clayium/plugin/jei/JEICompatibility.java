@@ -1,5 +1,10 @@
 package mods.clayium.plugin.jei;
 
+import java.util.Arrays;
+import java.util.Collections;
+
+import net.minecraft.item.ItemStack;
+
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -15,13 +20,10 @@ import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.ClayiumRecipes;
-import net.minecraft.item.ItemStack;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 @JEIPlugin
 public class JEICompatibility implements IModPlugin {
+
     public static IJeiRuntime jeiRuntime = null;
 
     @Override
@@ -48,15 +50,16 @@ public class JEICompatibility implements IModPlugin {
         // 粘土作業台
         registry.addRecipes(ClayiumRecipes.clayWorkTable, ClayWorkTableCategory.categoryID);
         registry.addRecipeClickArea(GuiClayWorkTable.class, 48, 33, 80, 12, ClayWorkTableCategory.categoryID);
-        recipeTransfer.addRecipeTransferHandler(ContainerClayWorkTable.class, ClayWorkTableCategory.categoryID, 0, 2, 4, 36);
+        recipeTransfer.addRecipeTransferHandler(ContainerClayWorkTable.class, ClayWorkTableCategory.categoryID, 0, 2, 4,
+                36);
         registry.addRecipeCatalyst(new ItemStack(ClayiumMachines.clayWorkTable), ClayWorkTableCategory.categoryID);
 
         // クォーツるつぼ
         registry.addIngredientInfo(Arrays.asList(
-                    ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot),
-                    new ItemStack(ClayiumMachines.quartzCrucible),
-                    ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.ingot)
-                ), VanillaTypes.ITEM, "recipe.quartz_crucible.description");
+                ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot),
+                new ItemStack(ClayiumMachines.quartzCrucible),
+                ClayiumMaterials.get(ClayiumMaterial.silicon, ClayiumShape.ingot)), VanillaTypes.ITEM,
+                "recipe.quartz_crucible.description");
 
         // 機械たち
         for (EnumMachineKind kind : EnumMachineKind.values()) {
@@ -64,7 +67,8 @@ public class JEICompatibility implements IModPlugin {
 
             String categoryID = getCategoryID(kind);
             registry.addRecipes(kind.getRecipe(), categoryID);
-            recipeTransfer.addRecipeTransferHandler(kind.slotType.containerClass, categoryID, kind.slotType.inStart, kind.slotType.inCount, kind.slotType.playerStart, kind.slotType.playerCount);
+            recipeTransfer.addRecipeTransferHandler(kind.slotType.containerClass, categoryID, kind.slotType.inStart,
+                    kind.slotType.inCount, kind.slotType.playerStart, kind.slotType.playerCount);
 
             for (ItemStack stack : ClayiumMachines.getSet(kind)) {
                 registry.addRecipeCatalyst(stack, categoryID);
@@ -72,7 +76,9 @@ public class JEICompatibility implements IModPlugin {
         }
 
         // 粘土樹
-        registry.addIngredientInfo(Arrays.asList(new ItemStack(ClayiumBlocks.clayTreeSapling), new ItemStack(ClayiumBlocks.clayTreeLog), new ItemStack(ClayiumBlocks.clayTreeLeaf)), VanillaTypes.ITEM, "recipe.clay_tree.description");
+        registry.addIngredientInfo(Arrays.asList(new ItemStack(ClayiumBlocks.clayTreeSapling),
+                new ItemStack(ClayiumBlocks.clayTreeLog), new ItemStack(ClayiumBlocks.clayTreeLeaf)), VanillaTypes.ITEM,
+                "recipe.clay_tree.description");
     }
 
     @Override
@@ -83,7 +89,9 @@ public class JEICompatibility implements IModPlugin {
     /**
      * Use the static field {@link JEICompatibility#jeiRuntime} to show each machine category.<br>
      * <br>
-     * REFER TO: <a href="https://github.com/SleepyTrousers/EnderIO/blob/b2754e2c08384a0c51b1289db6cf8f2607ea0d01/enderio-base/src/main/java/crazypants/enderio/base/integration/jei/JeiPlugin.java#L108-L110">Ender IO</a><br>
+     * REFER TO: <a href=
+     * "https://github.com/SleepyTrousers/EnderIO/blob/b2754e2c08384a0c51b1289db6cf8f2607ea0d01/enderio-base/src/main/java/crazypants/enderio/base/integration/jei/JeiPlugin.java#L108-L110">Ender
+     * IO</a><br>
      */
     public static void showMachineRecipes(EnumMachineKind kind) {
         if (JEICompatibility.jeiRuntime == null || !kind.hasRecipe()) return;

@@ -1,19 +1,23 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.machine.crafting.ClayiumRecipe;
-import mods.clayium.machine.crafting.IRecipeElement;
-import mods.clayium.util.UsedFor;
-import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.item.ItemStack;
+
+import mods.clayium.machine.crafting.ClayiumRecipe;
+import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.util.UsedFor;
+
 @UsedFor(UsedFor.Type.TileEntity)
 public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider {
+
     ClayiumRecipe getRecipeCard();
+
     T getFlat();
 
     static <T extends IRecipeElement> T getRecipe(ClayiumRecipe recipeCard, Predicate<T> pred, T flat) {
@@ -23,16 +27,19 @@ public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeP
     default T getRecipe(Predicate<T> pred) {
         return this.getRecipeCard().getRecipe(pred, this.getFlat());
     }
+
     default T getRecipe(ItemStack stack) {
         if (stack.isEmpty()) return this.getFlat();
 
         return this.getRecipe(e -> e.isCraftable(stack, this.getRecipeTier()));
     }
+
     default T getRecipe(List<ItemStack> stacks) {
         if (stacks.isEmpty()) return this.getFlat();
 
         return this.getRecipe(e -> e.match(stacks, -1, this.getRecipeTier()));
     }
+
     default T getRecipe(int hash) {
         return this.getRecipe(e -> e.hashCode() == hash);
     }
@@ -42,31 +49,35 @@ public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeP
 
         return this.canCraft(this.getRecipe(stack));
     }
+
     default boolean canCraft(List<ItemStack> stacks) {
         if (stacks.isEmpty()) return false;
 
         return this.canCraft(this.getRecipe(stacks));
     }
+
     boolean canCraft(T recipe);
 
     @Nullable
-    static <T extends IRecipeElement> int[] getCraftPermutation(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+    static <T extends IRecipeElement> int[] getCraftPermutation(ClayiumRecipeProvider<T> provider, ItemStack mat1,
+                                                                ItemStack mat2) {
         if (provider.canCraft(Arrays.asList(mat1, mat2)))
-            return new int[]{ 0, 1 };
+            return new int[] { 0, 1 };
 
         if (provider.canCraft(Arrays.asList(mat2, mat1)))
-            return new int[]{ 1, 0 };
+            return new int[] { 1, 0 };
 
         if (provider.canCraft(Collections.singletonList(mat1)))
-            return new int[]{ 0 };
+            return new int[] { 0 };
 
         if (provider.canCraft(Collections.singletonList(mat2)))
-            return new int[]{ 1 };
+            return new int[] { 1 };
 
         return null;
     }
 
-    static <T extends IRecipeElement> List<ItemStack> getCraftPermStacks(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+    static <T extends IRecipeElement> List<ItemStack> getCraftPermStacks(ClayiumRecipeProvider<T> provider,
+                                                                         ItemStack mat1, ItemStack mat2) {
         List<ItemStack> materials;
 
         materials = Arrays.asList(mat1, mat2);
@@ -86,7 +97,8 @@ public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeP
         return Collections.emptyList();
     }
 
-    static <T extends IRecipeElement> T getCraftPermRecipe(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
+    static <T extends IRecipeElement> T getCraftPermRecipe(ClayiumRecipeProvider<T> provider, ItemStack mat1,
+                                                           ItemStack mat2) {
         T recipe;
 
         recipe = provider.getRecipe(Arrays.asList(mat1, mat2));

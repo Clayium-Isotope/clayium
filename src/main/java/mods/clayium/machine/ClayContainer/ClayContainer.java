@@ -1,13 +1,12 @@
 package mods.clayium.machine.ClayContainer;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilLocale;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -31,18 +30,24 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilLocale;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
+
     private final Class<? extends TileEntityGeneric> teClass;
-    /*package-private*/ final int guiId;
+    /* package-private */ final int guiId;
     protected final TierPrefix tier;
 
-    public ClayContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId, TierPrefix tier) {
+    public ClayContainer(Material material, Class<? extends TileEntityGeneric> teClass, String modelPath, int guiId,
+                         TierPrefix tier) {
         super(material);
         this.teClass = teClass;
         this.guiId = guiId;
@@ -61,14 +66,14 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
                     .withProperty(BlockStateClayContainer.ARM_WEST, false)
                     .withProperty(BlockStateClayContainer.ARM_EAST, false)
                     .withProperty(BlockStateClayContainer.IS_PIPE, false)
-                    .withProperty(BlockStateClayContainer.FACING, EnumFacing.NORTH)
-            );
+                    .withProperty(BlockStateClayContainer.FACING, EnumFacing.NORTH));
         }
     }
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (worldIn.getTileEntity(pos) instanceof TileEntityGeneric && ((TileEntityGeneric) worldIn.getTileEntity(pos)).hasSpecialDrops()) {
+        if (worldIn.getTileEntity(pos) instanceof TileEntityGeneric &&
+                ((TileEntityGeneric) worldIn.getTileEntity(pos)).hasSpecialDrops()) {
             List<ItemStack> drops = new ArrayList<>();
             ((TileEntityGeneric) worldIn.getTileEntity(pos)).addSpecialDrops(drops);
 
@@ -95,7 +100,8 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+                                    EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         // the used item which implements IModifyCC calls own Item#onItemUse
         if (playerIn.getHeldItem(hand).getItem() instanceof IModifyCC) return false;
 
@@ -116,7 +122,8 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     protected void openGui(World world, BlockPos pos, EntityPlayer player) {
         Block block = world.getBlockState(pos).getBlock();
-        if (block instanceof ClayContainer && world.getTileEntity(pos) instanceof TileEntityGeneric && ((ClayContainer) block).guiId != -1)
+        if (block instanceof ClayContainer && world.getTileEntity(pos) instanceof TileEntityGeneric &&
+                ((ClayContainer) block).guiId != -1)
             openGui(((ClayContainer) block).guiId, world, pos, player);
     }
 
@@ -125,7 +132,8 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
      * Modifying Place Fields -> onBlockPlacedBy
      */
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+                                ItemStack stack) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (tileentity instanceof TileEntityGeneric) {
@@ -136,7 +144,8 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+                                            float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
         return state.withProperty(BlockStateClayContainer.FACING, UtilDirection.getBetterFront(state, pos, placer));
     }
@@ -222,12 +231,14 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     }
 
     private static class ClayContainerStateContainer extends BlockStateContainer {
+
         public ClayContainerStateContainer(ClayContainer blockIn) {
             super(blockIn, BlockStateClayContainer.getPropertyList().toArray(new IProperty[0]));
         }
 
         @Override
-        protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties, @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
+        protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties,
+                                                  @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
             if (block instanceof ClaySidedContainer)
                 return new BlockStateClaySidedContainer(block, properties);
             if (block instanceof ClayDirectionalContainer)

@@ -1,5 +1,13 @@
 package mods.clayium.machine.SolarClayFabricator;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumSkyBlock;
+
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
@@ -10,15 +18,9 @@ import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.EnumSkyBlock;
-
-import javax.annotation.Nullable;
 
 public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
+
     public TierPrefix acceptableTier;
     public float baseCraftTime;
 
@@ -33,8 +35,8 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         this.listSlotsExport.add(new int[] { 1 });
         this.slotsDrop = new int[] { 0, 1 };
 
-        this.maxAutoExtract = new int[]{64};
-        this.maxAutoInsert = new int[]{64};
+        this.maxAutoExtract = new int[] { 64 };
+        this.maxAutoInsert = new int[] { 64 };
 
         this.debtEnergy = 0;
     }
@@ -79,12 +81,16 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
                 throw new IllegalTierException();
         }
 
-        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier.meta() + 1) * (double)(this.baseCraftTime - 1.0F) / ((double)this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) - 1.0D)) / (double)(ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
+        this.initCraftTime = (float) (Math.pow(10.0D, this.acceptableTier.meta() + 1) *
+                (double) (this.baseCraftTime - 1.0F) /
+                ((double) this.baseCraftTime * (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) - 1.0D)) /
+                (double) (ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
         this.autoExtractInterval = this.autoInsertInterval = 4;
     }
 
     protected boolean canCraft(TierPrefix tier) {
-        return isTierValid(tier) && UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier.offset(1)), this.containerItemStacks, 1, 2, this.getInventoryStackLimit()) >= 1;
+        return isTierValid(tier) && UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier.offset(1)),
+                this.containerItemStacks, 1, 2, this.getInventoryStackLimit()) >= 1;
     }
 
     @Override
@@ -93,38 +99,41 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     }
 
     public boolean canProceedCraft() {
-        if (this.world.getLightFor(EnumSkyBlock.SKY, this.getPos().up()) < 15 || this.world.getSkylightSubtracted() > 0) return false;
+        if (this.world.getLightFor(EnumSkyBlock.SKY, this.getPos().up()) < 15 || this.world.getSkylightSubtracted() > 0)
+            return false;
 
         return this.canCraft(this.getStackInSlot(0));
     }
 
     public void proceedCraft() {
         ++this.craftTime;
-        this.containEnergy().set((long)(Math.pow(10.0D, this.raiseFrom.meta() + 1) * (double)this.craftTime / (double)this.timeToCraft));
+        this.containEnergy().set((long) (Math.pow(10.0D, this.raiseFrom.meta() + 1) * (double) this.craftTime /
+                (double) this.timeToCraft));
         if (this.craftTime < this.timeToCraft) {
             return;
         }
 
         this.containEnergy().set(0L);
-        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.raiseFrom.offset(1)), this.containerItemStacks, 1, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.raiseFrom.offset(1)), this.containerItemStacks,
+                1, this.getInventoryStackLimit());
         this.craftTime = 0L;
-//            if (this.externalControlState > 0) {
-//                --this.externalControlState;
-//                if (this.externalControlState == 0) {
-//                    this.externalControlState = -1;
-//                }
-//            }
+        // if (this.externalControlState > 0) {
+        // --this.externalControlState;
+        // if (this.externalControlState == 0) {
+        // this.externalControlState = -1;
+        // }
+        // }
     }
 
     @Override
     public boolean setNewRecipe() {
-//        if (this.world.isRemote) return false;
+        // if (this.world.isRemote) return false;
 
         this.raiseFrom = getTierOfCompressedClay(this.getStackInSlot(0));
         if (!this.canCraft(this.raiseFrom)) return false;
 
         this.craftTime = 1;
-        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, this.raiseFrom.meta()) * (double)this.multCraftTime);
+        this.timeToCraft = (long) (Math.pow(this.baseCraftTime, this.raiseFrom.meta()) * (double) this.multCraftTime);
         this.getStackInSlot(0).shrink(1);
 
         return true;
@@ -142,7 +151,9 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
             return TierPrefix.denseClay;
         }
 
-        return UtilItemStack.hasOreName(itemstack, ClayiumMaterials.getOreName(ClayiumMaterial.lithium, ClayiumShape.ingot)) ? TierPrefix.clayium : TierPrefix.unknown;
+        return UtilItemStack.hasOreName(itemstack,
+                ClayiumMaterials.getOreName(ClayiumMaterial.lithium, ClayiumShape.ingot)) ? TierPrefix.clayium :
+                        TierPrefix.unknown;
     }
 
     @Nullable

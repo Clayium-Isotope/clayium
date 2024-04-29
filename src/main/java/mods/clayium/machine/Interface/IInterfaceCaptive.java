@@ -1,13 +1,15 @@
 package mods.clayium.machine.Interface;
 
-import mods.clayium.util.UsedFor;
+import javax.annotation.Nullable;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
+import mods.clayium.util.UsedFor;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IInterfaceCaptive {
+
     IInterfaceCaptive NONE = new EmptyCaptive();
 
     boolean acceptInterfaceSync();
@@ -25,11 +27,13 @@ public interface IInterfaceCaptive {
     }
 
     World getWorld();
+
     BlockPos getPos();
 
     void markDirty();
 
     class EmptyCaptive implements IInterfaceCaptive {
+
         EmptyCaptive() {}
 
         @Override

@@ -8,6 +8,7 @@ import mods.clayium.util.TierPrefix;
 
 @HasOriginalState
 public class AutoCrafter extends ClayHorizontalNoRecipeMachine {
+
     public AutoCrafter(TierPrefix tier) {
         super(TileEntityAutoCrafter.class, EnumMachineKind.autoCrafter, GuiHandler.GuiIdAutoCrafter, tier);
     }

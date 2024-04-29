@@ -1,13 +1,15 @@
 package mods.clayium.gui;
 
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
-import mods.clayium.machine.common.INormalInventory;
-import mods.clayium.machine.common.InventoryMultiPage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.common.INormalInventory;
+import mods.clayium.machine.common.InventoryMultiPage;
+
 public class ContainerNormalInventory extends ContainerTemp {
+
     public static final int buttonIdPrevious = 6;
     public static final int buttonIdNext = 7;
     private final InventoryMultiPage impl;
@@ -43,7 +45,8 @@ public class ContainerNormalInventory extends ContainerTemp {
 
         for (int y = 0; y < this.impl.getInventoryY(); y++) {
             for (int x = 0; x < this.impl.getInventoryX(); x++) {
-                addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, this.impl.getInventoryStart() + x + y * this.impl.getInventoryX(),
+                addMachineSlotToContainer(new SlotWithTexture(this.tileEntity,
+                        this.impl.getInventoryStart() + x + y * this.impl.getInventoryX(),
                         x * 18 + (this.machineGuiSizeX - 18 * this.impl.getInventoryX()) / 2 + 1, y * 18 + offsetY));
             }
         }

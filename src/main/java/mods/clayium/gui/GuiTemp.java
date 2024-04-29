@@ -1,14 +1,16 @@
 package mods.clayium.gui;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.common.ClayEnergyHolder;
-import mods.clayium.util.UtilLocale;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.common.ClayEnergyHolder;
+import mods.clayium.util.UtilLocale;
+
 public class GuiTemp extends GuiContainer {
+
     protected final IInventory tile;
     protected final ContainerTemp container;
     protected final int machineHeight;
@@ -46,7 +48,10 @@ public class GuiTemp extends GuiContainer {
         fontRenderer.drawString(I18n.format("container.inventory"), 8, machineHeight, 4210752);
 
         if (this.tile instanceof ClayEnergyHolder)
-            this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((ClayEnergyHolder) this.tile).containEnergy().get(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
+            this.fontRenderer.drawString(
+                    I18n.format("gui.Common.energy",
+                            UtilLocale.ClayEnergyNumeral(((ClayEnergyHolder) this.tile).containEnergy().get(), false)),
+                    4, this.container.machineGuiSizeY - 12, 4210752);
     }
 
     @Override
@@ -65,7 +70,7 @@ public class GuiTemp extends GuiContainer {
     }
 
     protected void supplyDraw() {
-        for(int i = 0; i < container.inventorySlots.size(); ++i) {
+        for (int i = 0; i < container.inventorySlots.size(); ++i) {
             if (container.inventorySlots.get(i) instanceof SlotWithTexture)
                 ((SlotWithTexture) container.inventorySlots.get(i)).draw(this, guiLeft, guiTop);
         }

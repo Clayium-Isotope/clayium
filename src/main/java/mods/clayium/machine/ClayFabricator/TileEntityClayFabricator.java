@@ -1,15 +1,17 @@
 package mods.clayium.machine.ClayFabricator;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
 import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 
 public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
+
     public float exponentOfNumber;
 
     public void initParams() {
@@ -52,43 +54,47 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
                 throw new IllegalTierException();
         }
 
-        this.initCraftTime = (float)(Math.pow(10.0D, this.acceptableTier.meta()) * 64.0D / (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) * Math.pow(64.0D, this.exponentOfNumber)) / (double)(ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
+        this.initCraftTime = (float) (Math.pow(10.0D, this.acceptableTier.meta()) * 64.0D /
+                (Math.pow(this.baseCraftTime, this.acceptableTier.meta()) * Math.pow(64.0D, this.exponentOfNumber)) /
+                (double) (ClayiumCore.multiplyProgressionRate(craftTimeDivisor) / 20.0F));
     }
 
     @Override
     public boolean canCraft(ItemStack material) {
         if (material.isEmpty()) return false;
 
-        return isTierValid(IClayEnergy.getTier(material)) && UtilTransfer.canProduceItemStack(material, this.getContainerItemStacks(), 1, this.getInventoryStackLimit()) > 0;
+        return isTierValid(IClayEnergy.getTier(material)) && UtilTransfer.canProduceItemStack(material,
+                this.getContainerItemStacks(), 1, this.getInventoryStackLimit()) > 0;
     }
 
     public boolean canProceedCraft() {
         return true;
 
-//        if (this.getStackInSlot(2).isEmpty())
-//            return this.canCraft(this.getStackInSlot(0));
-//
-//        return this.canCraft(this.getStackInSlot(2));
+        // if (this.getStackInSlot(2).isEmpty())
+        // return this.canCraft(this.getStackInSlot(0));
+        //
+        // return this.canCraft(this.getStackInSlot(2));
     }
 
     public void proceedCraft() {
         ++this.craftTime;
-        this.containEnergy().set((long)(Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2)).meta()) * this.getStackInSlot(2).getCount() * this.craftTime / (double)this.timeToCraft));
+        this.containEnergy().set((long) (Math.pow(10.0D, IClayEnergy.getTier(this.getStackInSlot(2)).meta()) *
+                this.getStackInSlot(2).getCount() * this.craftTime / (double) this.timeToCraft));
         if (this.craftTime < this.timeToCraft) {
             return;
         }
 
-        UtilTransfer.produceItemStack(this.getStackInSlot(2).copy(), this.getContainerItemStacks(), 1, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(this.getStackInSlot(2).copy(), this.getContainerItemStacks(), 1,
+                this.getInventoryStackLimit());
 
         this.containEnergy().set(0L);
         this.craftTime = 0L;
-//            if (this.externalControlState > 0) {
-//                --this.externalControlState;
-//                if (this.externalControlState == 0) {
-//                    this.externalControlState = -1;
-//                }
-//            }
-
+        // if (this.externalControlState > 0) {
+        // --this.externalControlState;
+        // if (this.externalControlState == 0) {
+        // this.externalControlState = -1;
+        // }
+        // }
     }
 
     @Override
@@ -97,7 +103,8 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
             return false;
 
         this.craftTime = 1;
-        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0)).meta()) * Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double)this.multCraftTime);
+        this.timeToCraft = (long) (Math.pow(this.baseCraftTime, IClayEnergy.getTier(this.getStackInSlot(0)).meta()) *
+                Math.pow(this.getStackInSlot(0).getCount(), this.exponentOfNumber) * (double) this.multCraftTime);
         this.setInventorySlotContents(2, this.getStackInSlot(0).copy());
 
         return true;

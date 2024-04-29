@@ -8,10 +8,12 @@ import net.minecraft.nbt.NBTTagList;
  * compound key is hard-corded. we can change whenever you want.
  */
 public class InventoryInItemStack extends NBTInventoryWrapper {
+
     protected final ItemStack itemstack;
 
     public InventoryInItemStack(ItemStack itemstack, int sizeInventory) {
-        super(getSufficientTagCompound(itemstack), !itemstack.isEmpty() ? itemstack.getDisplayName() : "", sizeInventory);
+        super(getSufficientTagCompound(itemstack), !itemstack.isEmpty() ? itemstack.getDisplayName() : "",
+                sizeInventory);
         this.itemstack = itemstack;
     }
 

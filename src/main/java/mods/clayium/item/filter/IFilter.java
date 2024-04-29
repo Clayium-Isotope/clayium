@@ -1,19 +1,21 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.util.UsedFor;
-import mods.clayium.util.UtilItemStack;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilItemStack;
 
 @UsedFor(UsedFor.Type.Item)
 public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
+
     boolean test(NBTTagCompound filterTag, ItemStack input);
 
     static boolean match(ItemStack filter, ItemStack input) {
@@ -49,7 +51,8 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
             return false;
         }
 
-        return UtilItemStack.areItemDamageEqualOrDamageable(filter, itemstack) || UtilItemStack.haveSameOD(filter, itemstack);
+        return UtilItemStack.areItemDamageEqualOrDamageable(filter, itemstack) ||
+                UtilItemStack.haveSameOD(filter, itemstack);
     }
 
     static Predicate<ItemStack> getFilterPredicate(ItemStack filter) {

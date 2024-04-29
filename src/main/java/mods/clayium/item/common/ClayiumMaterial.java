@@ -1,13 +1,14 @@
 package mods.clayium.item.common;
 
-import mods.clayium.core.ClayiumConfiguration;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+import mods.clayium.core.ClayiumConfiguration;
+
 public enum ClayiumMaterial {
+
     clay("clay", "Clay", 512),
     denseClay("dense_clay", "DenseClay", 513),
     indClay("ind_clay", "IndustrialClay", 515),
@@ -15,7 +16,8 @@ public enum ClayiumMaterial {
     engClay("eng_clay", "EnergizedClay", 768),
     calClay("cal_clay", "CalcareousClay", 769),
     excClay("exc_clay", "ExcitedClay", 770),
-    orgClay("org_clay", "OrganicClay", 771, $ -> $.setColor(136, 144, 173).setColor(106, 44, 43, 1).setColor(146, 164, 183, 2)),
+    orgClay("org_clay", "OrganicClay", 771,
+            $ -> $.setColor(136, 144, 173).setColor(106, 44, 43, 1).setColor(146, 164, 183, 2)),
 
     // Period II
     lithium("lithium", "Lithium", 3, $ -> $.setColor(210, 210, 150).setColor(120, 120, 120, 1)),
@@ -49,7 +51,8 @@ public enum ClayiumMaterial {
     niobium("niobium", "Niobium", 41),
     molybdenum("molybdenum", "Molybdenum", 42, $ -> $.setColor(130, 160, 130)),
     palladium("palladium", "Palladium", 46, $ -> $.setColor(151, 70, 70)),
-    silver("silver", "Silver", 47, $ -> $.setColor(230, 230, 245).setColor(120, 120, 140, 1).setColor(255, 255, 255, 2)),
+    silver("silver", "Silver", 47,
+            $ -> $.setColor(230, 230, 245).setColor(120, 120, 140, 1).setColor(255, 255, 255, 2)),
     tin("tin", "Tin", 50, $ -> $.setColor(230, 230, 240).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
     antimony("antimony", "Antimony", 51, $ -> $.setColor(70, 70, 70)),
     // Period VI
@@ -61,14 +64,17 @@ public enum ClayiumMaterial {
     neodymium("neodymium", "Neodymium", 60, $ -> $.setColor(145, 145, 145).setColor(0, 150, 150, 1)),
     promethium("promethium", "Promethium", 61, $ -> $.setColor(145, 145, 145).setColor(0, 0, 235, 1)),
     samarium("samarium", "Samarium", 62, $ -> $.setColor(145, 145, 145).setColor(150, 0, 150, 1)),
-    europium("europium", "Europium", 63, $ -> $.setColor(145, 145, 145).setColor(55, 55, 55, 1).setColor(145, 145, 145, 2)),
+    europium("europium", "Europium", 63,
+            $ -> $.setColor(145, 145, 145).setColor(55, 55, 55, 1).setColor(145, 145, 145, 2)),
     hafnium("hafnium", "Hafnium", 72, $ -> $.setColor(240, 210, 170)),
     tantalum("tantalum", "Tantalum", 73, $ -> $.setColor(240, 210, 170).setColor(240, 210, 150, 2)),
     tungsten("tungsten", "Tungsten", 74, $ -> $.setColor(30, 30, 30)),
     rhenium("rhenium", "Rhenium", 75, $ -> $.setColor(70, 70, 150).setColor(50, 50, 90, 2)),
     osmium("osmium", "Osmium", 76, $ -> $.setColor(70, 70, 150)),
-    iridium("iridium", "Iridium", 77, $ -> $.setColor(240, 240, 240).setColor(210, 210, 210, 1).setColor(235, 235, 235, 2)),
-    platinum("platinum", "Platinum", 78, $ -> $.setColor(245, 245, 230).setColor(140, 140, 120, 1).setColor(255, 255, 255, 2)),
+    iridium("iridium", "Iridium", 77,
+            $ -> $.setColor(240, 240, 240).setColor(210, 210, 210, 1).setColor(235, 235, 235, 2)),
+    platinum("platinum", "Platinum", 78,
+            $ -> $.setColor(245, 245, 230).setColor(140, 140, 120, 1).setColor(255, 255, 255, 2)),
     gold("gold", "Gold", 79, $ -> $.setColor(255, 255, 10, 0).setColor(60, 60, 0, 1).setColor(255, 255, 255, 2)),
     lead("lead", "Lead", 82, $ -> $.setColor(190, 240, 210)),
     bismuth("bismuth", "Bismuth", 83, $ -> $.setColor(70, 120, 70)),
@@ -79,33 +85,58 @@ public enum ClayiumMaterial {
     thorium("thorium", "Thorium", 90, $ -> $.setColor(50, 50, 50).setColor(200, 50, 50, 2)),
     protactinium("protactinium", "Protactinium", 91, $ -> $.setColor(50, 50, 50).setColor(50, 50, 100, 2)),
     uranium("uranium", "Uranium", 92, $ -> $.setColor(50, 255, 50).setColor(50, 155, 50, 1).setColor(50, 255, 50, 2)),
-    neptunium("neptunium", "Neptunium", 93, $ -> $.setColor(50, 50, 255).setColor(50, 50, 155, 1).setColor(50, 50, 255, 2)),
-    plutonium("plutonium", "Plutonium", 94, $ -> $.setColor(255, 50, 50).setColor(155, 50, 50, 1).setColor(255, 50, 50, 2)),
-    americium("americium", "Americium", 95, $ -> $.setColor(235, 235, 235).setColor(155, 155, 155, 1).setColor(235, 235, 235, 2)),
-    curium("curium", "Curium", 96, $ -> $.setColor(255, 255, 255).setColor(155, 155, 155, 1).setColor(244, 244, 244, 2)),
+    neptunium("neptunium", "Neptunium", 93,
+            $ -> $.setColor(50, 50, 255).setColor(50, 50, 155, 1).setColor(50, 50, 255, 2)),
+    plutonium("plutonium", "Plutonium", 94,
+            $ -> $.setColor(255, 50, 50).setColor(155, 50, 50, 1).setColor(255, 50, 50, 2)),
+    americium("americium", "Americium", 95,
+            $ -> $.setColor(235, 235, 235).setColor(155, 155, 155, 1).setColor(235, 235, 235, 2)),
+    curium("curium", "Curium", 96,
+            $ -> $.setColor(255, 255, 255).setColor(155, 155, 155, 1).setColor(244, 244, 244, 2)),
 
     // impure metals
-    impureLithium("impure_lithium", "ImpureLithium", 131, $ -> $.setColor(220, 220, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureBeryllium("impure_beryllium", "ImpureBeryllium", 132, $ -> $.setColor(210, 240, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureSodium("impure_sodium", "ImpureSodium", 139, $ -> $.setColor(170, 170, 230).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureMagnesium("impure_magnesium", "ImpureMagnesium", 140, $ -> $.setColor(150, 220, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureAluminium("impure_aluminium", "ImpureAluminium", 141, $ -> $.setColor(190, 200, 202).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureSilicon("impure_silicon", "ImpureSilicon", 142, $ -> $.setColor(151, 143, 152, 0).setColor(83, 55, 100, 1).setColor(169, 165, 165, 2)),
-    impurePotassium("impure_potassium", "ImpurePotassium", 147, $ -> $.setColor(240, 240, 190).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureCalcium("impure_calcium", "ImpureCalcium", 148, $ -> $.setColor(240, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureTitanium("impure_titanium", "ImpureTitanium", 150, $ -> $.setColor(210, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureChrome("impure_chrome", "ImpureChrome", 152, $ -> $.setColor(240, 210, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureManganese("impure_manganese", "ImpureManganese", 153, $ -> $.setColor(190, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureIron("impure_iron", "ImpureIron", 154, $ -> $.setColor(216, 216, 216, 0).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureNickel("impure_nickel", "ImpureNickel", 156, $ -> $.setColor(210, 210, 240, 0).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureCopper("impure_copper", "ImpureCopper", 157, $ -> $.setColor(160, 90, 10).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureZinc("impure_zinc", "ImpureZinc", 158, $ -> $.setColor(230, 170, 170).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureStrontium("impure_strontium", "ImpureStrontium", 166, $ -> $.setColor(210, 170, 242).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureZirconium("impure_zirconium", "ImpureZirconium", 168, $ -> $.setColor(190, 170, 122).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureBarium("impure_barium", "ImpureBarium", 184, $ -> $.setColor(150, 80, 120).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureHafnium("impure_hafnium", "ImpureHafnium", 200, $ -> $.setColor(240, 210, 170).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureOsmium("impure_osmium", "ImpureOsmium", 204, $ -> $.setColor(70, 70, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
-    impureLead("impure_lead", "ImpureLead", 210, $ -> $.setColor(190, 240, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureLithium("impure_lithium", "ImpureLithium", 131,
+            $ -> $.setColor(220, 220, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureBeryllium("impure_beryllium", "ImpureBeryllium", 132,
+            $ -> $.setColor(210, 240, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureSodium("impure_sodium", "ImpureSodium", 139,
+            $ -> $.setColor(170, 170, 230).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureMagnesium("impure_magnesium", "ImpureMagnesium", 140,
+            $ -> $.setColor(150, 220, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureAluminium("impure_aluminium", "ImpureAluminium", 141,
+            $ -> $.setColor(190, 200, 202).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureSilicon("impure_silicon", "ImpureSilicon", 142,
+            $ -> $.setColor(151, 143, 152, 0).setColor(83, 55, 100, 1).setColor(169, 165, 165, 2)),
+    impurePotassium("impure_potassium", "ImpurePotassium", 147,
+            $ -> $.setColor(240, 240, 190).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureCalcium("impure_calcium", "ImpureCalcium", 148,
+            $ -> $.setColor(240, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureTitanium("impure_titanium", "ImpureTitanium", 150,
+            $ -> $.setColor(210, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureChrome("impure_chrome", "ImpureChrome", 152,
+            $ -> $.setColor(240, 210, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureManganese("impure_manganese", "ImpureManganese", 153,
+            $ -> $.setColor(190, 240, 240).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureIron("impure_iron", "ImpureIron", 154,
+            $ -> $.setColor(216, 216, 216, 0).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureNickel("impure_nickel", "ImpureNickel", 156,
+            $ -> $.setColor(210, 210, 240, 0).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureCopper("impure_copper", "ImpureCopper", 157,
+            $ -> $.setColor(160, 90, 10).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureZinc("impure_zinc", "ImpureZinc", 158,
+            $ -> $.setColor(230, 170, 170).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureStrontium("impure_strontium", "ImpureStrontium", 166,
+            $ -> $.setColor(210, 170, 242).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureZirconium("impure_zirconium", "ImpureZirconium", 168,
+            $ -> $.setColor(190, 170, 122).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureBarium("impure_barium", "ImpureBarium", 184,
+            $ -> $.setColor(150, 80, 120).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureHafnium("impure_hafnium", "ImpureHafnium", 200,
+            $ -> $.setColor(240, 210, 170).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureOsmium("impure_osmium", "ImpureOsmium", 204,
+            $ -> $.setColor(70, 70, 150).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
+    impureLead("impure_lead", "ImpureLead", 210,
+            $ -> $.setColor(190, 240, 210).setColor(120, 120, 60, 1).setColor(220, 220, 220, 2)),
 
     uranium235("uranium_235", "Uranium235", 288),
     plutonium241("plutonium_241", "Plutonium241", 289),
@@ -124,38 +155,75 @@ public enum ClayiumMaterial {
     silicone("silicone", "Silicone", 1028, 0.2F, $ -> $.setColor(180, 180, 180, 240, 240, 240)),
 
     claySteel("clay_steel", "ClaySteel", 256, 3.0F, $ -> $.setColor(136, 144, 173).setColor(255, 255, 255, 2)),
-    clayium("clayium", "ClaySteel", 257, 6.0F, $ -> $.setColor(90, 240, 210).setColor(63, 72, 85, 1).setColor(255, 205, 200, 2)),
-    impureUltimateAlloy("impure_ultimate_alloy", "ImpureUltimateAlloy", 386, 9.0F, $ -> $.setColor(85, 205, 85).setColor(245, 160, 255, 2).setColor(245, 255, 255, 1)),
-    ultimateAlloy("ultimate_alloy", "UltimateAlloy", 258, 9.0F, $ -> $.setColor(85, 205, 85).setColor(245, 160, 255, 2)),
-    antimatter("antimatter", "Antimatter", 800, $ -> $.setColor(0, 0, 235).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
-    pureAntimatter("pure_antimatter", "PureAntimatter", 801, $ -> $.setColor(255, 50, 255).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
+    clayium("clayium", "ClaySteel", 257, 6.0F,
+            $ -> $.setColor(90, 240, 210).setColor(63, 72, 85, 1).setColor(255, 205, 200, 2)),
+    impureUltimateAlloy("impure_ultimate_alloy", "ImpureUltimateAlloy", 386, 9.0F,
+            $ -> $.setColor(85, 205, 85).setColor(245, 160, 255, 2).setColor(245, 255, 255, 1)),
+    ultimateAlloy("ultimate_alloy", "UltimateAlloy", 258, 9.0F,
+            $ -> $.setColor(85, 205, 85).setColor(245, 160, 255, 2)),
+    antimatter("antimatter", "Antimatter", 800,
+            $ -> $.setColor(0, 0, 235).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
+    pureAntimatter("pure_antimatter", "PureAntimatter", 801,
+            $ -> $.setColor(255, 50, 255).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
 
-    compressedPureAntimatter_1("pure_antimatter_" + 1, "PureAntimatter" + 1, 801 + 1, $ -> $.setColor((int) ((13.0D * (255.0D * 7.0D + 150.0D * 1.0D)) / 128.0D), (int) (13.0D * 50.0D * 7.0D / 128.0D), (int) (13.0D * 255.0D * 7.0D / 128.0D)).setColor((int) (200.0D * 1.0D / 8.0D), (int) (200.0D * 1.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    compressedPureAntimatter_2("pure_antimatter_" + 2, "PureAntimatter" + 2, 801 + 2, $ -> $.setColor((int) ((10.0D * (255.0D * 6.0D + 150.0D * 2.0D)) / 128.0D), (int) (10.0D * 50.0D * 6.0D / 128.0D), (int) (10.0D * 255.0D * 6.0D / 128.0D)).setColor((int) (200.0D * 2.0D / 8.0D), (int) (200.0D * 2.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    compressedPureAntimatter_3("pure_antimatter_" + 3, "PureAntimatter" + 3, 801 + 3, $ -> $.setColor((int) ((7.0D * (255.0D * 5.0D + 150.0D * 3.0D)) / 128.0D), (int) (7.0D * 50.0D * 5.0D / 128.0D), (int) (7.0D * 255.0D * 5.0D / 128.0D)).setColor((int) (200.0D * 3.0D / 8.0D), (int) (200.0D * 3.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    compressedPureAntimatter_4("pure_antimatter_" + 4, "PureAntimatter" + 4, 801 + 4, $ -> $.setColor((int) ((4.0D * (255.0D * 4.0D + 150.0D * 4.0D)) / 128.0D), (int) (4.0D * 50.0D * 4.0D / 128.0D), (int) (4.0D * 255.0D * 4.0D / 128.0D)).setColor((int) (200.0D * 4.0D / 8.0D), (int) (200.0D * 4.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    compressedPureAntimatter_5("pure_antimatter_" + 5, "PureAntimatter" + 5, 801 + 5, $ -> $.setColor((int) ((7.0D * (255.0D * 3.0D + 150.0D * 5.0D)) / 128.0D), (int) (7.0D * 50.0D * 3.0D / 128.0D), (int) (7.0D * 255.0D * 3.0D / 128.0D)).setColor((int) (200.0D * 5.0D / 8.0D), (int) (200.0D * 5.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    compressedPureAntimatter_6("pure_antimatter_" + 6, "PureAntimatter" + 6, 801 + 6, $ -> $.setColor((int) ((10.0D * (255.0D * 2.0D + 150.0D * 6.0D)) / 128.0D), (int) (10.0D * 50.0D * 2.0D / 128.0D), (int) (10.0D * 255.0D * 2.0D / 128.0D)).setColor((int) (200.0D * 6.0D / 8.0D), (int) (200.0D * 6.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    compressedPureAntimatter_7("pure_antimatter_" + 7, "PureAntimatter" + 7, 801 + 7, $ -> $.setColor((int) ((13.0D * (255.0D * 1.0D + 150.0D * 7.0D)) / 128.0D), (int) (13.0D * 50.0D * 1.0D / 128.0D), (int) (13.0D * 255.0D * 1.0D / 128.0D)).setColor((int) (200.0D * 7.0D / 8.0D), (int) (200.0D * 7.0D / 8.0D), 0, 1).setColor(255, 255, 255, 2)),
-    octuplePureAntimatter("octuple_pure_antimatter", "OctuplePureAntimatter", 801 + 8, $ -> $.setColor(150, 0, 0).setColor(200, 200, 0, 1).setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_1("pure_antimatter_" + 1, "PureAntimatter" + 1, 801 + 1,
+            $ -> $.setColor((int) ((13.0D * (255.0D * 7.0D + 150.0D * 1.0D)) / 128.0D),
+                    (int) (13.0D * 50.0D * 7.0D / 128.0D), (int) (13.0D * 255.0D * 7.0D / 128.0D))
+                    .setColor((int) (200.0D * 1.0D / 8.0D), (int) (200.0D * 1.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_2("pure_antimatter_" + 2, "PureAntimatter" + 2, 801 + 2,
+            $ -> $.setColor((int) ((10.0D * (255.0D * 6.0D + 150.0D * 2.0D)) / 128.0D),
+                    (int) (10.0D * 50.0D * 6.0D / 128.0D), (int) (10.0D * 255.0D * 6.0D / 128.0D))
+                    .setColor((int) (200.0D * 2.0D / 8.0D), (int) (200.0D * 2.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_3("pure_antimatter_" + 3, "PureAntimatter" + 3, 801 + 3,
+            $ -> $.setColor((int) ((7.0D * (255.0D * 5.0D + 150.0D * 3.0D)) / 128.0D),
+                    (int) (7.0D * 50.0D * 5.0D / 128.0D), (int) (7.0D * 255.0D * 5.0D / 128.0D))
+                    .setColor((int) (200.0D * 3.0D / 8.0D), (int) (200.0D * 3.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_4("pure_antimatter_" + 4, "PureAntimatter" + 4, 801 + 4,
+            $ -> $.setColor((int) ((4.0D * (255.0D * 4.0D + 150.0D * 4.0D)) / 128.0D),
+                    (int) (4.0D * 50.0D * 4.0D / 128.0D), (int) (4.0D * 255.0D * 4.0D / 128.0D))
+                    .setColor((int) (200.0D * 4.0D / 8.0D), (int) (200.0D * 4.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_5("pure_antimatter_" + 5, "PureAntimatter" + 5, 801 + 5,
+            $ -> $.setColor((int) ((7.0D * (255.0D * 3.0D + 150.0D * 5.0D)) / 128.0D),
+                    (int) (7.0D * 50.0D * 3.0D / 128.0D), (int) (7.0D * 255.0D * 3.0D / 128.0D))
+                    .setColor((int) (200.0D * 5.0D / 8.0D), (int) (200.0D * 5.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_6("pure_antimatter_" + 6, "PureAntimatter" + 6, 801 + 6,
+            $ -> $.setColor((int) ((10.0D * (255.0D * 2.0D + 150.0D * 6.0D)) / 128.0D),
+                    (int) (10.0D * 50.0D * 2.0D / 128.0D), (int) (10.0D * 255.0D * 2.0D / 128.0D))
+                    .setColor((int) (200.0D * 6.0D / 8.0D), (int) (200.0D * 6.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    compressedPureAntimatter_7("pure_antimatter_" + 7, "PureAntimatter" + 7, 801 + 7,
+            $ -> $.setColor((int) ((13.0D * (255.0D * 1.0D + 150.0D * 7.0D)) / 128.0D),
+                    (int) (13.0D * 50.0D * 1.0D / 128.0D), (int) (13.0D * 255.0D * 1.0D / 128.0D))
+                    .setColor((int) (200.0D * 7.0D / 8.0D), (int) (200.0D * 7.0D / 8.0D), 0, 1)
+                    .setColor(255, 255, 255, 2)),
+    octuplePureAntimatter("octuple_pure_antimatter", "OctuplePureAntimatter", 801 + 8,
+            $ -> $.setColor(150, 0, 0).setColor(200, 200, 0, 1).setColor(255, 255, 255, 2)),
 
-    octupleEnergeticClay("octuple_energetic_clay", "OctupleEnergeticClay", 525, $ -> $.setColor(255, 255, 0).setColor(140, 140, 140, 1).setColor(255, 255, 255, 2)),
+    octupleEnergeticClay("octuple_energetic_clay", "OctupleEnergeticClay", 525,
+            $ -> $.setColor(255, 255, 0).setColor(140, 140, 140, 1).setColor(255, 255, 255, 2)),
 
     zincalminiumAlloy("zincalminium", "Zincalminium", 1344, $ -> $.setColor(240, 190, 220).setColor(160, 0, 0, 1)),
-    AZ91DAlloy("az91d", "AZ91D", 1312, $ -> $.setColor(130, 140, 135).setColor(255, 255, 255, 2).setColor(10, 40, 10, 1)),
+    AZ91DAlloy("az91d", "AZ91D", 1312,
+            $ -> $.setColor(130, 140, 135).setColor(255, 255, 255, 2).setColor(10, 40, 10, 1)),
     zinconiumAlloy("zinconium", "Zinconium", 1345, $ -> $.setColor(230, 170, 140).setColor(120, 0, 0, 1)),
     ZK60AAlloy("zk60a", "ZK60A", 1313, $ -> $.setColor(75, 85, 80).setColor(255, 255, 255, 2).setColor(10, 40, 10, 1)),
 
     bronze("bronze", "Bronze", 1280, $ -> $.setColor(250, 150, 40).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
     brass("brass", "Brass", 1281, $ -> $.setColor(190, 170, 20).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
-    electrum("electrum", "Electrum", 1283, $ -> $.setColor(230, 230, 155).setColor(120, 120, 70, 1).setColor(255, 255, 255, 2)),
+    electrum("electrum", "Electrum", 1283,
+            $ -> $.setColor(230, 230, 155).setColor(120, 120, 70, 1).setColor(255, 255, 255, 2)),
     invar("invar", "Invar", 1284, $ -> $.setColor(170, 170, 80).setColor(140, 140, 70, 1).setColor(180, 180, 80, 2)),
     steel("steel", "Steel", 1536, $ -> $.setColor(90, 90, 110).setColor(0, 0, 0, 1).setColor(255, 255, 255, 2)),
 
-//    public static CMaterial OBSIDIAN;
-//    public static CMaterial REDSTONE;
-//    public static CMaterial GLOWSTONE;
-//    public static CMaterial ENDER_PEARL;
+    // public static CMaterial OBSIDIAN;
+    // public static CMaterial REDSTONE;
+    // public static CMaterial GLOWSTONE;
+    // public static CMaterial ENDER_PEARL;
 
     coal("coal", "Coal", 1792, $ -> $.setColor(20, 20, 20).setColor(50, 50, 80, 2)),
     charcoal("charcoal", "Charcoal", 1793, $ -> $.setColor(20, 20, 20).setColor(80, 50, 50, 2)),
@@ -312,14 +380,16 @@ public enum ClayiumMaterial {
     ALUMINIUM_OD("Aluminium", 4096),
 
     ;
-    public static final ClayiumMaterial mainAluminium = ClayiumConfiguration.cfgHardcoreAluminium ? impureAluminium : aluminium;
+
+    public static final ClayiumMaterial mainAluminium = ClayiumConfiguration.cfgHardcoreAluminium ? impureAluminium :
+            aluminium;
     public static final ClayiumMaterial mainOsmium = ClayiumConfiguration.cfgHardcoreOsmium ? impureOsmium : osmium;
 
     public static final List<ClayiumMaterial> compressedPureAntimatter = Arrays.asList(
             pureAntimatter, compressedPureAntimatter_1, compressedPureAntimatter_2, compressedPureAntimatter_3,
-            compressedPureAntimatter_4, compressedPureAntimatter_5, compressedPureAntimatter_6, compressedPureAntimatter_7,
-            octuplePureAntimatter
-    );
+            compressedPureAntimatter_4, compressedPureAntimatter_5, compressedPureAntimatter_6,
+            compressedPureAntimatter_7,
+            octuplePureAntimatter);
 
     ClayiumMaterial(String ODName, int id) {
         this(ODName.toLowerCase(Locale.ROOT), ODName, id, 1.0F);
@@ -349,15 +419,19 @@ public enum ClayiumMaterial {
     public String getName() {
         return name;
     }
+
     public String getODName() {
         return ODName;
     }
+
     public float getHardness() {
         return hardness;
     }
+
     public int getID() {
         return id;
     }
+
     public int[][] getColors() {
         return colors;
     }
@@ -366,18 +440,20 @@ public enum ClayiumMaterial {
     private final String ODName;
     private final float hardness;
     private final int id;
-    private final int[][] colors = {{140, 140, 140}, {25, 25, 25}, {255, 255, 255}};
+    private final int[][] colors = { { 140, 140, 140 }, { 25, 25, 25 }, { 255, 255, 255 } };
 
     private ClayiumMaterial setColor(int r, int g, int b, int index) {
-        this.colors[index] = new int[] {r, g, b};
+        this.colors[index] = new int[] { r, g, b };
         return this;
     }
+
     private ClayiumMaterial setColor(int r, int g, int b) {
         setColor(r, g, b, 0);
         setColor(r / 6, g / 6, b / 6, 1);
         setColor(Math.min(r * 2, 255), Math.min(g * 2, 255), Math.min(b * 2, 255), 2);
         return this;
     }
+
     private ClayiumMaterial setColor(int r1, int g1, int b1, int r3, int g3, int b3) {
         setColor((r1 + r3) / 2, (g1 + g3) / 2, (b1 + b3) / 2, 0);
         setColor(r1, g1, b1, 1);
@@ -395,60 +471,66 @@ public enum ClayiumMaterial {
     }
 
     public static final List<ClayiumMaterial> metals = Arrays.asList(
-            magnesium, sodium, lithium, zirconium, zinc, manganese, calcium, potassium, nickel, beryllium, lead, hafnium,
-            chrome, titanium, strontium, barium, copper, iron, gold, bronze, brass, electrum, invar, steel
-    );
+            magnesium, sodium, lithium, zirconium, zinc, manganese, calcium, potassium, nickel, beryllium, lead,
+            hafnium,
+            chrome, titanium, strontium, barium, copper, iron, gold, bronze, brass, electrum, invar, steel);
 
     public static final List<ClayiumMaterial> impureMetals = Arrays.asList(
             impureAluminium, impureMagnesium, impureSodium, impureLithium, impureZirconium, impureZinc, impureManganese,
-            impureCalcium, impurePotassium, impureNickel, impureIron, impureBeryllium, impureLead, impureHafnium, impureChrome,
-            impureTitanium, impureStrontium, impureBarium, impureCopper
-    );
+            impureCalcium, impurePotassium, impureNickel, impureIron, impureBeryllium, impureLead, impureHafnium,
+            impureChrome,
+            impureTitanium, impureStrontium, impureBarium, impureCopper);
 
     public static final List<ClayiumMaterial> ingotMetals = Arrays.asList(
-            rubidium, caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium,
-            curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium,
-            silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth
-    );
-/*
-    public static final List<ClayiumMaterial> ingotAndPlateToDust = Arrays.asList(
-            rubidium, caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium,
-            curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium,
-            silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth, carbon,
-            gallium, yttrium, niobium, uranium235, plutonium241, naquadah, naquadahEnriched, naquadria, neutronium,
-            ardite, yellorium, cyanite, blutonium, ludicrite, fz_darkIron, meteoricIron, desh, prometheum, deepIron, infuscolium,
-            oureclase, aredrite, astralSilver, carmot, mithril, rubracium, orichalcum, adamantite, atlarus, ignatius, shadowIron,
-            lemurite, midasium, vyroxeres, ceruclase, alduorite, kalendrite, vulcanite, sangunite, eximite, meutoite, plastic,
-            graphite, redstoneAlloy, conductiveIron, energeticAlloy, electricalSteel, darkSteel, phasedIron, phasedGold,
-            soularium, signalum, lumium, enderium, electrumFlux, aluminiumBrass, pigIron, alumite, manyullyn, fairy, pokefennium,
-            redAurum, drulloy, redAlloy, electrotineAlloy, tungstenSteel, cupronickel, nichrome, kanthal, stainlessSteel,
-            cobaltBrass, magnalium, solderingAlloy, batteryAlloy, vanadiumGallium, yttriumBariumCuprate, ultimet, tinAlloy,
-            blueAlloy, hepatizon, damascusSteel, angmallen, blackSteel, quicksilver, haderoth, celenegil, tartarite, shadowSteel,
-            inolashite, amordrine, desichalkos, wroughtIron, annealedCopper, ironMagnetic, steelMagnetic, neodymiumMagnetic,
-            refinedGlowstone, refinedObsidian, ironCompressed, thaumium, _void, manasteel, terrasteel, elvenElementium,
-            heeEndium,unstable, ninja
-    );
-
-    public static final List<ClayiumMaterial> gems = Arrays.asList(
-            quartz, lapis, diamond, emerald, ruby, sapphire, peridot, amber, amethyst, apatite, crystalFlux, malachite,
-            tanzanite, topaz, dilithium, forcicium, greenSapphire, opal, jasper, blueTopaz, forcillium, monazite, force,
-            quartzite, lazurite, sodalite, garnetRed, garnetYellow, niter, phosphorus, lignite, glass, iridium
-    );
-
-    public static final List<ClayiumMaterial> crystals = Arrays.asList(
-            cinnabar, certusQuartz, fluix
-    );
-
-    public static final List<ClayiumMaterial> ores = Arrays.asList(
-            silicon, aluminium, aluminiumOD, coal, iron, gold, magnesium, sodium, lithium, zirconium, zinc, manganese,
-            calcium, potassium, nickel, beryllium, lead, hafnium, chrome, titanium, strontium, barium, copper, rubidium,
-            caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium, curium,
-            lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium, silver,
-            platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth, gallium, yttrium,
-            niobium, naquadah, naquadahEnriched, naquadria, ardite, yellorium, fz_darkIron, meteoricIron, desh, graphite,
-            prometheum, deepIron, infuscolium, oureclase, aredrite, astralSilver, carmot, mithril, rubracium, orichalcum,
-            adamantite, atlasus, ignatius, shadowIron, lemurite, midasium, vyroxeres, cericlase, alduorite, kalendrite,
-            vulcanite, sanguinite, eximite, meutoite
-    );
- */
+            rubidium, caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium,
+            americium,
+            curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt,
+            palladium,
+            silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth);
+    /*
+     * public static final List<ClayiumMaterial> ingotAndPlateToDust = Arrays.asList(
+     * rubidium, caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium,
+     * curium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium,
+     * silver, platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth, carbon,
+     * gallium, yttrium, niobium, uranium235, plutonium241, naquadah, naquadahEnriched, naquadria, neutronium,
+     * ardite, yellorium, cyanite, blutonium, ludicrite, fz_darkIron, meteoricIron, desh, prometheum, deepIron,
+     * infuscolium,
+     * oureclase, aredrite, astralSilver, carmot, mithril, rubracium, orichalcum, adamantite, atlarus, ignatius,
+     * shadowIron,
+     * lemurite, midasium, vyroxeres, ceruclase, alduorite, kalendrite, vulcanite, sangunite, eximite, meutoite,
+     * plastic,
+     * graphite, redstoneAlloy, conductiveIron, energeticAlloy, electricalSteel, darkSteel, phasedIron, phasedGold,
+     * soularium, signalum, lumium, enderium, electrumFlux, aluminiumBrass, pigIron, alumite, manyullyn, fairy,
+     * pokefennium,
+     * redAurum, drulloy, redAlloy, electrotineAlloy, tungstenSteel, cupronickel, nichrome, kanthal, stainlessSteel,
+     * cobaltBrass, magnalium, solderingAlloy, batteryAlloy, vanadiumGallium, yttriumBariumCuprate, ultimet, tinAlloy,
+     * blueAlloy, hepatizon, damascusSteel, angmallen, blackSteel, quicksilver, haderoth, celenegil, tartarite,
+     * shadowSteel,
+     * inolashite, amordrine, desichalkos, wroughtIron, annealedCopper, ironMagnetic, steelMagnetic, neodymiumMagnetic,
+     * refinedGlowstone, refinedObsidian, ironCompressed, thaumium, _void, manasteel, terrasteel, elvenElementium,
+     * heeEndium,unstable, ninja
+     * );
+     * 
+     * public static final List<ClayiumMaterial> gems = Arrays.asList(
+     * quartz, lapis, diamond, emerald, ruby, sapphire, peridot, amber, amethyst, apatite, crystalFlux, malachite,
+     * tanzanite, topaz, dilithium, forcicium, greenSapphire, opal, jasper, blueTopaz, forcillium, monazite, force,
+     * quartzite, lazurite, sodalite, garnetRed, garnetYellow, niter, phosphorus, lignite, glass, iridium
+     * );
+     * 
+     * public static final List<ClayiumMaterial> crystals = Arrays.asList(
+     * cinnabar, certusQuartz, fluix
+     * );
+     * 
+     * public static final List<ClayiumMaterial> ores = Arrays.asList(
+     * silicon, aluminium, aluminiumOD, coal, iron, gold, magnesium, sodium, lithium, zirconium, zinc, manganese,
+     * calcium, potassium, nickel, beryllium, lead, hafnium, chrome, titanium, strontium, barium, copper, rubidium,
+     * caesium, francium, radium, actinium, thorium, protactinium, uranium, neptunium, plutonium, americium, curium,
+     * lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium, vanadium, cobalt, palladium, silver,
+     * platinum, iridium, osmium, rhenium, tantalum, tungsten, molybdenum, tin, antimony, bismuth, gallium, yttrium,
+     * niobium, naquadah, naquadahEnriched, naquadria, ardite, yellorium, fz_darkIron, meteoricIron, desh, graphite,
+     * prometheum, deepIron, infuscolium, oureclase, aredrite, astralSilver, carmot, mithril, rubracium, orichalcum,
+     * adamantite, atlasus, ignatius, shadowIron, lemurite, midasium, vyroxeres, cericlase, alduorite, kalendrite,
+     * vulcanite, sanguinite, eximite, meutoite
+     * );
+     */
 }

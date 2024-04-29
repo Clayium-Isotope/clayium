@@ -1,9 +1,11 @@
 package mods.clayium.gui;
 
-import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
+
 public class SlotStorageContainer extends SlotWithTexture {
+
     public SlotStorageContainer(TileEntityStorageContainer tile, int index, int x, int y, ITexture texture) {
         super(tile, index, x, y, texture);
     }

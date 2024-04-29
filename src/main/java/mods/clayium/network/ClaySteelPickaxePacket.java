@@ -1,12 +1,14 @@
 package mods.clayium.network;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
+import io.netty.buffer.ByteBuf;
+
 public class ClaySteelPickaxePacket implements IMessage {
+
     public EnumFacing side;
     public int dimid;
     public Vec3i pos;
@@ -22,7 +24,6 @@ public class ClaySteelPickaxePacket implements IMessage {
         this.dimid = world.provider.getDimension();
         this.pos = pos;
     }
-
 
     public void fromBytes(ByteBuf buf) {
         int _side = buf.readInt();

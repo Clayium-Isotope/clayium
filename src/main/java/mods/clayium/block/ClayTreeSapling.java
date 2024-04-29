@@ -1,9 +1,7 @@
 package mods.clayium.block;
 
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.worldgen.WorldGenGenericTree;
+import java.util.Random;
+
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -19,9 +17,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
-import java.util.Random;
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.worldgen.WorldGenGenericTree;
 
 public class ClayTreeSapling extends BlockBush implements IGrowable, ITieredBlock {
+
     protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.1d, 0.0d, 0.1d, 0.9d, 0.8d, 0.9d);
     protected static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
 
@@ -46,13 +48,11 @@ public class ClayTreeSapling extends BlockBush implements IGrowable, ITieredBloc
 
     @Override // copied form BlockSapling
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        if (!worldIn.isRemote)
-        {
+        if (!worldIn.isRemote) {
             super.updateTick(worldIn, pos, state, rand);
 
             if (!worldIn.isAreaLoaded(pos, 1)) return;
-            if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0)
-            {
+            if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
                 this.growUp(worldIn, pos, state, rand);
             }
         }
@@ -69,7 +69,8 @@ public class ClayTreeSapling extends BlockBush implements IGrowable, ITieredBloc
     public void growTree(World world, BlockPos pos, IBlockState state, Random random) {
         if (!TerrainGen.saplingGrowTree(world, random, pos)) return;
 
-        WorldGenerator generator = new WorldGenGenericTree(true, 5, ClayiumBlocks.clayTreeLog.getDefaultState(), ClayiumBlocks.clayTreeLeaf.getDefaultState(), false);
+        WorldGenerator generator = new WorldGenGenericTree(true, 5, ClayiumBlocks.clayTreeLog.getDefaultState(),
+                ClayiumBlocks.clayTreeLeaf.getDefaultState(), false);
 
         // There was some line which I can't understand why.
         // Might be for 2x2 tree

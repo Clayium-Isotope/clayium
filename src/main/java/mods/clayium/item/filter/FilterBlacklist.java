@@ -1,10 +1,12 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import mods.clayium.util.TierPrefix;
+
 public class FilterBlacklist extends FilterWhitelist {
+
     public FilterBlacklist() {
         super("filter_blacklist", TierPrefix.advanced);
     }

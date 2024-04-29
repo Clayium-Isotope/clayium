@@ -1,5 +1,10 @@
 package mods.clayium.machine.CACondenser;
 
+import static mods.clayium.machine.crafting.ClayiumRecipes.e;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
 import mods.clayium.block.ICAMachine;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.ClayiumItems;
@@ -14,14 +19,12 @@ import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
-import static mods.clayium.machine.crafting.ClayiumRecipes.e;
 
 public class TileEntityCACondenser extends TileEntityCAMachine implements Machine1To1 {
+
     protected static final RecipeElement RECIPE = new RecipeElement(new ItemStack(ClayiumItems.antimatterSeed), 9,
-            ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9), ClayiumCore.divideByProgressionRate(2000L));
+            ClayiumMaterials.get(ClayiumMaterial.antimatter, ClayiumShape.gem), e(2.5D, 9),
+            ClayiumCore.divideByProgressionRate(2000L));
 
     @Override
     public void initParams() {
@@ -64,25 +67,27 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
         }
 
         ItemStack itemstack = RECIPE.getResults().get(0).copy();
-        itemstack.setCount((int) (itemstack.getCount() * Math.log(ICAMachine.getResonance(this.getWorld(), this.getPos())) + 1.0d));
+        itemstack.setCount(
+                (int) (itemstack.getCount() * Math.log(ICAMachine.getResonance(this.getWorld(), this.getPos())) +
+                        1.0d));
         this.craftTime = 0L;
         this.timeToCraft = 0L;
         this.debtEnergy = 0L;
 
         UtilTransfer.produceItemStack(itemstack, this.containerItemStacks, 1, this.getInventoryStackLimit());
 
-//        if (this.externalControlState > 0) {
-//            --this.externalControlState;
-//            if (this.externalControlState == 0) {
-//                this.externalControlState = -1;
-//            }
-//        }
+        // if (this.externalControlState > 0) {
+        // --this.externalControlState;
+        // if (this.externalControlState == 0) {
+        // this.externalControlState = -1;
+        // }
+        // }
     }
 
     @Override
     public boolean setNewRecipe() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, RECIPE.getEnergy(), false)
-                || UtilTransfer.consumeByIngredient(RECIPE.getIngredients().get(0), this.containerItemStacks, 0) != 0) {
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, RECIPE.getEnergy(), false) ||
+                UtilTransfer.consumeByIngredient(RECIPE.getIngredients().get(0), this.containerItemStacks, 0) != 0) {
             this.debtEnergy = 0;
             this.timeToCraft = 0L;
             this.craftTime = 0;
@@ -91,7 +96,7 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
         }
 
         this.debtEnergy = (long) (RECIPE.getEnergy() * this.multConsumingEnergy);
-        this.timeToCraft = (long)((float) RECIPE.getTime() * this.multCraftTime);
+        this.timeToCraft = (long) ((float) RECIPE.getTime() * this.multCraftTime);
         this.craftTime = 1;
         UtilTransfer.consumeByIngredient(RECIPE.getIngredients().get(0), this.containerItemStacks, 0);
         return true;

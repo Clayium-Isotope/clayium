@@ -1,5 +1,13 @@
 package mods.clayium.machine.ClayBlastFurnace;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.MachineHull;
 import mods.clayium.block.Overclocker;
@@ -15,15 +23,9 @@ import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine implements IClayEnergyConsumer {
+
     private static final int resultSlotNum = 2;
     private TierPrefix recipeTier = TierPrefix.none;
 
@@ -35,16 +37,16 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         this.setExportRoutes(2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.listSlotsImport.clear();
         this.listSlotsExport.clear();
-        this.listSlotsImport.add(new int[]{0});
-        this.listSlotsImport.add(new int[]{1});
-        this.listSlotsImport.add(new int[]{0, 1});
-        this.listSlotsExport.add(new int[]{2});
-        this.listSlotsExport.add(new int[]{3});
-        this.listSlotsExport.add(new int[]{2, 3});
+        this.listSlotsImport.add(new int[] { 0 });
+        this.listSlotsImport.add(new int[] { 1 });
+        this.listSlotsImport.add(new int[] { 0, 1 });
+        this.listSlotsExport.add(new int[] { 2 });
+        this.listSlotsExport.add(new int[] { 3 });
+        this.listSlotsExport.add(new int[] { 2, 3 });
 
-        this.maxAutoExtract = new int[]{64, 64, 64, 1};
-        this.maxAutoInsert = new int[]{64, 64, 64};
-        this.slotsDrop = new int[]{0, 1, 2, 3, this.getEnergySlot()};
+        this.maxAutoExtract = new int[] { 64, 64, 64, 1 };
+        this.maxAutoInsert = new int[] { 64, 64, 64 };
+        this.slotsDrop = new int[] { 0, 1, 2, 3, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
     }
@@ -87,7 +89,8 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
             sum += Math.pow(2, 16 - tier);
         }
 
-        this.recipeTier = TierPrefix.get(Math.max((int)(16.0D - Math.floor(Math.log(sum / 17) / Math.log(2.0D) + 0.5D)), 0));
+        this.recipeTier = TierPrefix
+                .get(Math.max((int) (16.0D - Math.floor(Math.log(sum / 17) / Math.log(2.0D) + 0.5D)), 0));
         return flag;
     }
 
@@ -98,7 +101,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
 
     @Override
     protected void onConstruction() {
-//        this.setRenderSyncFlag();
+        // this.setRenderSyncFlag();
         BlockStateMultiblockMachine.setConstructed(this, true);
 
         // sync the interface around the blast furnace.
@@ -119,7 +122,7 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         if (block == null) return -1;
 
         if (block instanceof MachineHull) {
-//            return this.getBlockMetadata(vector);
+            // return this.getBlockMetadata(vector);
             return ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(vector)).meta();
         }
 
@@ -141,14 +144,16 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
+        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(), 2,
+                2 + resultSlotNum, this.getInventoryStackLimit());
     }
 
     @Override
     public boolean setNewRecipe() {
         if (!BlockStateMultiblockMachine.isConstructed(this)) return false;
 
-        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0),
+                this.getStackInSlot(1));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);
@@ -168,7 +173,8 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
 
     @Override
     public boolean canProceedCraft() {
-        return BlockStateMultiblockMachine.isConstructed(this) && IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+        return BlockStateMultiblockMachine.isConstructed(this) &&
+                IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
     }
 
     @Override
@@ -178,18 +184,19 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;
 
-        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(), 2,
+                2 + resultSlotNum, this.getInventoryStackLimit());
         this.craftTime = 0;
         this.timeToCraft = 0;
         this.debtEnergy = 0;
         this.doingRecipe = RecipeElement.flat();
 
-//        if (this.externalControlState > 0) {
-//            --this.externalControlState;
-//            if (this.externalControlState == 0) {
-//                this.externalControlState = -1;
-//            }
-//        }
+        // if (this.externalControlState > 0) {
+        // --this.externalControlState;
+        // if (this.externalControlState == 0) {
+        // this.externalControlState = -1;
+        // }
+        // }
     }
 
     @Override

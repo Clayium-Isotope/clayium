@@ -1,18 +1,20 @@
 package mods.clayium.machine.MultitrackBuffer;
 
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilTier;
-import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilTier;
+import mods.clayium.util.UtilTransfer;
+
 public class TileEntityMultitrackBuffer extends TileEntityClayContainer implements IMultitrackInventory {
+
     public int[] allSlots;
     public int[][] tracks;
     public int[] slot2track;
@@ -34,7 +36,7 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
 
         int trackNum;
         int trackSize;
-        switch(tier) {
+        switch (tier) {
             case basic:
                 trackNum = 2;
                 trackSize = 1;
@@ -74,7 +76,7 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
         int[] slotsInvert = new int[slotNum];
 
         int i;
-        for(i = 0; i < slotNum; i++) {
+        for (i = 0; i < slotNum; i++) {
             slots[i] = i;
             slotsInvert[i] = slotNum - i - 1;
         }
@@ -87,11 +89,11 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
         this.tracks = new int[trackNum][trackSize];
         this.slot2track = new int[slotNum];
 
-        for(i = 0; i < trackNum; i++) {
+        for (i = 0; i < trackNum; i++) {
             slots = new int[trackSize];
             slotsInvert = new int[trackSize];
 
-            for(int j = 0; j < trackSize; ++j) {
+            for (int j = 0; j < trackSize; ++j) {
                 slots[j] = j + i * trackSize;
                 slotsInvert[j] = (trackSize - j - 1) + i * trackSize;
                 this.slot2track[j + i * trackSize] = i;
@@ -120,12 +122,13 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
         if (track < 0) {
             return true;
         } else {
-            ItemStack filter = track + 54 < this.containerItemStacks.size() ? this.containerItemStacks.get(track + 54) : ItemStack.EMPTY;
+            ItemStack filter = track + 54 < this.containerItemStacks.size() ? this.containerItemStacks.get(track + 54) :
+                    ItemStack.EMPTY;
             if (filter.isEmpty()) {
                 return true;
             } else {
-                return IFilter.isFilter(filter) && IFilter.match(filter, itemstack)
-                        || IFilter.matchBetweenItemstacks(filter, itemstack, false);
+                return IFilter.isFilter(filter) && IFilter.match(filter, itemstack) ||
+                        IFilter.matchBetweenItemstacks(filter, itemstack, false);
             }
         }
     }
@@ -141,7 +144,8 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
 
     @Override
     public int[] getSlotsForFace(EnumFacing side, int track) {
-        return this.tracks != null && track >= 0 && track < this.tracks.length ? this.tracks[track] : this.getSlotsForFace(side);
+        return this.tracks != null && track >= 0 && track < this.tracks.length ? this.tracks[track] :
+                this.getSlotsForFace(side);
     }
 
     @Override
@@ -176,7 +180,11 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
             for (int k = 0; k < this.tracks.length; ++k) {
                 if (route == 0 || route - 1 == k) {
                     this.selector.track = k;
-                    UtilTransfer.extract(this, this.tracks[k], side, this.maxAutoExtract != null && route < this.maxAutoExtract.length && this.maxAutoExtract[route] >= 0 ? this.maxAutoExtract[route] : this.maxAutoExtractDefault, this.selector);
+                    UtilTransfer.extract(this, this.tracks[k], side,
+                            this.maxAutoExtract != null && route < this.maxAutoExtract.length &&
+                                    this.maxAutoExtract[route] >= 0 ? this.maxAutoExtract[route] :
+                                            this.maxAutoExtractDefault,
+                            this.selector);
                 }
             }
         }
@@ -190,23 +198,29 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
             for (int k = 0; k < this.tracks.length; ++k) {
                 if (route == 0 || route - 1 == k) {
                     this.selector.track = k;
-                    UtilTransfer.insert(this, this.tracks[k], side, this.maxAutoInsert != null && route < this.maxAutoInsert.length && this.maxAutoInsert[route] >= 0 ? this.maxAutoInsert[route] : this.maxAutoInsertDefault, this.selector);
+                    UtilTransfer.insert(this, this.tracks[k], side,
+                            this.maxAutoInsert != null && route < this.maxAutoInsert.length &&
+                                    this.maxAutoInsert[route] >= 0 ? this.maxAutoInsert[route] :
+                                            this.maxAutoInsertDefault,
+                            this.selector);
                 }
             }
         }
     }
 
     public static class MultitrackSelector extends UtilTransfer.InventorySelector {
+
         public int track = -1;
 
-        public MultitrackSelector() {
-        }
+        public MultitrackSelector() {}
 
         public int[] getSlotToInsertTo(EnumFacing direction) {
             if (this.selected == null) {
                 return null;
             } else {
-                return this.selected instanceof IMultitrackInventory ? ((IMultitrackInventory)this.selected).getSlotsForFace(direction.getOpposite(), this.track) : super.getSlotToExtractFrom(direction);
+                return this.selected instanceof IMultitrackInventory ?
+                        ((IMultitrackInventory) this.selected).getSlotsForFace(direction.getOpposite(), this.track) :
+                        super.getSlotToExtractFrom(direction);
             }
         }
 
@@ -214,7 +228,9 @@ public class TileEntityMultitrackBuffer extends TileEntityClayContainer implemen
             if (this.selected == null) {
                 return null;
             } else {
-                return this.selected instanceof IMultitrackInventory ? ((IMultitrackInventory)this.selected).getSlotsForFace(direction.getOpposite(), this.track) : super.getSlotToExtractFrom(direction);
+                return this.selected instanceof IMultitrackInventory ?
+                        ((IMultitrackInventory) this.selected).getSlotsForFace(direction.getOpposite(), this.track) :
+                        super.getSlotToExtractFrom(direction);
             }
         }
     }

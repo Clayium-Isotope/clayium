@@ -7,15 +7,14 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerDummy extends ContainerTemp {
+
     public ContainerDummy() {
         super(null, null);
     }
 
-    protected void initParameters(InventoryPlayer player) {
-    }
+    protected void initParameters(InventoryPlayer player) {}
 
-    public void setMachineInventorySlots(InventoryPlayer player) {
-    }
+    public void setMachineInventorySlots(InventoryPlayer player) {}
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
         return false;
@@ -33,11 +32,9 @@ public class ContainerDummy extends ContainerTemp {
         return 0;
     }
 
-    public void addMachineInventorySlots(InventoryPlayer player) {
-    }
+    public void addMachineInventorySlots(InventoryPlayer player) {}
 
-    public void addPlayerInventorySlots(InventoryPlayer player) {
-    }
+    public void addPlayerInventorySlots(InventoryPlayer player) {}
 
     public boolean canInteractWith(EntityPlayer player) {
         return true;
@@ -51,11 +48,9 @@ public class ContainerDummy extends ContainerTemp {
         return null;
     }
 
-    public void setTextFieldString(EntityPlayer player, String string, int id) {
-    }
+    public void setTextFieldString(EntityPlayer player, String string, int id) {}
 
-    public void sendTextFieldStringToClient(EntityPlayer player, String string, int id) {
-    }
+    public void sendTextFieldStringToClient(EntityPlayer player, String string, int id) {}
 
     public ItemStack transferStackInSlot(EntityPlayer player, int par2) {
         return null;
@@ -73,6 +68,5 @@ public class ContainerDummy extends ContainerTemp {
         return true;
     }
 
-    public void onCraftMatrixChanged(IInventory p_75130_1_) {
-    }
+    public void onCraftMatrixChanged(IInventory p_75130_1_) {}
 }

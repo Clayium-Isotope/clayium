@@ -1,13 +1,8 @@
 package mods.clayium.util.crafting;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.util.JsonHelper;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -16,20 +11,30 @@ import net.minecraft.util.JsonUtils;
 import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.util.JsonHelper;
+import mods.clayium.util.TierPrefix;
 
 /**
- * <pre>{@code
+ * <pre>
+ * {@code
  * {
  *     "type": "clayium:tiered",
  *     "keyword": "circuit" | "hull" | "machine" | "overclocker",
  *     "machine": "assembler",  // when "keyword" is "machine"
  *     "tier": 1
  * }
- * }</pre>
+ * }
+ * </pre>
  */
 public class TieredIngredientFactory implements IIngredientFactory {
+
     @Nonnull
     @Override
     public Ingredient parse(JsonContext context, JsonObject json) throws JsonSyntaxException {
@@ -53,23 +58,28 @@ public class TieredIngredientFactory implements IIngredientFactory {
     }
 
     public static class TieredIngredient extends Ingredient {
+
         protected final TieredIngredientKeyword keyword;
         protected final EnumMachineKind machine;
         protected final int tier;
 
-        protected TieredIngredient(TieredIngredientKeyword keyword, EnumMachineKind machine, int tier, ItemStack... stacks) {
+        protected TieredIngredient(TieredIngredientKeyword keyword, EnumMachineKind machine, int tier,
+                                   ItemStack... stacks) {
             super(stacks);
             this.keyword = keyword;
             this.machine = machine;
             this.tier = tier;
         }
 
-        public static TieredIngredient parse(TieredIngredientKeyword keyword, int tier, JsonObject json) throws JsonSyntaxException {
+        public static TieredIngredient parse(TieredIngredientKeyword keyword, int tier,
+                                             JsonObject json) throws JsonSyntaxException {
             switch (keyword) {
                 case CIRCUIT:
-                    return new TieredIngredient(TieredIngredientKeyword.CIRCUIT, EnumMachineKind.EMPTY, tier, ClayiumRecipes.circuits.get(tier));
+                    return new TieredIngredient(TieredIngredientKeyword.CIRCUIT, EnumMachineKind.EMPTY, tier,
+                            ClayiumRecipes.circuits.get(tier));
                 case HULL:
-                    return new TieredIngredient(TieredIngredientKeyword.HULL, EnumMachineKind.EMPTY, tier, ClayiumRecipes.machines.get(tier));
+                    return new TieredIngredient(TieredIngredientKeyword.HULL, EnumMachineKind.EMPTY, tier,
+                            ClayiumRecipes.machines.get(tier));
                 case MACHINE:
                     if (!json.has("machine")) {
                         throw new JsonSyntaxException("The key \"machine\" not found");
@@ -87,14 +97,16 @@ public class TieredIngredientFactory implements IIngredientFactory {
 
                     return new TieredIngredient(TieredIngredientKeyword.MACHINE, kind, tier, new ItemStack(machine));
                 case OVERCLOCKER:
-                    return new TieredIngredient(TieredIngredientKeyword.OVERCLOCKER, EnumMachineKind.EMPTY, tier, ClayiumBlocks.overclocker.get(TierPrefix.get(tier)));
+                    return new TieredIngredient(TieredIngredientKeyword.OVERCLOCKER, EnumMachineKind.EMPTY, tier,
+                            ClayiumBlocks.overclocker.get(TierPrefix.get(tier)));
             }
 
             throw new JsonSyntaxException("Could not process keyword: " + keyword);
         }
     }
 
-    /*package-private*/ enum TieredIngredientKeyword {
+    /* package-private */ enum TieredIngredientKeyword {
+
         CIRCUIT("circuit"),
         HULL("hull"),
         MACHINE("machine"),
@@ -104,7 +116,7 @@ public class TieredIngredientFactory implements IIngredientFactory {
             this.value = value;
         }
 
-        /*package-private*/ final String value;
+        /* package-private */ final String value;
 
         @Nullable // when not found
         public static TieredIngredientKeyword fromName(String name) {

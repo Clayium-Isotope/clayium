@@ -6,7 +6,9 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 
 public class ChemicalMetalSeparator extends ClayiumMachine {
+
     public ChemicalMetalSeparator() {
-        super(EnumMachineKind.chemicalMetalSeparator, "", TierPrefix.precision, TileEntityChemicalMetalSeparator.class, GuiHandler.GuiIdChemicalMetalSeparator);
+        super(EnumMachineKind.chemicalMetalSeparator, "", TierPrefix.precision, TileEntityChemicalMetalSeparator.class,
+                GuiHandler.GuiIdChemicalMetalSeparator);
     }
 }

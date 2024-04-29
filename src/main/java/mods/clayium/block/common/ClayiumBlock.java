@@ -1,7 +1,10 @@
 package mods.clayium.block.common;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.UtilLocale;
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -17,11 +20,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.UtilLocale;
 
 public class ClayiumBlock extends Block implements IItemBlockHolder {
+
     public ClayiumBlock(Material material, String modelPath) {
         this(material, modelPath, material.getMaterialMapColor());
     }
@@ -45,14 +48,15 @@ public class ClayiumBlock extends Block implements IItemBlockHolder {
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
+                                  EntityPlayer player) {
         return new ItemStack(this);
-//        return new ItemStack(getItemBlock());
+        // return new ItemStack(getItemBlock());
     }
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(this);
-//        return getItemBlock();
+        // return getItemBlock();
     }
 }

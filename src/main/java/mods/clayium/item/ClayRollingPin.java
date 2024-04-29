@@ -1,11 +1,5 @@
 package mods.clayium.item;
 
-import mods.clayium.item.common.ClayiumItem;
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.EnumSide;
-import mods.clayium.util.UtilDirection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -15,7 +9,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
+import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
+
 public class ClayRollingPin extends ClayiumItem implements IModifyCC {
+
     public ClayRollingPin() {
         super("clay_rolling_pin");
         setMaxDamage(60);
@@ -25,7 +27,8 @@ public class ClayRollingPin extends ClayiumItem implements IModifyCC {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
             return EnumActionResult.SUCCESS;
         }

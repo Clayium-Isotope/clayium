@@ -1,13 +1,7 @@
 package mods.clayium.machine.ClayEnergyLaser;
 
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.ContainClayEnergy;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -20,9 +14,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.ContainClayEnergy;
+import mods.clayium.util.TierPrefix;
 
-public class TileEntityClayEnergyLaser extends TileEntityClayContainer implements IClayEnergyConsumer, IClayLaserManager {
+public class TileEntityClayEnergyLaser extends TileEntityClayContainer
+                                       implements IClayEnergyConsumer, IClayLaserManager {
+
     protected final ContainClayEnergy containEnergy = new ContainClayEnergy();
     protected int machineConsumingEnergy;
     protected ClayLaser machineClayLaser;
@@ -38,7 +41,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     }
 
     public void setPowered(boolean powered) {
-//        this.setInstantSyncFlag();
+        // this.setInstantSyncFlag();
         this.powered = powered;
     }
 
@@ -49,7 +52,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
 
         this.containerItemStacks = NonNullList.withSize(1, ItemStack.EMPTY);
         this.setImportRoutes(NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.slotsDrop = new int[]{ this.getEnergySlot() };
+        this.slotsDrop = new int[] { this.getEnergySlot() };
         this.autoInsert = false;
         this.autoExtract = true;
 
@@ -57,20 +60,20 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     }
 
     public void setManager(World world, BlockPos pos, EnumFacing direction) {
-//        if (this.manager == null) {
-//            this.manager = new ClayLaserManager(world, pos, direction);
-//        } else {
-            this.manager.reset(world, pos, direction);
-//        }
+        // if (this.manager == null) {
+        // this.manager = new ClayLaserManager(world, pos, direction);
+        // } else {
+        this.manager.reset(world, pos, direction);
+        // }
 
-//        this.setSyncFlag();
+        // this.setSyncFlag();
     }
 
     @Override
     public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
 
-        switch(tier) {
+        switch (tier) {
             case claySteel:
                 this.machineConsumingEnergy = consumingEnergyBlue;
                 this.machineClayLaser = new ClayLaser(0, 1, 0, 0);
@@ -94,8 +97,10 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     public void update() {
         super.update();
         if (this.manager != null && this.world.getBlockState(this.pos) instanceof BlockStateClayContainer) {
-            this.manager.set(this.world, this.pos, this.world.getBlockState(this.pos).getValue(BlockStateClayContainer.FACING));
-            this.manager.update(this.isPowered() && IClayEnergyConsumer.compensateClayEnergy(this, this.machineConsumingEnergy));
+            this.manager.set(this.world, this.pos,
+                    this.world.getBlockState(this.pos).getValue(BlockStateClayContainer.FACING));
+            this.manager.update(
+                    this.isPowered() && IClayEnergyConsumer.compensateClayEnergy(this, this.machineConsumingEnergy));
         }
     }
 
@@ -170,9 +175,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer implement
     }
 
     @Override
-    public void setClayEnergyStorageSize(int size) {
-
-    }
+    public void setClayEnergyStorageSize(int size) {}
 
     @Override
     public int getEnergySlot() {

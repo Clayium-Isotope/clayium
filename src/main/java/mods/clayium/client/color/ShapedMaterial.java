@@ -1,7 +1,7 @@
 package mods.clayium.client.color;
 
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumShapedMaterial;
+import java.awt.*;
+
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.ItemStack;
@@ -10,10 +10,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.awt.*;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumShapedMaterial;
 
 @SideOnly(Side.CLIENT)
 public class ShapedMaterial implements IItemColor {
+
     private final ClayiumShapedMaterial mat;
 
     public ShapedMaterial(ClayiumShapedMaterial mat) {
@@ -21,16 +23,18 @@ public class ShapedMaterial implements IItemColor {
     }
 
     @SubscribeEvent
-    public void registerMaterialColor(ColorHandlerEvent.Item event){
+    public void registerMaterialColor(ColorHandlerEvent.Item event) {
         event.getItemColors().registerItemColorHandler(this, this.mat);
     }
 
     @SideOnly(Side.CLIENT)
     public static void requestTint(ItemColors event) {
         for (ItemStack stack : ClayiumMaterials.getMaterials()) {
-            if (stack.getItem() instanceof ClayiumShapedMaterial && ((ClayiumShapedMaterial) stack.getItem()).useGeneralIcon()) {
-//                ((ClayiumShapedMaterial) stack.getItem()).registerMaterialColor(event);
-                event.registerItemColorHandler(new ShapedMaterial((ClayiumShapedMaterial) stack.getItem()), stack.getItem());
+            if (stack.getItem() instanceof ClayiumShapedMaterial &&
+                    ((ClayiumShapedMaterial) stack.getItem()).useGeneralIcon()) {
+                // ((ClayiumShapedMaterial) stack.getItem()).registerMaterialColor(event);
+                event.registerItemColorHandler(new ShapedMaterial((ClayiumShapedMaterial) stack.getItem()),
+                        stack.getItem());
             }
         }
     }

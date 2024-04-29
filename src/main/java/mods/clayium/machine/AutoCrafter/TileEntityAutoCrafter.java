@@ -1,11 +1,8 @@
 package mods.clayium.machine.AutoCrafter;
 
-import mods.clayium.gui.ContainerDummy;
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.RecipeProvider;
-import mods.clayium.util.*;
+import java.util.List;
+import java.util.function.Predicate;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCraftResult;
@@ -19,16 +16,25 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-import java.util.function.Predicate;
+import mods.clayium.gui.ContainerDummy;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.RecipeProvider;
+import mods.clayium.util.*;
 
 /**
- * <br>0 - 8: Depot: stacks will be consumed
- * <br>9 - 14: Output: produced item is here
- * <br>15 - 23: Pattern: ghost items are recipe reference
- * <br>24: Energy
+ * <br>
+ * 0 - 8: Depot: stacks will be consumed
+ * <br>
+ * 9 - 14: Output: produced item is here
+ * <br>
+ * 15 - 23: Pattern: ghost items are recipe reference
+ * <br>
+ * 24: Energy
  */
 public class TileEntityAutoCrafter extends TileEntityClayContainer implements IClayEnergyConsumer, RecipeProvider {
+
     public int craftTime;
     public int timeToCraft = 20;
     public long debtEnergy = 10L;
@@ -37,15 +43,24 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     public int numAutomation = 1;
 
     /**
-     * craftMatrix couldn't be an array of {@link java.util.function.Predicate}{@code <}{@link net.minecraft.item.ItemStack}{@code >};
-     * <br>using {@link mods.clayium.item.filter.IFilter#getFilterPredicate(ItemStack) }
+     * craftMatrix couldn't be an array of
+     * {@link java.util.function.Predicate}{@code <}{@link net.minecraft.item.ItemStack}{@code >};
      * <br>
-     * <br> Can't compare between {@code Predicate<ItemStack>} and Recipes;
-     * <br> Because of fixed processes:
-     * <br>{@link net.minecraft.item.crafting.Ingredient#apply(ItemStack)}
-     * <br>--- on {@link net.minecraft.item.crafting.ShapedRecipes#matches(InventoryCrafting, World)}
-     * <br>--- on {@link CraftingManager#findMatchingRecipe(InventoryCrafting, World)}
-     * <br>--- on {@link net.minecraft.inventory.Container#slotChangedCraftingGrid(World, EntityPlayer, InventoryCrafting, InventoryCraftResult)}
+     * using {@link mods.clayium.item.filter.IFilter#getFilterPredicate(ItemStack) }
+     * <br>
+     * <br>
+     * Can't compare between {@code Predicate<ItemStack>} and Recipes;
+     * <br>
+     * Because of fixed processes:
+     * <br>
+     * {@link net.minecraft.item.crafting.Ingredient#apply(ItemStack)}
+     * <br>
+     * --- on {@link net.minecraft.item.crafting.ShapedRecipes#matches(InventoryCrafting, World)}
+     * <br>
+     * --- on {@link CraftingManager#findMatchingRecipe(InventoryCrafting, World)}
+     * <br>
+     * --- on
+     * {@link net.minecraft.inventory.Container#slotChangedCraftingGrid(World, EntityPlayer, InventoryCrafting, InventoryCraftResult)}
      */
     private final InventoryCrafting craftMatrix = new InventoryCrafting(new ContainerDummy(), 3, 3);
 
@@ -61,13 +76,13 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     public void initParams() {
         super.initParams();
         this.containerItemStacks = NonNullList.withSize(25, ItemStack.EMPTY);
-        this.listSlotsImport.add(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8});
-        this.listSlotsExport.add(new int[]{9, 10, 11, 12, 13, 14});
+        this.listSlotsImport.add(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
+        this.listSlotsExport.add(new int[] { 9, 10, 11, 12, 13, 14 });
         this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.maxAutoExtract = new int[]{-1, 1};
+        this.maxAutoExtract = new int[] { -1, 1 };
         this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.maxAutoInsert = new int[]{-1};
-        this.slotsDrop = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, this.getEnergySlot()};
+        this.maxAutoInsert = new int[] { -1 };
+        this.slotsDrop = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
     }
@@ -117,7 +132,8 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
                 this.autoExtractInterval = this.autoInsertInterval = 8;
         }
 
-        if (TierPrefix.comparator.compare(tier, TierPrefix.advanced) <= 0 && this.getImportRoute(EnumSide.BACK) == ENERGY_ROUTE) {
+        if (TierPrefix.comparator.compare(tier, TierPrefix.advanced) <= 0 &&
+                this.getImportRoute(EnumSide.BACK) == ENERGY_ROUTE) {
             this.setImportRoute(EnumSide.BACK, -1);
         }
     }
@@ -151,7 +167,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
 
     @Override
     public boolean acceptClayEnergy() {
-        return (float)this.debtEnergy * this.multConsumingEnergy > 0.0F;
+        return (float) this.debtEnergy * this.multConsumingEnergy > 0.0F;
     }
 
     @Override
@@ -278,18 +294,19 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     public void checkRemaining() {
         NonNullList<ItemStack> nonnulllist = CraftingManager.getRemainingItems(this.craftMatrix, this.world);
 
-        for (int i = 0; i < nonnulllist.size(); ++i)
-        {
+        for (int i = 0; i < nonnulllist.size(); ++i) {
             ItemStack remaining = nonnulllist.get(i);
 
             this.craftMatrix.decrStackSize(i, 1);
 
             if (remaining.isEmpty()) continue;
 
-            remaining = UtilTransfer.produceItemStack(remaining, UtilCollect.sliceInventory(this, 0, 9), i, this.getInventoryStackLimit());
+            remaining = UtilTransfer.produceItemStack(remaining, UtilCollect.sliceInventory(this, 0, 9), i,
+                    this.getInventoryStackLimit());
             if (remaining.isEmpty()) continue;
 
-            this.getWorld().spawnEntity(new EntityItem(this.world, this.pos.getX(), this.pos.getY() + 0.5f, this.pos.getZ(), remaining));
+            this.getWorld().spawnEntity(
+                    new EntityItem(this.world, this.pos.getX(), this.pos.getY() + 0.5f, this.pos.getZ(), remaining));
         }
     }
 

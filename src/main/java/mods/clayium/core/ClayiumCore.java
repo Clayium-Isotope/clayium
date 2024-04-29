@@ -1,18 +1,5 @@
 package mods.clayium.core;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.common.IItemBlockHolder;
-import mods.clayium.block.itemblock.ItemBlockTiered;
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.entity.EntityClayBall;
-import mods.clayium.entity.EntityTeleportBall;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumShapedMaterial;
-import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.worldgen.ClayOreGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -42,11 +29,27 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.common.IItemBlockHolder;
+import mods.clayium.block.itemblock.ItemBlockTiered;
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.entity.EntityClayBall;
+import mods.clayium.entity.EntityTeleportBall;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumShapedMaterial;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.worldgen.ClayOreGenerator;
+
 @Mod(modid = ClayiumCore.ModId, version = ClayiumCore.Version, name = ClayiumCore.ModName)
 public class ClayiumCore {
+
     public static final String ModId = "clayium";
     public static final String ModName = "Clayium";
     public static final String Version = "0.0.0";
@@ -60,14 +63,17 @@ public class ClayiumCore {
         return instance;
     }
 
-    @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy", serverSide = "mods.clayium.core.ClayiumCommonProxy")
+    @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy",
+                serverSide = "mods.clayium.core.ClayiumCommonProxy")
     public static IClayiumProxy proxy;
 
-    public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel("clayium:channel");
+    public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE
+            .newSimpleChannel("clayium:channel");
 
     public static Logger logger = LogManager.getLogger("clayium");
 
     public static final CreativeTabs tabClayium = new CreativeTabs("clayium") {
+
         @Override
         public ItemStack createIcon() {
             return new ItemStack(Items.CLAY_BALL);
@@ -84,9 +90,9 @@ public class ClayiumCore {
                 tab.add(new ItemStack(block));
             }
 
-//            for (Item item : ClayiumMaterials.getItems()) {
-//                tab.add(new ItemStack(item));
-//            }
+            // for (Item item : ClayiumMaterials.getItems()) {
+            // tab.add(new ItemStack(item));
+            // }
             tab.addAll(ClayiumMaterials.getMaterials());
 
             for (Block block : ClayiumMachines.getBlocks()) {
@@ -105,8 +111,11 @@ public class ClayiumCore {
         ClayiumMaterials.registerMaterials();
         ClayiumMachines.registerMachines();
 
-        EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "clay_bullet"), EntityClayBall.class, "clay_bullet", ClayiumConfiguration.EntityIdClayBall, ClayiumCore.instance(), 128, 1, true);
-        EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "teleport_bullet"), EntityTeleportBall.class, "teleport_bullet", ClayiumConfiguration.EntityIdTeleportBall, ClayiumCore.instance(), 128, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "clay_bullet"), EntityClayBall.class,
+                "clay_bullet", ClayiumConfiguration.EntityIdClayBall, ClayiumCore.instance(), 128, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(ClayiumCore.ModId, "teleport_bullet"),
+                EntityTeleportBall.class, "teleport_bullet", ClayiumConfiguration.EntityIdTeleportBall,
+                ClayiumCore.instance(), 128, 1, true);
 
         proxy.preInit(event);
     }
@@ -120,12 +129,12 @@ public class ClayiumCore {
 
         proxy.registerTileEntity();
 
-//        OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
-//        OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);
-//        OreDictionary.registerOre("circuitElite", ClayiumItems.integratedCircuit);
-//        OreDictionary.registerOre("circuitUltimate", ClayiumItems.clayCore);
-//
-//        ClayiumMaterials.registerOres();
+        // OreDictionary.registerOre("circuitBasic", ClayiumItems.advancedCircuit);
+        // OreDictionary.registerOre("circuitAdvanced", ClayiumItems.precisionCircuit);
+        // OreDictionary.registerOre("circuitElite", ClayiumItems.integratedCircuit);
+        // OreDictionary.registerOre("circuitUltimate", ClayiumItems.clayCore);
+        //
+        // ClayiumMaterials.registerOres();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance(), new GuiHandler());
         GameRegistry.registerWorldGenerator(new ClayOreGenerator(), 0);
@@ -151,7 +160,8 @@ public class ClayiumCore {
     public void registerItems(RegistryEvent.Register<Item> event) {
         for (Block block : ClayiumBlocks.getBlocks()) {
             assert block.getRegistryName() != null;
-            Item item = block instanceof IItemBlockHolder ? ((IItemBlockHolder) block).getItemBlock() : new ItemBlock(block);
+            Item item = block instanceof IItemBlockHolder ? ((IItemBlockHolder) block).getItemBlock() :
+                    new ItemBlock(block);
             event.getRegistry().register(item.setRegistryName(block.getRegistryName()));
         }
 
@@ -175,19 +185,23 @@ public class ClayiumCore {
         for (Block block : ClayiumBlocks.getBlocks()) {
             assert block.getRegistryName() != null;
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
-                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(block.getRegistryName(), "inventory"));
+                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(block.getRegistryName(),
+                            "inventory"));
         }
 
         for (Block block : ClayiumMachines.getBlocks()) {
             assert block.getRegistryName() != null;
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
-                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getPath(), "inventory"));
+                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(
+                            ClayiumCore.ModId + ":machine/" + block.getRegistryName().getPath(), "inventory"));
             // Custom blockstate mapping
             if (!block.getClass().isAnnotationPresent(HasOriginalState.class)) {
                 net.minecraftforge.client.model.ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+
                     @Override
                     protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                        return new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":empty");
+                        return new net.minecraft.client.renderer.block.model.ModelResourceLocation(
+                                ClayiumCore.ModId + ":empty");
                     }
                 });
             }
@@ -196,7 +210,8 @@ public class ClayiumCore {
         for (Item item : ClayiumItems.getItems()) {
             assert item.getRegistryName() != null;
             net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(item, 0,
-                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(item.getRegistryName(), "inventory"));
+                    new net.minecraft.client.renderer.block.model.ModelResourceLocation(item.getRegistryName(),
+                            "inventory"));
         }
 
         for (ItemStack stack : ClayiumMaterials.getMaterials()) {
@@ -205,10 +220,14 @@ public class ClayiumCore {
             if (stack.getItem() instanceof ClayiumShapedMaterial) {
                 if (((ClayiumShapedMaterial) stack.getItem()).useGeneralIcon())
                     net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":material/" + ((ClayiumShapedMaterial) stack.getItem()).getTempFile(), "inventory"));
+                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId +
+                                    ":material/" + ((ClayiumShapedMaterial) stack.getItem()).getTempFile(),
+                                    "inventory"));
                 else
                     net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":material/" + stack.getItem().getRegistryName().getPath(), "inventory"));
+                            new net.minecraft.client.renderer.block.model.ModelResourceLocation(
+                                    ClayiumCore.ModId + ":material/" + stack.getItem().getRegistryName().getPath(),
+                                    "inventory"));
             }
         }
 
@@ -216,14 +235,18 @@ public class ClayiumCore {
             assert stack.getItem().getRegistryName() != null;
             if (stack.getItem() instanceof ClayiumShapedMaterial)
                 net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(), "inventory"));
+                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(
+                                ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(),
+                                "inventory"));
         }
 
         for (ItemStack stack : ClayiumMaterials.denseClayParts.values()) {
             assert stack.getItem().getRegistryName() != null;
             if (stack.getItem() instanceof ClayiumShapedMaterial)
                 net.minecraftforge.client.model.ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(), "inventory"));
+                        new net.minecraft.client.renderer.block.model.ModelResourceLocation(
+                                ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(),
+                                "inventory"));
         }
     }
 

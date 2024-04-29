@@ -1,21 +1,24 @@
 package mods.clayium.util.crafting;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.common.IClayEnergyConsumer;
+import javax.annotation.Nullable;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import javax.annotation.Nullable;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 
 /**
  * 機械のレシピ処理を担うクラス
  */
 public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
+
     protected long debtEnergy = 0L;
     protected long craftTime = 0L;
     protected long timeToCraft = 0L;
 
-    @Nullable protected final IClayEnergyConsumer energyConsumer;
+    @Nullable
+    protected final IClayEnergyConsumer energyConsumer;
 
     protected Kitchen() {
         this(null);
@@ -32,7 +35,7 @@ public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
     /**
      * {@link net.minecraft.world.World#isRemote} などで場合分け
      */
-// TODO    @SideOnly(Side.SERVER) // 蔵でおこなう必要は無さそうなので。
+    // TODO @SideOnly(Side.SERVER) // 蔵でおこなう必要は無さそうなので。
     public final void work() {
         if (this.isDoingWork() || this.setNewRecipe()) {
             if (this.canProceedCraft()) {
@@ -60,11 +63,13 @@ public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
     // ===== Internal Methods =====
 
     protected boolean canProceedCraft() {
-        return this.energyConsumer == null || IClayEnergyConsumer.compensateClayEnergy(this.energyConsumer, this.debtEnergy, false);
+        return this.energyConsumer == null ||
+                IClayEnergyConsumer.compensateClayEnergy(this.energyConsumer, this.debtEnergy, false);
     }
 
     protected final void proceedWork() {
-        if (this.energyConsumer != null && !IClayEnergyConsumer.compensateClayEnergy(this.energyConsumer, this.debtEnergy)) {
+        if (this.energyConsumer != null &&
+                !IClayEnergyConsumer.compensateClayEnergy(this.energyConsumer, this.debtEnergy)) {
             return;
         }
 

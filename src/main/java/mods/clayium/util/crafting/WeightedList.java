@@ -1,13 +1,15 @@
 package mods.clayium.util.crafting;
 
-import net.minecraft.util.WeightedRandom;
-
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.util.WeightedRandom;
+
 public class WeightedList<E> {
+
     private final List<WeightedList.WeightedResult<E>> internal = new ArrayList<>();
     private final E flat;
 
@@ -33,6 +35,7 @@ public class WeightedList<E> {
     }
 
     static class WeightedResult<E> extends WeightedRandom.Item {
+
         public E result;
 
         public WeightedResult(E result, int weight) {

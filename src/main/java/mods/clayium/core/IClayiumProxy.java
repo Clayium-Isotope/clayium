@@ -8,21 +8,22 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public interface IClayiumProxy {
-	void preInit(FMLPreInitializationEvent event);
 
-	void init(FMLInitializationEvent event);
+    void preInit(FMLPreInitializationEvent event);
 
-	void postInit(FMLPostInitializationEvent event);
+    void init(FMLInitializationEvent event);
 
-	void serverLoad(FMLServerStartingEvent event);
+    void postInit(FMLPostInitializationEvent event);
 
-	EnumFacing getHittingSide(EntityPlayer player);
+    void serverLoad(FMLServerStartingEvent event);
 
-	EntityPlayer getClientPlayer();
+    EnumFacing getHittingSide(EntityPlayer player);
 
-	void registerTileEntity();
+    EntityPlayer getClientPlayer();
 
-	void updateFlightStatus(int mode);
+    void registerTileEntity();
 
-	void overclockPlayer(int delay);
+    void updateFlightStatus(int mode);
+
+    void overclockPlayer(int delay);
 }

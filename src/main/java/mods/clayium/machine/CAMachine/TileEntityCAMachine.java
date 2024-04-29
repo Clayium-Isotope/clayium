@@ -1,5 +1,8 @@
 package mods.clayium.machine.CAMachine;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
+
 import mods.clayium.block.ICAMachine;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -7,10 +10,10 @@ import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.ContainClayEnergy;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ITickable;
 
-public abstract class TileEntityCAMachine extends TileEntityClayContainer implements ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement>, ICAMachine {
+public abstract class TileEntityCAMachine extends TileEntityClayContainer implements ITickable, IClayEnergyConsumer,
+                                          ClayiumRecipeProvider<RecipeElement>, ICAMachine {
+
     private final ContainClayEnergy containEnergy = new ContainClayEnergy();
     protected RecipeElement doingRecipe = RecipeElement.flat();
     protected long craftTime = 0;
@@ -39,15 +42,12 @@ public abstract class TileEntityCAMachine extends TileEntityClayContainer implem
     }
 
     @Override
-    public void setClayEnergyStorageSize(int size) {
-
-    }
+    public void setClayEnergyStorageSize(int size) {}
 
     @Override
     public boolean acceptClayEnergy() {
         return true;
     }
-
 
     @Override
     public int getField(int id) {
@@ -82,7 +82,6 @@ public abstract class TileEntityCAMachine extends TileEntityClayContainer implem
     public int getFieldCount() {
         return 3;
     }
-
 
     @Override
     public void readMoreFromNBT(NBTTagCompound tagCompound) {

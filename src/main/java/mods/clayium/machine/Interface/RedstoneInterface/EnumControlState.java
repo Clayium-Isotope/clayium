@@ -3,6 +3,7 @@ package mods.clayium.machine.Interface.RedstoneInterface;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumControlState implements IStringSerializable {
+
     None("None", "none"),
     EmitIfIdle("Emit if idle", "emit_if_idle"),
     EmitIfWorkScheduled("Emit if work scheduled", "emit_if_work_scheduled"),

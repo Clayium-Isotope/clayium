@@ -1,5 +1,9 @@
 package mods.clayium.machine;
 
+import java.util.Objects;
+
+import net.minecraft.util.ResourceLocation;
+
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
@@ -7,11 +11,9 @@ import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
-import net.minecraft.util.ResourceLocation;
-
-import java.util.Objects;
 
 public enum EnumMachineKind {
+
     // Tier 0 ~
     EMPTY("", null),
     workTable("work_table", ClayiumRecipes.clayWorkTable, SlotType.CLAY_WORK_TABLE),
@@ -151,6 +153,7 @@ public enum EnumMachineKind {
     }
 
     public static class SlotType {
+
         public static final SlotType UNKNOWN = new SlotType(0, 0, 0, 0, 0, 36, ContainerTemp.class);
         public static final SlotType CLAY_WORK_TABLE = new SlotType(0, 2, 2, 2, 4, 36, ContainerClayWorkTable.class);
         public static final SlotType MACHINE = new SlotType(0, 1, 1, 2, 3, 36, ContainerClayiumMachine.class);
@@ -164,7 +167,8 @@ public enum EnumMachineKind {
         public final int playerCount;
         public final Class<? extends ContainerTemp> containerClass;
 
-        SlotType(int inStart, int inCount, int outStart, int outCount, int playerStart, int playerCount, Class<? extends ContainerTemp> containerClass) {
+        SlotType(int inStart, int inCount, int outStart, int outCount, int playerStart, int playerCount,
+                 Class<? extends ContainerTemp> containerClass) {
             this.inStart = inStart;
             this.inCount = inCount;
             this.outStart = outStart;

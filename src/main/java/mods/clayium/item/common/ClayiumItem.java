@@ -1,7 +1,9 @@
 package mods.clayium.item.common;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.UtilLocale;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,10 +11,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.List;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.UtilLocale;
 
 public class ClayiumItem extends Item {
+
     public ClayiumItem(String modelPath) {
         setTranslationKey(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);

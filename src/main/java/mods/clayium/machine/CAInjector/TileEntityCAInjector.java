@@ -1,5 +1,8 @@
 package mods.clayium.machine.CAInjector;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
 import mods.clayium.block.ICAMachine;
 import mods.clayium.machine.CAMachine.TileEntityCAMachine;
 import mods.clayium.machine.EnumMachineKind;
@@ -12,25 +15,24 @@ import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 
 public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMachine, Machine2To1 {
+
     protected double caFactorExponent = 1.0;
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(4, ItemStack.EMPTY);
         this.listSlotsImport.clear();
         this.listSlotsExport.clear();
-        this.listSlotsImport.add(new int[]{0});
-        this.listSlotsImport.add(new int[]{1});
-        this.listSlotsImport.add(new int[]{0, 1});
-        this.listSlotsExport.add(new int[]{2});
+        this.listSlotsImport.add(new int[] { 0 });
+        this.listSlotsImport.add(new int[] { 1 });
+        this.listSlotsImport.add(new int[] { 0, 1 });
+        this.listSlotsExport.add(new int[] { 2 });
         this.setImportRoutes(NONE_ROUTE, 2, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.maxAutoExtract = new int[]{-1, -1, -1, 1};
+        this.maxAutoExtract = new int[] { -1, -1, -1, 1 };
         this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.maxAutoInsert = new int[]{-1};
-        this.slotsDrop = new int[]{0, 1, 2, this.getEnergySlot()};
+        this.maxAutoInsert = new int[] { -1 };
+        this.slotsDrop = new int[] { 0, 1, 2, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
     }
@@ -71,7 +73,8 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMach
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), 2, this.getInventoryStackLimit()) > 0;
+        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), 2,
+                this.getInventoryStackLimit()) > 0;
     }
 
     public double getCraftTimeMultiplier() {
@@ -107,19 +110,20 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMach
         this.debtEnergy = 0;
         this.doingRecipe = this.getFlat();
 
-//        if (this.externalControlState > 0) {
-//            --this.externalControlState;
-//            if (this.externalControlState == 0) {
-//                this.externalControlState = -1;
-//            }
-//        }
-
+        // if (this.externalControlState > 0) {
+        // --this.externalControlState;
+        // if (this.externalControlState == 0) {
+        // this.externalControlState = -1;
+        // }
+        // }
     }
 
     @Override
     public boolean setNewRecipe() {
-        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
-//        ClayiumCore.logger.info("[CA Injector] Set recipe to [" + this.getStackInSlot(0) + ", " + this.getStackInSlot(1) + "] -> " + this.doingRecipe.getResults());
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0),
+                this.getStackInSlot(1));
+        // ClayiumCore.logger.info("[CA Injector] Set recipe to [" + this.getStackInSlot(0) + ", " +
+        // this.getStackInSlot(1) + "] -> " + this.doingRecipe.getResults());
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);
@@ -132,7 +136,8 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements ICAMach
         }
 
         UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), 0, 2);
-        this.timeToCraft = (long) (this.doingRecipe.getTime() * this.getCraftTimeMultiplier() * (double) this.multCraftTime);
+        this.timeToCraft = (long) (this.doingRecipe.getTime() * this.getCraftTimeMultiplier() *
+                (double) this.multCraftTime);
         this.craftTime = 1;
         return true;
     }

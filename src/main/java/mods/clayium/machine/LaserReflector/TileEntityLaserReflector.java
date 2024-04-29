@@ -1,10 +1,8 @@
 package mods.clayium.machine.LaserReflector;
 
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -13,10 +11,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 
 public class TileEntityLaserReflector extends TileEntityClayContainer implements IClayLaserMachine, IClayLaserManager {
+
     protected ClayLaser machineClayLaser;
     protected List<ClayLaser> listIrradiatedClayLasers = new ArrayList<>();
     protected List<Long> irradiatedTime = new ArrayList<>();
@@ -51,7 +53,7 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
         boolean flag = false;
         int num = 0;
 
-        for(int i = 0; i < this.listIrradiatedClayLasers.size(); ++i) {
+        for (int i = 0; i < this.listIrradiatedClayLasers.size(); ++i) {
             if (this.irradiatedTime.get(i) != time) {
                 ++num;
             }
@@ -62,7 +64,7 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
         List<Long> newIrradiatedTime = new ArrayList<>();
         int j = 0;
 
-        for(int i = 0; i < this.listIrradiatedClayLasers.size(); ++i) {
+        for (int i = 0; i < this.listIrradiatedClayLasers.size(); ++i) {
             if (this.irradiatedTime.get(i) != time) {
                 array[j] = this.listIrradiatedClayLasers.get(i);
                 ++j;
@@ -144,8 +146,7 @@ public class TileEntityLaserReflector extends TileEntityClayContainer implements
                 Math.min(this.pos.getZ(), this.pos.getZ() + direction.getZOffset() * l),
                 Math.max(this.pos.getX(), this.pos.getX() + direction.getXOffset() * l) + 1.0D,
                 Math.max(this.pos.getY(), this.pos.getY() + direction.getYOffset() * l) + 1.0D,
-                Math.max(this.pos.getZ(), this.pos.getZ() + direction.getZOffset() * l) + 1.0D
-        );
+                Math.max(this.pos.getZ(), this.pos.getZ() + direction.getZOffset() * l) + 1.0D);
         return this.boundingBox;
     }
 

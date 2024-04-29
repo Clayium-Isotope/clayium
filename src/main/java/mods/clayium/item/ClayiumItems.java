@@ -1,13 +1,9 @@
 package mods.clayium.item;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.ClayPipingTools;
-import mods.clayium.item.common.ClayiumItem;
-import mods.clayium.item.common.ItemDamaged;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.item.filter.*;
-import mods.clayium.item.gadget.*;
-import mods.clayium.util.TierPrefix;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -16,11 +12,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.ClayPipingTools;
+import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.common.ItemDamaged;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.item.filter.*;
+import mods.clayium.item.gadget.*;
+import mods.clayium.util.TierPrefix;
 
 public class ClayiumItems {
+
     public static void initItems() {
         items.clear();
 
@@ -31,19 +33,16 @@ public class ClayiumItems {
 
                     Item item = (Item) field.get(instance);
 
-                    if (item instanceof ClayiumItem
-                            || item.equals(clayPickaxe)
-                            || item.equals(clayShovel)
-                            || item.equals(claySteelPickaxe)
-                            || item.equals(claySteelShovel)) {
+                    if (item instanceof ClayiumItem || item.equals(clayPickaxe) || item.equals(clayShovel) ||
+                            item.equals(claySteelPickaxe) || item.equals(claySteelShovel)) {
                         items.add(item);
-//                        ClayiumCore.jsonHelper.generateSimpleItemJson(item.getUnlocalizedName().substring(5));
+                        // ClayiumCore.jsonHelper.generateSimpleItemJson(item.getUnlocalizedName().substring(5));
                     }
                 }
                 if (field.get(instance) instanceof ItemDamaged) {
                     for (Item item : (ItemDamaged) field.get(instance)) {
                         items.add(item);
-//                        ClayiumCore.jsonHelper.generateSimpleItemJson(item.getUnlocalizedName().substring(5));
+                        // ClayiumCore.jsonHelper.generateSimpleItemJson(item.getUnlocalizedName().substring(5));
                     }
                 }
             }
@@ -60,7 +59,8 @@ public class ClayiumItems {
     private static final ClayiumItems instance = new ClayiumItems();
 
     /* Elements... */
-    public static final ItemDamaged clayShards = new ItemDamaged("compressed_clay_shard_", new TierPrefix[] {TierPrefix.clay, TierPrefix.denseClay, TierPrefix.simple});
+    public static final ItemDamaged clayShards = new ItemDamaged("compressed_clay_shard_",
+            new TierPrefix[] { TierPrefix.clay, TierPrefix.denseClay, TierPrefix.simple });
 
     /* Misc... */
     public static final Item clayCircuit = new ItemTiered("clay_circuit", TierPrefix.denseClay);
@@ -106,12 +106,17 @@ public class ClayiumItems {
     public static final Item claySteelPickaxe = new ClaySteelPickaxe();
     public static final Item claySteelShovel = new ClaySteelShovel();
 
-    public static final Item clayShooter0 = new ClayShooter(10000, "clay_shooter_0", TierPrefix.precision, 2, 1.2f, 25.0f, 4, 6, 0);
-    public static final Item clayShooter1 = new ClayShooter(1000, "clay_shooter_1", TierPrefix.precision, 4, 4.5f, 3.0f, 7, 12, 0);
-    public static final Item clayShooter2 = new ClayShooter(8000, "clay_shooter_2", TierPrefix.precision, 2, 15.0f, 0.0f, 25, 8, 20);
-    public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", TierPrefix.precision, 3, 30.0f, 0.0f, 100, 8, 40);
+    public static final Item clayShooter0 = new ClayShooter(10000, "clay_shooter_0", TierPrefix.precision, 2, 1.2f,
+            25.0f, 4, 6, 0);
+    public static final Item clayShooter1 = new ClayShooter(1000, "clay_shooter_1", TierPrefix.precision, 4, 4.5f, 3.0f,
+            7, 12, 0);
+    public static final Item clayShooter2 = new ClayShooter(8000, "clay_shooter_2", TierPrefix.precision, 2, 15.0f,
+            0.0f, 25, 8, 20);
+    public static final Item clayShooter3 = new ClayShooter(2500, "clay_shooter_3", TierPrefix.precision, 3, 30.0f,
+            0.0f, 100, 8, 40);
 
-    public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter", TierPrefix.pureAntimatter, 3, 30.0F, 0.0F, 100, 8, 40);
+    public static final Item instantTeleporter = new InstantTeleporter(2500, "instant_teleporter",
+            TierPrefix.pureAntimatter, 3, 30.0F, 0.0F, 100, 8, 40);
 
     public static final Item synchronizer = new Synchronizer();
     public static final Item directionMemory = new DirectionMemory();
@@ -157,7 +162,7 @@ public class ClayiumItems {
     private static final List<Item> items = new ArrayList<>();
 
     public static boolean isWorkTableTool(ItemStack itemstack) {
-        for (Item item : new Item[]{
+        for (Item item : new Item[] {
                 ClayiumItems.rollingPin,
                 ClayiumItems.slicer,
                 ClayiumItems.spatula

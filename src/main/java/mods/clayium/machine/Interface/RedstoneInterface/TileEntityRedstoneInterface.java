@@ -1,20 +1,22 @@
 package mods.clayium.machine.Interface.RedstoneInterface;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.Interface.IExternalControl;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.SyncManager;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.util.Constants;
 
-import javax.annotation.Nullable;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.Interface.IExternalControl;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
 
 public class TileEntityRedstoneInterface extends TileEntityGeneric implements ISynchronizedInterface, ITickable {
+
     protected boolean synced = false;
     protected IInterfaceCaptive core = IInterfaceCaptive.NONE;
     protected int[] syncSource = null;
@@ -117,7 +119,8 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
         }
 
         if (this.lastPower != power || this.lastSignal != signal) {
-            this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos), this.world.getBlockState(this.pos), 3);
+            this.world.notifyBlockUpdate(this.pos, this.world.getBlockState(this.pos),
+                    this.world.getBlockState(this.pos), 3);
             this.world.markBlockRangeForRenderUpdate(this.pos, this.pos);
         }
 
@@ -155,7 +158,8 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
     }
 
     public EnumControlState changeState() {
-        IBlockState newState = this.world.getBlockState(this.pos).cycleProperty(BlockStateRedstoneInterface.CONTROL_STATE);
+        IBlockState newState = this.world.getBlockState(this.pos)
+                .cycleProperty(BlockStateRedstoneInterface.CONTROL_STATE);
 
         this.world.setBlockState(this.pos, newState, 3);
 
@@ -165,9 +169,10 @@ public class TileEntityRedstoneInterface extends TileEntityGeneric implements IS
     public void changeState(EnumControlState state) {
         this.lastSignal = -1;
 
-        this.world.setBlockState(this.pos, this.world.getBlockState(this.pos).withProperty(BlockStateRedstoneInterface.CONTROL_STATE, state), 3);
+        this.world.setBlockState(this.pos,
+                this.world.getBlockState(this.pos).withProperty(BlockStateRedstoneInterface.CONTROL_STATE, state), 3);
 
-//        this.setInstantSyncFlag();
+        // this.setInstantSyncFlag();
     }
 
     public EnumControlState getState() {

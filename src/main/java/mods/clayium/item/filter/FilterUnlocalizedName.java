@@ -1,9 +1,11 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.util.TierPrefix;
+
 public class FilterUnlocalizedName extends FilterString {
+
     public FilterUnlocalizedName() {
         super("filter_unl10n", TierPrefix.precision);
     }

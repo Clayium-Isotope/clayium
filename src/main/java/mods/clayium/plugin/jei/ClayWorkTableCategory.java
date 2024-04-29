@@ -1,5 +1,14 @@
 package mods.clayium.plugin.jei;
 
+import java.util.LinkedList;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
@@ -8,17 +17,13 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayWorkTable.KneadingRecipe;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nullable;
-import java.util.LinkedList;
 
 public class ClayWorkTableCategory implements IRecipeCategory<KneadingRecipe> {
-    protected static final ResourceLocation clayWorkTable = new ResourceLocation(ClayiumCore.ModId, "textures/gui/_old/clayworktable.png");
-    protected static final ResourceLocation button = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
+
+    protected static final ResourceLocation clayWorkTable = new ResourceLocation(ClayiumCore.ModId,
+            "textures/gui/_old/clayworktable.png");
+    protected static final ResourceLocation button = new ResourceLocation(ClayiumCore.ModId,
+            "textures/gui/button_.png");
     protected final IDrawable icon;
     protected final IDrawable background;
     public static final String categoryID = ClayiumCore.ModName + ".kneading";
@@ -31,7 +36,8 @@ public class ClayWorkTableCategory implements IRecipeCategory<KneadingRecipe> {
 
     public ClayWorkTableCategory(IGuiHelper helper) {
         progressBG = helper.createDrawable(button, 0, 96, 80, 16);
-        progressFG = helper.createAnimatedDrawable(helper.createDrawable(button, 0, 112, 80, 16), 40, IDrawableAnimated.StartDirection.LEFT, false);
+        progressFG = helper.createAnimatedDrawable(helper.createDrawable(button, 0, 112, 80, 16), 40,
+                IDrawableAnimated.StartDirection.LEFT, false);
 
         background = helper.createDrawable(clayWorkTable, 12, 16, 152, 56);
         icon = helper.createDrawableIngredient(new ItemStack(Items.CLAY_BALL));

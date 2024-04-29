@@ -1,7 +1,9 @@
 package mods.clayium.util;
 
 public class UtilTier {
+
     public enum BufferTransport {
+
         _0(8, 8, 1, 1),
         _1(8, 8, 1, 1),
         _2(8, 8, 1, 1),
@@ -31,20 +33,34 @@ public class UtilTier {
 
         public static BufferTransport getByTier(TierPrefix tier) {
             switch (tier) {
-                case none:              return _0;
-                case clay:              return _1;
-                case denseClay:         return _2;
-                case simple:            return _3;
-                case basic:             return _4;
-                case advanced:          return _5;
-                case precision:         return _6;
-                case claySteel:         return _7;
-                case clayium:           return _8;
-                case ultimate:          return _9;
-                case antimatter:        return _10;
-                case pureAntimatter:    return _11;
-                case OEC:               return _12;
-                case OPA:               return _13;
+                case none:
+                    return _0;
+                case clay:
+                    return _1;
+                case denseClay:
+                    return _2;
+                case simple:
+                    return _3;
+                case basic:
+                    return _4;
+                case advanced:
+                    return _5;
+                case precision:
+                    return _6;
+                case claySteel:
+                    return _7;
+                case clayium:
+                    return _8;
+                case ultimate:
+                    return _9;
+                case antimatter:
+                    return _10;
+                case pureAntimatter:
+                    return _11;
+                case OEC:
+                    return _12;
+                case OPA:
+                    return _13;
             }
 
             throw new IllegalTierException();
@@ -52,6 +68,7 @@ public class UtilTier {
     }
 
     public enum MachineTransport {
+
         _0(20, 20, 8, 8),
         _1(20, 20, 8, 8),
         _2(20, 20, 8, 8),
@@ -82,20 +99,34 @@ public class UtilTier {
         public static MachineTransport getByTier(TierPrefix tier) {
             switch (tier) {
                 case unknown:
-                case none:              return _0;
-                case clay:              return _1;
-                case denseClay:         return _2;
-                case simple:            return _3;
-                case basic:             return _4;
-                case advanced:          return _5;
-                case precision:         return _6;
-                case claySteel:         return _7;
-                case clayium:           return _8;
-                case ultimate:          return _9;
-                case antimatter:        return _10;
-                case pureAntimatter:    return _11;
-                case OEC:               return _12;
-                case OPA:               return _13;
+                case none:
+                    return _0;
+                case clay:
+                    return _1;
+                case denseClay:
+                    return _2;
+                case simple:
+                    return _3;
+                case basic:
+                    return _4;
+                case advanced:
+                    return _5;
+                case precision:
+                    return _6;
+                case claySteel:
+                    return _7;
+                case clayium:
+                    return _8;
+                case ultimate:
+                    return _9;
+                case antimatter:
+                    return _10;
+                case pureAntimatter:
+                    return _11;
+                case OEC:
+                    return _12;
+                case OPA:
+                    return _13;
             }
 
             throw new IllegalTierException();
@@ -107,8 +138,9 @@ public class UtilTier {
     }
 
     /**
-     * @return true: Pushing the button is the only way to produce CE<p>
-     * false: kinds of Clay Energy Block are the only way to produce CE
+     * @return true: Pushing the button is the only way to produce CE
+     *         <p>
+     *         false: kinds of Clay Energy Block are the only way to produce CE
      */
     public static boolean canManufactureCraft(TierPrefix tier) {
         return TierPrefix.comparator.compare(tier, TierPrefix.simple) < 0;

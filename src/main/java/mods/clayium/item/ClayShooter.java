@@ -1,8 +1,5 @@
 package mods.clayium.item;
 
-import mods.clayium.entity.EntityClayBall;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -13,7 +10,12 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import mods.clayium.entity.EntityClayBall;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
+
 public class ClayShooter extends ItemTiered {
+
     protected final boolean infinity;
     protected final int maxAmmo;
     protected final int bulletDamage;
@@ -26,11 +28,14 @@ public class ClayShooter extends ItemTiered {
 
     protected float cooldown = 0;
 
-    public ClayShooter(int maxDamage, String modelPath, TierPrefix tier, int bAliveTime, float bInitialVelocity, float bDiffusion, int bDamage, int bShootFrame, int chargeTime) {
-        this(maxDamage, modelPath, tier, bAliveTime, bInitialVelocity, bDiffusion, bDamage, 3.0f / bShootFrame, bShootFrame / 3, chargeTime);
+    public ClayShooter(int maxDamage, String modelPath, TierPrefix tier, int bAliveTime, float bInitialVelocity,
+                       float bDiffusion, int bDamage, int bShootFrame, int chargeTime) {
+        this(maxDamage, modelPath, tier, bAliveTime, bInitialVelocity, bDiffusion, bDamage, 3.0f / bShootFrame,
+                bShootFrame / 3, chargeTime);
     }
 
-    public ClayShooter(int maxDamage, String modelPath, TierPrefix tier, int bAliveTime, float bInitialVelocity, float bDiffusion, int bDamage, float bShootRate, int bCooldownTime, int chargeTime) {
+    public ClayShooter(int maxDamage, String modelPath, TierPrefix tier, int bAliveTime, float bInitialVelocity,
+                       float bDiffusion, int bDamage, float bShootRate, int bCooldownTime, int chargeTime) {
         super(modelPath, tier);
 
         setMaxStackSize(1);
@@ -57,7 +62,8 @@ public class ClayShooter extends ItemTiered {
         if (itemstack.getItem() instanceof ClayShooter) {
             ClayShooter shooter = (ClayShooter) itemstack.getItem();
 
-            playerIn.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 0.6F, 5.0F / (itemRand.nextFloat() * 0.7F + 1.0F));
+            playerIn.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 0.6F,
+                    5.0F / (itemRand.nextFloat() * 0.7F + 1.0F));
             float v = shooter.getInitialVelocity() * per;
             if (v >= 6.0F) {
                 playerIn.playSound(SoundEvents.ENTITY_FIREWORK_LAUNCH, 0.01F * (v - 6.0F), 1.0F);
@@ -72,10 +78,13 @@ public class ClayShooter extends ItemTiered {
         }
     }
 
-    protected void spawnBullet(World worldIn, EntityPlayer playerIn, ItemStack stack, ClayShooter shooter, float per, boolean critical) {
+    protected void spawnBullet(World worldIn, EntityPlayer playerIn, ItemStack stack, ClayShooter shooter, float per,
+                               boolean critical) {
         if (!worldIn.isRemote) {
-            EntityClayBall entityclayball = new EntityClayBall(worldIn, playerIn, shooter.lifespan, shooter.initialVelocity, shooter.diffusion, shooter.bulletDamage, 1, critical);
-            entityclayball.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, shooter.initialVelocity, shooter.diffusion);
+            EntityClayBall entityclayball = new EntityClayBall(worldIn, playerIn, shooter.lifespan,
+                    shooter.initialVelocity, shooter.diffusion, shooter.bulletDamage, 1, critical);
+            entityclayball.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, shooter.initialVelocity,
+                    shooter.diffusion);
             worldIn.spawnEntity(entityclayball);
         }
     }
@@ -145,7 +154,8 @@ public class ClayShooter extends ItemTiered {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         playerIn.setActiveHand(handIn);
         if (this.isCharger()) {
-            ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, true);
+            ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn,
+                    playerIn, handIn, true);
             if (ret != null) return ret;
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
@@ -157,7 +167,8 @@ public class ClayShooter extends ItemTiered {
             if (!(entityLiving instanceof EntityPlayer)) return;
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            int charge = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, player, this.getMaxItemUseDuration(stack) - timeLeft, this.getDurabilityForDisplay(stack) < 1.0d);
+            int charge = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, player,
+                    this.getMaxItemUseDuration(stack) - timeLeft, this.getDurabilityForDisplay(stack) < 1.0d);
             if (charge < 0) {
                 return;
             }

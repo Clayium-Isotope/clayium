@@ -1,6 +1,7 @@
 package mods.clayium.util;
 
 public class RangeCheck {
+
     /**
      * @return true when num is in [min, max]
      */
