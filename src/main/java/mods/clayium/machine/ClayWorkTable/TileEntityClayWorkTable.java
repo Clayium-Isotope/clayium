@@ -1,5 +1,12 @@
 package mods.clayium.machine.ClayWorkTable;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -10,17 +17,14 @@ import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 
-public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider, ClayiumRecipeProvider<KneadingRecipe> {
+public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider,
+                                     ClayiumRecipeProvider<KneadingRecipe> {
+
     private static final int[] slotsTop = new int[] { ClayWorkTableSlots.TOOL.ordinal() };
     private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
-    private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(), ClayWorkTableSlots.CHANGE.ordinal() };
+    private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(),
+            ClayWorkTableSlots.CHANGE.ordinal() };
     private KneadingRecipe currentRecipe = KneadingRecipe.flat();
     private KneadingMethod currentMethod = KneadingMethod.UNKNOWN;
     private long craftTime;
@@ -40,7 +44,8 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
 
         this.craftTime = tagCompound.getLong("KneadProgress");
         this.timeToCraft = tagCompound.getLong("TimeToKnead");
-        this.currentRecipe = ClayiumRecipes.clayWorkTable.getRecipe(tagCompound.getInteger("RecipeHash"), KneadingRecipe.flat());
+        this.currentRecipe = ClayiumRecipes.clayWorkTable.getRecipe(tagCompound.getInteger("RecipeHash"),
+                KneadingRecipe.flat());
     }
 
     @Override
@@ -64,7 +69,8 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
             }
         }
 
-        return this.getRecipe(e -> e.method == method && this.canCraft(e)).isFlat() ? ButtonProperty.FAILURE : ButtonProperty.PERMIT;
+        return this.getRecipe(e -> e.method == method && this.canCraft(e)).isFlat() ? ButtonProperty.FAILURE :
+                ButtonProperty.PERMIT;
     }
 
     public boolean isButtonEnable(int button) {
@@ -104,7 +110,7 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
 
     @Override
     public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-//        if (IClayInventory.checkBlocked(itemStackIn, direction)) return false;
+        // if (IClayInventory.checkBlocked(itemStackIn, direction)) return false;
 
         return isItemValidForSlot(index, itemStackIn);
     }
@@ -140,18 +146,20 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
             return false;
         }
 
-        if (!UtilItemStack.areItemDamageTagEqual(recipe.material, this.getStackInSlot(ClayWorkTableSlots.MATERIAL))
-                || recipe.material.getCount() > this.getStackInSlot(ClayWorkTableSlots.MATERIAL).getCount()) {
+        if (!UtilItemStack.areItemDamageTagEqual(recipe.material, this.getStackInSlot(ClayWorkTableSlots.MATERIAL)) ||
+                recipe.material.getCount() > this.getStackInSlot(ClayWorkTableSlots.MATERIAL).getCount()) {
             return false;
         }
 
         if (recipe.hasChange()) {
-            if (UtilTransfer.canProduceItemStack(recipe.change, this.getContainerItemStacks(), ClayWorkTableSlots.CHANGE.ordinal(), this.getInventoryStackLimit()) <= 0) {
+            if (UtilTransfer.canProduceItemStack(recipe.change, this.getContainerItemStacks(),
+                    ClayWorkTableSlots.CHANGE.ordinal(), this.getInventoryStackLimit()) <= 0) {
                 return false;
             }
         }
 
-        return UtilTransfer.canProduceItemStack(recipe.product, this.getContainerItemStacks(), ClayWorkTableSlots.PRODUCT.ordinal(), this.getInventoryStackLimit()) > 0;
+        return UtilTransfer.canProduceItemStack(recipe.product, this.getContainerItemStacks(),
+                ClayWorkTableSlots.PRODUCT.ordinal(), this.getInventoryStackLimit()) > 0;
     }
 
     @Override
@@ -163,8 +171,10 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
     public void proceedCraft() {
         if (++this.craftTime < this.timeToCraft) return;
 
-        UtilTransfer.produceItemStack(this.currentRecipe.product, this.getContainerItemStacks(), ClayWorkTableSlots.PRODUCT.ordinal(), this.getInventoryStackLimit());
-        UtilTransfer.produceItemStack(this.currentRecipe.change, this.getContainerItemStacks(), ClayWorkTableSlots.CHANGE.ordinal(), this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(this.currentRecipe.product, this.getContainerItemStacks(),
+                ClayWorkTableSlots.PRODUCT.ordinal(), this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(this.currentRecipe.change, this.getContainerItemStacks(),
+                ClayWorkTableSlots.CHANGE.ordinal(), this.getInventoryStackLimit());
 
         this.currentRecipe = KneadingRecipe.flat();
         this.craftTime = -1L;
@@ -180,8 +190,10 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
         this.craftTime = 1;
         this.timeToCraft = this.currentRecipe.time;
 
-        UtilTransfer.consumeItemStack(this.currentRecipe.material, this.getContainerItemStacks(), ClayWorkTableSlots.MATERIAL.ordinal());
-        this.setInventorySlotContents(ClayWorkTableSlots.TOOL.ordinal(), this.currentRecipe.getRemainingTool(this.getStackInSlot(ClayWorkTableSlots.TOOL)));
+        UtilTransfer.consumeItemStack(this.currentRecipe.material, this.getContainerItemStacks(),
+                ClayWorkTableSlots.MATERIAL.ordinal());
+        this.setInventorySlotContents(ClayWorkTableSlots.TOOL.ordinal(),
+                this.currentRecipe.getRemainingTool(this.getStackInSlot(ClayWorkTableSlots.TOOL)));
 
         return true;
     }

@@ -1,11 +1,12 @@
 package mods.clayium.machine.ClayContainer;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -15,13 +16,15 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.*;
 
 public class TileEntityClayContainer extends TileEntityGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
+
     protected boolean isLoaded;
 
     private final Map<EnumSide, Integer> importRoutes = UtilCollect.enumMapWithFill(EnumSide.VALUES, -1);
@@ -137,8 +140,8 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
     @Override
     public void onLoad() {
         this.isLoaded = false;
-//        ClayContainer.ClayContainerState.checkSurroundConnection(this.getWorld(), this.getPos(), this);
-//        this.getWorld().addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
+        // ClayContainer.ClayContainerState.checkSurroundConnection(this.getWorld(), this.getPos(), this);
+        // this.getWorld().addBlockEvent(this.getPos(), this.getBlockType(), 0, 0);
     }
 
     /*
@@ -184,7 +187,8 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
             }
 
             // 挙動を再現するために、なんとなく書いてます。
-            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
+            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()),
+                    this.getWorld().getBlockState(this.getPos()), 3);
 
             if (this.autoInsert) {
                 this.autoInsertCount++;
@@ -211,17 +215,19 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
         for (EnumSide facing : EnumSide.VALUES) {
             route = this.getImportRoute(facing);
             if (route != ENERGY_ROUTE && (0 > route || route >= this.getListSlotsImport().size())) {
-//                if (route != -1)
-//                    this.setImportRoute(facing, -1);
+                // if (route != -1)
+                // this.setImportRoute(facing, -1);
                 continue;
             }
 
             if (this instanceof IClayEnergyConsumer && route == ENERGY_ROUTE) {
                 transferred = UtilTransfer.extract(this, new int[] { ((IClayEnergyConsumer) this).getEnergySlot() },
                         UtilDirection.getSideOfDirection(this.getFront(), facing),
-                        ((IClayEnergyConsumer) this).getClayEnergyStorageSize() - ((IClayEnergyConsumer) this).getEnergyStack().getCount());
+                        ((IClayEnergyConsumer) this).getClayEnergyStorageSize() -
+                                ((IClayEnergyConsumer) this).getEnergyStack().getCount());
             } else {
-                transferred = UtilTransfer.extract(this, this.getListSlotsImport().get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
+                transferred = UtilTransfer.extract(this, this.getListSlotsImport().get(route),
+                        UtilDirection.getSideOfDirection(this.getFront(), facing), transferred);
             }
 
             if (transferred == 0) {
@@ -234,9 +240,10 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
         for (EnumSide facing : EnumSide.VALUES) {
             int route = this.getExportRoute(facing);
             if (0 <= route && route < this.getListSlotsExport().size()) {
-                UtilTransfer.insert(this, this.getListSlotsExport().get(route), UtilDirection.getSideOfDirection(this.getFront(), facing), this.maxAutoInsertDefault);
-//            } else {
-//                this.setExportRoute(facing, -1);
+                UtilTransfer.insert(this, this.getListSlotsExport().get(route),
+                        UtilDirection.getSideOfDirection(this.getFront(), facing), this.maxAutoInsertDefault);
+                // } else {
+                // this.setExportRoute(facing, -1);
             }
         }
     }
@@ -331,7 +338,8 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
             for (String iconStr : iconstrs) {
                 this.InsertIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + ".png"));
-                this.InsertPipeIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + "_p.png"));
+                this.InsertPipeIcons
+                        .add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + "_p.png"));
             }
         }
     }
@@ -343,8 +351,10 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
             this.ExtractPipeIcons.clear();
 
             for (String iconStr : iconstrs) {
-                this.ExtractIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + ".png"));
-                this.ExtractPipeIcons.add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + "_p.png"));
+                this.ExtractIcons
+                        .add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + ".png"));
+                this.ExtractPipeIcons
+                        .add(new ResourceLocation(ClayiumCore.ModId, "textures/blocks/io/" + iconStr + "_p.png"));
             }
         }
     }
@@ -354,6 +364,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
     @SideOnly(Side.CLIENT)
     private final List<ResourceLocation> InsertIcons = new ArrayList<>();
+
     @SideOnly(Side.CLIENT)
     public List<ResourceLocation> getInsertIcons() {
         return InsertIcons;
@@ -361,6 +372,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
     @SideOnly(Side.CLIENT)
     private final List<ResourceLocation> ExtractIcons = new ArrayList<>();
+
     @SideOnly(Side.CLIENT)
     public List<ResourceLocation> getExtractIcons() {
         return ExtractIcons;
@@ -368,6 +380,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
     @SideOnly(Side.CLIENT)
     private final List<ResourceLocation> InsertPipeIcons = new ArrayList<>();
+
     @SideOnly(Side.CLIENT)
     public List<ResourceLocation> getInsertPipeIcons() {
         return InsertPipeIcons;
@@ -375,6 +388,7 @@ public class TileEntityClayContainer extends TileEntityGeneric implements IClayI
 
     @SideOnly(Side.CLIENT)
     private final List<ResourceLocation> ExtractPipeIcons = new ArrayList<>();
+
     @SideOnly(Side.CLIENT)
     public List<ResourceLocation> getExtractPipeIcons() {
         return ExtractPipeIcons;

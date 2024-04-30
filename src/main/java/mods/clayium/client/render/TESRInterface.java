@@ -1,10 +1,7 @@
 package mods.clayium.client.render;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.UtilBuilder;
-import mods.clayium.util.UtilRender;
+import java.awt.*;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -19,25 +16,33 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.UtilBuilder;
+import mods.clayium.util.UtilRender;
 
 /**
  * @see net.minecraft.client.renderer.entity.RenderItemFrame;
  */
 @SideOnly(Side.CLIENT)
 public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> {
+
     public static final TESRInterface instance = new TESRInterface();
 
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void render(TileEntityGeneric tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        TESRInterface.render(tile, x, y, z,  partialTicks, destroyStage, alpha, this.rendererDispatcher);
+    public void render(TileEntityGeneric tile, double x, double y, double z, float partialTicks, int destroyStage,
+                       float alpha) {
+        TESRInterface.render(tile, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
     }
 
-    public static void render(TileEntityGeneric tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha, TileEntityRendererDispatcher rendererDispatcher) {
+    public static void render(TileEntityGeneric tile, double x, double y, double z, float partialTicks,
+                              int destroyStage, float alpha, TileEntityRendererDispatcher rendererDispatcher) {
         if (tile == null || !(tile instanceof ISynchronizedInterface) || !((ISynchronizedInterface) tile).isSynced()) {
             return;
         }
@@ -54,7 +59,9 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         GlStateManager.enableBlend();
 
-        highlightCore((ISynchronizedInterface) tile, core, new Vec3d(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ), partialTicks);
+        highlightCore((ISynchronizedInterface) tile, core,
+                new Vec3d(rendererDispatcher.entityX, rendererDispatcher.entityY, rendererDispatcher.entityZ),
+                partialTicks);
 
         drawRemoteCore(x, y, z, core, (ISynchronizedInterface) tile, partialTicks, rendererDispatcher, mop);
 
@@ -64,7 +71,8 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
     }
 
     /**
-     * @see net.minecraft.client.renderer.EntityRenderer#drawNameplate(FontRenderer, String, float, float, float, int, float, float, boolean, boolean)
+     * @see net.minecraft.client.renderer.EntityRenderer#drawNameplate(FontRenderer, String, float, float, float, int,
+     *      float, float, boolean, boolean)
      */
     public static void drawString(FontRenderer fontrenderer, String s) {
         GL11.glPushMatrix();
@@ -106,13 +114,16 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         Color highlight = new Color(cr, cg, cb, cf);
 
         UtilRender.renderOffsetAABB(caabb, new Vec3d(core.getPos()).subtract(viewPos), highlight);
-//        Render.renderOffsetAABB(caabb, core.getPos().getX() - viewPos.x, core.getPos().getY() - viewPos.y, core.getPos().getZ() - viewPos.z);
-//        RenderGlobal.renderFilledBox(caabb, cr, cg, cb, 1.0f);
+        // Render.renderOffsetAABB(caabb, core.getPos().getX() - viewPos.x, core.getPos().getY() - viewPos.y,
+        // core.getPos().getZ() - viewPos.z);
+        // RenderGlobal.renderFilledBox(caabb, cr, cg, cb, 1.0f);
 
-        UtilRender.renderLine(new Vec3d(core.getPos()).subtract(viewPos), new Vec3d(in.getPos()).subtract(viewPos), highlight);
+        UtilRender.renderLine(new Vec3d(core.getPos()).subtract(viewPos), new Vec3d(in.getPos()).subtract(viewPos),
+                highlight);
     }
 
-    private static void drawRemoteCoreBlock(IInterfaceCaptive core, ItemStack itemstack, float ticktime, TileEntityRendererDispatcher tileRenderer) {
+    private static void drawRemoteCoreBlock(IInterfaceCaptive core, ItemStack itemstack, float ticktime,
+                                            TileEntityRendererDispatcher tileRenderer) {
         final BlockRendererDispatcher blockRenderer = mc.getBlockRendererDispatcher();
         final RenderItem itemRenderer = mc.getRenderItem();
 
@@ -126,14 +137,15 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         GL11.glAlphaFunc(516, 0.0F);
         GL11.glEnable(3042);
 
-//        blockRenderer.renderBlockBrightness(core.getWorld().getBlockState(core.getPos()), 1.0f); // face only
-//        tileRenderer.render((TileEntity) core, x, y, z, ticktime); // render hull not work :(
+        // blockRenderer.renderBlockBrightness(core.getWorld().getBlockState(core.getPos()), 1.0f); // face only
+        // tileRenderer.render((TileEntity) core, x, y, z, ticktime); // render hull not work :(
         itemRenderer.renderItem(itemstack, ItemCameraTransforms.TransformType.FIXED);
 
         GL11.glPopMatrix();
     }
 
-    private static void drawRemoteCoreInfo(IInterfaceCaptive core, ItemStack itemstack, float viewYaw, FontRenderer fontRenderer) {
+    private static void drawRemoteCoreInfo(IInterfaceCaptive core, ItemStack itemstack, float viewYaw,
+                                           FontRenderer fontRenderer) {
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, 0.4F, 0.0F);
         GL11.glRotatef(180.0F - viewYaw, 0.0F, 1.0F, 0.0F);
@@ -153,7 +165,8 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
             GL11.glPushMatrix();
             GL11.glScalef(0.005F, 0.005F, 0.005F);
             GlStateManager.disableDepth();
-            drawString(fontRenderer, "[" + core.getPos().getX() + "," + core.getPos().getY() + "," + core.getPos().getZ() + "]" + ";" + core.getWorld().provider.getDimensionType().getName());
+            drawString(fontRenderer, "[" + core.getPos().getX() + "," + core.getPos().getY() + "," +
+                    core.getPos().getZ() + "]" + ";" + core.getWorld().provider.getDimensionType().getName());
             GlStateManager.enableDepth();
             GL11.glPopMatrix();
         }
@@ -161,12 +174,14 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         GL11.glPopMatrix();
     }
 
-    public static void drawRemoteCore(double x, double y, double z, IInterfaceCaptive core, ISynchronizedInterface in, float partialTicks, TileEntityRendererDispatcher rendererDispatcher, RayTraceResult mop) {
+    public static void drawRemoteCore(double x, double y, double z, IInterfaceCaptive core, ISynchronizedInterface in,
+                                      float partialTicks, TileEntityRendererDispatcher rendererDispatcher,
+                                      RayTraceResult mop) {
         float ticktime = (float) in.getWorld().getWorldTime() + partialTicks;
         ItemStack itemstack = UtilBuilder.getItemBlock(core.getWorld(), core.getPos());
 
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F);
+        GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
         float f = 0.8F;
         switch (mop.sideHit) {
             case UP:

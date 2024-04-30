@@ -1,10 +1,7 @@
 package mods.clayium.item.gadget;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilCollect;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -16,9 +13,14 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.List;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilCollect;
 
 public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
+
     private final boolean isEconomical;
 
     public GadgetAutoEat(int meta, TierPrefix tier) {
@@ -28,7 +30,8 @@ public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        playerIn.openGui(ClayiumCore.instance(), GuiHandler.GuiIdGadgetAutoEat, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+        playerIn.openGui(ClayiumCore.instance(), GuiHandler.GuiIdGadgetAutoEat, worldIn, (int) playerIn.posX,
+                (int) playerIn.posY, (int) playerIn.posZ);
         return ActionResult.newResult(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
@@ -53,12 +56,14 @@ public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
             int bestIndex = -1; // index of the food considered best
 
             for (int i = 0; i < inventory.size(); i++) {
-                if (!inventory.get(i).isEmpty() && this.filterMatch(gadget, inventory.get(i)) && inventory.get(i).getItem() instanceof ItemFood) {
+                if (!inventory.get(i).isEmpty() && this.filterMatch(gadget, inventory.get(i)) &&
+                        inventory.get(i).getItem() instanceof ItemFood) {
                     int tempFood = currentFood;
                     float tempSat = currentSat;
                     int foodPoint = ((ItemFood) inventory.get(i).getItem()).getHealAmount(inventory.get(i));
                     float saturation = ((ItemFood) inventory.get(i).getItem()).getSaturationModifier(inventory.get(i));
-                    float immediateFood = (float)Math.min(foodPoint, 20 - currentFood) + Math.min(saturation, (float)Math.min(currentFood + foodPoint, 20) - currentSat);
+                    float immediateFood = (float) Math.min(foodPoint, 20 - currentFood) +
+                            Math.min(saturation, (float) Math.min(currentFood + foodPoint, 20) - currentSat);
                     boolean mayBest = true;
 
                     if (this.isEconomical) {
@@ -71,7 +76,8 @@ public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
                                 --tempFood;
                             }
 
-                            float ecoConsidered = (float)Math.min(foodPoint, 20 - tempFood) + Math.min(saturation, (float)Math.min(tempFood + foodPoint, 20) - tempSat);
+                            float ecoConsidered = (float) Math.min(foodPoint, 20 - tempFood) +
+                                    Math.min(saturation, (float) Math.min(tempFood + foodPoint, 20) - tempSat);
                             if (ecoConsidered > immediateFood) {
                                 immediateFood = ecoConsidered;
                                 mayBest = false;
@@ -109,7 +115,8 @@ public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
             return true;
         }
 
-        List<ItemStack> filters = UtilCollect.tagList2ItemList(gadget.getTagCompound().getTagList("Items", Constants.NBT.TAG_COMPOUND));
+        List<ItemStack> filters = UtilCollect
+                .tagList2ItemList(gadget.getTagCompound().getTagList("Items", Constants.NBT.TAG_COMPOUND));
         if (filters.isEmpty()) {
             return true;
         }
@@ -117,7 +124,8 @@ public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
         boolean ret = true;
         for (ItemStack filter : filters) {
             ret &= filter.isEmpty();
-            if (IFilter.isFilter(filter) && IFilter.match(filter, input) || IFilter.matchBetweenItemstacks(filter, input, false)) {
+            if (IFilter.isFilter(filter) && IFilter.match(filter, input) ||
+                    IFilter.matchBetweenItemstacks(filter, input, false)) {
                 return true;
             }
         }

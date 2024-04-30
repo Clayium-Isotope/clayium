@@ -1,13 +1,16 @@
 package mods.clayium.gui;
 
-import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
+import mods.clayium.core.ClayiumCore;
+
 public class RectangleTexture implements ITexture {
+
     private final int sizeX;
     private final int sizeY;
     private final int textureX;
@@ -64,7 +67,7 @@ public class RectangleTexture implements ITexture {
         SmallSlotMultitrackTextures = new ITexture[6];
         SmallSlotMultitrackFilterTextures = new ITexture[6];
 
-        for(int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 6; ++i) {
             SmallSlotMultitrackTextures[i] = new RectangleTexture(SlotTexture, 18, 18, 32 + i * 32, 96);
             SmallSlotMultitrackFilterTextures[i] = new RectangleTexture(SlotTexture, 18, 18, 32 + i * 32, 128);
         }

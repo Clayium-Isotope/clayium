@@ -1,9 +1,9 @@
 package mods.clayium.item;
 
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.UtilAdvancedTools;
-import mods.clayium.util.UtilLocale;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,17 +18,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.List;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.UtilAdvancedTools;
+import mods.clayium.util.UtilLocale;
 
 public class ClaySteelPickaxe extends ItemPickaxe implements IAdvancedTool {
+
     private IHarvestCoord harvestCoord;
 
     public ClaySteelPickaxe() {
         super(ToolMaterial.DIAMOND);
         setMaxDamage(10000);
 
-        setUnlocalizedName("clay_steel_pickaxe");
+        setTranslationKey("clay_steel_pickaxe");
         setRegistryName(ClayiumCore.ModId, "clay_steel_pickaxe");
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -45,19 +48,22 @@ public class ClaySteelPickaxe extends ItemPickaxe implements IAdvancedTool {
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
-        stack.damageItem(UtilAdvancedTools.onBlockDestroyed(stack, worldIn, state.getBlock(), pos, entityLiving), entityLiving);
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
+                                    EntityLivingBase entityLiving) {
+        stack.damageItem(UtilAdvancedTools.onBlockDestroyed(stack, worldIn, state.getBlock(), pos, entityLiving),
+                entityLiving);
         return true;
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         return getHarvestCoord().onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, getTranslationKey());
     }
 }

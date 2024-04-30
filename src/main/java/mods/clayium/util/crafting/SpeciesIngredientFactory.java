@@ -1,8 +1,11 @@
 package mods.clayium.util.crafting;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import mods.clayium.core.ClayiumCore;
+import java.util.Objects;
+import java.util.function.Function;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -11,23 +14,27 @@ import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.function.Function;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import mods.clayium.core.ClayiumCore;
 
 /**
  * Available
- * <pre>{@code
+ * 
+ * <pre>
+ * {@code
  * {
  *     "type": "clayium:species",
  *     "root": "filter" | "gadget",
  *     "branch": "blank" etc.,
  *     "nbt": {} // optional
  * }
- * }</pre>
+ * }
+ * </pre>
  */
 public class SpeciesIngredientFactory implements IIngredientFactory {
+
     @Nonnull
     @Override
     public Ingredient parse(final JsonContext context, final JsonObject json) {
@@ -36,7 +43,8 @@ public class SpeciesIngredientFactory implements IIngredientFactory {
 
     public static ItemStack getStack(final JsonObject json) {
         if (!json.has("root") || !json.has("branch")) {
-            throw new JsonSyntaxException("[SpeciesIngredientFactory] Recipe Ingredient Type \"clayium:lineage\" requires 'root' and 'branch' properties");
+            throw new JsonSyntaxException(
+                    "[SpeciesIngredientFactory] Recipe Ingredient Type \"clayium:lineage\" requires 'root' and 'branch' properties");
         }
 
         final LineageRoot root = LineageRoot.getByRoot(json.get("root").getAsString());
@@ -48,6 +56,7 @@ public class SpeciesIngredientFactory implements IIngredientFactory {
     }
 
     enum LineageRoot {
+
         Filter("filter"),
         Gadget("gadget");
 

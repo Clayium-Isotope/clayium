@@ -1,10 +1,10 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilLocale;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -20,11 +20,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilLocale;
 
 public abstract class FilterTemp extends ItemTiered implements IFilter, IModifyCC {
+
     public FilterTemp(String modelPath, TierPrefix tier) {
         super(modelPath, tier);
 
@@ -32,7 +35,8 @@ public abstract class FilterTemp extends ItemTiered implements IFilter, IModifyC
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
             return EnumActionResult.SUCCESS;
         }

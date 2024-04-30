@@ -1,5 +1,13 @@
 package mods.clayium.machine.ClayReactor;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
+
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.MachineHull;
 import mods.clayium.block.Overclocker;
@@ -19,15 +27,9 @@ import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 
 public class TileEntityClayReactor extends TileEntityMultiblockMachine implements IClayLaserMachine {
+
     public TierPrefix recipeTier = TierPrefix.none;
     public ClayLaser irradiatedLaser = null;
     protected int resultSlotNum = 2;
@@ -46,10 +48,10 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
 
         this.setImportRoutes(NONE_ROUTE, 2, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.setExportRoutes(2, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.maxAutoExtract = new int[]{64, 64, 64, 1};
-        this.maxAutoInsert = new int[]{64, 64, 64};
+        this.maxAutoExtract = new int[] { 64, 64, 64, 1 };
+        this.maxAutoInsert = new int[] { 64, 64, 64 };
         this.autoExtractInterval = this.autoInsertInterval = 1;
-        this.slotsDrop = new int[]{0, 1, 2, 3, this.getEnergySlot()};
+        this.slotsDrop = new int[] { 0, 1, 2, 3, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
     }
@@ -66,20 +68,22 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
                 flag = false;
             }
 
-            if (!relative.equals(new Vec3i(0, 1, 1)) && this.getTileEntity(relative) instanceof TileEntityClayLaserInterface) {
+            if (!relative.equals(new Vec3i(0, 1, 1)) &&
+                    this.getTileEntity(relative) instanceof TileEntityClayLaserInterface) {
                 flag = false;
             }
 
             sum += Math.pow(2.0, 16 - atier);
         }
 
-        this.recipeTier = TierPrefix.get(Math.max((int) (16.0 - Math.floor(Math.log(sum / 26) / Math.log(2.0) + 0.5)), 0));
+        this.recipeTier = TierPrefix
+                .get(Math.max((int) (16.0 - Math.floor(Math.log(sum / 26) / Math.log(2.0) + 0.5)), 0));
         return flag;
     }
 
     @Override
     protected void onConstruction() {
-//        this.setRenderSyncFlag();
+        // this.setRenderSyncFlag();
         BlockStateMultiblockMachine.setConstructed(this, true);
 
         // sync the interface around the blast furnace.
@@ -123,8 +127,7 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
     }
 
     @Override
-    public void initParamsByTier(TierPrefix tier) {
-    }
+    public void initParamsByTier(TierPrefix tier) {}
 
     @Override
     public TierPrefix getRecipeTier() {
@@ -150,7 +153,8 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(), 2, 4, this.getInventoryStackLimit());
+        return UtilTransfer.canProduceItemStacks(recipe.getResults(), this.getContainerItemStacks(), 2, 4,
+                this.getInventoryStackLimit());
     }
 
     @Override
@@ -166,7 +170,8 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
 
         if (this.craftTime < this.timeToCraft) return;
 
-        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(), 2, 2 + resultSlotNum, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(), 2,
+                2 + resultSlotNum, this.getInventoryStackLimit());
         this.craftTime = 0;
         this.timeToCraft = 0;
         this.debtEnergy = 0;
@@ -177,7 +182,8 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
     public boolean setNewRecipe() {
         if (!BlockStateMultiblockMachine.isConstructed(this)) return false;
 
-        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0),
+                this.getStackInSlot(1));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);
@@ -200,7 +206,7 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
         if (this.world.isRemote) return false;
 
         this.irradiatedLaser = laser;
-//        this.setSyncFlag();
+        // this.setSyncFlag();
         return true;
     }
 

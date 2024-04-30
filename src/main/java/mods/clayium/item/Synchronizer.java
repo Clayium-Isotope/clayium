@@ -1,13 +1,11 @@
 package mods.clayium.item;
 
-import mods.clayium.item.common.ClayiumItem;
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.SyncManager;
-import mods.clayium.util.UtilLocale;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,12 +19,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.Interface.ClayInterface.TileEntityClayInterface;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.SyncManager;
+import mods.clayium.util.UtilLocale;
 
 public class Synchronizer extends ClayiumItem implements IModifyCC {
+
     private static final String SourceKey = "SyncSource";
     public static final Map<TileEntityClayInterface, TileEntityClayContainer> interfaceLinks = new HashMap<>();
 
@@ -38,7 +41,8 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
 
     // TODO Server-Client同期問題が起こる予感
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.getHeldItem(hand);
         assert !itemStack.isEmpty();
         TileEntity tile = worldIn.getTileEntity(pos);
@@ -50,7 +54,8 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
         }
     }
 
-    protected static EnumActionResult applySync(EntityPlayer player, ItemStack itemStack, World world, TileEntity tile) {
+    protected static EnumActionResult applySync(EntityPlayer player, ItemStack itemStack, World world,
+                                                TileEntity tile) {
         if (!(tile instanceof ISynchronizedInterface)) {
             if (world.isRemote) {
                 player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.InvalidSyncInterface"));
@@ -59,10 +64,9 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
         }
 
         int[] coord; // [I; DimID, x, y, z]
-        if (!itemStack.hasTagCompound() || itemStack.getTagCompound() == null
-                || !itemStack.getTagCompound().hasKey(SourceKey, Constants.NBT.TAG_INT_ARRAY)
-                || (coord = itemStack.getTagCompound().getIntArray(SourceKey)).length != 4
-        ) {
+        if (!itemStack.hasTagCompound() || itemStack.getTagCompound() == null ||
+                !itemStack.getTagCompound().hasKey(SourceKey, Constants.NBT.TAG_INT_ARRAY) ||
+                (coord = itemStack.getTagCompound().getIntArray(SourceKey)).length != 4) {
             if (world.isRemote) {
                 player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.HasNoMachine"));
             }
@@ -95,7 +99,8 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
         return EnumActionResult.SUCCESS;
     }
 
-    protected static EnumActionResult makeReadyToSync(EntityPlayer player, ItemStack itemStack, World world, TileEntity tile) {
+    protected static EnumActionResult makeReadyToSync(EntityPlayer player, ItemStack itemStack, World world,
+                                                      TileEntity tile) {
         if (!IInterfaceCaptive.isSyncable(tile)) {
             if (world.isRemote) {
                 player.sendMessage(UtilLocale.localizeAndFormatComponent("info.sync.MachineDisagreed"));
@@ -130,7 +135,8 @@ public class Synchronizer extends ClayiumItem implements IModifyCC {
         int[] coord = stack.getTagCompound().getIntArray(SourceKey);
 
         tooltip.add("");
-        tooltip.add(UtilLocale.localizeAndFormat("info.sync.tooltip.Source", coord[1], coord[2], coord[3], DimensionManager.getProviderType(coord[0]).getName()));
+        tooltip.add(UtilLocale.localizeAndFormat("info.sync.tooltip.Source", coord[1], coord[2], coord[3],
+                DimensionManager.getProviderType(coord[0]).getName()));
     }
 
     @Override

@@ -1,11 +1,9 @@
 package mods.clayium.machine.MultiblockMachine;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
-import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,11 +11,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-import javax.annotation.Nullable;
-import java.util.Optional;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 
 public class MultiblockMachine extends ClayiumMachine {
-    public MultiblockMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
+
+    public MultiblockMachine(EnumMachineKind kind, String suffix, TierPrefix tier,
+                             Class<? extends TileEntityGeneric> teClass, int guiID) {
         super(kind, suffix, tier, teClass, guiID);
 
         this.setDefaultState(this.getDefaultState().withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, false));
@@ -45,7 +50,7 @@ public class MultiblockMachine extends ClayiumMachine {
         return this.getDefaultState()
                 .withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, (meta >> 3) == 1)
                 .withProperty(BlockStateClayContainer.IS_PIPE, (meta >> 2) == 1)
-                .withProperty(BlockStateClayContainer.FACING, EnumFacing.getHorizontal(meta & 0b0011));
+                .withProperty(BlockStateClayContainer.FACING, EnumFacing.byHorizontalIndex(meta & 0b0011));
     }
 
     @Override
@@ -54,12 +59,14 @@ public class MultiblockMachine extends ClayiumMachine {
     }
 
     private static class MultiblockMachineStateContainer extends BlockStateContainer {
+
         public MultiblockMachineStateContainer(MultiblockMachine blockIn) {
             super(blockIn, BlockStateMultiblockMachine.getPropertyList().toArray(new IProperty[0]));
         }
 
         @Override
-        protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties, @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
+        protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties,
+                                                  @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
             return new BlockStateMultiblockMachine(block, properties);
         }
     }

@@ -1,7 +1,8 @@
 package mods.clayium.item;
 
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.util.UtilAdvancedTools;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -18,10 +19,11 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.util.UtilAdvancedTools;
 
 public class HarvestCoordClaySteelTools implements IHarvestCoord {
+
     public int maxRange = 2;
 
     public HarvestCoordClaySteelTools(int maxRange) {
@@ -29,7 +31,8 @@ public class HarvestCoordClaySteelTools implements IHarvestCoord {
     }
 
     @Override
-    public List<BlockPos> getHarvestedCoordList(ItemStack itemstack, BlockPos blockPos, Vec3i vec31, Vec3i vec32, Vec3i vec33) {
+    public List<BlockPos> getHarvestedCoordList(ItemStack itemstack, BlockPos blockPos, Vec3i vec31, Vec3i vec32,
+                                                Vec3i vec33) {
         List<BlockPos> res = new ArrayList<>();
         NBTTagCompound tag = itemstack.hasTagCompound() ? itemstack.getTagCompound() : new NBTTagCompound();
         int mode = tag.hasKey("Mode") ? tag.getInteger("Mode") : 0;
@@ -45,17 +48,17 @@ public class HarvestCoordClaySteelTools implements IHarvestCoord {
                 }
             }
 
-//            NBTTagList coords = tag.getTagList("Coords", 10);
-//            for (int i = 0; i < coords.tagCount(); i++) {
-//                NBTTagCompound coord = coords.getCompoundTagAt(i);
-//                int xx = coord.getInteger("xx");
-//                int yy = coord.getInteger("yy");
-//                int zz = coord.getInteger("zz");
-//                res.add(new BlockPos(
-//                        blockPos.getX() + vec31.getX() * xx + vec32.getX() * yy + vec33.getX() * zz,
-//                        blockPos.getY() + vec31.getY() * xx + vec32.getY() * yy + vec33.getY() * zz,
-//                        blockPos.getZ() + vec31.getZ() * xx + vec32.getZ() * yy + vec33.getZ() * zz));
-//            }
+            // NBTTagList coords = tag.getTagList("Coords", 10);
+            // for (int i = 0; i < coords.tagCount(); i++) {
+            // NBTTagCompound coord = coords.getCompoundTagAt(i);
+            // int xx = coord.getInteger("xx");
+            // int yy = coord.getInteger("yy");
+            // int zz = coord.getInteger("zz");
+            // res.add(new BlockPos(
+            // blockPos.getX() + vec31.getX() * xx + vec32.getX() * yy + vec33.getX() * zz,
+            // blockPos.getY() + vec31.getY() * xx + vec32.getY() * yy + vec33.getY() * zz,
+            // blockPos.getZ() + vec31.getZ() * xx + vec32.getZ() * yy + vec33.getZ() * zz));
+            // }
 
             return res;
         }
@@ -76,8 +79,10 @@ public class HarvestCoordClaySteelTools implements IHarvestCoord {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        NBTTagCompound tag = player.getHeldItem(hand).hasTagCompound() ? player.getHeldItem(hand).getTagCompound() : new NBTTagCompound();
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
+        NBTTagCompound tag = player.getHeldItem(hand).hasTagCompound() ? player.getHeldItem(hand).getTagCompound() :
+                new NBTTagCompound();
         int mode = tag.hasKey("Mode") ? tag.getInteger("Mode") : 0;
 
         if (player.isSneaking()) {
@@ -107,21 +112,21 @@ public class HarvestCoordClaySteelTools implements IHarvestCoord {
                 }
             }
 
-//            Vec3i[] ev = UtilAdvancedTools.getInverse(UtilAdvancedTools.getEigenVectors(player, facing));
-//
-//            for (int x = -maxRange; x <= maxRange; x++) {
-//                for (int y = -maxRange; y <= maxRange; y++) {
-//                    for (int z = -maxRange; z <= maxRange; z++) {
-//                        if (worldIn.getBlockState(pos.add(x, y, z)).getBlock() == Blocks.CLAY) {
-//                            NBTTagCompound coord = new NBTTagCompound();
-//                            coord.setInteger("xx", ev[0].getX() * x + ev[1].getX() * y + ev[2].getX() * z);
-//                            coord.setInteger("yy", ev[0].getY() * x + ev[1].getY() * y + ev[2].getY() * z);
-//                            coord.setInteger("zz", ev[0].getZ() * x + ev[1].getZ() * y + ev[2].getZ() * z);
-//                            coords.appendTag(coord);
-//                        }
-//                    }
-//                }
-//            }
+            // Vec3i[] ev = UtilAdvancedTools.getInverse(UtilAdvancedTools.getEigenVectors(player, facing));
+            //
+            // for (int x = -maxRange; x <= maxRange; x++) {
+            // for (int y = -maxRange; y <= maxRange; y++) {
+            // for (int z = -maxRange; z <= maxRange; z++) {
+            // if (worldIn.getBlockState(pos.add(x, y, z)).getBlock() == Blocks.CLAY) {
+            // NBTTagCompound coord = new NBTTagCompound();
+            // coord.setInteger("xx", ev[0].getX() * x + ev[1].getX() * y + ev[2].getX() * z);
+            // coord.setInteger("yy", ev[0].getY() * x + ev[1].getY() * y + ev[2].getY() * z);
+            // coord.setInteger("zz", ev[0].getZ() * x + ev[1].getZ() * y + ev[2].getZ() * z);
+            // coords.appendTag(coord);
+            // }
+            // }
+            // }
+            // }
 
             tag.setTag("Coords", coords);
             player.getHeldItem(hand).setTagCompound(tag);

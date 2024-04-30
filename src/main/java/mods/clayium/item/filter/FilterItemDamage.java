@@ -1,9 +1,11 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.util.TierPrefix;
+
 public class FilterItemDamage extends FilterString {
+
     public FilterItemDamage() {
         super("filter_metadata", TierPrefix.precision);
     }

@@ -1,6 +1,5 @@
 package mods.clayium.client.render;
 
-import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -10,10 +9,14 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
+import mods.clayium.core.ClayiumCore;
 
 @Deprecated
 public class TEISRLaserReflector extends TileEntityItemStackRenderer {
+
     @Override
     public void renderByItem(ItemStack itemStackIn) {
         EnumFacing direction = EnumFacing.SOUTH;
@@ -24,7 +27,8 @@ public class TEISRLaserReflector extends TileEntityItemStackRenderer {
         GlStateManager.pushMatrix();
         builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
 
-        TileEntityRendererDispatcher.instance.renderEngine.bindTexture(new ResourceLocation(ClayiumCore.ModId, "laser_reflector"));
+        TileEntityRendererDispatcher.instance.renderEngine
+                .bindTexture(new ResourceLocation(ClayiumCore.ModId, "laser_reflector"));
         float f14 = 0;
         float f15 = 16;
         float f4 = 0;
@@ -34,7 +38,7 @@ public class TEISRLaserReflector extends TileEntityItemStackRenderer {
         GlStateManager.translate(-0.5D, -0.5D, -0.5D);
         GlStateManager.scale(1.2D, 1.2D, 1.2D);
         GlStateManager.translate(0.5D, 0.5D, 0.5D);
-        switch(direction) {
+        switch (direction) {
             case UP:
                 GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
                 break;
@@ -55,19 +59,23 @@ public class TEISRLaserReflector extends TileEntityItemStackRenderer {
         }
 
         GlStateManager.translate(-0.5D, -0.5D, -0.5D);
-        builder.pos(0.0D + (double)(f * 2.0F), 0.0D + (double)f, 0.0D + (double)(f * 2.0F)).tex(f14, f4).normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
-        builder.pos(1.0D - (double)(f * 2.0F), 0.0D + (double)f, 0.0D + (double)(f * 2.0F)).tex(f15, f4).normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
-        builder.pos(1.0D - (double)(f * 2.0F), 0.0D + (double)f, 1.0D - (double)(f * 2.0F)).tex(f15, f5).normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
-        builder.pos(0.0D + (double)(f * 2.0F), 0.0D + (double)f, 1.0D - (double)(f * 2.0F)).tex(f14, f5).normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
+        builder.pos(0.0D + (double) (f * 2.0F), 0.0D + (double) f, 0.0D + (double) (f * 2.0F)).tex(f14, f4)
+                .normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
+        builder.pos(1.0D - (double) (f * 2.0F), 0.0D + (double) f, 0.0D + (double) (f * 2.0F)).tex(f15, f4)
+                .normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
+        builder.pos(1.0D - (double) (f * 2.0F), 0.0D + (double) f, 1.0D - (double) (f * 2.0F)).tex(f15, f5)
+                .normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
+        builder.pos(0.0D + (double) (f * 2.0F), 0.0D + (double) f, 1.0D - (double) (f * 2.0F)).tex(f14, f5)
+                .normal(0.0F, -1.0F, 0.0F).color(1.0f, 1.0f, 1.0f, 1.0f);
         double x1 = 0.5D;
-        double y1 = 1.0D - (double)f;
+        double y1 = 1.0D - (double) f;
         double z1 = 0.5D;
-        double x2 = 1.0D - (double)(f * 2.0F);
-        double y2 = 0.0D + (double)f;
-        double z2 = 0.0D + (double)(f * 2.0F);
-        double x3 = 0.0D + (double)(f * 2.0F);
-        double y3 = 0.0D + (double)f;
-        double z3 = 0.0D + (double)(f * 2.0F);
+        double x2 = 1.0D - (double) (f * 2.0F);
+        double y2 = 0.0D + (double) f;
+        double z2 = 0.0D + (double) (f * 2.0F);
+        double x3 = 0.0D + (double) (f * 2.0F);
+        double y3 = 0.0D + (double) f;
+        double z3 = 0.0D + (double) (f * 2.0F);
         double xa = x2 - x1;
         double ya = y2 - y1;
         double za = z2 - z1;
@@ -79,11 +87,15 @@ public class TEISRLaserReflector extends TileEntityItemStackRenderer {
         double zc = xa * yb - xb * ya;
         double lc = Math.pow(xc * xc + yc * yc + zc * zc, 0.5D);
 
-        for(int i = 0; i < 4; ++i) {
-            builder.pos(x1, y1, z1).tex(f15, f4).normal((float)(xc / lc), (float)(yc / lc), (float)(zc / lc)).color(1.0f, 1.0f, 1.0f, 1.0f);
-            builder.pos(x2, y2, z2).tex(f15, f5).normal((float)(xc / lc), (float)(yc / lc), (float)(zc / lc)).color(1.0f, 1.0f, 1.0f, 1.0f);
-            builder.pos(x3, y3, z3).tex(f14, f5).normal((float)(xc / lc), (float)(yc / lc), (float)(zc / lc)).color(1.0f, 1.0f, 1.0f, 1.0f);
-            builder.pos(x1, y1, z1).tex(f15, f4).normal((float)(xc / lc), (float)(yc / lc), (float)(zc / lc)).color(1.0f, 1.0f, 1.0f, 1.0f);
+        for (int i = 0; i < 4; ++i) {
+            builder.pos(x1, y1, z1).tex(f15, f4).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc))
+                    .color(1.0f, 1.0f, 1.0f, 1.0f);
+            builder.pos(x2, y2, z2).tex(f15, f5).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc))
+                    .color(1.0f, 1.0f, 1.0f, 1.0f);
+            builder.pos(x3, y3, z3).tex(f14, f5).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc))
+                    .color(1.0f, 1.0f, 1.0f, 1.0f);
+            builder.pos(x1, y1, z1).tex(f15, f4).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc))
+                    .color(1.0f, 1.0f, 1.0f, 1.0f);
             GlStateManager.translate(0.5D, 0.0D, 0.5D);
             GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.translate(-0.5D, 0.0D, -0.5D);

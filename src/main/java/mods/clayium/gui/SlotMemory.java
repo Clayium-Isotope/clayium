@@ -1,15 +1,17 @@
 package mods.clayium.gui;
 
-import mods.clayium.item.filter.IFilter;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 
-import java.util.ArrayList;
-import java.util.List;
+import mods.clayium.item.filter.IFilter;
 
 public class SlotMemory extends SlotWithTexture {
+
     protected final boolean makeMock;
 
     public SlotMemory(IInventory inventoryIn, int indexIn, int xPos, int yPos, boolean makeMock) {
@@ -64,7 +66,7 @@ public class SlotMemory extends SlotWithTexture {
     @Override
     public ItemStack getStack() {
         if (this.inventory == null) {
-//            ClayiumCore.logger.warn("inv is null");
+            // ClayiumCore.logger.warn("inv is null");
             return ItemStack.EMPTY;
         }
         ItemStack stack = this.inventory.getStackInSlot(this.getSlotIndex());

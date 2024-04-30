@@ -1,7 +1,5 @@
 package mods.clayium.machine.ClayCraftingTable;
 
-import mods.clayium.gui.ContainerTemp;
-import mods.clayium.gui.SlotWithTexture;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -11,17 +9,35 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.crafting.IRecipeContainer;
 
+import mods.clayium.gui.ContainerTemp;
+import mods.clayium.gui.SlotWithTexture;
+
 /**
  * <table border="1">
- *   <tr> <td> 1 </td> <td> 2 </td> <td> 3 </td> </tr>
- *   <tr> <td> 4 </td> <td> 5 </td> <td> 6 -> 0 </td> </tr>
- *   <tr> <td> 7 </td> <td> 8 </td> <td> 9 </td> </tr>
+ * <tr>
+ * <td>1</td>
+ * <td>2</td>
+ * <td>3</td>
+ * </tr>
+ * <tr>
+ * <td>4</td>
+ * <td>5</td>
+ * <td>6 -> 0</td>
+ * </tr>
+ * <tr>
+ * <td>7</td>
+ * <td>8</td>
+ * <td>9</td>
+ * </tr>
  * </table>
  *
- * <br>この後、player のインベントリが 10 ~ 45
- * <br>(あれば、)chest のインベントリが 46 ~ 72
+ * <br>
+ * この後、player のインベントリが 10 ~ 45
+ * <br>
+ * (あれば、)chest のインベントリが 46 ~ 72
  */
 public class ContainerClayCraftingTable extends ContainerTemp implements IRecipeContainer {
+
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public InventoryCraftResult craftResult = new InventoryCraftResult();
     private final AccessibleTile<TileEntityClayCraftingTable> tileTable;
@@ -36,7 +52,8 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
 
         // find chest
         for (EnumFacing facing : EnumFacing.VALUES) {
-            TileEntity rawTile = this.tileTable.getInventory().getWorld().getTileEntity(this.tileTable.getInventory().getPos().offset(facing));
+            TileEntity rawTile = this.tileTable.getInventory().getWorld()
+                    .getTileEntity(this.tileTable.getInventory().getPos().offset(facing));
             if (rawTile instanceof TileEntityChest) {
                 this.tileChest = new AccessibleTile<>((TileEntityChest) rawTile, 0, 9, 3, 8, 75);
                 guiY += 5 + this.tileChest.getHeight() * SLOT_HEIGHT;
@@ -50,9 +67,12 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
 
         // add Chest Slots
         if (this.tileChest != null) {
-            for(int y = 0; y < this.tileChest.getHeight(); ++y) {
-                for(int x = 0; x < this.tileChest.getWidth(); ++x) {
-                    addSlotToContainer(new SlotWithTexture(this.tileChest.getInventory(), this.tileChest.getStart() + x + y * this.tileChest.getWidth(), this.tileChest.getX() + x * 18, this.tileChest.getY() + y * 18, this) {
+            for (int y = 0; y < this.tileChest.getHeight(); ++y) {
+                for (int x = 0; x < this.tileChest.getWidth(); ++x) {
+                    addSlotToContainer(new SlotWithTexture(this.tileChest.getInventory(),
+                            this.tileChest.getStart() + x + y * this.tileChest.getWidth(),
+                            this.tileChest.getX() + x * 18, this.tileChest.getY() + y * 18, this) {
+
                         @Override
                         public ItemStack getStack() {
                             return this.inventory.getStackInSlot(this.getSlotIndex());
@@ -70,7 +90,8 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
 
     @Override
     public void onCraftMatrixChanged(IInventory inventoryIn) {
-        slotChangedCraftingGrid(this.tileTable.getInventory().getWorld(), this.player.player, this.craftMatrix, this.craftResult);
+        slotChangedCraftingGrid(this.tileTable.getInventory().getWorld(), this.player.player, this.craftMatrix,
+                this.craftResult);
     }
 
     @Override
@@ -87,9 +108,11 @@ public class ContainerClayCraftingTable extends ContainerTemp implements IRecipe
     public void setMachineInventorySlots(InventoryPlayer player) {
         addMachineSlotToContainer(new SlotCrafting(player.player, this.craftMatrix, this.craftResult, 0, 124, 35));
 
-        for(int y = 0; y < this.tileTable.getHeight(); ++y) {
-            for(int x = 0; x < this.tileTable.getWidth(); ++x) {
-                addMachineSlotToContainer(new SlotWithTexture(this.craftMatrix, this.tileTable.getStart() + x + y * this.tileTable.getWidth(), this.tileTable.getX() + x * 18, this.tileTable.getY() + y * 18, this));
+        for (int y = 0; y < this.tileTable.getHeight(); ++y) {
+            for (int x = 0; x < this.tileTable.getWidth(); ++x) {
+                addMachineSlotToContainer(new SlotWithTexture(this.craftMatrix,
+                        this.tileTable.getStart() + x + y * this.tileTable.getWidth(), this.tileTable.getX() + x * 18,
+                        this.tileTable.getY() + y * 18, this));
             }
         }
     }

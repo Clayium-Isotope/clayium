@@ -3,6 +3,7 @@ package mods.clayium.block.tile;
 import net.minecraft.entity.player.EntityPlayer;
 
 public interface IGeneralInterface {
+
     void markForStrongUpdate();
 
     void markForWeakUpdate();

@@ -6,7 +6,9 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 
 public class MultitrackBuffer extends ClayiumMachine {
+
     public MultitrackBuffer(TierPrefix tier) {
-        super(EnumMachineKind.multitrackBuffer, "", tier, TileEntityMultitrackBuffer.class, GuiHandler.GuiIdMultitrackBuffer);
+        super(EnumMachineKind.multitrackBuffer, "", tier, TileEntityMultitrackBuffer.class,
+                GuiHandler.GuiIdMultitrackBuffer);
     }
 }

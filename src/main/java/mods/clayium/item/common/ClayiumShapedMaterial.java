@@ -1,10 +1,11 @@
 package mods.clayium.item.common;
 
-import mods.clayium.util.TierPrefix;
-
 import javax.annotation.Nullable;
 
+import mods.clayium.util.TierPrefix;
+
 public class ClayiumShapedMaterial extends ItemTiered {
+
     private final ClayiumMaterial material;
     private final ClayiumShape shape;
     private final boolean useGeneralIcon;
@@ -13,7 +14,8 @@ public class ClayiumShapedMaterial extends ItemTiered {
         this(material, shape, tier, false);
     }
 
-    public ClayiumShapedMaterial(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier, boolean useGeneralIcon) {
+    public ClayiumShapedMaterial(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier,
+                                 boolean useGeneralIcon) {
         super(material, shape, tier);
         this.material = material;
         this.shape = shape;

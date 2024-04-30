@@ -1,6 +1,8 @@
 package mods.clayium.entity;
 
-import mods.clayium.util.UtilNetwork;
+import java.util.List;
+import java.util.UUID;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,10 +20,10 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-import java.util.UUID;
+import mods.clayium.util.UtilNetwork;
 
 public class EntityClayBall extends Entity implements IProjectile {
+
     private int xTile = -1;
     private int yTile = -1;
     private int zTile = -1;
@@ -44,32 +46,39 @@ public class EntityClayBall extends Entity implements IProjectile {
         this.setSize(0.25f, 0.25f);
     }
 
-    public EntityClayBall(World worldIn, double x, double y, double z)
-    {
+    public EntityClayBall(World worldIn, double x, double y, double z) {
         this(worldIn);
         this.setPosition(x, y, z);
     }
 
-    public EntityClayBall(World worldIn, EntityLivingBase throwerIn)
-    {
-        this(worldIn, throwerIn.posX, throwerIn.posY + (double)throwerIn.getEyeHeight() - 0.10000000149011612D, throwerIn.posZ);
+    public EntityClayBall(World worldIn, EntityLivingBase throwerIn) {
+        this(worldIn, throwerIn.posX, throwerIn.posY + (double) throwerIn.getEyeHeight() - 0.10000000149011612D,
+                throwerIn.posZ);
         this.thrower = throwerIn;
     }
 
-    public EntityClayBall(World worldIn, EntityLivingBase thrower, int lifespan, float initialVelocity, float diffusion, int damage, int numberOfTick, boolean critical) {
+    public EntityClayBall(World worldIn, EntityLivingBase thrower, int lifespan, float initialVelocity, float diffusion,
+                          int damage, int numberOfTick, boolean critical) {
         super(worldIn);
 
         this.thrower = thrower;
         this.setSize(0.25F, 0.25F);
-        this.setLocationAndAngles(thrower.posX, thrower.posY + (double)thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
+        this.setLocationAndAngles(thrower.posX, thrower.posY + (double) thrower.getEyeHeight(), thrower.posZ,
+                thrower.rotationYaw, thrower.rotationPitch);
         this.posX -= MathHelper.cos(this.rotationYaw / 180.0F * 3.1415927F) * 0.16F;
         this.posY -= 0.10000000149011612D;
         this.posZ -= MathHelper.sin(this.rotationYaw / 180.0F * 3.1415927F) * 0.16F;
         this.setPosition(this.posX, this.posY, this.posZ);
-        double d4 = thrower.posX - (double)(MathHelper.sin(thrower.rotationYaw / 180.0F * 3.1415927F) * initialVelocity) * (double)lifespan - this.posX;
-        double d5 = thrower.posZ + (double)(MathHelper.cos(thrower.rotationYaw / 180.0F * 3.1415927F) * initialVelocity) * (double)lifespan - this.posZ;
-        this.rotationYaw = (float)(Math.atan2(d5, d4) * 180.0D / 3.141592653589793D) - 90.0F;
-//        this.yOffset = 0.0F;  use: getYOffset()
+        double d4 = thrower.posX -
+                (double) (MathHelper.sin(thrower.rotationYaw / 180.0F * 3.1415927F) * initialVelocity) *
+                        (double) lifespan -
+                this.posX;
+        double d5 = thrower.posZ +
+                (double) (MathHelper.cos(thrower.rotationYaw / 180.0F * 3.1415927F) * initialVelocity) *
+                        (double) lifespan -
+                this.posZ;
+        this.rotationYaw = (float) (Math.atan2(d5, d4) * 180.0D / 3.141592653589793D) - 90.0F;
+        // this.yOffset = 0.0F; use: getYOffset()
 
         this.lifespan = lifespan;
         this.damage = damage;
@@ -83,7 +92,7 @@ public class EntityClayBall extends Entity implements IProjectile {
         this.ticksInGround = 0;
         this.setSize(0.25F, 0.25F);
         this.setPosition(xCoord, yCoord, zCoord);
-//        this.yOffset = 0.0F;
+        // this.yOffset = 0.0F;
         this.lifespan = lifespan;
     }
 
@@ -105,10 +114,13 @@ public class EntityClayBall extends Entity implements IProjectile {
         return 0.0F;
     }
 
-    public void shoot(Entity entityThrower, float rotationPitchIn, float rotationYawIn, float pitchOffset, float velocity, float diffusion) {
+    public void shoot(Entity entityThrower, float rotationPitchIn, float rotationYawIn, float pitchOffset,
+                      float velocity, float diffusion) {
         float f = 0.4F;
-        this.motionX = -MathHelper.sin((float) Math.toRadians(this.rotationYaw)) * MathHelper.cos((float) Math.toRadians(this.rotationPitch)) * f;
-        this.motionZ = MathHelper.cos((float) Math.toRadians(this.rotationYaw)) * MathHelper.cos((float) Math.toRadians(this.rotationPitch)) * f;
+        this.motionX = -MathHelper.sin((float) Math.toRadians(this.rotationYaw)) *
+                MathHelper.cos((float) Math.toRadians(this.rotationPitch)) * f;
+        this.motionZ = MathHelper.cos((float) Math.toRadians(this.rotationYaw)) *
+                MathHelper.cos((float) Math.toRadians(this.rotationPitch)) * f;
         this.motionY = -MathHelper.sin((float) Math.toRadians(this.rotationPitch + pitchOffset)) * f;
         this.shoot(this.motionX, this.motionY, this.motionZ, velocity, diffusion);
     }
@@ -119,17 +131,17 @@ public class EntityClayBall extends Entity implements IProjectile {
         directionX /= f2;
         directionY /= f2;
         directionZ /= f2;
-        directionX += this.rand.nextGaussian() * 0.007499999832361937D * (double)diffusion;
-        directionZ += this.rand.nextGaussian() * 0.007499999832361937D * (double)diffusion;
-        directionX *= (double)velocity / 10.0D;
-        directionY *= (double)velocity / 10.0D;
-        directionZ *= (double)velocity / 10.0D;
+        directionX += this.rand.nextGaussian() * 0.007499999832361937D * (double) diffusion;
+        directionZ += this.rand.nextGaussian() * 0.007499999832361937D * (double) diffusion;
+        directionX *= (double) velocity / 10.0D;
+        directionY *= (double) velocity / 10.0D;
+        directionZ *= (double) velocity / 10.0D;
         this.motionX = directionX;
         this.motionY = directionY;
         this.motionZ = directionZ;
         float f3 = MathHelper.sqrt(directionX * directionX + directionZ * directionZ);
-        this.prevRotationYaw = this.rotationYaw = (float)(Math.toDegrees(Math.atan2(directionX, directionZ)));
-        this.prevRotationPitch = this.rotationPitch = (float)(Math.toDegrees(Math.atan2(directionY, f3)));
+        this.prevRotationYaw = this.rotationYaw = (float) (Math.toDegrees(Math.atan2(directionX, directionZ)));
+        this.prevRotationPitch = this.rotationPitch = (float) (Math.toDegrees(Math.atan2(directionY, f3)));
         this.ticksInGround = 0;
     }
 
@@ -141,15 +153,15 @@ public class EntityClayBall extends Entity implements IProjectile {
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
             float f = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
-            this.prevRotationYaw = this.rotationYaw = (float)(Math.toDegrees(Math.atan2(motionX, motionZ)));
-            this.prevRotationPitch = this.rotationPitch = (float)(Math.toDegrees(Math.atan2(motionY, f)));
+            this.prevRotationYaw = this.rotationYaw = (float) (Math.toDegrees(Math.atan2(motionX, motionZ)));
+            this.prevRotationPitch = this.rotationPitch = (float) (Math.toDegrees(Math.atan2(motionY, f)));
         }
     }
 
     @Override
     public void onUpdate() {
         if (!this.world.isRemote) {
-            for(int i = 0; i < 1; ++i) {
+            for (int i = 0; i < 1; ++i) {
                 if (!this.isDead) {
                     this.onUpdatePer();
                 }
@@ -189,18 +201,22 @@ public class EntityClayBall extends Entity implements IProjectile {
         }
 
         Vec3d vec3 = new Vec3d(this.posX, this.posY, this.posZ);
-        Vec3d vec31 = new Vec3d(this.posX + this.motionX * 10.0D, this.posY + this.motionY * 10.0D, this.posZ + this.motionZ * 10.0D);
+        Vec3d vec31 = new Vec3d(this.posX + this.motionX * 10.0D, this.posY + this.motionY * 10.0D,
+                this.posZ + this.motionZ * 10.0D);
         RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec3, vec31);
         vec3 = new Vec3d(this.posX, this.posY, this.posZ);
-        vec31 = new Vec3d(this.posX + this.motionX * 10.0D, this.posY + this.motionY * 10.0D, this.posZ + this.motionZ * 10.0D);
+        vec31 = new Vec3d(this.posX + this.motionX * 10.0D, this.posY + this.motionY * 10.0D,
+                this.posZ + this.motionZ * 10.0D);
 
         if (movingobjectposition != null) {
-            vec31 = new Vec3d(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y, movingobjectposition.hitVec.z);
+            vec31 = new Vec3d(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y,
+                    movingobjectposition.hitVec.z);
         }
 
         if (!this.world.isRemote) {
             Entity entity = null;
-            List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(this.motionX * 10.0D, this.motionY * 10.0D, this.motionZ * 10.0D).grow(1.0D));
+            List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()
+                    .expand(this.motionX * 10.0D, this.motionY * 10.0D, this.motionZ * 10.0D).grow(1.0D));
             double d0 = 0.0D;
             EntityLivingBase entitylivingbase = this.getThrower();
 
@@ -224,7 +240,8 @@ public class EntityClayBall extends Entity implements IProjectile {
         }
 
         if (movingobjectposition != null) {
-            if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK && this.world.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL) {
+            if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK &&
+                    this.world.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.PORTAL) {
                 this.setPortal(movingobjectposition.getBlockPos());
             } else {
                 this.onImpact(movingobjectposition);
@@ -235,9 +252,10 @@ public class EntityClayBall extends Entity implements IProjectile {
         this.posY += this.motionY * 10.0D;
         this.posZ += this.motionZ * 10.0D;
         float f1 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-        this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / 3.141592653589793D);
+        this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / 3.141592653589793D);
 
-        for (this.rotationPitch = (float)(Math.toDegrees(Math.atan2(this.motionY, f1))); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+        for (this.rotationPitch = (float) (Math.toDegrees(Math.atan2(this.motionY, f1))); this.rotationPitch -
+                this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
             ;
         }
 
@@ -304,12 +322,16 @@ public class EntityClayBall extends Entity implements IProjectile {
         }
 
         if (!this.world.isRemote) {
-            this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.NEUTRAL, 0.06F * (float) this.damage, 1.4F / (this.rand.nextFloat() * 0.4F + 0.6F));
+            this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH,
+                    SoundCategory.NEUTRAL, 0.06F * (float) this.damage, 1.4F / (this.rand.nextFloat() * 0.4F + 0.6F));
 
-            float s = (float) Math.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+            float s = (float) Math
+                    .sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
             if (s >= 0.5f && this.age <= this.lifespan) {
-                this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 0.3f * s, 0.5f / (this.rand.nextFloat() * 0.4f + 0.6f));
-                ((WorldServer) this.world).spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 1, 0.0f, 0.0f, 0.0f, 3);
+                this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE,
+                        SoundCategory.NEUTRAL, 0.3f * s, 0.5f / (this.rand.nextFloat() * 0.4f + 0.6f));
+                ((WorldServer) this.world).spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY,
+                        this.posZ, 1, 0.0f, 0.0f, 0.0f, 3);
             }
 
             if (this.checkDeath(result)) {
@@ -319,7 +341,8 @@ public class EntityClayBall extends Entity implements IProjectile {
 
         this.spawnImpactDustParticle();
         this.playImpactSound();
-        float s = (float)Math.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+        float s = (float) Math
+                .sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
         if (s >= 0.5F && this.age <= this.lifespan) {
             this.playImpactExplodeSound(s);
             this.spawnImpactExplodeParticle();
@@ -335,7 +358,7 @@ public class EntityClayBall extends Entity implements IProjectile {
     }
 
     protected void onEntityHit(Entity entity) {
-        if (entity instanceof EntityLivingBase && ((EntityLivingBase)entity).getHealth() > 0.0F) {
+        if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getHealth() > 0.0F) {
             if (this.critical) {
                 if (!this.world.isRemote) {
                     this.spawnCriticalParticle();
@@ -350,7 +373,6 @@ public class EntityClayBall extends Entity implements IProjectile {
         if (!this.world.isRemote) {
             this.causeDamage(entity);
         }
-
     }
 
     protected void causeDamage(Entity entity) {
@@ -359,7 +381,7 @@ public class EntityClayBall extends Entity implements IProjectile {
         double motionY = entity.motionY;
         double motionZ = entity.motionZ;
         if (entity != this.thrower) {
-            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)b0);
+            entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) b0);
         }
 
         if (entity instanceof EntityLivingBase) {
@@ -372,35 +394,48 @@ public class EntityClayBall extends Entity implements IProjectile {
     }
 
     protected void spawnFlyingDustPartcle() {
-        this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.lastTickPosX, this.lastTickPosY, this.lastTickPosZ, this.motionX / 2.0D, this.motionY / 2.0D, this.motionZ / 2.0D, Block.getStateId(Blocks.CLAY.getDefaultState()));
-        this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, (this.posX + this.lastTickPosX) / 2.0D, (this.posY + this.lastTickPosY) / 2.0D, (this.posZ + this.lastTickPosZ) / 2.0D, this.motionX / 2.0D, this.motionY / 2.0D, this.motionZ / 2.0D, Block.getStateId(Blocks.CLAY.getDefaultState()));
+        this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.lastTickPosX, this.lastTickPosY, this.lastTickPosZ,
+                this.motionX / 2.0D, this.motionY / 2.0D, this.motionZ / 2.0D,
+                Block.getStateId(Blocks.CLAY.getDefaultState()));
+        this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, (this.posX + this.lastTickPosX) / 2.0D,
+                (this.posY + this.lastTickPosY) / 2.0D, (this.posZ + this.lastTickPosZ) / 2.0D, this.motionX / 2.0D,
+                this.motionY / 2.0D, this.motionZ / 2.0D, Block.getStateId(Blocks.CLAY.getDefaultState()));
     }
 
     protected void spawnTwinklingPartcle() {
-        int s = (int)Math.floor(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) * 100 / 16;
+        int s = (int) Math
+                .floor(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) * 100 /
+                16;
         if (this.age >= this.lifespan) {
             s = 0;
         }
 
         s *= this.numberOfTick * this.numberOfTick;
 
-        for(int i = 0; i < s; ++i) {
-            this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + this.motionX * 10.0D * (double)this.numberOfTick * (double)(i - s) / (double)s, this.posY + this.motionY * 10.0D * (double)this.numberOfTick * (double)(i - s) / (double)s, this.posZ + this.motionZ * 10.0D * (double)this.numberOfTick * (double)(i - s) / (double)s, this.motionX * 10.0D * (double)this.numberOfTick / (double)s / 2.0D, this.motionY * 10.0D * (double)this.numberOfTick / (double)s / 2.0D, this.motionZ * 10.0D * (double)this.numberOfTick / (double)s / 2.0D);
+        for (int i = 0; i < s; ++i) {
+            this.world.spawnParticle(EnumParticleTypes.CRIT,
+                    this.posX + this.motionX * 10.0D * (double) this.numberOfTick * (double) (i - s) / (double) s,
+                    this.posY + this.motionY * 10.0D * (double) this.numberOfTick * (double) (i - s) / (double) s,
+                    this.posZ + this.motionZ * 10.0D * (double) this.numberOfTick * (double) (i - s) / (double) s,
+                    this.motionX * 10.0D * (double) this.numberOfTick / (double) s / 2.0D,
+                    this.motionY * 10.0D * (double) this.numberOfTick / (double) s / 2.0D,
+                    this.motionZ * 10.0D * (double) this.numberOfTick / (double) s / 2.0D);
         }
-
     }
 
     protected void spawnInWaterParticle() {
-        for(int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i) {
             float f4 = 0.25F;
-            this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ);
+            this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double) f4,
+                    this.posY - this.motionY * (double) f4, this.posZ - this.motionZ * (double) f4, this.motionX,
+                    this.motionY, this.motionZ);
         }
-
     }
 
     protected void spawnImpactDustParticle() {
         for (int i = 0; i < 8; ++i) {
-            this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, 0.05d, 0.05d, 0.05d, Block.getStateId(Blocks.CLAY.getDefaultState()));
+            this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, 0.05d, 0.05d, 0.05d,
+                    Block.getStateId(Blocks.CLAY.getDefaultState()));
         }
     }
 
@@ -410,59 +445,64 @@ public class EntityClayBall extends Entity implements IProjectile {
 
     protected void spawnCriticalParticle() {
         WorldServer server = (WorldServer) this.world;
-        UtilNetwork.sendParticlePacketFromServer(server, EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY, this.posZ, 50, 0.0D, -1.0D, 0.0D, 0.5D, 200.0D);
+        UtilNetwork.sendParticlePacketFromServer(server, EnumParticleTypes.FIREWORKS_SPARK, this.posX, this.posY,
+                this.posZ, 50, 0.0D, -1.0D, 0.0D, 0.5D, 200.0D);
     }
 
     protected void playImpactSound() {
-        this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, 0.06F * (float) this.damage, 1.4F / (this.rand.nextFloat() * 0.4F + 0.6F));
+        this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, 0.06F * (float) this.damage,
+                1.4F / (this.rand.nextFloat() * 0.4F + 0.6F));
     }
 
     protected void playImpactExplodeSound(float speed) {
         if (speed >= 0.5F && this.age <= this.lifespan) {
-            this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 0.6F * speed, 0.5F / (this.rand.nextFloat() * 0.4F + 0.6F));
+            this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 0.6F * speed,
+                    0.5F / (this.rand.nextFloat() * 0.4F + 0.6F));
         }
     }
 
     protected void playHitSound() {
-        this.playSound(SoundEvents.ENTITY_PLAYER_HURT, 0.1F * (float)this.damage, 0.7F);
-        this.playSound(SoundEvents.ENTITY_BLAZE_HURT, 0.05F * (float)this.damage, 0.5F);
-        this.playSound(SoundEvents.BLOCK_WOOD_HIT, 0.2F * (float)this.damage, 1.2F);
-        this.playSound(SoundEvents.BLOCK_NOTE_HAT, 0.3F * (float)this.damage, 1.3F);
-        this.playSound(SoundEvents.BLOCK_NOTE_SNARE, 0.1F * (float)this.damage, 1.2F);
+        this.playSound(SoundEvents.ENTITY_PLAYER_HURT, 0.1F * (float) this.damage, 0.7F);
+        this.playSound(SoundEvents.ENTITY_BLAZE_HURT, 0.05F * (float) this.damage, 0.5F);
+        this.playSound(SoundEvents.BLOCK_WOOD_HIT, 0.2F * (float) this.damage, 1.2F);
+        this.playSound(SoundEvents.BLOCK_NOTE_HAT, 0.3F * (float) this.damage, 1.3F);
+        this.playSound(SoundEvents.BLOCK_NOTE_SNARE, 0.1F * (float) this.damage, 1.2F);
     }
 
     protected void playCriticalSound() {
-        this.world.playSound(null, this.thrower.posX, this.thrower.posY, this.thrower.posZ, SoundEvents.ENTITY_FIREWORK_TWINKLE, this.getSoundCategory(), 10.0F, 1.0F);
+        this.world.playSound(null, this.thrower.posX, this.thrower.posY, this.thrower.posZ,
+                SoundEvents.ENTITY_FIREWORK_TWINKLE, this.getSoundCategory(), 10.0F, 1.0F);
     }
 
     protected boolean checkDeath(RayTraceResult moposition) {
-        return !(moposition.entityHit instanceof EntityLivingBase) || ((EntityLivingBase)moposition.entityHit).getHealth() > 0.0F;
+        return !(moposition.entityHit instanceof EntityLivingBase) ||
+                ((EntityLivingBase) moposition.entityHit).getHealth() > 0.0F;
     }
 
     protected void onDeath() {
         if (!this.world.isRemote) {
             this.setDead();
         }
-
     }
 
     @Override
     public void writeEntityToNBT(NBTTagCompound tagcompound) {
-        tagcompound.setShort("xTile", (short)this.xTile);
-        tagcompound.setShort("yTile", (short)this.yTile);
-        tagcompound.setShort("zTile", (short)this.zTile);
-        tagcompound.setByte("inTile", (byte)Block.getIdFromBlock(this.inBlock));
-        tagcompound.setByte("shake", (byte)this.throwableShake);
-        tagcompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
-        if ((this.throwerName == null || this.throwerName.isEmpty()) && this.thrower != null && this.thrower instanceof EntityPlayer) {
+        tagcompound.setShort("xTile", (short) this.xTile);
+        tagcompound.setShort("yTile", (short) this.yTile);
+        tagcompound.setShort("zTile", (short) this.zTile);
+        tagcompound.setByte("inTile", (byte) Block.getIdFromBlock(this.inBlock));
+        tagcompound.setByte("shake", (byte) this.throwableShake);
+        tagcompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
+        if ((this.throwerName == null || this.throwerName.isEmpty()) && this.thrower != null &&
+                this.thrower instanceof EntityPlayer) {
             this.throwerName = this.thrower.getName();
         }
 
         tagcompound.setString("ownerName", this.throwerName == null ? "" : this.throwerName);
-        tagcompound.setShort("age", (short)this.age);
-        tagcompound.setShort("lifespan", (short)this.lifespan);
-        tagcompound.setShort("clayBallDamage", (short)this.damage);
-        tagcompound.setShort("numberOfTick", (short)this.numberOfTick);
+        tagcompound.setShort("age", (short) this.age);
+        tagcompound.setShort("lifespan", (short) this.lifespan);
+        tagcompound.setShort("clayBallDamage", (short) this.damage);
+        tagcompound.setShort("numberOfTick", (short) this.numberOfTick);
         tagcompound.setBoolean("critical", this.critical);
     }
 
@@ -491,19 +531,14 @@ public class EntityClayBall extends Entity implements IProjectile {
             this.thrower = this.world.getPlayerEntityByName(this.throwerName);
 
             // vvv from EntityThrowable class vvv
-            if (this.thrower == null && this.world instanceof WorldServer)
-            {
-                try
-                {
-                    Entity entity = ((WorldServer)this.world).getEntityFromUuid(UUID.fromString(this.throwerName));
+            if (this.thrower == null && this.world instanceof WorldServer) {
+                try {
+                    Entity entity = ((WorldServer) this.world).getEntityFromUuid(UUID.fromString(this.throwerName));
 
-                    if (entity instanceof EntityLivingBase)
-                    {
-                        this.thrower = (EntityLivingBase)entity;
+                    if (entity instanceof EntityLivingBase) {
+                        this.thrower = (EntityLivingBase) entity;
                     }
-                }
-                catch (Throwable var2)
-                {
+                } catch (Throwable var2) {
                     this.thrower = null;
                 }
             }

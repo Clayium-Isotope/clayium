@@ -1,12 +1,12 @@
 [
   {
-    "modid": "clayium",
-    "name": "Clayium",
+    "modid": "${modid}",
+    "name": "${modname}",
     "description": "You can make \"minecraft:clay\" crazy.  Clay Industry leads you fantastic world.",
-    "version": "0.0.0",
+    "version": "${version}",
     "credits": "Based on an original idea by deb_rk, organization idea by HarryTalks",
     "logoFile": "",
-    "mcversion": "1.12.2",
+    "mcversion": "${mcversion}",
     "url": "https://github.com/t5ugu/clayium",
     "updateUrl": "",
     "authorList": [

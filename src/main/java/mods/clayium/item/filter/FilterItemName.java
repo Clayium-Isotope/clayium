@@ -1,9 +1,11 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.util.TierPrefix;
+
 public class FilterItemName extends FilterString {
+
     public FilterItemName() {
         super("filter_name", TierPrefix.precision);
     }

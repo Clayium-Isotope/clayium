@@ -8,9 +8,11 @@ import mods.clayium.util.TierPrefix;
 
 @HasOriginalState
 public class SolarClayFabricator extends ClayHorizontalNoRecipeMachine {
+
     public SolarClayFabricator(TierPrefix tier) {
         super(TileEntitySolarClayFabricator.class, EnumMachineKind.solarClayFabricator,
-                tier == TierPrefix.advanced ? "mk1" : tier == TierPrefix.precision ? "mk2" : tier == TierPrefix.claySteel? "mk3" : "",
+                tier == TierPrefix.advanced ? "mk1" :
+                        tier == TierPrefix.precision ? "mk2" : tier == TierPrefix.claySteel ? "mk3" : "",
                 GuiHandler.GuiIdClayMachines, tier);
     }
 }

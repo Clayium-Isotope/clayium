@@ -1,12 +1,8 @@
 package mods.clayium.machine.CreativeEnergySource;
 
-import mods.clayium.client.render.CustomHull;
-import mods.clayium.item.common.IClayEnergy;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilTier;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -15,11 +11,17 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import mods.clayium.client.render.CustomHull;
+import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilTier;
 
 @CustomHull("blocks/machine/creativeenergy")
 public class TileEntityCreativeEnergySource extends TileEntityClayContainer implements ICapabilityProvider {
+
     protected static final ItemStack oec = IClayEnergy.getCompressedClay(13, 64);
 
     @Override
@@ -74,14 +76,16 @@ public class TileEntityCreativeEnergySource extends TileEntityClayContainer impl
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
-                && this.getExportRoute(UtilDirection.getSideOfDirection(this.getFront(), facing)) != IClayInventory.NONE_ROUTE) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY &&
+                this.getExportRoute(UtilDirection.getSideOfDirection(this.getFront(), facing)) !=
+                        IClayInventory.NONE_ROUTE) {
             return (T) this.handler;
         }
         return super.getCapability(capability, facing);
     }
 
     protected static class CESourceHandler implements IItemHandler {
+
         @Override
         public int getSlots() {
             return 1;

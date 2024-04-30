@@ -1,18 +1,21 @@
 package mods.clayium.machine.ClayDistributor;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class ClayDistributor extends ClayDirectionalNoRecipeMachine {
+
     public ClayDistributor(TierPrefix tier) {
         super(TileEntityClayDistributor.class, EnumMachineKind.distributor, GuiHandler.GuiIdClayDistributor, tier);
     }

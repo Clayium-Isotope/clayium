@@ -1,39 +1,51 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.util.EnumSide;
-import mods.clayium.util.UsedFor;
-import mods.clayium.util.UtilDirection;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilDirection;
+
 /**
  * You can use these static methods even if the parent class modified the method(s).
  */
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayInventory extends ISidedInventory {
+
     NonNullList<ItemStack> EMPTY_INV = NonNullList.withSize(0, ItemStack.EMPTY);
     int ENERGY_ROUTE = -2;
     int NONE_ROUTE = -1;
 
     List<int[]> getListSlotsImport();
+
     List<int[]> getListSlotsExport();
+
     EnumFacing getFront();
+
     int getImportRoute(EnumSide side);
+
     int getExportRoute(EnumSide side);
+
     void setImportRoute(EnumSide side, int route);
+
     void setExportRoute(EnumSide side, int route);
+
     Map<EnumFacing, ItemStack> getFilters();
+
     NonNullList<ItemStack> getContainerItemStacks();
+
     boolean getAutoInsert();
+
     boolean getAutoExtract();
 
     static boolean isItemValidForSlot(IClayInventory inv, int index, ItemStack stack) {
@@ -53,7 +65,9 @@ public interface IClayInventory extends ISidedInventory {
         EnumSide side = UtilDirection.getSideOfDirection(inv.getFront(), direction);
 
         int route = inv.getImportRoute(side);
-        if (inv instanceof IClayEnergyConsumer && route == ENERGY_ROUTE && index == ((IClayEnergyConsumer) inv).getEnergySlot()) return inv.isItemValidForSlot(index, itemStackIn);
+        if (inv instanceof IClayEnergyConsumer && route == ENERGY_ROUTE &&
+                index == ((IClayEnergyConsumer) inv).getEnergySlot())
+            return inv.isItemValidForSlot(index, itemStackIn);
 
         if (route >= 0 && route < inv.getListSlotsImport().size()) {
             return Arrays.stream(inv.getListSlotsImport().get(route)).anyMatch(e -> e == index);
@@ -75,7 +89,8 @@ public interface IClayInventory extends ISidedInventory {
     }
 
     default boolean checkBlocked(ItemStack itemStackIn, EnumFacing direction) {
-        return IFilter.isFilter(this.getFilters().get(direction)) && !IFilter.match(this.getFilters().get(direction), itemStackIn);
+        return IFilter.isFilter(this.getFilters().get(direction)) &&
+                !IFilter.match(this.getFilters().get(direction), itemStackIn);
     }
 
     /**
@@ -110,17 +125,21 @@ public interface IClayInventory extends ISidedInventory {
         Collector<Boolean, ArrayList<Integer>, int[]> verifiedIndexJoiner = Collector.of(
                 ArrayList::new,
                 (list, flag) -> list.add(flag != null && flag ? list.size() : -1),
-                (list, list1) -> { list.addAll(list1); return list; },
-                list -> list.stream().mapToInt(e -> e).filter(e -> e != NONE_ROUTE).toArray()
-        );
+                (list, list1) -> {
+                    list.addAll(list1);
+                    return list;
+                },
+                list -> list.stream().mapToInt(e -> e).filter(e -> e != NONE_ROUTE).toArray());
 
         return Arrays.stream(flags).collect(verifiedIndexJoiner);
     }
 
     /**
      * 0 more : Item
-     * <br>-1 : none
-     * <br>-2 : Energy Block
+     * <br>
+     * -1 : none
+     * <br>
+     * -2 : Energy Block
      */
     default void setImportRoutes(int d, int u, int f, int b, int l, int r) {
         this.setImportRoute(EnumSide.DOWN, d);
@@ -133,7 +152,8 @@ public interface IClayInventory extends ISidedInventory {
 
     /**
      * 0 more : Item
-     * <br>-1 : none
+     * <br>
+     * -1 : none
      */
     default void setExportRoutes(int d, int u, int f, int b, int l, int r) {
         this.setExportRoute(EnumSide.DOWN, d);

@@ -1,10 +1,7 @@
 package mods.clayium.item.gadget;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilItemStack;
+import java.util.*;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,14 +9,19 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-import java.util.*;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilItemStack;
 
 public class GadgetHolder extends ItemTiered {
+
     /**
      * Key: each entity
      * Value:
-     *   Key: name of gadget kind
-     *   Value: applied gadget
+     * Key: name of gadget kind
+     * Value: applied gadget
      */
     protected static Map<Entity, Map<String, ItemStack>> appliedGadgets = new HashMap<>();
     protected static Map<Entity, Map<String, ItemStack>> clientAppliedGadgets = new HashMap<>();
@@ -32,7 +34,8 @@ public class GadgetHolder extends ItemTiered {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        playerIn.openGui(ClayiumCore.instance(), GuiHandler.GuiIdGadgetHolder, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+        playerIn.openGui(ClayiumCore.instance(), GuiHandler.GuiIdGadgetHolder, worldIn, (int) playerIn.posX,
+                (int) playerIn.posY, (int) playerIn.posZ);
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
@@ -53,7 +56,8 @@ public class GadgetHolder extends ItemTiered {
         for (ItemStack stack : holdingGadgets) {
             if (IGadget.isGadget(stack)) {
                 IGadget kind = (IGadget) stack.getItem();
-                if (!newMap.containsKey(kind.getGroupName()) || kind.compare(stack, newMap.get(kind.getGroupName())) > 0)
+                if (!newMap.containsKey(kind.getGroupName()) ||
+                        kind.compare(stack, newMap.get(kind.getGroupName())) > 0)
                     newMap.put(kind.getGroupName(), stack);
             }
         }

@@ -1,15 +1,17 @@
 package mods.clayium.block;
 
-import mods.clayium.block.common.BlockTiered;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import mods.clayium.block.common.BlockTiered;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.TierPrefix;
+
 public class EnergyStorageUpgrade extends BlockTiered implements IClayContainerModifier {
+
     private final int additionalEnergyStorage;
 
     public EnergyStorageUpgrade(int meta, TierPrefix tier, int additionalEnergyStorage) {

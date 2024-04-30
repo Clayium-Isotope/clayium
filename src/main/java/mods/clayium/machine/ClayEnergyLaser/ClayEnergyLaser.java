@@ -1,13 +1,9 @@
 package mods.clayium.machine.ClayEnergyLaser;
 
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilLocale;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,11 +13,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.List;
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilLocale;
 
 @HasOriginalState
 public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
+
     public ClayEnergyLaser(TierPrefix tier) {
         super(TileEntityClayEnergyLaser.class, EnumMachineKind.clayEnergyLaser, GuiHandler.GuiIdClayEnergyLaser, tier);
     }
@@ -30,7 +33,8 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
         if (!worldIn.isRemote) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TileEntityClayEnergyLaser) {
-                ((TileEntityClayEnergyLaser) tile).setPowered(ClayiumConfiguration.cfgInverseClayLaserRSCondition == (worldIn.isBlockIndirectlyGettingPowered(pos) != 0));
+                ((TileEntityClayEnergyLaser) tile).setPowered(ClayiumConfiguration.cfgInverseClayLaserRSCondition ==
+                        (worldIn.getRedstonePowerFromNeighbors(pos) != 0));
             }
         }
     }
@@ -48,9 +52,11 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+                                ItemStack stack) {
         if (worldIn.getTileEntity(pos) instanceof TileEntityClayEnergyLaser) {
-            ((TileEntityClayEnergyLaser) worldIn.getTileEntity(pos)).setManager(worldIn, pos, UtilDirection.getDirectionFromEntity(pos, placer));
+            ((TileEntityClayEnergyLaser) worldIn.getTileEntity(pos)).setManager(worldIn, pos,
+                    UtilDirection.getDirectionFromEntity(pos, placer));
         }
 
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
@@ -63,7 +69,7 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
 
         if (UtilLocale.canLocalize("tooltip.ClayEnergyLaser.energyConsumption")) {
             int e = 0;
-            switch(this.tier) {
+            switch (this.tier) {
                 case claySteel:
                     e = TileEntityClayEnergyLaser.consumingEnergyBlue;
                     break;
@@ -77,7 +83,8 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
                     e = TileEntityClayEnergyLaser.consumingEnergyWhite;
             }
 
-            tooltip.add(UtilLocale.localizeAndFormat("tooltip.ClayEnergyLaser.energyConsumption", UtilLocale.ClayEnergyNumeral(e)));
+            tooltip.add(UtilLocale.localizeAndFormat("tooltip.ClayEnergyLaser.energyConsumption",
+                    UtilLocale.ClayEnergyNumeral(e)));
         }
     }
 }

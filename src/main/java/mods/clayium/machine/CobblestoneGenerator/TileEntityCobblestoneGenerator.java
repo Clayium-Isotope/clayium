@@ -1,10 +1,7 @@
 package mods.clayium.machine.CobblestoneGenerator;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTransfer;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,9 +10,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.Nullable;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilTransfer;
 
 public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
+
     public int progress = 0;
     public int progressEfficiency = 5;
     public static int progressMax = 100;
@@ -36,7 +38,7 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
     public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
         this.listSlotsImport.clear();
-        switch(tier) {
+        switch (tier) {
             case clay:
                 this.progressEfficiency = ClayiumCore.multiplyProgressionRate(2);
                 break;
@@ -103,9 +105,10 @@ public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
                 this.progress += this.progressEfficiency;
             }
 
-            for(; this.progress >= progressMax; this.isDoingWork = true) {
+            for (; this.progress >= progressMax; this.isDoingWork = true) {
                 this.progress -= progressMax;
-                UtilTransfer.produceItemStack(new ItemStack(Blocks.COBBLESTONE), this.containerItemStacks, 0, this.inventoryX * this.inventoryY, this.getInventoryStackLimit());
+                UtilTransfer.produceItemStack(new ItemStack(Blocks.COBBLESTONE), this.containerItemStacks, 0,
+                        this.inventoryX * this.inventoryY, this.getInventoryStackLimit());
                 if (this.externalControlState > 0) {
                     --this.externalControlState;
                     if (this.externalControlState == 0) {

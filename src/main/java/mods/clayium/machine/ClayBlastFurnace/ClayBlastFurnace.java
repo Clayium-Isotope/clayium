@@ -8,7 +8,9 @@ import mods.clayium.util.TierPrefix;
 
 @HasOriginalState
 public class ClayBlastFurnace extends MultiblockMachine {
+
     public ClayBlastFurnace() {
-        super(EnumMachineKind.blastFurnace, "", TierPrefix.precision, TileEntityClayBlastFurnace.class, GuiHandler.GuiIdClayBlastFurnace);
+        super(EnumMachineKind.blastFurnace, "", TierPrefix.precision, TileEntityClayBlastFurnace.class,
+                GuiHandler.GuiIdClayBlastFurnace);
     }
 }

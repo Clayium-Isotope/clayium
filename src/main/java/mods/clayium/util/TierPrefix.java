@@ -1,17 +1,18 @@
 package mods.clayium.util;
 
-import mods.clayium.item.common.ClayiumMaterial;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import mods.clayium.item.common.ClayiumMaterial;
+
 /**
  * tier = ordinal - 1
  */
 public enum TierPrefix {
+
     unknown("", ClayiumMaterial.clayium),
     none("", ClayiumMaterial.clay),
     clay("clay", ClayiumMaterial.clay),
@@ -60,25 +61,40 @@ public enum TierPrefix {
 
     public static TierPrefix get(int rawTier) {
         switch (rawTier) {
-            case 0:     return none;
-            case 1:     return clay;
-            case 2:     return denseClay;
-            case 3:     return simple;
-            case 4:     return basic;
-            case 5:     return advanced;
-            case 6:     return precision;
-            case 7:     return claySteel;
-            case 8:     return clayium;
-            case 9:     return ultimate;
-            case 10:    return antimatter;
-            case 11:    return pureAntimatter;
-            case 12:    return OEC;
-            case 13:    return OPA;
-            default:    return unknown;
+            case 0:
+                return none;
+            case 1:
+                return clay;
+            case 2:
+                return denseClay;
+            case 3:
+                return simple;
+            case 4:
+                return basic;
+            case 5:
+                return advanced;
+            case 6:
+                return precision;
+            case 7:
+                return claySteel;
+            case 8:
+                return clayium;
+            case 9:
+                return ultimate;
+            case 10:
+                return antimatter;
+            case 11:
+                return pureAntimatter;
+            case 12:
+                return OEC;
+            case 13:
+                return OPA;
+            default:
+                return unknown;
         }
     }
 
-    public static List<TierPrefix> makeList(int ...tiers) {
+    public static List<TierPrefix> makeList(int... tiers) {
         return Arrays.stream(tiers)
                 .mapToObj(TierPrefix::get)
                 .collect(Collectors.toList());
@@ -88,6 +104,7 @@ public enum TierPrefix {
 
     public static Iterable<TierPrefix> makeIterable(TierPrefix begin, int offset) {
         return () -> new Iterator<TierPrefix>() {
+
             private TierPrefix current = begin;
 
             @Override

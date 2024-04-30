@@ -1,14 +1,16 @@
 package mods.clayium.machine.AutoClayCondenser;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotMemory;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.common.IClayEnergy;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 
 public class ContainerAutoClayCondenser extends ContainerTemp {
+
     private static final int inventoryX = 5;
     private static final int inventoryY = 4;
 
@@ -24,7 +26,9 @@ public class ContainerAutoClayCondenser extends ContainerTemp {
     public void setMachineInventorySlots(InventoryPlayer player) {
         for (int j = 0; j < inventoryY; ++j) {
             for (int i = 0; i < inventoryX; ++i) {
-                this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, i + j * inventoryX, i * 18 + (this.machineGuiSizeX - 18 * inventoryX) / 2, j * 18 + 18) {
+                this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, i + j * inventoryX,
+                        i * 18 + (this.machineGuiSizeX - 18 * inventoryX) / 2, j * 18 + 18) {
+
                     public boolean isItemValid(ItemStack itemstack) {
                         return IClayEnergy.getTier(itemstack).isValid();
                     }
@@ -32,7 +36,8 @@ public class ContainerAutoClayCondenser extends ContainerTemp {
             }
         }
 
-        this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, TileEntityAutoClayCondenser.SAMPLE_SLOT, 108 + (this.machineGuiSizeX - 18 * inventoryX) / 2, 18, RectangleTexture.SmallSlotEClayTexture, true));
+        this.addMachineSlotToContainer(new SlotMemory(this.tileEntity, TileEntityAutoClayCondenser.SAMPLE_SLOT,
+                108 + (this.machineGuiSizeX - 18 * inventoryX) / 2, 18, RectangleTexture.SmallSlotEClayTexture, true));
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {

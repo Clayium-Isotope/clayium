@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayWorkTable;
 
 public enum KneadingMethod {
+
     Roll,       // 転がす
     Press,      // つぶす
     Bend,       // 引き延ばす

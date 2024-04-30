@@ -1,14 +1,16 @@
 package mods.clayium.item.gadget;
 
-import mods.clayium.util.UsedFor;
-import mods.clayium.util.UtilItemStack;
+import java.util.Comparator;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 
-import java.util.Comparator;
+import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilItemStack;
 
 @UsedFor(UsedFor.Type.Item)
 public interface IGadget extends Comparator<ItemStack> {
+
     static boolean isGadget(ItemStack stack) {
         return stack.getItem() instanceof IGadget;
     }
@@ -16,11 +18,15 @@ public interface IGadget extends Comparator<ItemStack> {
     String getGroupName();
 
     void onApply(Entity entity, ItemStack gadget, boolean isRemote);
+
     void onTick(Entity entity, ItemStack gadget, boolean isRemote);
+
     void onReform(Entity entity, ItemStack before, ItemStack after, boolean isRemote);
+
     void onRemove(Entity entity, ItemStack gadget, boolean isRemote);
 
     int getMeta();
+
     @Override
     default int compare(ItemStack o1, ItemStack o2) {
         if (!UtilItemStack.areItemDamageTagEqual(o1, o2)) return 0;

@@ -8,5 +8,6 @@ import net.minecraft.world.World;
  * For Block
  */
 public interface IClayLaserVictim {
+
     void onLaserComes(World world, BlockPos pos, EnumFacing aspect, long irradiatedEnergy);
 }

@@ -1,5 +1,15 @@
 package mods.clayium.machine.SaltExtractor;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
@@ -8,17 +18,9 @@ import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator implements IClayEnergyConsumer {
+
     private final ContainClayEnergy clayEnergy = new ContainClayEnergy();
     private static final int energyPerWork = 30;
 
@@ -42,30 +44,31 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
         this.listSlotsImport.clear();
         this.slotsDrop = Stream.concat(
                 IntStream.range(0, this.slotsDrop.length).boxed(),
-                Stream.of( this.getEnergySlot() ))
-            .mapToInt(e -> e).toArray();
+                Stream.of(this.getEnergySlot()))
+                .mapToInt(e -> e).toArray();
     }
 
     @Override
     public void produce() {
         int count = this.countWater();
-        if (/*this.externalControlState >= 0 &&*/ count > 0 && IClayEnergyConsumer.compensateClayEnergy(this, (long) this.progressEfficiency * energyPerWork)) {
+        if (/* this.externalControlState >= 0 && */ count > 0 &&
+                IClayEnergyConsumer.compensateClayEnergy(this, (long) this.progressEfficiency * energyPerWork)) {
             this.progress += this.progressEfficiency * count;
 
-            while(this.progress >= progressMax) {
-//                this.setSyncFlag();
+            while (this.progress >= progressMax) {
+                // this.setSyncFlag();
                 ItemStack salt = ClayiumMaterials.get(ClayiumMaterial.salt, ClayiumShape.dust).copy();
                 this.progress -= progressMax;
-                UtilTransfer.produceItemStack(salt, this.containerItemStacks, 0, this.inventoryX * this.inventoryY, this.getInventoryStackLimit());
-//                if (this.externalControlState > 0) {
-//                    --this.externalControlState;
-//                    if (this.externalControlState == 0) {
-//                        this.externalControlState = -1;
-//                    }
-//                }
+                UtilTransfer.produceItemStack(salt, this.containerItemStacks, 0, this.inventoryX * this.inventoryY,
+                        this.getInventoryStackLimit());
+                // if (this.externalControlState > 0) {
+                // --this.externalControlState;
+                // if (this.externalControlState == 0) {
+                // this.externalControlState = -1;
+                // }
+                // }
             }
         }
-
     }
 
     @Override
@@ -103,9 +106,7 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     }
 
     @Override
-    public void setClayEnergyStorageSize(int size) {
-
-    }
+    public void setClayEnergyStorageSize(int size) {}
 
     @Override
     public int getEnergySlot() {

@@ -1,9 +1,5 @@
 package mods.clayium.machine.LaserReflector;
 
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
@@ -24,13 +20,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.util.TierPrefix;
+
 public class LaserReflector extends BlockContainer implements ITieredBlock {
+
     public static PropertyDirection FACING = BlockDirectional.FACING;
 
     public LaserReflector() {
         super(Material.IRON);
 
-        setUnlocalizedName("laser_reflector");
+        setTranslationKey("laser_reflector");
         setRegistryName(ClayiumCore.ModId, "laser_reflector");
         setCreativeTab(ClayiumCore.tabClayium);
         setSoundType(SoundType.GLASS);
@@ -63,7 +65,7 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
     }
 
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
@@ -87,11 +89,14 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
         float f = 0.125F;
         switch (state.getValue(FACING).getAxis()) {
             case Y:
-                return new AxisAlignedBB(0.0F + f * 2.0F, 0.0F + f, 0.0F + f * 2.0F, 1.0F - f * 2.0F, 1.0F - f, 1.0F - f * 2.0F);
+                return new AxisAlignedBB(0.0F + f * 2.0F, 0.0F + f, 0.0F + f * 2.0F, 1.0F - f * 2.0F, 1.0F - f,
+                        1.0F - f * 2.0F);
             case Z:
-                return new AxisAlignedBB(0.0F + f * 2.0F, 0.0F + f * 2.0F, 0.0F + f, 1.0F - f * 2.0F, 1.0F - f * 2.0F, 1.0F - f);
+                return new AxisAlignedBB(0.0F + f * 2.0F, 0.0F + f * 2.0F, 0.0F + f, 1.0F - f * 2.0F, 1.0F - f * 2.0F,
+                        1.0F - f);
             case X:
-                return new AxisAlignedBB(0.0F + f, 0.0F + f * 2.0F, 0.0F + f * 2.0F, 1.0F - f, 1.0F - f * 2.0F, 1.0F - f * 2.0F);
+                return new AxisAlignedBB(0.0F + f, 0.0F + f * 2.0F, 0.0F + f * 2.0F, 1.0F - f, 1.0F - f * 2.0F,
+                        1.0F - f * 2.0F);
         }
         return super.getBoundingBox(state, source, pos);
     }
@@ -108,19 +113,23 @@ public class LaserReflector extends BlockContainer implements ITieredBlock {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (playerIn.getHeldItem(hand).getItem() == ClayiumItems.wrench || playerIn.getHeldItem(hand).getItem() == ClayiumItems.spatula)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+                                    EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (playerIn.getHeldItem(hand).getItem() == ClayiumItems.wrench ||
+                playerIn.getHeldItem(hand).getItem() == ClayiumItems.spatula)
             return false;
 
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite());
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+                                            float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+        return this.getDefaultState().withProperty(FACING,
+                EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite());
     }
 }

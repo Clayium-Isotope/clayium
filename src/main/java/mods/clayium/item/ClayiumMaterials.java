@@ -1,12 +1,7 @@
 package mods.clayium.item;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.common.MaterialBlock;
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.*;
-import mods.clayium.util.ODHelper;
-import mods.clayium.util.TierPrefix;
+import java.util.*;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -15,10 +10,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.*;
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.common.MaterialBlock;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.*;
+import mods.clayium.util.ODHelper;
+import mods.clayium.util.TierPrefix;
 
 public class ClayiumMaterials {
-    private static final Map<ClayiumMaterial, Map<ClayiumShape, ItemStack>> materialShapeMap = new EnumMap<>(ClayiumMaterial.class);
+
+    private static final Map<ClayiumMaterial, Map<ClayiumShape, ItemStack>> materialShapeMap = new EnumMap<>(
+            ClayiumMaterial.class);
+
     public static List<Item> getItems() {
         List<Item> res = new ArrayList<>();
         for (Map<ClayiumShape, ItemStack> entry : ClayiumMaterials.materialShapeMap.values()) {
@@ -29,6 +33,7 @@ public class ClayiumMaterials {
         }
         return res;
     }
+
     public static List<ItemStack> getMaterials() {
         List<ItemStack> res = new ArrayList<>();
         for (Map<ClayiumMaterial, ItemStack> map : Arrays.asList(plates, largePlates, dusts, ingots, gems)) {
@@ -38,6 +43,7 @@ public class ClayiumMaterials {
     }
 
     private static final Map<String, ItemStack> ODReserve = new HashMap<>();
+
     public static void registerOres() {
         for (Map.Entry<String, ItemStack> ore : ODReserve.entrySet()) {
             OreDictionary.registerOre(ore.getKey(), ore.getValue());
@@ -79,8 +85,8 @@ public class ClayiumMaterials {
         add(ClayiumMaterial.advClay, ClayiumShape.plate, TierPrefix.basic, true);
         add(ClayiumMaterial.advClay, ClayiumShape.largePlate, TierPrefix.basic, true);
 
-//        add(ClayiumMaterial.clay, ClayiumShape.dust, 1, true);
-//        add(ClayiumMaterial.denseClay, ClayiumShape.dust, 2, true);
+        // add(ClayiumMaterial.clay, ClayiumShape.dust, 1, true);
+        // add(ClayiumMaterial.denseClay, ClayiumShape.dust, 2, true);
         addOD(ClayiumMaterial.indClay, ClayiumShape.dust, TierPrefix.simple, true);
         addOD(ClayiumMaterial.advClay, ClayiumShape.dust, TierPrefix.basic, true);
         addOD(ClayiumMaterial.engClay, ClayiumShape.dust, TierPrefix.simple, true);
@@ -172,8 +178,10 @@ public class ClayiumMaterials {
         }
 
         for (EnumDyeColor dye : EnumDyeColor.values()) {
-            registerOre(getOreName(ClayiumMaterial.silicone, ClayiumShape.block), I(ClayiumBlocks.siliconeColored.get(dye.ordinal())));
-            registerOre(getOreName(ClayiumMaterial.silicone, ClayiumShape.block) + dye.getName(), I(ClayiumBlocks.siliconeColored.get(dye.ordinal())));
+            registerOre(getOreName(ClayiumMaterial.silicone, ClayiumShape.block),
+                    I(ClayiumBlocks.siliconeColored.get(dye.ordinal())));
+            registerOre(getOreName(ClayiumMaterial.silicone, ClayiumShape.block) + dye.getName(),
+                    I(ClayiumBlocks.siliconeColored.get(dye.ordinal())));
         }
 
         addOD(ClayiumMaterial.orgClay, ClayiumShape.dust, false);
@@ -183,7 +191,7 @@ public class ClayiumMaterials {
 
         add(ClayiumMaterial.impureUltimateAlloy, ClayiumShape.ingot, TierPrefix.clayium, false);
 
-        for (ClayiumMaterial metal: ClayiumMaterial.metals) {
+        for (ClayiumMaterial metal : ClayiumMaterial.metals) {
             addOD(metal, ClayiumShape.dust, false);
             addOD(metal, ClayiumShape.ingot, false);
         }
@@ -243,7 +251,8 @@ public class ClayiumMaterials {
 
         materialShapeMap.get(ClayiumMaterial.advClay).put(ClayiumShape.block, ClayiumBlocks.compressedClay.get(3, 1));
 
-        materialShapeMap.get(ClayiumMaterial.octupleEnergeticClay).put(ClayiumShape.block, ClayiumBlocks.compressedClay.get(12, 1));
+        materialShapeMap.get(ClayiumMaterial.octupleEnergeticClay).put(ClayiumShape.block,
+                ClayiumBlocks.compressedClay.get(12, 1));
     }
 
     public static final Map<Integer, ClayiumMaterial> materials = new HashMap<>();
@@ -267,7 +276,8 @@ public class ClayiumMaterials {
     }
 
     private static void add(ClayiumMaterial material, ClayiumShape shape, TierPrefix tier, boolean hasUniqueIcon) {
-        if (materialShapeMap.containsKey(material) && materialShapeMap.get(material).containsKey(shape) && !materialShapeMap.get(material).get(shape).isEmpty()) {
+        if (materialShapeMap.containsKey(material) && materialShapeMap.get(material).containsKey(shape) &&
+                !materialShapeMap.get(material).get(shape).isEmpty()) {
             ClayiumCore.logger.error("The item already exists  [" + material.getName() + "] [" + shape.getName() + "]");
             return;
         }
@@ -275,7 +285,8 @@ public class ClayiumMaterials {
             materialShapeMap.put(material, new EnumMap<>(ClayiumShape.class));
         }
 
-        materialShapeMap.get(material).putIfAbsent(shape, I(new ClayiumShapedMaterial(material, shape, tier, !hasUniqueIcon)));
+        materialShapeMap.get(material).putIfAbsent(shape,
+                I(new ClayiumShapedMaterial(material, shape, tier, !hasUniqueIcon)));
         if (material != ClayiumMaterial.clay && material != ClayiumMaterial.denseClay)
             putMap(material, shape);
     }
@@ -337,7 +348,7 @@ public class ClayiumMaterials {
     }
 
     private static void registerOre(String key, ItemStack stack) {
-//        OreDictionary.registerOre(key, stack);
+        // OreDictionary.registerOre(key, stack);
         ODReserve.put(key, stack);
     }
 
@@ -387,15 +398,20 @@ public class ClayiumMaterials {
     private static void putMap(ClayiumMaterial material, ClayiumShape shape) {
         switch (shape) {
             case plate:
-                plates.put(material, get(material, shape)); break;
+                plates.put(material, get(material, shape));
+                break;
             case largePlate:
-                largePlates.put(material, get(material, shape)); break;
+                largePlates.put(material, get(material, shape));
+                break;
             case dust:
-                dusts.put(material, get(material, shape)); break;
+                dusts.put(material, get(material, shape));
+                break;
             case ingot:
-                ingots.put(material, get(material, shape)); break;
+                ingots.put(material, get(material, shape));
+                break;
             case gem:
-                gems.put(material, get(material, shape)); break;
+                gems.put(material, get(material, shape));
+                break;
         }
     }
 }

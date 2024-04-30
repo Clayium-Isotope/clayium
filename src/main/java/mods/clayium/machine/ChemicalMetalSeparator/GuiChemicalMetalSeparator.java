@@ -3,6 +3,7 @@ package mods.clayium.machine.ChemicalMetalSeparator;
 import mods.clayium.gui.GuiIMachine;
 
 public class GuiChemicalMetalSeparator extends GuiIMachine {
+
     public GuiChemicalMetalSeparator(ContainerChemicalMetalSeparator container) {
         super(container);
         this.progressBarSizeX = 24;

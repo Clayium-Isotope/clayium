@@ -1,27 +1,29 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import mods.clayium.block.tile.FlexibleStackLimit;
+
 /**
  * Sorry for NullPointerException when you access {@link net.minecraft.inventory.Slot#inventory}
  */
 public class SlotItemHandler extends SlotWithTexture {
+
     protected final IItemHandler handler;
 
     public SlotItemHandler(TileEntity inventory, int indexIn, int xPos, int yPos, ITexture texture) {
         super((IInventory) inventory, indexIn, xPos, yPos, texture);
 
         if (!inventory.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-            throw new IllegalArgumentException("[SlotItemHandler] argument must have CapabilityItemHandler.ITEM_HANDLER_CAPABILITY for null facing");
+            throw new IllegalArgumentException(
+                    "[SlotItemHandler] argument must have CapabilityItemHandler.ITEM_HANDLER_CAPABILITY for null facing");
         }
 
         this.handler = inventory.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-
     }
 
     @Override

@@ -1,8 +1,16 @@
 package mods.clayium.util;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.crafting.AmountedIngredient;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
@@ -20,24 +28,19 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.crafting.AmountedIngredient;
 
 public class UtilTransfer {
+
     private static final IInventorySelector defaultSelector = new InventorySelector();
 
     /**
      * Transfer item(s) from a tile to another tile.
      *
-     * @param from wants to carry out
-     * @param to wants to carry in
+     * @param from        wants to carry out
+     * @param to          wants to carry in
      * @param maxTransfer the operation stops when transferred-items' count became greater than this.
      */
     public static int transfer(final IItemHandler from, final IItemHandler to, final int maxTransfer) {
@@ -54,22 +57,26 @@ public class UtilTransfer {
         return transferred;
     }
 
-    public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer, IInventorySelector selector) {
+    public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer,
+                             IInventorySelector selector) {
         TileEntity to = from.getWorld().getTileEntity(from.getPos().offset(direction));
         if (!(from instanceof IInventory) || !(to instanceof IInventory)) return maxTransfer;
 
-        return transfer(UtilTransfer.getItemHandler(from, direction, fromSlots), UtilTransfer.getItemHandler(to, direction.getOpposite(), null), maxTransfer);
+        return transfer(UtilTransfer.getItemHandler(from, direction, fromSlots),
+                UtilTransfer.getItemHandler(to, direction.getOpposite(), null), maxTransfer);
     }
 
     public static int insert(TileEntity from, int[] fromSlots, EnumFacing direction, int maxTransfer) {
         return insert(from, fromSlots, direction, maxTransfer, defaultSelector);
     }
 
-    public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer, IInventorySelector selector) {
+    public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer,
+                              IInventorySelector selector) {
         TileEntity from = to.getWorld().getTileEntity(to.getPos().offset(direction));
         if (!(to instanceof IInventory) || !(from instanceof IInventory)) return maxTransfer;
 
-        return transfer(UtilTransfer.getItemHandler(from, direction, null), UtilTransfer.getItemHandler(to, direction.getOpposite(), toSlots), maxTransfer);
+        return transfer(UtilTransfer.getItemHandler(from, direction, null),
+                UtilTransfer.getItemHandler(to, direction.getOpposite(), toSlots), maxTransfer);
     }
 
     public static int extract(TileEntity to, int[] toSlots, EnumFacing direction, int maxTransfer) {
@@ -90,7 +97,8 @@ public class UtilTransfer {
     /**
      * @param itemstack won't be changed.
      */
-    public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
+    public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index,
+                                             int inventoryStackLimit) {
         if (itemstack.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -114,14 +122,15 @@ public class UtilTransfer {
     /**
      * @param itemstack won't be changed.
      */
-    public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j, int inventoryStackLimit) {
+    public static ItemStack produceItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j,
+                                             int inventoryStackLimit) {
         if (itemstack.isEmpty()) {
             return ItemStack.EMPTY;
         }
 
         ItemStack res = itemstack.copy();
 
-        for(int k = i; k < j; ++k) {
+        for (int k = i; k < j; ++k) {
             res = produceItemStack(res, inventory, k, inventoryStackLimit);
         }
 
@@ -132,13 +141,15 @@ public class UtilTransfer {
      * <B>inventory</B> の {@code [startIncl, endExcl)} の範囲に、できるだけ <B>itemstacks</B> を詰める。<br>
      * <B>itemstacks</B> は内部でコピーがおこなわれて変更されない。変更後の値は、返り値を参照のこと
      */
-    public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
+    public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory,
+                                                    int startIncl, int endExcl, int inventoryStackLimit) {
         if (itemstacks.isEmpty()) {
             return Collections.emptyList();
         }
 
         List<ItemStack> copiedItemstacks = getHardCopy(itemstacks);
-        copiedItemstacks.replaceAll(itemstack -> produceItemStack(itemstack, inventory, startIncl, endExcl, inventoryStackLimit));
+        copiedItemstacks.replaceAll(
+                itemstack -> produceItemStack(itemstack, inventory, startIncl, endExcl, inventoryStackLimit));
 
         return copiedItemstacks;
     }
@@ -148,21 +159,24 @@ public class UtilTransfer {
      *
      * @return <B>inventory</B> が <B>index</B> 番目に <B>itemstack</B> のうち、いくつを挿入できるか
      */
-    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index, int inventoryStackLimit) {
+    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int index,
+                                          int inventoryStackLimit) {
         if (itemstack.isEmpty() || inventory.get(index).isEmpty()) {
             return inventoryStackLimit;
         }
 
-        return UtilItemStack.areItemDamageTagEqual(inventory.get(index), itemstack) ? inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
+        return UtilItemStack.areItemDamageTagEqual(inventory.get(index), itemstack) ?
+                inventory.get(index).getMaxStackSize() - inventory.get(index).getCount() : 0;
     }
 
     /**
      * @return <B>inventory</B> が {@code [startIncl, endExcl)} の範囲に <B>itemstack</B> のうち、いくつを挿入できるか
      */
-    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
+    public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int startIncl, int endExcl,
+                                          int inventoryStackLimit) {
         int rest = 0;
 
-        for(int k = startIncl; k < endExcl; ++k) {
+        for (int k = startIncl; k < endExcl; ++k) {
             rest += canProduceItemStack(itemstack, inventory, k, inventoryStackLimit);
         }
 
@@ -173,12 +187,15 @@ public class UtilTransfer {
      * <B>inventory</B> の {@code [startIncl, endExcl)} の範囲に <B>itemstacks</B> をすべて入れることができるか調べる。<br>
      * 実際に詰めてみる実装なので、遅い可能性あり
      */
-    public static boolean canProduceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
-        return produceItemStacks(itemstacks, getHardCopy(inventory), startIncl, endExcl, inventoryStackLimit).stream().allMatch(ItemStack::isEmpty);
+    public static boolean canProduceItemStacks(List<ItemStack> itemstacks, List<ItemStack> inventory, int startIncl,
+                                               int endExcl, int inventoryStackLimit) {
+        return produceItemStacks(itemstacks, getHardCopy(inventory), startIncl, endExcl, inventoryStackLimit).stream()
+                .allMatch(ItemStack::isEmpty);
     }
 
     /**
      * Do deep copy
+     * 
      * @see <a href="https://stackoverflow.com/a/33507565">Deep Copy Method at Stack Overflow</a>
      */
     public static List<ItemStack> getHardCopy(List<ItemStack> itemstacks) {
@@ -238,7 +255,7 @@ public class UtilTransfer {
     public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j) {
         ItemStack stack = itemstack.copy();
 
-        for(int k = i; k < j; ++k) {
+        for (int k = i; k < j; ++k) {
             stack = consumeItemStack(stack, inventory, k);
         }
 
@@ -273,13 +290,16 @@ public class UtilTransfer {
     }
 
     public static int consumeByIngredient(Ingredient ingredient, List<ItemStack> inventory, int index) {
-        return consumeByIngredient(ingredient, (ingredient instanceof AmountedIngredient) ? ((AmountedIngredient) ingredient).getAmount() : 1, inventory, index);
+        return consumeByIngredient(ingredient,
+                (ingredient instanceof AmountedIngredient) ? ((AmountedIngredient) ingredient).getAmount() : 1,
+                inventory, index);
     }
 
     /**
      * @return 0 or remaining amount
      */
-    public static int consumeByIngredient(Ingredient ingredient, List<ItemStack> inventory, int startIncl, int endExcl) {
+    public static int consumeByIngredient(Ingredient ingredient, List<ItemStack> inventory, int startIncl,
+                                          int endExcl) {
         int amount = (ingredient instanceof AmountedIngredient) ? ((AmountedIngredient) ingredient).getAmount() : 1;
 
         for (int i = startIncl; i < endExcl && amount > 0; ++i) {
@@ -289,7 +309,8 @@ public class UtilTransfer {
         return amount;
     }
 
-    public static List<Integer> consumeByIngredient(List<Ingredient> ingredients, List<ItemStack> inventory, int startIncl, int endExcl) {
+    public static List<Integer> consumeByIngredient(List<Ingredient> ingredients, List<ItemStack> inventory,
+                                                    int startIncl, int endExcl) {
         List<Integer> res = new ArrayList<>(ingredients.size());
 
         for (Ingredient ingredient : ingredients) {
@@ -301,10 +322,10 @@ public class UtilTransfer {
 
     // TODO will substitute ItemStackHandler for this
     public static class InventorySelector implements UtilTransfer.IInventorySelector {
+
         protected IInventory selected = null;
 
-        public InventorySelector() {
-        }
+        public InventorySelector() {}
 
         public IInventory getSelectedInventory() {
             return this.selected;
@@ -325,10 +346,10 @@ public class UtilTransfer {
             if (!(te instanceof IInventory)) {
                 return null;
             } else {
-                IInventory to = (IInventory)te;
+                IInventory to = (IInventory) te;
                 Block block = world.getBlockState(pos.offset(direction)).getBlock();
                 if (block instanceof BlockChest) {
-                    IInventory chest = ((BlockChest)block).getContainer(world, pos.offset(direction), true);
+                    IInventory chest = ((BlockChest) block).getContainer(world, pos.offset(direction), true);
                     if (chest != null) {
                         to = chest;
                     }
@@ -347,9 +368,9 @@ public class UtilTransfer {
                 if (!(this.selected instanceof ISidedInventory)) {
                     toSlots = new int[this.selected.getSizeInventory()];
 
-                    for(int i = 0; i < this.selected.getSizeInventory(); toSlots[i] = i++);
+                    for (int i = 0; i < this.selected.getSizeInventory(); toSlots[i] = i++);
                 } else {
-                    toSlots = ((ISidedInventory)this.selected).getSlotsForFace(toSide);
+                    toSlots = ((ISidedInventory) this.selected).getSlotsForFace(toSide);
                 }
 
                 return toSlots;
@@ -371,10 +392,10 @@ public class UtilTransfer {
             if (!(te instanceof IInventory)) {
                 return null;
             } else {
-                IInventory from = (IInventory)te;
+                IInventory from = (IInventory) te;
                 Block block = world.getBlockState(pos.offset(direction)).getBlock();
                 if (block instanceof BlockChest) {
-                    IInventory chest = ((BlockChest)block).getContainer(world, pos.offset(direction), true);
+                    IInventory chest = ((BlockChest) block).getContainer(world, pos.offset(direction), true);
                     if (chest != null) {
                         from = chest;
                     }
@@ -393,9 +414,9 @@ public class UtilTransfer {
                 if (!(this.selected instanceof ISidedInventory)) {
                     fromSlots = new int[this.selected.getSizeInventory()];
 
-                    for(int i = 0; i < this.selected.getSizeInventory(); fromSlots[i] = i++);
+                    for (int i = 0; i < this.selected.getSizeInventory(); fromSlots[i] = i++);
                 } else {
-                    fromSlots = ((ISidedInventory)this.selected).getSlotsForFace(fromSide);
+                    fromSlots = ((ISidedInventory) this.selected).getSlotsForFace(fromSide);
                 }
 
                 return fromSlots;
@@ -404,6 +425,7 @@ public class UtilTransfer {
     }
 
     interface IInventorySelector {
+
         IInventory getSelectedInventory();
 
         boolean selectInventoryToInsertTo(TileEntity var1, EnumFacing var2);
@@ -418,13 +440,15 @@ public class UtilTransfer {
     /**
      * @param ioSlots when null, filled by using {@link UtilTransfer#getSlots}
      */
-    public static IItemHandler getItemHandler(final TileEntity te, final EnumFacing facing, @Nullable final int[] ioSlots) {
+    public static IItemHandler getItemHandler(final TileEntity te, final EnumFacing facing,
+                                              @Nullable final int[] ioSlots) {
         if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
             return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
         }
 
         if (te instanceof IClayInventory) {
-            return new OffsettedHandler(new ClayInvWrapper((IClayInventory) te), Objects.nonNull(ioSlots) ? ioSlots : UtilTransfer.getSlots(te, facing));
+            return new OffsettedHandler(new ClayInvWrapper((IClayInventory) te),
+                    Objects.nonNull(ioSlots) ? ioSlots : UtilTransfer.getSlots(te, facing));
         } else if (te instanceof ISidedInventory) {
             return new SidedInvWrapper((ISidedInventory) te, facing);
         } else if (te instanceof IInventory) {
@@ -435,6 +459,7 @@ public class UtilTransfer {
     }
 
     static class ClayInvWrapper extends ItemStackHandler {
+
         protected final IInventory inv;
         protected final boolean isFlexibleStackLimit;
 
@@ -459,6 +484,7 @@ public class UtilTransfer {
     }
 
     static class OffsettedHandler implements IItemHandler {
+
         protected final IItemHandler handler;
         protected final int[] ioSlots;
 

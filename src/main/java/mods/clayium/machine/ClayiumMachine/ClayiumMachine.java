@@ -1,12 +1,9 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayContainer.ClaySidedContainer;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.JsonHelper;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilLocale;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -14,21 +11,27 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.List;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.machine.ClayContainer.ClaySidedContainer;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.JsonHelper;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilLocale;
 
 public class ClayiumMachine extends ClaySidedContainer {
+
     private final EnumMachineKind machineKind;
 
-    public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Class<? extends TileEntityGeneric> teClass, int guiID) {
+    public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier,
+                          Class<? extends TileEntityGeneric> teClass, int guiID) {
         super(Material.IRON, teClass,
-                suffix == null || suffix.equals("")
-                        ? tier.getPrefix() + "_" + kind.getRegisterName()
-                        : kind.getRegisterName() + "_" + suffix,
+                suffix == null || suffix.equals("") ? tier.getPrefix() + "_" + kind.getRegisterName() :
+                        kind.getRegisterName() + "_" + suffix,
                 guiID, tier);
         this.machineKind = kind;
 
-        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
+        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getPath());
     }
 
     public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier) {

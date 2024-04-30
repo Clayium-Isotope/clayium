@@ -1,7 +1,8 @@
 package mods.clayium.util;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.IAdvancedTool;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +15,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.IAdvancedTool;
 
 public class UtilAdvancedTools {
-    public static int onBlockDestroyed(ItemStack itemstack, World world, Block block, BlockPos pos, EntityLivingBase entity) {
+
+    public static int onBlockDestroyed(ItemStack itemstack, World world, Block block, BlockPos pos,
+                                       EntityLivingBase entity) {
         int damage = 0;
         if (!world.isRemote && entity instanceof EntityPlayer) {
             for (BlockPos coord : getHarvestedCoordListInSafe(itemstack, world, pos, (EntityPlayer) entity)) {
@@ -55,10 +58,11 @@ public class UtilAdvancedTools {
             xxVector = zzVector.rotateY();
         }
 
-        return new Vec3i[] {xxVector.getDirectionVec(), yyVector.getDirectionVec(), zzVector.getDirectionVec()};
+        return new Vec3i[] { xxVector.getDirectionVec(), yyVector.getDirectionVec(), zzVector.getDirectionVec() };
     }
 
-    public static List<BlockPos> getHarvestedCoordListInSafe(ItemStack itemstack, World world, BlockPos pos, EntityPlayer player) {
+    public static List<BlockPos> getHarvestedCoordListInSafe(ItemStack itemstack, World world, BlockPos pos,
+                                                             EntityPlayer player) {
         List<BlockPos> list = new ArrayList<>();
 
         NBTTagCompound compound = itemstack.getTagCompound();
@@ -75,17 +79,20 @@ public class UtilAdvancedTools {
         return list;
     }
 
-    public static List<BlockPos> getHarvestedCoordList(ItemStack itemstack, World world, BlockPos pos, EntityPlayer player, EnumFacing facing) {
+    public static List<BlockPos> getHarvestedCoordList(ItemStack itemstack, World world, BlockPos pos,
+                                                       EntityPlayer player, EnumFacing facing) {
         if (!(itemstack.getItem() instanceof IAdvancedTool)) {
             return new ArrayList<>();
         }
 
-        RayTraceResult rtr = world.rayTraceBlocks(player.getPositionEyes(3.0F), player.getLookVec().scale(9999.0D), false, false, true);
+        RayTraceResult rtr = world.rayTraceBlocks(player.getPositionEyes(3.0F), player.getLookVec().scale(9999.0D),
+                false, false, true);
         if (rtr == null) {
             return new ArrayList<>();
         }
 
         Vec3i[] ev = getEigenVectors(player, rtr.sideHit);
-        return ((IAdvancedTool) itemstack.getItem()).getHarvestCoord().getHarvestedCoordList(itemstack, pos, ev[0], ev[1], ev[2]);
+        return ((IAdvancedTool) itemstack.getItem()).getHarvestCoord().getHarvestedCoordList(itemstack, pos, ev[0],
+                ev[1], ev[2]);
     }
 }

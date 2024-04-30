@@ -1,12 +1,14 @@
 package mods.clayium.block;
 
-import mods.clayium.util.UsedFor;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import mods.clayium.util.UsedFor;
+
 @UsedFor(UsedFor.Type.TileEntity)
 public interface ICAMachine {
+
     int RESONATE_RANGE = 2;
 
     /**
@@ -15,10 +17,11 @@ public interface ICAMachine {
     static double getResonance(IBlockAccess world, BlockPos caMachine) {
         double totalResonance = 1.0;
 
-        for (BlockPos pos : BlockPos.getAllInBox(-RESONATE_RANGE, -RESONATE_RANGE, -RESONATE_RANGE, RESONATE_RANGE, RESONATE_RANGE, RESONATE_RANGE)) {
+        for (BlockPos pos : BlockPos.getAllInBox(-RESONATE_RANGE, -RESONATE_RANGE, -RESONATE_RANGE, RESONATE_RANGE,
+                RESONATE_RANGE, RESONATE_RANGE)) {
             Block block = world.getBlockState(caMachine.add(pos)).getBlock();
             if (block instanceof CAResonator) {
-                totalResonance *= ((CAResonator)block).getResonance(world, caMachine.add(pos));
+                totalResonance *= ((CAResonator) block).getResonance(world, caMachine.add(pos));
             }
         }
 

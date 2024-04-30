@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SlotWithTexture extends Slot {
+
     private final ITexture texture;
     private boolean restricted = false;
     protected Container listener = null;
@@ -26,14 +27,16 @@ public class SlotWithTexture extends Slot {
         this(inventoryIn, indexIn, xPos, yPos, listener, RectangleTexture.SmallSlotTexture);
     }
 
-    public SlotWithTexture(IInventory inventoryIn, int indexIn, int xPos, int yPos, Container listener, ITexture texture) {
+    public SlotWithTexture(IInventory inventoryIn, int indexIn, int xPos, int yPos, Container listener,
+                           ITexture texture) {
         this(inventoryIn, indexIn, xPos, yPos, texture);
         this.listener = listener;
     }
 
     @SideOnly(Side.CLIENT)
     public void draw(GuiScreen gui, int offsetX, int offsetY) {
-        this.texture.draw(gui, offsetX + this.xPos - (this.texture.getSizeX() - 16) / 2, offsetY + this.yPos - (this.texture.getSizeY() - 16) / 2);
+        this.texture.draw(gui, offsetX + this.xPos - (this.texture.getSizeX() - 16) / 2,
+                offsetY + this.yPos - (this.texture.getSizeY() - 16) / 2);
     }
 
     @Override

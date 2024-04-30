@@ -1,10 +1,10 @@
 package mods.clayium.machine.StorageContainer;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.client.render.CustomHull;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.util.UtilItemStack;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,12 +17,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.client.render.CustomHull;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.util.UtilItemStack;
 
 @CustomHull(CustomHull.AZ91D)
-public class TileEntityStorageContainer extends TileEntityClayContainer implements FlexibleStackLimit, ICapabilityProvider {
+public class TileEntityStorageContainer extends TileEntityClayContainer
+                                        implements FlexibleStackLimit, ICapabilityProvider {
+
     protected int currentStackSize = 0;
 
     @Override
@@ -195,6 +199,7 @@ public class TileEntityStorageContainer extends TileEntityClayContainer implemen
     }
 
     protected static class StorageContainerItemHandler implements IItemHandler {
+
         private final TileEntityStorageContainer inv;
 
         StorageContainerItemHandler(TileEntityStorageContainer tesc) {

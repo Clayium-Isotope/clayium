@@ -6,7 +6,8 @@ import javax.vecmath.Tuple3i;
 // will make the field, named numbers, net.minecraft.util.math.Vec3i or java.awt.Color
 // will be made general about colors
 public class ClayLaser {
-//    static final int colorNum = 3;
+
+    // static final int colorNum = 3;
     static final int lLifespan = 10;
     static final double[] lBases = { 2.5D, 1.8D, 1.5D };
     static final double[] lMaxEnergys = { 1000.0D, 300.0D, 100.0D };
@@ -27,7 +28,7 @@ public class ClayLaser {
      * @param n_i number
      * @param b_i base
      * @param m_i maxEnergy
-     * @param r dampingRate
+     * @param r   dampingRate
      */
     public static double calculateEnergyPerColor(int n_i, double b_i, double m_i, double r) {
         if (n_i <= 0 || r <= 0.0D || m_i < 0.0D || b_i < 1.0D) {
@@ -37,7 +38,7 @@ public class ClayLaser {
         double c = Math.log(m_i) / (Math.log((1.0D + r) / r) * Math.log(b_i));
         double a = Math.pow(Math.E, (1.0D + r) / c);
         double e = Math.pow(m_i, Math.log((1.0D + r) / (Math.pow(a, -n_i) + r)) / Math.log((1.0D + r) / r));
-        double m = (1.0D + r * Math.pow(a, n_i) * (double)n_i) / (1.0D + r * Math.pow(a, n_i));
+        double m = (1.0D + r * Math.pow(a, n_i) * (double) n_i) / (1.0D + r * Math.pow(a, n_i));
         return Math.max(e * m, 1.0D);
     }
 
@@ -72,11 +73,12 @@ public class ClayLaser {
         }
 
         if (age >= 10) {
-            for(ClayLaser laser : lasers) {
-                numbers.set(Math.max(numbers.x, laser.numbers.x), Math.max(numbers.y, laser.numbers.y), Math.max(numbers.z, laser.numbers.z));
+            for (ClayLaser laser : lasers) {
+                numbers.set(Math.max(numbers.x, laser.numbers.x), Math.max(numbers.y, laser.numbers.y),
+                        Math.max(numbers.z, laser.numbers.z));
             }
         } else {
-            for(ClayLaser laser : lasers) {
+            for (ClayLaser laser : lasers) {
                 numbers.add(laser.numbers);
             }
         }

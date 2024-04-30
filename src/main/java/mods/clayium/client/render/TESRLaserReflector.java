@@ -1,19 +1,23 @@
 package mods.clayium.client.render;
 
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.LaserReflector.LaserReflector;
-import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
+
 import org.lwjgl.opengl.GL11;
 
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.LaserReflector.LaserReflector;
+import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
+
 public class TESRLaserReflector extends TileEntitySpecialRenderer<TileEntityLaserReflector> {
+
     @Override
-    public void render(TileEntityLaserReflector te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(TileEntityLaserReflector te, double x, double y, double z, float partialTicks, int destroyStage,
+                       float alpha) {
         EnumFacing direction = te.getWorld().getBlockState(te.getPos()).getValue(LaserReflector.FACING);
         if (te.getDirection() != null) {
             direction = te.getDirection();
@@ -58,10 +62,14 @@ public class TESRLaserReflector extends TileEntitySpecialRenderer<TileEntityLase
 
         builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
 
-        builder.pos(0.0d + (double) (f5 * 2.0F), 0.0D + (double) f5, 0.0D + (double) (f5 * 2.0F)).tex(0.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
-        builder.pos(1.0d - (double) (f5 * 2.0F), 0.0D + (double) f5, 0.0D + (double) (f5 * 2.0F)).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
-        builder.pos(1.0d - (double) (f5 * 2.0F), 0.0D + (double) f5, 1.0d - (double) (f5 * 2.0F)).tex(1.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
-        builder.pos(0.0d + (double) (f5 * 2.0F), 0.0D + (double) f5, 1.0d - (double) (f5 * 2.0F)).tex(0.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
+        builder.pos(0.0d + (double) (f5 * 2.0F), 0.0D + (double) f5, 0.0D + (double) (f5 * 2.0F)).tex(0.0d, 0.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
+        builder.pos(1.0d - (double) (f5 * 2.0F), 0.0D + (double) f5, 0.0D + (double) (f5 * 2.0F)).tex(1.0d, 0.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
+        builder.pos(1.0d - (double) (f5 * 2.0F), 0.0D + (double) f5, 1.0d - (double) (f5 * 2.0F)).tex(1.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
+        builder.pos(0.0d + (double) (f5 * 2.0F), 0.0D + (double) f5, 1.0d - (double) (f5 * 2.0F)).tex(0.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal(0.0f, -1.0f, 0.0f).endVertex();
 
         tessellator.draw();
 
@@ -87,21 +95,33 @@ public class TESRLaserReflector extends TileEntitySpecialRenderer<TileEntityLase
 
         builder.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
 
-        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D + (double) (f5 * 2.0F), y2, 0.5D + (double) (f5 * 2.0F)).tex(1.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D + (double) (f5 * 2.0F), y3, 0.5D - (double) (f5 * 2.0F)).tex(0.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a)
+                .normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D + (double) (f5 * 2.0F), y2, 0.5D + (double) (f5 * 2.0F)).tex(1.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D + (double) (f5 * 2.0F), y3, 0.5D - (double) (f5 * 2.0F)).tex(0.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
 
-        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D + (double) (f5 * 2.0F), y2, 0.5D - (double) (f5 * 2.0F)).tex(1.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D - (double) (f5 * 2.0F), y3, 0.5D - (double) (f5 * 2.0F)).tex(0.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a)
+                .normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D + (double) (f5 * 2.0F), y2, 0.5D - (double) (f5 * 2.0F)).tex(1.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D - (double) (f5 * 2.0F), y3, 0.5D - (double) (f5 * 2.0F)).tex(0.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
 
-        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D - (double) (f5 * 2.0F), y2, 0.5D - (double) (f5 * 2.0F)).tex(1.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D - (double) (f5 * 2.0F), y3, 0.5D + (double) (f5 * 2.0F)).tex(0.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a)
+                .normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D - (double) (f5 * 2.0F), y2, 0.5D - (double) (f5 * 2.0F)).tex(1.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D - (double) (f5 * 2.0F), y3, 0.5D + (double) (f5 * 2.0F)).tex(0.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
 
-        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D - (double) (f5 * 2.0F), y2, 0.5D + (double) (f5 * 2.0F)).tex(1.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
-        builder.pos(0.5D + (double) (f5 * 2.0F), y3, 0.5D + (double) (f5 * 2.0F)).tex(0.0d, 1.0d).color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(x1, y1, z1).tex(1.0d, 0.0d).color(1.0f, 1.0f, 1.0f, a)
+                .normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D - (double) (f5 * 2.0F), y2, 0.5D + (double) (f5 * 2.0F)).tex(1.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
+        builder.pos(0.5D + (double) (f5 * 2.0F), y3, 0.5D + (double) (f5 * 2.0F)).tex(0.0d, 1.0d)
+                .color(1.0f, 1.0f, 1.0f, a).normal((float) (xc / lc), (float) (yc / lc), (float) (zc / lc)).endVertex();
 
         tessellator.draw();
 

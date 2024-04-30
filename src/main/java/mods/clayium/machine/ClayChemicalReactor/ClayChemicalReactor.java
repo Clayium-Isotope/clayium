@@ -6,7 +6,9 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 
 public class ClayChemicalReactor extends ClayiumMachine {
+
     public ClayChemicalReactor(TierPrefix tier) {
-        super(EnumMachineKind.chemicalReactor, "", tier, TileEntityClayChemicalReactor.class, GuiHandler.GuiIdClayChemicalReactor);
+        super(EnumMachineKind.chemicalReactor, "", tier, TileEntityClayChemicalReactor.class,
+                GuiHandler.GuiIdClayChemicalReactor);
     }
 }

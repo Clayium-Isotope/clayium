@@ -10,6 +10,7 @@ import mods.clayium.util.UtilTransfer;
 import mods.clayium.util.crafting.KitchenWithRecipe;
 
 /* package-private */ final class KitchenCentrifuge extends KitchenWithRecipe<RecipeElement> {
+
     private final TileEntityClayCentrifuge centrifuge;
 
     /* package-private */ KitchenCentrifuge(TileEntityClayCentrifuge centrifuge, TierPrefix tier) {
@@ -17,19 +18,22 @@ import mods.clayium.util.crafting.KitchenWithRecipe;
 
         this.centrifuge = centrifuge;
     }
-    
+
     @Override
     protected boolean canCraft() {
         if (this.currentRecipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStacks(this.currentRecipe.getResults(), this.centrifuge.getContainerItemStacks(),
+        return UtilTransfer.canProduceItemStacks(this.currentRecipe.getResults(),
+                this.centrifuge.getContainerItemStacks(),
                 Machine1ToSome.PRODUCT_1, Machine1ToSome.PRODUCT_1 + this.centrifuge.getResultSlotCount(),
                 this.centrifuge.getInventoryStackLimit());
     }
 
     @Override
     protected RecipeElement getRecipe() {
-        return ClayiumRecipeProvider.getRecipe(this.recipes, e -> e.isCraftable(this.centrifuge.getStackInSlot(Machine1ToSome.MATERIAL), this.machineTier), this.flat);
+        return ClayiumRecipeProvider.getRecipe(this.recipes,
+                e -> e.isCraftable(this.centrifuge.getStackInSlot(Machine1ToSome.MATERIAL), this.machineTier),
+                this.flat);
     }
 
     @Override

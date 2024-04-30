@@ -1,6 +1,7 @@
 package mods.clayium.machine.ClayEnergyLaser.laser;
 
-import mods.clayium.block.ClayiumBlocks;
+import java.util.ArrayDeque;
+
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,9 +14,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.ArrayDeque;
+import mods.clayium.block.ClayiumBlocks;
 
 public class ClayLaserManager {
+
     public ClayLaser clayLaser;
     public static final int historyLength = 10;
     public static final int laserLengthMax = 32;
@@ -78,7 +80,7 @@ public class ClayLaserManager {
         this.hasTarget = false;
 
         IBlockState state;
-        for(int i = 1; i < laserLengthMax; ++i) {
+        for (int i = 1; i < laserLengthMax; ++i) {
             BlockPos front = this.posNow.offset(this.direction, i);
             if (this.canGoThrough(front)) continue;
 
@@ -104,7 +106,7 @@ public class ClayLaserManager {
             m = Math.min(m, h);
         }
 
-        this.totalIrradiatedEnergy = m * this.totalIrradiatedEnergy / (n == 0 ? 1 : n) ;
+        this.totalIrradiatedEnergy = m * this.totalIrradiatedEnergy / (n == 0 ? 1 : n);
 
         if (this.laserEnergyHistory.size() >= historyLength)
             this.laserEnergyHistory.removeFirst();
@@ -114,11 +116,13 @@ public class ClayLaserManager {
         TileEntity tile = this.world.getTileEntity(this.targetPos);
 
         if (state.getBlock() instanceof IClayLaserVictim) {
-            ((IClayLaserVictim) state.getBlock()).onLaserComes(this.world, this.targetPos, this.direction.getOpposite(), this.totalIrradiatedEnergy);
+            ((IClayLaserVictim) state.getBlock()).onLaserComes(this.world, this.targetPos, this.direction.getOpposite(),
+                    this.totalIrradiatedEnergy);
             return;
         }
 
-        if (state.getMaterial() == Material.ROCK && state.getBlock() != Blocks.BEDROCK && this.totalIrradiatedEnergy >= (long)(state.getBlockHardness(this.world, this.targetPos) + 1.0F) * 10L) {
+        if (state.getMaterial() == Material.ROCK && state.getBlock() != Blocks.BEDROCK && this.totalIrradiatedEnergy >=
+                (long) (state.getBlockHardness(this.world, this.targetPos) + 1.0F) * 10L) {
             if (state.getBlock() == Blocks.COAL_ORE) {
                 this.world.setBlockState(this.targetPos, Blocks.COAL_BLOCK.getDefaultState(), 3);
             } else if (state.getBlock() == Blocks.IRON_ORE) {
@@ -139,7 +143,8 @@ public class ClayLaserManager {
             return;
         }
 
-        if (state.getBlock() == Blocks.SAPLING && this.totalIrradiatedEnergy >= 300L && this.totalIrradiatedEnergy < 1000L) {
+        if (state.getBlock() == Blocks.SAPLING && this.totalIrradiatedEnergy >= 300L &&
+                this.totalIrradiatedEnergy < 1000L) {
             this.world.setBlockState(this.targetPos, state.cycleProperty(BlockSapling.TYPE), 3);
             return;
         }
@@ -187,13 +192,14 @@ public class ClayLaserManager {
         this.totalIrradiatedEnergy = tagCompound.getLong("TotalIrradiatedEnergy");
         this.laserEnergyHistory.clear();
 
-        /* NBTTagLongArray is uncompleted
-        NBTBase raw = tagCompound.getTag("LaserEnergyHistory");
-        if (raw.getId() == 12) {
-            assert raw instanceof NBTTagLongArray;
-            // ...
-        }
-        */
+        /*
+         * NBTTagLongArray is uncompleted
+         * NBTBase raw = tagCompound.getTag("LaserEnergyHistory");
+         * if (raw.getId() == 12) {
+         * assert raw instanceof NBTTagLongArray;
+         * // ...
+         * }
+         */
 
         NBTTagList tagList = tagCompound.getTagList("LaserEnergyHistory", 10);
         for (NBTBase nbt : tagList) {
@@ -207,8 +213,10 @@ public class ClayLaserManager {
     public void writeToNBT(NBTTagCompound tagCompound) {
         tagCompound.setLong("TotalIrradiatedEnergy", this.totalIrradiatedEnergy);
 
-        /* NBTTagLongArray is uncompleted
-        NBTTagLongArray tagList = new NBTTagLongArray(Arrays.stream(this.laserEnergyHistory.toArray(new Long[0])).mapToLong(e -> e).toArray());
+        /*
+         * NBTTagLongArray is uncompleted
+         * NBTTagLongArray tagList = new NBTTagLongArray(Arrays.stream(this.laserEnergyHistory.toArray(new
+         * Long[0])).mapToLong(e -> e).toArray());
          */
 
         NBTTagList tagList = new NBTTagList();

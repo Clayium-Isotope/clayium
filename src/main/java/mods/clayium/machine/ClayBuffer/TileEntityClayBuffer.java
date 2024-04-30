@@ -1,18 +1,20 @@
 package mods.clayium.machine.ClayBuffer;
 
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.INormalInventory;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTier;
+import java.util.stream.IntStream;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.stream.IntStream;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.INormalInventory;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilTier;
 
 public class TileEntityClayBuffer extends TileEntityClayContainer implements INormalInventory {
+
     protected int inventoryX;
     protected int inventoryY;
     protected boolean isBuffer = true;
