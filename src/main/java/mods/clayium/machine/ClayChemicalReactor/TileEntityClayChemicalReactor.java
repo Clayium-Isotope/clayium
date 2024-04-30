@@ -1,17 +1,19 @@
 package mods.clayium.machine.ClayChemicalReactor;
 
+import java.util.List;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To2;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
-import java.util.List;
 
 public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine implements Machine2To2 {
+
     protected static final int resultSlotNum = 2;
 
     public void initParams() {
@@ -19,15 +21,16 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine impl
 
         this.setImportRoutes(NONE_ROUTE, 0, NONE_ROUTE, ENERGY_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.setExportRoutes(0, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
-        this.listSlotsImport.add(new int[]{ Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2 });
-        this.listSlotsImport.add(new int[]{ Machine2To2.MATERIAL_1 });
-        this.listSlotsImport.add(new int[]{ Machine2To2.MATERIAL_2 });
-        this.listSlotsExport.add(new int[]{ Machine2To2.PRODUCT_1, Machine2To2.PRODUCT_2 });
-        this.listSlotsExport.add(new int[]{ Machine2To2.PRODUCT_1 });
-        this.listSlotsExport.add(new int[]{ Machine2To2.PRODUCT_2 });
-        this.maxAutoExtract = new int[]{-1, -1, -1, 1};
-        this.maxAutoInsert = new int[]{-1, -1, -1};
-        this.slotsDrop = new int[]{ Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2, Machine2To2.PRODUCT_1, Machine2To2.PRODUCT_2, this.getEnergySlot() };
+        this.listSlotsImport.add(new int[] { Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2 });
+        this.listSlotsImport.add(new int[] { Machine2To2.MATERIAL_1 });
+        this.listSlotsImport.add(new int[] { Machine2To2.MATERIAL_2 });
+        this.listSlotsExport.add(new int[] { Machine2To2.PRODUCT_1, Machine2To2.PRODUCT_2 });
+        this.listSlotsExport.add(new int[] { Machine2To2.PRODUCT_1 });
+        this.listSlotsExport.add(new int[] { Machine2To2.PRODUCT_2 });
+        this.maxAutoExtract = new int[] { -1, -1, -1, 1 };
+        this.maxAutoInsert = new int[] { -1, -1, -1 };
+        this.slotsDrop = new int[] { Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2, Machine2To2.PRODUCT_1,
+                Machine2To2.PRODUCT_2, this.getEnergySlot() };
         this.autoInsert = true;
         this.autoExtract = true;
     }
@@ -72,13 +75,15 @@ public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine impl
 
     @Override
     public boolean setNewRecipe() {
-        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(Machine2To2.MATERIAL_1), this.getStackInSlot(Machine2To2.MATERIAL_2));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(Machine2To2.MATERIAL_1),
+                this.getStackInSlot(Machine2To2.MATERIAL_2));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = this.doingRecipe.getEnergy();
         this.timeToCraft = this.doingRecipe.getTime();
 
-        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2 + 1);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(),
+                Machine2To2.MATERIAL_1, Machine2To2.MATERIAL_2 + 1);
 
         return true;
     }

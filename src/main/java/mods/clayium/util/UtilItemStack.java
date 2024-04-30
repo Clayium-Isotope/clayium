@@ -1,10 +1,10 @@
 package mods.clayium.util;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import mods.clayium.util.crafting.IItemPattern;
-import mods.clayium.util.crafting.OreDictionaryStack;
-import mods.clayium.util.crafting.SpeciesIngredientFactory;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -12,12 +12,15 @@ import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import mods.clayium.util.crafting.IItemPattern;
+import mods.clayium.util.crafting.OreDictionaryStack;
+import mods.clayium.util.crafting.SpeciesIngredientFactory;
 
 public class UtilItemStack {
+
     @Deprecated // Use ItemStack.areItemsEqual
     public static boolean areItemEqual(ItemStack itemstack1, ItemStack itemstack2) {
         return ItemStack.areItemsEqual(itemstack1, itemstack2);
@@ -49,7 +52,8 @@ public class UtilItemStack {
     }
 
     public static boolean areItemDamageEqualOrDamageable(ItemStack itemstack1, ItemStack itemstack2) {
-        return ItemStack.areItemsEqual(itemstack1, itemstack2) && (areDamageEqual(itemstack1, itemstack2) || itemstack1.getItem().isDamageable());
+        return ItemStack.areItemsEqual(itemstack1, itemstack2) &&
+                (areDamageEqual(itemstack1, itemstack2) || itemstack1.getItem().isDamageable());
     }
 
     /**
@@ -70,10 +74,11 @@ public class UtilItemStack {
 
     /**
      * @return true when stacks' contain item and tag are equal.
-     * Several params are ignored: damage and size.
+     *         Several params are ignored: damage and size.
      */
     public static boolean areItemTagEqual(ItemStack itemstack1, ItemStack itemstack2) {
-        return ItemStack.areItemsEqual(itemstack1, itemstack2) && ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
+        return ItemStack.areItemsEqual(itemstack1, itemstack2) &&
+                ItemStack.areItemStackTagsEqual(itemstack1, itemstack2);
     }
 
     public static boolean haveSameOD(ItemStack itemstack1, ItemStack itemstack2) {
@@ -113,7 +118,7 @@ public class UtilItemStack {
         int[] ids = OreDictionary.getOreIDs(itemstack);
         String[] res = new String[ids.length];
 
-        for(int i = 0; i < ids.length; ++i) {
+        for (int i = 0; i < ids.length; ++i) {
             res[i] = OreDictionary.getOreName(ids[i]);
         }
 
@@ -189,7 +194,8 @@ public class UtilItemStack {
     }
 
     public static List<ItemStack> getItemsFromTag(NBTTagCompound tag) {
-        return tag != null ? UtilCollect.tagList2ItemList(tag.getTagList("Items", Constants.NBT.TAG_COMPOUND)) : new ArrayList<>();
+        return tag != null ? UtilCollect.tagList2ItemList(tag.getTagList("Items", Constants.NBT.TAG_COMPOUND)) :
+                new ArrayList<>();
     }
 
     public static void setItemsToTag(NBTTagCompound tag, List<ItemStack> items) {
@@ -197,8 +203,7 @@ public class UtilItemStack {
         tag.setTag("Items", UtilCollect.items2TagList(items));
     }
 
-    public static ItemStack getItemStack(final JsonObject json, final JsonContext context)
-    {
+    public static ItemStack getItemStack(final JsonObject json, final JsonContext context) {
         final String type = context.appendModId(json.get("type").getAsString());
         if ("minecraft:item".equals(type)) return CraftingHelper.getItemStack(json, context);
         if ("clayium:species".equals(type)) return SpeciesIngredientFactory.getStack(json);

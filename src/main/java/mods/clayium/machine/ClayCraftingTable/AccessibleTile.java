@@ -3,6 +3,7 @@ package mods.clayium.machine.ClayCraftingTable;
 import net.minecraft.tileentity.TileEntity;
 
 public class AccessibleTile<T extends TileEntity> {
+
     public AccessibleTile(T inventory, int start, int width, int height, int x, int y) {
         this.inventory = inventory;
         this.start = start;

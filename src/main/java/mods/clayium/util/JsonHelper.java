@@ -1,23 +1,27 @@
 package mods.clayium.util;
 
-import com.google.gson.*;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.crafting.IRecipeElement;
-import mods.clayium.util.crafting.AmountedIngredient;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.JsonUtils;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.JsonUtils;
+
+import com.google.gson.*;
+
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.util.crafting.AmountedIngredient;
+
 public class JsonHelper {
+
     public static void genItemJson(TierPrefix tier, EnumMachineKind kind, String registerName) {
-        Path path = Paths.get("D:\\clayium\\src\\main\\resources\\assets\\clayium\\models\\item\\machine\\" + registerName + ".json");
+        Path path = Paths.get(
+                "D:\\clayium\\src\\main\\resources\\assets\\clayium\\models\\item\\machine\\" + registerName + ".json");
         if (Files.exists(path)) return;
 
         JsonObject root = new JsonObject();
@@ -40,7 +44,8 @@ public class JsonHelper {
     }
 
     public static void genBlockJsonParent(TierPrefix tier, EnumMachineKind kind, String registerName, String parent) {
-        Path path = Paths.get("D:\\clayium\\src\\main\\resources\\assets\\clayium\\models\\block\\machine\\" + registerName + ".json");
+        Path path = Paths.get("D:\\clayium\\src\\main\\resources\\assets\\clayium\\models\\block\\machine\\" +
+                registerName + ".json");
         if (Files.exists(path)) return;
 
         JsonObject root = new JsonObject();
@@ -62,7 +67,8 @@ public class JsonHelper {
     }
 
     public static void genItemJsonSimple(String registerName) {
-        Path path = Paths.get("D:\\clayium\\src\\main\\resources\\assets\\clayium\\models\\item\\machine\\" + registerName + ".json");
+        Path path = Paths.get(
+                "D:\\clayium\\src\\main\\resources\\assets\\clayium\\models\\item\\machine\\" + registerName + ".json");
         if (Files.exists(path)) return;
 
         JsonObject root = new JsonObject();
@@ -79,7 +85,8 @@ public class JsonHelper {
     }
 
     public static void genStateJsonSimple(String registerName) {
-        Path path = Paths.get("D:\\clayium\\src\\main\\resources\\assets\\clayium\\blockstates\\" + registerName + ".json");
+        Path path = Paths
+                .get("D:\\clayium\\src\\main\\resources\\assets\\clayium\\blockstates\\" + registerName + ".json");
         if (Files.exists(path)) return;
 
         JsonObject root = new JsonObject();
@@ -106,11 +113,13 @@ public class JsonHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static <N extends Number> N readNumeric(JsonElement json, String key, Class<N> primitive) throws JsonSyntaxException {
+    public static <N extends Number> N readNumeric(JsonElement json, String key,
+                                                   Class<N> primitive) throws JsonSyntaxException {
         if (json.isJsonObject() && ((JsonObject) json).has(key)) {
             JsonElement element = ((JsonObject) json).get(key);
             if (!element.isJsonPrimitive()) {
-                throw new JsonSyntaxException("Expected " + key + " to be a Primitive, was " + JsonUtils.toString(element));
+                throw new JsonSyntaxException(
+                        "Expected " + key + " to be a Primitive, was " + JsonUtils.toString(element));
             }
 
             if (primitive == Integer.class) {

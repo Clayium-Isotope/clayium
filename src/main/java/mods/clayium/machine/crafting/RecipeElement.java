@@ -1,8 +1,8 @@
 package mods.clayium.machine.crafting;
 
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
-import mods.clayium.util.UtilLocale;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -12,13 +12,17 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
+import mods.clayium.util.UtilLocale;
 
 // https://forums.minecraftforge.net/topic/69258-1122-custom-irecipe/
 // Extend ShapelessRecipes for JEI CraftingRecipeChecker
 public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
-    private static final RecipeElement FLAT = new RecipeElement(Collections.emptyList(), -1, Collections.emptyList(), -1, -1);
+
+    private static final RecipeElement FLAT = new RecipeElement(Collections.emptyList(), -1, Collections.emptyList(),
+            -1, -1);
+
     public static RecipeElement flat() {
         return FLAT;
     }
@@ -33,10 +37,12 @@ public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
     }
 
     public RecipeElement(List<ItemStack> materialIn, int tier, List<ItemStack> resultIn, long energy, long time) {
-        this(materialIn.stream().map(Ingredient::fromStacks).collect(Collectors.toCollection(NonNullList::create)), tier, resultIn, energy, time);
+        this(materialIn.stream().map(Ingredient::fromStacks).collect(Collectors.toCollection(NonNullList::create)),
+                tier, resultIn, energy, time);
     }
 
-    public RecipeElement(NonNullList<Ingredient> materialIn, int tier, List<ItemStack> resultIn, long energy, long time) {
+    public RecipeElement(NonNullList<Ingredient> materialIn, int tier, List<ItemStack> resultIn, long energy,
+                         long time) {
         super("clayium", ItemStack.EMPTY, materialIn);
         this.tier = tier;
         this.results = resultIn;
@@ -66,7 +72,8 @@ public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
         return this.equals(FLAT);
     }
 
-    private static boolean runner(List<Ingredient> ingredients, NonNullList<ItemStack> invStacks, int ingIdx, LinkedList<Integer> assigned) {
+    private static boolean runner(List<Ingredient> ingredients, NonNullList<ItemStack> invStacks, int ingIdx,
+                                  LinkedList<Integer> assigned) {
         if (ingIdx >= ingredients.size()) {
             return true;
         }
@@ -141,9 +148,9 @@ public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
         if (this.energy < 0L) {
             str = this.time < 0L ? "" : UtilLocale.craftTimeNumeral(this.time) + "t";
         } else {
-            str = this.time < 0L
-                    ? UtilLocale.ClayEnergyNumeral(this.energy) + "CE"
-                    : UtilLocale.ClayEnergyNumeral(this.energy) + "CE/t x " + UtilLocale.craftTimeNumeral(this.time) + "t = " + UtilLocale.ClayEnergyNumeral((double)this.energy * (double)this.time) + "CE";
+            str = this.time < 0L ? UtilLocale.ClayEnergyNumeral(this.energy) + "CE" :
+                    UtilLocale.ClayEnergyNumeral(this.energy) + "CE/t x " + UtilLocale.craftTimeNumeral(this.time) +
+                            "t = " + UtilLocale.ClayEnergyNumeral((double) this.energy * (double) this.time) + "CE";
         }
 
         minecraft.fontRenderer.drawString(str, 6, 45, -16777216);
@@ -156,11 +163,8 @@ public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
         if (!(o instanceof RecipeElement)) return false;
         RecipeElement other = (RecipeElement) o;
 
-        return this.tier == other.tier
-                && this.energy == other.energy
-                && this.time == other.time
-                && this.getIngredients().equals(other.getIngredients())
-                && this.results.equals(other.results);
+        return this.tier == other.tier && this.energy == other.energy && this.time == other.time &&
+                this.getIngredients().equals(other.getIngredients()) && this.results.equals(other.results);
     }
 
     @Override
@@ -170,13 +174,13 @@ public class RecipeElement extends ShapelessRecipes implements IRecipeElement {
         for (Ingredient ingredient : this.getIngredients()) {
             for (ItemStack stack : ingredient.getMatchingStacks()) {
                 if (stack.getItem().getRegistryName() != null)
-                    hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+                    hash = 31 * hash + stack.getItem().getRegistryName().getPath().hashCode();
             }
         }
 
         for (ItemStack stack : this.results) {
             if (stack.getItem().getRegistryName() != null)
-                hash = 31 * hash + stack.getItem().getRegistryName().getResourcePath().hashCode();
+                hash = 31 * hash + stack.getItem().getRegistryName().getPath().hashCode();
         }
 
         return hash;

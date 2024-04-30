@@ -1,13 +1,12 @@
 package mods.clayium.machine.StorageContainer;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
-import mods.clayium.machine.ClayiumMachine.ClayHorizontalNoRecipeMachine;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -25,11 +24,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.util.Constants;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
+import mods.clayium.machine.ClayiumMachine.ClayHorizontalNoRecipeMachine;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 
 @HasOriginalState
 public class StorageContainer extends ClayHorizontalNoRecipeMachine {
@@ -45,7 +48,7 @@ public class StorageContainer extends ClayHorizontalNoRecipeMachine {
         assert Objects.nonNull(tag) : "Always pass";
         if (!tag.hasKey("TileEntityNBTTag", Constants.NBT.TAG_COMPOUND)) return;
 
-        final NBTTagCompound tetag = (NBTTagCompound)tag.getTag("TileEntityNBTTag");
+        final NBTTagCompound tetag = (NBTTagCompound) tag.getTag("TileEntityNBTTag");
 
         for (NBTBase nbt : tetag.getTagList("Items", Constants.NBT.TAG_COMPOUND)) {
             NBTTagCompound tagCompound = (NBTTagCompound) nbt;
@@ -120,8 +123,7 @@ public class StorageContainer extends ClayHorizontalNoRecipeMachine {
         public static List<IProperty<?>> getPropertyList() {
             return Arrays.asList(
                     FACING, IS_PIPE, StorageContainerSize.STORAGE_SIZE,
-                    ARM_UP, ARM_DOWN, ARM_NORTH, ARM_SOUTH, ARM_WEST, ARM_EAST
-            );
+                    ARM_UP, ARM_DOWN, ARM_NORTH, ARM_SOUTH, ARM_WEST, ARM_EAST);
         }
 
         protected BlockStateStorageContainer(Block blockIn, ImmutableMap<IProperty<?>, Comparable<?>> propertiesIn) {

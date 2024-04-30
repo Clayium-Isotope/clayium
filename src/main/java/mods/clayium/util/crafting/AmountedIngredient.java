@@ -1,15 +1,18 @@
 package mods.clayium.util.crafting;
 
-import com.google.gson.JsonElement;
-import mods.clayium.util.JsonHelper;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.JsonContext;
 
-import javax.annotation.Nullable;
+import com.google.gson.JsonElement;
+
+import mods.clayium.util.JsonHelper;
 
 public class AmountedIngredient extends Ingredient {
+
     protected final Ingredient internal;
     protected final int amount;
 
@@ -47,8 +50,8 @@ public class AmountedIngredient extends Ingredient {
 
     @Override
     protected void invalidate() {
-//        this.internal = EMPTY;
-//        this.amount = 0;
+        // this.internal = EMPTY;
+        // this.amount = 0;
         this.matchingStacks = null;
     }
 

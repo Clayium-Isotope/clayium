@@ -5,5 +5,6 @@ import mods.clayium.util.UsedFor;
 
 @UsedFor(UsedFor.Type.Item)
 public interface ITieredItem {
+
     TierPrefix getTier();
 }

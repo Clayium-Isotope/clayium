@@ -1,15 +1,16 @@
 package mods.clayium.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.EnumDyeColor;
+
 import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.BlockTierTied;
 import mods.clayium.block.common.MaterialBlock;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.util.TierPrefix;
-import net.minecraft.block.Block;
-import net.minecraft.item.EnumDyeColor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClayiumBlocks {
     public static void registerBlocks() {
@@ -31,7 +32,6 @@ public class ClayiumBlocks {
 
         blocks.add(AZ91DHull);
         blocks.add(ZK60AHull);
-
 
         resonator.put(TierPrefix.antimatter, new Resonator(0, TierPrefix.antimatter, 1.08D));
         resonator.put(TierPrefix.pureAntimatter, new Resonator(1, TierPrefix.pureAntimatter, 1.1D));

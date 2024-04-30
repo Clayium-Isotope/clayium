@@ -1,9 +1,5 @@
 package mods.clayium.util.crafting;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -14,7 +10,14 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
+import mods.clayium.util.UtilItemStack;
+
 public class ShapelessRecipeFactoryWrapper implements IRecipeFactory {
+
     @Override
     public IRecipe parse(JsonContext context, JsonObject json) {
         String group = JsonUtils.getString(json, "group", "");

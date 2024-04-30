@@ -3,6 +3,7 @@ package mods.clayium.util.crafting;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OreDictionaryStack {
+
     private final int id;
     private final int stackSize;
 

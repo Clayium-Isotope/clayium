@@ -1,10 +1,7 @@
 package mods.clayium.client.render;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.UtilBuilder;
-import mods.clayium.util.UtilRender;
+import java.awt.*;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -19,9 +16,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.UtilBuilder;
+import mods.clayium.util.UtilRender;
 
 /**
  * @see net.minecraft.client.renderer.entity.RenderItemFrame;
@@ -169,7 +171,7 @@ public class TESRInterface extends TileEntitySpecialRenderer<TileEntityGeneric> 
         ItemStack itemstack = UtilBuilder.getItemBlock(core.getWorld(), core.getPos());
 
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)x + 0.5F, (float)y + 0.5F, (float)z + 0.5F);
+        GL11.glTranslatef((float) x + 0.5F, (float) y + 0.5F, (float) z + 0.5F);
         float f = 0.8F;
         switch (mop.sideHit) {
             case UP:

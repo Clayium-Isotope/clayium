@@ -1,12 +1,14 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.common.IMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.common.IMachine;
+
 public abstract class ContainerIMachine extends ContainerTemp {
+
     /**
      * The first index of material
      */

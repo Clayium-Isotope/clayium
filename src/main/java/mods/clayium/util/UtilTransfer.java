@@ -1,8 +1,17 @@
 package mods.clayium.util;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.crafting.AmountedIngredient;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
@@ -20,16 +29,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.crafting.AmountedIngredient;
 
 public class UtilTransfer {
     private static final IInventorySelector defaultSelector = new InventorySelector();
@@ -123,7 +125,7 @@ public class UtilTransfer {
 
         ItemStack res = itemstack.copy();
 
-        for(int k = i; k < j; ++k) {
+        for (int k = i; k < j; ++k) {
             res = produceItemStack(res, inventory, k, inventoryStackLimit);
         }
 
@@ -175,7 +177,7 @@ public class UtilTransfer {
     public static int canProduceItemStack(ItemStack itemstack, List<ItemStack> inventory, int startIncl, int endExcl, int inventoryStackLimit) {
         int rest = 0;
 
-        for(int k = startIncl; k < endExcl; ++k) {
+        for (int k = startIncl; k < endExcl; ++k) {
             rest += canProduceItemStack(itemstack, inventory, k, inventoryStackLimit);
         }
 
@@ -251,7 +253,7 @@ public class UtilTransfer {
     public static ItemStack consumeItemStack(ItemStack itemstack, List<ItemStack> inventory, int i, int j) {
         ItemStack stack = itemstack.copy();
 
-        for(int k = i; k < j; ++k) {
+        for (int k = i; k < j; ++k) {
             stack = consumeItemStack(stack, inventory, k);
         }
 
@@ -316,8 +318,7 @@ public class UtilTransfer {
     public static class InventorySelector implements UtilTransfer.IInventorySelector {
         protected IInventory selected = null;
 
-        public InventorySelector() {
-        }
+        public InventorySelector() {}
 
         public IInventory getSelectedInventory() {
             return this.selected;
@@ -338,10 +339,10 @@ public class UtilTransfer {
             if (!(te instanceof IInventory)) {
                 return null;
             } else {
-                IInventory to = (IInventory)te;
+                IInventory to = (IInventory) te;
                 Block block = world.getBlockState(pos.offset(direction)).getBlock();
                 if (block instanceof BlockChest) {
-                    IInventory chest = ((BlockChest)block).getContainer(world, pos.offset(direction), true);
+                    IInventory chest = ((BlockChest) block).getContainer(world, pos.offset(direction), true);
                     if (chest != null) {
                         to = chest;
                     }
@@ -360,9 +361,9 @@ public class UtilTransfer {
                 if (!(this.selected instanceof ISidedInventory)) {
                     toSlots = new int[this.selected.getSizeInventory()];
 
-                    for(int i = 0; i < this.selected.getSizeInventory(); toSlots[i] = i++);
+                    for (int i = 0; i < this.selected.getSizeInventory(); toSlots[i] = i++);
                 } else {
-                    toSlots = ((ISidedInventory)this.selected).getSlotsForFace(toSide);
+                    toSlots = ((ISidedInventory) this.selected).getSlotsForFace(toSide);
                 }
 
                 return toSlots;
@@ -384,10 +385,10 @@ public class UtilTransfer {
             if (!(te instanceof IInventory)) {
                 return null;
             } else {
-                IInventory from = (IInventory)te;
+                IInventory from = (IInventory) te;
                 Block block = world.getBlockState(pos.offset(direction)).getBlock();
                 if (block instanceof BlockChest) {
-                    IInventory chest = ((BlockChest)block).getContainer(world, pos.offset(direction), true);
+                    IInventory chest = ((BlockChest) block).getContainer(world, pos.offset(direction), true);
                     if (chest != null) {
                         from = chest;
                     }
@@ -406,9 +407,9 @@ public class UtilTransfer {
                 if (!(this.selected instanceof ISidedInventory)) {
                     fromSlots = new int[this.selected.getSizeInventory()];
 
-                    for(int i = 0; i < this.selected.getSizeInventory(); fromSlots[i] = i++);
+                    for (int i = 0; i < this.selected.getSizeInventory(); fromSlots[i] = i++);
                 } else {
-                    fromSlots = ((ISidedInventory)this.selected).getSlotsForFace(fromSide);
+                    fromSlots = ((ISidedInventory) this.selected).getSlotsForFace(fromSide);
                 }
 
                 return fromSlots;

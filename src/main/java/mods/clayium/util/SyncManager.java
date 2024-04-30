@@ -1,19 +1,23 @@
 package mods.clayium.util;
 
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.DimensionManager;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
 
 public class SyncManager {
+
     /**
      * @return := "" | Error Message
-     * <br> Succeed: Empty but not {@code null}
-     * <br> Problem Occurred: Error Message
+     *         <br>
+     *         Succeed: Empty but not {@code null}
+     *         <br>
+     *         Problem Occurred: Error Message
      *
      * @param source the container, which will be the sync source, or null for de-sync.
      */
@@ -51,6 +55,7 @@ public class SyncManager {
     }
 
     public static int[] getIntArrayFromTile(@Nonnull TileEntity tile) {
-        return new int[] { tile.getWorld().provider.getDimension(), tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ() };
+        return new int[] { tile.getWorld().provider.getDimension(), tile.getPos().getX(), tile.getPos().getY(),
+                tile.getPos().getZ() };
     }
 }

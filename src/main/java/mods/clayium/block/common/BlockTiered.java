@@ -1,7 +1,5 @@
 package mods.clayium.block.common;
 
-import mods.clayium.block.itemblock.ItemBlockTiered;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
@@ -9,8 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import mods.clayium.block.itemblock.ItemBlockTiered;
+import mods.clayium.util.TierPrefix;
+
 public class BlockTiered extends ClayiumBlock implements ITieredBlock {
-    protected final TierPrefix tier;
+
+    private final TierPrefix tier;
 
     public BlockTiered(Material material, String modelPath, TierPrefix tier) {
         this(material, modelPath, tier.meta(), tier);

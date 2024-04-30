@@ -1,5 +1,9 @@
 package mods.clayium.util;
 
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -8,11 +12,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 public class UtilCollect {
+
     /**
      * Unknown sized TagList -> ItemStack list<br>
      */
@@ -55,7 +56,7 @@ public class UtilCollect {
         NBTTagList tagList = new NBTTagList();
         if (items == null) return tagList;
 
-        for(int i = 0; i < items.size(); ++i) {
+        for (int i = 0; i < items.size(); ++i) {
             if (items.get(i) != null) {
                 NBTTagCompound tagCompound1 = new NBTTagCompound();
                 tagCompound1.setShort("Slot", (short) i);
@@ -100,6 +101,7 @@ public class UtilCollect {
     }
 
     private static class SliceList<E> extends AbstractList<E> {
+
         private final List<E> refer;
         private final int asZero;
         private final int size;
@@ -140,6 +142,7 @@ public class UtilCollect {
     }
 
     private static class SliceInventory extends AbstractList<ItemStack> {
+
         private final IInventory refer;
         private final int asZero;
         private final int size;

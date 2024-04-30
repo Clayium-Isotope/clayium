@@ -1,11 +1,8 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.IngredientAlways;
+import java.util.Arrays;
+import java.util.Collections;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -15,33 +12,42 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
+
 import org.lwjgl.opengl.GL11;
 
-import java.util.Arrays;
-import java.util.Collections;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.IngredientAlways;
 
 public class KneadingRecipe extends RecipeElement {
-    protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId, "textures/gui/button_.png");
-    private static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, KneadingMethod.UNKNOWN, -1, ItemStack.EMPTY, ItemStack.EMPTY);
+
+    protected static final ResourceLocation buttonTex = new ResourceLocation(ClayiumCore.ModId,
+            "textures/gui/button_.png");
+    private static final KneadingRecipe FLAT = new KneadingRecipe(ItemStack.EMPTY, KneadingMethod.UNKNOWN, -1,
+            ItemStack.EMPTY, ItemStack.EMPTY);
+
     public static KneadingRecipe flat() {
         return FLAT;
     }
 
-    /*private*/ final ItemStack material;
-    /*private*/ final Ingredient tool;
-    /*private*/ final KneadingMethod method;
-    /*private*/ final short time;
-    /*private*/ final ItemStack product;
-    /*private*/ final ItemStack change;
+    /* private */ final ItemStack material;
+    /* private */ final Ingredient tool;
+    /* private */ final KneadingMethod method;
+    /* private */ final short time;
+    /* private */ final ItemStack product;
+    /* private */ final ItemStack change;
 
-    private static final ItemStack rollingPin   = new ItemStack(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE);
-    private static final ItemStack slicer       = new ItemStack(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE);
-    private static final ItemStack spatula      = new ItemStack(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE);
+    private static final ItemStack rollingPin = new ItemStack(ClayiumItems.rollingPin, 1, OreDictionary.WILDCARD_VALUE);
+    private static final ItemStack slicer = new ItemStack(ClayiumItems.slicer, 1, OreDictionary.WILDCARD_VALUE);
+    private static final ItemStack spatula = new ItemStack(ClayiumItems.spatula, 1, OreDictionary.WILDCARD_VALUE);
 
-    private static final Ingredient Always  = new IngredientAlways();
-    private static final Ingredient RP      = Ingredient.fromStacks(rollingPin);
-    private static final Ingredient SL_SP   = Ingredient.fromStacks(slicer, spatula);
-    private static final Ingredient SP      = Ingredient.fromStacks(spatula);
+    private static final Ingredient Always = new IngredientAlways();
+    private static final Ingredient RP = Ingredient.fromStacks(rollingPin);
+    private static final Ingredient SL_SP = Ingredient.fromStacks(slicer, spatula);
+    private static final Ingredient SP = Ingredient.fromStacks(spatula);
 
     public KneadingRecipe(ItemStack material, KneadingMethod method, int time, ItemStack product, ItemStack change) {
         super(material, 0, product, 0, time);
@@ -53,21 +59,26 @@ public class KneadingRecipe extends RecipeElement {
             case Roll:
             case Press:
             default:
-                this.tool = Always; break;
+                this.tool = Always;
+                break;
             case Bend: // 圧延は麺棒
-                this.tool = RP;     break;
+                this.tool = RP;
+                break;
             case CutRect:
             case Slice: // 矩形に打抜くのはスライサーまたはへら
-                this.tool = SL_SP;  break;
+                this.tool = SL_SP;
+                break;
             case CutCircle: // 円形に切り出すのはへら
-                this.tool = SP;     break;
+                this.tool = SP;
+                break;
         }
 
         this.time = (short) time;
         this.product = product;
         this.change = change;
 
-        setRegistryName(ClayiumCore.ModId, this.material.getUnlocalizedName() + "_to_" + this.product.getUnlocalizedName() + this.method.toBeSuffix());
+        setRegistryName(ClayiumCore.ModId, this.material.getTranslationKey() + "_to_" +
+                this.product.getTranslationKey() + this.method.toBeSuffix());
     }
 
     public boolean hasChange() {
@@ -78,7 +89,6 @@ public class KneadingRecipe extends RecipeElement {
         if (this.tool != Always) return ForgeHooks.getContainerItem(tool).copy();
         return tool;
     }
-
 
     @Override
     public boolean isFlat() {
@@ -91,6 +101,7 @@ public class KneadingRecipe extends RecipeElement {
     }
 
     private final NonNullList<Ingredient> materialIng;
+
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.materialIng;
@@ -103,13 +114,16 @@ public class KneadingRecipe extends RecipeElement {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.singletonList(this.material), Arrays.asList(this.tool.getMatchingStacks())));
+        ingredients.setInputLists(VanillaTypes.ITEM,
+                Arrays.asList(Collections.singletonList(this.material), Arrays.asList(this.tool.getMatchingStacks())));
         ingredients.setOutputs(VanillaTypes.ITEM, Arrays.asList(this.product, this.change));
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        minecraft.fontRenderer.drawString("" + this.time, 28 + 16 * this.method.ordinal() + 8 - minecraft.fontRenderer.getStringWidth("" + this.time) / 2, 37 - minecraft.fontRenderer.FONT_HEIGHT, -16777216);
+        minecraft.fontRenderer.drawString("" + this.time,
+                28 + 16 * this.method.ordinal() + 8 - minecraft.fontRenderer.getStringWidth("" + this.time) / 2,
+                37 - minecraft.fontRenderer.FONT_HEIGHT, -16777216);
 
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         minecraft.getTextureManager().bindTexture(buttonTex);

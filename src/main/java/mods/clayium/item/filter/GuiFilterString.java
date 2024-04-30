@@ -1,12 +1,15 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.gui.GuiTemp;
-import net.minecraft.client.gui.GuiTextField;
-import org.lwjgl.input.Keyboard;
-
 import java.io.IOException;
 
+import net.minecraft.client.gui.GuiTextField;
+
+import org.lwjgl.input.Keyboard;
+
+import mods.clayium.gui.GuiTemp;
+
 public class GuiFilterString extends GuiTemp {
+
     protected GuiTextField textField;
 
     public GuiFilterString(ContainerFilterString container) {
@@ -17,7 +20,8 @@ public class GuiFilterString extends GuiTemp {
     public void initGui() {
         super.initGui();
 
-        this.textField = new GuiTextField(0, this.fontRenderer, this.guiLeft + 12, this.guiTop + 18, this.xSize - 24, 12);
+        this.textField = new GuiTextField(0, this.fontRenderer, this.guiLeft + 12, this.guiTop + 18, this.xSize - 24,
+                12);
         this.textField.setTextColor(-1);
         this.textField.setDisabledTextColour(-1);
         this.textField.setEnableBackgroundDrawing(true);
@@ -35,8 +39,8 @@ public class GuiFilterString extends GuiTemp {
     @Override
     protected void keyTyped(char typedChar, int keyCode) {
         if (keyCode == Keyboard.KEY_ESCAPE) {
-// if you want Original's behavior, uncomment out.
-//            ((ContainerFilterString) this.inventorySlots).setFilterString(this.textField.getText().trim());
+            // if you want Original's behavior, uncomment out.
+            // ((ContainerFilterString) this.inventorySlots).setFilterString(this.textField.getText().trim());
 
             this.mc.displayGuiScreen(null);
         } else if (keyCode == Keyboard.KEY_RETURN && !this.textField.isFocused()) {

@@ -1,6 +1,7 @@
 package mods.clayium.util;
 
-import mods.clayium.core.ClayiumCore;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
@@ -9,13 +10,14 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
+import mods.clayium.core.ClayiumCore;
 
 public class UtilLocale {
+
     // 'long' type can't represent numerals above Tera in the SI prefix
     // FIXME if anyone contains much CE greater than (LONG_MAX / 1,000,000), how to represent?
-    static String[] CENumerals = new String[]{"u", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R"};
-    static String[] SNumerals = new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R"};
+    static String[] CENumerals = new String[] { "u", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R" };
+    static String[] SNumerals = new String[] { "", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R" };
     private static final int maxLineTooltip = 12;
 
     public static String ClayEnergyNumeral(double ce, boolean lessInfo) {
@@ -31,9 +33,9 @@ public class UtilLocale {
             s = "-";
         }
 
-        int k = (int)Math.floor(Math.log10(n));
+        int k = (int) Math.floor(Math.log10(n));
         int p = Math.min(k / 3, CENumerals.length - 1);
-        int d = (int)(n * 1000.0D / Math.pow(10.0D, p * 3));
+        int d = (int) (n * 1000.0D / Math.pow(10.0D, p * 3));
 
         return s + ClayEnergyNumeral(d, p, p == 0 || lessInfo);
     }
@@ -55,9 +57,9 @@ public class UtilLocale {
             s = "-";
         }
 
-        int k = (int)Math.floor(Math.log10((double)n));
+        int k = (int) Math.floor(Math.log10((double) n));
         int p = Math.min(k / 3, CENumerals.length - 1);
-        int d = (int)((double)n * 1000.0D / Math.pow(10.0D, (double)(p * 3)));
+        int d = (int) ((double) n * 1000.0D / Math.pow(10.0D, (double) (p * 3)));
 
         return s + ClayEnergyNumeral(d, p, p == 0 || lessInfo);
     }
@@ -91,17 +93,18 @@ public class UtilLocale {
             s = "-";
         }
 
-        int k = (int)Math.floor(Math.log10((double)n));
+        int k = (int) Math.floor(Math.log10((double) n));
         if (k < 5) {
             return s + n;
         }
 
         int p = Math.min(k / 3, SNumerals.length - 1);
-        int d = (int)((double)n / Math.pow(10.0D, (double)(k - 2)));
+        int d = (int) ((double) n / Math.pow(10.0D, (double) (k - 2)));
         boolean flag1 = flag && k % 3 <= 1 && d % 10 == 0;
         boolean flag2 = flag1 && k % 3 == 0 && d / 10 % 10 == 0;
 
-        return s + (d / 100) + (flag2 ? "" : (k % 3 == 0 ? "." : "") + (d / 10 % 10)) + (flag1 ? "" : (k % 3 == 1 ? "." : "") + (d % 10)) + SNumerals[p];
+        return s + (d / 100) + (flag2 ? "" : (k % 3 == 0 ? "." : "") + (d / 10 % 10)) +
+                (flag1 ? "" : (k % 3 == 1 ? "." : "") + (d % 10)) + SNumerals[p];
     }
 
     public static String StackSizeNumeral(long stackSize) {
@@ -121,14 +124,14 @@ public class UtilLocale {
             return String.format("%.2f", resonance);
         }
 
-        return resonance < 1000.0D ? String.format("%.1f", resonance) : StackSizeNumeral((long)resonance);
+        return resonance < 1000.0D ? String.format("%.1f", resonance) : StackSizeNumeral((long) resonance);
     }
 
     public static String laserNumeral(long laser) {
         return StackSizeNumeral(laser);
     }
 
-    @SideOnly( Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public static String laserGui(long laser) {
         return I18n.format("gui.Common.clayLaser", laserNumeral(laser));
     }
@@ -177,7 +180,7 @@ public class UtilLocale {
         return I18n.hasKey(key);
     }
 
-    public static String localizeAndFormat(String key, Object ...args) {
+    public static String localizeAndFormat(String key, Object... args) {
         String unsafe = I18n.format(key, args);
 
         if (unsafe.equals(key))
@@ -192,7 +195,7 @@ public class UtilLocale {
         return unsafe;
     }
 
-    public static ITextComponent localizeAndFormatComponent(String key, Object ...args) {
+    public static ITextComponent localizeAndFormatComponent(String key, Object... args) {
         String unsafe = I18n.format(key, args);
 
         if (unsafe.equals(key))
@@ -208,12 +211,12 @@ public class UtilLocale {
     }
 
     @Deprecated // for Server
-    public static String getLocalizedText(String key, Object ...args) {
+    public static String getLocalizedText(String key, Object... args) {
         return getLocalizedTextComponent(key, args).getFormattedText().trim();
     }
 
     @Deprecated // for Server
-    public static TextComponentTranslation getLocalizedTextComponent(String key, Object ...args) {
+    public static TextComponentTranslation getLocalizedTextComponent(String key, Object... args) {
         return new TextComponentTranslation(key, args);
     }
 }

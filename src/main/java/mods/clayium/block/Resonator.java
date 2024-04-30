@@ -1,12 +1,9 @@
 package mods.clayium.block;
 
-import mods.clayium.block.common.BlockTiered;
-import mods.clayium.block.common.IItemBlockHolder;
-import mods.clayium.block.itemblock.ItemBlockTierNamed;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.CAMachine.ResonanceHandler;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilLocale;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,8 +15,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.List;
+import mods.clayium.block.common.BlockTiered;
+import mods.clayium.block.common.IItemBlockHolder;
+import mods.clayium.block.itemblock.ItemBlockTierNamed;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.CAMachine.ResonanceHandler;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilLocale;
 
 public class Resonator extends BlockTiered implements CAResonator, IItemBlockHolder {
     static final int RESONATE_RANGE = ResonanceHandler.RESONATE_RANGE;

@@ -1,11 +1,12 @@
 package mods.clayium.util;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
-import javax.annotation.Nullable;
-
 public class IngredientAlways extends Ingredient {
+
     @Override
     public ItemStack[] getMatchingStacks() {
         return new ItemStack[] { ItemStack.EMPTY };

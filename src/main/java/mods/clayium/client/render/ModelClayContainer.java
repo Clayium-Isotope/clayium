@@ -1,6 +1,5 @@
 package mods.clayium.client.render;
 
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.PositionTextureVertex;
@@ -10,7 +9,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+
 public class ModelClayContainer extends ModelBase {
+
     private static final float pipeWidth = 0.1875F;
 
     // always should reset them
@@ -68,12 +70,18 @@ public class ModelClayContainer extends ModelBase {
         ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
 
         GlStateManager.popMatrix();
     }
@@ -83,19 +91,21 @@ public class ModelClayContainer extends ModelBase {
 
         ptv0 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv1 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv2 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 1.0d,             0.5d - pipeWidth), 0f, 0f);
-        ptv3 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 1.0d,             0.5d + pipeWidth), 0f, 0f);
+        ptv2 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 1.0d, 0.5d - pipeWidth), 0f, 0f);
+        ptv3 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 1.0d, 0.5d + pipeWidth), 0f, 0f);
         ptv4 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv5 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 1.0d,             0.5d - pipeWidth), 0f, 0f);
-        ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 1.0d,             0.5d + pipeWidth), 0f, 0f);
+        ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 1.0d, 0.5d - pipeWidth), 0f, 0f);
+        ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 1.0d, 0.5d + pipeWidth), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
 
         GlStateManager.popMatrix();
     }
@@ -103,21 +113,27 @@ public class ModelClayContainer extends ModelBase {
     public void renderPipeUp(BufferBuilder builder) {
         GlStateManager.pushMatrix();
 
-        ptv0 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.0d,             0.5d - pipeWidth), 0f, 0f);
-        ptv1 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.0d,             0.5d + pipeWidth), 0f, 0f);
+        ptv0 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.0d, 0.5d - pipeWidth), 0f, 0f);
+        ptv1 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.0d, 0.5d + pipeWidth), 0f, 0f);
         ptv2 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv3 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv4 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.0d,             0.5d - pipeWidth), 0f, 0f);
-        ptv5 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.0d,             0.5d + pipeWidth), 0f, 0f);
+        ptv4 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.0d, 0.5d - pipeWidth), 0f, 0f);
+        ptv5 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.0d, 0.5d + pipeWidth), 0f, 0f);
         ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 5, 11, 11, 16, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 5, 11, 11, 16, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 5, 11, 11, 16, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 5, 11, 11, 16, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 5, 11, 11, 16, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 5, 11, 11, 16, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 5, 11, 11, 16, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 5, 11, 11, 16, 16, 16).draw(builder,
+                1f);
 
         GlStateManager.popMatrix();
     }
@@ -125,21 +141,25 @@ public class ModelClayContainer extends ModelBase {
     public void renderPipeSouth(BufferBuilder builder) {
         GlStateManager.pushMatrix();
 
-        ptv0 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.0d            ), 0f, 0f);
+        ptv0 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.0d), 0f, 0f);
         ptv1 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv2 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.0d            ), 0f, 0f);
+        ptv2 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.0d), 0f, 0f);
         ptv3 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv4 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.0d            ), 0f, 0f);
+        ptv4 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.0d), 0f, 0f);
         ptv5 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.0d            ), 0f, 0f);
+        ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.0d), 0f, 0f);
         ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 5, 11, 11, 16, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 11, 5, 16, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 5, 11, 11, 16, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 11, 5, 16, 11, 16, 16).draw(builder,
+                1f);
 
         GlStateManager.popMatrix();
     }
@@ -148,20 +168,24 @@ public class ModelClayContainer extends ModelBase {
         GlStateManager.pushMatrix();
 
         ptv0 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv1 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 1.0d            ), 0f, 0f);
+        ptv1 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 1.0d), 0f, 0f);
         ptv2 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv3 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 1.0d            ), 0f, 0f);
+        ptv3 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 1.0d), 0f, 0f);
         ptv4 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv5 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 1.0d            ), 0f, 0f);
+        ptv5 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 1.0d), 0f, 0f);
         ptv6 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 1.0d            ), 0f, 0f);
+        ptv7 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 1.0d), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 5, 11, 11, 16, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 11, 5, 16, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 5, 11, 11, 16, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 5, 0, 11, 5, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 11, 5, 16, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
 
         GlStateManager.popMatrix();
     }
@@ -169,21 +193,24 @@ public class ModelClayContainer extends ModelBase {
     public void renderPipeWest(BufferBuilder builder) {
         GlStateManager.pushMatrix();
 
-        ptv0 = new PositionTextureVertex(new Vec3d(0.0d,             0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv1 = new PositionTextureVertex(new Vec3d(0.0d,             0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv2 = new PositionTextureVertex(new Vec3d(0.0d,             0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv3 = new PositionTextureVertex(new Vec3d(0.0d,             0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
+        ptv0 = new PositionTextureVertex(new Vec3d(0.0d, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
+        ptv1 = new PositionTextureVertex(new Vec3d(0.0d, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
+        ptv2 = new PositionTextureVertex(new Vec3d(0.0d, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
+        ptv3 = new PositionTextureVertex(new Vec3d(0.0d, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
         ptv4 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv5 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
         ptv6 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv7 = new PositionTextureVertex(new Vec3d(0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 11, 5, 16, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 11, 5, 16, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
 
         GlStateManager.popMatrix();
     }
@@ -195,17 +222,22 @@ public class ModelClayContainer extends ModelBase {
         ptv1 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
         ptv2 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
         ptv3 = new PositionTextureVertex(new Vec3d(0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv4 = new PositionTextureVertex(new Vec3d(1.0d,             0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv5 = new PositionTextureVertex(new Vec3d(1.0d,             0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
-        ptv6 = new PositionTextureVertex(new Vec3d(1.0d,             0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
-        ptv7 = new PositionTextureVertex(new Vec3d(1.0d,             0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
+        ptv4 = new PositionTextureVertex(new Vec3d(1.0d, 0.5d - pipeWidth, 0.5d - pipeWidth), 0f, 0f);
+        ptv5 = new PositionTextureVertex(new Vec3d(1.0d, 0.5d - pipeWidth, 0.5d + pipeWidth), 0f, 0f);
+        ptv6 = new PositionTextureVertex(new Vec3d(1.0d, 0.5d + pipeWidth, 0.5d - pipeWidth), 0f, 0f);
+        ptv7 = new PositionTextureVertex(new Vec3d(1.0d, 0.5d + pipeWidth, 0.5d + pipeWidth), 0f, 0f);
 
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv2, ptv3, ptv7}, 11, 5, 16, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv5, ptv1, ptv0, ptv4}, 11, 5, 16, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv2, ptv6, ptv4, ptv0}, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv7, ptv3, ptv1, ptv5}, 11, 5, 16, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv3, ptv2, ptv0, ptv1}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
-        new TexturedQuad(new PositionTextureVertex[] {ptv6, ptv7, ptv5, ptv4}, 5, 5, 11, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv2, ptv3, ptv7 }, 11, 5, 16, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv5, ptv1, ptv0, ptv4 }, 11, 5, 16, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv2, ptv6, ptv4, ptv0 }, 0, 5, 5, 11, 16, 16).draw(builder, 1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv7, ptv3, ptv1, ptv5 }, 11, 5, 16, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv3, ptv2, ptv0, ptv1 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
+        new TexturedQuad(new PositionTextureVertex[] { ptv6, ptv7, ptv5, ptv4 }, 5, 5, 11, 11, 16, 16).draw(builder,
+                1f);
 
         GlStateManager.popMatrix();
     }

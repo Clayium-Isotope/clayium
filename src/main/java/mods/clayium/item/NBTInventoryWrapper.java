@@ -9,6 +9,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class NBTInventoryWrapper extends InventoryBasic implements INBTSerializable<NBTTagCompound> {
+
     protected NBTTagCompound reference;
 
     protected NBTInventoryWrapper(NBTTagCompound tagCompound, String title, int sizeInventory) {

@@ -1,14 +1,16 @@
 package mods.clayium.machine.ClayCentrifuge;
 
+import net.minecraft.entity.player.InventoryPlayer;
+
 import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine1ToSome;
-import net.minecraft.entity.player.InventoryPlayer;
 
 public class ContainerClayCentrifuge extends ContainerIMachine {
+
     protected int resultSlotNum;
 
     public ContainerClayCentrifuge(InventoryPlayer player, Machine1ToSome tile) {
@@ -22,10 +24,12 @@ public class ContainerClayCentrifuge extends ContainerIMachine {
     }
 
     public void setMachineInventorySlots(InventoryPlayer player) {
-        this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, 0, 44, 35, RectangleTexture.LargeSlotTexture));
+        this.addMachineSlotToContainer(
+                new SlotWithTexture(this.tileEntity, 0, 44, 35, RectangleTexture.LargeSlotTexture));
 
-        for(int i = 0; i < this.resultSlotNum; ++i) {
-            this.addMachineSlotToContainer(new SlotWithTexture(this.tileEntity, i + 1, 116, 35 + 18 * i - 9 * (this.resultSlotNum - 1)));
+        for (int i = 0; i < this.resultSlotNum; ++i) {
+            this.addMachineSlotToContainer(
+                    new SlotWithTexture(this.tileEntity, i + 1, 116, 35 + 18 * i - 9 * (this.resultSlotNum - 1)));
         }
 
         if (IClayEnergyConsumer.hasClayEnergy(this.tileEntity))

@@ -1,13 +1,15 @@
 package mods.clayium.util.crafting;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.util.TierPrefix;
-import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class KitchenWithRecipe<RecipeType extends IRecipeElement> extends Kitchen {
+
     protected final ClayiumRecipe recipes;
     protected final RecipeType flat;
     protected final TierPrefix machineTier;
@@ -44,7 +46,7 @@ public abstract class KitchenWithRecipe<RecipeType extends IRecipeElement> exten
         this.debtEnergy = this.currentRecipe.getEnergy();
         this.timeToCraft = this.currentRecipe.getTime();
         if (this.canCraft() && this.canProceedCraft()) {
-//            ClayiumCore.logger.info("[KitchenWithRecipe] Set New Recipe: true");
+            // ClayiumCore.logger.info("[KitchenWithRecipe] Set New Recipe: true");
             this.consumeMaterial();
             return true;
         }

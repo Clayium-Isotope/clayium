@@ -1,19 +1,21 @@
 package mods.clayium.machine.ClayDistributor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TileEntityClayDistributor extends TileEntityClayContainer {
+
     public int inventoryX = 0;
     public int inventoryY = 0;
     public int invSectorX = 0;
@@ -68,7 +70,7 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
         int[] slots = new int[slotNum];
         int[] slots2 = new int[slotNum];
 
-        for(int i = 0; i < slots.length; ++i) {
+        for (int i = 0; i < slots.length; ++i) {
             slots[i] = i;
             slots2[i] = slots.length - i - 1;
         }
@@ -79,7 +81,7 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        for(int i = 0; i < this.getListSlotsImport().size(); ++i) {
+        for (int i = 0; i < this.getListSlotsImport().size(); ++i) {
             for (int j : this.getListSlotsImport().get(i)) {
                 if (j == slot) return true;
             }
@@ -95,13 +97,13 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
             return;
         }
 
-//        if (this.sectorPopFrom >= this.invSectorX * this.invSectorY) {
-//            this.sectorPopFrom = 0;
-//        }
-//
-//        if (this.sectorPutInto >= this.invSectorX * this.invSectorY) {
-//            this.sectorPutInto = 0;
-//        }
+        // if (this.sectorPopFrom >= this.invSectorX * this.invSectorY) {
+        // this.sectorPopFrom = 0;
+        // }
+        //
+        // if (this.sectorPutInto >= this.invSectorX * this.invSectorY) {
+        // this.sectorPutInto = 0;
+        // }
 
         boolean flag;
         boolean syncFlag = false;
@@ -146,7 +148,7 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
         }
 
         if (syncFlag) {
-//            this.setSyncFlag();
+            // this.setSyncFlag();
         }
 
         super.update();
@@ -158,14 +160,16 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
 
     @Override
     protected void doAutoTakeOut() {
-//        this.setSyncFlag();
+        // this.setSyncFlag();
 
         int max = this.maxAutoInsertDefault;
 
         // D U F B L R,D U F B L R
-        // skip=4 |  limit=6  |
+        // skip=4 | limit=6 |
         List<EnumSide> sides = Stream.concat(Stream.of(EnumSide.values()), Stream.of(EnumSide.values()))  // Copy twice
-                .limit(this.lastReachedSide + EnumSide.VALUES.length).skip(this.lastReachedSide)  // Slice.  on py: arr[startSide : startSide+6]
+                .limit(this.lastReachedSide + EnumSide.VALUES.length).skip(this.lastReachedSide)  // Slice. on py:
+                                                                                                  // arr[startSide :
+                                                                                                  // startSide+6]
                 .filter(side -> {  // Filtering
                     int route = this.getExportRoute(side);
                     return route >= 0 && route < this.getListSlotsExport().size();
@@ -173,7 +177,8 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
                 .collect(Collectors.toList());
 
         for (EnumSide side : sides) {
-            if (UtilTransfer.insert(this, this.getListSlotsExport().get(this.getExportRoute(side)), UtilDirection.getSideOfDirection(this.getFront(), side), 1) == 0) {
+            if (UtilTransfer.insert(this, this.getListSlotsExport().get(this.getExportRoute(side)),
+                    UtilDirection.getSideOfDirection(this.getFront(), side), 1) == 0) {
                 if ((--max) <= 0) {
                     this.lastReachedSide = side.ordinal();
                     return;
@@ -200,14 +205,14 @@ public class TileEntityClayDistributor extends TileEntityClayContainer {
     public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
         super.writeMoreToNBT(tagCompound);
 
-        tagCompound.setShort("StartSide", (short)this.lastReachedSide);
-        tagCompound.setShort("AutoInsertColony", (short)this.sectorPutInto);
-        tagCompound.setShort("AutoExtractColony", (short)this.sectorPopFrom);
+        tagCompound.setShort("StartSide", (short) this.lastReachedSide);
+        tagCompound.setShort("AutoInsertColony", (short) this.sectorPutInto);
+        tagCompound.setShort("AutoExtractColony", (short) this.sectorPopFrom);
         tagCompound.setBoolean("AutoInsertDelayFlag", this.autoInsertDelayFlag);
-        tagCompound.setShort("InventoryX", (short)this.inventoryX);
-        tagCompound.setShort("InventoryY", (short)this.inventoryY);
-        tagCompound.setShort("InventoryColonyX", (short)this.invSectorX);
-        tagCompound.setShort("InventoryColonyY", (short)this.invSectorY);
+        tagCompound.setShort("InventoryX", (short) this.inventoryX);
+        tagCompound.setShort("InventoryY", (short) this.inventoryY);
+        tagCompound.setShort("InventoryColonyX", (short) this.invSectorX);
+        tagCompound.setShort("InventoryColonyY", (short) this.invSectorY);
 
         return tagCompound;
     }

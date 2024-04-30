@@ -1,13 +1,9 @@
 package mods.clayium.machine.QuartzCrucible;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.item.common.ClayiumShape;
-import mods.clayium.machine.ClayContainer.ClayContainer;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilItemStack;
+import java.util.Optional;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -22,11 +18,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-import javax.annotation.Nullable;
-import java.util.Optional;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilItemStack;
 
 @HasOriginalState
 public class QuartzCrucible extends ClayContainer {
+
     public QuartzCrucible() {
         super(Material.GLASS, TileEntityQuartzCrucible::new, "quartz_crucible", -1, TierPrefix.advanced);
         this.setSoundType(SoundType.GLASS);
@@ -36,7 +40,7 @@ public class QuartzCrucible extends ClayContainer {
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
         if (entity instanceof EntityItem) {
             ItemStack itemStack = ((EntityItem) entity).getItem();
             ItemStack ingot = ClayiumMaterials.get(ClayiumMaterial.impureSilicon, ClayiumShape.ingot);
@@ -82,12 +86,14 @@ public class QuartzCrucible extends ClayContainer {
     }
 
     private static class QuartzCrucibleStateContainer extends BlockStateContainer {
+
         public QuartzCrucibleStateContainer(Block blockIn) {
             super(blockIn, BlockStateQuartzCrucible.LEVEL);
         }
 
         @Override
-        protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties, @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
+        protected StateImplementation createState(Block block, ImmutableMap<IProperty<?>, Comparable<?>> properties,
+                                                  @Nullable ImmutableMap<IUnlistedProperty<?>, Optional<?>> unlistedProperties) {
             return new BlockStateQuartzCrucible(block, properties);
         }
     }

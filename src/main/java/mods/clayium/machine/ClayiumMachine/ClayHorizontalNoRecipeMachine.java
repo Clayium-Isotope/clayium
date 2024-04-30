@@ -1,5 +1,15 @@
 package mods.clayium.machine.ClayiumMachine;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
@@ -29,7 +39,7 @@ public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
 
-        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getResourcePath());
+        JsonHelper.genItemJson(tier, kind, this.getRegistryName().getPath());
     }
 
     public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {

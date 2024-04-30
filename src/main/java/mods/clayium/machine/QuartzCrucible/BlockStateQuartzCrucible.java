@@ -1,6 +1,11 @@
 package mods.clayium.machine.QuartzCrucible;
 
-import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.properties.IProperty;
@@ -14,12 +19,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.google.common.collect.ImmutableMap;
 
 public class BlockStateQuartzCrucible extends BlockStateContainer.StateImplementation {
+
     public static final PropertyInteger LEVEL = PropertyInteger.create("level", 0, 9);
     public static final AxisAlignedBB CRUCIBLE_AABB = new AxisAlignedBB(0.0d, 0.0d, 0.0d, 1.0d, 0.75d, 1.0d);
     protected AxisAlignedBB currentAABB = CRUCIBLE_AABB;
@@ -29,11 +32,15 @@ public class BlockStateQuartzCrucible extends BlockStateContainer.StateImplement
     }
 
     /**
-     * Reproduction of protected {@link Block#addCollisionBoxToList(BlockPos, AxisAlignedBB, List, AxisAlignedBB)} behavior as done in {@link BlockStairs}.
+     * Reproduction of protected {@link Block#addCollisionBoxToList(BlockPos, AxisAlignedBB, List, AxisAlignedBB)}
+     * behavior as done in {@link BlockStairs}.
      */
     @Override
-    public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
-        collidingBoxes.addAll(getAABBList().stream().map(e -> e.offset(pos)).filter(entityBox::intersects).collect(Collectors.toList()));
+    public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+                                      List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn,
+                                      boolean isActualState) {
+        collidingBoxes.addAll(getAABBList().stream().map(e -> e.offset(pos)).filter(entityBox::intersects)
+                .collect(Collectors.toList()));
     }
 
     private static List<AxisAlignedBB> getAABBList() {

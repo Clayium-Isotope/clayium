@@ -1,6 +1,8 @@
 package mods.clayium.block.tile;
 
-import mods.clayium.util.TierPrefix;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -19,10 +21,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-import java.util.List;
-import java.util.Random;
+import mods.clayium.util.TierPrefix;
 
 public abstract class TileEntityGeneric extends TileEntity implements IInventory {
+
     protected static final Random random = new Random();
     protected NonNullList<ItemStack> containerItemStacks = NonNullList.withSize(0, ItemStack.EMPTY);
     private String customName;
@@ -39,7 +41,8 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
         return false;
     }
 
-    public final void getDrops(List<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public final void getDrops(List<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
+                               int fortune) {
         drops.add(getNormalDrop(state, fortune));
         addSpecialDrops(drops);
     }
@@ -57,17 +60,28 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
 
     /**
      * Tile Entity Type:
-     * <br>1: Mob Spawner
-     * <br>2: Command Block
-     * <br>3: Beacon
-     * <br>4: Skull
-     * <br>5: Flower Pot
-     * <br>6: Banner
-     * <br>7: Structure Block
-     * <br>8: End Gate Way
-     * <br>9: Sign
-     * <br>10: Shulker Box
-     * <br>11: Bed
+     * <br>
+     * 1: Mob Spawner
+     * <br>
+     * 2: Command Block
+     * <br>
+     * 3: Beacon
+     * <br>
+     * 4: Skull
+     * <br>
+     * 5: Flower Pot
+     * <br>
+     * 6: Banner
+     * <br>
+     * 7: Structure Block
+     * <br>
+     * 8: End Gate Way
+     * <br>
+     * 9: Sign
+     * <br>
+     * 10: Shulker Box
+     * <br>
+     * 11: Bed
      *
      * @see net.minecraft.client.network.NetHandlerPlayClient#handleUpdateTileEntity
      */
@@ -88,7 +102,8 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     public void markDirty() {
         if (!this.getWorld().isRemote) {
             this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), this.getPos());
-//            this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()), this.getWorld().getBlockState(this.getPos()), 3);
+            // this.getWorld().notifyBlockUpdate(this.getPos(), this.getWorld().getBlockState(this.getPos()),
+            // this.getWorld().getBlockState(this.getPos()), 3);
         }
 
         super.markDirty();
@@ -183,14 +198,10 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
-
-    }
+    public void openInventory(EntityPlayer player) {}
 
     @Override
-    public void closeInventory(EntityPlayer player) {
-
-    }
+    public void closeInventory(EntityPlayer player) {}
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -203,9 +214,7 @@ public abstract class TileEntityGeneric extends TileEntity implements IInventory
     }
 
     @Override
-    public void setField(int id, int value) {
-
-    }
+    public void setField(int id, int value) {}
 
     @Override
     public int getFieldCount() {

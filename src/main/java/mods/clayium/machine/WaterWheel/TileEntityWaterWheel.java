@@ -1,9 +1,5 @@
 package mods.clayium.machine.WaterWheel;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTier;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,15 +8,22 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilTier;
+
 public class TileEntityWaterWheel extends TileEntityGeneric {
+
     public int progress = 0;
     public int progressEfficiency = 1000;
     protected static int progressMax = 20000;
     private TierPrefix tier;
 
     public void initParams() {
-        this.progressEfficiency = (int)((double)this.progressEfficiency * Math.pow(Math.max(this.tier.meta(), 1.0D), 3.0D));
-        this.slotsDrop = new int[]{0};
+        this.progressEfficiency = (int) ((double) this.progressEfficiency *
+                Math.pow(Math.max(this.tier.meta(), 1.0D), 3.0D));
+        this.slotsDrop = new int[] { 0 };
     }
 
     @Override
@@ -48,7 +51,8 @@ public class TileEntityWaterWheel extends TileEntityGeneric {
             return;
         }
 
-        this.progress = (int)((double)this.progress + (double)this.progressEfficiency * Math.pow(Math.max(this.tier.meta(), 1.0D), 3.0D));
+        this.progress = (int) ((double) this.progress +
+                (double) this.progressEfficiency * Math.pow(Math.max(this.tier.meta(), 1.0D), 3.0D));
         if (this.progress < progressMax) {
             return;
         }
@@ -63,22 +67,22 @@ public class TileEntityWaterWheel extends TileEntityGeneric {
     }
 
     public double getProgress() {
-        return (double)this.progress / (double)progressMax;
+        return (double) this.progress / (double) progressMax;
     }
 
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     public void emitEnergy() {
         for (EnumFacing direction : EnumFacing.VALUES) {
             TileEntity te = this.world.getTileEntity(this.pos.offset(direction));
-            if (te != null && te instanceof TileEntityClayiumMachine
-                    && UtilTier.acceptWaterWheel(((TileEntityClayiumMachine) te).getHullTier())
-                    && (double) ((TileEntityClayiumMachine) te).containEnergy().get() < 5.0D * Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D)) {
-                ((TileEntityClayiumMachine) te).containEnergy().increase((long) Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D));
+            if (te != null && te instanceof TileEntityClayiumMachine &&
+                    UtilTier.acceptWaterWheel(((TileEntityClayiumMachine) te).getHullTier()) &&
+                    (double) ((TileEntityClayiumMachine) te).containEnergy().get() <
+                            5.0D * Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D)) {
+                ((TileEntityClayiumMachine) te).containEnergy()
+                        .increase((long) Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D));
                 te.markDirty();
             }
         }

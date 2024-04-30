@@ -1,11 +1,11 @@
 package mods.clayium.util;
 
-import mods.clayium.item.common.ClayiumMaterial;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.stream.Collectors;
+
+import mods.clayium.item.common.ClayiumMaterial;
 
 /**
  * tier = ordinal - 1
@@ -77,7 +77,7 @@ public enum TierPrefix {
         }
     }
 
-    public static Iterable<TierPrefix> makeList(int ...tiers) {
+    public static Iterable<TierPrefix> makeList(int... tiers) {
         return Arrays.stream(tiers)
                 .mapToObj(TierPrefix::get)
                 .collect(Collectors.toList());

@@ -1,9 +1,5 @@
 package mods.clayium.machine.ClayCraftingTable;
 
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayContainer.ClayContainer;
-import mods.clayium.util.TierPrefix;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -16,6 +12,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.util.TierPrefix;
 
 @HasOriginalState
 public class ClayCraftingTable extends ClayContainer {

@@ -1,12 +1,13 @@
 package mods.clayium.machine.crafting;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-
 import java.util.Map;
 import java.util.function.Predicate;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+
 class SmeltingRecipe extends ClayiumRecipes.SimpleMachineRecipe {
+
     private static final int tierSmelting = 0;
     private static final int energySmelting = 4;
     private static final int timeSmelting = 200;

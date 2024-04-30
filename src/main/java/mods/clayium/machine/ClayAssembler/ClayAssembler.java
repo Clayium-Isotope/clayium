@@ -9,6 +9,7 @@ import mods.clayium.util.TierPrefix;
 import java.util.function.Supplier;
 
 public class ClayAssembler extends ClayiumMachine {
+
     public ClayAssembler(EnumMachineKind kind, TierPrefix tier) {
         super(kind, "", tier, TileEntityClayAssembler::new, GuiHandler.GuiIdClayAssembler);
     }

@@ -1,16 +1,18 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.machine.crafting.ClayiumRecipe;
-import mods.clayium.machine.crafting.IRecipeElement;
-import mods.clayium.util.UsedFor;
-import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.item.ItemStack;
+
+import mods.clayium.machine.crafting.ClayiumRecipe;
+import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.util.UsedFor;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider {
@@ -55,16 +57,16 @@ public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeP
     @Nullable
     static <T extends IRecipeElement> int[] getCraftPermutation(ClayiumRecipeProvider<T> provider, ItemStack mat1, ItemStack mat2) {
         if (provider.canCraft(Arrays.asList(mat1, mat2)))
-            return new int[]{ 0, 1 };
+            return new int[] { 0, 1 };
 
         if (provider.canCraft(Arrays.asList(mat2, mat1)))
-            return new int[]{ 1, 0 };
+            return new int[] { 1, 0 };
 
         if (provider.canCraft(Collections.singletonList(mat1)))
-            return new int[]{ 0 };
+            return new int[] { 0 };
 
         if (provider.canCraft(Collections.singletonList(mat2)))
-            return new int[]{ 1 };
+            return new int[] { 1 };
 
         return null;
     }

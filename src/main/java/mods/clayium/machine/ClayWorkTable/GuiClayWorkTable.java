@@ -1,16 +1,18 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiPictureButton;
-import mods.clayium.gui.GuiTemp;
-import mods.clayium.machine.common.ClayiumRecipeProvider;
-import mods.clayium.machine.common.IButtonProvider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiPictureButton;
+import mods.clayium.gui.GuiTemp;
+import mods.clayium.machine.common.ClayiumRecipeProvider;
+import mods.clayium.machine.common.IButtonProvider;
+
 public class GuiClayWorkTable extends GuiTemp {
+
     public GuiClayWorkTable(ContainerClayWorkTable container) {
         super(container);
     }
@@ -40,9 +42,10 @@ public class GuiClayWorkTable extends GuiTemp {
     @Override
     protected void actionPerformed(GuiButton button) {
         if (button.enabled) {
-//            ClayiumCore.packetHandler.sendToServer(new GuiButtonPacket(this.tileEntityClayWorkTable.getPos(), button.id));
+            // ClayiumCore.packetHandler.sendToServer(new GuiButtonPacket(this.tileEntityClayWorkTable.getPos(),
+            // button.id));
             mc.playerController.sendEnchantPacket(inventorySlots.windowId, button.id);
-//            this.tileEntity.pushButton(button.id);
+            // this.tileEntity.pushButton(button.id);
         }
     }
 

@@ -1,5 +1,13 @@
 package mods.clayium.machine.SolarClayFabricator;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumSkyBlock;
+
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
@@ -10,13 +18,6 @@ import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.EnumSkyBlock;
-
-import javax.annotation.Nullable;
 
 public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public TierPrefix acceptableTier;
@@ -33,8 +34,8 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         this.listSlotsExport.add(new int[] { 1 });
         this.slotsDrop = new int[] { 0, 1 };
 
-        this.maxAutoExtract = new int[]{64};
-        this.maxAutoInsert = new int[]{64};
+        this.maxAutoExtract = new int[] {64};
+        this.maxAutoInsert = new int[] {64};
 
         this.debtEnergy = 0;
     }
@@ -124,7 +125,7 @@ public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
         if (!this.canCraft(this.raiseFrom)) return false;
 
         this.craftTime = 1;
-        this.timeToCraft = (long)(Math.pow(this.baseCraftTime, this.raiseFrom.meta()) * (double)this.multCraftTime);
+        this.timeToCraft = (long) (Math.pow(this.baseCraftTime, this.raiseFrom.meta()) * (double) this.multCraftTime);
         this.getStackInSlot(0).shrink(1);
 
         return true;

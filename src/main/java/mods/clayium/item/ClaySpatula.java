@@ -1,8 +1,5 @@
 package mods.clayium.item;
 
-import mods.clayium.item.common.ClayiumItem;
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +10,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+
 public class ClaySpatula extends ClayiumItem implements IModifyCC {
+
     public ClaySpatula() {
         super("clay_spatula");
         setMaxDamage(36);
@@ -22,7 +24,8 @@ public class ClaySpatula extends ClayiumItem implements IModifyCC {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+                                      EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (worldIn.isRemote) {
             return EnumActionResult.SUCCESS;
         }

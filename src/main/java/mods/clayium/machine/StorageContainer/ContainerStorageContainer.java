@@ -1,14 +1,16 @@
 package mods.clayium.machine.StorageContainer;
 
-import mods.clayium.gui.ContainerTemp;
-import mods.clayium.gui.RectangleTexture;
-import mods.clayium.gui.SlotStorageContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mods.clayium.gui.ContainerTemp;
+import mods.clayium.gui.RectangleTexture;
+import mods.clayium.gui.SlotStorageContainer;
+
 public class ContainerStorageContainer extends ContainerTemp {
+
     protected int currentStackSize;
 
     public ContainerStorageContainer(InventoryPlayer player, TileEntityStorageContainer tile) {
@@ -17,8 +19,9 @@ public class ContainerStorageContainer extends ContainerTemp {
 
     @Override
     public void setMachineInventorySlots(InventoryPlayer player) {
-        TileEntityStorageContainer tile = (TileEntityStorageContainer)this.tileEntity;
-        this.addMachineSlotToContainer(new SlotStorageContainer(tile, 0, (this.machineGuiSizeX - 20) / 2, 18, RectangleTexture.LargeSlotTexture));
+        TileEntityStorageContainer tile = (TileEntityStorageContainer) this.tileEntity;
+        this.addMachineSlotToContainer(new SlotStorageContainer(tile, 0, (this.machineGuiSizeX - 20) / 2, 18,
+                RectangleTexture.LargeSlotTexture));
     }
 
     @Override

@@ -1,15 +1,16 @@
 package mods.clayium.gui;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.common.ClayEnergyHolder;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.UtilLocale;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.common.ClayEnergyHolder;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.UtilLocale;
 
 public class GuiTemp extends GuiContainer {
     protected final IInventory tile;
@@ -76,7 +77,7 @@ public class GuiTemp extends GuiContainer {
     }
 
     protected void supplyDraw() {
-        for(int i = 0; i < container.inventorySlots.size(); ++i) {
+        for (int i = 0; i < container.inventorySlots.size(); ++i) {
             if (container.inventorySlots.get(i) instanceof SlotWithTexture)
                 ((SlotWithTexture) container.inventorySlots.get(i)).draw(this, guiLeft, guiTop);
         }

@@ -1,6 +1,5 @@
 package mods.clayium.util;
 
-import mods.clayium.machine.ClayContainer.ClayContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -23,12 +22,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import mods.clayium.machine.ClayContainer.ClayContainer;
+
 public class UtilBuilder {
+
     public static boolean rotateBlockByWrench(World world, BlockPos pos, EnumFacing side) {
         Block block = world.getBlockState(pos).getBlock();
         if (block instanceof ClayContainer) return false;
 
-        EnumFacing direction = EnumFacing.getFront(side.ordinal());
+        EnumFacing direction = EnumFacing.byIndex(side.ordinal());
         EnumFacing[] axes = block.getValidRotations(world, pos);
         if (axes == null || axes.length == 0) return false;
 
@@ -41,10 +43,10 @@ public class UtilBuilder {
     }
 
     public static ItemStack getItemBlock(World theWorld, BlockPos pos) {
-//        ItemStack capsule = getFluidCapsule(theWorld, xx, yy, zz);
-//        if (capsule != null) {
-//            return capsule;
-//        }
+        // ItemStack capsule = getFluidCapsule(theWorld, xx, yy, zz);
+        // if (capsule != null) {
+        // return capsule;
+        // }
 
         IBlockState state = theWorld.getBlockState(pos);
         ItemStack silkitem = getRawItemBlock(state);

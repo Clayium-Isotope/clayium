@@ -1,10 +1,11 @@
 package mods.clayium.gui;
 
-import mods.clayium.machine.common.INormalInventory;
-import mods.clayium.machine.common.InventoryMultiPage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+
+import mods.clayium.machine.common.INormalInventory;
+import mods.clayium.machine.common.InventoryMultiPage;
 
 public class ContainerNormalInventory extends ContainerTemp {
     public static final int buttonIdPrevious = 6;

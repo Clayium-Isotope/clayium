@@ -4,6 +4,7 @@ import mods.clayium.util.UsedFor;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IExternalControl {
+
     IExternalControl NONE = new None();
 
     /**
@@ -43,20 +44,15 @@ public interface IExternalControl {
     }
 
     class None implements IExternalControl {
-        @Override
-        public void doWorkOnce() {
-
-        }
 
         @Override
-        public void startWork() {
-
-        }
+        public void doWorkOnce() {}
 
         @Override
-        public void stopWork() {
+        public void startWork() {}
 
-        }
+        @Override
+        public void stopWork() {}
 
         @Override
         public boolean isScheduled() {

@@ -1,9 +1,10 @@
 package mods.clayium.machine.ClayContainer;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.EnumSide;
-import mods.clayium.util.UtilDirection;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.properties.IProperty;
@@ -27,11 +28,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
 
 public class BlockStateClayContainer extends BlockStateContainer.StateImplementation {
+
     private static final float pipeWidth = 0.1875F;
     public static final PropertyDirection FACING = BlockDirectional.FACING;
     public static final PropertyBool IS_PIPE = PropertyBool.create("is_pipe");
@@ -53,8 +57,7 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     public static List<IProperty<?>> getPropertyList() {
         return Arrays.asList(
                 FACING, IS_PIPE,
-                ARM_UP, ARM_DOWN, ARM_NORTH, ARM_SOUTH, ARM_WEST, ARM_EAST
-        );
+                ARM_UP, ARM_DOWN, ARM_NORTH, ARM_SOUTH, ARM_WEST, ARM_EAST);
     }
 
     @Override
@@ -72,7 +75,8 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     }
 
     private static AxisAlignedBB pipeBB() {
-        return new AxisAlignedBB(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth, 0.5d + pipeWidth);
+        return new AxisAlignedBB(0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d - pipeWidth, 0.5d + pipeWidth,
+                0.5d + pipeWidth, 0.5d + pipeWidth);
     }
 
     private static AxisAlignedBB pipeArmBB(EnumFacing facing) {
@@ -82,24 +86,26 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
                 facing == EnumFacing.NORTH ? 0.0d : 0.5d - (facing == EnumFacing.SOUTH ? -pipeWidth : +pipeWidth),
                 facing == EnumFacing.EAST ? 1.0d : 0.5d + (facing == EnumFacing.WEST ? -pipeWidth : +pipeWidth),
                 facing == EnumFacing.UP ? 1.0d : 0.5d + (facing == EnumFacing.DOWN ? -pipeWidth : +pipeWidth),
-                facing == EnumFacing.SOUTH ? 1.0d : 0.5d + (facing == EnumFacing.NORTH ? -pipeWidth : +pipeWidth)
-        );
+                facing == EnumFacing.SOUTH ? 1.0d : 0.5d + (facing == EnumFacing.NORTH ? -pipeWidth : +pipeWidth));
 
-//            return pipeBB().offset(
-//                    (facing.getFrontOffsetX() == 1 ? pipeWidth * 2.0d : 0.0d) - (facing.getFrontOffsetX() == -1 ? 0.5d - pipeWidth : 0.0d),
-//                    (facing.getFrontOffsetY() == 1 ? pipeWidth * 2.0d : 0.0d) - (facing.getFrontOffsetY() == -1 ? 0.5d - pipeWidth : 0.0d),
-//                    (facing.getFrontOffsetZ() == 1 ? pipeWidth * 2.0d : 0.0d) - (facing.getFrontOffsetZ() == -1 ? 0.5d - pipeWidth : 0.0d)
-//            );
+        // return pipeBB().offset(
+        // (facing.getFrontOffsetX() == 1 ? pipeWidth * 2.0d : 0.0d) - (facing.getFrontOffsetX() == -1 ? 0.5d -
+        // pipeWidth : 0.0d),
+        // (facing.getFrontOffsetY() == 1 ? pipeWidth * 2.0d : 0.0d) - (facing.getFrontOffsetY() == -1 ? 0.5d -
+        // pipeWidth : 0.0d),
+        // (facing.getFrontOffsetZ() == 1 ? pipeWidth * 2.0d : 0.0d) - (facing.getFrontOffsetZ() == -1 ? 0.5d -
+        // pipeWidth : 0.0d)
+        // );
     }
 
     public static boolean renderAsPipe(@Nullable TileEntity tile) {
         if (tile == null) return false;
 
-        if (!(tile.getBlockType() instanceof ClayContainer)
-                || !((ClayContainer) tile.getBlockType()).canBePipe()) return false;
+        if (!(tile.getBlockType() instanceof ClayContainer) || !((ClayContainer) tile.getBlockType()).canBePipe())
+            return false;
 
-        return tile instanceof TileEntityClayContainer
-                && ((TileEntityClayContainer) tile).getBlockState().getValue(IS_PIPE);
+        return tile instanceof TileEntityClayContainer &&
+                ((TileEntityClayContainer) tile).getBlockState().getValue(IS_PIPE);
     }
 
     public IBlockState reverseIsPipe() {
@@ -112,7 +118,7 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     @Override
     public RayTraceResult collisionRayTrace(World worldIn, BlockPos pos, Vec3d start, Vec3d end) {
         if (!renderAsPipe(worldIn.getTileEntity(pos))) {
-//                super.setBlockBoundsBasedOnState((IBlockAccess) world, x, y, z);
+            // super.setBlockBoundsBasedOnState((IBlockAccess) world, x, y, z);
             this.aabb = fullBB();
             return super.collisionRayTrace(worldIn, pos, start, end);
         }
@@ -122,13 +128,12 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
 
         RayTraceResult rtr1;
         for (EnumFacing facing : EnumFacing.VALUES) {
-            if (worldIn.getBlockState(pos) instanceof BlockStateClayContainer
-                    && ((BlockStateClayContainer) worldIn.getBlockState(pos)).isTheFacingActivated(facing)) {
+            if (worldIn.getBlockState(pos) instanceof BlockStateClayContainer &&
+                    ((BlockStateClayContainer) worldIn.getBlockState(pos)).isTheFacingActivated(facing)) {
                 this.aabb = pipeArmBB(facing);
                 rtr1 = super.collisionRayTrace(worldIn, pos, start, end);
-                if (rtr1 != null && (
-                        rtr == null || rtr1.hitVec.distanceTo(start) < rtr.hitVec.distanceTo(start)
-                )) return rtr1;
+                if (rtr1 != null && (rtr == null || rtr1.hitVec.distanceTo(start) < rtr.hitVec.distanceTo(start)))
+                    return rtr1;
             }
         }
 
@@ -137,7 +142,9 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
     }
 
     @Override
-    public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185908_6_) {
+    public void addCollisionBoxToList(World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+                                      List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn,
+                                      boolean p_185908_6_) {
         if (!renderAsPipe(worldIn.getTileEntity(pos))) {
             if (entityBox.intersects(fullBB().offset(pos))) {
                 collidingBoxes.add(fullBB().offset(pos));
@@ -216,13 +223,14 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
 
     public static void changeConnectionState(World world, BlockPos pos, TileEntity here, EnumFacing facing) {
         world.setBlockState(pos, world.getBlockState(pos).withProperty(
-                getFacingProperty(facing), checkPipeConnection(here, world.getTileEntity(pos.offset(facing)), facing)
-        ), 2);
+                getFacingProperty(facing), checkPipeConnection(here, world.getTileEntity(pos.offset(facing)), facing)),
+                2);
     }
 
     @Override
     public void neighborChanged(World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        EnumFacing facing = EnumFacing.getFacingFromVector(fromPos.getX() - pos.getX(), fromPos.getY() - pos.getY(), fromPos.getZ() - pos.getZ());
+        EnumFacing facing = EnumFacing.getFacingFromVector(fromPos.getX() - pos.getX(), fromPos.getY() - pos.getY(),
+                fromPos.getZ() - pos.getZ());
 
         NBTTagCompound tag = worldIn.getTileEntity(pos).writeToNBT(new NBTTagCompound());
         changeConnectionState(worldIn, pos, worldIn.getTileEntity(pos), facing);
@@ -236,13 +244,15 @@ public class BlockStateClayContainer extends BlockStateContainer.StateImplementa
 
         EnumSide side = UtilDirection.getSideOfDirection(myselfCC.getFront(), direction);
         if (myselfCC.getImportRoute(side) != -1 || (myselfCC.getExportRoute(side) != -1))
-            return ((myselfCC.getImportRoute(side) != -1 && myselfCC.getAutoExtract())
-                    || (myselfCC.getExportRoute(side) != -1 && myselfCC.getAutoInsert()));
+            return ((myselfCC.getImportRoute(side) != -1 && myselfCC.getAutoExtract()) ||
+                    (myselfCC.getExportRoute(side) != -1 && myselfCC.getAutoInsert()));
 
         if (!(customer instanceof IClayInventory)) return false;
 
-        return (((IClayInventory) customer).getImportRoute(side.getOpposite()) != -1 && ((IClayInventory) customer).getAutoExtract())
-                || (((IClayInventory) customer).getExportRoute(side.getOpposite()) != -1 && ((IClayInventory) customer).getAutoInsert());
+        return (((IClayInventory) customer).getImportRoute(side.getOpposite()) != -1 &&
+                ((IClayInventory) customer).getAutoExtract()) ||
+                (((IClayInventory) customer).getExportRoute(side.getOpposite()) != -1 &&
+                        ((IClayInventory) customer).getAutoInsert());
     }
 
     public EnumFacing getFront() {

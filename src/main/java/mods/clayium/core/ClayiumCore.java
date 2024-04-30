@@ -34,8 +34,24 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.common.IItemBlockHolder;
+import mods.clayium.block.itemblock.ItemBlockTiered;
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.entity.EntityClayBall;
+import mods.clayium.entity.EntityTeleportBall;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumShapedMaterial;
+import mods.clayium.machine.CAMachine.ResonanceHandler;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.worldgen.ClayOreGenerator;
 
 @Mod(modid = ClayiumCore.ModId, version = ClayiumCore.Version, name = ClayiumCore.ModName)
 public class ClayiumCore {
@@ -52,7 +68,8 @@ public class ClayiumCore {
         return instance;
     }
 
-    @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy", serverSide = "mods.clayium.core.ClayiumCommonProxy")
+    @SidedProxy(clientSide = "mods.clayium.core.ClayiumClientProxy",
+                serverSide = "mods.clayium.core.ClayiumCommonProxy")
     public static IClayiumProxy proxy;
 
     public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel("clayium:channel");
@@ -61,7 +78,7 @@ public class ClayiumCore {
 
     public static final CreativeTabs tabClayium = new CreativeTabs("clayium") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(Items.CLAY_BALL);
         }
 

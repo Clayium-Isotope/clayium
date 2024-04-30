@@ -1,14 +1,10 @@
 package mods.clayium.machine.Interface.ClayInterface;
 
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.ContainClayEnergy;
-import mods.clayium.util.SyncManager;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilCollect;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -18,11 +14,19 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.ContainClayEnergy;
+import mods.clayium.util.SyncManager;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilCollect;
 
-public class TileEntityClayInterface extends TileEntityClayContainer implements ISynchronizedInterface, IClayEnergyConsumer {
+public class TileEntityClayInterface extends TileEntityClayContainer
+                                     implements ISynchronizedInterface, IClayEnergyConsumer {
+
     protected boolean enableSync = false;
     protected boolean synced = false;
     protected IInterfaceCaptive core = IInterfaceCaptive.NONE;
@@ -51,7 +55,11 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     }
 
     /**
-     * assert <pre>{@code this.enableSync == true}</pre>
+     * assert
+     * 
+     * <pre>
+     * {@code this.enableSync == true}
+     * </pre>
      */
     public void setCoreBlock(@Nullable IInterfaceCaptive tile) {
         if (IInterfaceCaptive.isSyncable(tile)) {
@@ -331,9 +339,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer implements 
     }
 
     @Override
-    public void setClayEnergyStorageSize(int size) {
-
-    }
+    public void setClayEnergyStorageSize(int size) {}
 
     @Override
     public int getEnergySlot() {

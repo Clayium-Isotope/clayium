@@ -1,15 +1,10 @@
 package mods.clayium.util.crafting;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.JsonHelper;
-import mods.clayium.util.UtilCollect;
-import mods.clayium.util.UtilItemStack;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -20,16 +15,24 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.StreamSupport;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.JsonHelper;
+import mods.clayium.util.UtilCollect;
+import mods.clayium.util.UtilItemStack;
 
 /**
  * <a href="https://docs.minecraftforge.net/en/1.12.x/utilities/recipes/">Guide</a>
  * {@link CraftingHelper#init()}
  *
- * <pre>{@code example.json
+ * <pre>
+ * {@code example.json
  * {
  *     "type": "clayium:add_recipe",
  *     "machine": "condenser",
@@ -52,11 +55,13 @@ import java.util.stream.StreamSupport;
  *     "energy": 1000,
  *     "time": 120
  * }
- * }</pre>
+ * }
+ * </pre>
  *
  * Usage: resources/assets/clayium/recipes/_factories.json
  */
 public class ClayiumRecipeFactory implements IRecipeFactory {
+
     @Override
     public IRecipe parse(JsonContext context, JsonObject json) throws JsonSyntaxException {
         String group = JsonUtils.getString(json, "machine", "");
@@ -74,9 +79,9 @@ public class ClayiumRecipeFactory implements IRecipeFactory {
         NonNullList<Ingredient> inputItems = StreamSupport.stream(input.spliterator(), false)
                 .map(elm -> new Tuple<>(
                         JsonHelper.readNumeric(elm, "priority", Integer.MAX_VALUE),
-                        new AmountedIngredient(elm, context))
-                )
-                .sorted(Comparator.comparingInt(Tuple::getFirst)) // The smaller the "priority" value, the more it comes to the front
+                        new AmountedIngredient(elm, context)))
+                .sorted(Comparator.comparingInt(Tuple::getFirst)) // The smaller the "priority" value, the more it comes
+                                                                  // to the front
                 .map(Tuple::getSecond)
                 .collect(UtilCollect.toNonNullList());
 
@@ -97,13 +102,16 @@ public class ClayiumRecipeFactory implements IRecipeFactory {
         long energy;
         if (json.get("energy").isJsonObject()) {
             JsonObject energyObj = json.getAsJsonObject("energy");
-            if (!json.has("tier")) throw new JsonSyntaxException("\"energy\" should be a long number or be an object { \"tier\": int, \"factor\"?: double }");
-            energy = ClayiumRecipes.e(JsonHelper.readNumeric(energyObj, "factor", 1.0d), JsonHelper.readNumeric(energyObj, "tier", Integer.class));
+            if (!json.has("tier")) throw new JsonSyntaxException(
+                    "\"energy\" should be a long number or be an object { \"tier\": int, \"factor\"?: double }");
+            energy = ClayiumRecipes.e(JsonHelper.readNumeric(energyObj, "factor", 1.0d),
+                    JsonHelper.readNumeric(energyObj, "tier", Integer.class));
         } else {
             energy = JsonHelper.readNumeric(json, "energy", Long.class);
         }
 
-        RecipeElement recipe = new RecipeElement(inputItems, JsonHelper.readNumeric(json, "tier", Integer.class), outputItems, energy, JsonHelper.readNumeric(json, "time", Long.class));
+        RecipeElement recipe = new RecipeElement(inputItems, JsonHelper.readNumeric(json, "tier", Integer.class),
+                outputItems, energy, JsonHelper.readNumeric(json, "time", Long.class));
         kind.getRecipe().add(recipe);
         return recipe;
     }

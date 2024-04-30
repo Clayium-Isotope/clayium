@@ -1,11 +1,10 @@
 package mods.clayium.machine.MultiblockMachine;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
-import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,9 +12,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-import javax.annotation.Nullable;
-import java.util.Optional;
-import java.util.function.Supplier;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 
 public class MultiblockMachine extends ClayiumMachine {
     public MultiblockMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Supplier<? extends TileEntityGeneric> teSupplier, int guiID) {
@@ -46,7 +49,7 @@ public class MultiblockMachine extends ClayiumMachine {
         return this.getDefaultState()
                 .withProperty(BlockStateMultiblockMachine.IS_CONSTRUCTED, (meta >> 3) == 1)
                 .withProperty(BlockStateClayContainer.IS_PIPE, (meta >> 2) == 1)
-                .withProperty(BlockStateClayContainer.FACING, EnumFacing.getHorizontal(meta & 0b0011));
+                .withProperty(BlockStateClayContainer.FACING, EnumFacing.byHorizontalIndex(meta & 0b0011));
     }
 
     @Override

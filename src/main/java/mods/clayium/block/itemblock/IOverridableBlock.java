@@ -9,9 +9,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface IOverridableBlock {
-    void overrideTo(ItemStack stackIn, EntityPlayer playerIn, World worldIn, BlockPos posIn, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState overriddenState, Class overriddenTEClass, NBTTagCompound overriddenTETag);
 
-    boolean canOverride(ItemStack stackIn, EntityPlayer playerIn, World worldIn, BlockPos posIn, EnumFacing side, float hitX, float hitY, float hitZ);
+    void overrideTo(ItemStack stackIn, EntityPlayer playerIn, World worldIn, BlockPos posIn, EnumFacing side,
+                    float hitX, float hitY, float hitZ, IBlockState overriddenState, Class overriddenTEClass,
+                    NBTTagCompound overriddenTETag);
 
-    void onOverridden(ItemStack stackIn, EntityPlayer playerIn, World worldIn, BlockPos posIn, EnumFacing side, float hitX, float hitY, float hitZ);
+    boolean canOverride(ItemStack stackIn, EntityPlayer playerIn, World worldIn, BlockPos posIn, EnumFacing side,
+                        float hitX, float hitY, float hitZ);
+
+    void onOverridden(ItemStack stackIn, EntityPlayer playerIn, World worldIn, BlockPos posIn, EnumFacing side,
+                      float hitX, float hitY, float hitZ);
 }

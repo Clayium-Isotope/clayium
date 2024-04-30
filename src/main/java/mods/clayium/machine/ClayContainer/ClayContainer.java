@@ -1,13 +1,13 @@
 package mods.clayium.machine.ClayContainer;
 
-import com.google.common.collect.ImmutableMap;
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilLocale;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -31,12 +31,15 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
+import com.google.common.collect.ImmutableMap;
+
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilLocale;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
     private final Supplier<? extends TileEntityGeneric> teSupplier;
@@ -49,7 +52,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
         this.guiId = guiId;
         this.tier = tier;
 
-        setUnlocalizedName(modelPath);
+        setTranslationKey(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -62,8 +65,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
                     .withProperty(BlockStateClayContainer.ARM_WEST, false)
                     .withProperty(BlockStateClayContainer.ARM_EAST, false)
                     .withProperty(BlockStateClayContainer.IS_PIPE, false)
-                    .withProperty(BlockStateClayContainer.FACING, EnumFacing.NORTH)
-            );
+                    .withProperty(BlockStateClayContainer.FACING, EnumFacing.NORTH));
         }
     }
 
@@ -163,7 +165,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
     // https://forums.minecraftforge.net/topic/39057-solved194-transparent-texture-not-rendering-correctly/
     @Override
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 
@@ -174,7 +176,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-        UtilLocale.localizeTooltip(tooltip, this.getUnlocalizedName());
+        UtilLocale.localizeTooltip(tooltip, this.getTranslationKey());
     }
 
     @Override
@@ -204,7 +206,7 @@ public abstract class ClayContainer extends BlockContainer implements ITieredBlo
 
         return this.getDefaultState()
                 .withProperty(BlockStateClayContainer.IS_PIPE, this.canBePipe() && (meta >> 3) == 1)
-                .withProperty(BlockStateClayContainer.FACING, EnumFacing.getFront(meta & 0b0111));
+                .withProperty(BlockStateClayContainer.FACING, EnumFacing.byIndex(meta & 0b0111));
     }
 
     @Override

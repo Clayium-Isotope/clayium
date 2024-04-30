@@ -1,5 +1,16 @@
 package mods.clayium.machine.ClayiumMachine;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.IExternalControl;
@@ -11,25 +22,20 @@ import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
+public class TileEntityClayiumMachine extends TileEntityClayContainer
+                                      implements IButtonProvider, ITickable, IClayEnergyConsumer,
+                                      ClayiumRecipeProvider<RecipeElement>, IExternalControl, Machine1To1 {
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement>, IExternalControl, Machine1To1 {
     protected EnumMachineKind kind = EnumMachineKind.EMPTY;
+
     @Override
     public EnumMachineKind getKind() {
         return this.kind;
     }
 
     private ClayiumRecipe recipeCards = ClayiumRecipes.EMPTY;
+
     @Override
     public ClayiumRecipe getRecipeCard() {
         return this.recipeCards;
@@ -40,6 +46,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     protected long craftTime;
     protected long timeToCraft;
     protected long debtEnergy;
+
     @Override
     public boolean isDoingWork() {
         return !this.doingRecipe.isFlat();
@@ -120,8 +127,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     @Override
     public void markDirty() {
         world.markBlockRangeForRenderUpdate(pos, pos);
-//        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-//        ClayiumMachine.updateBlockState(world, pos);
+        // world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+        // ClayiumMachine.updateBlockState(world, pos);
 
         super.markDirty();
     }
@@ -182,7 +189,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
     @Override
     public int getEnergySlot() {
-//        if (UtilTier.canManufactureCraft(this.tier)) return -1;
+        // if (UtilTier.canManufactureCraft(this.tier)) return -1;
         return 2;
     }
 
@@ -229,7 +236,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
     public boolean canCraft(RecipeElement recipe) {
         if (recipe.isFlat()) return false;
 
-        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(), Machine1To1.PRODUCT, this.getInventoryStackLimit()) > 0;
+        return UtilTransfer.canProduceItemStack(recipe.getResults().get(0), this.getContainerItemStacks(),
+                Machine1To1.PRODUCT, this.getInventoryStackLimit()) > 0;
     }
 
     public boolean setNewRecipe() {
@@ -245,7 +253,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer implements
 
         this.craftTime = 1L;
         this.timeToCraft = this.doingRecipe.getTime();
-        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(), Machine1To1.MATERIAL);
+        UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(),
+                Machine1To1.MATERIAL);
 
         return true;
     }

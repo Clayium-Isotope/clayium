@@ -1,24 +1,26 @@
 package mods.clayium.machine.AutoClayCondenser;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.item.common.IClayEnergy;
-import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
-import mods.clayium.machine.common.RecipeProvider;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTransfer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.RecipeProvider;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilTransfer;
 
 public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
-    /*package-private*/ static final int SAMPLE_SLOT = 20;
+
+    /* package-private */ static final int SAMPLE_SLOT = 20;
     private TierPrefix mergeFrom = TierPrefix.unknown;
     private boolean isStable = false;
 
@@ -73,7 +75,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
             this.setInventorySlotContents(i++, IClayEnergy.getCompressedClay(j, size));
         }
 
-//        this.setSyncFlag();
+        // this.setSyncFlag();
     }
 
     public List<Integer> getQuantityOfClay() {
@@ -91,7 +93,8 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     }
 
     protected boolean canCraft(TierPrefix tier) {
-        return UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier), this.containerItemStacks, 0, 20, this.getInventoryStackLimit()) >= 1;
+        return UtilTransfer.canProduceItemStack(IClayEnergy.getCompressedClay(tier), this.containerItemStacks, 0, 20,
+                this.getInventoryStackLimit()) >= 1;
     }
 
     @Override
@@ -127,18 +130,19 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
     @Override
     public boolean canProceedCraft() {
         return true;
-        /*this.externalControlState >= 0 &&*/
-//        if (!this.isDoingWork()) {
-//            return this.getConsumedClay() != -1;
-//        }
-//        return this.canCraft(this.mergeFrom + 1);
+        /* this.externalControlState >= 0 && */
+        // if (!this.isDoingWork()) {
+        // return this.getConsumedClay() != -1;
+        // }
+        // return this.canCraft(this.mergeFrom + 1);
     }
 
     public TierPrefix getConsumedClay() {
         List<Integer> num = this.getQuantityOfClay();
         TierPrefix max = TierPrefix.MAX_TIER;
 
-        if (!this.getStackInSlot(SAMPLE_SLOT).isEmpty() && IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT)).isValid()) {
+        if (!this.getStackInSlot(SAMPLE_SLOT).isEmpty() &&
+                IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT)).isValid()) {
             max = IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT));
         }
 
@@ -159,31 +163,33 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
             return;
         }
 
-        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom.offset(1)), this.containerItemStacks, 0, 20, this.getInventoryStackLimit());
+        UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom.offset(1)), this.containerItemStacks,
+                0, 20, this.getInventoryStackLimit());
         this.craftTime = 0L;
         this.mergeFrom = TierPrefix.unknown;
-//                if (this.externalControlState > 0) {
-//                    --this.externalControlState;
-//                    if (this.externalControlState == 0) {
-//                        this.externalControlState = -1;
-//                    }
-//                }
-
+        // if (this.externalControlState > 0) {
+        // --this.externalControlState;
+        // if (this.externalControlState == 0) {
+        // this.externalControlState = -1;
+        // }
+        // }
     }
 
     @Override
     public boolean setNewRecipe() {
-        this.timeToCraft = (long)(1.0F * this.multCraftTime);
+        this.timeToCraft = (long) (1.0F * this.multCraftTime);
         this.mergeFrom = this.getConsumedClay();
         if (!this.mergeFrom.isValid()) return false;
 
-        UtilTransfer.consumeItemStack(IClayEnergy.getCompressedClay(this.mergeFrom, 9), this.containerItemStacks, 0, 20);
+        UtilTransfer.consumeItemStack(IClayEnergy.getCompressedClay(this.mergeFrom, 9), this.containerItemStacks, 0,
+                20);
         return true;
     }
 
     @Override
     public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing side) {
-        return super.canExtractItem(slot, itemstack, side) && TierPrefix.comparator.compare(IClayEnergy.getTier(itemstack), IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT))) >= 0;
+        return super.canExtractItem(slot, itemstack, side) && TierPrefix.comparator
+                .compare(IClayEnergy.getTier(itemstack), IClayEnergy.getTier(this.getStackInSlot(SAMPLE_SLOT))) >= 0;
     }
 
     @Override

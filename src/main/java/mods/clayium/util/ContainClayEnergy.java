@@ -1,6 +1,7 @@
 package mods.clayium.util;
 
 public class ContainClayEnergy {
+
     private long containEnergy = 0;
 
     public long get() {
@@ -29,7 +30,9 @@ public class ContainClayEnergy {
     }
 
     public static final ContainClayEnergy NIL = new HasNoEnergy();
+
     private static class HasNoEnergy extends ContainClayEnergy {
+
         @Override
         public long get() {
             return 0;

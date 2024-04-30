@@ -1,14 +1,16 @@
 package mods.clayium.network;
 
-import mods.clayium.item.ClayShooter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import mods.clayium.item.ClayShooter;
+
 // Related to fov, etc...
 @Mod.EventBusSubscriber
 public class UXEventHandler {
+
     @SubscribeEvent
     public static void onFOVUpdateEvent(FOVUpdateEvent event) {
         ItemStack stack = event.getEntity().getActiveItemStack();

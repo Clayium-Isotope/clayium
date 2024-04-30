@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ClayiumShape {
+
     plate("plate"),
     stick("stick"),
     shortStick("short_stick"),
@@ -59,6 +60,5 @@ public enum ClayiumShape {
             ball, dust);
 
     public static final List<ClayiumShape> metalPartShapes = Arrays.asList(
-            plate, largePlate, block, dust, ingot, gem
-    );
+            plate, largePlate, block, dust, ingot, gem);
 }

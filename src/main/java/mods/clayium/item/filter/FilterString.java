@@ -1,19 +1,21 @@
 package mods.clayium.item.filter;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.util.TierPrefix;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.util.TierPrefix;
+
 public abstract class FilterString extends FilterTemp {
+
     protected FilterString(String modelPath, TierPrefix tier) {
         super(modelPath, tier);
     }
@@ -37,7 +39,8 @@ public abstract class FilterString extends FilterTemp {
     }
 
     public void openGui(ItemStack itemstack, World world, EntityPlayer player) {
-        player.openGui(ClayiumCore.instance(), GuiHandler.GuiIdItemFilterString, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+        player.openGui(ClayiumCore.instance(), GuiHandler.GuiIdItemFilterString, world, (int) player.posX,
+                (int) player.posY, (int) player.posZ);
     }
 
     @Override
@@ -48,7 +51,7 @@ public abstract class FilterString extends FilterTemp {
 
         StringBuilder in = new StringBuilder();
 
-        for(int i = 0; i < indent; ++i) {
+        for (int i = 0; i < indent; ++i) {
             in.append(" ");
         }
 
