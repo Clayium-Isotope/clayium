@@ -43,7 +43,7 @@ public class ClayMarker extends BlockContainer implements ITieredBlock {
         this.setResistance(5.0f);
         this.setHarvestLevel("shovel", 0);
 
-        setUnlocalizedName(modelPath);
+        setTranslationKey(modelPath);
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
 
@@ -88,7 +88,7 @@ public class ClayMarker extends BlockContainer implements ITieredBlock {
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(UtilLocale.localizeAndFormat(this.getUnlocalizedName() + ".tooltip"));
+        tooltip.add(UtilLocale.localizeAndFormat(this.getTranslationKey() + ".tooltip"));
     }
 
     @Override

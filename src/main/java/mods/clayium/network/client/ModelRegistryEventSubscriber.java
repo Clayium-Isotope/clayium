@@ -35,7 +35,7 @@ public class ModelRegistryEventSubscriber {
         for (Block block : ClayiumMachines.getBlocks()) {
             assert block.getRegistryName() != null;
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
-                    new ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getResourcePath(), "inventory"));
+                    new ModelResourceLocation(ClayiumCore.ModId + ":machine/" + block.getRegistryName().getPath(), "inventory"));
             // Custom blockstate mapping
             if (!block.getClass().isAnnotationPresent(HasOriginalState.class)) {
                 ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
@@ -62,7 +62,7 @@ public class ModelRegistryEventSubscriber {
                             new ModelResourceLocation(ClayiumCore.ModId + ":material/" + ((ClayiumShapedMaterial) stack.getItem()).getTempFile(), "inventory"));
                 else
                     ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                            new ModelResourceLocation(ClayiumCore.ModId + ":material/" + stack.getItem().getRegistryName().getResourcePath(), "inventory"));
+                            new ModelResourceLocation(ClayiumCore.ModId + ":material/" + stack.getItem().getRegistryName().getPath(), "inventory"));
             }
         }
 
@@ -70,14 +70,14 @@ public class ModelRegistryEventSubscriber {
             assert stack.getItem().getRegistryName() != null;
             if (stack.getItem() instanceof ClayiumShapedMaterial)
                 ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                        new ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getResourcePath(), "inventory"));
+                        new ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(), "inventory"));
         }
 
         for (ItemStack stack : ClayiumMaterials.denseClayParts.values()) {
             assert stack.getItem().getRegistryName() != null;
             if (stack.getItem() instanceof ClayiumShapedMaterial)
                 ModelLoader.setCustomModelResourceLocation(stack.getItem(), 0,
-                        new ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getResourcePath(), "inventory"));
+                        new ModelResourceLocation(ClayiumCore.ModId + ":part/" + stack.getItem().getRegistryName().getPath(), "inventory"));
         }
     }
 }
