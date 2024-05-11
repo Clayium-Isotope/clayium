@@ -40,4 +40,10 @@ public class EnergyStorageUpgrade extends BlockTiered implements IClayContainerM
     public ItemBlock getItemBlock() {
         return new ItemBlockTierNamed(this, "util.block.energy_storage_upgrade", UtilLocale.localizeAndFormat(TierPrefix.getLocalizeKey(this.tier)));
     }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+        UtilLocale.localizeTooltip(tooltip, "tooltip.energy_storage_upgrade");
+        super.addInformation(stack, player, tooltip, advanced);
+    }
 }

@@ -26,7 +26,7 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 
 public class ClayiumRecipes {
-    static class SimpleMachineRecipe extends ClayiumRecipe {
+    public static class SimpleMachineRecipe extends ClayiumRecipe {
         SimpleMachineRecipe(String id) {
             super(id);
         }
@@ -766,8 +766,8 @@ public class ClayiumRecipes {
                         ii(i(ClayiumMachines.get(EnumMachineKind.assembler, tier))), e(i), 40L);
             }
             if (i >= 10) {
-// TODO               assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 10,
-//                        ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, tier))), e(i), 120L);
+                assembler.addRecipe(oo(machines.get(i), i(ClayiumMachines.clayReactor, 16)), 10,
+                        ii(i(ClayiumMachines.get(EnumMachineKind.CAReactorCore, tier))), e(i), 120L);
                 if (i <= 12) {
                     assembler.addRecipe(oo(i(ClayiumMachines.get(EnumMachineKind.CAInjector, tier)), i(ClayiumMachines.clayReactor)), 10,
                             ii(i(ClayiumMachines.get(EnumMachineKind.transformer, tier))), e(i), 120L);
@@ -879,14 +879,14 @@ public class ClayiumRecipes {
                     'I', ClayiumMaterials.getODName(panDuplicatorMats[j], ClayiumShape.ingot), 'M', machines[j + 5])));
         }
 */
-/* TODO
-        assembler.addRecipe(ii(i(ClayiumBlocks.AZ91DHull, 4), i(ClayiumMachines.get(EnumMachineKind.clayInterface, 5))), 0, 4,
-                ii(s(StorageContainer.expandStorage(i(CBlocks.blockStorageContainer), 65536), 4)), e(6), 120L);
-        assembler.addRecipe(ii(i(ClayiumBlocks.AZ91DHull, 4), i(ClayiumMachines.get(EnumMachineKind.redstoneInterface, 5))), 0, 4,
-                ii(i(CBlocks.blockVacuumContainer, 4)), e(6), 120L);
-        assembler.addRecipe(ii(i(ClayiumBlocks.AZ91DHull), s(circuits.get(8), 4)), 0, 6,
-                ii(i(CBlocks.blockAutoTrader)), e(8), 120L);
-*/
+
+        assembler.addRecipe(ii(i(ClayiumBlocks.AZ91DHull, 4), i(ClayiumMachines.get(EnumMachineKind.clayInterface, TierPrefix.advanced))), 4,
+                ii(i(ClayiumMachines.storageContainer, 4)), e(6), 120L);
+        assembler.addRecipe(ii(i(ClayiumBlocks.AZ91DHull, 4), i(ClayiumMachines.get(EnumMachineKind.redstoneInterface, TierPrefix.advanced))), 4,
+                ii(i(ClayiumMachines.vacuumContainer, 4)), e(6), 120L);
+        assembler.addRecipe(ii(i(ClayiumBlocks.AZ91DHull), s(circuits.get(8), 4)), 6,
+                ii(i(ClayiumMachines.autoTrader)), e(8), 120L);
+
 /*
         GameRegistry.addRecipe(new Shapelesss(StorageContainer.expandStorage(i(CBlocks.blockStorageContainer), 2147483647),
                 li(StorageContainer.expandStorage(i(CBlocks.blockStorageContainer), 65536), s(circuits[8], 1))) {
@@ -907,16 +907,16 @@ public class ClayiumRecipes {
                 '#', i(ClayiumBlocks.ZK60AHull),
                 'C', circuits[6], 'P', circuits[5]);
 */
-/*
-        assembler.addRecipe(ii(i(Blocks.CLAY), circuits.get(7)), 0, 6,
-                ii(i(CBlocks.blockClayMarker)), e(7), 480L);
-        assembler.addRecipe(ii(i(ClayiumBlocks.compressedClay.get(0), 1, 0), circuits.get(8)), 0, 6,
-                ii(i(CBlocks.blockClayOpenPitMarker)), e(8), 480L);
-        assembler.addRecipe(ii(i(ClayiumBlocks.compressedClay.get(1), 1, 1), circuits.get(8)), 0, 6,
-                ii(i(CBlocks.blockClayGroundLevelingMarker)), e(8), 480L);
-        assembler.addRecipe(ii(i(CBlocks.blockClayOpenPitMarker), i(CBlocks.blockClayGroundLevelingMarker)), 0, 6,
-                ii(i(CBlocks.blockClayPrismMarker)), e(8), 480L);
+        assembler.addRecipe(ii(i(Blocks.CLAY), circuits.get(7)), 6,
+                ii(i(ClayiumMachines.clayMarker)), e(7), 480L);
+        assembler.addRecipe(ii(i(ClayiumBlocks.compressedClay.get(0), 1), circuits.get(8)), 6,
+                ii(i(ClayiumMachines.clayOpenPitMarker)), e(8), 480L);
+        assembler.addRecipe(ii(i(ClayiumBlocks.compressedClay.get(1), 1), circuits.get(8)), 6,
+                ii(i(ClayiumMachines.groundLevelingMarker)), e(8), 480L);
+        assembler.addRecipe(ii(i(ClayiumMachines.clayOpenPitMarker), i(ClayiumMachines.groundLevelingMarker)), 6,
+                ii(i(ClayiumMachines.prismMarker)), e(8), 480L);
 
+/*
         assembler.addRecipe(ii(i(ClayiumBlocks.ZK60AHull), s(circuits.get(7), 64)), 0, 6,
                 ii(i(CBlocks.blockAreaCollector)), e(7), 6000L);
 

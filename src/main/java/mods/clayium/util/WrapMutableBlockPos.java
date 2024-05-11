@@ -1,6 +1,7 @@
 package mods.clayium.util;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 
 public class WrapMutableBlockPos extends BlockPos.MutableBlockPos {
     public void setX(int xIn) {
@@ -38,5 +39,9 @@ public class WrapMutableBlockPos extends BlockPos.MutableBlockPos {
 
     public void decrZ() {
         this.z--;
+    }
+
+    public void addAndSet(Vec3i vec) {
+        this.setPos(this.add(vec));
     }
 }

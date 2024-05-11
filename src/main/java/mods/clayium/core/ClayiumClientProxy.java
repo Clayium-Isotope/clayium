@@ -174,7 +174,8 @@ public class ClayiumClientProxy implements IClayiumProxy {
                 });
         ClientRegistry.registerTileEntity(TileEntityAutoTrader.class, "clayium:auto_trader", TESRClayContainer.instance);
 
-        ClientRegistry.registerTileEntity(TileEntityCACollector.class, "clayium_ca_collector", TESRClayContainer.instance);
+        ClientRegistry.registerTileEntity(TileEntityCACollector.class, "clayium:ca_collector", TESRClayContainer.instance);
+        ClientRegistry.registerTileEntity(TileEntityCAReactor.class, "clayium:ca_reactor", TESRClayContainer.instance);
     }
 
     /**

@@ -126,9 +126,7 @@ public class ClayiumMachines {
 
         addAssembler(EnumMachineKind.CAInjector, TierPrefix.makeList(9, 10, 11, 12, 13), TileEntityCAInjector::new);
         addContainer(EnumMachineKind.CACollector, TierPrefix.antimatter, new CACollector());
-//        new ClayNoRecipeMachines((String)null, 10, TileCACollector.class, 18, 1);
-//        blockCAReactorHull = new BlockDamaged(Material.iron, 10);
-//        registerTieredMachines("CAReactor", new int[]{10, 11, 12, 13}, TileCAReactor.class, 9, CAReactor.class, ItemBlockTiered.class);
+        addContainers(EnumMachineKind.CAReactorCore, TierPrefix.makeList(10, 11, 12, 13), CAReactor::new);
 
         energeticClayDecomposer = addMachine(EnumMachineKind.ECDecomposer, TierPrefix.OPA, null);
         storageContainer = addContainer(EnumMachineKind.storageContainer, TierPrefix.precision, new StorageContainer());

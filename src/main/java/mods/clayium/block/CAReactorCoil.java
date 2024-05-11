@@ -35,7 +35,7 @@ public class CAReactorCoil extends BlockTiered {
 
     @Override
     public ItemBlock getItemBlock() {
-        return new ItemBlockTierNamed(this, "util.block.energy_storage_upgrade", argMark(this.meta));
+        return new ItemBlockTierNamed(this, "util.block.ca_reactor_coil", argMark(this.meta));
     }
 
     protected static String argMark(int meta) {

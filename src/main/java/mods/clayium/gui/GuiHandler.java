@@ -118,6 +118,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerAutoTrader(player.inventory, (TileEntityAutoTrader) tile);
             case GuiIdCACollector:
                 return new ContainerCACollector(player.inventory, (TileEntityCACollector) tile);
+            case GuiIdCAReactor:
+                return new ContainerClayiumMachine(player.inventory, (TileEntityCAReactor) tile);
         }
 
         return null;
@@ -188,6 +190,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiAutoTrader(new ContainerAutoTrader(player.inventory, (TileEntityAutoTrader) tile));
             case GuiIdCACollector:
                 return new GuiTemp(new ContainerCACollector(player.inventory, (TileEntityCACollector) tile));
+            case GuiIdCAReactor:
+                return new GuiCAReactor(new ContainerClayiumMachine(player.inventory, (TileEntityCAReactor) tile));
         }
 
         return null;
