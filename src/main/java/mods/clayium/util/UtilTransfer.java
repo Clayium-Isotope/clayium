@@ -1,17 +1,8 @@
 package mods.clayium.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.crafting.AmountedIngredient;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
@@ -29,9 +20,16 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.crafting.AmountedIngredient;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class UtilTransfer {
     private static final IInventorySelector defaultSelector = new InventorySelector();

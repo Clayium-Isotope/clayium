@@ -1,8 +1,7 @@
 package mods.clayium.gui;
 
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
+import net.minecraft.item.ItemStack;
 
 public class SlotStorageContainer extends SlotWithTexture {
 

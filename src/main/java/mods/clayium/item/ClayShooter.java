@@ -1,5 +1,8 @@
 package mods.clayium.item;
 
+import mods.clayium.entity.EntityClayBall;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -9,10 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-
-import mods.clayium.entity.EntityClayBall;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.util.TierPrefix;
 
 public class ClayShooter extends ItemTiered {
 

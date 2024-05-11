@@ -1,9 +1,9 @@
 package mods.clayium.block.itemblock;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.item.common.ITieredItem;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
@@ -14,10 +14,8 @@ import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.item.common.ITieredItem;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemBlockTiered extends ItemBlock implements ITieredItem {
     protected final TierPrefix tier;

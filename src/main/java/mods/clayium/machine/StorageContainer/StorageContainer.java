@@ -1,12 +1,13 @@
 package mods.clayium.machine.StorageContainer;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
+import com.google.common.collect.ImmutableMap;
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
+import mods.clayium.machine.ClayiumMachine.ClayHorizontalNoRecipeMachine;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,15 +25,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.util.Constants;
 
-import com.google.common.collect.ImmutableMap;
-
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
-import mods.clayium.machine.ClayiumMachine.ClayHorizontalNoRecipeMachine;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @HasOriginalState
 public class StorageContainer extends ClayHorizontalNoRecipeMachine {

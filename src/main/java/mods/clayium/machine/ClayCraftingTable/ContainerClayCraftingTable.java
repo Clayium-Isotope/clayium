@@ -1,5 +1,7 @@
 package mods.clayium.machine.ClayCraftingTable;
 
+import mods.clayium.gui.ContainerTemp;
+import mods.clayium.gui.SlotWithTexture;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -8,9 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.crafting.IRecipeContainer;
-
-import mods.clayium.gui.ContainerTemp;
-import mods.clayium.gui.SlotWithTexture;
 
 /**
  * <table border="1">

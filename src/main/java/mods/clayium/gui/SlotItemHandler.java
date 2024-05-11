@@ -1,12 +1,11 @@
 package mods.clayium.gui;
 
+import mods.clayium.block.tile.FlexibleStackLimit;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-
-import mods.clayium.block.tile.FlexibleStackLimit;
 
 /**
  * Sorry for NullPointerException when you access {@link net.minecraft.inventory.Slot#inventory}

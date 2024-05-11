@@ -1,10 +1,9 @@
 package mods.clayium.gui;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Set;
-
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.common.IButtonProvider;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -12,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.common.IButtonProvider;
-import mods.clayium.util.UtilItemStack;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Set;
 
 public abstract class ContainerTemp extends Container {
 

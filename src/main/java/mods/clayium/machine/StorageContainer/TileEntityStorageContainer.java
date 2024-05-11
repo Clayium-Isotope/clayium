@@ -1,10 +1,10 @@
 package mods.clayium.machine.StorageContainer;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.client.render.CustomHull;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,11 +17,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.client.render.CustomHull;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.util.UtilItemStack;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 @CustomHull(CustomHull.AZ91D)
 public class TileEntityStorageContainer extends TileEntityClayContainer

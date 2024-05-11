@@ -1,21 +1,19 @@
 package mods.clayium.util;
 
+import com.google.gson.*;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.util.crafting.AmountedIngredient;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.JsonUtils;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.JsonUtils;
-
-import com.google.gson.*;
-
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.crafting.IRecipeElement;
-import mods.clayium.util.crafting.AmountedIngredient;
 
 public class JsonHelper {
 

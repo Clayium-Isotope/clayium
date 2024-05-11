@@ -1,13 +1,5 @@
 package mods.clayium.machine.SolarClayFabricator;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.EnumSkyBlock;
-
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
@@ -18,6 +10,13 @@ import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumSkyBlock;
+
+import javax.annotation.Nullable;
 
 public class TileEntitySolarClayFabricator extends TileEntityClayiumMachine {
     public TierPrefix acceptableTier;

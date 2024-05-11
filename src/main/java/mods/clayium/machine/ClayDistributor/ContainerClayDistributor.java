@@ -1,10 +1,9 @@
 package mods.clayium.machine.ClayDistributor;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.SlotWithTexture;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class ContainerClayDistributor extends ContainerTemp {
 

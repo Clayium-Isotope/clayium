@@ -1,7 +1,6 @@
 package mods.clayium.item;
 
-import java.util.List;
-
+import mods.clayium.util.UsedFor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -11,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-import mods.clayium.util.UsedFor;
+import java.util.List;
 
 @UsedFor(UsedFor.Type.Item)
 public interface IHarvestCoord {

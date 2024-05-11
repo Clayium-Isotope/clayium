@@ -1,8 +1,11 @@
 package mods.clayium.machine.AutoCrafter;
 
-import java.util.List;
-import java.util.function.Predicate;
-
+import mods.clayium.gui.ContainerDummy;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.RecipeProvider;
+import mods.clayium.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCraftResult;
@@ -16,12 +19,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.gui.ContainerDummy;
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.RecipeProvider;
-import mods.clayium.util.*;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * <br>

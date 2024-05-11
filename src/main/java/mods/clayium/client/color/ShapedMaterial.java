@@ -1,7 +1,7 @@
 package mods.clayium.client.color;
 
-import java.awt.*;
-
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumShapedMaterial;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.ItemStack;
@@ -10,8 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumShapedMaterial;
+import java.awt.*;
 
 @SideOnly(Side.CLIENT)
 public class ShapedMaterial implements IItemColor {

@@ -1,12 +1,11 @@
 package mods.clayium.util.crafting;
 
-import javax.annotation.Nullable;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.common.IClayEnergyConsumer;
+import javax.annotation.Nullable;
 
 /**
  * 機械のレシピ処理を担うクラス

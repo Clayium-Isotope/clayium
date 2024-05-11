@@ -1,8 +1,7 @@
 package mods.clayium.machine.common;
 
-import net.minecraft.inventory.IInventory;
-
 import mods.clayium.util.UsedFor;
+import net.minecraft.inventory.IInventory;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface INormalInventory extends IInventory {

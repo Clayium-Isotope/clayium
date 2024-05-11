@@ -1,7 +1,9 @@
 package mods.clayium.block;
 
-import java.util.Random;
-
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.worldgen.WorldGenGenericTree;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -17,10 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.worldgen.WorldGenGenericTree;
+import java.util.Random;
 
 public class ClayTreeSapling extends BlockBush implements IGrowable, ITieredBlock {
 

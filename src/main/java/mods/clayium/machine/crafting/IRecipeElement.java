@@ -1,13 +1,12 @@
 package mods.clayium.machine.crafting;
 
-import java.util.List;
-
+import mezz.jei.api.recipe.IRecipeWrapper;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 
-import mezz.jei.api.recipe.IRecipeWrapper;
-import mods.clayium.util.TierPrefix;
+import java.util.List;
 
 public interface IRecipeElement extends IRecipe, IRecipeWrapper {
 

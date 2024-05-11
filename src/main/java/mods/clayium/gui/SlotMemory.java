@@ -1,14 +1,13 @@
 package mods.clayium.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import mods.clayium.item.filter.IFilter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 
-import mods.clayium.item.filter.IFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SlotMemory extends SlotWithTexture {
 

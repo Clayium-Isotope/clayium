@@ -1,18 +1,17 @@
 package mods.clayium.item.filter;
 
-import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
-
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.util.UsedFor;
-import mods.clayium.util.UtilItemStack;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 @UsedFor(UsedFor.Type.Item)
 public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {

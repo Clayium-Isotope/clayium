@@ -1,9 +1,11 @@
 package mods.clayium.block;
 
-import java.util.Random;
-
-import javax.annotation.Nonnull;
-
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.MapColor;
@@ -21,12 +23,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.item.common.ClayiumShape;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class ClayTreeLeaf extends BlockLeaves implements ITieredBlock {
 

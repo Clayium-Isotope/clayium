@@ -1,10 +1,9 @@
 package mods.clayium.gui;
 
+import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
-import mods.clayium.machine.common.IClayEnergyConsumer;
 
 public class SlotEnergy extends Slot {
 

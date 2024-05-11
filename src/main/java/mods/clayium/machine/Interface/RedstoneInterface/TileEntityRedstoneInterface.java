@@ -1,19 +1,18 @@
 package mods.clayium.machine.Interface.RedstoneInterface;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
-import net.minecraftforge.common.util.Constants;
-
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.Interface.IExternalControl;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.common.util.Constants;
+
+import javax.annotation.Nullable;
 
 public class TileEntityRedstoneInterface extends TileEntityGeneric implements ISynchronizedInterface, ITickable {
 

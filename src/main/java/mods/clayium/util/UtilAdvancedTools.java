@@ -1,8 +1,7 @@
 package mods.clayium.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.IAdvancedTool;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,8 +14,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.IAdvancedTool;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtilAdvancedTools {
 

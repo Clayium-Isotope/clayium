@@ -1,5 +1,6 @@
 package mods.clayium.entity;
 
+import mods.clayium.util.UtilNetwork;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,8 +14,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-
-import mods.clayium.util.UtilNetwork;
 
 public class EntityTeleportBall extends EntityClayBall {
 

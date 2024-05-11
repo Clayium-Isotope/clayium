@@ -1,8 +1,7 @@
 package mods.clayium.machine.common;
 
-import net.minecraft.entity.player.EntityPlayer;
-
 import mods.clayium.util.UsedFor;
+import net.minecraft.entity.player.EntityPlayer;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IButtonProvider {

@@ -1,10 +1,5 @@
 package mods.clayium.machine.CAInjector;
 
-import javax.annotation.Nonnull;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.machine.CAMachine.TileEntityCAMachine;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -16,6 +11,10 @@ import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityCAInjector extends TileEntityCAMachine implements Machine2To1 {
     protected double caFactorExponent = 1.0;

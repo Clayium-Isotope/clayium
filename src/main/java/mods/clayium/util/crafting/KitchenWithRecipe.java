@@ -1,12 +1,11 @@
 package mods.clayium.util.crafting;
 
-import net.minecraft.nbt.NBTTagCompound;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.IRecipeElement;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class KitchenWithRecipe<RecipeType extends IRecipeElement> extends Kitchen {
 

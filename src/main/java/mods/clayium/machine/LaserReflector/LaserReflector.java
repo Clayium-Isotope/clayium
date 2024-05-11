@@ -1,5 +1,9 @@
 package mods.clayium.machine.LaserReflector;
 
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.SoundType;
@@ -19,11 +23,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.util.TierPrefix;
 
 public class LaserReflector extends BlockContainer implements ITieredBlock {
 

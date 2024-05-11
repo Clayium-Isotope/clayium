@@ -1,9 +1,9 @@
 package mods.clayium.util;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class ODHelper {
 

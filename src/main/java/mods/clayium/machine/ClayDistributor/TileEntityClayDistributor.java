@@ -1,18 +1,17 @@
 package mods.clayium.machine.ClayDistributor;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.util.EnumSide;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TileEntityClayDistributor extends TileEntityClayContainer {
 

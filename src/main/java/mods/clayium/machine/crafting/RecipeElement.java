@@ -1,8 +1,8 @@
 package mods.clayium.machine.crafting;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -12,9 +12,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
-import mods.clayium.util.UtilLocale;
+import java.util.*;
+import java.util.stream.Collectors;
 
 // https://forums.minecraftforge.net/topic/69258-1122-custom-irecipe/
 // Extend ShapelessRecipes for JEI CraftingRecipeChecker

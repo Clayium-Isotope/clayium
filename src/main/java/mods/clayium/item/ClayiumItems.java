@@ -1,17 +1,5 @@
 package mods.clayium.item;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.ClayPipingTools;
 import mods.clayium.item.common.ClayiumItem;
@@ -20,6 +8,17 @@ import mods.clayium.item.common.ItemTiered;
 import mods.clayium.item.filter.*;
 import mods.clayium.item.gadget.*;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClayiumItems {
 

@@ -1,9 +1,5 @@
 package mods.clayium.util;
 
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -11,6 +7,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
+
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class UtilCollect {
 

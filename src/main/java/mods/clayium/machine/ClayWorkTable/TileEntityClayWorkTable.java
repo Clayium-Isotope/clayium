@@ -1,12 +1,5 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
@@ -17,6 +10,12 @@ import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider,
                                      ClayiumRecipeProvider<KneadingRecipe> {

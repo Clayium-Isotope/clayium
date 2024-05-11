@@ -1,8 +1,7 @@
 package mods.clayium.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.util.UtilAdvancedTools;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -19,8 +18,8 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.util.UtilAdvancedTools;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HarvestCoordClaySteelTools implements IHarvestCoord {
 

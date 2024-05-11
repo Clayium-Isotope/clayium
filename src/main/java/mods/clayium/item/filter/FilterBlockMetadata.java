@@ -1,8 +1,7 @@
 package mods.clayium.item.filter;
 
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.util.TierPrefix;
+import net.minecraft.item.ItemStack;
 
 // TODO Checking Block and its Blockstate
 @Deprecated // not yet

@@ -1,8 +1,8 @@
 package mods.clayium.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import mods.clayium.item.common.ClayiumItem;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.common.IClayInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -12,9 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
-import mods.clayium.item.common.ClayiumItem;
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.machine.common.IClayInventory;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RawClayTools extends ClayiumItem {
 

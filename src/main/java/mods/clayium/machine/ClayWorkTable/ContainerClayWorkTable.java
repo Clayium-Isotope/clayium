@@ -1,13 +1,12 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.ClayiumItems;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
 
 public class ContainerClayWorkTable extends ContainerTemp {
 

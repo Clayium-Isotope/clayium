@@ -1,14 +1,13 @@
 package mods.clayium.gui;
 
-import java.io.IOException;
-
-import net.minecraft.util.ResourceLocation;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.core.ClayiumIntegration;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IMachine;
 import mods.clayium.plugin.jei.JEICompatibility;
+import net.minecraft.util.ResourceLocation;
+
+import java.io.IOException;
 
 public class GuiIMachine extends GuiTemp {
 

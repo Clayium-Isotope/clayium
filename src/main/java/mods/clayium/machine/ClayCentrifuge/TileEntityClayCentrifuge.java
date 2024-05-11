@@ -1,9 +1,5 @@
 package mods.clayium.machine.ClayCentrifuge;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
@@ -12,6 +8,9 @@ import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.crafting.Kitchen;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityClayCentrifuge extends TileEntityClayContainer implements IClayEnergyConsumer, Machine1ToSome {
 

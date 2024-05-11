@@ -1,21 +1,19 @@
 package mods.clayium.machine.Interface.ClayLaserInterface;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClayDirectionalContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 @HasOriginalState
 public class ClayLaserInterface extends ClayDirectionalContainer {

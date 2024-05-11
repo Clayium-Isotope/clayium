@@ -1,11 +1,8 @@
 package mods.clayium.util.crafting;
 
-import java.util.Objects;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -14,10 +11,10 @@ import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import mods.clayium.core.ClayiumCore;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Available

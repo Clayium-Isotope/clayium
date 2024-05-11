@@ -1,10 +1,9 @@
 package mods.clayium.item.common;
 
-import java.util.ArrayList;
-
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.Item;
 
-import mods.clayium.util.TierPrefix;
+import java.util.ArrayList;
 
 public class ItemDamaged extends ArrayList<Item> {
 

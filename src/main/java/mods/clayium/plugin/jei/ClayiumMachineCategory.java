@@ -1,10 +1,5 @@
 package mods.clayium.plugin.jei;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableAnimated;
@@ -15,6 +10,10 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.RecipeElement;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nullable;
 
 public class ClayiumMachineCategory implements IRecipeCategory<RecipeElement> {
 

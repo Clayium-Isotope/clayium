@@ -1,12 +1,10 @@
 package mods.clayium.item.filter;
 
-import java.io.IOException;
-
+import mods.clayium.gui.GuiTemp;
 import net.minecraft.client.gui.GuiTextField;
-
 import org.lwjgl.input.Keyboard;
 
-import mods.clayium.gui.GuiTemp;
+import java.io.IOException;
 
 public class GuiFilterString extends GuiTemp {
 

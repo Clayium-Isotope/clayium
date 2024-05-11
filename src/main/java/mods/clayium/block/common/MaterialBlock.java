@@ -1,10 +1,9 @@
 package mods.clayium.block.common;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 
 public class MaterialBlock extends BlockTiered {
 

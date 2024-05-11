@@ -1,9 +1,5 @@
 package mods.clayium.machine;
 
-import java.util.Objects;
-
-import net.minecraft.util.ResourceLocation;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
@@ -11,6 +7,9 @@ import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
 import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import net.minecraft.util.ResourceLocation;
+
+import java.util.Objects;
 
 public enum EnumMachineKind {
     EMPTY("", null),

@@ -1,11 +1,10 @@
 package mods.clayium.machine.common;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.util.RangeCheck;
 import mods.clayium.util.UsedFor;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {

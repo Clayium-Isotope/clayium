@@ -1,8 +1,12 @@
 package mods.clayium.machine.CreativeEnergySource;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import mods.clayium.client.render.CustomHull;
+import mods.clayium.item.common.IClayEnergy;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -11,13 +15,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import mods.clayium.client.render.CustomHull;
-import mods.clayium.item.common.IClayEnergy;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilTier;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * [TODO] [GUI]専用のGUI, 流量調節機能, [Container]エネルギー粘土を無に帰す

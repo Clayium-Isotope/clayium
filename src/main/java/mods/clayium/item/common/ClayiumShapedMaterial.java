@@ -1,11 +1,10 @@
 package mods.clayium.item.common;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
+import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nullable;
 
 public class ClayiumShapedMaterial extends ItemTiered {
 

@@ -1,10 +1,10 @@
 package mods.clayium.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import mods.clayium.util.crafting.IItemPattern;
+import mods.clayium.util.crafting.OreDictionaryStack;
+import mods.clayium.util.crafting.SpeciesIngredientFactory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -12,12 +12,10 @@ import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import mods.clayium.util.crafting.IItemPattern;
-import mods.clayium.util.crafting.OreDictionaryStack;
-import mods.clayium.util.crafting.SpeciesIngredientFactory;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UtilItemStack {
 

@@ -1,14 +1,5 @@
 package mods.clayium.plugin.jei;
 
-import java.util.LinkedList;
-
-import javax.annotation.Nullable;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
@@ -17,6 +8,13 @@ import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.ClayWorkTable.KneadingRecipe;
 import mods.clayium.machine.ClayWorkTable.TileEntityClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nullable;
+import java.util.LinkedList;
 
 public class ClayWorkTableCategory implements IRecipeCategory<KneadingRecipe> {
 

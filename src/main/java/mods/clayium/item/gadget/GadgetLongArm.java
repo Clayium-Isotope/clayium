@@ -1,7 +1,6 @@
 package mods.clayium.item.gadget;
 
-import java.util.UUID;
-
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -10,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.Constants;
 
-import mods.clayium.util.TierPrefix;
+import java.util.UUID;
 
 public class GadgetLongArm extends GadgetTemp {
 

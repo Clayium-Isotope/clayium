@@ -1,14 +1,13 @@
 package mods.clayium.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.DimensionManager;
 
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class SyncManager {
 

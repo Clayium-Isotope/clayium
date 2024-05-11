@@ -1,7 +1,12 @@
 package mods.clayium.item;
 
-import java.util.*;
-
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.common.MaterialBlock;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.*;
+import mods.clayium.util.ODHelper;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -10,13 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.common.MaterialBlock;
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.*;
-import mods.clayium.util.ODHelper;
-import mods.clayium.util.TierPrefix;
+import java.util.*;
 
 public class ClayiumMaterials {
 
@@ -313,6 +312,9 @@ public class ClayiumMaterials {
         materialShapeMap.get(material).putIfAbsent(shape, stack);
     }
 
+    /**
+     * @return the copied stack of Map[material][shape]
+     */
     public static ItemStack get(ClayiumMaterial material, ClayiumShape shape) {
         assert materialShapeMap.containsKey(material);
         assert materialShapeMap.get(material).containsKey(shape);

@@ -1,5 +1,9 @@
 package mods.clayium.item;
 
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -7,11 +11,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.TierPrefix;
 
 public class SynchronousParts extends ItemTiered implements IModifyCC {
 

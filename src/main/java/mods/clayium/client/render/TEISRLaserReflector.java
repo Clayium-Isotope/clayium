@@ -1,5 +1,6 @@
 package mods.clayium.client.render;
 
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -9,10 +10,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
-import mods.clayium.core.ClayiumCore;
 
 @Deprecated
 public class TEISRLaserReflector extends TileEntityItemStackRenderer {

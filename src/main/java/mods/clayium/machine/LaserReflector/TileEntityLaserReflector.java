@@ -1,8 +1,10 @@
 package mods.clayium.machine.LaserReflector;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -11,11 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityLaserReflector extends TileEntityClayContainer implements IClayLaserMachine, IClayLaserManager {
 

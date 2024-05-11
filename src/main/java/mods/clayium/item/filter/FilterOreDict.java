@@ -1,9 +1,8 @@
 package mods.clayium.item.filter;
 
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
+import net.minecraft.item.ItemStack;
 
 public class FilterOreDict extends FilterString {
 

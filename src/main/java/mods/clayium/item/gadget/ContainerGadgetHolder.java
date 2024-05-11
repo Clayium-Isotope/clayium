@@ -1,12 +1,11 @@
 package mods.clayium.item.gadget;
 
+import mods.clayium.gui.ContainerInItemStack;
+import mods.clayium.gui.SlotWithTexture;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
-import mods.clayium.gui.ContainerInItemStack;
-import mods.clayium.gui.SlotWithTexture;
 
 public class ContainerGadgetHolder extends ContainerInItemStack {
 

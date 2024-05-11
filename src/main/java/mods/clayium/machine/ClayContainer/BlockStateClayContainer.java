@@ -1,10 +1,9 @@
 package mods.clayium.machine.ClayContainer;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import com.google.common.collect.ImmutableMap;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UtilDirection;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.properties.IProperty;
@@ -28,11 +27,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.collect.ImmutableMap;
-
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.EnumSide;
-import mods.clayium.util.UtilDirection;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 
 public class BlockStateClayContainer extends BlockStateContainer.StateImplementation {
 

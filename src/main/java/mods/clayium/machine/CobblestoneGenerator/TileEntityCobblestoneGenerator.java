@@ -1,7 +1,10 @@
 package mods.clayium.machine.CobblestoneGenerator;
 
-import javax.annotation.Nullable;
-
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -10,11 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTransfer;
+import javax.annotation.Nullable;
 
 public class TileEntityCobblestoneGenerator extends TileEntityClayBuffer {
     public int progress = 0;

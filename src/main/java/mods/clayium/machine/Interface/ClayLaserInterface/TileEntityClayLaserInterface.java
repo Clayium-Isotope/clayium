@@ -1,12 +1,5 @@
 package mods.clayium.machine.Interface.ClayLaserInterface;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.util.Constants;
-
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
@@ -14,6 +7,12 @@ import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.util.Constants;
+
+import javax.annotation.Nullable;
 
 public class TileEntityClayLaserInterface extends TileEntityGeneric
                                           implements ISynchronizedInterface, IClayLaserMachine {

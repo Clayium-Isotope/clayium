@@ -1,9 +1,8 @@
 package mods.clayium.machine.crafting;
 
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.machine.ClayWorkTable.KneadingMethod;
 import mods.clayium.machine.ClayWorkTable.KneadingRecipe;
+import net.minecraft.item.ItemStack;
 
 public class ClayWorkTableRecipe extends ClayiumRecipe /* extends ArrayList<KneadingRecipeElement> */ {
 

@@ -1,17 +1,15 @@
 package mods.clayium.util;
 
-import java.awt.*;
-
+import mods.clayium.machine.ClayMarker.AABBHolder;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
-
-import mods.clayium.machine.ClayMarker.AABBHolder;
-
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 public class UtilRender {
     /**

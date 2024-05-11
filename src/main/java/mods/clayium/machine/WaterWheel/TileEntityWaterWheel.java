@@ -1,5 +1,9 @@
 package mods.clayium.machine.WaterWheel;
 
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilTier;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -7,11 +11,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilTier;
 
 public class TileEntityWaterWheel extends TileEntityGeneric {
 

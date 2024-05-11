@@ -1,7 +1,5 @@
 package mods.clayium.worldgen;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockVine;
@@ -11,6 +9,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+
+import java.util.Random;
 
 /**
  * it is a copy of {@link net.minecraft.world.gen.feature.WorldGenBirchTree}

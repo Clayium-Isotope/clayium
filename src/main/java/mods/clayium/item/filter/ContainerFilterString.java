@@ -1,5 +1,6 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.gui.ContainerTemp;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -7,8 +8,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentString;
-
-import mods.clayium.gui.ContainerTemp;
 
 public class ContainerFilterString extends ContainerTemp {
 

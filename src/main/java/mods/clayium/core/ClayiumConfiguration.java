@@ -1,11 +1,11 @@
 package mods.clayium.core;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Copied from the original clayium

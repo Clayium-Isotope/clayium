@@ -1,18 +1,17 @@
 package mods.clayium.item.filter;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.util.TierPrefix;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public abstract class FilterString extends FilterTemp {
 

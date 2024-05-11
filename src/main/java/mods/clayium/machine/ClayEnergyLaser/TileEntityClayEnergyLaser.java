@@ -1,7 +1,13 @@
 package mods.clayium.machine.ClayEnergyLaser;
 
-import javax.annotation.Nullable;
-
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.util.ContainClayEnergy;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -14,14 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.ContainClayEnergy;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nullable;
 
 public class TileEntityClayEnergyLaser extends TileEntityClayContainer
                                        implements IClayEnergyConsumer, IClayLaserManager {

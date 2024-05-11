@@ -1,15 +1,14 @@
 package mods.clayium.machine.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import mods.clayium.gui.ContainerNormalInventory;
+import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 
-import mods.clayium.gui.ContainerNormalInventory;
-import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InventoryMultiPage implements INormalInventory, IButtonProvider {
 

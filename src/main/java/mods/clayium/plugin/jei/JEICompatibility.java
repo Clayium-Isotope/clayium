@@ -1,10 +1,5 @@
 package mods.clayium.plugin.jei;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import net.minecraft.item.ItemStack;
-
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -20,6 +15,10 @@ import mods.clayium.machine.ClayWorkTable.GuiClayWorkTable;
 import mods.clayium.machine.ClayiumMachines;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import net.minecraft.item.ItemStack;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @JEIPlugin
 public class JEICompatibility implements IModPlugin {

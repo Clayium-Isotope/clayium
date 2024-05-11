@@ -1,17 +1,15 @@
 package mods.clayium.client.render;
 
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.LaserReflector.LaserReflector;
+import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
-
 import org.lwjgl.opengl.GL11;
-
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.LaserReflector.LaserReflector;
-import mods.clayium.machine.LaserReflector.TileEntityLaserReflector;
 
 public class TESRLaserReflector extends TileEntitySpecialRenderer<TileEntityLaserReflector> {
 

@@ -1,9 +1,8 @@
 package mods.clayium.item;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemPickaxe;
@@ -12,9 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.UtilLocale;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ClayPickaxe extends ItemPickaxe {
 

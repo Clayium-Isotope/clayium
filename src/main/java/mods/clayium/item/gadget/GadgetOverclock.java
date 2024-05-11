@@ -1,10 +1,9 @@
 package mods.clayium.item.gadget;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 
 public class GadgetOverclock extends GadgetTemp {
 

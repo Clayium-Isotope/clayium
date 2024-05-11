@@ -1,7 +1,10 @@
 package mods.clayium.client.render;
 
-import java.awt.*;
-
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.util.UtilBuilder;
+import mods.clayium.util.UtilRender;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -16,14 +19,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.Interface.ISynchronizedInterface;
-import mods.clayium.util.UtilBuilder;
-import mods.clayium.util.UtilRender;
+import java.awt.*;
 
 /**
  * @see net.minecraft.client.renderer.entity.RenderItemFrame;

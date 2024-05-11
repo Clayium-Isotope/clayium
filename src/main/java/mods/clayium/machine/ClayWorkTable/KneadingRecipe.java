@@ -1,8 +1,11 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import java.util.Arrays;
-import java.util.Collections;
-
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.ClayiumItems;
+import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.IngredientAlways;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -12,15 +15,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
-
 import org.lwjgl.opengl.GL11;
 
-import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.VanillaTypes;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.ClayiumItems;
-import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.IngredientAlways;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class KneadingRecipe extends RecipeElement {
 

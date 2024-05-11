@@ -1,7 +1,6 @@
 package mods.clayium.item.gadget;
 
-import java.util.UUID;
-
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -9,7 +8,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.item.ItemStack;
 
-import mods.clayium.util.TierPrefix;
+import java.util.UUID;
 
 public class GadgetHealth extends GadgetTemp {
 

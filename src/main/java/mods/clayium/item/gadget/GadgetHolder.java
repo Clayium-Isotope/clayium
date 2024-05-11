@@ -1,7 +1,10 @@
 package mods.clayium.item.gadget;
 
-import java.util.*;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.common.ItemTiered;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,11 +12,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.common.ItemTiered;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilItemStack;
+import java.util.*;
 
 public class GadgetHolder extends ItemTiered {
 

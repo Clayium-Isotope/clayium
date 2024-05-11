@@ -1,5 +1,6 @@
 package mods.clayium.client.render;
 
+import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.PositionTextureVertex;
@@ -8,8 +9,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
-
-import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 
 public class ModelClayContainer extends ModelBase {
 

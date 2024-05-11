@@ -1,9 +1,7 @@
 package mods.clayium.item.common;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -13,8 +11,8 @@ import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilLocale;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemTiered extends ClayiumItem implements ITieredItem {
 

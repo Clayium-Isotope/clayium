@@ -1,9 +1,8 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
-import mods.clayium.util.TierPrefix;
 
 public class FilterDuplicator extends FilterTemp {
 

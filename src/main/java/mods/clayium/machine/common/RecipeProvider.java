@@ -1,8 +1,7 @@
 package mods.clayium.machine.common;
 
-import net.minecraft.inventory.IInventory;
-
 import mods.clayium.util.TierPrefix;
+import net.minecraft.inventory.IInventory;
 
 public interface RecipeProvider {
 

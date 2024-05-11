@@ -1,14 +1,13 @@
 package mods.clayium.machine.ClayFabricator;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
 import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
     public float exponentOfNumber;

@@ -1,17 +1,5 @@
 package mods.clayium.gui;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.clayium.item.filter.ContainerFilterString;
 import mods.clayium.item.filter.ContainerFilterWhitelist;
 import mods.clayium.item.filter.GuiFilterString;
@@ -29,6 +17,8 @@ import mods.clayium.machine.AutoTrader.GuiAutoTrader;
 import mods.clayium.machine.AutoTrader.TileEntityAutoTrader;
 import mods.clayium.machine.CACollector.ContainerCACollector;
 import mods.clayium.machine.CACollector.TileEntityCACollector;
+import mods.clayium.machine.CAReactor.GuiCAReactor;
+import mods.clayium.machine.CAReactor.TileEntityCAReactor;
 import mods.clayium.machine.ChemicalMetalSeparator.ContainerChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
@@ -61,6 +51,17 @@ import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
 import mods.clayium.machine.VacuumContainer.ContainerVacuumContainer;
 import mods.clayium.machine.VacuumContainer.TileEntityVacuumContainer;
 import mods.clayium.machine.common.Machine2To1;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class GuiHandler implements IGuiHandler {
 

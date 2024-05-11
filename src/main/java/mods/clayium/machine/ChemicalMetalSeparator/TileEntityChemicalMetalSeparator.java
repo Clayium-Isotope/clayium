@@ -1,11 +1,5 @@
 package mods.clayium.machine.ChemicalMetalSeparator;
 
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
@@ -16,6 +10,11 @@ import mods.clayium.machine.common.Machine1ToSome;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import mods.clayium.util.crafting.WeightedList;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine implements Machine1ToSome {
 

@@ -1,11 +1,11 @@
 package mods.clayium.block.common;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockDamaged extends ArrayList<Block> {
 

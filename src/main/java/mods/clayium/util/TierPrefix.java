@@ -1,11 +1,11 @@
 package mods.clayium.util;
 
+import mods.clayium.item.common.ClayiumMaterial;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.stream.Collectors;
-
-import mods.clayium.item.common.ClayiumMaterial;
 
 /**
  * tier = ordinal - 1
@@ -100,6 +100,19 @@ public enum TierPrefix {
                 return this.current;
             }
         };
+    }
+
+    public static TierPrefix min(TierPrefix a, TierPrefix b) {
+        if (unknown.equals(a)) {
+            return b;
+        }
+
+        if (unknown.equals(b)) {
+            return a;
+        }
+
+        if (a.compareTo(b) > 0) return b;
+        return a;
     }
 
     public static String getLocalizeKey(TierPrefix tier) {

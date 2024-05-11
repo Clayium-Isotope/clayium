@@ -1,8 +1,5 @@
 package mods.clayium.machine.ClayChemicalReactor;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
@@ -10,6 +7,8 @@ import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To2;
 import mods.clayium.machine.common.MachineSomeToSome;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class ContainerClayChemicalReactor extends ContainerIMachine {
 

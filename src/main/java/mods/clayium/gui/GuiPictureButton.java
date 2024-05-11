@@ -1,10 +1,9 @@
 package mods.clayium.gui;
 
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButtonToggle;
 import net.minecraft.util.ResourceLocation;
-
-import mods.clayium.core.ClayiumCore;
 
 public class GuiPictureButton extends GuiButtonToggle {
 

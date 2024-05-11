@@ -1,13 +1,13 @@
 package mods.clayium.machine.ClayContainer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import javax.annotation.Nullable;
-
+import com.google.common.collect.ImmutableMap;
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.common.IModifyCC;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -31,15 +31,12 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.collect.ImmutableMap;
-
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.common.IModifyCC;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilLocale;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public abstract class ClayContainer extends BlockContainer implements ITieredBlock {
     private final Supplier<? extends TileEntityGeneric> teSupplier;

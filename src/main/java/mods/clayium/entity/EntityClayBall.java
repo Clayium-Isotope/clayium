@@ -1,8 +1,6 @@
 package mods.clayium.entity;
 
-import java.util.List;
-import java.util.UUID;
-
+import mods.clayium.util.UtilNetwork;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +18,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.util.UtilNetwork;
+import java.util.List;
+import java.util.UUID;
 
 public class EntityClayBall extends Entity implements IProjectile {
 

@@ -1,10 +1,5 @@
 package mods.clayium.machine.CAMachine;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ITickable;
-
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
@@ -16,6 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+
+import javax.annotation.Nullable;
 
 public abstract class TileEntityCAMachine extends TileEntityClayContainer implements ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement> {
     @CapabilityInject(ResonanceHandler.class)

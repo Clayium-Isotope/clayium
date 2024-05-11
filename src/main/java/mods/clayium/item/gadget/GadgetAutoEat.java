@@ -1,7 +1,10 @@
 package mods.clayium.item.gadget;
 
-import java.util.List;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilCollect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
@@ -13,11 +16,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilCollect;
+import java.util.List;
 
 public class GadgetAutoEat extends GadgetTemp /* implements IFilter */ {
 

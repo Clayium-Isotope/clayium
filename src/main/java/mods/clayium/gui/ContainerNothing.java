@@ -1,10 +1,9 @@
 package mods.clayium.gui;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class ContainerNothing extends ContainerTemp {
 

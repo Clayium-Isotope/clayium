@@ -1,19 +1,17 @@
 package mods.clayium.util.crafting;
 
-import javax.annotation.Nonnull;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.item.common.ClayiumShape;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.item.common.ClayiumShape;
+import javax.annotation.Nonnull;
 
 /**
  * <pre>

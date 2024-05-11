@@ -1,12 +1,11 @@
 package mods.clayium.machine.MultitrackBuffer;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotMemory;
 import mods.clayium.gui.SlotWithTexture;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class ContainerMultitrackBuffer extends ContainerTemp {
 

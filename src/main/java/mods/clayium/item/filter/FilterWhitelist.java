@@ -1,16 +1,15 @@
 package mods.clayium.item.filter;
 
-import java.util.List;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilItemStack;
+import java.util.List;
 
 public class FilterWhitelist extends FilterTemp {
 

@@ -1,14 +1,5 @@
 package mods.clayium.machine.MultiblockMachine;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-
 import mods.clayium.block.common.ITieredBlock;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
@@ -17,6 +8,15 @@ import mods.clayium.util.EnumSide;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
+
+import javax.annotation.Nullable;
 
 public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachine implements MachineSomeToSome {
 
@@ -69,34 +69,33 @@ public abstract class TileEntityMultiblockMachine extends TileEntityClayiumMachi
         super.update();
     }
 
-    public BlockPos getRelativeCoord(BlockPos relative) {
+    public BlockPos getRelativeCoord(Vec3i relative) {
         // EnumFacing direction = EnumFacing.getFront(this.getBlockMetadata());
         EnumFacing direction = this.getFront();
         EnumFacing xxVector = UtilDirection.getSideOfDirection(direction, EnumSide.RIGHT);
         assert xxVector != null;
         EnumFacing yyVector = EnumFacing.UP;
         EnumFacing zzVector = direction.getOpposite();
-        return this.pos.offset(xxVector, relative.getX()).offset(yyVector, relative.getY()).offset(zzVector,
-                relative.getZ());
+        return this.pos.offset(xxVector, relative.getX()).offset(yyVector, relative.getY()).offset(zzVector, relative.getZ());
     }
 
-    protected TileEntity getTileEntity(BlockPos relative) {
+    protected TileEntity getTileEntity(Vec3i relative) {
         return this.world == null ? null : this.world.getTileEntity(this.getRelativeCoord(relative));
     }
 
-    protected Block getBlock(BlockPos relative) {
+    protected Block getBlock(Vec3i relative) {
         return this.world == null ? null : this.world.getBlockState(this.getRelativeCoord(relative)).getBlock();
     }
 
-    protected IBlockState getBlockState(BlockPos relative) {
+    protected IBlockState getBlockState(Vec3i relative) {
         return this.world == null ? null : this.world.getBlockState(this.getRelativeCoord(relative));
     }
 
-    protected int getBlockMetadata(BlockPos relative) {
+    protected int getBlockMetadata(Vec3i relative) {
         return this.world == null ? 0 : this.getBlock(relative).getMetaFromState(this.getBlockState(relative));
     }
 
-    protected TierPrefix getBlockTier(BlockPos relative) {
+    protected TierPrefix getBlockTier(Vec3i relative) {
         Block block = this.getBlock(relative);
         return block instanceof ITieredBlock ?
                 ((ITieredBlock) block).getTier(this.world, this.getRelativeCoord(relative)) : TierPrefix.none;

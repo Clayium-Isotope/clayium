@@ -1,9 +1,13 @@
 package mods.clayium.machine.QuartzCrucible;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
+import com.google.common.collect.ImmutableMap;
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.item.ClayiumMaterials;
+import mods.clayium.item.common.ClayiumMaterial;
+import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.machine.ClayContainer.ClayContainer;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -18,15 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-import com.google.common.collect.ImmutableMap;
-
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.item.ClayiumMaterials;
-import mods.clayium.item.common.ClayiumMaterial;
-import mods.clayium.item.common.ClayiumShape;
-import mods.clayium.machine.ClayContainer.ClayContainer;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilItemStack;
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 @HasOriginalState
 public class QuartzCrucible extends ClayContainer {

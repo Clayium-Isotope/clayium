@@ -1,16 +1,15 @@
 package mods.clayium.machine.ClayChemicalReactor;
 
-import java.util.List;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To2;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
+import java.util.List;
 
 public class TileEntityClayChemicalReactor extends TileEntityClayiumMachine implements Machine2To2 {
 

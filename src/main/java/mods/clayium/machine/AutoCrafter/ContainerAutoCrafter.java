@@ -1,10 +1,9 @@
 package mods.clayium.machine.AutoCrafter;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.gui.*;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class ContainerAutoCrafter extends ContainerTemp {
 

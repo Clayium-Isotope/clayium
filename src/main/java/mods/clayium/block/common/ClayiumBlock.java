@@ -1,10 +1,7 @@
 package mods.clayium.block.common;
 
-import java.util.List;
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -20,8 +17,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.UtilLocale;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class ClayiumBlock extends Block implements IItemBlockHolder {
 

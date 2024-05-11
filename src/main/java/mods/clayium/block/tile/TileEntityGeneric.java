@@ -1,8 +1,6 @@
 package mods.clayium.block.tile;
 
-import java.util.List;
-import java.util.Random;
-
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -21,7 +19,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-import mods.clayium.util.TierPrefix;
+import java.util.List;
+import java.util.Random;
 
 public abstract class TileEntityGeneric extends TileEntity implements IInventory {
 

@@ -1,9 +1,8 @@
 package mods.clayium.block;
 
+import mods.clayium.block.common.ClayiumBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-
-import mods.clayium.block.common.ClayiumBlock;
 
 public class DenseClayOre extends ClayiumBlock {
 

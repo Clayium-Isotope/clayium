@@ -1,8 +1,7 @@
 package mods.clayium.machine.ClayEnergyLaser.laser;
 
-import net.minecraft.util.EnumFacing;
-
 import mods.clayium.util.UsedFor;
+import net.minecraft.util.EnumFacing;
 
 /**
  * Works similar to {@link IClayLaserVictim}

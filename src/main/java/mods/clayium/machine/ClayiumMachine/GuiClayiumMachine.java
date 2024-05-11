@@ -1,9 +1,5 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import java.io.IOException;
-
-import net.minecraft.util.ResourceLocation;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.core.ClayiumIntegration;
 import mods.clayium.gui.GuiPictureButton;
@@ -12,6 +8,9 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.plugin.jei.JEICompatibility;
 import mods.clayium.util.UtilTier;
+import net.minecraft.util.ResourceLocation;
+
+import java.io.IOException;
 
 public class GuiClayiumMachine extends GuiTemp {
     protected int progressBarSizeX = 24;

@@ -1,20 +1,19 @@
 package mods.clayium.machine.common;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
-
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilDirection;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.util.EnumSide;
-import mods.clayium.util.UsedFor;
-import mods.clayium.util.UtilDirection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
 
 /**
  * You can use these static methods even if the parent class modified the method(s).

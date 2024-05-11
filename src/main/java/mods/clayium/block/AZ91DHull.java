@@ -1,10 +1,9 @@
 package mods.clayium.block;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
 import mods.clayium.block.common.BlockTiered;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 
 public class AZ91DHull extends BlockTiered {
 

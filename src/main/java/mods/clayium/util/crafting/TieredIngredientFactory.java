@@ -1,8 +1,13 @@
 package mods.clayium.util.crafting;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.util.JsonHelper;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -11,15 +16,8 @@ import net.minecraft.util.JsonUtils;
 import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.machine.ClayiumMachines;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.util.JsonHelper;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * <pre>

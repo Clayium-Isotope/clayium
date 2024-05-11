@@ -1,12 +1,11 @@
 package mods.clayium.machine.Interface;
 
-import javax.annotation.Nullable;
-
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UsedFor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UsedFor;
+import javax.annotation.Nullable;
 
 @UsedFor(UsedFor.Type.TileEntity)
 public interface ISynchronizedInterface {

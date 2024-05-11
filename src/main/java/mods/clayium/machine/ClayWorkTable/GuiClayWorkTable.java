@@ -1,15 +1,14 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.gui.GuiPictureButton;
 import mods.clayium.gui.GuiTemp;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IButtonProvider;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiClayWorkTable extends GuiTemp {
 

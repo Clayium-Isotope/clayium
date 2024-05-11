@@ -1,9 +1,13 @@
 package mods.clayium.machine.ClayEnergyLaser;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.gui.GuiHandler;
+import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilDirection;
+import mods.clayium.util.UtilLocale;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,14 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.gui.GuiHandler;
-import mods.clayium.machine.ClayiumMachine.ClayDirectionalNoRecipeMachine;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.util.TierPrefix;
-import mods.clayium.util.UtilDirection;
-import mods.clayium.util.UtilLocale;
+import javax.annotation.Nullable;
+import java.util.List;
 
 @HasOriginalState
 public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {

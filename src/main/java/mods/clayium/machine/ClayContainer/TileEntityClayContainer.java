@@ -1,12 +1,11 @@
 package mods.clayium.machine.ClayContainer;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.Interface.IInterfaceCaptive;
+import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.IClayInventory;
+import mods.clayium.util.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -16,12 +15,11 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.Interface.IInterfaceCaptive;
-import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.*;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 public class TileEntityClayContainer extends TileEntityGeneric implements IClayInventory, ITickable, IInterfaceCaptive {
 

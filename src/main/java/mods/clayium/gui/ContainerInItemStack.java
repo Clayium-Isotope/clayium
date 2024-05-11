@@ -1,7 +1,7 @@
 package mods.clayium.gui;
 
-import java.util.function.Predicate;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.item.InventoryInItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -9,8 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.item.InventoryInItemStack;
+import java.util.function.Predicate;
 
 public abstract class ContainerInItemStack extends ContainerTemp {
 

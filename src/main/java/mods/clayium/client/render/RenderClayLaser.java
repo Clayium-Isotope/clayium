@@ -1,18 +1,16 @@
 package mods.clayium.client.render;
 
+import mods.clayium.core.ClayiumConfiguration;
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
+import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
-import mods.clayium.core.ClayiumConfiguration;
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
-import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
 
 public class RenderClayLaser {
 

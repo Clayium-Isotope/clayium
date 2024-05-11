@@ -1,12 +1,11 @@
 package mods.clayium.item.gadget;
 
-import java.util.Comparator;
-
+import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 
-import mods.clayium.util.UsedFor;
-import mods.clayium.util.UtilItemStack;
+import java.util.Comparator;
 
 @UsedFor(UsedFor.Type.Item)
 public interface IGadget extends Comparator<ItemStack> {

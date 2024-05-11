@@ -1,11 +1,11 @@
 package mods.clayium.machine.crafting;
 
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
-
-import net.minecraft.item.ItemStack;
 
 public class ClayiumRecipe extends ArrayList<IRecipeElement> {
     // private static final Map<String, ClayiumRecipe> id2Recipe = new HashMap<>();

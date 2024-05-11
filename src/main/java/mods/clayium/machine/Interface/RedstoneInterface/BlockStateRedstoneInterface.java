@@ -1,5 +1,6 @@
 package mods.clayium.machine.Interface.RedstoneInterface;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -7,8 +8,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-
-import com.google.common.collect.ImmutableMap;
 
 public class BlockStateRedstoneInterface extends BlockStateContainer.StateImplementation {
 

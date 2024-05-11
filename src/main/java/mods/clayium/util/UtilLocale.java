@@ -1,7 +1,6 @@
 package mods.clayium.util;
 
-import java.util.List;
-
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
@@ -10,7 +9,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.core.ClayiumCore;
+import java.util.List;
 
 public class UtilLocale {
 

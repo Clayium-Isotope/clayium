@@ -1,11 +1,10 @@
 package mods.clayium.item;
 
+import mods.clayium.entity.EntityTeleportBall;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import mods.clayium.entity.EntityTeleportBall;
-import mods.clayium.util.TierPrefix;
 
 public class InstantTeleporter extends ClayShooter {
 

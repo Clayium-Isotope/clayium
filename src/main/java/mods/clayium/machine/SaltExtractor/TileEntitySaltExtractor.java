@@ -1,15 +1,5 @@
 package mods.clayium.machine.SaltExtractor;
 
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
@@ -18,6 +8,15 @@ import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator implements IClayEnergyConsumer {
 

@@ -1,16 +1,15 @@
 package mods.clayium.item.gadget;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.util.TierPrefix;
+import java.util.HashMap;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = ClayiumCore.ModId)
 public class GadgetRepeatedlyAttack extends GadgetTemp {

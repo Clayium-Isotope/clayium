@@ -1,14 +1,13 @@
 package mods.clayium.block.common;
 
+import mods.clayium.util.TierPrefix;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-
-import mods.clayium.util.TierPrefix;
 
 public class BlockTierTied extends EnumMap<TierPrefix, Block> {
 

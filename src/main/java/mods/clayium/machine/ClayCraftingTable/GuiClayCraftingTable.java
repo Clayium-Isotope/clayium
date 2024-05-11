@@ -1,7 +1,7 @@
 package mods.clayium.machine.ClayCraftingTable;
 
-import java.io.IOException;
-
+import mods.clayium.core.ClayiumCore;
+import mods.clayium.gui.GuiTemp;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonImage;
 import net.minecraft.client.gui.recipebook.GuiRecipeBook;
@@ -12,8 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.core.ClayiumCore;
-import mods.clayium.gui.GuiTemp;
+import java.io.IOException;
 
 /**
  * Copied from: <a href="https://github.com/MinecraftForge/MinecraftForge/blob/1.12.2/src/minecraft/client/gui/GuiCrafting.java">GuiCrafting</a>

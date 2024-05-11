@@ -1,10 +1,9 @@
 package mods.clayium.machine.ClayCraftingTable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityClayCraftingTable extends TileEntityClayContainer {
 

@@ -1,9 +1,12 @@
 package mods.clayium.machine.Interface.RedstoneInterface;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
+import com.google.common.collect.ImmutableMap;
+import mods.clayium.block.common.ITieredBlock;
+import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.client.render.HasOriginalState;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
+import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -17,14 +20,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IUnlistedProperty;
 
-import com.google.common.collect.ImmutableMap;
-
-import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileEntityGeneric;
-import mods.clayium.client.render.HasOriginalState;
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
-import mods.clayium.util.TierPrefix;
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 @HasOriginalState
 public class RedstoneInterface extends ClayInterface implements ITieredBlock {

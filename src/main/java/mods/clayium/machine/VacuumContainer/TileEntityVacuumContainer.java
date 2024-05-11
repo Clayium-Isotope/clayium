@@ -1,8 +1,9 @@
 package mods.clayium.machine.VacuumContainer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.client.render.CustomHull;
+import mods.clayium.item.filter.IFilter;
+import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -13,10 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
-import mods.clayium.client.render.CustomHull;
-import mods.clayium.item.filter.IFilter;
-import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @CustomHull(CustomHull.AZ91D)
 public class TileEntityVacuumContainer extends TileEntityClayContainer

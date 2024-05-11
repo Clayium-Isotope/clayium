@@ -1,5 +1,6 @@
 package mods.clayium.util;
 
+import mods.clayium.machine.ClayContainer.ClayContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -21,8 +22,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import mods.clayium.machine.ClayContainer.ClayContainer;
 
 public class UtilBuilder {
 

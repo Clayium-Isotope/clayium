@@ -1,13 +1,12 @@
 package mods.clayium.machine.AutoClayCondenser;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.gui.ContainerTemp;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotMemory;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.item.common.IClayEnergy;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 
 public class ContainerAutoClayCondenser extends ContainerTemp {
 

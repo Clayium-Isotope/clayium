@@ -1,7 +1,6 @@
 package mods.clayium.worldgen;
 
-import java.util.Random;
-
+import mods.clayium.block.ClayiumBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -13,7 +12,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-import mods.clayium.block.ClayiumBlocks;
+import java.util.Random;
 
 public class ClayOreGenerator implements IWorldGenerator {
 

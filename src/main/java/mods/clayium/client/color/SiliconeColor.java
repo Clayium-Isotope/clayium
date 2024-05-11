@@ -1,7 +1,7 @@
 package mods.clayium.client.color;
 
-import javax.annotation.Nullable;
-
+import mods.clayium.block.ClayiumBlocks;
+import mods.clayium.block.SiliconeColored;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -17,8 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.clayium.block.ClayiumBlocks;
-import mods.clayium.block.SiliconeColored;
+import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class SiliconeColor implements IBlockColor, IItemColor {

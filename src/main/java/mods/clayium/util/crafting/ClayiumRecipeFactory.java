@@ -1,10 +1,15 @@
 package mods.clayium.util.crafting;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.StreamSupport;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.util.JsonHelper;
+import mods.clayium.util.UtilCollect;
+import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -15,17 +20,10 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-
-import mods.clayium.machine.EnumMachineKind;
-import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.JsonHelper;
-import mods.clayium.util.UtilCollect;
-import mods.clayium.util.UtilItemStack;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 /**
  * <a href="https://docs.minecraftforge.net/en/1.12.x/utilities/recipes/">Guide</a>

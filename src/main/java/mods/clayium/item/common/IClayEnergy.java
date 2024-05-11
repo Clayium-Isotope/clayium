@@ -1,13 +1,12 @@
 package mods.clayium.item.common;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.block.ClayiumBlocks;
 import mods.clayium.block.itemblock.ItemBlockCompressedClay;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UsedFor;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 @UsedFor(UsedFor.Type.Item)
 public interface IClayEnergy {

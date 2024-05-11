@@ -1,13 +1,11 @@
 package mods.clayium.gui;
 
+import mods.clayium.core.ClayiumCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
-import mods.clayium.core.ClayiumCore;
 
 public class RectangleTexture implements ITexture {
 

@@ -1,11 +1,10 @@
 package mods.clayium.item.filter;
 
+import mods.clayium.gui.ContainerInItemStack;
+import mods.clayium.gui.SlotMemory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-
-import mods.clayium.gui.ContainerInItemStack;
-import mods.clayium.gui.SlotMemory;
 
 public class ContainerFilterWhitelist extends ContainerInItemStack {
 

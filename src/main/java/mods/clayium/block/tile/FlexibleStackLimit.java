@@ -1,8 +1,7 @@
 package mods.clayium.block.tile;
 
-import net.minecraft.item.ItemStack;
-
 import mods.clayium.util.UsedFor;
+import net.minecraft.item.ItemStack;
 
 /**
  * 各スロット、各ItemStackに対して、特定のMaxStackSizeを持っている。

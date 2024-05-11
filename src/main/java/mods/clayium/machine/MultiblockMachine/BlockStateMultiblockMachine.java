@@ -1,15 +1,13 @@
 package mods.clayium.machine.MultiblockMachine;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.common.collect.ImmutableMap;
+import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 
-import com.google.common.collect.ImmutableMap;
-
-import mods.clayium.machine.ClayContainer.BlockStateClaySidedContainer;
+import java.util.Arrays;
+import java.util.List;
 
 public class BlockStateMultiblockMachine extends BlockStateClaySidedContainer {
 

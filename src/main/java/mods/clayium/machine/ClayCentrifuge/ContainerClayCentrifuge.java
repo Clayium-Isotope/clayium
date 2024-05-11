@@ -1,13 +1,12 @@
 package mods.clayium.machine.ClayCentrifuge;
 
-import net.minecraft.entity.player.InventoryPlayer;
-
 import mods.clayium.gui.ContainerIMachine;
 import mods.clayium.gui.RectangleTexture;
 import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine1ToSome;
+import net.minecraft.entity.player.InventoryPlayer;
 
 public class ContainerClayCentrifuge extends ContainerIMachine {
 

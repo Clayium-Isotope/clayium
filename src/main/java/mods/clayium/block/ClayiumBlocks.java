@@ -1,16 +1,15 @@
 package mods.clayium.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.EnumDyeColor;
-
 import mods.clayium.block.common.BlockDamaged;
 import mods.clayium.block.common.BlockTierTied;
 import mods.clayium.block.common.MaterialBlock;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.util.TierPrefix;
+import net.minecraft.block.Block;
+import net.minecraft.item.EnumDyeColor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClayiumBlocks {
     public static void registerBlocks() {

@@ -1,12 +1,5 @@
 package mods.clayium.machine.CACondenser;
 
-import static mods.clayium.machine.crafting.ClayiumRecipes.e;
-
-import javax.annotation.Nonnull;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.item.ClayiumMaterials;
@@ -20,6 +13,12 @@ import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.UtilTransfer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
+import javax.annotation.Nonnull;
+
+import static mods.clayium.machine.crafting.ClayiumRecipes.e;
 
 public class TileEntityCACondenser extends TileEntityCAMachine implements Machine1To1 {
     protected static final RecipeElement RECIPE = new RecipeElement(new ItemStack(ClayiumItems.antimatterSeed), 9,
