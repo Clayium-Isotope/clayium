@@ -82,7 +82,7 @@ public class UtilRender {
         AABBHolder.Appearance state = tile.getBoxAppearance();
         int pass = MinecraftForgeClient.getRenderPass();
 
-        if (AABBHolder.Appearance._0.equals(state) || /*pass == 1 ||*/ !tile.hasAxisAlignedBB()) {
+        if (AABBHolder.Appearance.NoRender.equals(state) || /*pass == 1 ||*/ !tile.hasAxisAlignedBB()) {
             return;
         }
 

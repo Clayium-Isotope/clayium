@@ -2,6 +2,7 @@ package mods.clayium.machine;
 
 import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.AreaCollector.AreaCollector;
 import mods.clayium.machine.AreaMiner.AreaMiner;
 import mods.clayium.machine.AutoClayCondenser.AutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.AutoCrafter;
@@ -139,7 +140,7 @@ public class ClayiumMachines {
         prismMarker             = addContainer(EnumMachineKind.prismMarker, TierPrefix.clayium, new ClayMarker("prism_marker", TierPrefix.clayium, TileEntityClayMarker::new, MarkerExtent.Prism));
 
         addContainer(EnumMachineKind.areaMiner, TierPrefix.precision, new AreaMiner(TierPrefix.precision, "breaker"));
-//        blockAreaCollector = (new AreaCollector(7))
+        addContainer(EnumMachineKind.areaCollector, TierPrefix.claySteel, new AreaCollector());
         addContainer(EnumMachineKind.areaMiner, TierPrefix.clayium, new AreaMiner(TierPrefix.clayium, "area_miner"));
         addContainer(EnumMachineKind.advancedAreaMiner, TierPrefix.ultimate, new AreaMiner(TierPrefix.ultimate, "adv_area_miner"));
         addContainer(EnumMachineKind.areaReplacer, TierPrefix.antimatter, new AreaMiner(TierPrefix.antimatter, "area_replacer"));

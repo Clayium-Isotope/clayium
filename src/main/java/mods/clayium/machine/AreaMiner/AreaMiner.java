@@ -14,13 +14,18 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 // [TODO]   どうやらオリジナルでは作業中か否かで見た目が変わるみたい。
 //          作業中判定のためだけに、同期+TEアクセス はしたくないので、BSを用意できればよいが。
 public class AreaMiner extends ClayHorizontalNoRecipeMachine {
+    public AreaMiner(TierPrefix tier, String modelPath, Supplier<TileEntityAreaMiner> teSupplier, EnumMachineKind kind) {
+        super(teSupplier, kind, tier, modelPath, GuiHandler.GuiIdAreaMiner);
+        setDefaultState(this.getDefaultState().withProperty(AABBHolder.APPEARANCE, AABBHolder.Appearance.NoRender));
+    }
+
     public AreaMiner(TierPrefix tier, String modelPath) {
-        super(TileEntityAreaMiner::new, EnumMachineKind.areaMiner, tier, modelPath, GuiHandler.GuiIdAreaMiner);
-        setDefaultState(this.getDefaultState().withProperty(AABBHolder.APPEARANCE, AABBHolder.Appearance._0));
+        this(tier, modelPath, TileEntityAreaMiner::new, EnumMachineKind.areaMiner);
     }
 
     @Override

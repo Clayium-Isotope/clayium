@@ -47,7 +47,7 @@ public class ClayMarker extends BlockContainer implements ITieredBlock {
         setRegistryName(ClayiumCore.ModId, modelPath);
         setCreativeTab(ClayiumCore.tabClayium);
 
-        this.setDefaultState(this.getDefaultState().withProperty(AABBHolder.APPEARANCE, AABBHolder.Appearance._0));
+        this.setDefaultState(this.getDefaultState().withProperty(AABBHolder.APPEARANCE, AABBHolder.Appearance.NoRender));
 
         this.tier = tier;
         this.teSupplier = teSupplier;

@@ -47,7 +47,7 @@ public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityGeneric>
         GlStateManager.disableTexture2D();
 
         switch (state.getValue(AABBHolder.APPEARANCE)) {
-            case _1:
+            case Grid:
                 GlStateManager.glLineWidth(3.0f);
 
                 builder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
@@ -82,7 +82,7 @@ public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityGeneric>
 
                 break;
             case _2:
-            case _3:
+            case Box:
             case _4:
                 if (te.hasAxisAlignedBB()) {
 //                    ClayiumCore.logger.info(te.getAxisAlignedBB());

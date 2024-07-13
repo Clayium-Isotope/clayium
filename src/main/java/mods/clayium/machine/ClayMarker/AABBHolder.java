@@ -17,10 +17,10 @@ public interface AABBHolder {
     Appearance getBoxAppearance();
 
     enum Appearance implements IStringSerializable {
-        _0,
-        _1,
+        NoRender,
+        Grid,
         _2,
-        _3,
+        Box,
         _4;
 
         public static int compare(Appearance a, Appearance b) {
@@ -29,10 +29,10 @@ public interface AABBHolder {
 
         public static Appearance back2(Appearance self) {
             switch (self) {
-                case _0:
-                case _1:
-                case _2: return _0;
-                case _3: return _1;
+                case NoRender:
+                case Grid:
+                case _2: return NoRender;
+                case Box: return Grid;
                 case _4: return _2;
                 default: throw new EnumConstantNotPresentException(Appearance.class, "[default]");
             }
@@ -40,10 +40,10 @@ public interface AABBHolder {
 
         public static Appearance increment(Appearance self, Appearance overflow) {
             switch (self) {
-                case _0: return _1;
-                case _1: return _2;
-                case _2: return _3;
-                case _3: return _4;
+                case NoRender: return Grid;
+                case Grid: return _2;
+                case _2: return Box;
+                case Box: return _4;
                 case _4: return overflow;
                 default: throw new EnumConstantNotPresentException(Appearance.class, "[default]");
             }
@@ -55,10 +55,10 @@ public interface AABBHolder {
 
         public static Appearance fromMeta(int meta) {
             switch (meta) {
-                case 0: return _0;
-                case 1: return _1;
+                case 0: return NoRender;
+                case 1: return Grid;
                 case 2: return _2;
-                case 3: return _3;
+                case 3: return Box;
                 case 4: return _4;
                 default: throw new EnumConstantNotPresentException(Appearance.class, "[default]");
             }

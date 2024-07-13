@@ -5,6 +5,7 @@ import mods.clayium.client.color.SiliconeColor;
 import mods.clayium.client.render.*;
 import mods.clayium.entity.EntityClayBall;
 import mods.clayium.entity.EntityTeleportBall;
+import mods.clayium.machine.AreaCollector.TileEntityAreaCollector;
 import mods.clayium.machine.AreaMiner.TileEntityAreaMiner;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
@@ -172,6 +173,7 @@ public class ClayiumClientProxy implements IClayiumProxy {
                         TESRClayMarker.render(te, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
                     }
                 });
+        ClientRegistry.registerTileEntity(TileEntityAreaCollector.class, "clayium:area_collector", TESRClayContainer.instance);
         ClientRegistry.registerTileEntity(TileEntityAutoTrader.class, "clayium:auto_trader", TESRClayContainer.instance);
 
         ClientRegistry.registerTileEntity(TileEntityCACollector.class, "clayium:ca_collector", TESRClayContainer.instance);

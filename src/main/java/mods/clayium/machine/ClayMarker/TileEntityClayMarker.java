@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 public class TileEntityClayMarker extends TileEntityGeneric implements IAABBProvider {
     @Nonnull
     protected AxisAlignedBB aabb = NULL_AABB;
-    public Appearance state = Appearance._0;
+    public Appearance state = Appearance.NoRender;
     public static final int maxRange = 64;
     protected int xx = 0;
     protected int yy = 0;
@@ -68,14 +68,14 @@ public class TileEntityClayMarker extends TileEntityGeneric implements IAABBProv
         }
 
         this.state = state.getValue(AABBHolder.APPEARANCE);
-        if (this.xx == 0 && this.yy == 0 && this.zz == 0 && !Appearance._1.equals(this.state)) {
+        if (this.xx == 0 && this.yy == 0 && this.zz == 0 && !Appearance.Grid.equals(this.state)) {
             this.aabb = NULL_AABB;
-            this.state = Appearance._0.equals(this.state) ? Appearance._1 : Appearance._0;
+            this.state = Appearance.NoRender.equals(this.state) ? Appearance.Grid : Appearance.NoRender;
         } else {
             this.aabb = extentMode.apply(
                     new AxisAlignedBB(pos, pos.add(this.xx, this.yy, this.zz)).offset(0.5d, 0.5d, 0.5d).grow(0.5d)
             );
-            this.state = Appearance._1.compareTo(this.state) >= 0 ? Appearance._3 : Appearance.increment(this.state, Appearance._2);
+            this.state = Appearance.Grid.compareTo(this.state) >= 0 ? Appearance.Box : Appearance.increment(this.state, Appearance._2);
         }
         world.setBlockState(pos, state.withProperty(AABBHolder.APPEARANCE, this.state));
     }
