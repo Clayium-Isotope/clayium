@@ -6,7 +6,7 @@ import mods.clayium.client.render.*;
 import mods.clayium.entity.EntityClayBall;
 import mods.clayium.entity.EntityTeleportBall;
 import mods.clayium.machine.AreaCollector.TileEntityAreaCollector;
-import mods.clayium.machine.AreaMiner.TileEntityAreaMiner;
+import mods.clayium.machine.AreaMiner.TileEntityAreaWorker;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.TileEntityAutoCrafter;
 import mods.clayium.machine.AutoTrader.TileEntityAutoTrader;
@@ -165,10 +165,10 @@ public class ClayiumClientProxy implements IClayiumProxy {
 
         ClientRegistry.registerTileEntity(TileEntityClayMarker.class, "clayium:clay_marker", TESRClayMarker.instance);
 //        GameRegistry.registerTileEntity(TileEntityClayMarker.class, new ResourceLocation(ClayiumCore.ModId, "clay_marker"));
-        ClientRegistry.registerTileEntity(TileEntityAreaMiner.class, "clayium:area_miner",
-                new TileEntitySpecialRenderer<TileEntityAreaMiner>() {
+        ClientRegistry.registerTileEntity(TileEntityAreaWorker.class, "clayium:area_miner",
+                new TileEntitySpecialRenderer<>() {
                     @Override
-                    public void render(TileEntityAreaMiner te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+                    public void render(TileEntityAreaWorker te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
                         TESRClayContainer.render(te, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
                         TESRClayMarker.render(te, x, y, z, partialTicks, destroyStage, alpha, this.rendererDispatcher);
                     }

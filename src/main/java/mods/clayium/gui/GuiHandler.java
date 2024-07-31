@@ -7,7 +7,7 @@ import mods.clayium.item.gadget.ContainerGadgetAutoEat;
 import mods.clayium.item.gadget.ContainerGadgetHolder;
 import mods.clayium.machine.AreaMiner.ContainerAreaMiner;
 import mods.clayium.machine.AreaMiner.GuiAreaMiner;
-import mods.clayium.machine.AreaMiner.TileEntityAreaMiner;
+import mods.clayium.machine.AreaMiner.TileEntityAreaWorker;
 import mods.clayium.machine.AutoClayCondenser.ContainerAutoClayCondenser;
 import mods.clayium.machine.AutoClayCondenser.TileEntityAutoClayCondenser;
 import mods.clayium.machine.AutoCrafter.ContainerAutoCrafter;
@@ -114,7 +114,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdVacuumContainer:
                 return new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile);
             case GuiIdAreaMiner:
-                return new ContainerAreaMiner(player.inventory, (TileEntityAreaMiner) tile);
+                return new ContainerAreaMiner(player.inventory, (TileEntityAreaWorker) tile);
             case GuiIdAutoTrader:
                 return new ContainerAutoTrader(player.inventory, (TileEntityAutoTrader) tile);
             case GuiIdCACollector:
@@ -186,7 +186,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdVacuumContainer:
                 return new GuiTemp(new ContainerVacuumContainer(player.inventory, (TileEntityVacuumContainer) tile));
             case GuiIdAreaMiner:
-                return new GuiAreaMiner(new ContainerAreaMiner(player.inventory, (TileEntityAreaMiner) tile));
+                return new GuiAreaMiner(new ContainerAreaMiner(player.inventory, (TileEntityAreaWorker) tile));
             case GuiIdAutoTrader:
                 return new GuiAutoTrader(new ContainerAutoTrader(player.inventory, (TileEntityAutoTrader) tile));
             case GuiIdCACollector:

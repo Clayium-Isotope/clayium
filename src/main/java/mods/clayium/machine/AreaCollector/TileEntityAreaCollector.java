@@ -1,98 +1,21 @@
 package mods.clayium.machine.AreaCollector;
 
-import mods.clayium.item.filter.IFilter;
+import mods.clayium.component.bot.AreaBotCollector;
+import mods.clayium.component.bot.LocalBotIdle;
 import mods.clayium.machine.AreaMiner.EnumAreaMinerState;
-import mods.clayium.machine.AreaMiner.TileEntityAreaMiner;
-import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.AreaMiner.TileEntityAreaWorker;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
 
-import java.util.List;
+import java.util.stream.IntStream;
 
-public class TileEntityAreaCollector extends TileEntityAreaMiner {
-    public static final long energyPerTick = 100L;
-    public static final int progressPerTick = 100;
-    public static final int progressPerJob = 10;
-
-    public TileEntityAreaCollector() {
-    }
-
-    public void initParams() {
-        super.initParams();
-    }
-
-    public void initState() {
+public class TileEntityAreaCollector extends TileEntityAreaWorker {
+    @Override
+    public void initParamsByTier(TierPrefix tier) {
+        this.areaBot.set(new AreaBotCollector());
+        this.localBot.set(new LocalBotIdle());
+        this.botOutput.set(UtilTransfer.getItemHandler(this, null, IntStream.range(0, 9).toArray()));
+        super.initParamsByTier(tier);
         this.setState(EnumAreaMinerState.LoopMode_Ready);
-    }
-
-    public void doWork() {
-        AxisAlignedBB aabb = this.getAxisAlignedBB();
-        switch (this.getState()) {
-            case OnceMode_Ready:
-                this.setState(EnumAreaMinerState.OnceMode_Doing);
-                break;
-            case LoopMode_Ready:
-                this.setState(EnumAreaMinerState.LoopMode_Doing);
-                break;
-            case OnceMode_Doing:
-            case LoopMode_Doing:
-                long c = (long)((double) this.energyPerTick * (1.0 + 4.0 * Math.log10((double)(this.laserEnergy / 1000L + 1L))));
-                if (!IClayEnergyConsumer.compensateClayEnergy(this, c)) {
-                    break;
-                }
-
-//                this.setSyncFlag();
-                this.progress += (long)((double) this.progressPerTick * (1.0 + 4.0 * Math.log10((double)(this.laserEnergy / 1000L + 1L))));
-                this.laserEnergy = 0L;
-
-                for (int count = 0; count < maxJobCount; ++count) {
-                    List<EntityItem> list = this.world.getEntitiesWithinAABB(EntityItem.class, this.aabb, item -> true);
-                    long i = (long) ((double) this.progressPerJob * 1.0);
-                    ItemStack filter = this.getStackInSlot(this.filterHarvestSlot);
-
-                    if (list.isEmpty()) {
-                        continue;
-                    }
-
-                    for (EntityItem eitem : list) {
-                        ItemStack item = eitem.getItem().copy();
-                        ItemStack item1 = item.copy();
-                        item1.setCount(1);
-
-                        if (!IFilter.match(filter, item)) {
-                            continue;
-                        }
-
-                        int slotNum = this.inventoryX.get() * this.inventoryY.get();
-                        boolean flag1 = true;
-
-                        while (flag1 && i <= this.progress) {
-                            if (UtilTransfer.canProduceItemStack(item1, this.containerItemStacks, 0, slotNum, this.getInventoryStackLimit()) < 1 || i > this.progress) {
-                                break;
-                            }
-
-                            this.progress -= i;
-                            UtilTransfer.produceItemStack(item1, this.containerItemStacks, 0, slotNum, this.getInventoryStackLimit());
-                            item.shrink(1);
-                            if (item.getCount() <= 0) {
-                                eitem.setDead();
-                                flag1 = false;
-                            } else {
-                                eitem.setItem(item);
-                            }
-
-                            if (this.getState() == EnumAreaMinerState.OnceMode_Doing) {
-                                this.progress = 0L;
-                                this.setState(EnumAreaMinerState.Idle);
-                                break;
-                            }
-                        }
-                    }
-                }
-            case Idle:
-        }
-
     }
 }

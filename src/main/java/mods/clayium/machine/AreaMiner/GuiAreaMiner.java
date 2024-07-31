@@ -15,10 +15,10 @@ public class GuiAreaMiner extends GuiTemp {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseZ) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseZ);
         ContainerTemp container = (ContainerTemp) this.inventorySlots;
-        long energy = ((TileEntityAreaMiner)this.tile).laserEnergy;
+        long energy = ((TileEntityAreaWorker)this.tile).laserEnergy;
 
         this.fontRenderer.drawString(UtilLocale.laserGui(energy), 64, container.machineGuiSizeY - 12, 4210752);
-        if (!((TileEntityAreaMiner) this.tile).replaceMode.get()) {
+        if (!((TileEntityAreaWorker) this.tile).isAreaMiner()) {
             this.fontRenderer.drawString(I18n.format("gui.AreaMiner.harvest"), container.machineGuiSizeX - 48, 21, 4210752);
             this.fontRenderer.drawString(I18n.format("gui.AreaMiner.fortune"), container.machineGuiSizeX - 48, 39, 4210752);
             this.fontRenderer.drawString(I18n.format("gui.AreaMiner.silktouch"), container.machineGuiSizeX - 48, 57, 4210752);
@@ -29,7 +29,7 @@ public class GuiAreaMiner extends GuiTemp {
     public void addButtons() {
         int offsetX = this.guiLeft;
         int offsetY = this.guiTop;
-        if (!((TileEntityAreaMiner) this.tile).replaceMode.get()) {
+        if (!((TileEntityAreaWorker) this.tile).isAreaMiner()) {
             offsetX = this.guiLeft - 10;
         }
 
@@ -38,7 +38,7 @@ public class GuiAreaMiner extends GuiTemp {
          *   2: @   |  3: []
          */
 
-        if (((TileEntityAreaMiner) this.tile).replaceMode.get()) {
+        if (((TileEntityAreaWorker) this.tile).isAreaReplacer()) {
             this.buttonList.add(new GuiPictureButton(0, offsetX + 16, offsetY + 16, 16, 48));
             this.buttonList.add(new GuiPictureButton(1, offsetX + 16, offsetY + 16 + 18, 32, 48));
             this.buttonList.add(new GuiPictureButton(2, offsetX + 16, offsetY + 16 + 36, 64, 48));
