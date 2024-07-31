@@ -10,7 +10,7 @@ public class GadgetOverclock extends GadgetTemp {
     private final int meta;
 
     public GadgetOverclock(int meta, TierPrefix tier) {
-        super("gadget_" + tier.getPrefix() + "_overclock", meta, tier);
+        super("gadget_" + tier.getName() + "_overclock", meta, tier);
         this.meta = meta;
     }
 

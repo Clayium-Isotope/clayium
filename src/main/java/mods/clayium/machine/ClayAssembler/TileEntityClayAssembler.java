@@ -42,7 +42,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine implements
 
     @Override
     public boolean canProceedCraft() {
-        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy);
 
         // return IRecipeProvider.getCraftPermutation(this, this.getStackInSlot(AssemblerSlots.MATERIAL_1),
         // this.getStackInSlot(AssemblerSlots.MATERIAL_2)) != null;
@@ -50,7 +50,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine implements
 
     @Override
     public void proceedCraft() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
+        if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
         ++this.craftTime;
         if (this.craftTime < this.timeToCraft) return;

@@ -88,12 +88,12 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements Machine
 
     @Override
     public boolean canProceedCraft() {
-        return IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy(), false);
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.doingRecipe.getEnergy());
     }
 
     @Override
     public void proceedCraft() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
+        if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) {
             return;
         }
 

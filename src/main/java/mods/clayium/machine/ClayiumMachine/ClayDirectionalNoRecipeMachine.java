@@ -21,7 +21,7 @@ public class ClayDirectionalNoRecipeMachine extends ClayDirectionalContainer {
     private final EnumMachineKind machineKind;
 
     public ClayDirectionalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {
-        super(Material.IRON, teSupplier, (suffix.isEmpty() ? (tier.getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
+        super(Material.IRON, teSupplier, (suffix.isEmpty() ? (tier.getName() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId, tier);
         this.machineKind = kind;
 
         setSoundType(SoundType.METAL);

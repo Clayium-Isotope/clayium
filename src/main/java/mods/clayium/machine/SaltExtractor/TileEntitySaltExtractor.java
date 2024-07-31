@@ -51,7 +51,7 @@ public class TileEntitySaltExtractor extends TileEntityCobblestoneGenerator impl
     public void produce() {
         int count = this.countWater();
         if (/* this.externalControlState >= 0 && */ count > 0 &&
-                IClayEnergyConsumer.compensateClayEnergy(this, (long) this.progressEfficiency * energyPerWork)) {
+                IClayEnergyConsumer.consumeClayEnergy(this, (long) this.progressEfficiency * energyPerWork)) {
             this.progress += this.progressEfficiency * count;
 
             while (this.progress >= progressMax) {

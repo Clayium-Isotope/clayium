@@ -87,7 +87,7 @@ public class TileEntityAutoTrader extends TileEntityClayContainer implements IBu
         this.resetRecipeAndSlots();
         if (this.currentRecipe != null) {
             ItemStack itemToSell = this.currentRecipe.getItemToSell().copy();
-            if (UtilTransfer.canProduceItemStack(itemToSell, this.containerItemStacks, this.toSellSlotIndex, this.getInventoryStackLimit()) >= itemToSell.getCount() && IClayEnergyConsumer.compensateClayEnergy(this, energyPerTrade)) {
+            if (UtilTransfer.canProduceItemStack(itemToSell, this.containerItemStacks, this.toSellSlotIndex, this.getInventoryStackLimit()) >= itemToSell.getCount() && IClayEnergyConsumer.consumeClayEnergy(this, energyPerTrade)) {
                 UtilTransfer.produceItemStack(itemToSell, this.containerItemStacks, this.toSellSlotIndex, this.getInventoryStackLimit());
                 this.onPickupFromMerchantSlot(this.currentRecipe);
 //                this.setSyncFlag();

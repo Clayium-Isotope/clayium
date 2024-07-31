@@ -37,7 +37,7 @@ public class ClayInterface extends ClayContainer {
     }
 
     public ClayInterface(EnumMachineKind kind, Supplier<? extends TileEntityGeneric> teSupplier, TierPrefix tier) {
-        super(Material.IRON, teSupplier, tier.getPrefix() + "_" + kind.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
+        super(Material.IRON, teSupplier, tier.getName() + "_" + kind.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
         this.setSoundType(SoundType.METAL);
         this.setHardness(2.0f);
         this.setResistance(5.0f);

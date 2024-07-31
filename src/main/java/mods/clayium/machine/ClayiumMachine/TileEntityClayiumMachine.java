@@ -213,11 +213,11 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     }
 
     public boolean canProceedCraft() {
-        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false);
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy);
     }
 
     public void proceedCraft() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
+        if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;

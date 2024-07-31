@@ -177,7 +177,7 @@ public class ClayiumMachines {
     private static Block addContainer(EnumMachineKind kind, TierPrefix tier, Block block) {
         if (!machineMap.containsKey(kind)) machineMap.put(kind, new EnumMap<>(TierPrefix.class));
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier)) {
-            ClayiumCore.logger.error("The machine already exists  [" + kind.getRegisterName() + "] [" + tier.getPrefix() + "]");
+            ClayiumCore.logger.error("The machine already exists  [" + kind.getRegisterName() + "] [" + tier.getName() + "]");
             return get(kind, tier);
         }
 
@@ -222,7 +222,7 @@ public class ClayiumMachines {
 
         if (machineMap.containsKey(kind) && machineMap.get(kind).containsKey(tier))
             return machineMap.getOrDefault(kind, Collections.emptyMap()).getOrDefault(tier, Blocks.AIR);
-        throw new NoSuchElementException(tier.getPrefix() + " of " + kind.getRegisterName() + " is not registered!");
+        throw new NoSuchElementException(tier.getName() + " of " + kind.getRegisterName() + " is not registered!");
     }
     /**
      * @return the least tier machine of the kind

@@ -18,7 +18,7 @@ import java.util.List;
 @HasOriginalState
 public class ClayLaserInterface extends ClayDirectionalContainer {
     public ClayLaserInterface(TierPrefix tier) {
-        super(Material.IRON, TileEntityClayLaserInterface::new, tier.getPrefix() + "_" + EnumMachineKind.laserInterface.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
+        super(Material.IRON, TileEntityClayLaserInterface::new, tier.getName() + "_" + EnumMachineKind.laserInterface.getRegisterName(), GuiHandler.GuiIdClayInterface, tier);
         this.setSoundType(SoundType.METAL);
         this.setHardness(2.0f);
         this.setResistance(5.0f);

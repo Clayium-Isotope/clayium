@@ -83,7 +83,7 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
 
     @Override
     public boolean setNewRecipe() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, RECIPE.getEnergy(), false)
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, RECIPE.getEnergy())
                 || UtilTransfer.consumeByIngredient(RECIPE.getIngredients().get(0), this.containerItemStacks, 0) != 0) {
             this.debtEnergy = 0;
             this.timeToCraft = 0L;
@@ -112,7 +112,7 @@ public class TileEntityCACondenser extends TileEntityCAMachine implements Machin
 
     @Override
     public boolean canProceedCraft() {
-        return IClayEnergyConsumer.compensateClayEnergy(this, RECIPE.getEnergy(), false);
+        return IClayEnergyConsumer.compensateClayEnergy(this, RECIPE.getEnergy());
     }
 
     @Override

@@ -353,7 +353,7 @@ public class TileEntityCAReactor extends TileEntityMultiblockMachine {
 
     @Override
     public void proceedCraft() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
+        if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) {
             return;
         }
 
@@ -385,7 +385,7 @@ public class TileEntityCAReactor extends TileEntityMultiblockMachine {
 
         this.debtEnergy = (long)((double) this.doingRecipe.getEnergy() * this.multConsumingEnergy * this.getConsumingEnergyBaseMultiplier());
 
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false)) {
+        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) {
             return false;
         }
 

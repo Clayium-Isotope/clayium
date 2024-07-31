@@ -33,7 +33,7 @@ public class ClayHorizontalNoRecipeMachine extends ClaySidedContainer {
     }
 
     public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, String suffix, int guiId, TierPrefix tier) {
-        this(teSupplier, kind, tier, (suffix.isEmpty() ? (tier.getPrefix() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId);
+        this(teSupplier, kind, tier, (suffix.isEmpty() ? (tier.getName() + "_") : "") + kind.getRegisterName() + (suffix.isEmpty() ? "" : ("_" + suffix)), guiId);
     }
 
     public ClayHorizontalNoRecipeMachine(Supplier<? extends TileEntityGeneric> teSupplier, EnumMachineKind kind, TierPrefix tier) {

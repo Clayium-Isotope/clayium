@@ -158,11 +158,11 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
 
     @Override
     public boolean canProceedCraftWhenConstructed() {
-        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy, false) && this.irradiatedLaser != null;
+        return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy) && this.irradiatedLaser != null;
     }
 
     public void proceedCraft() {
-        if (!IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy) || this.irradiatedLaser == null) return;
+        if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy) || this.irradiatedLaser == null) return;
 
         this.craftTime += (long) this.irradiatedLaser.getEnergy();
         this.irradiatedLaser = null;

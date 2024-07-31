@@ -63,18 +63,35 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
         return true;
     }
 
-    static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt) {
-        return compensateClayEnergy(consumer, debt, true);
+    /**
+     * 消費できるか検討し、できそうなら消費するし、できなさそうならしない。
+     */
+    static boolean checkAndConsumeClayEnergy(IClayEnergyConsumer consumer, long debt) {
+        return compensateClayEnergy(consumer, debt)
+                && consumeClayEnergy(consumer, debt);
     }
 
-    static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt, boolean doConsume) {
+    /**
+     * CEが十分に蓄えられていれば、消費され、{@code true} が返される。
+     * <br>蓄えられていなければ、消費されずに {@code false} が返される。
+     */
+    static boolean consumeClayEnergy(IClayEnergyConsumer consumer, long debt) {
+        if (consumer.containEnergy().hasEnough(debt)) {
+            consumer.containEnergy().decrease(debt);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * CEを蓄える。
+     */
+    static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt) {
         if (!consumer.containEnergy().hasEnough(debt)) {
             if (!produceClayEnergy(consumer)) return false;
 
-            return compensateClayEnergy(consumer, debt, doConsume);
+            return compensateClayEnergy(consumer, debt);
         }
-
-        if (doConsume) consumer.containEnergy().decrease(debt);
         return true;
     }
 

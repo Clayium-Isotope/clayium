@@ -231,12 +231,12 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
     public boolean canProceedCraft() {
         if (!this.acceptClayEnergy()) return true;
 
-        return IClayEnergyConsumer.compensateClayEnergy(this, debtEnergy, false);
+        return IClayEnergyConsumer.compensateClayEnergy(this, debtEnergy);
     }
 
     @Override
     public void proceedCraft() {
-        if (this.acceptClayEnergy() && IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy)) return;
+        if (this.acceptClayEnergy() && IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
         this.craftTime++;
         if (this.craftTime < this.timeToCraft) return;

@@ -24,7 +24,7 @@ public class ClayiumMachine extends ClaySidedContainer {
     public ClayiumMachine(EnumMachineKind kind, String suffix, TierPrefix tier, Supplier<? extends TileEntityGeneric> teSupplier, int guiID) {
         super(Material.IRON, teSupplier,
                 suffix == null || suffix.equals("")
-                        ? tier.getPrefix() + "_" + kind.getRegisterName()
+                        ? tier.getName() + "_" + kind.getRegisterName()
                         : kind.getRegisterName() + "_" + suffix,
                 guiID, tier);
         this.machineKind = kind;

@@ -120,7 +120,7 @@ public class TileEntityClayMarker extends TileEntityGeneric implements IAABBProv
     }
 
     @Override
-    public void setAxisAlignedBBToMachine() {
+    public void postApplyAABBToMachine() {
         this.markDirty();
         this.breakMarker(this.xx, 0, 0);
         this.breakMarker(0, this.yy, 0);

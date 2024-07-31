@@ -99,7 +99,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer
             this.manager.set(this.world, this.pos,
                     this.world.getBlockState(this.pos).getValue(BlockStateClayContainer.FACING));
             this.manager.update(
-                    this.isPowered() && IClayEnergyConsumer.compensateClayEnergy(this, this.machineConsumingEnergy));
+                    this.isPowered() && IClayEnergyConsumer.consumeClayEnergy(this, this.machineConsumingEnergy));
         }
     }
 
