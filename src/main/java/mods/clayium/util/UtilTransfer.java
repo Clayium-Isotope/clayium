@@ -430,14 +430,20 @@ public class UtilTransfer {
     /**
      * @param ioSlots when null, filled by using {@link UtilTransfer#getSlots}
      */
-    public static IItemHandler getItemHandler(final TileEntity te, final EnumFacing facing, @Nullable final int[] ioSlots) {
+    public static IItemHandler getItemHandler(final TileEntity te, @Nullable final EnumFacing facing, @Nullable final int[] ioSlots) throws IllegalArgumentException {
         if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
             return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
         }
 
         if (te instanceof IClayInventory) {
+            if (ioSlots == null && facing == null) {
+                throw new IllegalArgumentException("[Bug] \"Facing\" is needed when get ItemHandler with \"ioSlots\" null");
+            }
             return new OffsettedHandler(new ClayInvWrapper((IClayInventory) te), Objects.nonNull(ioSlots) ? ioSlots : UtilTransfer.getSlots(te, facing));
         } else if (te instanceof ISidedInventory) {
+            if (facing == null) {
+                throw new IllegalArgumentException("[Bug] \"Facing\" is needed when get ItemHandler from ISidedInventory");
+            }
             return new SidedInvWrapper((ISidedInventory) te, facing);
         } else if (te instanceof IInventory) {
             return new InvWrapper((IInventory) te);

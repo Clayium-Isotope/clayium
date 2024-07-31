@@ -12,31 +12,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 public class UtilLocale {
+    public static final SIFormat ceFormatWithZero = new SIFormat(true, -5);
+    public static final SIFormat ceFormatWoutZero = new SIFormat(false, -5);
+    public static final SIFormat numFormatWithZero = new SIFormat(true, 0);
+    public static final SIFormat numFormatWoutZero = new SIFormat(false, 0);
 
-    // 'long' type can't represent numerals above Tera in the SI prefix
-    // FIXME if anyone contains much CE greater than (LONG_MAX / 1,000,000), how to represent?
-    static String[] CENumerals = new String[] { "u", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R" };
-    static String[] SNumerals = new String[] { "", "k", "M", "G", "T", "P", "E", "Z", "Y", "Q", "R" };
     private static final int maxLineTooltip = 12;
 
     public static String ClayEnergyNumeral(double ce, boolean lessInfo) {
-        double n = ce * 10.0D;
-        String s = "";
-
-        if (n == 0.0D) {
-            return "0";
-        }
-
-        if (n < 0.0D) {
-            n *= -1;
-            s = "-";
-        }
-
-        int k = (int) Math.floor(Math.log10(n));
-        int p = Math.min(k / 3, CENumerals.length - 1);
-        int d = (int) (n * 1000.0D / Math.pow(10.0D, p * 3));
-
-        return s + ClayEnergyNumeral(d, p, p == 0 || lessInfo);
+        return (lessInfo ? ceFormatWoutZero : ceFormatWithZero).format(ce);
     }
 
     public static String ClayEnergyNumeral(double ce) {
@@ -44,66 +28,15 @@ public class UtilLocale {
     }
 
     public static String ClayEnergyNumeral(long ce, boolean lessInfo) {
-        long n = ce * 10L;
-        String s = "";
-
-        if (n == 0L) {
-            return String.valueOf(n);
-        }
-
-        if (n < 0L) {
-            n *= -1;
-            s = "-";
-        }
-
-        int k = (int) Math.floor(Math.log10((double) n));
-        int p = Math.min(k / 3, CENumerals.length - 1);
-        int d = (int) ((double) n * 1000.0D / Math.pow(10.0D, (double) (p * 3)));
-
-        return s + ClayEnergyNumeral(d, p, p == 0 || lessInfo);
+        return (lessInfo ? ceFormatWoutZero : ceFormatWithZero).format(ce);
     }
 
     public static String ClayEnergyNumeral(long ce) {
         return ClayEnergyNumeral(ce, true);
     }
 
-    protected static String ClayEnergyNumeral(int d, int p, boolean lessInfo) {
-        if (d % 10 == 0 && lessInfo) {
-            if (d % 100 != 0) {
-                return d / 1000 + "." + d / 100 % 10 + d / 10 % 10 + CENumerals[p];
-            }
-
-            return d % 1000 != 0 ? d / 1000 + "." + d / 100 % 10 + CENumerals[p] : d / 1000 + CENumerals[p];
-        }
-
-        return d / 1000 + "." + d / 100 % 10 + d / 10 % 10 + d % 10 + CENumerals[p];
-    }
-
     protected static String StackSizeNumeral(long stackSize, boolean flag) {
-        String s = "";
-        long n = stackSize;
-
-        if (stackSize == 0L) {
-            return String.valueOf(stackSize);
-        }
-
-        if (stackSize < 0L) {
-            n = stackSize - 1L;
-            s = "-";
-        }
-
-        int k = (int) Math.floor(Math.log10((double) n));
-        if (k < 5) {
-            return s + n;
-        }
-
-        int p = Math.min(k / 3, SNumerals.length - 1);
-        int d = (int) ((double) n / Math.pow(10.0D, (double) (k - 2)));
-        boolean flag1 = flag && k % 3 <= 1 && d % 10 == 0;
-        boolean flag2 = flag1 && k % 3 == 0 && d / 10 % 10 == 0;
-
-        return s + (d / 100) + (flag2 ? "" : (k % 3 == 0 ? "." : "") + (d / 10 % 10)) +
-                (flag1 ? "" : (k % 3 == 1 ? "." : "") + (d % 10)) + SNumerals[p];
+        return (flag ? numFormatWoutZero : numFormatWithZero).format(stackSize);
     }
 
     public static String StackSizeNumeral(long stackSize) {

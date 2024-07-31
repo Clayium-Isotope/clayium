@@ -13,7 +13,6 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class UtilCollect {
-
     /**
      * Unknown sized TagList -> ItemStack list<br>
      */
@@ -97,35 +96,7 @@ public class UtilCollect {
             throw new IndexOutOfBoundsException("Invalid range: [" + start + ", " + end + ")");
         }
 
-        return new SliceList<>(inv, start, Math.min(end, inv.size()) - start);
-    }
-
-    private static class SliceList<E> extends AbstractList<E> {
-
-        private final List<E> refer;
-        private final int asZero;
-        private final int size;
-
-        SliceList(List<E> refer, int asZero, int size) {
-            this.refer = refer;
-            this.asZero = asZero;
-            this.size = size;
-        }
-
-        @Override
-        public E get(int index) {
-            return refer.get(index + asZero);
-        }
-
-        @Override
-        public E set(int index, E element) {
-            return refer.set(index + asZero, element);
-        }
-
-        @Override
-        public int size() {
-            return size;
-        }
+        return inv.subList(start, end);
     }
 
     @Deprecated // use: TileEntityGeneric#getContainerItemStacks()
@@ -142,7 +113,6 @@ public class UtilCollect {
     }
 
     private static class SliceInventory extends AbstractList<ItemStack> {
-
         private final IInventory refer;
         private final int asZero;
         private final int size;

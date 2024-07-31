@@ -1,6 +1,7 @@
 package mods.clayium.util;
 
 import mods.clayium.item.common.ClayiumMaterial;
+import net.minecraft.util.IStringSerializable;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * tier = ordinal - 1
  */
-public enum TierPrefix {
+public enum TierPrefix implements IStringSerializable {
     unknown("", ClayiumMaterial.clayium),
     none("", ClayiumMaterial.clay),
     clay("clay", ClayiumMaterial.clay),
@@ -32,7 +33,7 @@ public enum TierPrefix {
         this.material = material;
     }
 
-    public String getPrefix() {
+    public String getName() {
         return prefix;
     }
 
@@ -116,6 +117,6 @@ public enum TierPrefix {
     }
 
     public static String getLocalizeKey(TierPrefix tier) {
-        return "util.tier." + tier.getPrefix();
+        return "util.tier." + tier.getName();
     }
 }
