@@ -80,7 +80,7 @@ public class TileEntityClayFabricator extends TileEntitySolarClayFabricator {
 
         UtilTransfer.produceItemStack(this.getStackInSlot(2).copy(), this.getContainerItemStacks(), 1, this.getInventoryStackLimit());
 
-        this.containEnergy().set(0L);
+        this.containEnergy().clear();
         this.craftTime = 0L;
 //            if (this.externalControlState > 0) {
 //                --this.externalControlState;

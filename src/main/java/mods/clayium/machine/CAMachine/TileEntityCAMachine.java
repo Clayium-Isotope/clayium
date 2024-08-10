@@ -7,6 +7,7 @@ import mods.clayium.machine.common.RecipeProvider;
 import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.ContainClayEnergy;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
@@ -67,8 +68,6 @@ public abstract class TileEntityCAMachine extends TileEntityClayContainer implem
                 return (int) this.timeToCraft;
             case 1:
                 return (int) this.craftTime;
-            case 2:
-                return (int) this.containEnergy().get();
             default:
                 return 0;
         }
@@ -82,9 +81,6 @@ public abstract class TileEntityCAMachine extends TileEntityClayContainer implem
                 return;
             case 1:
                 this.craftTime = value;
-                return;
-            case 2:
-                this.containEnergy().set(value);
                 return;
         }
     }
@@ -102,7 +98,7 @@ public abstract class TileEntityCAMachine extends TileEntityClayContainer implem
         this.timeToCraft = tagCompound.getLong("TimeToCraft");
         this.debtEnergy = tagCompound.getLong("ConsumingEnergy");
 
-        this.containEnergy().set(tagCompound.getLong("ClayEnergy"));
+        this.containEnergy().deserializeNBT((NBTTagIntArray) tagCompound.getTag("ClayEnergy"));
 
         this.doingRecipe = this.getRecipe(tagCompound.getInteger("RecipeHash"));
         this.resonanceHandler.setResonance(tagCompound.getDouble("resonance"));
@@ -118,7 +114,7 @@ public abstract class TileEntityCAMachine extends TileEntityClayContainer implem
         tagCompound.setLong("TimeToCraft", this.timeToCraft);
         tagCompound.setLong("ConsumingEnergy", this.debtEnergy);
 
-        tagCompound.setLong("ClayEnergy", this.containEnergy.get());
+        tagCompound.setTag("ClayEnergy", this.containEnergy.serializeNBT());
 
         tagCompound.setInteger("RecipeHash", this.doingRecipe.hashCode());
         tagCompound.setDouble("resonance", this.resonanceHandler.getResonance());

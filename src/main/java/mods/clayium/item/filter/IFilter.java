@@ -2,12 +2,15 @@ package mods.clayium.item.filter;
 
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.util.UsedFor;
+import mods.clayium.util.UtilBuilder;
 import mods.clayium.util.UtilItemStack;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -21,8 +24,9 @@ public interface IFilter extends BiPredicate<NBTTagCompound, ItemStack> {
         return isFilter(filter) && ((IFilter) filter.getItem()).test(filter.getTagCompound(), input);
     }
 
-    static boolean match(ItemStack filter, IBlockState input) {
-        return false;
+    static boolean match(ItemStack filter, World world, BlockPos pos) {
+        if (filter.isEmpty() && world.getBlockState(pos).getBlock() != Blocks.AIR) return true;
+        return match(filter, UtilBuilder.getPickedBlock(world, pos));
     }
 
     static boolean isFilter(ItemStack filter) {

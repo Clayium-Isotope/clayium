@@ -1,46 +1,27 @@
 package mods.clayium.util;
 
-public class ContainClayEnergy {
+import mods.clayium.component.Stockholder;
 
-    private long containEnergy = 0;
-
-    public long get() {
-        return this.containEnergy;
+public class ContainClayEnergy extends Stockholder {
+    public ContainClayEnergy() {
+        super();
     }
 
     public void set(long containEnergy) {
-        this.containEnergy = containEnergy;
-    }
-
-    public void increase(long amount) {
-        this.set(this.get() + amount);
-    }
-
-    public void decrease(long amount) {
-        this.increase(-amount);
+        this.clear();
+        this.add(containEnergy);
     }
 
     public boolean hasEnough(long amount) {
-        return this.containEnergy >= amount;
+        return this.compareTo(amount) >= 0;
+    }
+
+    public boolean hasEnough(double amount) {
+        return Double.compare(this.doubleValue(), amount) >= 0;
     }
 
     @Override
     public String toString() {
-        return UtilLocale.ClayEnergyNumeral(this.containEnergy);
-    }
-
-    public static final ContainClayEnergy NIL = new HasNoEnergy();
-
-    private static class HasNoEnergy extends ContainClayEnergy {
-
-        @Override
-        public long get() {
-            return 0;
-        }
-
-        @Override
-        public void set(long containEnergy) {
-            throw new UnsupportedOperationException();
-        }
+        return UtilLocale.ClayEnergyNumeral(this.doubleValue());
     }
 }

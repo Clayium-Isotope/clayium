@@ -81,9 +81,9 @@ public class TESRClayMarker extends TileEntitySpecialRenderer<TileEntityGeneric>
                 UtilRender.renderBoldAABB(state.getBoundingBox(te.getWorld(), te.getPos()).offset(x, y, z), new Color(1.0f, 0.0f, 0.0f, 1.0f), true);
 
                 break;
-            case _2:
-            case Box:
-            case _4:
+            case Box_Worker:
+            case Box_Marker:
+            case Box_Unused:
                 if (te.hasAxisAlignedBB()) {
 //                    ClayiumCore.logger.info(te.getAxisAlignedBB());
                     UtilRender.renderBoldAABB(te.getAxisAlignedBB().offset(BlockPos.ORIGIN.subtract(te.getPos())).offset(x, y, z), new Color(0.1f, 0.1f, 0.7f, 1.0f), true);

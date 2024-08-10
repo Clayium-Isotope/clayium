@@ -1,5 +1,6 @@
 package mods.clayium.machine.AreaMiner;
 
+import mods.clayium.component.teField.FieldSender;
 import mods.clayium.gui.*;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,12 +8,14 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerAreaMiner extends ContainerTemp {
     protected final int inventoryX, inventoryY;
+    protected final FieldSender sender;
     
     public ContainerAreaMiner(InventoryPlayer player, TileEntityAreaWorker tile) {
         super(player, tile);
         this.inventoryX = tile.inventoryX.get();
         this.inventoryY = tile.inventoryY.get();
         postConstruct();
+        this.sender = new FieldSender(tile);
     }
 
     @Override
@@ -24,45 +27,42 @@ public class ContainerAreaMiner extends ContainerTemp {
         TileEntityAreaWorker tile = (TileEntityAreaWorker)this.tileEntity;
         int j;
         int i;
+        this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
         if (tile.isAreaReplacer()) {
-            for(j = 0; j < this.inventoryY; ++j) {
-                for(i = 0; i < this.inventoryX; ++i) {
-                    this.addMachineSlotToContainer(new SlotWithTexture(tile, i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, j * 18 + 18));
-                }
-            }
-
-            for(j = 0; j < this.inventoryY; ++j) {
-                for(i = 0; i < this.inventoryX; ++i) {
-                    this.addMachineSlotToContainer(new SlotWithTexture(tile, i + j * this.inventoryX + this.inventoryY * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, (j + this.inventoryY) * 18 + 18 + 2));
-                }
-            }
-
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterHarvestSlot, this.inventoryX * 18 + 2 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, 18, RectangleTexture.SmallSlotFilterTexture, true));
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterFortuneSlot, this.inventoryX * 18 + 2 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, 36, RectangleTexture.SmallSlotFilterTexture, true));
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterSilktouchSlot, this.inventoryX * 18 + 2 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, 54, RectangleTexture.SmallSlotFilterTexture, true));
-            this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
-        } else if (tile.isAdvAreaMiner()) {
+
             for(j = 0; j < this.inventoryY; ++j) {
                 for(i = 0; i < this.inventoryX; ++i) {
-                    this.addMachineSlotToContainer(new SlotWithTexture(tile, i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, j * 18 + 18));
+                    this.addMachineSlotToContainer(new SlotWithTexture(tile, 4 + i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, j * 18 + 18));
                 }
             }
 
+            for(j = 0; j < this.inventoryY; ++j) {
+                for(i = 0; i < this.inventoryX; ++i) {
+                    this.addMachineSlotToContainer(new SlotWithTexture(tile, 4 + i + j * this.inventoryX + this.inventoryY * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, (j + this.inventoryY) * 18 + 18 + 2));
+                }
+            }
+        } else if (tile.hasSomeFilterSlot()) {
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterHarvestSlot, this.inventoryX * 18 + 4 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, 18, RectangleTexture.SmallSlotFilterTexture, true));
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterFortuneSlot, this.inventoryX * 18 + 4 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, 36, RectangleTexture.SmallSlotFilterTexture, true));
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterSilktouchSlot, this.inventoryX * 18 + 4 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, 54, RectangleTexture.SmallSlotFilterTexture, true));
-            this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
-        } else {
+
             for(j = 0; j < this.inventoryY; ++j) {
                 for(i = 0; i < this.inventoryX; ++i) {
-                    this.addMachineSlotToContainer(new SlotWithTexture(tile, i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 18 * this.inventoryX) / 2, j * 18 + 18));
+                    this.addMachineSlotToContainer(new SlotWithTexture(tile, 4 + i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 32 - 18 * this.inventoryX) / 2, j * 18 + 18));
                 }
             }
-
+        } else {
             this.addMachineSlotToContainer(new SlotMemory(tile, TileEntityAreaWorker.filterHarvestSlot, this.inventoryX * 18 + 4 + (this.machineGuiSizeX - 18 * this.inventoryX) / 2, 18, RectangleTexture.SmallSlotFilterTexture, true));
-            this.addMachineSlotToContainer(new SlotEnergy((IClayEnergyConsumer) this.tileEntity, machineGuiSizeY));
-        }
 
+            for(j = 0; j < this.inventoryY; ++j) {
+                for(i = 0; i < this.inventoryX; ++i) {
+                    this.addMachineSlotToContainer(new SlotWithTexture(tile, 4 + i + j * this.inventoryX, i * 18 + (this.machineGuiSizeX - 18 * this.inventoryX) / 2, j * 18 + 18));
+                }
+            }
+        }
     }
 
     protected void initParameters(InventoryPlayer player) {
@@ -77,7 +77,7 @@ public class ContainerAreaMiner extends ContainerTemp {
     }
 
     public boolean canTransferToMachineInventory(ItemStack itemstack1) {
-        return ((TileEntityAreaWorker)this.tileEntity).isAreaReplacer();
+        return true;
     }
 
     public boolean transferStackToMachineInventory(ItemStack itemstack1, int slot) {
@@ -90,5 +90,12 @@ public class ContainerAreaMiner extends ContainerTemp {
 
     public boolean transferStackFromMachineInventory(ItemStack itemstack1, int slot) {
         return this.transferStackToPlayerInventory(itemstack1, true);
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        this.sender.detectAndSendChanges(this, this.listeners);
     }
 }

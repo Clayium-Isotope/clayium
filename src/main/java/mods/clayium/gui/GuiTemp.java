@@ -2,7 +2,6 @@ package mods.clayium.gui;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.ClayEnergyHolder;
-import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -56,8 +55,8 @@ public class GuiTemp extends GuiContainer {
             this.fontRenderer.drawString(I18n.format("gui.Common.resonance", UtilLocale.CAResonanceNumeral(resonance)), 80, container.machineGuiSizeY - 12, 4210752);
         }
 
-        if (this.tile instanceof ClayEnergyHolder && (!(this.tile instanceof IClayEnergyConsumer) || ((IClayEnergyConsumer) this.tile).acceptClayEnergy()))
-            this.fontRenderer.drawString(I18n.format("gui.Common.energy", UtilLocale.ClayEnergyNumeral(((ClayEnergyHolder) this.tile).containEnergy().get(), false)), 4, this.container.machineGuiSizeY - 12, 4210752);
+        if (this.tile instanceof ClayEnergyHolder)
+            this.fontRenderer.drawString(I18n.format("gui.Common.energy", ((ClayEnergyHolder) this.tile).containEnergy().toString()), 4, this.container.machineGuiSizeY - 12, 4210752);
     }
 
     @Override

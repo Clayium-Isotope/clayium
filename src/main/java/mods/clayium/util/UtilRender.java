@@ -98,7 +98,7 @@ public class UtilRender {
         GL11.glEnable(32823);
         GL11.glPolygonOffset(-1.0F, -1.0F);
         GL11.glDisable(2912);
-        if (AABBHolder.Appearance._2.equals(state)) {
+        if (AABBHolder.Appearance.Box_Worker.equals(state)) {
             GL11.glDisable(2929);
         }
 
@@ -163,7 +163,7 @@ public class UtilRender {
         GL11.glDepthMask(true);
         GL11.glDisable(3042);
         GL11.glEnable(2912);
-        if (AABBHolder.Appearance._2.equals(state)) {
+        if (AABBHolder.Appearance.Box_Worker.equals(state)) {
             GL11.glEnable(2929);
         }
 

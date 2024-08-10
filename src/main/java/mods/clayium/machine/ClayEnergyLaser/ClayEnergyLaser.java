@@ -62,20 +62,13 @@ public class ClayEnergyLaser extends ClayDirectionalNoRecipeMachine {
         super.addInformation(stack, player, tooltip, advanced);
 
         if (UtilLocale.canLocalize("tooltip.energy_laser.energyConsumption")) {
-            int e = 0;
-            switch (this.tier) {
-                case claySteel:
-                    e = TileEntityClayEnergyLaser.consumingEnergyBlue;
-                    break;
-                case clayium:
-                    e = TileEntityClayEnergyLaser.consumingEnergyGreen;
-                    break;
-                case ultimate:
-                    e = TileEntityClayEnergyLaser.consumingEnergyRed;
-                    break;
-                case antimatter:
-                    e = TileEntityClayEnergyLaser.consumingEnergyWhite;
-            }
+            int e = switch (this.tier) {
+                case claySteel -> TileEntityClayEnergyLaser.consumingEnergyBlue;
+                case clayium -> TileEntityClayEnergyLaser.consumingEnergyGreen;
+                case ultimate -> TileEntityClayEnergyLaser.consumingEnergyRed;
+                case antimatter -> TileEntityClayEnergyLaser.consumingEnergyWhite;
+                default -> 0;
+            };
 
             tooltip.add(UtilLocale.localizeAndFormat("tooltip.energy_laser.energyConsumption", UtilLocale.ClayEnergyNumeral(e)));
         }

@@ -1,6 +1,5 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.GeneralBot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

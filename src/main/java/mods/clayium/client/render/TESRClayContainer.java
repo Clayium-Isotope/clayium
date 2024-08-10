@@ -81,6 +81,10 @@ public class TESRClayContainer extends TileEntitySpecialRenderer<TileEntityClayC
             if (te.getClass().isAnnotationPresent(CustomHull.class)) {
                 hullPath = te.getClass().getAnnotation(CustomHull.class).value();
             } else {
+                if (te.getHullTier().meta() == 0) {
+                    ClayiumCore.logger.info(te.getClass() + " haven't set hull tier yet.");
+                }
+
                 hullPath = "blocks/machinehull-" + (te.getHullTier().meta() - 1);
             }
 

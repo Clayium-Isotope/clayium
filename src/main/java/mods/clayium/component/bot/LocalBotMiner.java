@@ -1,7 +1,5 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.EnumBotResult;
-import mods.clayium.component.GeneralBot;
 import mods.clayium.component.Stockholder;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.util.UtilBuilder;
@@ -21,7 +19,6 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class LocalBotMiner implements LocalBot {
     protected final NonNullList<ItemStack> restItems = NonNullList.create();
@@ -44,19 +41,18 @@ public class LocalBotMiner implements LocalBot {
         assert this.world != null;
 
         if (!this.restItems.isEmpty()) {
-            if (this.restItems.stream()
-                    .map(UtilTransfer.tryInsertItemStack(output))
-                    .anyMatch(((Predicate<ItemStack>) ItemStack::isEmpty).negate()))
-            {
+            List<ItemStack> tried = UtilTransfer.tryProduceItemStacks(output, this.restItems);
+            this.restItems.clear();
+            if (tried.stream().anyMatch(stack -> !stack.isEmpty())) {
+                this.restItems.addAll(tried);
                 return EnumBotResult.Overloading;
             }
         }
 
         IBlockState state = this.world.getBlockState(pos);
-
         boolean isFluid = FluidRegistry.lookupFluidForBlock(state.getBlock()) != null || state.getMaterial() instanceof MaterialLiquid;
         double hardness = isFluid ? 1.0 : (double)state.getBlockHardness(this.world, pos);
-        if (hardness == -1.0 || !IFilter.match(reference.getStackInSlot(referSlotHarvest), state)) {
+        if (hardness == -1.0 || !IFilter.match(reference.getStackInSlot(referSlotHarvest), this.world, pos)) {
             return EnumBotResult.Obstacle;
         }
 

@@ -1,6 +1,5 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.GeneralBot;
 import mods.clayium.machine.ClayMarker.AABBHolder;
 
 /**

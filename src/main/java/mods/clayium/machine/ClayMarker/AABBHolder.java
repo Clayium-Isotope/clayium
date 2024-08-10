@@ -1,8 +1,11 @@
 package mods.clayium.machine.ClayMarker;
 
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public interface AABBHolder {
     AxisAlignedBB NULL_AABB = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
@@ -16,12 +19,20 @@ public interface AABBHolder {
 
     Appearance getBoxAppearance();
 
+    default void applyAppearance(World world, BlockPos pos, IBlockState oldState, Appearance app) {
+        world.setBlockState(pos, oldState.withProperty(APPEARANCE, app));
+    }
+
+    default void applyAppearance(World world, BlockPos pos) {
+        world.setBlockState(pos, world.getBlockState(pos).withProperty(APPEARANCE, this.getBoxAppearance()));
+    }
+
     enum Appearance implements IStringSerializable {
         NoRender,
         Grid,
-        _2,
-        Box,
-        _4;
+        Box_Worker,
+        Box_Marker,
+        Box_Unused;
 
         public static int compare(Appearance a, Appearance b) {
             return a.compareTo(b);
@@ -29,19 +40,19 @@ public interface AABBHolder {
 
         public static Appearance back2(Appearance self) {
             return switch (self) {
-                case NoRender, Grid, _2 -> NoRender;
-                case Box -> Grid;
-                case _4 -> _2;
+                case NoRender, Grid, Box_Worker -> NoRender;
+                case Box_Marker -> Grid;
+                case Box_Unused -> Box_Worker;
             };
         }
 
         public static Appearance increment(Appearance self, Appearance overflow) {
             return switch (self) {
                 case NoRender -> Grid;
-                case Grid -> _2;
-                case _2 -> Box;
-                case Box -> _4;
-                case _4 -> overflow;
+                case Grid -> Box_Worker;
+                case Box_Worker -> Box_Marker;
+                case Box_Marker -> Box_Unused;
+                case Box_Unused -> overflow;
             };
         }
 
@@ -53,9 +64,9 @@ public interface AABBHolder {
             return switch (meta) {
                 case 0 -> NoRender;
                 case 1 -> Grid;
-                case 2 -> _2;
-                case 3 -> Box;
-                case 4 -> _4;
+                case 2 -> Box_Worker;
+                case 3 -> Box_Marker;
+                case 4 -> Box_Unused;
                 default -> throw new EnumConstantNotPresentException(Appearance.class, "[default]");
             };
         }

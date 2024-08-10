@@ -75,9 +75,9 @@ public class TileEntityClayMarker extends TileEntityGeneric implements IAABBProv
             this.aabb = extentMode.apply(
                     new AxisAlignedBB(pos, pos.add(this.xx, this.yy, this.zz)).offset(0.5d, 0.5d, 0.5d).grow(0.5d)
             );
-            this.state = Appearance.Grid.compareTo(this.state) >= 0 ? Appearance.Box : Appearance.increment(this.state, Appearance._2);
+            this.state = Appearance.Grid.compareTo(this.state) >= 0 ? Appearance.Box_Marker : Appearance.increment(this.state, Appearance.Box_Worker);
         }
-        world.setBlockState(pos, state.withProperty(AABBHolder.APPEARANCE, this.state));
+        this.applyAppearance(world, pos, state, this.state);
     }
 
     @Override

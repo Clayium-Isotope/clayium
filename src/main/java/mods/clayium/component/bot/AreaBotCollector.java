@@ -1,6 +1,5 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.EnumBotResult;
 import mods.clayium.component.Stockholder;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.util.UtilNBT;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class AreaBotCollector implements AreaBot {
     public static final int progressPerJob = 400;
-    protected final Stockholder progress = Stockholder.init();
+    protected final Stockholder progress = new Stockholder();
     protected boolean willTerminate = false;
     @Nonnull
     protected AxisAlignedBB aabb = NULL_AABB;

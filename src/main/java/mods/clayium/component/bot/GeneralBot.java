@@ -1,5 +1,6 @@
-package mods.clayium.component;
+package mods.clayium.component.bot;
 
+import mods.clayium.component.Stockholder;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;
@@ -7,6 +8,12 @@ import net.minecraftforge.items.IItemHandler;
 public interface GeneralBot<Context> extends INBTSerializable<NBTTagCompound> {
 
     boolean isReady();
+
+    /**
+     * 内部パラメータをリセットすることを想定。
+     * 割となんでもできるのでよくない
+     */
+    default void reboot() {}
 
     default void clearProgress() {
         this.progress().clear();

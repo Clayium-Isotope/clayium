@@ -1,5 +1,7 @@
 package mods.clayium.component;
 
+import mods.clayium.component.teField.FieldComponent;
+import mods.clayium.core.ClayiumCore;
 import mods.clayium.util.SIFormat;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -13,7 +15,7 @@ import java.text.NumberFormat;
  *
  * @see java.math.BigInteger
  */
-public class Stockholder implements Comparable<Long>, INBTSerializable<NBTTagIntArray> {
+public class Stockholder extends Number implements Comparable<Long>, INBTSerializable<NBTTagIntArray>, FieldComponent {
     protected static final NumberFormat stringify = new SIFormat(true, 0);
     public static final Stockholder ZERO = new Stockholder(0, 0);
 
@@ -25,8 +27,28 @@ public class Stockholder implements Comparable<Long>, INBTSerializable<NBTTagInt
         this.mutable = value;
     }
 
-    public static Stockholder init() {
-        return new Stockholder(0, 0);
+    public Stockholder() {
+        this(0, 0);
+    }
+
+    @Override
+    public int intValue() {
+        return (int) this.mutable;
+    }
+
+    @Override
+    public long longValue() {
+        return this.mutable;
+    }
+
+    @Override
+    public float floatValue() {
+        return (float) this.magnitude * Long.MAX_VALUE + this.mutable;
+    }
+
+    @Override
+    public double doubleValue() {
+        return (double) this.magnitude * Long.MAX_VALUE + this.mutable;
     }
 
     public void clear() {
@@ -87,7 +109,11 @@ public class Stockholder implements Comparable<Long>, INBTSerializable<NBTTagInt
         // 繰り下がりが必要な場合
         if (this.magnitude <= 0) {
             // 繰り下げられないとき
-            throw new ArithmeticException("Too less magnitude to subtract!");
+//            throw new ArithmeticException("Too less magnitude to subtract!");
+            ClayiumCore.logger.error("Too less magnitude to subtract!");
+            this.magnitude = 0;
+            this.mutable = 0;
+            return this;
         }
 
         this.magnitude -= 1;
@@ -111,7 +137,7 @@ public class Stockholder implements Comparable<Long>, INBTSerializable<NBTTagInt
 
     @Override
     public String toString() {
-        return stringify.format(this.magnitude * Long.MAX_VALUE + this.mutable);
+        return stringify.format(this.doubleValue());
     }
 
     @Override
@@ -124,10 +150,10 @@ public class Stockholder implements Comparable<Long>, INBTSerializable<NBTTagInt
     @Override
     public NBTTagIntArray serializeNBT() {
         return new NBTTagIntArray(new int[] {
-                (int) this.mutable,
-                (int) (this.mutable >> Integer.SIZE),
-                (int) this.magnitude,
-                (int) (this.magnitude >> Integer.SIZE)
+                this.getField(0),
+                this.getField(1),
+                this.getField(2),
+                this.getField(3)
         });
     }
 
@@ -137,10 +163,36 @@ public class Stockholder implements Comparable<Long>, INBTSerializable<NBTTagInt
 
         this.clear();
         if (value.length == 4) {
-            this.add(new Stockholder(
-                    (long) value[3] << Integer.SIZE + value[2],
-                    (long) value[1] << Integer.SIZE + value[0]
-            ));
+            this.setField(0, value[0]);
+            this.setField(1, value[1]);
+            this.setField(2, value[2]);
+            this.setField(3, value[3]);
+        }
+    }
+
+    @Override
+    public int getFieldCount() {
+        return 4;
+    }
+
+    @Override
+    public int getField(int id) {
+        return switch (id) {
+            case 0 -> (int) this.mutable;
+            case 1 -> (int) (this.mutable >> Integer.SIZE);
+            case 2 -> (int) this.magnitude;
+            case 3 -> (int) (this.magnitude >> Integer.SIZE);
+            default -> 0;
+        };
+    }
+
+    @Override
+    public void setField(int id, int value) {
+        switch (id) {
+            case 0 -> this.mutable = (this.mutable & 0xffffffff00000000L) + Integer.toUnsignedLong(value);
+            case 1 -> this.mutable = (this.mutable & 0x00000000ffffffffL) + ((long) value << Integer.SIZE);
+            case 2 -> this.magnitude = (this.magnitude & 0xffffffff00000000L) + Integer.toUnsignedLong(value);
+            case 3 -> this.magnitude = (this.magnitude & 0x00000000ffffffffL) + ((long) value << Integer.SIZE);
         }
     }
 }

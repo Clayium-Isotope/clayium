@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -72,6 +73,13 @@ public class UtilBuilder {
         return ItemStack.EMPTY;
     }
 
+    public static ItemStack getPickedBlock(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        RayTraceResult rtr = new RayTraceResult(RayTraceResult.Type.BLOCK, Vec3d.ZERO, EnumFacing.NORTH, pos);
+
+        return state.getBlock().getPickBlock(state, rtr, world, pos, UtilPlayer.getDefaultFake());
+    }
+
     public static ItemStack getRawItemBlock(IBlockState state) {
         int j = 0;
         Item item = Item.getItemFromBlock(state.getBlock());
@@ -100,14 +108,18 @@ public class UtilBuilder {
     /**
      * If player is known, use {@link Block#harvestBlock(World, EntityPlayer, BlockPos, IBlockState, TileEntity, ItemStack)}
      */
-    public static List<ItemStack> harvestBlock(World theWorld, BlockPos pos, boolean dropXP, boolean canSilkHarvest, int fortune, boolean collectFluid) {
+    public static List<ItemStack> harvestBlock(World theWorld, BlockPos pos, boolean dropXP, boolean doSilkHarvest, int fortune, boolean collectFluid) {
 
-        List<ItemStack> itemToDrop = getDropsFromBlock(theWorld, pos, canSilkHarvest, fortune, collectFluid);
-        destroyBlock(theWorld, pos, dropXP, canSilkHarvest, fortune);
+        List<ItemStack> itemToDrop = getDropsFromBlock(theWorld, pos, doSilkHarvest, fortune, collectFluid);
+        destroyBlock(theWorld, pos, dropXP, doSilkHarvest, fortune);
         return itemToDrop;
     }
 
     public static List<ItemStack> getDropsFromBlock(World world, BlockPos pos, boolean canSilkHarvest, int fortune, boolean collectFluid) {
+        if (world.isRemote || world.restoringBlockSnapshots) {
+            return Collections.emptyList();
+        }
+
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() == Blocks.AIR) {
             return Collections.emptyList();
@@ -121,14 +133,10 @@ public class UtilBuilder {
         }
 
         if (canSilkHarvest && state.getBlock().canSilkHarvest(world, pos, state, UtilPlayer.getDefaultFake())) {
-            ItemStack itemstack = getItemBlock(world, pos);
+            ItemStack itemstack = getPickedBlock(world, pos);
             if (!itemstack.isEmpty()) {
                 return Collections.singletonList(itemstack);
             }
-            return Collections.emptyList();
-        }
-
-        if (world.isRemote || world.restoringBlockSnapshots) {
             return Collections.emptyList();
         }
 
@@ -196,7 +204,12 @@ public class UtilBuilder {
     }
 
     public static boolean placeBlockByItemBlock(ItemStack itemStack, World world, BlockPos pos) {
-        return placeBlockByItemBlock(itemStack, world, pos, EnumFacing.UP, 0.5f, 0.5f, 0.5f) == EnumActionResult.SUCCESS;
+        if (itemStack.isEmpty() || !(itemStack.getItem() instanceof ItemBlock)) {
+            return false;
+        }
+
+        return world.setBlockState(pos, ((ItemBlock) itemStack.getItem()).getBlock().getDefaultState());
+//        return placeBlockByItemBlock(itemStack, world, pos, EnumFacing.UP, 0.5f, 0.5f, 0.5f) == EnumActionResult.SUCCESS;
     }
 
     public static EnumActionResult placeBlockByItemBlock(ItemStack itemstack, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {

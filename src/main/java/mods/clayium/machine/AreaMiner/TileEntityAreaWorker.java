@@ -1,7 +1,8 @@
 package mods.clayium.machine.AreaMiner;
 
-import mods.clayium.component.EnumBotResult;
 import mods.clayium.component.bot.*;
+import mods.clayium.component.teField.FieldComponent;
+import mods.clayium.component.teField.FieldManager;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
@@ -19,6 +20,7 @@ import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -31,10 +33,26 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-public class TileEntityAreaWorker extends TileEntityClayContainer implements IClayLaserMachine, AABBHolder, IExternalControl, IClayEnergyConsumer, IButtonProvider {
-    public static final int filterHarvestSlot = 37;
-    public static final int filterFortuneSlot = 38;
-    public static final int filterSilktouchSlot = 39;
+/**
+ * Slot ID
+ * Block Breaker:
+ *  0: Energy
+ *  1: harvest filter
+ *  2: UNUSED
+ *  3: UNUSED
+ *  4-12: Output
+ * Miner:
+ *  0: Energy
+ *  1: harvest filter
+ *  2: fortune filter
+ *  3: silktouch filter
+ *  4-12: Output
+ *  13-21: Input
+ */
+public class TileEntityAreaWorker extends TileEntityClayContainer implements IClayLaserMachine, AABBHolder, IExternalControl, IClayEnergyConsumer, IButtonProvider, FieldComponent {
+    public static final int filterHarvestSlot = 1;
+    public static final int filterFortuneSlot = 2;
+    public static final int filterSilktouchSlot = 3;
     public static final long energyPerTick = 1000L;
     public static final int progressPerTick = 100;
     public static final int progressPerJob = 400;
@@ -48,6 +66,7 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
     public long laserEnergy = 0L;
     public EnumAreaMinerState state = EnumAreaMinerState.BEFORE_INIT;
     protected final ContainClayEnergy ce = new ContainClayEnergy();
+    protected final FieldComponent manager = new FieldManager(this.ce);
 
     protected final LateInit<LocalBot> localBot = new LateInit<>();
     protected final LateInit<AreaBot> areaBot = new LateInit<>();
@@ -62,7 +81,7 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
         this.setExportRoutes(NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, 0, 0);
         this.autoInsert = true;
         this.autoExtract = true;
-        this.containerItemStacks = NonNullList.withSize(40, ItemStack.EMPTY);
+        this.containerItemStacks = NonNullList.withSize(22, ItemStack.EMPTY);
     }
 
     @Override
@@ -77,14 +96,14 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
 
     @Override
     public int getEnergySlot() {
-        return 36;
+        return 0;
     }
 
     @Override
     public void initParamsByTier(TierPrefix tier) {
         super.initParamsByTier(tier);
         int slotNum;
-        if (tier.compareTo(TierPrefix.antimatter) >= 0) {
+        if (this.isAreaReplacer()) {
             this.inventoryX.set(4);
             this.inventoryY.set(2);
             slotNum = 8;
@@ -94,23 +113,24 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
             slotNum = 9;
         }
 
-        this.slotsDrop = IntStream.concat(IntStream.range(0, slotNum), IntStream.of(this.getEnergySlot())).toArray();
+        this.slotsDrop = IntStream.concat(IntStream.rangeClosed(1, slotNum), IntStream.of(this.getEnergySlot())).toArray();
 
-        this.listSlotsImport.add(new int[]{this.getEnergySlot()});
-        this.listSlotsExport.add(IntStream.range(0, slotNum).toArray());
-        this.botInput.set(UtilTransfer.getItemHandler(this, null, IntStream.range(0, slotNum).toArray()));
+        this.listSlotsImport.add(new int[]{ this.getEnergySlot() });
+        this.listSlotsExport.add(IntStream.rangeClosed(1, slotNum).toArray());
+        this.botOutput.set(UtilTransfer.getItemHandler(this, null, IntStream.rangeClosed(1, slotNum).toArray()));
         this.botReference.set(UtilTransfer.getItemHandler(this, null, new int[] { filterHarvestSlot, filterFortuneSlot, filterSilktouchSlot }));
-        this.botOutput.set(UtilTransfer.getItemHandler(this, null, IntStream.range(slotNum, slotNum * 2).toArray()));
+        this.botInput.set(UtilTransfer.getItemHandler(this, null, IntStream.range(4 + slotNum, 4 + slotNum * 2).toArray()));
 
         this.areaBot.set(new AreaBotAreaWorker());
         switch (tier) {
-            case precision -> initAsMiner();
-            case claySteel, clayium, ultimate -> initAsAdvMiner();
+            case precision -> initAsBreaker();
+            case clayium -> initAsMiner();
+            case ultimate -> initAsAdvMiner();
             case antimatter -> initAsReplacer(slotNum);
         }
     }
 
-    protected void initAsMiner() {
+    protected void initAsBreaker() {
         this.maxAutoInsertDefault = this.maxAutoExtractDefault = 16;
         this.autoExtractInterval = this.autoInsertInterval = 2;
         this.setState(EnumAreaMinerState.LoopMode_Ready);
@@ -120,6 +140,14 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
 
         this.setImportRoutes(NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE, NONE_ROUTE);
         this.aabbDeterminer.set(TileEntityAreaWorker::applyBlockAABB);
+        this.localBot.set(new LocalBotMiner());
+    }
+
+    protected void initAsMiner() {
+        this.maxAutoInsertDefault = this.maxAutoExtractDefault = 64;
+        this.autoExtractInterval = this.autoInsertInterval = 1;
+        this.setState(EnumAreaMinerState.OnceMode_Ready);
+        this.aabbDeterminer.set(TileEntityAreaWorker::applyAABBProvider);
         this.localBot.set(new LocalBotMiner());
     }
 
@@ -149,7 +177,12 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
         if (!this.world.isRemote) {
             if (!this.hasAxisAlignedBB()) {
                 this.aabbDeterminer.get().accept(this);
+                this.areaBot.get().setAxisAlignedBB(this.getAxisAlignedBB());
             } else {
+                if (!this.isLoaded) {
+                    this.areaBot.get().setAxisAlignedBB(this.getAxisAlignedBB());
+                    this.localBot.get().setWorld(this.getWorld());
+                }
                 this.doWork();
             }
         }
@@ -175,44 +208,39 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
             case OnceMode_Ready:
                 this.areaBot.get().setAxisAlignedBB(this.getAxisAlignedBB());
                 this.areaBot.get().setFinite(true);
+                this.areaBot.get().reboot();
+                this.localBot.get().setWorld(this.getWorld());
                 this.setState(EnumAreaMinerState.OnceMode_Doing);
                 break;
             case LoopMode_Ready:
                 this.areaBot.get().setAxisAlignedBB(this.getAxisAlignedBB());
                 this.areaBot.get().setFinite(false);
+                this.areaBot.get().reboot();
+                this.localBot.get().setWorld(this.getWorld());
                 this.setState(EnumAreaMinerState.LoopMode_Doing);
                 break;
             case OnceMode_Doing:
             case LoopMode_Doing:
                 double v = 1.0 + 4.0 * Math.log10((double) (this.laserEnergy / 1000L + 1L));
 
-                if (!IClayEnergyConsumer.checkAndConsumeClayEnergy(this, (long)((double)energyPerTick * v))) {
-                    return;
+                if ((this.isAreaMode() && IClayEnergyConsumer.checkAndConsumeClayEnergy(this, (long)((double)energyPerTick * v)))
+                    || !this.isAreaMode()) {
+                    this.laserEnergy = 0L;
+                    this.areaBot.get().addProgress((long)((double) progressPerTick * v));
+                    this.markDirty();
                 }
 //                this.setSyncFlag();
-                this.laserEnergy = 0L;
 
-                this.areaBot.get().addProgress((long)((double) progressPerTick * v));
-                final int maxJob = this.getMaxJobCount();
+                final int maxJob = this.state == EnumAreaMinerState.OnceMode_Doing ? maxJobCount : maxJobCountInLoop;
+                EnumBotResult workResult = EnumBotResult.Success;
+                for (int i = 0; i < maxJob && workResult == EnumBotResult.Success; i++) {
+                    workResult = this.areaBot.get().work(this.botInput.get(), this.botReference.get(), this.botOutput.get(), this.localBot.get());
+                }
 
-                for (int i = 0; i < maxJob; i++) {
-                    EnumBotResult workResult = this.areaBot.get().work(this.botInput.get(), this.botReference.get(), this.botOutput.get(), this.localBot.get());
-                    if (workResult == EnumBotResult.Success) continue;
-
-                    // Success でさえなければ、ループを抜けるのみ。
-                    if (workResult == EnumBotResult.EndOfTerm) {
-                        this.setState(EnumAreaMinerState.Idle);
-                    }
-
-                    // TODO この progress リセットは、挙動の解釈不一致が起こりうる...
-                    this.areaBot.get().clearProgress();
-                    return;
+                if (workResult == EnumBotResult.EndOfTerm) {
+                    this.setState(EnumAreaMinerState.Idle);
                 }
         }
-    }
-
-    public int getMaxJobCount() {
-        return this.state == EnumAreaMinerState.OnceMode_Doing ? maxJobCount : maxJobCountInLoop;
     }
 
     @Override
@@ -233,11 +261,12 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
             case 2 -> this.setState(EnumAreaMinerState.LoopMode_Ready);
             case 3 -> {
 //                this.setSyncFlag();
-                switch (this.boxState) {
-                    case NoRender -> this.boxState = Appearance.Grid;
-                    case Grid -> this.boxState = Appearance._2;
-                    case _2 -> this.boxState = Appearance.NoRender;
-                }
+                this.boxState = switch (this.boxState) {
+                    case NoRender -> Appearance.Box_Worker;
+                    case Box_Worker -> Appearance.NoRender;
+                    default -> this.boxState;
+                };
+                this.applyAppearance(this.world, this.pos);
             }
         }
     }
@@ -260,6 +289,7 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
         TileEntityClayMarker.readAxisAlignedBBFromNBT(tagCompound, this);
         this.laserEnergy = tagCompound.getLong("LaserEnergy");
         this.state = EnumAreaMinerState.getByMeta(tagCompound.getByte("State"));
+        this.containEnergy().deserializeNBT((NBTTagIntArray) tagCompound.getTag("ClayEnergy"));
 
         this.areaBot.get().deserializeNBT(tagCompound.getCompoundTag("AreaBot"));
         this.localBot.get().deserializeNBT(tagCompound.getCompoundTag("WorkBot"));
@@ -272,6 +302,8 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
         TileEntityClayMarker.writeAxisAlignedBBToNBT(tagCompound, this);
         tagCompound.setLong("LaserEnergy", this.laserEnergy);
         tagCompound.setByte("State", (byte)this.state.meta());
+        tagCompound.setTag("ClayEnergy", this.containEnergy().serializeNBT());
+
         tagCompound.setTag("AreaBot", this.areaBot.get().serializeNBT());
         tagCompound.setTag("WorkBot", this.localBot.get().serializeNBT());
         return tagCompound;
@@ -308,7 +340,12 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
     }
 
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-        return slot != filterHarvestSlot && slot != filterFortuneSlot && slot != filterSilktouchSlot ? super.isItemValidForSlot(slot, itemstack) : IFilter.isFilter(itemstack);
+        if (slot == filterHarvestSlot || slot == filterFortuneSlot || slot == filterSilktouchSlot)
+            return IFilter.isFilter(itemstack);
+        if (slot == this.getEnergySlot()) {
+            return IClayEnergyConsumer.isItemValidForSlot(this, slot, itemstack);
+        }
+        return true;
     }
 
     public void doWorkOnce() {
@@ -336,15 +373,41 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
         return this.ce;
     }
 
-    public boolean isAreaMiner() {
-        return this.tier == TierPrefix.precision;
+    public boolean isAreaMode() {
+        return this.tier != TierPrefix.precision;
     }
 
-    public boolean isAdvAreaMiner() {
-        return this.tier == TierPrefix.claySteel || this.tier == TierPrefix.clayium || this.tier == TierPrefix.ultimate;
+    public boolean hasSomeFilterSlot() {
+        return this.tier == TierPrefix.ultimate || this.tier == TierPrefix.antimatter;
     }
 
     public boolean isAreaReplacer() {
         return this.tier == TierPrefix.antimatter;
+    }
+
+    @Override
+    public boolean acceptClayEnergy() {
+        return true;
+    }
+
+    @Override
+    public int getFieldCount() {
+        return this.manager.getFieldCount();
+    }
+
+    @Override
+    public int getField(int id) {
+        return this.manager.getField(id);
+    }
+
+    @Override
+    public void setField(int id, int value) {
+        this.manager.setField(id, value);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIOIcons() {
+        this.registerInsertIcons("import_energy", "import");
+        this.registerExtractIcons("export");
     }
 }

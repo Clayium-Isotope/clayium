@@ -18,7 +18,7 @@ public class GuiAreaMiner extends GuiTemp {
         long energy = ((TileEntityAreaWorker)this.tile).laserEnergy;
 
         this.fontRenderer.drawString(UtilLocale.laserGui(energy), 64, container.machineGuiSizeY - 12, 4210752);
-        if (!((TileEntityAreaWorker) this.tile).isAreaMiner()) {
+        if (((TileEntityAreaWorker) this.tile).hasSomeFilterSlot()) {
             this.fontRenderer.drawString(I18n.format("gui.AreaMiner.harvest"), container.machineGuiSizeX - 48, 21, 4210752);
             this.fontRenderer.drawString(I18n.format("gui.AreaMiner.fortune"), container.machineGuiSizeX - 48, 39, 4210752);
             this.fontRenderer.drawString(I18n.format("gui.AreaMiner.silktouch"), container.machineGuiSizeX - 48, 57, 4210752);
@@ -29,7 +29,7 @@ public class GuiAreaMiner extends GuiTemp {
     public void addButtons() {
         int offsetX = this.guiLeft;
         int offsetY = this.guiTop;
-        if (!((TileEntityAreaWorker) this.tile).isAreaMiner()) {
+        if (((TileEntityAreaWorker) this.tile).hasSomeFilterSlot()) {
             offsetX = this.guiLeft - 10;
         }
 

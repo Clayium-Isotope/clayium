@@ -1,14 +1,11 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.EnumBotResult;
 import mods.clayium.component.Stockholder;
-import mods.clayium.util.UtilNBT;
 import mods.clayium.util.WrapMutableBlockPos;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -18,12 +15,11 @@ public class AreaBotAreaWorker implements AreaBot {
     protected AxisAlignedBB aabb = NULL_AABB;
     protected final WrapMutableBlockPos pos = new WrapMutableBlockPos();
     protected boolean willTerminate = false;
-    protected final Stockholder progress = Stockholder.init();
+    protected final Stockholder progress = new Stockholder();
 
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound tag = new NBTTagCompound();
-        tag.setTag("aabb", UtilNBT.serializeAABB(this.getAxisAlignedBB()));
         tag.setTag("pos", NBTUtil.createPosTag(this.pos));
         tag.setBoolean("will_terminate", this.willTerminate);
         tag.setTag("progress", this.progress.serializeNBT());
@@ -33,10 +29,16 @@ public class AreaBotAreaWorker implements AreaBot {
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        this.setAxisAlignedBB(UtilNBT.deserializeAABB(nbt.getCompoundTag("aabb")));
         this.pos.setPos(NBTUtil.getPosFromTag(nbt.getCompoundTag("pos")));
         this.willTerminate = nbt.getBoolean("will_terminate");
         this.progress.deserializeNBT((NBTTagIntArray) nbt.getTag("progress"));
+    }
+
+    @Override
+    public void reboot() {
+        if (this.hasAxisAlignedBB()) {
+            this.pos.setPos(this.aabb.minX, this.aabb.maxY, this.aabb.minZ);
+        }
     }
 
     @Override
@@ -70,7 +72,7 @@ public class AreaBotAreaWorker implements AreaBot {
 
     @Override
     public boolean hasAxisAlignedBB() {
-        return this.aabb == NULL_AABB;
+        return this.aabb != NULL_AABB;
     }
 
     @Override
@@ -101,6 +103,7 @@ public class AreaBotAreaWorker implements AreaBot {
     public EnumBotResult nextPos() {
         if (!this.isReady()) return EnumBotResult.NotReady;
 
+        this.pos.incrX();
         if (this.pos.getX() > this.aabb.maxX) {
             this.pos.setX((int) this.aabb.minX);
             this.pos.incrZ();
@@ -121,16 +124,12 @@ public class AreaBotAreaWorker implements AreaBot {
     public EnumBotResult work(IItemHandler input, IItemHandler reference, IItemHandler output, LocalBot bot) {
         if (!this.isReady() || !bot.isReady()) return EnumBotResult.NotReady;
 
-        final BlockPos oldPos = this.pos.toImmutable();
-        EnumBotResult result = this.nextPos();
-        if (result != EnumBotResult.Success) return result;
-
         bot.setProgressAccess(this);
         EnumBotResult botResult = bot.work(input, reference, output, this.pos.toImmutable());
 
-        if (botResult == EnumBotResult.Success) return EnumBotResult.Success;
-
-        this.pos.setPos(oldPos);
-        return EnumBotResult.Incomplete;
+        if (botResult == EnumBotResult.Success || botResult == EnumBotResult.Obstacle) {
+            return this.nextPos();
+        }
+        return botResult;
     }
 }

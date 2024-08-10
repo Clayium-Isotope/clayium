@@ -14,6 +14,7 @@ import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -140,7 +141,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
         this.timeToCraft = tagCompound.getLong("TimeToCraft");
         this.debtEnergy = tagCompound.getLong("ConsumingEnergy");
 
-        this.containEnergy().set(tagCompound.getLong("ClayEnergy"));
+        this.containEnergy().deserializeNBT((NBTTagIntArray) tagCompound.getTag("ClayEnergy"));
 
         setKind(EnumMachineKind.fromName(tagCompound.getString("MachineId")));
         this.doingRecipe = this.getRecipe(tagCompound.getInteger("RecipeHash"));
@@ -154,7 +155,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
         tagCompound.setLong("TimeToCraft", this.timeToCraft);
         tagCompound.setLong("ConsumingEnergy", this.debtEnergy);
 
-        tagCompound.setLong("ClayEnergy", this.containEnergy.get());
+        tagCompound.setTag("ClayEnergy", this.containEnergy().serializeNBT());
 
         tagCompound.setInteger("RecipeHash", this.doingRecipe.hashCode());
 
@@ -177,7 +178,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     @Override
     public void pushButton(EntityPlayer playerIn, int button) {
         if (UtilTier.canManufactureCraft(this.getHullTier()) && canPushButton(button) == ButtonProperty.PERMIT) {
-            this.containEnergy.increase(5L);
+            this.containEnergy.add(5L);
         }
     }
 

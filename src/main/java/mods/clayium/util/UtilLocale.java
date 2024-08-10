@@ -19,28 +19,12 @@ public class UtilLocale {
 
     private static final int maxLineTooltip = 12;
 
-    public static String ClayEnergyNumeral(double ce, boolean lessInfo) {
-        return (lessInfo ? ceFormatWoutZero : ceFormatWithZero).format(ce);
-    }
-
     public static String ClayEnergyNumeral(double ce) {
-        return ClayEnergyNumeral(ce, true);
-    }
-
-    public static String ClayEnergyNumeral(long ce, boolean lessInfo) {
-        return (lessInfo ? ceFormatWoutZero : ceFormatWithZero).format(ce);
+        return ceFormatWoutZero.format(ce);
     }
 
     public static String ClayEnergyNumeral(long ce) {
-        return ClayEnergyNumeral(ce, true);
-    }
-
-    protected static String StackSizeNumeral(long stackSize, boolean flag) {
-        return (flag ? numFormatWoutZero : numFormatWithZero).format(stackSize);
-    }
-
-    public static String StackSizeNumeral(long stackSize) {
-        return StackSizeNumeral(stackSize, false);
+        return ceFormatWoutZero.format(ce);
     }
 
     public static String CAResonanceNumeral(double resonance) {
@@ -56,11 +40,11 @@ public class UtilLocale {
             return String.format("%.2f", resonance);
         }
 
-        return resonance < 1000.0D ? String.format("%.1f", resonance) : StackSizeNumeral((long) resonance);
+        return resonance < 1000.0D ? String.format("%.1f", resonance) : numFormatWithZero.format(resonance);
     }
 
     public static String laserNumeral(long laser) {
-        return StackSizeNumeral(laser);
+        return numFormatWithZero.format(laser);
     }
 
     @SideOnly(Side.CLIENT)
@@ -74,7 +58,7 @@ public class UtilLocale {
     }
 
     public static String craftTimeNumeral(long craftTime) {
-        return StackSizeNumeral(craftTime, true);
+        return numFormatWoutZero.format(craftTime);
     }
 
     public static String rfNumeral(long rf) {

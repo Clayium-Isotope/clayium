@@ -25,6 +25,7 @@ import java.util.List;
 public class TileEntityClayInterface extends TileEntityClayContainer
                                      implements ISynchronizedInterface, IClayEnergyConsumer {
 
+    public static final ContainClayEnergy NIL = new ContainClayEnergy();
     protected boolean enableSync = false;
     protected boolean synced = false;
     protected IInterfaceCaptive core = IInterfaceCaptive.NONE;
@@ -325,7 +326,7 @@ public class TileEntityClayInterface extends TileEntityClayContainer
         if (IClayEnergyConsumer.hasClayEnergy(this.core)) {
             return ((IClayEnergyConsumer) this.core).containEnergy();
         }
-        return ContainClayEnergy.NIL;
+        return NIL;
     }
 
     @Override

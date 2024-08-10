@@ -5,11 +5,13 @@ import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaserManager;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserManager;
+import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -99,7 +101,7 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer
             this.manager.set(this.world, this.pos,
                     this.world.getBlockState(this.pos).getValue(BlockStateClayContainer.FACING));
             this.manager.update(
-                    this.isPowered() && IClayEnergyConsumer.consumeClayEnergy(this, this.machineConsumingEnergy));
+                    this.isPowered() && IClayEnergyConsumer.checkAndConsumeClayEnergy(this, this.machineConsumingEnergy));
         }
     }
 
@@ -107,9 +109,9 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer
     public void readMoreFromNBT(NBTTagCompound tagCompound) {
         super.readMoreFromNBT(tagCompound);
 
-        this.manager.readFromNBT(tagCompound.getCompoundTag("ClayEnergyManager"));
+        this.manager.readFromNBT(tagCompound.getCompoundTag("ClayLaserManager"));
         this.setPowered(tagCompound.getBoolean("Powered"));
-        this.containEnergy().set(tagCompound.getLong("ContainEnergy"));
+        this.containEnergy().deserializeNBT((NBTTagIntArray) tagCompound.getTag("ContainEnergy"));
     }
 
     @Override
@@ -118,9 +120,9 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer
 
         NBTTagCompound manager = new NBTTagCompound();
         this.manager.writeToNBT(manager);
-        tagCompound.setTag("ClayEnergyManager", manager);
+        tagCompound.setTag("ClayLaserManager", manager);
         tagCompound.setBoolean("Powered", this.isPowered());
-        tagCompound.setLong("ContainEnergy", this.containEnergy().get());
+        tagCompound.setTag("ContainEnergy", this.containEnergy().serializeNBT());
 
         return tagCompound;
     }
@@ -184,6 +186,11 @@ public class TileEntityClayEnergyLaser extends TileEntityClayContainer
     @Nullable
     @Override
     public ResourceLocation getFaceResource() {
-        return null;
+        return EnumMachineKind.clayEnergyLaser.getFaceResource();
+    }
+
+    @Override
+    public TierPrefix getHullTier() {
+        return this.tier;
     }
 }

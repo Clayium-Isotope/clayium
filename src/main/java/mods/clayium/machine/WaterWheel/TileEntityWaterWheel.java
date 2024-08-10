@@ -20,14 +20,14 @@ public class TileEntityWaterWheel extends TileEntityGeneric {
     private TierPrefix tier;
 
     public void initParams() {
-        this.progressEfficiency = (int) ((double) this.progressEfficiency *
-                Math.pow(Math.max(this.tier.meta(), 1.0D), 3.0D));
         this.slotsDrop = new int[] { 0 };
     }
 
     @Override
     public void initParamsByTier(TierPrefix tier) {
         this.tier = tier;
+        this.progressEfficiency = (int) ((double) this.progressEfficiency *
+                Math.pow(Math.max(this.tier.meta(), 1.0D), 3.0D));
     }
 
     @Override
@@ -69,19 +69,14 @@ public class TileEntityWaterWheel extends TileEntityGeneric {
         return (double) this.progress / (double) progressMax;
     }
 
-    public void openInventory() {}
-
-    public void closeInventory() {}
-
     public void emitEnergy() {
         for (EnumFacing direction : EnumFacing.VALUES) {
             TileEntity te = this.world.getTileEntity(this.pos.offset(direction));
-            if (te != null && te instanceof TileEntityClayiumMachine &&
+            if (te instanceof TileEntityClayiumMachine &&
                     UtilTier.acceptWaterWheel(((TileEntityClayiumMachine) te).getHullTier()) &&
-                    (double) ((TileEntityClayiumMachine) te).containEnergy().get() <
-                            5.0D * Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D)) {
+                    !((TileEntityClayiumMachine) te).containEnergy().hasEnough(5.0D * Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D))) {
                 ((TileEntityClayiumMachine) te).containEnergy()
-                        .increase((long) Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D));
+                        .add((long) Math.pow(Math.max(this.tier.meta(), 1.0D), 8.0D));
                 te.markDirty();
             }
         }

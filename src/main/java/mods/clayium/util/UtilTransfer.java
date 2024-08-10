@@ -1,6 +1,5 @@
 package mods.clayium.util;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
 import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.crafting.AmountedIngredient;
 import net.minecraft.block.Block;
@@ -16,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
@@ -439,7 +437,7 @@ public class UtilTransfer {
             if (ioSlots == null && facing == null) {
                 throw new IllegalArgumentException("[Bug] \"Facing\" is needed when get ItemHandler with \"ioSlots\" null");
             }
-            return new OffsettedHandler(new ClayInvWrapper((IClayInventory) te), Objects.nonNull(ioSlots) ? ioSlots : UtilTransfer.getSlots(te, facing));
+            return new OffsettedHandler(new InvWrapper((IInventory) te), Objects.nonNull(ioSlots) ? ioSlots : UtilTransfer.getSlots(te, facing));
         } else if (te instanceof ISidedInventory) {
             if (facing == null) {
                 throw new IllegalArgumentException("[Bug] \"Facing\" is needed when get ItemHandler from ISidedInventory");
@@ -450,30 +448,6 @@ public class UtilTransfer {
         }
 
         throw new IllegalArgumentException("The tile entity doesn't implement IInventory");
-    }
-
-    static class ClayInvWrapper extends ItemStackHandler {
-        protected final IInventory inv;
-        protected final boolean isFlexibleStackLimit;
-
-        ClayInvWrapper(IClayInventory inv) {
-            super(inv.getContainerItemStacks());
-            this.inv = inv;
-            this.isFlexibleStackLimit = this.inv instanceof FlexibleStackLimit;
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
-            return this.inv.getInventoryStackLimit();
-        }
-
-        @Override
-        protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
-            if (this.isFlexibleStackLimit) {
-                return ((FlexibleStackLimit) this.inv).getInventoryStackLimit(slot, stack);
-            }
-            return super.getStackLimit(slot, stack);
-        }
     }
 
     public static class OffsettedHandler implements IItemHandler {

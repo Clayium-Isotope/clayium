@@ -47,7 +47,10 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
     }
 
     /**
-     * Change Compressed Clay to Clay Energy
+     * Energy Slotが空のとき、
+     * Energy SlotのアイテムがCEを持たないとき、
+     * {@code false} を返す。
+     * 圧縮粘土をCEに変換したとき、{@code true} を返す。
      */
     static boolean produceClayEnergy(IClayEnergyConsumer consumer) {
         if (RangeCheck.isInOutOfInclusive(consumer.getEnergySlot(), 0, consumer.getSizeInventory() - 1)) return false;
@@ -56,7 +59,7 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
         if (itemstack.isEmpty()) return false;
 
         if (!IClayEnergy.hasClayEnergy(itemstack)) return false;
-        consumer.containEnergy().increase(IClayEnergy.getClayEnergy(itemstack));
+        consumer.containEnergy().add(IClayEnergy.getClayEnergy(itemstack));
         itemstack.shrink(1);
         consumer.markDirty();
 
@@ -77,7 +80,7 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
      */
     static boolean consumeClayEnergy(IClayEnergyConsumer consumer, long debt) {
         if (consumer.containEnergy().hasEnough(debt)) {
-            consumer.containEnergy().decrease(debt);
+            consumer.containEnergy().sub(debt);
             return true;
         }
         return false;
@@ -87,10 +90,8 @@ public interface IClayEnergyConsumer extends IInventory, ClayEnergyHolder {
      * CEを蓄える。
      */
     static boolean compensateClayEnergy(IClayEnergyConsumer consumer, long debt) {
-        if (!consumer.containEnergy().hasEnough(debt)) {
+        while (!consumer.containEnergy().hasEnough(debt)) {
             if (!produceClayEnergy(consumer)) return false;
-
-            return compensateClayEnergy(consumer, debt);
         }
         return true;
     }

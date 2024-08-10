@@ -1,7 +1,5 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.EnumBotResult;
-import mods.clayium.component.GeneralBot;
 import mods.clayium.component.Stockholder;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
