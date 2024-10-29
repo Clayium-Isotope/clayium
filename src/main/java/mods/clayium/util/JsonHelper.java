@@ -27,7 +27,7 @@ public class JsonHelper {
 
         JsonObject textures = new JsonObject();
         textures.addProperty("hull", "clayium:blocks/machinehull-" + (tier.meta() - 1));
-        textures.addProperty("face", "clayium:blocks/machine/" + kind.facePath);
+        textures.addProperty("face", "clayium:blocks/machine/" + kind.getFacePath());
 
         root.add("textures", textures);
 

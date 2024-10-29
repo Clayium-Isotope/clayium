@@ -26,6 +26,10 @@ public class AmountedIngredient extends Ingredient {
         this(CraftingHelper.getIngredient(json, context), JsonHelper.readNumeric(json, "amount", 1));
     }
 
+    public AmountedIngredient(ItemStack stack) {
+        this(Ingredient.fromStacks(stack), stack.getCount());
+    }
+
     @Override
     public boolean apply(@Nullable ItemStack p_apply_1_) {
         if (p_apply_1_ == null || p_apply_1_.isEmpty()) return false;

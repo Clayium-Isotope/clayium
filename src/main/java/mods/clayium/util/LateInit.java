@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * ChatGPTからスレッドセーフな {@link AtomicReference} の利用を促された。
  */
-public final class LateInit<T> {
+public class LateInit<T> {
     private final AtomicReference<Optional<T>> value = new AtomicReference<>(Optional.empty());
 
     public T get() {

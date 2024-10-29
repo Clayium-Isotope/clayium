@@ -66,13 +66,13 @@ public class ClayiumMachineCategory implements IRecipeCategory<RecipeElement> {
     public void setRecipe(IRecipeLayout iRecipeLayout, RecipeElement recipeElement, IIngredients iIngredients) {
         IGuiItemStackGroup stacks = iRecipeLayout.getItemStacks();
 
-        int len = this.kind.slotType.inCount;
+        int len = this.kind.getSlotType().inCount;
         int i;
         for (i = 0; i < len; i++) {
             stacks.init(i, true, 17 * (4 - len + i), 13);
         }
 
-        len = this.kind.slotType.outCount;
+        len = this.kind.getSlotType().outCount;
         for (int j = 0; j < len; j++) {
             stacks.init(j + i, false, 97 + 17 * j, 13);
         }

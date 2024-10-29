@@ -1,4 +1,4 @@
-package mods.clayium.util;
+package mods.clayium.util.exception;
 
 public class IllegalTierException extends IllegalArgumentException {
 

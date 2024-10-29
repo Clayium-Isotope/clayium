@@ -1,5 +1,7 @@
 package mods.clayium.util;
 
+import mods.clayium.util.exception.IllegalTierException;
+
 public class UtilTier {
 
     public enum BufferTransport {

@@ -5,8 +5,9 @@ import mods.clayium.gui.ContainerTemp;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
 import mods.clayium.machine.ClayWorkTable.ContainerClayWorkTable;
 import mods.clayium.machine.ClayiumMachine.ContainerClayiumMachine;
-import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.machine.crafting.RecipeList;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Objects;
@@ -97,15 +98,15 @@ public enum EnumMachineKind {
     CE_RFConverter("rf_generator", null),
     ;
 
-    EnumMachineKind(String kind, ClayiumRecipe recipe) {
+    EnumMachineKind(String kind, RecipeList<?> recipe) {
         this(kind, recipe, SlotType.UNKNOWN);
     }
 
-    EnumMachineKind(String kind, ClayiumRecipe recipe, SlotType slotType) {
+    EnumMachineKind(String kind, RecipeList<?> recipe, SlotType slotType) {
         this(kind, recipe, slotType, kind.replaceAll("_", ""));
     }
 
-    EnumMachineKind(String kind, ClayiumRecipe recipe, SlotType slotType, String facePath) {
+    EnumMachineKind(String kind, RecipeList<?> recipe, SlotType slotType, String facePath) {
         this.kind = kind;
         this.recipe = recipe == null ? ClayiumRecipes.EMPTY : recipe;
         if (slotType == null) throw new NullPointerException("Slot Type of " + this.kind + " is null! This is bug.");
@@ -114,17 +115,18 @@ public enum EnumMachineKind {
     }
 
     public String getRegisterName() {
-        return kind;
+        return this.kind;
     }
 
-    public ClayiumRecipe getRecipe() {
-        return recipe;
+    @SuppressWarnings("unchecked")
+    public <RecipeType extends IRecipeElement> RecipeList<RecipeType> getRecipe() {
+        return (RecipeList<RecipeType>) this.recipe;
     }
 
     private final String kind;
-    private final ClayiumRecipe recipe;
-    public final String facePath;
-    public final SlotType slotType;
+    private final RecipeList<?> recipe;
+    private final String facePath;
+    private final SlotType slotType;
 
     public static EnumMachineKind fromName(String name) {
         if (name == null || name.isEmpty()) return EMPTY;
@@ -141,6 +143,14 @@ public enum EnumMachineKind {
 
     public boolean hasRecipe() {
         return this.recipe != null;
+    }
+
+    public String getFacePath() {
+        return this.facePath;
+    }
+
+    public SlotType getSlotType() {
+        return this.slotType;
     }
 
     public static class SlotType {

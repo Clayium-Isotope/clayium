@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.*;
 import java.util.stream.Collector;
@@ -172,5 +173,22 @@ public class UtilCollect {
             left.addAll(right);
             return left;
         });
+    }
+
+    public static Iterable<ItemStack> makeIterable(IItemHandler handler) {
+        return () -> new Iterator<>() {
+            final int size = handler.getSlots();
+            int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.index < this.size;
+            }
+
+            @Override
+            public ItemStack next() {
+                return handler.getStackInSlot(this.index++);
+            }
+        };
     }
 }

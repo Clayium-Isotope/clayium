@@ -66,8 +66,8 @@ public class JEICompatibility implements IModPlugin {
 
             String categoryID = getCategoryID(kind);
             registry.addRecipes(kind.getRecipe(), categoryID);
-            recipeTransfer.addRecipeTransferHandler(kind.slotType.containerClass, categoryID, kind.slotType.inStart,
-                    kind.slotType.inCount, kind.slotType.playerStart, kind.slotType.playerCount);
+            recipeTransfer.addRecipeTransferHandler(kind.getSlotType().containerClass, categoryID, kind.getSlotType().inStart,
+                    kind.getSlotType().inCount, kind.getSlotType().playerStart, kind.getSlotType().playerCount);
 
             for (ItemStack stack : ClayiumMachines.getSet(kind)) {
                 registry.addRecipeCatalyst(stack, categoryID);

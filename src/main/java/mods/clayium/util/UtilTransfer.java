@@ -2,6 +2,7 @@ package mods.clayium.util;
 
 import mods.clayium.machine.common.IClayInventory;
 import mods.clayium.util.crafting.AmountedIngredient;
+import mods.clayium.util.exception.IncompleteItemHandlingException;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.inventory.IInventory;
@@ -10,20 +11,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -35,17 +35,17 @@ public class UtilTransfer {
     /**
      * Transfer item(s) from a tile to another tile.
      *
-     * @param from wants to carry out
-     * @param to wants to carry in
+     * @param from        wants to carry out
+     * @param to          wants to carry in
      * @param maxTransfer the operation stops when transferred-items' count became greater than this.
      */
-    public static int transfer(final IItemHandler from, final IItemHandler to, final int maxTransfer) {
+    public static int transfer(IItemHandler from, IItemHandler to, int maxTransfer) {
         int transferred = maxTransfer;
 
-        final int fromSize = from.getSlots();
-        for (int outIndex = 0; outIndex < fromSize && 0 < transferred; outIndex++) {
-            final ItemStack luggage = from.extractItem(outIndex, transferred, false);
-            final ItemStack rest = ItemHandlerHelper.insertItemStacked(to, luggage, false);
+        int fromSize = from.getSlots();
+        for (int outIndex = 0; outIndex < fromSize && transferred > 0; outIndex++) {
+            ItemStack luggage = from.extractItem(outIndex, transferred, false);
+            ItemStack rest = ItemHandlerHelper.insertItemStacked(to, luggage, false);
             from.insertItem(outIndex, rest, false);
             transferred = transferred - luggage.getCount() + rest.getCount();
         }
@@ -143,6 +143,16 @@ public class UtilTransfer {
         return copiedItemstacks;
     }
 
+    public static List<ItemStack> produceItemStacks(List<ItemStack> itemstacks, IItemHandler inventory) {
+        if (itemstacks.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<ItemStack> copiedItemstacks = getHardCopy(itemstacks);
+        copiedItemstacks.replaceAll(itemstack -> ItemHandlerHelper.insertItemStacked(inventory, itemstack, false));
+        return copiedItemstacks;
+    }
+
     public static List<ItemStack> tryProduceItemStacks(IItemHandler inventory, List<ItemStack> stacks) {
         return stacks.stream()
                 .map(stack -> ItemHandlerHelper.insertItemStacked(inventory, stack, false))
@@ -188,6 +198,15 @@ public class UtilTransfer {
         return produceItemStacks(itemstacks, getHardCopy(inventory), startIncl, endExcl, inventoryStackLimit).stream().allMatch(ItemStack::isEmpty);
     }
 
+    public static boolean canProduceItemStacks(List<ItemStack> itemstacks, IItemHandler inventory) {
+        IItemHandler invCopy = getHardCopy(inventory);
+
+        return itemstacks.stream()
+                .map(ItemStack::copy)
+                .map(stack -> ItemHandlerHelper.insertItemStacked(invCopy, stack, false))
+                .anyMatch(stack -> !stack.isEmpty());
+    }
+
     /**
      * Do deep copy
      * @see <a href="https://stackoverflow.com/a/33507565">Deep Copy Method at Stack Overflow</a>
@@ -198,6 +217,23 @@ public class UtilTransfer {
         }
 
         return itemstacks.stream().map(ItemStack::copy).collect(Collectors.toList());
+    }
+
+    /**
+     *  {@link IItemHandler#getStackInSlot} と {@link IItemHandler#extractItem} で制限の掛け方が違う場合などでは、
+     *  うまく動作しないバグに遭遇する可能性がある。
+     *  複数の {@link ItemStack} をinsert/extractする完全なシミュレーションはできなさそう。
+     *  simulate=false で実際にやってみて初めて、本当に成功するか失敗するかが変わるかもしれない。
+     */
+    public static NonNullList<ItemStack> getStacks(IItemHandler handler) {
+        return IntStream.range(0, handler.getSlots())
+                .mapToObj(handler::getStackInSlot)
+                .map(ItemStack::copy)
+                .collect(UtilCollect.toNonNullList());
+    }
+
+    public static IItemHandler getHardCopy(IItemHandler handler) {
+        return new ItemStackHandler(getStacks(handler));
     }
 
     /**
@@ -308,6 +344,172 @@ public class UtilTransfer {
         }
 
         return res;
+    }
+
+    @Nonnull
+    public static int[] findGreedyMatch(boolean[][] applyMatrix, int[] requires, int[] stocks, boolean individually) {
+        int invSize = stocks.length;
+        int[] quota = new int[invSize];
+
+        for (int j = 0; j < requires.length; j++) {
+            int amount = requires[j];
+
+            if (!individually) {
+                for (int i = 0; i < invSize && amount > 0; i++) {
+                    if (!applyMatrix[j][i] || stocks[i] < amount) continue;
+
+                    int min = Math.min(stocks[i], amount);
+                    stocks[i] -= min;
+                    amount -= min;
+                    quota[i] += min;
+                }
+            }
+
+            for (int i = 0; i < invSize && amount > 0; i++) {
+                if (!applyMatrix[j][i]) continue;
+
+                int min = Math.min(stocks[i], amount);
+                stocks[i] -= min;
+                amount -= min;
+                quota[i] += min;
+            }
+
+            if (amount > 0) {
+                return new int[0];
+            }
+        }
+        return quota;
+    }
+
+    /**
+     * @return
+     *      基本的な返り値としてのint型配列は、インデックス番目のインベントリを減らす個数を表す。
+     *      空なら、失敗したということ。
+     */
+    @Nonnull
+    public static int[] findBestMatch(boolean[][] applyMatrix, int[] requires, int[] stocks, boolean individually) {
+        int ingSize = requires.length;
+        int invSize = stocks.length;
+        if (ingSize == 0) {
+            int[] ret = new int[invSize];
+            Arrays.fill(ret, 0);
+            return ret;
+        }
+        if (invSize == 0) return new int[0];
+
+        // Arrays.copyOf で配列の末尾を切りながらコピーができるので、末尾から処理する。
+
+        int lastIngIndex = requires.length - 1;
+        boolean[] applyCol = applyMatrix[lastIngIndex];
+        int requirement = requires[lastIngIndex];
+
+        if (!individually) {
+            for (int i = 0; i < invSize; i++) {
+                if (!applyCol[i] || stocks[i] < requirement) continue;
+
+                stocks[i] -= requirement;
+
+                int[] subMat = findBestMatch(applyMatrix, Arrays.copyOf(requires, lastIngIndex), stocks, false);
+                if (subMat.length == 0) {
+                    stocks[i] += requirement;
+                    continue;
+                }
+
+                subMat[i] += requirement;
+                return subMat;
+            }
+        }
+
+        int[] validStocks = new int[invSize];
+        for (int i = 0; i < invSize; i++) {
+            validStocks[i] = applyCol[i] ? stocks[i] : 0;
+        }
+
+        List<int[]> combinations = new ArrayList<>(invSize * requirement);
+        findCombinationsHelper(validStocks, requirement, 0, new int[invSize], combinations);
+
+        for (int[] combination : combinations) {
+            assert combination.length == invSize;
+            for (int i = 0; i < invSize; i++) {
+                stocks[i] -= combination[i];
+            }
+
+            int[] subMat = findBestMatch(applyMatrix, Arrays.copyOf(requires, lastIngIndex), stocks, individually);
+            if (subMat.length == 0) {
+                for (int i = 0; i < invSize; i++) {
+                    stocks[i] += combination[i];
+                }
+                continue;
+            }
+
+            for (int i = 0; i < invSize; i++) {
+                subMat[i] += combination[i];
+            }
+            return subMat;
+        }
+
+        return new int[0];
+    }
+
+    /**
+     * Generated by ChatGPT-4o.
+     * prompt: int[]型引数 maxs および、int型引数 sum をとり、0<=x_i<=maxs[i] かつ x_0 + x_1 + ... + x_i + ... + x_{maxs.length - 1} = sum となる組を求めるjavaのプログラムを書けますか？
+     */
+    public static void findCombinationsHelper(int[] maxes, int remainingSum, int index, int[] currentCombination, List<int[]> combinations) {
+        if (index == maxes.length) {
+            if (remainingSum == 0) {
+                combinations.add(currentCombination.clone());
+            }
+            return;
+        }
+
+        int min = Math.min(maxes[index], remainingSum);
+        for (int i = 0; i <= min; i++) {
+            currentCombination[index] = i;
+            findCombinationsHelper(maxes, remainingSum - i, index + 1, currentCombination, combinations);
+        }
+    }
+
+    /**
+     * @param smartly
+     *      {@code false} のときは、greedyに消費する。
+     *      インベントリの走査後に消費が終わっていなければ {@link IncompleteItemHandlingException} を投げる。
+     *      {@code true} のときは、...
+     * @param individually
+     *      {@code false} のときは、なるべく1つの {@link ItemStack} だけで消費しようとする。
+     */
+    public static void consumeByIngredient(List<Ingredient> ingredients, IItemHandler inv, boolean smartly, boolean individually) throws IncompleteItemHandlingException {
+        // getStackInSlot が重たい可能性があるので、コピー。
+        NonNullList<ItemStack> stacks = getStacks(inv);
+        int invSize = stacks.size();
+        int ingSize = ingredients.size();
+        boolean[][] applyMatrix = new boolean[ingSize][invSize];
+        int[] requires = new int[ingSize];
+
+        for (int i = 0; i < ingSize; i++) {
+            Ingredient ing = ingredients.get(i);
+            if (ing instanceof AmountedIngredient aing) {
+                requires[i] = aing.getAmount();
+                for (int j = 0; j < invSize; j++) {
+                    applyMatrix[i][j] = aing.getIngredient().apply(stacks.get(j));
+                }
+            } else {
+                requires[i] = 1;
+                for (int j = 0; j < invSize; j++) {
+                    applyMatrix[i][j] = ing.apply(stacks.get(j));
+                }
+            }
+        }
+        int[] stocks = stacks.stream().mapToInt(ItemStack::getCount).toArray();
+
+        int[] quota = smartly ? findBestMatch(applyMatrix, requires, stocks, individually) : findGreedyMatch(applyMatrix, requires, stocks, individually);
+        if (quota.length == 0) {
+            throw new IncompleteItemHandlingException();
+        }
+
+        for (int i = 0; i < inv.getSlots(); i++) {
+            inv.extractItem(i, quota[i], false);
+        }
     }
 
     // TODO will substitute ItemStackHandler for this
@@ -428,7 +630,7 @@ public class UtilTransfer {
     /**
      * @param ioSlots when null, filled by using {@link UtilTransfer#getSlots}
      */
-    public static IItemHandler getItemHandler(final TileEntity te, @Nullable final EnumFacing facing, @Nullable final int[] ioSlots) throws IllegalArgumentException {
+    public static IItemHandler getItemHandler(TileEntity te, @Nullable EnumFacing facing, @Nullable int[] ioSlots) throws IllegalArgumentException {
         if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing)) {
             return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing);
         }

@@ -69,7 +69,7 @@ public class ClayiumRecipeFactory implements IRecipeFactory {
         }
 
         JsonArray input = JsonUtils.getJsonArray(json, "input");
-        if (input.size() > kind.slotType.inCount) {
+        if (input.size() > kind.getSlotType().inCount) {
             throw new JsonSyntaxException("Too many inputs for " + kind.getRegisterName());
         }
 
@@ -84,11 +84,11 @@ public class ClayiumRecipeFactory implements IRecipeFactory {
                 .collect(UtilCollect.toNonNullList());
 
         JsonArray output = JsonUtils.getJsonArray(json, "output");
-        if (output.size() > kind.slotType.outCount) {
+        if (output.size() > kind.getSlotType().outCount) {
             throw new JsonSyntaxException("Too many outputs for " + kind.getRegisterName());
         }
 
-        List<ItemStack> outputItems = new ArrayList<>(kind.slotType.outCount);
+        List<ItemStack> outputItems = new ArrayList<>(kind.getSlotType().outCount);
         for (JsonElement ele : output) {
             if (!ele.isJsonObject()) {
                 throw new JsonSyntaxException("Expected item object but found " + ele);
