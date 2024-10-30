@@ -151,19 +151,19 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     public boolean setNewRecipe() {
         if (!BlockStateMultiblockMachine.isConstructed(this)) return false;
 
-        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0),
-                this.getStackInSlot(1));
+        this.doingRecipe = ClayiumRecipeProvider.getCraftPermRecipe(this, this.getStackInSlot(0), this.getStackInSlot(1));
         if (this.doingRecipe.isFlat()) return false;
 
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);
         if (!this.canProceedCraft()) {
-            this.timeToCraft = 0L;
+            this.timeToCraft.set(0);
+            this.craftTime.set(0);
             this.debtEnergy = 0L;
-            this.doingRecipe = this.getFlat();
+            this.doingRecipe = this.getRecipeList().getFlat();
             return false;
         }
 
-        this.timeToCraft = (long) (this.doingRecipe.getTime() * this.multCraftTime);
+        this.timeToCraft.set((long) (this.doingRecipe.getTime() * this.multCraftTime));
 
         UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(), 0, 2);
 
@@ -180,13 +180,13 @@ public class TileEntityClayBlastFurnace extends TileEntityMultiblockMachine impl
     public void proceedCraft() {
         if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
-        this.craftTime++;
-        if (this.craftTime < this.timeToCraft) return;
+        this.craftTime.add(1);
+        if (this.craftTime.get() < this.timeToCraft.get()) return;
 
         UtilTransfer.produceItemStacks(this.doingRecipe.getResults(), this.getContainerItemStacks(), 2,
                 2 + resultSlotNum, this.getInventoryStackLimit());
-        this.craftTime = 0;
-        this.timeToCraft = 0;
+        this.craftTime.set(0);
+        this.timeToCraft.set(0);
         this.debtEnergy = 0;
         this.doingRecipe = RecipeElement.flat();
 

@@ -3,9 +3,9 @@ package mods.clayium.machine.ClayFabricator;
 import mods.clayium.core.ClayiumConfiguration;
 import mods.clayium.item.common.IClayEnergy;
 import mods.clayium.machine.SolarClayFabricator.TileEntitySolarClayFabricator;
-import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
+import mods.clayium.util.exception.IllegalTierException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 

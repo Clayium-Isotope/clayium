@@ -1,8 +1,8 @@
 package mods.clayium.client.render;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayMarker.AABBHolder;
 import mods.clayium.machine.ClayMarker.TileEntityClayMarker;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.UtilRender;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BufferBuilder;

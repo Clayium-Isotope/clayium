@@ -1,7 +1,7 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.common.IClayEnergyConsumer;
+import mods.clayium.machine.common.TileEntityGeneric;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 

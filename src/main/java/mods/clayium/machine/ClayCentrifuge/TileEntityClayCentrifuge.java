@@ -1,22 +1,26 @@
 package mods.clayium.machine.ClayCentrifuge;
 
+import mods.clayium.component.teField.FieldDelegate;
+import mods.clayium.component.teField.FieldLateInit;
+import mods.clayium.component.teField.FieldManager;
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine1ToSome;
-import mods.clayium.util.ContainClayEnergy;
-import mods.clayium.util.IllegalTierException;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.crafting.Kitchen;
+import mods.clayium.util.exception.IllegalTierException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityClayCentrifuge extends TileEntityClayContainer implements IClayEnergyConsumer, Machine1ToSome {
+public class TileEntityClayCentrifuge extends TileEntityClayContainer implements IClayEnergyConsumer, Machine1ToSome, FieldDelegate {
 
     /* package-private */ int resultSlotNum = 4;
-    Kitchen kitchen;
-    final ContainClayEnergy ce = new ContainClayEnergy();
+    protected final FieldLateInit<Kitchen> kitchen = new FieldLateInit<>();
+    protected final ContainClayEnergy ce = new ContainClayEnergy();
+    protected final FieldManager fm = new FieldManager(this.kitchen, this.ce);
 
     public void initParams() {
         this.containerItemStacks = NonNullList.withSize(6, ItemStack.EMPTY);
@@ -55,14 +59,14 @@ public class TileEntityClayCentrifuge extends TileEntityClayContainer implements
                 throw new IllegalTierException();
         }
 
-        this.kitchen = new KitchenCentrifuge(this, this.tier);
+        this.kitchen.set(new KitchenCentrifuge(this, this.tier));
     }
 
     @Override
     public void update() {
         super.update();
         if (!this.getWorld().isRemote)
-            this.kitchen.work();
+            this.kitchen.get().work();
     }
 
     @Override
@@ -88,45 +92,20 @@ public class TileEntityClayCentrifuge extends TileEntityClayContainer implements
         return EnumMachineKind.centrifuge;
     }
 
-    @Override
-    public int getField(int id) {
-        switch (id) {
-            case 0:
-                return (int) this.kitchen.getTimeToCraft();
-            case 1:
-                return (int) this.kitchen.getCraftTime();
-            case 2:
-                return (int) this.containEnergy().get();
-            default:
-                return 0;
-        }
-    }
-
-    @Override
-    public void setField(int id, int value) {
-        switch (id) {
-            case 0:
-                this.kitchen.setTimeToCraft(value);
-                return;
-            case 1:
-                this.kitchen.setCraftTime(value);
-                return;
-            case 2:
-                this.containEnergy().set(value);
-                return;
-        }
+    public FieldManager getDelegate() {
+        return this.fm;
     }
 
     @Override
     public void readMoreFromNBT(NBTTagCompound tagCompound) {
         super.readMoreFromNBT(tagCompound);
 
-        this.kitchen.deserializeNBT(tagCompound);
+        this.kitchen.get().deserializeNBT(tagCompound);
     }
 
     @Override
     public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
-        tagCompound.setTag("kitchen", this.kitchen.serializeNBT());
+        tagCompound.setTag("kitchen", this.kitchen.get().serializeNBT());
 
         return super.writeMoreToNBT(tagCompound);
     }

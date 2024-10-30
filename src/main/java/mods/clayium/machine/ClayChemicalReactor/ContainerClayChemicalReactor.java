@@ -7,12 +7,13 @@ import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To2;
 import mods.clayium.machine.common.MachineSomeToSome;
+import mods.clayium.machine.common.TileEntityGeneric;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ContainerClayChemicalReactor extends ContainerIMachine {
+public class ContainerClayChemicalReactor<Tile extends TileEntityGeneric & MachineSomeToSome> extends ContainerIMachine {
 
-    public ContainerClayChemicalReactor(InventoryPlayer player, MachineSomeToSome tile) {
+    public ContainerClayChemicalReactor(InventoryPlayer player, Tile tile) {
         super(player, tile, 0, 2);
     }
 

@@ -2,10 +2,10 @@ package mods.clayium.machine.Interface.RedstoneInterface;
 
 import com.google.common.collect.ImmutableMap;
 import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.ClayInterface.ClayInterface;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;

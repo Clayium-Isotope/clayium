@@ -1,9 +1,9 @@
 package mods.clayium.machine.VacuumContainer;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
 import mods.clayium.client.render.CustomHull;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
+import mods.clayium.machine.common.FlexibleStackLimit;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;

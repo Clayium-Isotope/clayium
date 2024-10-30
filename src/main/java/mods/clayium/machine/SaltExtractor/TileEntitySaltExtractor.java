@@ -1,11 +1,11 @@
 package mods.clayium.machine.SaltExtractor;
 
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.CobblestoneGenerator.TileEntityCobblestoneGenerator;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.block.material.Material;

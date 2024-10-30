@@ -1,11 +1,15 @@
 package mods.clayium.machine.AutoCrafter;
 
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.gui.ContainerDummy;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.RecipeProvider;
-import mods.clayium.util.*;
+import mods.clayium.util.EnumSide;
+import mods.clayium.util.TierPrefix;
+import mods.clayium.util.UtilCollect;
+import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCraftResult;
@@ -139,7 +143,7 @@ public class TileEntityAutoCrafter extends TileEntityClayContainer implements IC
 
     @Override
     public ContainClayEnergy containEnergy() {
-        return containEnergy;
+        return this.containEnergy;
     }
 
     @Override

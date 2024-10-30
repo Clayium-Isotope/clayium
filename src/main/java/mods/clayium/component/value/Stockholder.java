@@ -1,4 +1,4 @@
-package mods.clayium.component;
+package mods.clayium.component.value;
 
 import mods.clayium.component.teField.FieldComponent;
 import mods.clayium.core.ClayiumCore;

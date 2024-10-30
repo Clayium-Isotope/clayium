@@ -1,6 +1,6 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.Stockholder;
+import mods.clayium.component.value.Stockholder;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.util.UtilBuilder;
 import mods.clayium.util.UtilNBT;

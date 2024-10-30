@@ -1,4 +1,4 @@
-package mods.clayium.block.tile;
+package mods.clayium.machine.common;
 
 import mods.clayium.util.UsedFor;
 import net.minecraft.item.ItemStack;

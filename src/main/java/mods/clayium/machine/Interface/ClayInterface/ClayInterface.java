@@ -1,12 +1,12 @@
 package mods.clayium.machine.Interface.ClayInterface;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.client.render.HasOriginalState;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.item.common.IModifyCC;
 import mods.clayium.machine.ClayContainer.ClayContainer;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;
 import net.minecraft.block.SoundType;

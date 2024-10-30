@@ -1,4 +1,4 @@
-package mods.clayium.block.tile;
+package mods.clayium.machine.common;
 
 import net.minecraft.entity.player.EntityPlayer;
 

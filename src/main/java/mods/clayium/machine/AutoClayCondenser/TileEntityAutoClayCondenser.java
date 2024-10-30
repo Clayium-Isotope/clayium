@@ -43,7 +43,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public boolean isDoingWork() {
-        return this.craftTime > 0;
+        return this.craftTime.get() > 0;
     }
 
     @Override
@@ -156,14 +156,14 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public void proceedCraft() {
-        ++this.craftTime;
-        if (this.craftTime < this.timeToCraft) {
+        this.craftTime.add(1);
+        if (this.craftTime.get() < this.timeToCraft.get()) {
             return;
         }
 
         UtilTransfer.produceItemStack(IClayEnergy.getCompressedClay(this.mergeFrom.offset(1)), this.containerItemStacks,
                 0, 20, this.getInventoryStackLimit());
-        this.craftTime = 0L;
+        this.craftTime.set(0);
         this.mergeFrom = TierPrefix.unknown;
         // if (this.externalControlState > 0) {
         // --this.externalControlState;
@@ -175,7 +175,7 @@ public class TileEntityAutoClayCondenser extends TileEntityClayiumMachine {
 
     @Override
     public boolean setNewRecipe() {
-        this.timeToCraft = (long) (1.0F * this.multCraftTime);
+        this.timeToCraft.set((long) (1.0F * this.multCraftTime));
         this.mergeFrom = this.getConsumedClay();
         if (!this.mergeFrom.isValid()) return false;
 

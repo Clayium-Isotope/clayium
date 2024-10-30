@@ -1,9 +1,9 @@
 package mods.clayium.machine.StorageContainer;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
 import mods.clayium.client.render.CustomHull;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayiumMachines;
+import mods.clayium.machine.common.FlexibleStackLimit;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

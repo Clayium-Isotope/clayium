@@ -1,9 +1,9 @@
 package mods.clayium.machine.ClayiumMachine;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.gui.GuiHandler;
 import mods.clayium.machine.ClayContainer.ClaySidedContainer;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.JsonHelper;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilLocale;

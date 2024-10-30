@@ -1,8 +1,13 @@
 package mods.clayium.util.crafting;
 
+import mods.clayium.component.teField.FieldDelegate;
+import mods.clayium.component.teField.FieldLong;
+import mods.clayium.component.teField.FieldManager;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagLong;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
@@ -10,11 +15,13 @@ import javax.annotation.Nullable;
 /**
  * 機械のレシピ処理を担うクラス
  */
-public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
+public abstract class Kitchen implements INBTSerializable<NBTTagCompound>, FieldDelegate {
 
-    protected long debtEnergy = 0L;
-    protected long craftTime = 0L;
-    protected long timeToCraft = 0L;
+    protected final FieldLong timeToCraft = new FieldLong();
+    protected final FieldLong craftTime = new FieldLong();
+    protected long debtEnergy =  0L;
+
+    protected final FieldManager fm = new FieldManager(this.timeToCraft, this.craftTime);
 
     @Nullable
     protected final IClayEnergyConsumer energyConsumer;
@@ -44,26 +51,26 @@ public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
     }
 
     public final long getCraftTime() {
-        return this.craftTime;
+        return this.craftTime.get();
     }
 
     public final long getTimeToCraft() {
-        return this.timeToCraft;
+        return this.timeToCraft.get();
     }
 
     public final void setCraftTime(long craftTime) {
-        this.craftTime = craftTime;
+        this.craftTime.set(craftTime);
     }
 
     public final void setTimeToCraft(long timeToCraft) {
-        this.timeToCraft = timeToCraft;
+        this.timeToCraft.set(timeToCraft);
     }
 
     // ===== Internal Methods =====
 
     protected boolean canProceedCraft() {
         return this.energyConsumer == null ||
-                IClayEnergyConsumer.compensateClayEnergy(this.energyConsumer, this.debtEnergy, false);
+                IClayEnergyConsumer.compensateClayEnergy(this.energyConsumer, this.debtEnergy);
     }
 
     protected final void proceedWork() {
@@ -72,30 +79,30 @@ public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
             return;
         }
 
-        this.craftTime++;
+        this.craftTime.add(1);
         ClayiumCore.logger.info("[Kitchen] " + this.craftTime + " / " + this.timeToCraft);
-        if (this.craftTime >= this.timeToCraft) {
+        if (this.craftTime.get() >= this.timeToCraft.get()) {
             this.postWork();
         }
     }
 
     protected void postWork() {
-        this.craftTime = 0L;
-        this.timeToCraft = 0L;
+        this.craftTime.set(0);
+        this.timeToCraft.set(0);
     }
 
-    abstract protected boolean canCraft();
+    protected abstract boolean canCraft();
 
-    abstract protected boolean setNewRecipe();
+    protected abstract boolean setNewRecipe();
 
     @Override
     public void deserializeNBT(NBTTagCompound compound) {
-        this.craftTime = compound.getLong("CraftTime");
-        this.timeToCraft = compound.getLong("TimeToCraft");
+        this.craftTime.deserializeNBT((NBTTagLong) compound.getTag("CraftTime"));
+        this.timeToCraft.deserializeNBT((NBTTagLong) compound.getTag("TimeToCraft"));
         this.debtEnergy = compound.getLong("ConsumingEnergy");
 
         if (this.energyConsumer != null) {
-            this.energyConsumer.containEnergy().set(compound.getLong("ClayEnergy"));
+            this.energyConsumer.containEnergy().deserializeNBT((NBTTagIntArray) compound.getTag("ClayEnergy"));
         }
     }
 
@@ -103,14 +110,19 @@ public abstract class Kitchen implements INBTSerializable<NBTTagCompound> {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound compound = new NBTTagCompound();
 
-        compound.setLong("CraftTime", this.craftTime);
-        compound.setLong("TimeToCraft", this.timeToCraft);
+        compound.setTag("CraftTime", this.craftTime.serializeNBT());
+        compound.setTag("TimeToCraft", this.timeToCraft.serializeNBT());
         compound.setLong("ConsumingEnergy", this.debtEnergy);
 
         if (this.energyConsumer != null) {
-            compound.setLong("ClayEnergy", this.energyConsumer.containEnergy().get());
+            compound.setTag("ClayEnergy", this.energyConsumer.containEnergy().serializeNBT());
         }
 
         return compound;
+    }
+
+    @Override
+    public FieldManager getDelegate() {
+        return this.fm;
     }
 }

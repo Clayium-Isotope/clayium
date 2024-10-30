@@ -1,11 +1,11 @@
 package mods.clayium.machine.Interface.ClayInterface;
 
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.IClayInventory;
-import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilCollect;

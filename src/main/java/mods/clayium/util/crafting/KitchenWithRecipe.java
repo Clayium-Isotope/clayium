@@ -2,20 +2,20 @@ package mods.clayium.util.crafting;
 
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.machine.crafting.RecipeList;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class KitchenWithRecipe<RecipeType extends IRecipeElement> extends Kitchen {
 
-    protected final ClayiumRecipe recipes;
+    protected final RecipeList<RecipeType> recipes;
     protected final RecipeType flat;
     protected final TierPrefix machineTier;
 
     protected RecipeType currentRecipe;
 
-    public KitchenWithRecipe(ClayiumRecipe recipes, TierPrefix tier, RecipeType flat, IClayEnergyConsumer ce) {
+    public KitchenWithRecipe(RecipeList<RecipeType> recipes, TierPrefix tier, RecipeType flat, IClayEnergyConsumer ce) {
         super(ce);
 
         this.machineTier = tier;
@@ -84,7 +84,7 @@ public abstract class KitchenWithRecipe<RecipeType extends IRecipeElement> exten
     public void deserializeNBT(NBTTagCompound compound) {
         super.deserializeNBT(compound);
 
-        this.currentRecipe = this.recipes.getRecipe(compound.getInteger("RecipeHash"), this.flat);
+        this.currentRecipe = this.recipes.getRecipe(compound.getInteger("RecipeHash"));
     }
 
     @Override

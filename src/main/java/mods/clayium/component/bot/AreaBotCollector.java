@@ -1,6 +1,6 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.Stockholder;
+import mods.clayium.component.value.Stockholder;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.util.UtilNBT;
 import net.minecraft.entity.item.EntityItem;

@@ -52,16 +52,16 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine implements
     public void proceedCraft() {
         if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
-        ++this.craftTime;
-        if (this.craftTime < this.timeToCraft) return;
+        this.craftTime.add(1);
+        if (this.craftTime.get() < this.timeToCraft.get()) return;
 
         UtilTransfer.produceItemStack(this.doingRecipe.getResults().get(0),
                 this.getContainerItemStacks(), Machine2To1.PRODUCT, this.getInventoryStackLimit());
 
-        this.craftTime = 0L;
+        this.craftTime.set(0);
         this.debtEnergy = 0L;
-        this.timeToCraft = 0L;
-        this.doingRecipe = this.getFlat();
+        this.timeToCraft.set(0);
+        this.doingRecipe = this.getRecipeList().getFlat();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class TileEntityClayAssembler extends TileEntityClayiumMachine implements
         this.debtEnergy = this.doingRecipe.getEnergy();
         if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) return false;
 
-        this.timeToCraft = this.doingRecipe.getTime();
+        this.timeToCraft.set(this.doingRecipe.getTime());
 
         UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients(), this.getContainerItemStacks(),
                 Machine2To1.MATERIAL_1, Machine2To1.MATERIAL_2 + 1);

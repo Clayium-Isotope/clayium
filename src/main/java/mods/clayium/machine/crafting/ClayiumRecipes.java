@@ -19,52 +19,45 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ClayiumRecipes {
-    public static class SimpleMachineRecipe extends ClayiumRecipe {
-        SimpleMachineRecipe(String id) {
-            super(id);
-        }
-    }
+    public static final RecipeListGeneral EMPTY = new RecipeListEmpty();
+    public static final RecipeListKneading clayWorkTable = new RecipeListKneading();
 
-    public static final ClayiumRecipe EMPTY = new ClayiumRecipe(Collections.emptyList());
-    public static final ClayWorkTableRecipe clayWorkTable = new ClayWorkTableRecipe();
+    public static final RecipeListSimple bendingMachine = new RecipeListSimple("BendingMachine");
+    public static final RecipeListSimple wireDrawingMachine = new RecipeListSimple("WireDrawingMachine");
+    public static final RecipeListSimple pipeDrawingMachine = new RecipeListSimple("PipeDrawingMachine");
+    public static final RecipeListSimple cuttingMachine = new RecipeListSimple("CuttingMachine");
+    public static final RecipeListSimple lathe = new RecipeListSimple("Lathe");
+    public static final RecipeListSimple millingMachine = new RecipeListSimple("MillingMachine");
 
-    public static final SimpleMachineRecipe bendingMachine = new SimpleMachineRecipe("BendingMachine");
-    public static final SimpleMachineRecipe wireDrawingMachine = new SimpleMachineRecipe("WireDrawingMachine");
-    public static final SimpleMachineRecipe pipeDrawingMachine = new SimpleMachineRecipe("PipeDrawingMachine");
-    public static final SimpleMachineRecipe cuttingMachine = new SimpleMachineRecipe("CuttingMachine");
-    public static final SimpleMachineRecipe lathe = new SimpleMachineRecipe("Lathe");
-    public static final SimpleMachineRecipe millingMachine = new SimpleMachineRecipe("MillingMachine");
+    public static final RecipeListSimple condenser = new RecipeListSimple("Condenser");
+    public static final RecipeListSimple grinder = new RecipeListSimple("Grinder");
+    public static final RecipeListSimple decomposer = new RecipeListSimple("Decomposer");
 
-    public static final SimpleMachineRecipe condenser = new SimpleMachineRecipe("Condenser");
-    public static final SimpleMachineRecipe grinder = new SimpleMachineRecipe("Grinder");
-    public static final SimpleMachineRecipe decomposer = new SimpleMachineRecipe("Decomposer");
+    public static final RecipeListSimple energeticClayCondenser = new RecipeListSimple("ECCondenser");
+    public static final RecipeListGeneral assembler = new RecipeListGeneral("Assembler");
+    public static final RecipeListGeneral inscriber = new RecipeListGeneral("Inscriber");
+    public static final RecipeListGeneral centrifuge = new RecipeListGeneral("Centrifuge");
 
-    public static final SimpleMachineRecipe energeticClayCondenser = new SimpleMachineRecipe("ECCondenser");
-    public static final ClayiumRecipe assembler = new ClayiumRecipe("Assembler");
-    public static final ClayiumRecipe inscriber = new ClayiumRecipe("Inscriber");
-    public static final ClayiumRecipe centrifuge = new ClayiumRecipe("Centrifuge");
+    public static final RecipeListGeneral smelter = new RecipeListSmelting("Smelter");
 
-    public static final SimpleMachineRecipe smelter = new SmeltingRecipe("Smelter");
+    public static final RecipeListGeneral chemicalReactor = new RecipeListGeneral("ChemicalReactor");
+    public static final RecipeListGeneral alloySmelter = new RecipeListGeneral("AlloySmelter");
+    public static final RecipeListGeneral blastFurnace = new RecipeListGeneral("BlastFurnace");
+    public static final RecipeListSimple electrolysisReactor = new RecipeListSimple("ElectrolysisReactor");
+    public static final RecipeListGeneral clayReactor = new RecipeListGeneral("ClayReactor");
+    public static final RecipeListSimple transformer = new RecipeListSimple("MatterTransformer");
 
-    public static final ClayiumRecipe chemicalReactor = new ClayiumRecipe("ChemicalReactor");
-    public static final ClayiumRecipe alloySmelter = new ClayiumRecipe("AlloySmelter");
-    public static final ClayiumRecipe blastFurnace = new ClayiumRecipe("BlastFurnace");
-    public static final SimpleMachineRecipe electrolysisReactor = new SimpleMachineRecipe("ElectrolysisReactor");
-    public static final ClayiumRecipe clayReactor = new ClayiumRecipe("ClayReactor");
-    public static final SimpleMachineRecipe transformer = new SimpleMachineRecipe("MatterTransformer");
+    public static final RecipeListGeneral CAInjector = new RecipeListGeneral("CAInjector");
+    public static final RecipeListSimple CAReactor = new RecipeListSimple("CAReactor");
 
-    public static final ClayiumRecipe CAInjector = new SimpleMachineRecipe("CAInjector");
-    public static final SimpleMachineRecipe CAReactor = new SimpleMachineRecipe("CAReactor");
+    public static final RecipeListSimple energeticClayDecomposer = new RecipeListSimple("ECDecomposer");
 
-    public static final SimpleMachineRecipe energeticClayDecomposer = new SimpleMachineRecipe("ECDecomposer");
-
-    public static final ClayiumRecipe fluidTransferMachine = new ClayiumRecipe("FluidTransferMachine");
+    public static final RecipeListGeneral fluidTransferMachine = new RecipeListGeneral("FluidTransferMachine");
 
 
     private static final List<ClayiumMaterial> cmats = Arrays.asList(ClayiumMaterial.clay, ClayiumMaterial.clay, ClayiumMaterial.denseClay, ClayiumMaterial.denseClay, ClayiumMaterial.denseClay);

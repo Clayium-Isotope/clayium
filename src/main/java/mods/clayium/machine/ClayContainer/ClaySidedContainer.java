@@ -1,6 +1,6 @@
 package mods.clayium.machine.ClayContainer;
 
-import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

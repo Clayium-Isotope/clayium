@@ -23,6 +23,7 @@ import mods.clayium.machine.ChemicalMetalSeparator.ContainerChemicalMetalSeparat
 import mods.clayium.machine.ChemicalMetalSeparator.GuiChemicalMetalSeparator;
 import mods.clayium.machine.ChemicalMetalSeparator.TileEntityChemicalMetalSeparator;
 import mods.clayium.machine.ClayAssembler.ContainerClayAssembler;
+import mods.clayium.machine.ClayAssembler.TileEntityClayAssembler;
 import mods.clayium.machine.ClayBlastFurnace.GuiClayBlastFurnace;
 import mods.clayium.machine.ClayBuffer.TileEntityClayBuffer;
 import mods.clayium.machine.ClayCentrifuge.ContainerClayCentrifuge;
@@ -50,7 +51,6 @@ import mods.clayium.machine.StorageContainer.GuiStorageContainer;
 import mods.clayium.machine.StorageContainer.TileEntityStorageContainer;
 import mods.clayium.machine.VacuumContainer.ContainerVacuumContainer;
 import mods.clayium.machine.VacuumContainer.TileEntityVacuumContainer;
-import mods.clayium.machine.common.Machine2To1;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -80,13 +80,13 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdNormalInventory:
                 return new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile);
             case GuiIdClayAssembler:
-                return new ContainerClayAssembler(player.inventory, (Machine2To1) tile);
+                return new ContainerClayAssembler<>(player.inventory, (TileEntityClayAssembler) tile);
             case GuiIdClayCentrifuge:
-                return new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile);
+                return new ContainerClayCentrifuge<>(player.inventory, (TileEntityClayCentrifuge) tile);
             case GuiIdClayChemicalReactor:
             case GuiIdClayBlastFurnace:
             case GuiIdClayReactor:
-                return new ContainerClayChemicalReactor(player.inventory, (TileEntityMultiblockMachine) tile);
+                return new ContainerClayChemicalReactor<>(player.inventory, (TileEntityMultiblockMachine) tile);
             case GuiIdMultitrackBuffer:
                 return new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile);
             case GuiIdItemFilterWhitelist:
@@ -146,12 +146,12 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiMultiPageContainer(
                         new ContainerNormalInventory(player.inventory, (TileEntityClayBuffer) tile));
             case GuiIdClayAssembler:
-                return new GuiIMachine(new ContainerClayAssembler(player.inventory, (Machine2To1) tile));
+                return new GuiIMachine(new ContainerClayAssembler<>(player.inventory, (TileEntityClayAssembler) tile));
             case GuiIdClayCentrifuge:
-                return new GuiIMachine(new ContainerClayCentrifuge(player.inventory, (TileEntityClayCentrifuge) tile));
+                return new GuiIMachine(new ContainerClayCentrifuge<>(player.inventory, (TileEntityClayCentrifuge) tile));
             case GuiIdClayChemicalReactor:
                 return new GuiIMachine(
-                        new ContainerClayChemicalReactor(player.inventory, (TileEntityClayChemicalReactor) tile));
+                        new ContainerClayChemicalReactor<>(player.inventory, (TileEntityClayChemicalReactor) tile));
             case GuiIdMultitrackBuffer:
                 return new GuiTemp(new ContainerMultitrackBuffer(player.inventory, (TileEntityMultitrackBuffer) tile));
             case GuiIdItemFilterWhitelist:
@@ -175,7 +175,7 @@ public class GuiHandler implements IGuiHandler {
             case GuiIdClayBlastFurnace:
             case GuiIdClayReactor:
                 return new GuiClayBlastFurnace(
-                        new ContainerClayChemicalReactor(player.inventory, (TileEntityMultiblockMachine) tile));
+                        new ContainerClayChemicalReactor<>(player.inventory, (TileEntityMultiblockMachine) tile));
             case GuiIdClayDistributor:
                 return new GuiTemp(new ContainerClayDistributor(player.inventory, (TileEntityClayDistributor) tile));
             case GuiIdAutoCrafter:

@@ -6,13 +6,14 @@ import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine1ToSome;
+import mods.clayium.machine.common.TileEntityGeneric;
 import net.minecraft.entity.player.InventoryPlayer;
 
-public class ContainerClayCentrifuge extends ContainerIMachine {
+public class ContainerClayCentrifuge<Tile extends TileEntityGeneric & Machine1ToSome> extends ContainerIMachine {
 
     protected int resultSlotNum;
 
-    public ContainerClayCentrifuge(InventoryPlayer player, Machine1ToSome tile) {
+    public ContainerClayCentrifuge(InventoryPlayer player, Tile tile) {
         super(player, tile, Machine1ToSome.MATERIAL, Machine1ToSome.PRODUCT_1);
     }
 

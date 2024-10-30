@@ -1,6 +1,6 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.machine.common.FlexibleStackLimit;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

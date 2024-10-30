@@ -62,8 +62,11 @@ public class GuiIMachine extends GuiTemp {
 
     private int getCraftProgressScaled(int width) {
         IMachine tecm = (IMachine) this.tile;
+        // すごくハードコーディング
+        long timeToCraft = ((long) tecm.getField(5) & 0xffffffff00000000L) + Integer.toUnsignedLong(tecm.getField(4));
+        long craftTime = ((long) tecm.getField(1) & 0xffffffff00000000L) + Integer.toUnsignedLong(tecm.getField(0));
 
-        if (tecm.getField(0) == 0) return 0;
-        return tecm.getField(1) * width / tecm.getField(0);
+        if (timeToCraft == 0) return 0;
+        return (int) (craftTime * width / timeToCraft);
     }
 }

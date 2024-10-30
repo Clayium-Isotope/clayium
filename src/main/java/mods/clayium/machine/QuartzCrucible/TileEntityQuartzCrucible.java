@@ -1,9 +1,9 @@
 package mods.clayium.machine.QuartzCrucible;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
+import mods.clayium.machine.common.TileEntityGeneric;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;

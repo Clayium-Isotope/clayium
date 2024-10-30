@@ -1,10 +1,10 @@
 package mods.clayium.machine.MultiblockMachine;
 
 import com.google.common.collect.ImmutableMap;
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayContainer.BlockStateClayContainer;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;

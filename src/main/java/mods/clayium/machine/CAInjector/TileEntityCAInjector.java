@@ -5,12 +5,12 @@ import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To1;
-import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.IllegalTierException;
+import mods.clayium.machine.crafting.RecipeListGeneral;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
+import mods.clayium.util.exception.IllegalTierException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -60,14 +60,8 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements Machine
 
     @Nonnull
     @Override
-    public ClayiumRecipe getRecipeCard() {
+    public RecipeListGeneral getRecipeList() {
         return ClayiumRecipes.CAInjector;
-    }
-
-    @Nonnull
-    @Override
-    public RecipeElement getFlat() {
-        return RecipeElement.flat();
     }
 
     @Override
@@ -108,7 +102,7 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements Machine
         this.timeToCraft = 0;
         this.craftTime = 0;
         this.debtEnergy = 0;
-        this.doingRecipe = this.getFlat();
+        this.doingRecipe = this.getRecipeList().getFlat();
 
 //        if (this.externalControlState > 0) {
 //            --this.externalControlState;
@@ -128,7 +122,7 @@ public class TileEntityCAInjector extends TileEntityCAMachine implements Machine
         this.debtEnergy = (long) (this.doingRecipe.getEnergy() * this.multConsumingEnergy);
         if (!this.canProceedCraft()) {
             this.debtEnergy = 0;
-            this.doingRecipe = this.getFlat();
+            this.doingRecipe = this.getRecipeList().getFlat();
             this.timeToCraft = 0;
             this.craftTime = 0;
             return false;

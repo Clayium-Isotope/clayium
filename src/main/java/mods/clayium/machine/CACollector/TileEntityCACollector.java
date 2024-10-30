@@ -7,9 +7,9 @@ import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.CAMachine.TileEntityCAMachine;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.common.INormalInventory;
-import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
+import mods.clayium.machine.crafting.RecipeListGeneral;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.item.ItemStack;
@@ -109,14 +109,8 @@ public class TileEntityCACollector extends TileEntityCAMachine implements INorma
 
     @Nonnull
     @Override
-    public ClayiumRecipe getRecipeCard() {
+    public RecipeListGeneral getRecipeList() {
         return ClayiumRecipes.EMPTY;
-    }
-
-    @Nonnull
-    @Override
-    public RecipeElement getFlat() {
-        return RecipeElement.flat();
     }
 
     @Override

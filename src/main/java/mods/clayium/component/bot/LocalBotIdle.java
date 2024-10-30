@@ -1,6 +1,6 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.Stockholder;
+import mods.clayium.component.value.Stockholder;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

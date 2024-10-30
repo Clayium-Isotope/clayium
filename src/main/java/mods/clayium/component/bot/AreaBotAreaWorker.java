@@ -1,6 +1,6 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.Stockholder;
+import mods.clayium.component.value.Stockholder;
 import mods.clayium.util.WrapMutableBlockPos;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;

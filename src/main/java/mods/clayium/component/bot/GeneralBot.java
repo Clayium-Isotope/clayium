@@ -1,6 +1,6 @@
 package mods.clayium.component.bot;
 
-import mods.clayium.component.Stockholder;
+import mods.clayium.component.value.Stockholder;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;

@@ -1,7 +1,8 @@
 package mods.clayium.machine.common;
 
-import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.IRecipeElement;
+import mods.clayium.machine.crafting.RecipeList;
+import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UsedFor;
 import net.minecraft.item.ItemStack;
 
@@ -15,24 +16,22 @@ import java.util.function.Predicate;
 @UsedFor(UsedFor.Type.TileEntity)
 public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeProvider {
     @Nonnull
-    ClayiumRecipe getRecipeCard();
-    @Nonnull
-    T getFlat();
+    RecipeList<T> getRecipeList();
 
-    static <T extends IRecipeElement> T getRecipe(ClayiumRecipe recipeCard, Predicate<T> pred, T flat) {
-        return recipeCard.getRecipe(pred, flat);
+    static <T extends IRecipeElement> T getRecipe(RecipeList<T> recipeCard, Predicate<T> pred) {
+        return recipeCard.getRecipe(pred);
     }
 
     default T getRecipe(Predicate<T> pred) {
-        return this.getRecipeCard().getRecipe(pred, this.getFlat());
+        return this.getRecipeList().getRecipe(pred);
     }
     default T getRecipe(ItemStack stack) {
-        if (stack.isEmpty()) return this.getFlat();
+        if (stack.isEmpty()) return this.getRecipeList().getFlat();
 
         return this.getRecipe(e -> e.isCraftable(stack, this.getRecipeTier()));
     }
     default T getRecipe(List<ItemStack> stacks) {
-        if (stacks.isEmpty()) return this.getFlat();
+        if (stacks.isEmpty()) return this.getRecipeList().getFlat();
 
         return this.getRecipe(e -> e.match(stacks, -1, this.getRecipeTier()));
     }
@@ -108,6 +107,28 @@ public interface ClayiumRecipeProvider<T extends IRecipeElement> extends RecipeP
         if (provider.canCraft(recipe))
             return recipe;
 
-        return provider.getFlat();
+        return provider.getRecipeList().getFlat();
+    }
+
+    static <T extends IRecipeElement> T getCraftPermRecipe(RecipeList<T> recipes, TierPrefix tier, Predicate<T> validator, ItemStack mat1, ItemStack mat2) {
+        T recipe;
+
+        recipe = recipes.getRecipe(Arrays.asList(mat1, mat2), tier);
+        if (validator.test(recipe))
+            return recipe;
+
+        recipe = recipes.getRecipe(Arrays.asList(mat2, mat1), tier);
+        if (validator.test(recipe))
+            return recipe;
+
+        recipe = recipes.getRecipe(Collections.singletonList(mat1), tier);
+        if (validator.test(recipe))
+            return recipe;
+
+        recipe = recipes.getRecipe(Collections.singletonList(mat2), tier);
+        if (validator.test(recipe))
+            return recipe;
+
+        return recipes.getFlat();
     }
 }

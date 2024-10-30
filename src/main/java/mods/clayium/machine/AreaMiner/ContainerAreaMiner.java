@@ -1,6 +1,5 @@
 package mods.clayium.machine.AreaMiner;
 
-import mods.clayium.component.teField.FieldSender;
 import mods.clayium.gui.*;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -8,14 +7,12 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerAreaMiner extends ContainerTemp {
     protected final int inventoryX, inventoryY;
-    protected final FieldSender sender;
     
     public ContainerAreaMiner(InventoryPlayer player, TileEntityAreaWorker tile) {
         super(player, tile);
         this.inventoryX = tile.inventoryX.get();
         this.inventoryY = tile.inventoryY.get();
         postConstruct();
-        this.sender = new FieldSender(tile);
     }
 
     @Override
@@ -90,12 +87,5 @@ public class ContainerAreaMiner extends ContainerTemp {
 
     public boolean transferStackFromMachineInventory(ItemStack itemstack1, int slot) {
         return this.transferStackToPlayerInventory(itemstack1, true);
-    }
-
-    @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-
-        this.sender.detectAndSendChanges(this, this.listeners);
     }
 }

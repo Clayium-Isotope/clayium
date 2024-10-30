@@ -1,8 +1,8 @@
 package mods.clayium.machine.CAMachine;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayiumMachine.ClayiumMachine;
 import mods.clayium.machine.EnumMachineKind;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 
 import java.util.function.Supplier;

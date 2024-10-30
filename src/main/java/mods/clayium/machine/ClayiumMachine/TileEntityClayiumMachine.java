@@ -1,13 +1,16 @@
 package mods.clayium.machine.ClayiumMachine;
 
+import mods.clayium.component.teField.FieldDelegate;
+import mods.clayium.component.teField.FieldLong;
+import mods.clayium.component.teField.FieldManager;
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.EnumMachineKind;
 import mods.clayium.machine.Interface.IExternalControl;
 import mods.clayium.machine.common.*;
-import mods.clayium.machine.crafting.ClayiumRecipe;
 import mods.clayium.machine.crafting.ClayiumRecipes;
 import mods.clayium.machine.crafting.RecipeElement;
-import mods.clayium.util.ContainClayEnergy;
+import mods.clayium.machine.crafting.RecipeList;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTier;
 import mods.clayium.util.UtilTransfer;
@@ -15,17 +18,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityClayiumMachine extends TileEntityClayContainer
-                                      implements IButtonProvider, ITickable, IClayEnergyConsumer,
-                                      ClayiumRecipeProvider<RecipeElement>, IExternalControl, Machine1To1 {
+public class TileEntityClayiumMachine extends TileEntityClayContainer implements IButtonProvider, ITickable, IClayEnergyConsumer, ClayiumRecipeProvider<RecipeElement>, IExternalControl, Machine1To1, FieldDelegate {
 
     protected EnumMachineKind kind = EnumMachineKind.EMPTY;
 
@@ -34,17 +37,18 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
         return this.kind;
     }
 
-    private ClayiumRecipe recipeCards = ClayiumRecipes.EMPTY;
+    private RecipeList<RecipeElement> recipeCards = ClayiumRecipes.EMPTY;
 
+    @Nonnull
     @Override
-    public ClayiumRecipe getRecipeCard() {
+    public RecipeList<RecipeElement> getRecipeList() {
         return this.recipeCards;
     }
 
     protected RecipeElement doingRecipe = RecipeElement.flat();
 
-    protected long craftTime;
-    protected long timeToCraft;
+    protected final FieldLong craftTime = new FieldLong();
+    protected final FieldLong timeToCraft = new FieldLong();
     protected long debtEnergy;
 
     @Override
@@ -58,6 +62,7 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     public float initConsumingEnergy = 1.0F;
     protected final ContainClayEnergy containEnergy = new ContainClayEnergy();
     private int clayEnergyStorageSize = 1;
+    protected final FieldManager fm = new FieldManager(this.timeToCraft, this.craftTime, this.containEnergy);
 
     protected boolean scheduled = true;
 
@@ -137,8 +142,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     public void readMoreFromNBT(NBTTagCompound tagCompound) {
         super.readMoreFromNBT(tagCompound);
 
-        this.craftTime = tagCompound.getLong("CraftTime");
-        this.timeToCraft = tagCompound.getLong("TimeToCraft");
+        this.craftTime.deserializeNBT((NBTTagLong) tagCompound.getTag("CraftTime"));
+        this.timeToCraft.deserializeNBT((NBTTagLong) tagCompound.getTag("TimeToCraft"));
         this.debtEnergy = tagCompound.getLong("ConsumingEnergy");
 
         this.containEnergy().deserializeNBT((NBTTagIntArray) tagCompound.getTag("ClayEnergy"));
@@ -151,8 +156,8 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     public NBTTagCompound writeMoreToNBT(NBTTagCompound tagCompound) {
         super.writeMoreToNBT(tagCompound);
 
-        tagCompound.setLong("CraftTime", this.craftTime);
-        tagCompound.setLong("TimeToCraft", this.timeToCraft);
+        tagCompound.setTag("CraftTime", this.craftTime.serializeNBT());
+        tagCompound.setTag("TimeToCraft", this.timeToCraft.serializeNBT());
         tagCompound.setLong("ConsumingEnergy", this.debtEnergy);
 
         tagCompound.setTag("ClayEnergy", this.containEnergy().serializeNBT());
@@ -208,11 +213,6 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
         this.clayEnergyStorageSize = size;
     }
 
-    @Override
-    public RecipeElement getFlat() {
-        return RecipeElement.flat();
-    }
-
     public boolean canProceedCraft() {
         return IClayEnergyConsumer.compensateClayEnergy(this, this.debtEnergy);
     }
@@ -220,16 +220,16 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     public void proceedCraft() {
         if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
-        this.craftTime++;
-        if (this.craftTime < this.timeToCraft) return;
+        this.craftTime.add(1);
+        if (this.craftTime.get() < this.timeToCraft.get()) return;
 
         UtilTransfer.produceItemStack(this.doingRecipe.getResults().get(0), this.getContainerItemStacks(),
                 Machine1To1.PRODUCT, this.getInventoryStackLimit());
 
-        this.craftTime = 0L;
-        this.timeToCraft = 0L;
+        this.craftTime.set(0);
+        this.timeToCraft.set(0);
         this.debtEnergy = 0L;
-        this.doingRecipe = this.getFlat();
+        this.doingRecipe = this.getRecipeList().getFlat();
     }
 
     @Override
@@ -247,12 +247,12 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
         this.debtEnergy = this.doingRecipe.getEnergy();
 
         if (!this.canCraft(this.doingRecipe) || !this.canProceedCraft()) {
-            this.doingRecipe = this.getFlat();
+            this.doingRecipe = this.getRecipeList().getFlat();
             return false;
         }
 
-        this.craftTime = 1L;
-        this.timeToCraft = this.doingRecipe.getTime();
+        this.craftTime.set(1);
+        this.timeToCraft.set(this.doingRecipe.getTime());
         UtilTransfer.consumeByIngredient(this.doingRecipe.getIngredients().get(0), this.getContainerItemStacks(),
                 Machine1To1.MATERIAL);
 
@@ -260,46 +260,15 @@ public class TileEntityClayiumMachine extends TileEntityClayContainer
     }
 
     @Override
-    public int getField(int id) {
-        switch (id) {
-            case 0:
-                return (int) this.timeToCraft;
-            case 1:
-                return (int) this.craftTime;
-            case 2:
-                return (int) this.containEnergy().get();
-            default:
-                return 0;
-        }
-    }
-
-    @Override
-    public void setField(int id, int value) {
-        switch (id) {
-            case 0:
-                this.timeToCraft = value;
-                return;
-            case 1:
-                this.craftTime = value;
-                return;
-            case 2:
-                this.containEnergy().set(value);
-                return;
-            default:
-                return;
-        }
-    }
-
-    @Override
-    public int getFieldCount() {
-        return 3;
+    public FieldManager getDelegate() {
+        return this.fm;
     }
 
     @SideOnly(Side.CLIENT)
     @Nullable
     @Override
     public ResourceLocation getFaceResource() {
-        if (kind == null) return null;
+        if (this.kind == null) return null;
         return this.kind.getFaceResource();
     }
 

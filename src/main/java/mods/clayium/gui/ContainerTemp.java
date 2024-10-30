@@ -1,7 +1,8 @@
 package mods.clayium.gui;
 
-import mods.clayium.block.tile.FlexibleStackLimit;
+import mods.clayium.component.teField.FieldSender;
 import mods.clayium.core.ClayiumCore;
+import mods.clayium.machine.common.FlexibleStackLimit;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,10 +28,12 @@ public abstract class ContainerTemp extends Container {
 
     public int playerSlotOffsetX;
     public int playerSlotOffsetY;
+    protected final FieldSender fieldSender;
 
     public ContainerTemp(InventoryPlayer player, IInventory tileEntity) {
         this.player = player;
         this.tileEntity = tileEntity;
+        this.fieldSender = new FieldSender(tileEntity);
 
         if (this.tileEntity != null)
             this.tileEntity.openInventory(this.player.player);
@@ -459,5 +462,12 @@ public abstract class ContainerTemp extends Container {
         }
 
         return false;
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        this.fieldSender.detectAndSendChanges(this, this.listeners);
     }
 }

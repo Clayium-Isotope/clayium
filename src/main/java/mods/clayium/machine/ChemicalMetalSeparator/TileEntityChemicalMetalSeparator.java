@@ -1,12 +1,12 @@
 package mods.clayium.machine.ChemicalMetalSeparator;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumMaterials;
 import mods.clayium.item.common.ClayiumMaterial;
 import mods.clayium.item.common.ClayiumShape;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine1ToSome;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
 import mods.clayium.util.crafting.WeightedList;
@@ -44,7 +44,7 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine i
 
     @Override
     public boolean isDoingWork() {
-        return this.timeToCraft > 0;
+        return this.timeToCraft.get() > 0;
     }
 
     public String getNEIOutputId() {
@@ -66,13 +66,13 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine i
     public void proceedCraft() {
         if (!IClayEnergyConsumer.consumeClayEnergy(this, this.debtEnergy)) return;
 
-        ++this.craftTime;
-        if (this.craftTime < this.timeToCraft) {
+        this.craftTime.add(1);
+        if (this.craftTime.get() < this.timeToCraft.get()) {
             return;
         }
 
-        this.craftTime = 0L;
-        this.timeToCraft = 0L;
+        this.craftTime.set(0);
+        this.timeToCraft.set(0);
         this.debtEnergy = 0L;
         UtilTransfer.produceItemStack(this.getStackInSlot(RESULT_SLOT).copy(), this.containerItemStacks, 1, 17,
                 this.getInventoryStackLimit());
@@ -98,7 +98,7 @@ public class TileEntityChemicalMetalSeparator extends TileEntityClayiumMachine i
             return false;
         }
 
-        this.timeToCraft = (long) ((float) baseCraftTime * this.multCraftTime);
+        this.timeToCraft.set((long) ((float) baseCraftTime * this.multCraftTime));
 
         this.getStackInSlot(0).shrink(1);
         this.setInventorySlotContents(RESULT_SLOT, result);

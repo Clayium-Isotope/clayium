@@ -1,8 +1,8 @@
 package mods.clayium.client.render;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.UtilBuilder;
 import mods.clayium.util.UtilRender;
 import net.minecraft.block.state.IBlockState;

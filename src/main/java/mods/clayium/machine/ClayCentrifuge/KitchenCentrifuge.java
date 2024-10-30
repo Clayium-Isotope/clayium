@@ -32,8 +32,7 @@ import mods.clayium.util.crafting.KitchenWithRecipe;
     @Override
     protected RecipeElement getRecipe() {
         return ClayiumRecipeProvider.getRecipe(this.recipes,
-                e -> e.isCraftable(this.centrifuge.getStackInSlot(Machine1ToSome.MATERIAL), this.machineTier),
-                this.flat);
+                e -> e.isCraftable(this.centrifuge.getStackInSlot(Machine1ToSome.MATERIAL), this.machineTier));
     }
 
     @Override

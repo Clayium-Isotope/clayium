@@ -1,10 +1,10 @@
 package mods.clayium.machine.AutoTrader;
 
 import io.netty.buffer.Unpooled;
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.UtilPlayer;
 import mods.clayium.util.UtilTransfer;
 import net.minecraft.entity.Entity;
@@ -29,7 +29,7 @@ public class TileEntityAutoTrader extends TileEntityClayContainer implements IBu
     public MerchantRecipe currentRecipe;
     protected PacketBuffer oldRecipeListBuffer;
     public int currentRecipeIndex = 0;
-    private int toSellSlotIndex = 2;
+    private final int toSellSlotIndex = 2;
     public static long energyPerTrade = 10000000L;
     protected final ContainClayEnergy ce = new ContainClayEnergy();
 

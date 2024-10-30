@@ -1,10 +1,10 @@
 package mods.clayium.machine.Interface.ClayLaserInterface;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
 import mods.clayium.machine.ClayEnergyLaser.laser.IClayLaserMachine;
 import mods.clayium.machine.Interface.IInterfaceCaptive;
 import mods.clayium.machine.Interface.ISynchronizedInterface;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.SyncManager;
 import mods.clayium.util.TierPrefix;
 import net.minecraft.nbt.NBTTagCompound;

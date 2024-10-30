@@ -1,12 +1,12 @@
 package mods.clayium.machine.ClayWorkTable;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.item.ClayiumItems;
 import mods.clayium.machine.common.ClayiumRecipeProvider;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.RecipeProvider;
-import mods.clayium.machine.crafting.ClayiumRecipe;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.machine.crafting.ClayiumRecipes;
+import mods.clayium.machine.crafting.RecipeListKneading;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilItemStack;
 import mods.clayium.util.UtilTransfer;
@@ -17,12 +17,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider,
-                                     ClayiumRecipeProvider<KneadingRecipe> {
+import javax.annotation.Nonnull;
 
-    private static final int[] slotsTop = new int[] { ClayWorkTableSlots.TOOL.ordinal() };
-    private static final int[] slotsSide = new int[] { ClayWorkTableSlots.MATERIAL.ordinal() };
-    private static final int[] slotsBottom = new int[] { ClayWorkTableSlots.PRODUCT.ordinal(),
+public class TileEntityClayWorkTable extends TileEntityGeneric implements ISidedInventory, IButtonProvider, ClayiumRecipeProvider<KneadingRecipe> {
+
+    private static final int[] slotsTop = { ClayWorkTableSlots.TOOL.ordinal() };
+    private static final int[] slotsSide = { ClayWorkTableSlots.MATERIAL.ordinal() };
+    private static final int[] slotsBottom = { ClayWorkTableSlots.PRODUCT.ordinal(),
             ClayWorkTableSlots.CHANGE.ordinal() };
     private KneadingRecipe currentRecipe = KneadingRecipe.flat();
     private KneadingMethod currentMethod = KneadingMethod.UNKNOWN;
@@ -43,8 +44,7 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
 
         this.craftTime = tagCompound.getLong("KneadProgress");
         this.timeToCraft = tagCompound.getLong("TimeToKnead");
-        this.currentRecipe = ClayiumRecipes.clayWorkTable.getRecipe(tagCompound.getInteger("RecipeHash"),
-                KneadingRecipe.flat());
+        this.currentRecipe = ClayiumRecipes.clayWorkTable.getRecipe(tagCompound.getInteger("RecipeHash"));
     }
 
     @Override
@@ -129,14 +129,10 @@ public class TileEntityClayWorkTable extends TileEntityGeneric implements ISided
         return !this.currentRecipe.isFlat();
     }
 
+    @Nonnull
     @Override
-    public ClayiumRecipe getRecipeCard() {
+    public RecipeListKneading getRecipeList() {
         return ClayiumRecipes.clayWorkTable;
-    }
-
-    @Override
-    public KneadingRecipe getFlat() {
-        return KneadingRecipe.flat();
     }
 
     @Override

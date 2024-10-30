@@ -2,7 +2,9 @@ package mods.clayium.machine.AreaMiner;
 
 import mods.clayium.component.bot.*;
 import mods.clayium.component.teField.FieldComponent;
+import mods.clayium.component.teField.FieldDelegate;
 import mods.clayium.component.teField.FieldManager;
+import mods.clayium.component.value.ContainClayEnergy;
 import mods.clayium.item.filter.IFilter;
 import mods.clayium.machine.ClayContainer.TileEntityClayContainer;
 import mods.clayium.machine.ClayEnergyLaser.laser.ClayLaser;
@@ -13,7 +15,6 @@ import mods.clayium.machine.ClayMarker.TileEntityClayMarker;
 import mods.clayium.machine.Interface.IExternalControl;
 import mods.clayium.machine.common.IButtonProvider;
 import mods.clayium.machine.common.IClayEnergyConsumer;
-import mods.clayium.util.ContainClayEnergy;
 import mods.clayium.util.LateInit;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTransfer;
@@ -49,7 +50,7 @@ import java.util.stream.IntStream;
  *  4-12: Output
  *  13-21: Input
  */
-public class TileEntityAreaWorker extends TileEntityClayContainer implements IClayLaserMachine, AABBHolder, IExternalControl, IClayEnergyConsumer, IButtonProvider, FieldComponent {
+public class TileEntityAreaWorker extends TileEntityClayContainer implements IClayLaserMachine, AABBHolder, IExternalControl, IClayEnergyConsumer, IButtonProvider, FieldDelegate {
     public static final int filterHarvestSlot = 1;
     public static final int filterFortuneSlot = 2;
     public static final int filterSilktouchSlot = 3;
@@ -391,18 +392,8 @@ public class TileEntityAreaWorker extends TileEntityClayContainer implements ICl
     }
 
     @Override
-    public int getFieldCount() {
-        return this.manager.getFieldCount();
-    }
-
-    @Override
-    public int getField(int id) {
-        return this.manager.getField(id);
-    }
-
-    @Override
-    public void setField(int id, int value) {
-        this.manager.setField(id, value);
+    public FieldComponent getDelegate() {
+        return this.manager;
     }
 
     @SideOnly(Side.CLIENT)

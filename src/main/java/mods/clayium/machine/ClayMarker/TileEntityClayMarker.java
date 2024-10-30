@@ -1,6 +1,6 @@
 package mods.clayium.machine.ClayMarker;
 
-import mods.clayium.block.tile.TileEntityGeneric;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.UtilBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

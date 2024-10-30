@@ -1,7 +1,10 @@
-package mods.clayium.util;
+package mods.clayium.component.value;
 
-import mods.clayium.component.Stockholder;
+import mods.clayium.util.UtilLocale;
 
+/**
+ * TODO: ここにエネルギースロットの IItemHandler を持たせる予定
+ */
 public class ContainClayEnergy extends Stockholder {
     public ContainClayEnergy() {
         super();

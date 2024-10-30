@@ -11,7 +11,6 @@ import mods.clayium.machine.Interface.ISynchronizedInterface;
 import mods.clayium.machine.MultiblockMachine.TileEntityMultiblockMachine;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.crafting.ClayiumRecipes;
-import mods.clayium.machine.crafting.RecipeElement;
 import mods.clayium.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -247,7 +246,7 @@ public class TileEntityCAReactor extends TileEntityMultiblockMachine {
     @Override
     protected void onDestruction() {
         this.markDirty(); // this.setRenderSyncFlag();
-        this.craftTime = 0L;
+        this.craftTime.set(0);
         this.setInventorySlotContents(3, ItemStack.EMPTY);
     }
 
@@ -357,11 +356,11 @@ public class TileEntityCAReactor extends TileEntityMultiblockMachine {
             return;
         }
 
-        this.craftTime = (long)((double)this.craftTime + 1000.0 * this.getEfficiency());
-        if (this.craftTime < this.timeToCraft) {
+        this.craftTime.add((long)(1000.0 * this.getEfficiency()));
+        if (this.craftTime.get() < this.timeToCraft.get()) {
             return;
         }
-        this.craftTime = 0L;
+        this.craftTime.set(0);
         this.debtEnergy = 0L;
         UtilTransfer.produceItemStack(this.getStackInSlot(3), this.containerItemStacks, 1, this.getInventoryStackLimit());
         this.setInventorySlotContents(3, ItemStack.EMPTY);
@@ -381,7 +380,7 @@ public class TileEntityCAReactor extends TileEntityMultiblockMachine {
             return false;
         }
         // レシピが一意に定まるはずだが、リセットされる
-        this.doingRecipe = ClayiumRecipes.CAReactor.getRecipe(r -> !r.isFlat(), RecipeElement.flat());
+        this.doingRecipe = ClayiumRecipes.CAReactor.getRecipe(r -> !r.isFlat());
 
         this.debtEnergy = (long)((double) this.doingRecipe.getEnergy() * this.multConsumingEnergy * this.getConsumingEnergyBaseMultiplier());
 
@@ -389,7 +388,7 @@ public class TileEntityCAReactor extends TileEntityMultiblockMachine {
             return false;
         }
 
-        this.timeToCraft = (long)((double) ((1000L * this.doingRecipe.getTime()) * this.multCraftTime) * this.getCraftTimePureAntimatterMultiplier());
+        this.timeToCraft.set((long)((double) ((1000L * this.doingRecipe.getTime()) * this.multCraftTime) * this.getCraftTimePureAntimatterMultiplier()));
         this.setInventorySlotContents(3, this.getResultPureAntimatter());
         this.getStackInSlot(0).shrink(1);
         return true;

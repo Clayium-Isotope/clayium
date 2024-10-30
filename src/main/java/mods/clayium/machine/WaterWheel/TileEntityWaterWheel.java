@@ -1,7 +1,7 @@
 package mods.clayium.machine.WaterWheel;
 
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.machine.ClayiumMachine.TileEntityClayiumMachine;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilTier;
 import net.minecraft.block.BlockDynamicLiquid;

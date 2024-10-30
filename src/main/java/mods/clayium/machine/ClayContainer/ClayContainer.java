@@ -2,9 +2,9 @@ package mods.clayium.machine.ClayContainer;
 
 import com.google.common.collect.ImmutableMap;
 import mods.clayium.block.common.ITieredBlock;
-import mods.clayium.block.tile.TileEntityGeneric;
 import mods.clayium.core.ClayiumCore;
 import mods.clayium.item.common.IModifyCC;
+import mods.clayium.machine.common.TileEntityGeneric;
 import mods.clayium.util.TierPrefix;
 import mods.clayium.util.UtilDirection;
 import mods.clayium.util.UtilLocale;

@@ -6,12 +6,13 @@ import mods.clayium.gui.SlotEnergy;
 import mods.clayium.gui.SlotWithTexture;
 import mods.clayium.machine.common.IClayEnergyConsumer;
 import mods.clayium.machine.common.Machine2To1;
+import mods.clayium.machine.common.TileEntityGeneric;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ContainerClayAssembler extends ContainerIMachine {
+public class ContainerClayAssembler<Tile extends TileEntityGeneric & Machine2To1> extends ContainerIMachine {
 
-    public ContainerClayAssembler(InventoryPlayer player, Machine2To1 tile) {
+    public ContainerClayAssembler(InventoryPlayer player, Tile tile) {
         super(player, tile, Machine2To1.MATERIAL_1, Machine2To1.PRODUCT);
     }
 

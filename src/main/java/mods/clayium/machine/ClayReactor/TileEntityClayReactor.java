@@ -189,7 +189,7 @@ public class TileEntityClayReactor extends TileEntityMultiblockMachine implement
         if (!this.canProceedCraft()) {
             this.timeToCraft = 0L;
             this.debtEnergy = 0L;
-            this.doingRecipe = this.getFlat();
+            this.doingRecipe = this.getRecipeList().getFlat();
             return false;
         }
 
